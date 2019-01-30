@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class Widget < ApplicationRecord
+class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend UriTemplateHelper
+  include Parentable
 
   enhance Createable
 
@@ -12,6 +13,8 @@ class Widget < ApplicationRecord
   enum widget_type: {custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5}
 
   acts_as_list scope: :owner
+
+  parentable :page, :forum
 
   def edgeable_record
     @edgeable_record ||= owner
@@ -31,6 +34,10 @@ class Widget < ApplicationRecord
         resource_iri
           .map { |iri, predicate| predicate.present? ? property_shape(iri, predicate).iri : RDF::DynamicURI(iri) }
       )
+  end
+
+  def parent
+    edgeable_record
   end
 
   def permitted_action_title=(title)
@@ -112,8 +119,8 @@ class Widget < ApplicationRecord
         )
     end
 
-    def show_includes
-      super + [:resource_sequence]
+    def preview_includes
+      super + %i[resource_sequence property_shapes]
     end
   end
 end

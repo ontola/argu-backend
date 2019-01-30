@@ -38,6 +38,8 @@ module ChildHelper
       parent.is_a?(Comment) ? {parent: parent.parent} : {parent: parent}
     when 'Placement'
       {placeable: parent}
+    when 'Widget'
+      {owner: parent}
     else
       raw_klass <= Edge && parent.is_a?(Edge) ? {parent: parent} : {}
     end

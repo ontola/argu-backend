@@ -199,10 +199,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
-    def preview_includes
-      super + [widget_sequence: {members: %i[resource_sequence property_shapes]}]
-    end
-
     def show_includes
       Page.show_includes + User.show_includes
     end

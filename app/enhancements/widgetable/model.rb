@@ -34,10 +34,6 @@ module Widgetable
           widgets
         end
       end
-
-      def preview_includes
-        super + [widget_sequence: {members: %i[resource_sequence property_shapes]}]
-      end
     end
   end
 end

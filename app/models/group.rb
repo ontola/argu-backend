@@ -71,10 +71,6 @@ class Group < ApplicationRecord
       @public ||= Group.find_by(id: Group::PUBLIC_ID)
     end
 
-    def show_includes
-      super + [organization: [widget_sequence: {members: %i[resource_sequence property_shapes]}]]
-    end
-
     def staff
       @staff ||= Group.find_by(id: Group::STAFF_ID)
     end

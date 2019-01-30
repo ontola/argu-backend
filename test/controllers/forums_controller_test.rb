@@ -14,7 +14,5 @@ class ForumsControllerTest < ActionController::TestCase
 
     expect_relationship('motionCollection')
     expect_relationship('questionCollection')
-    expect_relationship('widgetSequence')
-    holland.widgets.each { |w| expect_included(w.iri) }
   end
 end

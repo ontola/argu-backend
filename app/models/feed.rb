@@ -82,7 +82,7 @@ class Feed
     def preview_includes
       [
         :trackable,
-        recipient: [widget_sequence: {members: %i[resource_sequence property_shapes]}],
+        :recipient,
         owner: [:default_profile_photo]
       ]
     end

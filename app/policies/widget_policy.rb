@@ -28,4 +28,8 @@ class WidgetPolicy < EdgeTreePolicy
   def create?
     service?
   end
+
+  def show?
+    edgeable_policy.show?
+  end
 end
