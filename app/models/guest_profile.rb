@@ -8,6 +8,10 @@ class GuestProfile < Profile
     Forum.find_by(uuid: forum_id) if uuid?(forum_id)
   end
 
+  def group_ids
+    [Group::PUBLIC_ID]
+  end
+
   def preferred_forum
     Forum.first_public
   end

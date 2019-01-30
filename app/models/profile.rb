@@ -140,7 +140,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # @return [Boolean] Whether the user has a group_membership for the provided group_id
   def is_group_member?(group_id)
-    group_memberships.pluck(:group_id)&.include?(group_id)
+    group_ids.include?(group_id)
   end
 
   def owner
