@@ -22,11 +22,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
           menu_item(:support, label: I18n.t('help_support'), href: RDF::URI('https://argu.freshdesk.com/support/home')),
           menu_item(:contact, label: I18n.t('about.contact'), href: RDF::URI(info_url(:contact))),
           menu_item(:discover, label: I18n.t('pages.discover'), href: collection_iri(nil, :pages)),
-          menu_item(
-            :language,
-            label: I18n.t('set_language'),
-            href: RDF::DynamicURI(expand_uri_template(:languages_iri, with_hostname: true))
-          )
+          afe_request? ? language_menu_item : nil
         ]
       }
     )
@@ -83,6 +79,14 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
         href: page.iri
       )
     end
+  end
+
+  def language_menu_item
+    menu_item(
+      :language,
+      label: I18n.t('set_language'),
+      href: RDF::DynamicURI(expand_uri_template(:languages_iri, with_hostname: true))
+    )
   end
 
   def organizations_menu
