@@ -37,12 +37,12 @@ class ForumMenuList < MenuList
     )
   end
 
-  def settings_link
+  def edit_link
     menu_item(
-      :settings,
-      href: settings_iri(resource),
+      :edit,
       image: 'fa-gear',
-      link_opts: {data: {turbolinks: 'true'}},
+      label: I18n.t('menus.default.settings'),
+      href: edit_iri(resource),
       policy: :update?
     )
   end

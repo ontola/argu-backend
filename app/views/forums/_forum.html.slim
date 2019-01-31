@@ -12,7 +12,7 @@
           span.icon-left= t('forums.join.title')
     - if policy(forum).update?
       .sticky--top-right
-        =link_to settings_iri_path(forum), class: ('btn--transparant'), data: {turbolinks: false}
+        =link_to edit_iri_path(forum), class: ('btn--transparant'), data: {turbolinks: false}
           span.fa.fa-gear
           span.icon-left= t('settings')
   =render partial: 'forums/info_bar', locals: {forum: forum}
