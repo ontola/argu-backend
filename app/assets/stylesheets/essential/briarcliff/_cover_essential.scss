@@ -30,8 +30,6 @@
 
     @include bp-medium {
       span {
-        display: none;
-
         &.fa {
           display: inline-block;
         }
