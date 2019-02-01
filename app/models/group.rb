@@ -74,5 +74,9 @@ class Group < ApplicationRecord
     def staff
       @staff ||= Group.find_by(id: Group::STAFF_ID)
     end
+
+    def show_includes
+      [:organization]
+    end
   end
 end
