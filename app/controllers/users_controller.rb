@@ -103,7 +103,7 @@ class UsersController < AuthorizedController
     if password_required
       bypass_sign_in(authenticated_resource) if authenticated_resource.update_with_password(permit_params(true))
     else
-      authenticated_resource.update_without_password(permit_params)
+      authenticated_resource.update_without_password(permit_params) && authenticated_resource.profile.save
     end
   end
 

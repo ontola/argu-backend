@@ -498,7 +498,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal profile_id, user.reload.profile.id
   end
 
-  test 'user should update profile_photo and cover_photo' do
+  test 'user should update and remove profile_photo and cover_photo' do
     nominatim_postal_code_valid
     sign_in user
 
@@ -524,6 +524,23 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal('cover_photo.jpg', user.profile.default_cover_photo.content_identifier)
 
     assert_redirected_to settings_user_path(tab: :general)
+
+    put user_path(user),
+        params: {
+          user: {
+            profile_attributes: {
+              id: user.profile.id,
+              default_profile_photo_attributes: {
+                id: user.profile.default_profile_photo.id,
+                content_cache: '',
+                used_as: :profile_photo,
+                remove_content: '1'
+              }
+            }
+          }
+        }
+    assert_equal 'name', user.reload.first_name
+    assert_nil(user.profile.default_profile_photo.content_identifier)
   end
 
   let(:place) { create(:place) }
