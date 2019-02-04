@@ -231,11 +231,10 @@ Rails.application.routes.draw do
   resources :pages, path: 'o', only: %i[new create index show]
   get :settings, to: 'pages#settings'
   get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
-  get :delete, to: 'pages#delete', as: :delete
-  delete '', to: 'pages#destroy', as: :destroy
-  get :edit, to: 'pages#edit'
-  put '', to: 'pages#update'
-  patch '', to: 'pages#update'
+
+  resource :pages, path: '' do
+    concerns Page.route_concerns
+  end
 
   resources :actors, only: :index
   resources :arguments, only: %i[show], path: 'a'
@@ -259,7 +258,6 @@ Rails.application.routes.draw do
   end
   resources :comments, only: %i[show]
   resources :direct_messages, path: :dm, only: [:create]
-  resources :discussions, only: %i[index]
   resources :exports, only: [] do
     include_route_concerns
   end
@@ -281,9 +279,6 @@ Rails.application.routes.draw do
     resources :grants, only: %i[index]
   end
   resources :media_objects, only: :show
-  resources :menus, only: %i[show index] do
-    resources :sub_menus, only: :index, path: 'menus'
-  end
   resources :motions,
             path: 'm',
             only: %i[show] do
