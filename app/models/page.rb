@@ -51,6 +51,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
   property :base_color, :string, NS::ARGU[:baseColor]
   property :iri_prefix, :string, NS::ARGU[:iriPrefix]
+  property :use_new_frontend, :boolean, NS::ARGU[:useNewFrontend], default: false
 
   def build_profile(*options)
     super(*options) if profile.nil?

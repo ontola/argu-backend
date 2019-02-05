@@ -23,7 +23,7 @@ class TenantFinder
   end
 
   def tenant
-    ActsAsTenant.without_tenant { tenant_by_prefix || tenant_by_uuid }
+    ActsAsTenant.without_tenant { tenant_by_prefix || tenant_by_uuid || tenant_by_shortname }
   end
 
   private
@@ -42,6 +42,10 @@ class TenantFinder
 
   def tenant_by_prefix
     Page.find_by(iri_prefix: matching_iris)
+  end
+
+  def tenant_by_shortname
+    Page.find_via_shortname(iri_suffix) if @host == Rails.application.config.host_name
   end
 
   def tenant_by_uuid
