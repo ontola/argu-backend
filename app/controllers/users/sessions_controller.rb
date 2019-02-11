@@ -68,7 +68,13 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def r_from_url_or_header
-    params[:r] || request.env['HTTP_TURBOLINKS_REFERRER'] || request.referer
+    redirect = params[:r] || request.env['HTTP_TURBOLINKS_REFERRER'] || request.referer
+    begin
+      route_opts = Rails.application.routes.recognize_path(redirect)
+      redirect if !route_opts || route_opts[:controller] != 'users/passwords'
+    rescue ActionController::RoutingError
+      redirect
+    end
   end
 
   def r_with_authenticity_token
