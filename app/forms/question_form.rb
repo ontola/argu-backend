@@ -7,6 +7,7 @@ class QuestionForm < RailsLD::Form
     default_cover_photo
     mark_as_important
     attachments
+    custom_placement
     advanced
     footer
   ]

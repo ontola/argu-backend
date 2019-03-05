@@ -12,12 +12,10 @@ class ForumsTest < ActionDispatch::IntegrationTest
     attributes: {
       url: 'forum_with_placement',
       shortname_attributes: {shortname: 'forum_with_placement'},
-      placements_attributes: {
-        '0' => {
-          lat: 1.0,
-          lon: 1.0,
-          placement_type: 'custom'
-        }
+      custom_placement_attributes: {
+        lat: 1.0,
+        lon: 1.0,
+        placement_type: 'custom'
       }
     }
   )
@@ -353,12 +351,10 @@ class ForumsTest < ActionDispatch::IntegrationTest
           name: 'New forum',
           locale: 'en-GB',
           url: 'new_forum',
-          placements_attributes: {
-            '0' => {
-              lat: 1.0,
-              lon: 1.0,
-              placement_type: 'custom'
-            }
+          custom_placement_attributes: {
+            lat: 1.0,
+            lon: 1.0,
+            placement_type: 'custom'
           }
         }
       }
@@ -392,20 +388,18 @@ class ForumsTest < ActionDispatch::IntegrationTest
       put forum_with_placement,
           params: {
             forum: {
-              placements_attributes: {
-                '0' => {
-                  id: forum_with_placement.custom_placements.first.id,
-                  lat: 2.0,
-                  lon: 2.0
-                }
+              custom_placement_attributes: {
+                id: forum_with_placement.custom_placement.id,
+                lat: 2.0,
+                lon: 2.0
               }
             }
           }
     end
 
     forum_with_placement.reload
-    assert_equal 2, forum_with_placement.custom_placements.first.lat
-    assert_equal 2, forum_with_placement.custom_placements.first.lon
+    assert_equal 2, forum_with_placement.custom_placement.lat
+    assert_equal 2, forum_with_placement.custom_placement.lon
   end
 
   test 'staff should put update motion remove latlon' do
@@ -416,11 +410,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
       put forum_with_placement,
           params: {
             forum: {
-              placements_attributes: {
-                '0' => {
-                  id: forum_with_placement.custom_placements.first.id,
-                  _destroy: 'true'
-                }
+              custom_placement_attributes: {
+                id: forum_with_placement.custom_placement.id,
+                _destroy: 'true'
               }
             }
           }

@@ -11,7 +11,7 @@ section.section--details
           span[class="fa fa-#{motion_icon}"]
         .detail__text
           span= question.children_count(:motions)
-    - if local_assigns[:show_placement] && question.custom_placements.present?
+    - if local_assigns[:show_placement] && question.custom_placement.present?
       =react_component_store 'MapToggle', props: {tooltip: t('edges.show_placement')}.merge(map_resource_props(question))
     =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
     - if question.pinned?

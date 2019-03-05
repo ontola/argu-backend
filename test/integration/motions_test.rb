@@ -39,12 +39,10 @@ class MotionsTest < ActionDispatch::IntegrationTest
   end
   let(:motion_with_placement) do
     create(:motion,
-           placements_attributes: {
-             '0' => {
-               lat: 1.0,
-               lon: 1.0,
-               placement_type: 'custom'
-             }
+           custom_placement_attributes: {
+             lat: 1.0,
+             lon: 1.0,
+             placement_type: 'custom'
            },
            publisher: creator,
            parent: question)
@@ -117,13 +115,11 @@ class MotionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: 302},
       parent: :freetown,
       attributes: {
-        placements_attributes: {
-          '0' => {
-            lat: 1.0,
-            lon: 1.0,
-            zoom_level: 1,
-            placement_type: 'custom'
-          }
+        custom_placement_attributes: {
+          lat: 1.0,
+          lon: 1.0,
+          zoom_level: 1,
+          placement_type: 'custom'
         }
       },
       differences: [['Motion', 1], ['Placement', 1], ['Place', 1], ['Activity', 2]]
@@ -149,14 +145,12 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       attributes: {
-        placements_attributes: {
-          '0' => {
-            id: '',
-            placement_type: 'custom',
-            lat: '',
-            lon: '',
-            zoom_level: '1'
-          }
+        custom_placement_attributes: {
+          id: '',
+          placement_type: 'custom',
+          lat: '',
+          lon: '',
+          zoom_level: '1'
         }
       },
       results: {should: false, response: 200},
@@ -170,14 +164,12 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       attributes: {
-        placements_attributes: {
-          '0' => {
-            id: '',
-            placement_type: 'custom',
-            lat:  2.0,
-            lon:  2.0,
-            zoom_level: '1'
-          }
+        custom_placement_attributes: {
+          id: '',
+          placement_type: 'custom',
+          lat:  2.0,
+          lon:  2.0,
+          zoom_level: '1'
         }
       },
       results: {should: true, response: 302},
@@ -193,12 +185,10 @@ class MotionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: 302},
       record: :motion_with_placement,
       attributes: {
-        placements_attributes: {
-          '0' => {
-            id: motion_with_placement.placements.first.id,
-            lat: 2.0,
-            lon: 2.0
-          }
+        custom_placement_attributes: {
+          id: motion_with_placement.placements.first.id,
+          lat: 2.0,
+          lon: 2.0
         }
       },
       differences: [['Motion', 0], ['Placement', 0], ['Place', 1], ['Activity', 1]]
@@ -216,11 +206,9 @@ class MotionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: 302},
       record: :motion_with_placement,
       attributes: {
-        placements_attributes: {
-          '0' => {
-            id: motion_with_placement.placements.first.id,
-            _destroy: 'true'
-          }
+        custom_placement_attributes: {
+          id: motion_with_placement.placements.first.id,
+          _destroy: 'true'
         }
       },
       differences: [['Motion', 0], ['Placement', -1], ['Place', 0], ['Activity', 1]]

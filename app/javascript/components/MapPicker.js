@@ -53,8 +53,8 @@ export const MapPicker = React.createClass({
             let destroyFields;
             if (this.props.markerId) {
                 destroyFields = <div>
-                    <input type="hidden" name={`${this.props.resourceType}[placements_attributes][0][id]`} value={this.props.markerId}/>
-                    <input type="hidden" name={`${this.props.resourceType}[placements_attributes][0][_destroy]`} value={true}/>
+                    <input type="hidden" name={`${this.props.resourceType}[custom_placement_attributes][id]`} value={this.props.markerId}/>
+                    <input type="hidden" name={`${this.props.resourceType}[custom_placement_attributes][_destroy]`} value={true}/>
                 </div>;
             }
             return (
@@ -90,11 +90,11 @@ export const MapPicker = React.createClass({
                     onZoom={this.handleMapZoom}
                     zoom={this.state.zoom}/>
                 {removeLink}
-                <input type="hidden" name={`${this.props.resourceType}[placements_attributes][0][id]`} value={this.props.markerId}/>
-                <input type="hidden" name={`${this.props.resourceType}[placements_attributes][0][placement_type]`} value={this.props.markerType}/>
-                <input type="hidden" name={`${this.props.resourceType}[placements_attributes][0][lat]`} value={this.state.marker.lat}/>
-                <input type="hidden" name={`${this.props.resourceType}[placements_attributes][0][lon]`} value={this.state.marker.lng}/>
-                <input type="hidden" name={`${this.props.resourceType}[placements_attributes][0][zoom_level]`} value={this.state.zoom}/>
+                <input type="hidden" name={`${this.props.resourceType}[custom_placement_attributes][id]`} value={this.props.markerId}/>
+                <input type="hidden" name={`${this.props.resourceType}[custom_placement_attributes][placement_type]`} value={this.props.markerType}/>
+                <input type="hidden" name={`${this.props.resourceType}[custom_placement_attributes][lat]`} value={this.state.marker.lat}/>
+                <input type="hidden" name={`${this.props.resourceType}[custom_placement_attributes][lon]`} value={this.state.marker.lng}/>
+                <input type="hidden" name={`${this.props.resourceType}[custom_placement_attributes][zoom_level]`} value={this.state.zoom}/>
             </div>
         );
     }

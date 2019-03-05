@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class MotionSerializer < ContentEdgeSerializer
-  has_many :custom_placements, predicate: NS::SCHEMA[:location]
   attribute :current_vote, predicate: NS::ARGU[:currentVote], unless: :system_scope?
 
   attribute :lat, if: :export_scope?
@@ -16,11 +15,11 @@ class MotionSerializer < ContentEdgeSerializer
   end
 
   def lat
-    object.custom_placements.first&.lat
+    object.custom_placement&.lat
   end
 
   def lon
-    object.custom_placements.first&.lon
+    object.custom_placement&.lon
   end
 
   def votes_con_count

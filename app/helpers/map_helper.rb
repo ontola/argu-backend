@@ -34,21 +34,25 @@ module MapHelper
     }
   end
 
+  def map_picker_center(resource, marker)
+    return marker if marker&.lat && marker&.lon
+
+    Placement.find_by_path(resource.persisted_edge&.path, %w[custom country]) ||
+      Place.find_or_fetch_country('nl')
+  end
+
   def map_picker_props(resource) # rubocop:disable Metrics/AbcSize
-    marker = resource.custom_placements.first
-    if marker.nil?
-      center = Placement.find_by_path(resource.persisted_edge&.path, %w[custom country]) ||
-        Place.find_or_fetch_country('nl')
-    end
+    marker = resource.custom_placement
+    center = map_picker_center(resource, marker)
     {
       accessToken: map_access_token,
       icon: {
         iconUrl: image_url('marker-icon.png'),
         iconAnchor: [13, 44]
       },
-      centerLat: marker&.lat || center.lat,
-      centerLon: marker&.lon || center.lon,
-      initialZoom: marker&.zoom_level || center.zoom_level,
+      centerLat: center.lat,
+      centerLon: center.lon,
+      initialZoom: center.zoom_level,
       markerId: marker&.id,
       markerLat: marker&.lat,
       markerLon: marker&.lon,
@@ -75,14 +79,14 @@ module MapHelper
           text: t('add_type', type: motion_type)
         }
       },
-      center_lat: resource.custom_placements.first&.lat,
-      center_lon: resource.custom_placements.first&.lon,
-      zoom: resource.custom_placements.first&.zoom_level
+      center_lat: resource.custom_placement&.lat,
+      center_lon: resource.custom_placement&.lon,
+      zoom: resource.custom_placement&.zoom_level
     )
   end
 
   def map_resource_props(resource)
-    placement = resource.custom_placements.first
+    placement = resource.custom_placement
     map_viewer_props(map_marker_props(placement), zoom: placement.zoom_level)
   end
 

@@ -78,13 +78,6 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     resource.assign_attributes(@attributes)
   end
 
-  def placements_attributes
-    attrs = @attributes[:placements_attributes]
-    attrs.to_h.each_value do |hash|
-      hash.merge!(creator: @options[:creator], publisher: @options[:publisher])
-    end
-  end
-
   def publish_success_signals # rubocop:disable Metrics/AbcSize
     publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]
     publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
@@ -152,8 +145,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   end
 
   def prepare_placement_attributes
-    return if @attributes[:placements_attributes].blank?
-    @attributes[:placements_attributes] = placements_attributes
+    @attributes[:custom_placement_attributes]&.merge!(creator: @options[:creator], publisher: @options[:publisher])
   end
 
   def signal_base

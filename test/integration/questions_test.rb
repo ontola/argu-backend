@@ -18,12 +18,10 @@ class QuestionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: 302},
       parent: :freetown,
       attributes: {
-        placements_attributes: {
-          '0' => {
-            lat: 1,
-            lon: 1,
-            placement_type: 'custom'
-          }
+        custom_placement_attributes: {
+          lat: 1,
+          lon: 1,
+          placement_type: 'custom'
         }
       },
       differences: [['Question', 1], ['Placement', 1], ['Place', 1], ['Activity', 2]]

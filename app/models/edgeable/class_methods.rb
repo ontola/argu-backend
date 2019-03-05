@@ -13,7 +13,7 @@ module Edgeable
       def edge_includes_for_index
         {
           published_publications: {},
-          custom_placements: {place: {}},
+          custom_placement: {place: {}},
           default_cover_photo: {},
           active_motions: {}
         }

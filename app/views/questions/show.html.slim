@@ -30,7 +30,7 @@
   - unless question.is_published?
     =render partial: 'application/publish', locals: {resource: question}
   =render partial: 'happenings/timeline', locals: {resource: question, happenings: policy_scope(question.happenings).includes(trackable: [:published_publications, creator: Profile.includes_for_profileable]), show_unpublished: policy(question).update?}
-- if question.custom_placements.present?
+- if question.custom_placement.present?
   .col-1.large-map
     =react_component_store 'MapViewer', props: map_question_props(question)
 .col-1

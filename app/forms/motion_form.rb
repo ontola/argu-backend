@@ -7,6 +7,7 @@ class MotionForm < RailsLD::Form
     :default_cover_photo,
     {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
     :attachments,
+    :custom_placement,
     :advanced,
     :footer
   ]

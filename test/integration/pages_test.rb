@@ -298,12 +298,10 @@ class PagesTest < ActionDispatch::IntegrationTest
           params: {
             id: page.url,
             page: {
-              placements_attributes: {
-                '0' => {
-                  lat: 2.0,
-                  lon: 2.0,
-                  placement_type: 'custom'
-                }
+              custom_placement_attributes: {
+                lat: 2.0,
+                lon: 2.0,
+                placement_type: 'custom'
               }
             }
           }
@@ -311,8 +309,8 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to settings_iri(page, tab: :profile)
     page.reload
-    assert_equal 2, page.custom_placements.first.lat
-    assert_equal 2, page.custom_placements.first.lon
+    assert_equal 2, page.custom_placement.lat
+    assert_equal 2, page.custom_placement.lon
   end
 
   test 'administrator should get new' do

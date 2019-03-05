@@ -6,8 +6,6 @@ class QuestionSerializer < ContentEdgeSerializer
   attribute :children_placements, predicate: NS::ARGU[:childrenPlacements]
   count_attribute :motions
 
-  has_many :custom_placements, predicate: NS::SCHEMA[:location]
-
   enum :default_motion_sorting
 
   def children_placements
