@@ -145,7 +145,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
             expand_uri_template(:terms_iri), nil, query: {referrer: request.headers['Request-Referrer']}.to_param
           )
           add_exec_action_header(response.headers, ontola_dialog_action(action))
-          head 200
+          head 449
         end
       end
     end
