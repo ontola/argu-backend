@@ -23,7 +23,6 @@ class Motion < Edge
   enhance VoteEventable
 
   include Edgeable::Content
-  include Attribution
   include HasLinks
 
   attr_accessor :current_vote

@@ -19,7 +19,6 @@ class Question < Edge
 
   include Edgeable::Content
   include HasLinks
-  include Attribution
   include CustomGrants
 
   convertible motions: %i[activities media_objects]

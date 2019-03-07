@@ -21,8 +21,6 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   enhance Actionable
   enhance Statable
 
-  include Attribution
-
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]
   property :bio_long, :text, NS::SCHEMA[:text]
