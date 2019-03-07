@@ -7,6 +7,7 @@ module Argu
         extend ActiveSupport::Concern
 
         included do
+          rescue_from Argu::Errors::AccountLocked, with: :handle_error
           rescue_from Argu::Errors::UnknownEmail, with: :handle_error
           rescue_from Argu::Errors::UnknownUsername, with: :handle_error
           rescue_from Argu::Errors::WrongPassword, with: :handle_error

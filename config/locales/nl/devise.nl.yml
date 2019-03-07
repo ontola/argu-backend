@@ -72,6 +72,10 @@ nl:
       send_instructions: 'Je zal binnen enkele minuten een email ontvangen met instructies om jouw account te ontgrendelen.'
       unlocked: 'Jouw account is ontgrendeld. Log in om door te gaan.'
       send_paranoid_instructions: 'Als jouw account bestaat, zal je binnen enkele minuten een mail met instructies om jouw account te ontgredelen ontvangen.'
+      new:
+        header: 'Account vergrendeld?'
+        helper: 'Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je je account kunt ontgrendelen.'
+        submit: 'Verstuur ontgrendel instructies'
     omniauth_callbacks:
       success: 'Succesvol gekoppeld aan %{kind} account.'
       failure: 'Sorry, het lukte niet om jouw %{kind} account te koppelen vanwege %{reason}.'

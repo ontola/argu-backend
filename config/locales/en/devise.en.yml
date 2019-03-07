@@ -72,6 +72,10 @@ en:
       send_instructions: 'You will receive an email with instructions to unlock your account within a few minutes.'
       unlocked: 'Your account has been unlocked. Log in to continue.'
       send_paranoid_instructions: "If your account exists, you'll receive a mail with instructions to unlock your account within a few minutes."
+      new:
+          header: 'Account locked?'
+          helper: "Enter your email address and you'll receive a link to unlock your account."
+          submit: 'Send unlock instructions'
     omniauth_callbacks:
       success: 'Succesfully connected to a %{kind} account.'
       failure: 'Sorry, it was unsuccessful to couple your %{kind} account because of %{reason}.'

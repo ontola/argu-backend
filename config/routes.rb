@@ -62,6 +62,7 @@ Rails.application.routes.draw do
                registrations: 'registrations',
                sessions: 'users/sessions',
                passwords: 'users/passwords',
+               unlocks: 'users/unlocks',
                omniauth_callbacks: 'omniauth_callbacks',
                confirmations: 'users/confirmations'
              }, skip: :registrations

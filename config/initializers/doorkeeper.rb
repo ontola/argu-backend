@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'argu/errors/account_locked'
 require 'argu/errors/unknown_email'
 require 'argu/errors/unknown_username'
 require 'argu/errors/wrong_password'
@@ -68,8 +69,14 @@ Doorkeeper.configure do
             Argu::Errors::UnknownEmail.new(r: r_with_authenticity_token)
           elsif !email && Shortname.find_by(owner_type: 'User', shortname: params[:user][:email]).nil?
             Argu::Errors::UnknownUsername.new(r: r_with_authenticity_token)
-          else
+          elsif request.env['warden'].message == :locked
+            Argu::Errors::AccountLocked.new(r: r_with_authenticity_token)
+          elsif request.env['warden'].message == :invalid
             Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
+          elsif request.env['warden'].message == :not_found_in_database
+            Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
+          else
+            raise "unhandled login state #{request.env['warden'].message}"
           end
       raise e if argu_classic_frontend_request?
       e

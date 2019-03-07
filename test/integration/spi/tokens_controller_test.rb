@@ -30,6 +30,7 @@ module SPI
     # As Service
     ####################################
     let(:user) { create(:user) }
+    let(:locked_user) { create(:user, locked_at: Time.current) }
 
     test 'service should post create guest token' do
       sign_in :service
@@ -88,6 +89,22 @@ module SPI
 
       assert_response 201
       validate_user_token user
+    end
+
+    test 'service should not post create user token for locked account' do
+      locked_user
+      sign_in :service
+
+      assert_no_difference('Doorkeeper::AccessToken.count') do
+        post spi_token_path,
+             params: {
+               password: locked_user.password,
+               scope: :user,
+               username: locked_user.shortname.shortname
+             }
+      end
+
+      validate_error Argu::Errors::AccountLocked
     end
 
     [
