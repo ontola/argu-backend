@@ -67,18 +67,17 @@ RSpec.describe "Iri's", type: :model do
     context 'Forum' do
       subject { freetown }
       let(:id) { subject.url }
+      let(:url) { container_node_url(subject) }
       it_behaves_like 'iri matches route'
     end
 
     context 'LinkedRecord' do
       subject { linked_record }
       let(:url) do
-        url_for(
-          [
-            subject.ancestor(:forum),
-            subject,
-            protocol: :http
-          ]
+        container_node_linked_record_url(
+          subject.ancestor(:forum),
+          subject,
+          protocol: :http
         )
       end
       it_behaves_like 'iri matches route'

@@ -25,6 +25,9 @@ module Argu
     }
 
     config.autoload_paths += %w[lib]
+    %i[controllers forms models policies serializers].each do |type|
+      config.autoload_paths += %W[#{config.root}/app/#{type}/container_nodes]
+    end
     config.autoload_paths += %W[#{config.root}/app/models/actions]
     config.autoload_paths += %W[#{config.root}/app/models/menus]
     config.autoload_paths += %W[#{config.root}/app/responders]
@@ -32,9 +35,7 @@ module Argu
     config.autoload_paths += Dir["#{config.root}/app/services/**/"]
     config.autoload_paths += %W[#{config.root}/app/listeners]
     config.autoload_paths += %W[#{config.root}/app/serializers/base]
-    config.autoload_paths += %W[#{config.root}/app/policies/edge_tree_policies]
-    config.autoload_paths += %W[#{config.root}/app/policies/edgeable_policies]
-    config.autoload_paths += %W[#{config.root}/app/policies/helpers]
+    config.autoload_paths += Dir["#{config.root}/app/policies/**/"]
     config.autoload_paths += Dir["#{config.root}/app/enhancements/**/"]
     Dir.glob("#{config.root}/app/enhancements/**{,/*/**}/*.rb").each { |file| require_dependency file }
 

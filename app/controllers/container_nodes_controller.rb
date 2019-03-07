@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ForumsController < EdgeableController
+class ContainerNodesController < EdgeableController # rubocop:disable Metrics/ClassLength
   prepend_before_action :redirect_generic_shortnames, only: :show
   prepend_before_action :set_layout
   skip_before_action :authorize_action, only: %i[discover index]
@@ -44,8 +44,18 @@ class ForumsController < EdgeableController
       .per(30)
   end
 
+  def controller_classes
+    ([ContainerNode] + ContainerNode.descendants)
+  end
+
   def current_forum
     resource_by_id
+  end
+
+  def default_form_view(action)
+    return action if lookup_context.exists?("container_nodes/#{action}")
+
+    super
   end
 
   def form_view_locals
@@ -63,9 +73,13 @@ class ForumsController < EdgeableController
         .includes(group: {group_memberships: {member: :profileable}})
   end
 
+  def model_name
+    controller_classes.map { |klass| klass.name.underscore }.detect { |k| params.key?(k) }
+  end
+
   def permit_params
     attrs = policy(resource_by_id || new_resource_from_params).permitted_attributes
-    pm = params.require(:forum).permit(*attrs).to_h
+    pm = params.require(model_name).permit(*attrs).to_h
     merge_photo_params(pm, @resource.class)
     pm
   end
@@ -77,7 +91,7 @@ class ForumsController < EdgeableController
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = Shortname.find_resource(params[:id], tree_root_id) || raise(ActiveRecord::RecordNotFound)
-    return if resource.is_a?(Forum)
+    return if resource.is_a?(ContainerNode)
     redirect_to resource.iri
   end
 
@@ -95,11 +109,11 @@ class ForumsController < EdgeableController
   end
 
   def signals_failure
-    super + [:"#{action_name}_ori_forum_failed"]
+    controller_classes.map { |klass| :"#{action_name}_#{klass.name.underscore}_failed" }
   end
 
   def signals_success
-    super + [:"#{action_name}_ori_forum_successful"]
+    controller_classes.map { |klass| :"#{action_name}_#{klass.name.underscore}_successful" }
   end
 
   def tab!

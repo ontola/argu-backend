@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
-class ForumMenuList < MenuList
+class ContainerNodeMenuList < MenuList
   include SettingsHelper
   include Menus::ActionMenuItems
   include Menus::FollowMenuItems
   include Menus::ShareMenuItems
+
   cattr_accessor :defined_menus
-  has_menus %i[actions follow navigations share]
+  has_menus %i[]
 
   private
 

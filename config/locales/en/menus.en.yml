@@ -22,6 +22,9 @@ en:
       questions: "Questions"
       motions: "Motions"
       settings: "Settings"
+      new_component: "+"
+      new_forum: "New forum"
+      new_open_data_portal: "New data portal"
       actions: "Menu"
       comments:
         zero: "Comments"

@@ -186,7 +186,9 @@ module Argu
           let(:class_sym) { subject.class.name.underscore.to_sym }
           let(:table_sym) { subject.class.name.tableize.to_sym }
           let(:parent_class_sym) { subject.parent.class.name.underscore.to_sym }
-          let(:parent_table_sym) { subject.parent.class.name.tableize.to_sym }
+          let(:parent_table_sym) do
+            subject.parent.is_a?(Forum) ? :container_nodes : subject.parent.class.name.tableize.to_sym
+          end
 
           # Params
           let(:required_keys) { %w[title] }

@@ -14,7 +14,7 @@ class PageSerializer < RecordSerializer
 
   enum :visibility
 
-  with_collection :forums, predicate: NS::ARGU[:forums]
+  with_collection :container_nodes, predicate: NS::ARGU[:forums]
 
   def about
     object.profile.about

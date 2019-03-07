@@ -8,11 +8,29 @@ class PageMenuList < MenuList
 
   private
 
-  def forums
-    @forums ||=
-      EdgePolicy::Scope.new(user_context, resource.forums)
+  def container_nodes
+    @container_nodes ||=
+      EdgePolicy::Scope.new(user_context, resource.container_nodes)
         .resolve
         .includes(:default_profile_photo, :shortname)
+  end
+
+  def new_container_node_item
+    menu_item(
+      :new_component,
+      policy: :create_child?,
+      policy_arguments: %i[forums],
+      menus: lambda {
+        %i[forum open_data_portal].map do |container_type|
+          menu_item(
+            :"new_#{container_type}",
+            href: new_iri(resource, container_type.to_s.pluralize),
+            policy: :create_child?,
+            policy_arguments: [container_type]
+          )
+        end
+      }
+    )
   end
 
   def navigations_menu
@@ -25,7 +43,7 @@ class PageMenuList < MenuList
             image: 'fa-th-large',
             href: resource.iri
           ),
-          *forums.map { |child| navigation_item(child) },
+          *container_nodes.map { |child| navigation_item(child) },
           *custom_menu_items(:navigations, resource),
           activity_link,
           menu_item(
@@ -33,7 +51,8 @@ class PageMenuList < MenuList
             image: 'fa-gear',
             href: settings_iri(resource),
             policy: :update?
-          )
+          ),
+          new_container_node_item
         ]
       }
     )
@@ -58,9 +77,9 @@ class PageMenuList < MenuList
         [
           setting_item(:profile, label: I18n.t('pages.settings.menu.general'), href: edit_iri(resource.profile)),
           setting_item(
-            :forums,
-            label: I18n.t('pages.settings.menu.forums'),
-            href: collection_iri(resource, :forums, display: :settingsTable)
+            :container_nodes,
+            label: I18n.t('pages.settings.menu.container_nodes'),
+            href: collection_iri(resource, :container_nodes, display: :settingsTable)
           ),
           setting_item(
             :groups,

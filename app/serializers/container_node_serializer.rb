@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ForumSerializer < EdgeSerializer
+class ContainerNodeSerializer < EdgeSerializer
   attribute :bio, predicate: NS::SCHEMA[:description]
   attribute :bio_long, predicate: NS::SCHEMA[:text]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]

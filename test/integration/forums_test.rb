@@ -371,14 +371,13 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'staff should post create forum json_api' do
     sign_in :service
 
-    assert_difference('Forum.count' => 1) do
-      post collection_iri(argu, :forums), params: {
+    assert_difference('OpenDataPortal.count' => 1) do
+      post collection_iri(argu, :open_data_portals), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
           url: 'new_forum',
-          public_grant: :participator,
-          owner_type: :ORIForum
+          public_grant: :participator
         }
       }, headers: argu_headers(accept: :json_api)
     end
@@ -470,13 +469,12 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'service should post create ori forum' do
     sign_in :service
 
-    assert_difference('ORIForum.count' => 1, 'Widget.discussions.count' => 0) do
-      post collection_iri(argu, :forums), params: {
+    assert_difference('OpenDataPortal.count' => 1, 'Widget.discussions.count' => 0) do
+      post collection_iri(argu, :open_data_portals), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
-          url: 'new_forum',
-          owner_type: 'ORIForum'
+          url: 'new_forum'
         }
       }, headers: argu_headers(accept: :json)
     end

@@ -22,6 +22,9 @@ nl:
       questions: "Vraagstukken"
       motions: "Ideeën"
       settings: "Instellingen"
+      new_component: "+"
+      new_forum: "Nieuw forum"
+      new_open_data_portal: "Nieuw dataportaal"
       actions: "Menu"
       comments:
         zero: "Reacties"

@@ -14,7 +14,7 @@ class LinkedRecord < Edge
 
   validates :deku_id, presence: true
 
-  parentable :forum
+  parentable :open_data_portal
 
   property :deku_id, :string, NS::SCHEMA[:sameAs]
 
@@ -44,7 +44,7 @@ class LinkedRecord < Edge
   end
 
   def iri_opts
-    @iri_opts ||= {forum_id: parent.url, linked_record_id: deku_id}
+    @iri_opts ||= {container_node_id: parent.url, linked_record_id: deku_id}
   end
 
   def self.new_for_forum(organization_shortname, forum_shortname, id)
@@ -52,7 +52,7 @@ class LinkedRecord < Edge
     forum =
       Page
         .find_via_shortname!(organization_shortname)
-        .forums
+        .container_nodes
         .joins(:shortname)
         .find_by(shortnames: {shortname: forum_shortname})
     raise(ActiveRecord::RecordNotFound) if forum.nil?

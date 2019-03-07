@@ -3,4 +3,4 @@
   header
     h1= t('forums.management.title')
   - @forums.each do |forum|
-    =render partial: 'forums/forum', locals: {forum: forum}
+    =render partial: 'container_nodes/forum', locals: {forum: forum}

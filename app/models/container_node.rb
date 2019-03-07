@@ -1,21 +1,17 @@
 # frozen_string_literal: true
 
-class Forum < Edge # rubocop:disable Metrics/ClassLength
-  enhance BlogPostable
+class ContainerNode < Edge
   enhance ConfirmedDestroyable
   enhance CoverPhotoable
   enhance Createable
-  enhance Discussable
   enhance Exportable
   enhance Favorable
   enhance Feedable
-  enhance Inviteable
+  enhance Followable
   enhance Menuable
-  enhance Motionable
   enhance Moveable
   enhance Placeable
   enhance ProfilePhotoable
-  enhance Questionable
   enhance Updateable
   enhance Widgetable
   enhance Actionable
@@ -27,53 +23,25 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   property :cover_photo_attribution, :string, NS::ARGU[:photoAttribution]
   property :discoverable, :boolean, NS::ARGU[:discoverable], default: true
   property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
-  property :default_decision_group_id, :boolean, NS::ARGU[:defaultDecisionGroupId]
-
-  belongs_to :default_decision_group, class_name: 'Group', foreign_key_property: :default_decision_group_id
 
   with_collection :grants
+  parentable :page
 
-  self.default_widgets = %i[new_motion new_question discussions overview]
+  after_save :reset_country
+  after_save :reset_public_grant
 
-  # @private
-  attr_writer :public_grant
   alias_attribute :description, :bio
-
   alias_attribute :name, :display_name
   alias_attribute :description, :bio
 
-  paginates_per 30
-  parentable :page
-
+  auto_strip_attributes :name, :cover_photo_attribution, squish: true
+  auto_strip_attributes :bio, nullify: false
   validates :url, presence: true, length: {minimum: 4, maximum: 75}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :bio, length: {maximum: 90}
   validates :bio_long, length: {maximum: 5000}
 
-  auto_strip_attributes :name, :cover_photo_attribution, squish: true
-  auto_strip_attributes :bio, nullify: false
-
-  before_create :set_default_decision_group
-  after_save :reset_country
-  after_save :reset_public_grant
-
-  scope :top_public_forums, lambda { |limit = 10|
-    public_forums.first(limit)
-  }
-  scope :public_forums, lambda {
-    joins(:grants)
-      .where(discoverable: true, grants: {group_id: Group::PUBLIC_ID})
-      .order('edges.follows_count DESC')
-  }
-
-  def children_count(association)
-    return super unless association == :motions
-    descendants.active.where(owner_type: 'Motion').count
-  end
-
-  def default_decision_user
-    nil
-  end
+  attr_writer :public_grant
 
   def enforce_hidden_last_name?
     url == 'youngbelegen'
@@ -83,35 +51,22 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
     {id: url}
   end
 
+  def iri_template_name
+    :container_nodes_iri
+  end
+
   def language
     locale.split('-').first.to_sym
-  end
-
-  # @return [Forum] based on the `:default_forum` {Setting}, if not present,
-  # the first Forum where {Forum#discoverable} is true and a {Grant} for the public {Group} is present
-  def self.first_public
-    if (setting = Setting.get(:default_forum))
-      forum = Edge.find_by!(uuid: setting)
-    end
-    forum || Forum.public_forums.first
-  end
-
-  def self.policy_class
-    ForumPolicy
-  end
-
-  def public_grant
-    @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.grant_set&.title&.to_sym || :none
-  end
-
-  def self.shortnameable?
-    true
   end
 
   def move_to(_new_parent)
     super do
       grants.where('group_id != ?', Group::PUBLIC_ID).destroy_all
     end
+  end
+
+  def public_grant
+    @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.grant_set&.title&.to_sym || :none
   end
 
   private
@@ -142,10 +97,15 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def set_default_decision_group
-    self.default_decision_group =
-      parent.grants.joins(:group).find_by(grant_set: GrantSet.administrator, groups: {deletable: false}).group
+  class << self
+    def iri
+      [super, NS::ARGU[:ContainerNode]]
+    end
+
+    def shortnameable?
+      true
+    end
   end
 end
 
-Dir["#{Rails.application.config.root}/app/models/forums/*.rb"].each { |file| require_dependency file }
+Dir["#{Rails.application.config.root}/app/models/container_nodes/*.rb"].each { |file| require_dependency file }

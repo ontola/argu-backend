@@ -17,6 +17,7 @@ en:
         groups: 'Groups'
         grants: 'Grants'
         forums: 'Forums'
+        container_nodes: 'Components'
         shortnames: 'Redirects'
       managers:
         owner: "Owner"

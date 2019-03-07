@@ -1,14 +1,8 @@
 # English argument translations
 
 en:
-  ori_forums:
-    type: "Open data forum"
-    plural: "Open data forums"
   forums:
     resource_name: "Forum"
-    type: "Forum"
-    type_new: "New forum"
-    plural: "Forums"
     my: "My forums"
     current: "This forum"
     back_to: "Go back to forum"

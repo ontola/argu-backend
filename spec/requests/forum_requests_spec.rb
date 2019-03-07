@@ -7,12 +7,14 @@ RSpec.describe 'Forums', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:authorized_user) { staff }
 
+  let(:index_path) { collection_iri(subject.parent, :forums).path }
   let(:create_params) { {forum: attributes_for(class_sym).merge(url: 'new_forum')} }
   let(:create_differences) { {'Forum.count' => 1} }
   let(:invalid_create_params) { {page_id: argu.url, forum: {name: 'n1'}} }
   let(:update_params) { {page_id: argu.url, forum: {name: 'name'}} }
   let(:invalid_update_params) { {page_id: argu.url, forum: {name: 'n1'}} }
   let(:destroy_params) { {forum: {confirmation_string: 'remove'}} }
+  let(:table_sym) { :container_nodes }
 
   let(:expect_post_create_failed_html) do
     expect_success

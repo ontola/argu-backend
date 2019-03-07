@@ -301,11 +301,13 @@ Rails.application.routes.draw do
     include_route_concerns
   end
 
-  resources :forums, only: %i[index new create]
-  resources :forums,
+  %i[forums open_data_portals].each do |container_node|
+    resources container_node, only: %i[index new create]
+  end
+  resources :container_nodes,
             only: %i[show],
             path: '' do
-    include_route_concerns
+    concerns ContainerNode.descendants.map(&:route_concerns).flatten.uniq
     resources :motions, path: :m, only: [] do
       get :search, to: 'motions#search', on: :collection
     end

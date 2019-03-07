@@ -25,7 +25,7 @@ class ParentableController < AuthorizedController
     return unless parent_resource_param(opts) == 'linked_record_id'
     @linked_record_parent ||=
       LinkedRecord.find_by(deku_id: opts[:linked_record_id]) ||
-      LinkedRecord.new_for_forum(tree_root.url, opts[:forum_id], opts[:linked_record_id])
+      LinkedRecord.new_for_forum(tree_root.url, opts[:container_node_id], opts[:linked_record_id])
   end
 
   def parent_resource

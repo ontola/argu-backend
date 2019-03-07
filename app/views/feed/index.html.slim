@@ -2,7 +2,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   - if authenticated_resource.parent.is_a?(Page)
     =render partial: 'profiles/show', locals: {resource: authenticated_resource.parent.profile}
   - elsif authenticated_resource.parent.is_a?(Forum)
-    =render partial: 'forums/cover', locals: {resource: authenticated_resource.parent}
+    =render partial: 'container_nodes/cover', locals: {resource: authenticated_resource.parent}
   - elsif authenticated_resource.parent.is_a?(Edge)
     .col-1
       =to_parent(authenticated_resource.parent)

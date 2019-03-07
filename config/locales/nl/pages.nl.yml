@@ -17,6 +17,7 @@ nl:
         groups: 'Groepen'
         grants: 'Rechten'
         forums: 'Forums'
+        container_nodes: 'Componenten'
         shortnames: 'Redirects'
       managers:
         owner: "Eigenaar"

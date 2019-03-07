@@ -1,0 +1,9 @@
+en:
+  forums:
+    type: "Forum"
+    type_new: "New forum"
+    plural: "Forums"
+  open_data_portals:
+    type: "Dataportal"
+    type_new: "New dataportal"
+    plural: "Dataportals"

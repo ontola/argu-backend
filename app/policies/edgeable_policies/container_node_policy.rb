@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ForumPolicy < EdgePolicy
+class ContainerNodePolicy < EdgePolicy
   class Scope < Scope
     def resolve
       scope

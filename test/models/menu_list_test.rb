@@ -80,13 +80,15 @@ class MenuListTest < ActiveSupport::TestCase
   end
 
   test 'Do not include custom menu items if other page' do
-    assert_nil(
-      other_page
-        .menu(other_page_context, :navigations)
-        .menus
-        .call
-        .compact
-        .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
-    )
+    ActsAsTenant.with_tenant(other_page) do
+      assert_nil(
+        other_page
+          .menu(other_page_context, :navigations)
+          .menus
+          .call
+          .compact
+          .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
+      )
+    end
   end
 end

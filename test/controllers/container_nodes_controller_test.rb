@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class ForumsControllerTest < ActionController::TestCase
+class ContainerNodesControllerTest < ActionController::TestCase
   define_page
   define_holland
 

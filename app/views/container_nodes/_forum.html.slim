@@ -16,7 +16,7 @@
           =link_to edit_iri(forum), class: ('btn--transparant'), data: {turbolinks: false}
           span.fa.fa-gear
           span.icon-left= t('settings')
-    =render partial: 'forums/info_bar', locals: {forum: forum}
+    =render partial: 'container_nodes/info_bar', locals: {forum: forum}
     - if forum.bio.presence
       section.section-description
         //h3= forum.display_name

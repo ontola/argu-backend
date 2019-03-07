@@ -43,7 +43,7 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   test 'should get index motions of forum' do
     ActsAsTenant.with_tenant(holland.parent) do
-      get :index, params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url}
+      get :index, params: {format: :json_api, root_id: holland.parent.url, container_node_id: holland.url}
     end
     assert_response 200
 
@@ -59,7 +59,13 @@ class MotionsControllerTest < ActionController::TestCase
   test 'should get index motions of forum page 1' do
     ActsAsTenant.with_tenant(holland.parent) do
       get :index,
-          params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url, type: 'paginated', page: 1}
+          params: {
+            format: :json_api,
+            root_id: holland.parent.url,
+            container_node_id: holland.url,
+            type: 'paginated',
+            page: 1
+          }
     end
     assert_response 200
 
