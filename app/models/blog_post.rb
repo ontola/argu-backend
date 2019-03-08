@@ -13,7 +13,7 @@ class BlogPost < Edge
   counter_cache true
   parentable :motion, :question, :container_node, :page
 
-  validates :description, presence: true, length: {minimum: 2}
+  validates :description, presence: true, length: {minimum: 2, maximum: 50_000}
   validates :display_name, presence: true, length: {minimum: 2, maximum: 110}
   validates :creator, presence: true
 end
