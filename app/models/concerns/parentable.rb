@@ -44,6 +44,10 @@ module Parentable
         relation
       end
     end
+
+    def valid_parent?(klass)
+      parent_classes.any? { |parent_klass| klass <= parent_klass.to_s.classify.constantize }
+    end
   end
 
   module Serializer

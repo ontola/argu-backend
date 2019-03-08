@@ -35,7 +35,7 @@ class Motion < Edge
   convertible questions: %i[activities media_objects], comments: %i[activities]
   counter_cache true
   paginates_per 30
-  parentable :question, :forum
+  parentable :question, :container_node
 
   validates :description, presence: true, length: {maximum: 5000}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 110}

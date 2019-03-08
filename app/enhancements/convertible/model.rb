@@ -21,7 +21,7 @@ module Convertible
         new_model.properties = properties
 
         parent = new_model.parent
-        parent = parent.parent until new_model.parent_classes.include?(parent.owner_type.underscore.to_sym)
+        parent = parent.parent until new_model.class.valid_parent?(parent.class)
         update!(parent: parent, iri_cache: nil)
 
         new_model.run_callbacks :convert do
@@ -33,7 +33,7 @@ module Convertible
       end
     end
 
-    def convert_or_destroy_children(new_model) # rubocop:disable Metrics/AbcSize
+    def convert_or_destroy_children(new_model)
       new_model.displaced_children.each do |child|
         if new_model.is_a?(Comment) && child.is_a?(Comment)
           child.parent_comment ||= new_model
@@ -41,7 +41,7 @@ module Convertible
           child.save!(validate: false)
         elsif child.is_convertible? &&
             child.convert_to?(Comment) &&
-            Comment.parent_classes.include?(class_name.singularize.to_sym)
+            Comment.valid_parent?(self.class)
           child.convert_to(Comment, validate: false)
         else
           child.destroy!
@@ -57,7 +57,7 @@ module Convertible
     # Find children that don't allow the new class as parent
     # @return [Array<Edge>]
     def displaced_children
-      children.reject { |edge| edge.parent_classes.include?(class_name.singularize.to_sym) }
+      children.reject { |edge| edge.class.valid_parent?(self.class) }
     end
 
     module ClassMethods

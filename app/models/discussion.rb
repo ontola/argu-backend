@@ -2,7 +2,7 @@
 
 class Discussion < Edge
   attr_accessor :forum, :page, :publisher
-  parentable :forum, :page
+  parentable :container_node, :page
   filterable pinned: {key: :pinned_at, values: {yes: 'NOT NULL', no: 'NULL'}}
 
   def self.default_per_page

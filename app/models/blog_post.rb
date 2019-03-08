@@ -11,7 +11,7 @@ class BlogPost < Edge
   include HasLinks
 
   counter_cache true
-  parentable :motion, :question, :forum, :page
+  parentable :motion, :question, :container_node, :page
 
   validates :description, presence: true, length: {minimum: 2}
   validates :display_name, presence: true, length: {minimum: 2, maximum: 110}

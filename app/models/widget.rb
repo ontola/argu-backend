@@ -14,7 +14,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   acts_as_list scope: :owner
 
-  parentable :page, :forum
+  parentable :page, :container_node
 
   def edgeable_record
     @edgeable_record ||= owner
