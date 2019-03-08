@@ -69,8 +69,14 @@ module Edgeable
 
       private
 
+      def initialize_defined_properties
+        return if defined_properties && method(:defined_properties).owner == singleton_class
+
+        self.defined_properties = superclass.try(:defined_properties)&.dup || []
+      end
+
       def property(name, type, predicate, default: nil, enum: nil)
-        self.defined_properties ||= []
+        initialize_defined_properties
         defined_properties << {name: name, type: type, predicate: predicate, default: default, enum: enum}
 
         attribute name, property_type(type), default: default
