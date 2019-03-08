@@ -99,8 +99,10 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
     params.permit(:page)
   end
 
-  def show_success_html
-    if (/[a-zA-Z]/i =~ params[:id]).nil?
+  def show_success_html # rubocop:disable Metrics/AbcSize
+    if resource.is_a?(Blog)
+      redirect_to collection_iri(resource, :blog_posts)
+    elsif (/[a-zA-Z]/i =~ params[:id]).nil?
       redirect_to resource.iri, status: 307
     else
       @children = collect_children(authenticated_resource)

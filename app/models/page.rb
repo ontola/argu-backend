@@ -43,6 +43,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   after_create :create_staff_grant
 
   with_collection :container_nodes
+  with_collection :blogs
   with_collection :forums
   with_collection :open_data_portals
   with_collection :groups

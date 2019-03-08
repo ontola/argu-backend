@@ -9,7 +9,7 @@ module BlogPostable
 
       def route_concerns(mapper)
         mapper.concern :blog_postable do
-          mapper.resources :blog_posts, only: %i[index new create], path: 'blog' do
+          mapper.resources :blog_posts, only: %i[index new create], path: 'posts' do
             mapper.collection do
               mapper.resources :action_items, path: 'actions', only: %i[index show], collection: :blog_posts
             end

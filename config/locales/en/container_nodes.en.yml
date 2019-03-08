@@ -1,4 +1,8 @@
 en:
+  blogs:
+    type: "Blog"
+    type_new: "New blog"
+    plural: "Blogs"
   forums:
     type: "Forum"
     type_new: "New forum"

@@ -10,7 +10,9 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :primary_resource, class_name: 'Edge', primary_key: :uuid
   belongs_to :permitted_action
 
-  enum widget_type: {custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5}
+  enum widget_type: {
+    custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5, blog_posts: 6
+  }
 
   acts_as_list scope: :owner
 
@@ -56,6 +58,18 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
+    def create_blog_posts(owner)
+      blog_posts_iri = collection_iri(owner, :blog_posts, type: :infinite)
+      discussions
+        .create(
+          owner: owner,
+          permitted_action: PermittedAction.find_by!(title: 'blog_post_show'),
+          primary_resource: owner,
+          resource_iri: [[blog_posts_iri, nil]],
+          size: 3
+        )
+    end
+
     def create_discussions(owner)
       discussions_iri = collection_iri(owner, :discussions, display: :grid, type: :infinite)
       discussions

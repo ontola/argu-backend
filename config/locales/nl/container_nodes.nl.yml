@@ -1,4 +1,8 @@
 nl:
+  blogs:
+    type: "Blog"
+    type_new: "Nieuw blog"
+    plural: "Blogs"
   forums:
     type: "Forum"
     type_new: "Nieuw forum"

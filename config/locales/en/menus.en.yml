@@ -25,6 +25,7 @@ en:
       new_component: "+"
       new_forum: "New forum"
       new_open_data_portal: "New data portal"
+      new_blog: "New blog"
       actions: "Menu"
       comments:
         zero: "Comments"
