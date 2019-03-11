@@ -24,7 +24,7 @@ module ChildHelper
       {group: parent}
     when 'Group'
       {page: parent}
-    when 'MediaObject'
+    when 'MediaObject', 'ImageObject'
       {about: parent}
     when 'Decision'
       {state: 'forwarded', parent: parent}

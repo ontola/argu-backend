@@ -8,7 +8,7 @@ module ProfilePhotoable
       has_one :default_profile_photo,
               -> { where(used_as: MediaObject.used_as[:profile_photo]) },
               as: :about,
-              class_name: 'MediaObject',
+              class_name: 'ImageObject',
               dependent: :destroy,
               inverse_of: :about,
               required: true,

@@ -10,7 +10,7 @@ module CoverPhotoable
               as: :about,
               dependent: :destroy,
               inverse_of: :about,
-              class_name: 'MediaObject',
+              class_name: 'ImageObject',
               primary_key: :uuid
 
       accepts_nested_attributes_for :default_cover_photo,
