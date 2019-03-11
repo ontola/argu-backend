@@ -9,7 +9,7 @@ class PlacementPolicy < RestrictivePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[postal_code country_code id]
+    attributes.concat %i[lat lon id]
     attributes
   end
 

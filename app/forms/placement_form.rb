@@ -2,7 +2,7 @@
 
 class PlacementForm < RailsLD::Form
   fields %i[
-    postal_code
-    country_code
+    lat
+    lon
   ]
 end

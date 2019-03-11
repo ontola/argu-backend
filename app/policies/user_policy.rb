@@ -12,10 +12,7 @@ class UserPolicy < RestrictivePolicy
     attrs = super()
     attrs.concat %i[password password_confirmation primary_email current_password]
     attrs.append(profile_attributes: %i[name profile_photo])
-    attrs.append(
-      home_placement_attributes:
-        PlacementPolicy.new(context, record.home_placement || Placement.new(placeable: record)).permitted_attributes
-    )
+    attrs.append(home_placement_attributes: home_placement_attributes)
     attrs.append(email_addresses_attributes: %i[email _destroy id])
     attrs.append(:url, shortname_attributes: %i[shortname]) if record.url.nil?
     attrs.concat %i[first_name middle_name last_name hide_last_name]
@@ -86,5 +83,11 @@ class UserPolicy < RestrictivePolicy
 
   def current_user?
     record.id == user.id
+  end
+
+  private
+
+  def home_placement_attributes
+    HomePlacementPolicy.new(context, record.home_placement || HomePlacement.new(placeable: record)).permitted_attributes
   end
 end

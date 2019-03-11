@@ -36,7 +36,7 @@ module ChildHelper
       {publishable: parent}
     when 'Comment'
       parent.is_a?(Comment) ? {parent: parent.parent} : {parent: parent}
-    when 'Placement'
+    when 'Placement', 'HomePlacement'
       {placeable: parent}
     when 'Widget'
       {owner: parent}

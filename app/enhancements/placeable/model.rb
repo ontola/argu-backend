@@ -20,7 +20,6 @@ module Placeable
               primary_key: :uuid
       has_one :home_placement,
               -> { home },
-              class_name: 'Placement',
               as: :placeable,
               inverse_of: :placeable,
               primary_key: :uuid
