@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class NotificationListener
+  def create_activity_failed(activity)
+    raise "Creating #{activity.key} activity for #{activity.trackable_edge_id} failed: #{activity.errors.full_messages}"
+  end
+
   def create_activity_successful(activity)
     create_notifications_for(activity) if create_notifications_for_activity?(activity)
   end
