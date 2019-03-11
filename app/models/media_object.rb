@@ -47,6 +47,10 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     collection.update_all(publisher_id: User::COMMUNITY_ID)
   end
 
+  def allowed_content_types
+    content.content_type_white_list
+  end
+
   def content_type
     content&.content_type
   rescue Aws::S3::Errors::NotFound

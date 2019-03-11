@@ -5,7 +5,9 @@ class MediaObjectSerializer < RecordSerializer
 
   attribute :url, predicate: NS::SCHEMA[:url]
   attribute :content, predicate: NS::SCHEMA[:contentUrl]
-  attribute :content_type, predicate: NS::SCHEMA[:encodingFormat]
+  attribute :content_type,
+            predicate: NS::SCHEMA[:encodingFormat],
+            datatype: NS::XSD[:string]
   attribute :created_at, predicate: NS::SCHEMA[:uploadDate]
   attribute :description, predicate: NS::SCHEMA[:caption]
   attribute :embed_url, predicate: NS::SCHEMA[:embedUrl]
