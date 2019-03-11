@@ -27,7 +27,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   delegate :file, :icon, :avatar, :is_image?, to: :content
 
-  store_accessor :content_attributes
+  store_accessor :content_attributes, :position_y
 
   before_save :set_file_name
   before_save :set_publisher_and_creator
@@ -58,10 +58,6 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def parent
     about
-  end
-
-  def position_y
-    content_attributes.try(:[], 'position_y')
   end
 
   def remote_content_url=(url)

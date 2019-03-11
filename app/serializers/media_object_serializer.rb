@@ -11,7 +11,9 @@ class MediaObjectSerializer < RecordSerializer
   attribute :embed_url, predicate: NS::SCHEMA[:embedUrl]
   attribute :filename, predicate: NS::DBO[:filename]
   attribute :thumbnail, predicate: NS::SCHEMA[:thumbnail]
-  attribute :position_y, predicate: NS::ARGU[:imagePositionY]
+  attribute :position_y,
+            predicate: NS::ARGU[:imagePositionY],
+            datatype: NS::XSD[:integer]
   attribute :used_as
 
   MediaObjectUploader::VERSIONS.each do |format, opts|
