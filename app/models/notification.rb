@@ -32,7 +32,7 @@ class Notification < ApplicationRecord
     user.try :sync_notification_count
   end
 
-  def title # rubocop:disable Metrics/AbcSize
+  def display_name # rubocop:disable Metrics/AbcSize
     if activity.present?
       activity_string_for(activity, user)
     elsif confirmation_reminder?
@@ -41,10 +41,9 @@ class Notification < ApplicationRecord
     elsif finish_intro?
       t('notifications.permanent.finish_intro')
     else
-      super
+      title
     end
   end
-  alias display_name title
 
   def url_object
     href = activity.present? ? activity.trackable.iri : url

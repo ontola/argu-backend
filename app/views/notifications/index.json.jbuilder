@@ -6,7 +6,7 @@ json.notifications do
   json.from_time @from_time
   json.notifications @notifications do |notification|
     json.id notification.id
-    json.title notification.title
+    json.display_name notification.display_name
     json.created_at notification.created_at
     json.url url_for(notification.url_object.to_s)
     json.permanent notification.permanent

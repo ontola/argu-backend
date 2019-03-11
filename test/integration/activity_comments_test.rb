@@ -19,7 +19,7 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
       delete motion
     end
     assert_nil Activity.last.comment
-    assert_equal Notification.last.title, "#{administrator.display_name} trashed #{motion.display_name}"
+    assert_equal Notification.last.display_name, "#{administrator.display_name} trashed #{motion.display_name}"
   end
 
   test 'administrator should trash with comment' do
@@ -32,7 +32,7 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
 
     comment = motion.activities.last.comment
     assert_equal comment, 'Reason for trashing'
-    assert_equal Notification.last.title, "#{administrator.display_name} trashed #{motion.display_name}"
+    assert_equal Notification.last.display_name, "#{administrator.display_name} trashed #{motion.display_name}"
   end
 
   test 'administrator should trash with comment as page' do
@@ -46,6 +46,6 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
 
     comment = motion.activities.last.comment
     assert_equal comment, 'Reason for trashing'
-    assert_equal Notification.last.title, "#{argu.display_name} trashed #{motion.display_name}"
+    assert_equal Notification.last.display_name, "#{argu.display_name} trashed #{motion.display_name}"
   end
 end

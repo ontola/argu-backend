@@ -22,7 +22,7 @@ export const NotificationItem = React.createClass({
         id: React.PropTypes.number,
         image: React.PropTypes.object,
         read: React.PropTypes.bool,
-        title: React.PropTypes.string,
+        display_name: React.PropTypes.string,
         type: React.PropTypes.string,
         url: React.PropTypes.string
     },
@@ -57,7 +57,7 @@ export const NotificationItem = React.createClass({
         return (<li className={`notification-item ${className}`}>
             <a href={this.props.url} data-remote={remote} data-method={method} onClick={this.handleClick} data-turbolinks={turbolinks}>
                 <img src={this.props.creator.avatar.url} className="notification-avatar" />
-                <span className='notification-description'>{this.props.title}</span>
+                <span className='notification-description'>{this.props.display_name}</span>
                 <div className='notification-bottom'>
                     <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.created_at}</span>
                     {image(this.props)}
