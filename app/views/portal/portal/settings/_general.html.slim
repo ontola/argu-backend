@@ -35,7 +35,7 @@ h2= t('portal.pages')
           td= l f.created_at, format: :short
           /td= l f.updated_at, format: :short
           td= f.forums.length
-          td= link_to new_portal_forum_path(page: f) do
+          td= link_to new_iri(f, :forums) do
             span.fa.fa-plus
             span.icon-left= t('forums.type_new')
           td= link_to settings_iri(f) do

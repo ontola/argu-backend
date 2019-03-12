@@ -18,7 +18,7 @@ h3= t('forums.plural')
         td
           =forum.granted_groups.count
 - if policy(resource).create_child?(:forums)
-  =link_to new_portal_forum_path(page: resource), class: 'btn margin-bottom', data: {turbolinks: false} do
+  =link_to new_iri(resource, :forums), class: 'btn margin-bottom', data: {turbolinks: false} do
       span.fa.fa-plus
       span.icon-left= t('forums.type_new')
 - else
