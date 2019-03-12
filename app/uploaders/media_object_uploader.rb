@@ -59,17 +59,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   end
 
   def content_type_white_list
-    case model.used_as.to_sym
-    when :attachment
-      MediaObjectUploader::ARCHIVE_TYPES +
-        MediaObjectUploader::DOCUMENT_TYPES +
-        MediaObjectUploader::IMAGE_TYPES +
-        MediaObjectUploader::PORTABLE_DOCUMENT_TYPES +
-        MediaObjectUploader::PRESENTATION_TYPES +
-        MediaObjectUploader::SPREADSHEET_TYPES
-    else
-      MediaObjectUploader::IMAGE_TYPES
-    end
+    model.class.content_type_white_list
   end
 
   def cover_photo?(_file = nil)

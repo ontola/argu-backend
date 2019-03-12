@@ -9,5 +9,9 @@ class ImageObject < MediaObject
     def iri
       NS::SCHEMA[:ImageObject]
     end
+
+    def content_type_white_list
+      MediaObjectUploader::IMAGE_TYPES
+    end
   end
 end

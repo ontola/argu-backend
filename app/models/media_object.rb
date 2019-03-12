@@ -135,4 +135,15 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return unless remote_url.present? && VideoInfo.usable?(remote_url)
     @video_info ||= VideoInfo.new(remote_url)
   end
+
+  class << self
+    def content_type_white_list
+      MediaObjectUploader::ARCHIVE_TYPES +
+        MediaObjectUploader::DOCUMENT_TYPES +
+        MediaObjectUploader::IMAGE_TYPES +
+        MediaObjectUploader::PORTABLE_DOCUMENT_TYPES +
+        MediaObjectUploader::PRESENTATION_TYPES +
+        MediaObjectUploader::SPREADSHEET_TYPES
+    end
+  end
 end
