@@ -4,6 +4,16 @@ class ApplicationForm < RailsLD::Form
   class << self
     private
 
+    def actor_selector
+      {
+        custom: true,
+        datatype: NS::XSD[:string],
+        default_value: ->(resource) { resource.form.user_context.user.iri },
+        max_count: 1,
+        sh_in: ->(resource) { actors_iri(resource.form.target.root) }
+      }
+    end
+
     def mark_as_important_label(resource)
       I18n.t(
         'publications.follow_type.helper',
