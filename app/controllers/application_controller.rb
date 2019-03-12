@@ -79,6 +79,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   end
 
   def redirect_to(*args)
+    args[0] = args[0].iri if args[0].respond_to?(:iri)
     args[0] = args[0].to_s if args[0].is_a?(RDF::URI)
     args[0] = path_with_hostname(args[0]) if args[0].is_a?(String) && args[0].starts_with?('/')
     super
