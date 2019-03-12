@@ -4,7 +4,7 @@
     h1= resource.display_name
   .box
     section
-      =semantic_form_for resource, url: resource, multipart: true, remote: false, authenticity_token: true do |f|
+      =semantic_form_for resource, url: collection_iri(resource.parent, :forums).to_s, multipart: true, remote: false, authenticity_token: true do |f|
         - resource.errors.full_messages.each do |message|
           =message
         =f.inputs name: t('forums.settings.title') do

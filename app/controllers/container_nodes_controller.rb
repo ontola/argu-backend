@@ -69,7 +69,7 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
     @forum_grants ||=
       Grant
         .custom
-        .where(edge_id: [resource_by_id.uuid, resource_by_id.parent.uuid])
+        .where(edge_id: [authenticated_resource.uuid, authenticated_resource.parent.uuid])
         .includes(group: {group_memberships: {member: :profileable}})
   end
 
