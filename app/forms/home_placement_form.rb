@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class HomePlacementForm < RailsLD::Form
+class HomePlacementForm < ApplicationForm
   fields %i[
     postal_code
     country_code

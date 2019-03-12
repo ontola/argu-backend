@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DirectMessageForm < RailsLD::Form
+class DirectMessageForm < ApplicationForm
   fields [
     {email: {sh_in: ->(r) { r.form.user_context.user.email_addresses }}},
     :subject,

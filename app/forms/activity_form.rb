@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActivityForm < RailsLD::Form
+class ActivityForm < ApplicationForm
   fields %i[
     comment
   ]

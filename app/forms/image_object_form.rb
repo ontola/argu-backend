@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ImageObjectForm < RailsLD::Form
+class ImageObjectForm < ApplicationForm
   fields %i[
     content
     position_y

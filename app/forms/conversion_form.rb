@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class ConversionForm < RailsLD::Form
+class ConversionForm < ApplicationForm
   field :klass
 end

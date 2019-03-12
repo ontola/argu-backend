@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PublicationForm < RailsLD::Form
+class PublicationForm < ApplicationForm
   fields %i[
     draft
   ]

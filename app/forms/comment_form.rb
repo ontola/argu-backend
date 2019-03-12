@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CommentForm < RailsLD::Form
+class CommentForm < ApplicationForm
   fields %i[
     display_name
     description

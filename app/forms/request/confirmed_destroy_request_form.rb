@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Request
-  class ConfirmedDestroyRequestForm < RailsLD::Form
+  class ConfirmedDestroyRequestForm < ApplicationForm
     fields %i[
       confirmation_string
     ]

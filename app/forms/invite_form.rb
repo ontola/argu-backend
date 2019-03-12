@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InviteForm < RailsLD::Form
+class InviteForm < ApplicationForm
   include RegexHelper
 
   fields(

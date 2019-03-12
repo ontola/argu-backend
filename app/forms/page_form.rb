@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PageForm < RailsLD::Form
+class PageForm < ApplicationForm
   fields %i[
     visibility
     url

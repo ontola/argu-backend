@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class UnlockForm < RailsLD::Form
+  class UnlockForm < ApplicationForm
     fields %i[email]
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OpinionForm < RailsLD::Form
+class OpinionForm < ApplicationForm
   fields [
     {description: {description: I18n.t('opinions.form.placeholder')}},
     :hidden

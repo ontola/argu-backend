@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MotionForm < RailsLD::Form
+class MotionForm < ApplicationForm
   fields [
     :display_name,
     :description,
@@ -26,16 +26,4 @@ class MotionForm < RailsLD::Form
                  properties: [
                    creator: actor_selector
                  ]
-
-  class << self
-    private
-
-    def mark_as_important_label(resource)
-      I18n.t(
-        'publications.follow_type.helper',
-        news_audience: resource.parent.potential_audience(:news),
-        reactions_audience: resource.parent.potential_audience(:reactions)
-      )
-    end
-  end
 end

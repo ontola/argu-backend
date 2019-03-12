@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class SetupForm < RailsLD::Form
+  class SetupForm < ApplicationForm
     extend UsersHelper
 
     fields [

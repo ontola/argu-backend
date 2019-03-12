@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-class QuestionForm < RailsLD::Form
-  fields %i[
-    display_name
-    description
-    default_cover_photo
-    mark_as_important
-    attachments
-    custom_placement
-    advanced
-    footer
+class QuestionForm < ApplicationForm
+  fields [
+    :display_name,
+    :description,
+    :default_cover_photo,
+    {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
+    :attachments,
+    :custom_placement,
+    :advanced,
+    :footer
   ]
 
   property_group :advanced,

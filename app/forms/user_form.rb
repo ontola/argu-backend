@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserForm < RailsLD::Form
+class UserForm < ApplicationForm
   fields %i[
     first_name
     last_name

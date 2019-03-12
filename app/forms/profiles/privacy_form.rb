@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Profiles
-  class PrivacyForm < RailsLD::Form
+  class PrivacyForm < ApplicationForm
     fields %i[
       are_votes_public
       is_public

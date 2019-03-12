@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class PrivacyForm < RailsLD::Form
+  class PrivacyForm < ApplicationForm
     fields %i[
       has_analytics
     ]

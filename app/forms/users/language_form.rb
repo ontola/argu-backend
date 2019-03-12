@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class LanguageForm < RailsLD::Form
+  class LanguageForm < ApplicationForm
     fields %i[language]
   end
 end

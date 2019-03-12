@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class NotificationsForm < RailsLD::Form
+  class NotificationsForm < ApplicationForm
     fields %i[
       reactions_email
       news_email

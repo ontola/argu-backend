@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class BlogPostForm < RailsLD::Form
-  fields %i[
-    display_name
-    description
-    mark_as_important
-    attachments
-    advanced
-    footer
+class BlogPostForm < ApplicationForm
+  fields [
+    :display_name,
+    :description,
+    {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
+    :attachments,
+    :advanced,
+    :footer
   ]
 
   property_group :advanced,

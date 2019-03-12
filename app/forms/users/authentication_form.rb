@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class AuthenticationForm < RailsLD::Form
+  class AuthenticationForm < ApplicationForm
     fields %i[
       url
       password

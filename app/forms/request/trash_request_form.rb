@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Request
-  class TrashRequestForm < RailsLD::Form
+  class TrashRequestForm < ApplicationForm
     fields %i[
       trash_activity
     ]

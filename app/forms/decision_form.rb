@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DecisionForm < RailsLD::Form
+class DecisionForm < ApplicationForm
   fields [
     {
       state: {

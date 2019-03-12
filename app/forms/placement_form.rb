@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PlacementForm < RailsLD::Form
+class PlacementForm < ApplicationForm
   fields %i[
     lat
     lon

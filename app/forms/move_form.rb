@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MoveForm < RailsLD::Form
+class MoveForm < ApplicationForm
   field :new_parent_id,
         max_count: 1,
         sh_in: ->(resource) { move_options(resource.form.target.edge) }
