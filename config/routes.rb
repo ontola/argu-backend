@@ -284,6 +284,8 @@ Rails.application.routes.draw do
             only: %i[show] do
     include_route_concerns
   end
+  resources :placements, only: :show
+  resources :publications, only: :show
   resources :profiles, only: %i[index update show edit] do
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post :index, action: :index, on: :collection
