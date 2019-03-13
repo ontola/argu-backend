@@ -2,6 +2,6 @@
 
 class HomePlacementPolicy < PlacementPolicy
   def permitted_attribute_names
-    %i[postal_code country_code id]
+    %i[postal_code country_code id _destroy]
   end
 end

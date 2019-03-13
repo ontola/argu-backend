@@ -37,7 +37,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
            foreign_key: 'publisher_id',
            dependent: :restrict_with_exception
   accepts_nested_attributes_for :profile, update_only: true
-  accepts_nested_attributes_for :home_placement, reject_if: :all_blank
+  accepts_nested_attributes_for :home_placement, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
 
   # Include default devise modules. Others available are:
