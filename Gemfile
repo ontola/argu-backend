@@ -146,7 +146,7 @@ group :test do
   gem 'wisper-rspec', require: false
   gem 'fakeredis', '~> 0.6.0', require: false
   gem 'simplecov', require: false
-  gem 'webmock', '~> 2.3.2'
+  gem 'webmock'
   gem 'rails-controller-testing'
   gem 'rack-test'
 end
