@@ -12,7 +12,7 @@ gem 'bunny', '~> 2.6.1'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.6'
 gem 'sass', '= 3.4.18'
-gem 'rails', '~>5.2.1.1'
+gem 'rails', '~>5.2.2.1'
 gem 'active_model_serializers', '~> 0.10.7'
 
 gem 'simple_text', '~> 0.0.23'
@@ -144,7 +144,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'license_finder'
   gem 'database_cleaner'
-  gem 'bundler-audit', '~> 0.5.0'
+  gem 'bundler-audit', '~> 0.6.1'
   gem 'wisper-minitest', '~> 0.0.3', require: false
   gem 'wisper-rspec', require: false
   gem 'fakeredis', '~> 0.6.0', require: false
