@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org/'
-ruby '2.4.1'
-ruby = '2.4.1'
+ruby '2.6.1'
+ruby = '2.6.1'
 
 gem 'active_response', git: 'https://github.com/ontola/active_response', branch: :master
 gem 'acts_as_tenant', git: 'https://github.com/ArthurWD/acts_as_tenant', branch: :master
@@ -51,9 +51,6 @@ gem 'rack-cors', '~> 0.4.1', require: 'rack/cors'
 gem 'formtastic', '~> 3.1.4'
 gem 'redis', '~> 3.3.5'
 gem 'rest-client'
-gem 'multimap',
-    git: 'https://github.com/apalmblad/multimap.git',
-    ref: '96eeacc1606ea7f008ce0a50641c31a2c844fd9e'
 gem 'squirm_rails', require: 'squirm/rails'
 gem 'ltree_hierarchy'
 

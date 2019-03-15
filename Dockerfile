@@ -1,4 +1,4 @@
-FROM fletcher91/ruby-vips-qt-unicorn:2.4.1
+FROM fletcher91/ruby-vips-qt-unicorn:2.6.1
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update && apt-get install -y nodejs

@@ -3,7 +3,6 @@
 nl:
 #Application
   name: "Argu"
-  name_phonetic: "\\\'är-(ˌ)gyü\\"
   language: "Nederlands"
   set_language: "Taal instellen"
   language_language: "Taal"
