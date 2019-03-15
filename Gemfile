@@ -91,7 +91,7 @@ gem 'carrierwave_backgrounder', '~> 0.4.1'
 gem 'carrierwave-vips', '~> 1.0.5'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'
-gem 'carrierwave-aws', '~> 1.1.0'
+gem 'carrierwave-aws', '~> 1.3.0'
 gem 'image_optim', '~> 0.25.0'
 gem 'image_optim_pack', '~> 0.5.0'
 gem 'image_optim_rails', '~> 0.4.1'
