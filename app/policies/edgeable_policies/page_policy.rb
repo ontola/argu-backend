@@ -27,7 +27,7 @@ class PagePolicy < EdgePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i[profile forums groups advanced shortnames]
+    tabs.concat %i[profile container_nodes groups advanced shortnames]
     tabs
   end
 
