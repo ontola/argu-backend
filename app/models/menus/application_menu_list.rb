@@ -139,40 +139,66 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
               image: 'fa-sign-out')
   end
 
-  def user_links # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    items =
-      if resource.url.present?
-        [
-          menu_item(
-            :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_url(user), image: 'fa-user'
-          ),
-          menu_item(
-            :profile, label: I18n.t('profiles.edit.title'), href: edit_profile_link, image: 'fa-pencil'
-          )
-        ]
-      else
-        [menu_item(:setup, label: I18n.t('profiles.setup.link'), href: setup_users_url, image: 'fa-user')]
-      end
-    items << menu_item(
+  def user_base_items
+    if resource.url.present?
+      [
+        menu_item(
+          :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_url(user), image: 'fa-user'
+        ),
+        menu_item(
+          :profile, label: I18n.t('profiles.edit.title'), href: edit_profile_link, image: 'fa-pencil'
+        )
+      ]
+    else
+      [menu_item(:setup, label: I18n.t('profiles.setup.link'), href: setup_users_url, image: 'fa-user')]
+    end
+  end
+
+  def user_drafts_item
+    menu_item(
+      :drafts, label: I18n.t('users.drafts.title'), href: drafts_user_url(resource), image: 'fa-pencil-square-o'
+    )
+  end
+
+  def user_forum_management_item
+    menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource), image: 'fa-group')
+  end
+
+  def user_links # rubocop:disable Metrics/AbcSize
+    items = user_base_items
+    items << user_settings_item
+    items << user_drafts_item
+    items << user_page_management_item
+    items << user_forum_management_item if !user_context.vnext && resource.forum_management?
+    items << user_notifications_item
+    items << sign_out_menu_item
+    items
+  end
+
+  def user_notifications_item
+    unread_count = user.notifications.where(read_at: nil).count
+    menu_item(
+      :notifications,
+      label: "#{I18n.t('users.settings.menu.notifications')}#{unread_count.positive? ? " (#{unread_count})" : ''}",
+      href: collection_iri(nil, :notifications),
+      image: 'fa-bell'
+    )
+  end
+
+  def user_page_management_item
+    if resource.page_management?
+      menu_item(:pages, label: I18n.t('pages.management.title'), href: pages_user_url(resource), image: 'fa-building')
+    else
+      menu_item(:create_page, label: I18n.t('pages.create'), href: new_page_url, image: 'fa-building')
+    end
+  end
+
+  def user_settings_item
+    menu_item(
       :settings,
       label: I18n.t('users.settings.title'),
       href: settings_user_users_url,
       image: 'fa-gear'
     )
-    items << menu_item(
-      :drafts, label: I18n.t('users.drafts.title'), href: drafts_user_url(resource), image: 'fa-pencil-square-o'
-    )
-    items <<
-      if resource.page_management?
-        menu_item(:pages, label: I18n.t('pages.management.title'), href: pages_user_url(resource), image: 'fa-building')
-      else
-        menu_item(:create_page, label: I18n.t('pages.create'), href: new_page_url, image: 'fa-building')
-      end
-    if !user_context.vnext && resource.forum_management?
-      items <<
-        menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource), image: 'fa-group')
-    end
-    items << sign_out_menu_item
-    items
   end
 end
