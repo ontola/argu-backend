@@ -40,6 +40,7 @@ class ContainerNode < Edge
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :bio, length: {maximum: 90}
   validates :bio_long, length: {maximum: 5000}
+  validates :public_grant, presence: true
 
   attr_writer :public_grant
 
