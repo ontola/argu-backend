@@ -24,13 +24,17 @@ RSpec.feature 'Signup', type: :feature do
     click_link motion.title
     expect(page).to have_content(motion.content)
 
-    click_link 'Other'
+    assert_difference 'Argu::Redis.keys("temporary*").count', 1 do
+      click_link 'Other'
+      expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
+    end
 
-    assert_difference 'User.count' => 1, 'Vote.count' => 1, 'Favorite.count' => 1 do
+    assert_difference 'User.count' => 1, 'Favorite.count' => 1, 'Vote.count' => 1 do
       Sidekiq::Testing.inline! do
         within('.opinion-form') do
           click_link 'Log in with Facebook'
         end
+        expect(page).to have_content 'Succesfully connected to a Facebook account'
         expect(page).to have_current_path resource_iri(motion).path
         expect(page).to have_content motion.title
         expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
