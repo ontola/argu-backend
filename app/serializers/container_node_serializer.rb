@@ -12,7 +12,7 @@ class ContainerNodeSerializer < EdgeSerializer
        type: GrantSet.iri,
        options: Hash[
          [:none].concat(GrantSet::SELECTABLE_TITLES).map do |title|
-           [title.to_sym, {iri: NS::ARGU["grantSet#{title}"], label: I18n.t("roles.types.#{title}")}]
+           [title.to_sym, {iri: NS::ARGU["grantSet#{title}"], label: -> { I18n.t("roles.types.#{title}").capitalize }}]
          end
        ]
 end

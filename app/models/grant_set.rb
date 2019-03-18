@@ -11,8 +11,6 @@ class GrantSet < ApplicationRecord
   validates :page, presence: true
   validates :title, uniqueness: {scope: :root_id}
 
-  alias_attribute :display_name, :title
-
   scope :selectable, -> { where(title: SELECTABLE_TITLES) }
 
   RESERVED_TITLES.each do |title|
@@ -28,6 +26,10 @@ class GrantSet < ApplicationRecord
     end
     cloned.save!
     cloned
+  end
+
+  def display_name
+    I18n.t("roles.types.#{title}").capitalize
   end
 
   def self.for_one_action(resource_type, action)
