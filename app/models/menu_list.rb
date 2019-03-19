@@ -22,7 +22,7 @@ class MenuList
         "custom_#{menu_item.id}",
         label: menu_item.label,
         image: menu_item.image,
-        href: menu_item.href,
+        href: RDF::URI(menu_item.href),
         policy: menu_item.policy
       )
     end
