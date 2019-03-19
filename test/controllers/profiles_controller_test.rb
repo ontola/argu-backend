@@ -61,7 +61,7 @@ class ProfilesControllerTest < ActionController::TestCase
 
     get :edit, params: {id: user.url}
 
-    assert_redirected_to "#{settings_iri('/u')}?tab=profile"
+    assert_redirected_to settings_iri('/u', tab: :profile)
   end
 
   test 'user should not get edit profile with other profile' do

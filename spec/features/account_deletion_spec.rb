@@ -43,6 +43,7 @@ RSpec.feature 'Account deletion', type: :feature do
 
     sign_in_manually(user)
     ActsAsTenant.with_tenant(argu) do
+      RequestStore.store[:old_frontend] = true
       visit settings_iri('/u', tab: :advanced)
     end
     click_link 'Delete Argu account'
@@ -65,6 +66,7 @@ RSpec.feature 'Account deletion', type: :feature do
   scenario 'administrator should not delete destroy' do
     sign_in(create_administrator(freetown))
     ActsAsTenant.with_tenant(argu) do
+      RequestStore.store[:old_frontend] = true
       visit settings_iri('/u', tab: :advanced)
     end
     click_link 'Delete Argu account'

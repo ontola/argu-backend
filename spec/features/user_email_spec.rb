@@ -17,6 +17,7 @@ RSpec.feature 'User email' do
       email: new_email
     )
 
+    RequestStore.store[:old_frontend] = true
     visit settings_iri('/u', tab: :authentication)
     expect(page).to have_content('Email confirmed')
     expect(page).not_to have_link('Send confirmation mail')

@@ -21,6 +21,7 @@ RSpec.feature 'Shortname', type: :feature do
   private
 
   def general_create(_response = 200) # rubocop:disable Metrics/AbcSize
+    RequestStore.store[:old_frontend] = true
     motion
     visit settings_iri(argu, tab: 'shortnames')
 
@@ -41,6 +42,7 @@ RSpec.feature 'Shortname', type: :feature do
 
   def general_destroy(_response = 200) # rubocop:disable Metrics/AbcSize
     expect do
+      RequestStore.store[:old_frontend] = true
       visit settings_iri(argu, tab: 'shortnames')
       page.accept_alert do
         click_link 'Delete'
