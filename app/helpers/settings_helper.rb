@@ -25,10 +25,6 @@ module SettingsHelper
     }
   end
 
-  def group_redirect_url(group)
-    settings_iri(group, tab: :members)
-  end
-
   def render_settings_items_for(resource, active)
     content_tag :ul, class: 'tabs tabs--vertical' do
       policy(resource).permitted_tabs.each do |tab|
