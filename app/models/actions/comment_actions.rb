@@ -14,8 +14,9 @@ module Actions
       collection: true,
       url: -> { collection_iri(resource.parent, :comments) },
       condition: lambda {
-        resource.parent.ancestor(:motion)&.vote_for(user_context.user)&.present? &&
-          resource.parent.ancestor(:motion).opinion_for(user_context.user).blank?
+        resource.parent.is_a?(Motion) &&
+          resource.parent.vote_for(user_context.user)&.present? &&
+          resource.parent.opinion_for(user_context.user).blank?
       }
     )
   end
