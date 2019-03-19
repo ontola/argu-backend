@@ -12,6 +12,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   mount_uploader :content, MediaObjectUploader, mount_on: :content_uid
 
   attribute :content, FileType.new
+  validates :url, presence: true
 
   validates_integrity_of :content
   validates_processing_of :content

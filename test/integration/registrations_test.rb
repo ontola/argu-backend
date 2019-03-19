@@ -388,8 +388,12 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test 'user should delete destroy with placement, uploaded_photo and expired group_membership' do
     placement = user.build_home_placement(creator: user.profile, publisher: user, place: place)
     placement.save
-    photo = motion.build_default_cover_photo(creator: user.profile, publisher: user)
-    photo.save
+    photo = motion.build_default_cover_photo(
+      creator: user.profile,
+      publisher: user,
+      content: Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'profile_photo.png'))
+    )
+    photo.save!
     create(
       :group_membership,
       parent: create(:group, parent: argu),
