@@ -8,19 +8,19 @@
         .cover-overlay
       - if !current_user.has_favorite?(forum) && tree_root && policy(forum).create_child?(:favorites)
         .sticky--top-left
-          =link_to collection_iri(forum, :favorites), data: {remote: true, method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
-          span.fa.fa-plus
-          span.icon-left= t('forums.join.title')
+          =link_to collection_iri(forum, :favorites).to_s, data: {remote: true, method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
+            span.fa.fa-plus
+            span.icon-left= t('forums.join.title')
       - if policy(forum).update?
         .sticky--top-right
           =link_to edit_iri(forum), class: ('btn--transparant'), data: {turbolinks: false}
-          span.fa.fa-gear
-          span.icon-left= t('settings')
+            span.fa.fa-gear
+            span.icon-left= t('settings')
     =render partial: 'container_nodes/info_bar', locals: {forum: forum}
     - if forum.bio.presence
       section.section-description
         //h3= forum.display_name
         p=forum.bio.presence || t('forums.no_bio')
         =link_to forum, data: {turbolinks: false}
-        .sticky--bottom-right.btn-subtle.btn--mini
-          span=t('forums.visit')
+          .sticky--bottom-right.btn-subtle.btn--mini
+            span=t('forums.visit')
