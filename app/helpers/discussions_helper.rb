@@ -46,7 +46,7 @@ module DiscussionsHelper
 
   def discussion_invite_props(resource) # rubocop:disable Metrics/AbcSize
     {
-      createTokenUrl: '/tokens',
+      createTokenUrl: "/#{resource.root.url}/tokens",
       createGroupUrl: collection_iri(resource.root, :groups),
       currentActor: current_user.iri,
       defaultRole: GrantSet.participator.id,
