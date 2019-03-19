@@ -56,7 +56,7 @@ module OauthHelper
       value: token,
       secure: request.ssl? && (Rails.env.staging? || Rails.env.production?),
       httponly: true,
-      domain: :all
+      domain: Rails.env.staging? ? nil : :all
     }
   end
 

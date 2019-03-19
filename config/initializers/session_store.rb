@@ -5,5 +5,5 @@
 Rails.application.config.session_store(
   :cookie_store,
   key: Rails.configuration.cookie_name,
-  domain: :all
+  domain: Rails.env.staging? ? nil : :all
 )
