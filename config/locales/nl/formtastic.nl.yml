@@ -25,6 +25,7 @@ nl:
       cover_photo_add: "Afbeelding toevoegen"
       created_at: "Gemaakt op"
       creator: "Plaatsen als"
+      custom_placement: "Locatie"
       default_cover_photo: "Coverfoto"
       default_profile_photo: "Profielfoto"
       description: "Inhoud"
