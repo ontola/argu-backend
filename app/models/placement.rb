@@ -19,6 +19,7 @@ class Placement < ApplicationRecord
   delegated_attribute :postal_code, :string, to: :place
   delegated_attribute :zoom_level, :integer, to: :place, default: 13
   alias_attribute :display_name, :title
+  alias parent placeable
 
   parentable :user, :edge
 
