@@ -58,7 +58,6 @@ en:
       remove_profile_photo: "Remove profile photo"
       remove_image: "Remove photo"
       confirmation_string: "Confirmation"
-      shortname: "Argu URL"
       title: "Title"
       time_zone: "Time zone"
       updated_at: "Updated at"
@@ -90,6 +89,9 @@ en:
       shortname:
         owner_type: "Resource type"
         owner_id: "Resource id"
+        shortname: "Path"
+        unscoped: "Create an unscoped url"
+        destination: "Destination"
       user:
         shortname: "Username"
         first_name: "First name"
@@ -118,6 +120,9 @@ en:
         bio: "Summarize in one sentence what function the forum has. This text will appear under the name of the forum. There's a maximum of 80 characters."
       user:
         shortname: "No spaces. Only letters, numbers and _. Start with a letter."
+      shortname:
+        shortname: "No spaces. Only letters, numbers and _. Start with a letter."
+        destination: "Enter the part of the url following %{iri_prefix}/"
       password_confirmation: "Same as above"
       expires_at: "Please fill in all fields if you want to set a deadline"
     placeholders:

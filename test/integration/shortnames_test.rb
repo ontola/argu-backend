@@ -49,14 +49,14 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   test 'initiator should not post create' do
     sign_in initiator
-    general_create(403, 'Shortname.count' => 0)
+    general_create(response: 403, differences: {'Shortname.count' => 0})
     assert_not_authorized
   end
 
   test 'initiator should not delete destroy' do
     subject
     sign_in initiator
-    general_destroy(403)
+    general_destroy(response: 403)
   end
 
   ####################################
@@ -66,14 +66,14 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   test 'moderator should not post create' do
     sign_in moderator
-    general_create(403, 'Shortname.count' => 0)
+    general_create(response: 403, differences: {'Shortname.count' => 0})
     assert_not_authorized
   end
 
   test 'moderator should not delete destroy' do
     subject
     sign_in moderator
-    general_destroy(403)
+    general_destroy(response: 403)
   end
 
   ####################################
@@ -86,10 +86,36 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     general_create
   end
 
+  test 'administrator should post create with url' do
+    sign_in administrator
+    general_create(attrs: {shortname: {shortname: 'short1', destination: "m/#{motion.fragment}"}})
+    assert_equal Shortname.last.owner, motion
+    assert_equal Shortname.last.root_id, argu.uuid
+  end
+
+  test 'administrator should not post create unscoped' do
+    sign_in administrator
+    general_create(attrs: {shortname: {shortname: 'short1', destination: "m/#{motion.fragment}", unscoped: true}})
+    assert_equal Shortname.last.owner, motion
+    assert_equal Shortname.last.root_id, argu.uuid
+  end
+
   test 'administrator should delete destroy' do
     subject
     sign_in administrator
-    general_destroy 303, -1
+    general_destroy response: 303, difference: -1
+  end
+
+  ####################################
+  # As Staff
+  ####################################
+  let(:staff) { create(:user, :staff) }
+
+  test 'staff should post create unscoped' do
+    sign_in staff
+    general_create(attrs: {shortname: {shortname: 'short1', destination: "m/#{motion.fragment}", unscoped: true}})
+    assert_equal Shortname.last.owner, motion
+    assert_nil Shortname.last.root_id
   end
 
   private
@@ -104,15 +130,15 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     yield if block_given?
   end
 
-  def general_create(response = 302, differences = {'Shortname.count' => 1})
-    attrs = shortname_attributes
+  def general_create(response: 302, differences: {'Shortname.count' => 1}, attrs: nil)
+    attrs ||= shortname_attributes
     assert_difference(differences) do
       post collection_iri(argu, :shortnames), params: attrs
       assert_response response
     end
   end
 
-  def general_destroy(response = 302, difference = 0)
+  def general_destroy(response: 302, difference: 0)
     assert_difference('Shortname.count', difference) do
       delete resource_iri(subject)
       assert_response response

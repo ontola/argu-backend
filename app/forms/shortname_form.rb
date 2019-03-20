@@ -2,6 +2,12 @@
 
 class ShortnameForm < ApplicationForm
   fields [
-    owner: {sh_class: Edge.iri}
+    :shortname,
+    {
+      destination: {
+        description: ->(r) { I18n.t('formtastic.hints.shortname.destination', iri_prefix: r.root.iri_prefix) }
+      }
+    },
+    :unscoped
   ]
 end

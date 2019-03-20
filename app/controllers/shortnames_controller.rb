@@ -9,38 +9,12 @@ class ShortnamesController < ParentableController
     ACTION_MAP[action_name.to_sym] || action_name.to_sym
   end
 
-  def destination_param
-    return @destination_param if instance_variable_defined?(:@destination_param)
-    return if params[:shortname].try(:[], :destination).blank?
-    @destination_param = "#{tree_root.iri}/#{params[:shortname][:destination]}"
+  def collection_options
+    super.merge(association_base: unscoped_shortnames)
   end
 
   def create_execute
     update_execute
-  end
-
-  def handle_record_not_unique_html
-    authenticated_resource
-      .errors
-      .add(:owner, t('activerecord.errors.record_not_unique'))
-    respond_with_form(default_form_options(nil))
-  end
-
-  def parent_resource
-    return tree_root if destination_param.blank?
-    @parent_resource ||= resource_from_iri(destination_param)
-  end
-
-  def resource_new_params
-    HashWithIndifferentAccess.new(
-      primary: false,
-      owner: parent_resource!,
-      root_id: unscoped_param ? nil : parent_resource.root_id
-    )
-  end
-
-  def redirect_location
-    settings_iri(authenticated_resource.root, tab: 'shortnames')
   end
 
   def default_form_view(_action)
@@ -56,6 +30,40 @@ class ShortnamesController < ParentableController
     }
   end
 
+  def destination_param
+    return @destination_param if instance_variable_defined?(:@destination_param)
+    return if params[:shortname].try(:[], :destination).blank?
+    @destination_param = "#{tree_root.iri}/#{params[:shortname][:destination]}"
+  end
+
+  def handle_record_not_unique_html
+    authenticated_resource
+      .errors
+      .add(:owner, t('activerecord.errors.record_not_unique'))
+    respond_with_form(default_form_options(nil))
+  end
+
+  def parent_resource
+    return tree_root if destination_param.blank?
+    @parent_resource ||= resource_from_iri(destination_param)
+  end
+
+  def permit_params
+    super.except(:destination, :unscoped)
+  end
+
+  def resource_new_params
+    HashWithIndifferentAccess.new(
+      primary: false,
+      owner: parent_resource!,
+      root_id: unscoped_param ? nil : parent_resource.root_id
+    )
+  end
+
+  def redirect_location
+    settings_iri(authenticated_resource.root, tab: 'shortnames')
+  end
+
   def tab
     case action_name
     when 'create', 'new'
@@ -66,6 +74,18 @@ class ShortnamesController < ParentableController
   end
 
   def unscoped_param
-    params[:shortname].try(:[], :unscoped) if current_user.is_staff?
+    params[:shortname].try(:[], :unscoped)&.presence if current_user.is_staff?
+  end
+
+  def unscoped_shortnames
+    ActsAsTenant.without_tenant do
+      Kaminari.paginate_array(
+        Shortname
+          .joins("INNER JOIN edges ON edges.uuid = shortnames.owner_id AND shortnames.owner_type = 'Edge'")
+          .where(edges: {root_id: parent_resource.uuid}, primary: false)
+          .distinct
+          .to_a
+      )
+    end
   end
 end

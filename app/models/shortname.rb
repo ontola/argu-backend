@@ -65,7 +65,7 @@ class Shortname < ApplicationRecord
   private
 
   def base_path
-    root_id.present? ? root.iri_path : ''
+    root_id.present? ? "/#{root.url}" : ''
   end
 
   def base_url

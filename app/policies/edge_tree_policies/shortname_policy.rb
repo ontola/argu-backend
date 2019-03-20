@@ -3,7 +3,8 @@
 class ShortnamePolicy < EdgeTreePolicy
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[shortname]
+    attributes.concat %i[shortname destination]
+    attributes.concat %i[unscoped] if staff?
     attributes
   end
   delegate :show?, to: :edgeable_policy

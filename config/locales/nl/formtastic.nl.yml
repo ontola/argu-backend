@@ -58,7 +58,6 @@ nl:
       remove_profile_photo: "Profielfoto verwijderen"
       remove_image: "Foto verwijderen"
       confirmation_string: "Bevestiging"
-      shortname: "Argu URL"
       title: "Titel"
       time_zone: "Tijdzone"
       updated_at: "Aangepast op"
@@ -90,6 +89,9 @@ nl:
       shortname:
         owner_type: "Object type"
         owner_id: "Object id"
+        shortname: "Pad"
+        unscoped: "Maak een unscoped url"
+        destination: "Bestemming"
       user:
         shortname: "Gebruikersnaam"
         first_name: "Voornaam"
@@ -118,6 +120,9 @@ nl:
         bio_long: "Hier kan je verder toelichten over het forum en jouw organisatie. Je kunt hier markdown gebruiken."
       user:
         shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
+      shortname:
+        shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
+        destination: "Voer het gedeelte van de url in dat komt na %{iri_prefix}/"
       password_confirmation: "Zelfde als hierboven"
       expires_at: "Vul alle velden in als je een deadline in wil stellen"
     placeholders:
