@@ -31,6 +31,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     joins(children: %i[properties grants])
       .where(grants: {group_id: Group::PUBLIC_ID}, properties: {predicate: NS::ARGU[:discoverable].to_s, boolean: true})
       .order(follows_count: :desc)
+      .distinct
   }
 
   delegate :description, :default_profile_photo, to: :profile
@@ -60,10 +61,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     super(*options) if profile.nil?
   end
 
-  def clear_children_iri_cache
-    descendants.update_all(iri_cache: nil)
-  end
-
   def display_name
     if profile.present?
       profile.name || url
@@ -76,22 +73,16 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     'anonymous'
   end
 
-  def iri_opts
-    {id: url}
+  def iri_path_from_template(_opts = {})
+    ''
   end
 
-  def iri_path(opts = {})
-    ActsAsTenant.current_tenant == self ? '' : super
+  def iri(_opts = {})
+    @iri ||= RDF::URI("#{Rails.env.test? ? :http : :https}://#{iri_prefix}")
   end
 
   def root_object?
     true
-  end
-
-  def cache_iri_path!
-    super
-    clear_children_iri_cache
-    iri_cache
   end
 
   private

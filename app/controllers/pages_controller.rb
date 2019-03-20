@@ -43,16 +43,15 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def index_collection
     @collection ||= ::Collection.new(
+      association_base: discoverable_pages,
       association_class: Page,
-      default_sortings: [{key: NS::ARGU[:followsCount], direction: :desc}],
       user_context: user_context,
-      association_scope: :discover,
       type: :paginated
     )
   end
 
-  def index_success
-    ActsAsTenant.without_tenant { super }
+  def discoverable_pages
+    ActsAsTenant.without_tenant { Kaminari.paginate_array(Page.discover.to_a) }
   end
 
   def new_execute
