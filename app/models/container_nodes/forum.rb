@@ -27,7 +27,7 @@ class Forum < ContainerNode
   }
 
   def children_count(association)
-    return super unless association == :motions
+    return super unless association.to_sym == :motions
     descendants.active.where(owner_type: 'Motion').count
   end
 
