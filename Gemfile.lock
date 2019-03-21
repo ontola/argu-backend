@@ -280,6 +280,14 @@ GEM
     dotenv-rails (2.4.0)
       dotenv (= 2.4.0)
       railties (>= 3.2, < 6.0)
+    elasticsearch (6.2.0)
+      elasticsearch-api (= 6.2.0)
+      elasticsearch-transport (= 6.2.0)
+    elasticsearch-api (6.2.0)
+      multi_json
+    elasticsearch-transport (6.2.0)
+      faraday
+      multi_json
     erubi (1.8.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -606,6 +614,10 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    searchkick (3.1.2)
+      activemodel (>= 4.2)
+      elasticsearch (>= 5)
+      hashie
     selenium-webdriver (3.12.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
@@ -845,6 +857,7 @@ DEPENDENCIES
   rubyzip
   sass (= 3.4.18)
   sass-rails (~> 5.0.6)
+  searchkick
   selenium-webdriver (~> 3.12.0)
   sequenced
   sidekiq (~> 4.2.2)
@@ -883,4 +896,4 @@ RUBY VERSION
    ruby 2.6.1p33
 
 BUNDLED WITH
-   1.16.1
+   1.17.3

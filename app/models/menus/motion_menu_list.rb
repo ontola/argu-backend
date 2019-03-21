@@ -19,6 +19,7 @@ class MotionMenuList < MenuList
           decisions_link,
           comments_link,
           activity_link,
+          search_link,
           new_update_link,
           edit_link,
           convert_link,

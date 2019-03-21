@@ -43,6 +43,14 @@ module Edgeable
         super + [creator: Profile.preview_includes]
       end
 
+      def reindex_with_tenant(async: true)
+        ActsAsTenant.without_tenant do
+          Page.find_each do |page|
+            ActsAsTenant.with_tenant(page) { Edge.reindex(async: async) }
+          end
+        end
+      end
+
       # Selects edges of a certain type over persisted and transient models.
       # @param [String] type The (child) edges' #owner_type value
       # @param [Hash] where_clause Filter options for the owners of the edge akin to activerecords' `where`.

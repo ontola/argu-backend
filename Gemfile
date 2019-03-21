@@ -81,6 +81,7 @@ gem 'acts_as_list'
 gem 'kaminari', '~>0.17.0'
 gem 'staccato', '~> 0.4.7'
 gem 'rubyzip'
+gem 'searchkick'
 
 ################## Asset-y ########################
 gem 'slim', '~> 3.0.6'

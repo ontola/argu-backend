@@ -200,12 +200,14 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Sets the dependent foreign relations to the Community profile
   def anonymize_dependencies
-    %w[comments motions arguments questions blog_posts vote_events activities
-       uploaded_media_objects unscoped_group_memberships]
-      .each do |association|
-      send(association)
-        .model
-        .anonymize(send(association))
+    ActsAsTenant.without_tenant do
+      %w[comments motions arguments questions blog_posts vote_events activities
+         uploaded_media_objects unscoped_group_memberships]
+        .each do |association|
+        send(association)
+          .model
+          .anonymize(send(association))
+      end
     end
   end
 

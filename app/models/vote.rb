@@ -83,6 +83,10 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
     nil
   end
 
+  def searchable_should_index?
+    false
+  end
+
   def store_in_redis?(opts = {})
     !opts[:skip_redis] && publisher.guest?
   end

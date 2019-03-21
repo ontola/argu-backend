@@ -33,6 +33,15 @@ module Menus
       )
     end
 
+    def search_link
+      menu_item(
+        :search,
+        image: 'fa-search',
+        href: search_results_iri(resource),
+        policy: :show?
+      )
+    end
+
     def new_update_link
       menu_item(
         :new_update,

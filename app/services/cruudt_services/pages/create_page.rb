@@ -7,7 +7,7 @@ class CreatePage < EdgeableCreateService
   end
 
   def commit
-    ActsAsTenant.without_tenant { super }
+    ActsAsTenant.with_tenant(resource) { super }
   end
 
   private

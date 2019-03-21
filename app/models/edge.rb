@@ -17,6 +17,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Uuidable
 
   enhance Grantable
+  enhance Searchable
 
   acts_as_followable
   has_ltree_hierarchy
@@ -109,6 +110,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :expired, -> { where('edges.expires_at <= statement_timestamp()') }
   scope :active, -> { published.untrashed }
   scope :draft, -> { unpublished.untrashed }
+  scope :search_import, -> { published }
 
   validates :parent, presence: true, unless: :root_object?
 
@@ -263,6 +265,20 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def root_object?
     false
+  end
+
+  def search_data
+    data = serializable_hash.except(:id)
+    data[:published_branch] = !has_unpublished_ancestors?
+    data
+  end
+
+  def searchable_aggregations
+    %i[owner_type is_trashed?]
+  end
+
+  def searchable_should_index?
+    is_published?
   end
 
   # @return [Array] The ids of (persisted) ancestors, including self if persisted

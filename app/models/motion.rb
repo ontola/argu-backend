@@ -37,6 +37,7 @@ class Motion < Edge
 
   validates :description, presence: true, length: {maximum: 5000}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 110}
+  validates :title, presence: true
   validates :creator, presence: true
 
   VOTE_OPTIONS = %i[pro neutral con].freeze unless defined?(VOTE_OPTIONS)

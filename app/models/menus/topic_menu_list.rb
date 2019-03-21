@@ -18,6 +18,7 @@ class TopicMenuList < MenuList
         [
           comments_link,
           activity_link,
+          search_link,
           edit_link,
           convert_link,
           move_link,

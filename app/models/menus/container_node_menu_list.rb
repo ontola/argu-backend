@@ -15,7 +15,7 @@ class ContainerNodeMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: -> { [activity_link, statistics_link, export_link, move_link, destroy_link, edit_link] },
+      menus: -> { [activity_link, search_link, statistics_link, export_link, move_link, destroy_link, edit_link] },
       link_opts: {triggerClass: 'btn--transparant'}
     )
   end

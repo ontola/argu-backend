@@ -18,6 +18,10 @@ module RedisResource
         store_in_redis?(opts) ? store_in_redis : super
       end
 
+      def searchable_should_index?
+        super && !store_in_redis?
+      end
+
       private
 
       def remove_from_redis

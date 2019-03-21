@@ -187,99 +187,101 @@ ActsAsTenant.with_tenant(other_page) do
   )
 end
 
-members_group =
+ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
+  members_group =
+    FactorySeeder
+      .create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.root)
+  group_member = FactorySeeder.create(:user, email: 'member@example.com')
+  FactorySeeder.create(:group_membership, parent: members_group, member: group_member.profile)
+
+  FactorySeeder.create(:grant, edge: holland, group: members_group, grant_set: GrantSet.initiator)
+  moderators_group =
+    FactorySeeder
+      .create(:group, id: 222, name: 'Moderators', name_singular: 'Moderator', parent: holland.root)
+  FactorySeeder.create(:grant, edge: holland, group: moderators_group, grant_set: GrantSet.moderator)
+
+  linked_record = LinkedRecord.create_for_forum(page.url, freetown.url, SecureRandom.uuid)
+  FactorySeeder.create(:argument, parent: linked_record)
+  FactorySeeder.create(:comment, parent: linked_record)
+  linked_record_vote_event = linked_record.default_vote_event
+  FactorySeeder.create(:vote, parent: linked_record_vote_event)
+  forum_motion = FactorySeeder.create(:motion, parent: freetown)
+  FactorySeeder.create(:argument, parent: forum_motion)
+  question = FactorySeeder.create(:question, parent: freetown)
+  motion = FactorySeeder.create(:motion, parent: question)
+  actor_membership =
+    FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: page, name: 'custom'))
+  FactorySeeder.create(
+    :decision,
+    parent: motion,
+    state: 'forwarded',
+    forwarded_user: actor_membership.member.profileable,
+    forwarded_group: actor_membership.group
+  )
+  vote_event = motion.default_vote_event
+  FactorySeeder.create(:vote, parent: vote_event)
+
+  profile_hidden_votes =
+    FactorySeeder.create(:user, profile: FactorySeeder.build(:profile, are_votes_public: false)).profile
   FactorySeeder
-    .create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.root)
-group_member = FactorySeeder.create(:user, email: 'member@example.com')
-FactorySeeder.create(:group_membership, parent: members_group, member: group_member.profile)
+    .create(:vote, parent: vote_event, creator: profile_hidden_votes, publisher: profile_hidden_votes.profileable)
 
-FactorySeeder.create(:grant, edge: holland, group: members_group, grant_set: GrantSet.initiator)
-moderators_group =
-  FactorySeeder
-    .create(:group, id: 222, name: 'Moderators', name_singular: 'Moderator', parent: holland.root)
-FactorySeeder.create(:grant, edge: holland, group: moderators_group, grant_set: GrantSet.moderator)
+  argument = FactorySeeder.create(:argument, parent: motion)
+  FactorySeeder.create(:vote, parent: argument)
+  comment = FactorySeeder.create(:comment, parent: argument)
+  FactorySeeder.create(:comment, parent: argument, in_reply_to_id: comment.uuid)
+  FactorySeeder.create(:blog_post, parent: motion)
+  blog_post =
+    FactorySeeder.create(:blog_post, parent: question)
+  FactorySeeder.create(:comment, parent: blog_post)
+  FactorySeeder.create(:comment, parent: motion)
 
-linked_record = LinkedRecord.create_for_forum(page.url, freetown.url, SecureRandom.uuid)
-FactorySeeder.create(:argument, parent: linked_record)
-FactorySeeder.create(:comment, parent: linked_record)
-linked_record_vote_event = linked_record.default_vote_event
-FactorySeeder.create(:vote, parent: linked_record_vote_event)
-forum_motion = FactorySeeder.create(:motion, parent: freetown)
-FactorySeeder.create(:argument, parent: forum_motion)
-question = FactorySeeder.create(:question, parent: freetown)
-motion = FactorySeeder.create(:motion, parent: question)
-actor_membership =
-  FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: page, name: 'custom'))
-FactorySeeder.create(
-  :decision,
-  parent: motion,
-  state: 'forwarded',
-  forwarded_user: actor_membership.member.profileable,
-  forwarded_group: actor_membership.group
-)
-vote_event = motion.default_vote_event
-FactorySeeder.create(:vote, parent: vote_event)
+  hidden_question = FactorySeeder.create(:question, parent: holland)
+  FactorySeeder.create(:motion, parent: hidden_question)
 
-profile_hidden_votes =
-  FactorySeeder.create(:user, profile: FactorySeeder.build(:profile, are_votes_public: false)).profile
-FactorySeeder
-  .create(:vote, parent: vote_event, creator: profile_hidden_votes, publisher: profile_hidden_votes.profileable)
+  trashed_question =
+    FactorySeeder.create(
+      :question,
+      parent: freetown,
+      trashed_at: Time.current
+    )
+  trashed_motion =
+    FactorySeeder.create(
+      :motion,
+      parent: trashed_question
+    )
+  FactorySeeder.create(:argument, parent: trashed_motion)
 
-argument = FactorySeeder.create(:argument, parent: motion)
-FactorySeeder.create(:vote, parent: argument)
-comment = FactorySeeder.create(:comment, parent: argument)
-FactorySeeder.create(:comment, parent: argument, in_reply_to_id: comment.uuid)
-FactorySeeder.create(:blog_post, parent: motion)
-blog_post =
-  FactorySeeder.create(:blog_post, parent: question)
-FactorySeeder.create(:comment, parent: blog_post)
-FactorySeeder.create(:comment, parent: motion)
+  unpublished_question =
+    FactorySeeder.create(
+      :question,
+      parent: freetown,
+      argu_publication_attributes: {draft: true}
+    )
+  unpublished_motion =
+    FactorySeeder.create(
+      :motion,
+      parent: unpublished_question
+    )
+  FactorySeeder.create(:argument, parent: unpublished_motion)
 
-hidden_question = FactorySeeder.create(:question, parent: holland)
-FactorySeeder.create(:motion, parent: hidden_question)
+  expired_question =
+    FactorySeeder.create(
+      :question,
+      parent: freetown,
+      expires_at: Time.current
+    )
+  expired_motion =
+    FactorySeeder.create(
+      :motion,
+      parent: expired_question
+    )
+  FactorySeeder.create(:argument, parent: expired_motion)
+  FactorySeeder.create(:topic, parent: freetown)
 
-trashed_question =
-  FactorySeeder.create(
-    :question,
-    parent: freetown,
-    trashed_at: Time.current
-  )
-trashed_motion =
-  FactorySeeder.create(
-    :motion,
-    parent: trashed_question
-  )
-FactorySeeder.create(:argument, parent: trashed_motion)
-
-unpublished_question =
-  FactorySeeder.create(
-    :question,
-    parent: freetown,
-    argu_publication_attributes: {draft: true}
-  )
-unpublished_motion =
-  FactorySeeder.create(
-    :motion,
-    parent: unpublished_question
-  )
-FactorySeeder.create(:argument, parent: unpublished_motion)
-
-expired_question =
-  FactorySeeder.create(
-    :question,
-    parent: freetown,
-    expires_at: Time.current
-  )
-expired_motion =
-  FactorySeeder.create(
-    :motion,
-    parent: expired_question
-  )
-FactorySeeder.create(:argument, parent: expired_motion)
-FactorySeeder.create(:topic, parent: freetown)
-
-FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))
-FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))
+  FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))
+  FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))
+end
 
 Setting.set('suggested_forums', [freetown.uuid, other_page_forum.uuid].join(','))
 

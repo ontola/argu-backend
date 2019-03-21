@@ -29,6 +29,8 @@ WebMock.disable_net_connect!(
   allow: "https://#{Rails.application.config.rakismet[:key]}.rest.akismet.com"
 )
 
+Searchkick.disable_callbacks
+
 module TestHelper
   include RSpec::Expectations
   include RSpec::Matchers

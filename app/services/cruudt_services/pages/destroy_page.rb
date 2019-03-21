@@ -2,6 +2,6 @@
 
 class DestroyPage < EdgeableDestroyService
   def commit
-    ActsAsTenant.without_tenant { super }
+    ActsAsTenant.with_tenant(resource) { super }
   end
 end

@@ -3,4 +3,5 @@ production:
   :concurrency: 4
 :queues:
   - default
+  - searchkick
   - [carrierwave, 2]
