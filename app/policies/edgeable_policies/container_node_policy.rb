@@ -19,10 +19,6 @@ class ContainerNodePolicy < EdgePolicy
     attributes
   end
 
-  def invite?
-    parent_policy(:page).update?
-  end
-
   def list?
     raise(ActiveRecord::RecordNotFound) unless record.discoverable? || show?
     true

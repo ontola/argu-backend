@@ -21,8 +21,4 @@ class QuestionPolicy < EdgePolicy
   def move?
     staff? || administrator? || moderator?
   end
-
-  def invite?
-    parent_policy(:page).update?
-  end
 end
