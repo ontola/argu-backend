@@ -14,7 +14,7 @@ module Argu
       module InstanceMethods
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i[argument pro_argument con_argument blog_post comment forum group_membership motion export
-                            group question vote decision grant vote_event page].freeze
+                            group question vote decision grant vote_event page topic].freeze
 
         def cascaded_forum(key, opts)
           key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
@@ -276,7 +276,7 @@ module Argu
           let(:forum_motion) { freetown.motions.first }
           let(:question) { freetown.questions.first }
           let(:motion) { question.motions.first }
-          let(:forum_motion) { freetown.motions.first }
+          let(:forum_topic) { freetown.topics.first }
           let(:decision) { motion.decisions.first }
           let(:vote_event) { motion.default_vote_event }
           let(:vote) { vote_event.votes.first }

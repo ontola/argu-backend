@@ -7,7 +7,7 @@ class CreativeWork < Edge
            :integer,
            NS::ARGU[:CreativeWorkType],
            default: 0,
-           enum: {custom: 0, new_motion: 1, new_question: 2}
+           enum: {custom: 0, new_motion: 1, new_question: 2, new_topic: 3}
 
   class << self
     def iri

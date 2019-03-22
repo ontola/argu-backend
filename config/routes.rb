@@ -26,7 +26,7 @@ require 'argu/whitelist_constraint'
 # q: questions
 # r:
 # s: [RESERVED for search]
-# t: tags
+# t: topics
 # u: users
 # v: votes
 # w:
@@ -296,6 +296,11 @@ Rails.application.routes.draw do
     resources :placements, only: %i[index]
   end
   resources :shortnames, only: %i[new create index]
+  resources :topics,
+            path: 't',
+            only: %i[show] do
+    include_route_concerns
+  end
   resources :users, path: 'u', only: %i[] do
     get :feed, controller: 'users/feed', action: :index
   end

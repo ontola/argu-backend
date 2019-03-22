@@ -6,12 +6,12 @@ module Discussable
 
     included do
       has_many :discussions,
-               -> { where(owner_type: %w[Motion Question]) },
+               -> { where(owner_type: %w[Motion Question Topic]) },
                class_name: 'Edge',
                foreign_key: :parent_id,
                inverse_of: :parent
       has_many :active_discussions,
-               -> { active.where(owner_type: %w[Motion Question]) },
+               -> { active.where(owner_type: %w[Motion Question Topic]) },
                class_name: 'Edge',
                foreign_key: :parent_id,
                inverse_of: :parent

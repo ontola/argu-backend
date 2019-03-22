@@ -11,7 +11,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :permitted_action
 
   enum widget_type: {
-    custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5, blog_posts: 6
+    custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5, blog_posts: 6, new_topic: 7
   }
 
   acts_as_list scope: :owner
@@ -117,6 +117,25 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
           primary_resource: owner,
           permitted_action: PermittedAction.find_by!(title: 'question_create'),
           resource_iri: [[creative_work.iri, nil], [new_iri(owner, :questions), nil]]
+        )
+    end
+
+    def create_new_topic(owner)
+      creative_work =
+        CreativeWork.create!(
+          parent: owner,
+          creator: Profile.service,
+          publisher: User.service,
+          creative_work_type: :new_topic,
+          display_name: I18n.t('topics.call_to_action.title'),
+          description: I18n.t('topics.call_to_action.body')
+        )
+      new_topic
+        .create(
+          owner: owner,
+          primary_resource: owner,
+          permitted_action: PermittedAction.find_by!(title: 'topic_create'),
+          resource_iri: [[creative_work.iri, nil], [new_iri(owner, :topics), nil]]
         )
     end
 

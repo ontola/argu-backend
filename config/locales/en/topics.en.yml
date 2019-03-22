@@ -1,0 +1,8 @@
+en:
+  topics:
+    type: "Topic"
+    type_new: "New topic"
+    plural: "Topics"
+    call_to_action:
+      title: "Discuss a topic?"
+      body: "Do you want to start a conversation about a specific topic?"

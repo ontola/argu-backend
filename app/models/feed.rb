@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Feed
-  RELEVANT_KEYS = %w[question.publish motion.publish argument.create pro_argument.create con_argument.create
-                     blog_post.publish decision.approved decision.rejected comment.create].freeze
+  RELEVANT_KEYS = %w[question.publish motion.publish topic.publish argument.create pro_argument.create
+                     con_argument.create blog_post.publish decision.approved decision.rejected comment.create].freeze
 
   include ActiveModel::Model
   include RailsLD::Model

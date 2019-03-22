@@ -276,6 +276,7 @@ expired_motion =
     parent: expired_question
   )
 FactorySeeder.create(:argument, parent: expired_motion)
+FactorySeeder.create(:topic, parent: freetown)
 
 FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))
 FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))

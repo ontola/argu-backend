@@ -61,7 +61,7 @@ class Activity < PublicActivity::Activity
     when 'create'
       %w[con_argument pro_argument comment].include?(object)
     when 'publish'
-      %w[blog_post motion question].include?(object)
+      %w[blog_post motion question topic].include?(object)
     when 'approved', 'rejected', 'forwarded'
       true
     else

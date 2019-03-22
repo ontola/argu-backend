@@ -7,6 +7,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
   let(:question) { create(:question, :with_follower, :with_news_follower, parent: freetown) }
   let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question) }
+  let(:topic) { create(:topic, :with_follower, :with_news_follower, parent: freetown) }
   let(:argument) { create(:argument, :with_follower, :with_news_follower, parent: motion) }
   let(:comment) { create(:comment, parent: argument) }
   let(:group) { create(:group, parent: argu) }
@@ -33,6 +34,16 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     assert_difference('Motion.trashed.count' => 1, create_notification_count => -1) do
       delete Motion.last
+    end
+  end
+
+  test 'staff should destroy topic with notifications' do
+    sign_in staff
+
+    topic
+
+    assert_difference('Topic.count' => -1, create_notification_count => -1) do
+      delete topic.iri(destroy: true)
     end
   end
 
