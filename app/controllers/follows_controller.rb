@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FollowsController < AuthorizedController
-  PERMITTED_CLASSES = %w[Forum Question Motion Argument Comment BlogPost].freeze
+  PERMITTED_CLASSES = Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze
   skip_before_action :check_if_registered, if: :unsubscribe?
   skip_before_action :authorize_action, if: :unsubscribe?
   skip_before_action :verify_authenticity_token, if: :unsubscribe?
@@ -62,8 +62,8 @@ class FollowsController < AuthorizedController
 
   def new_resource_from_params # rubocop:disable Metrics/AbcSize
     return @resource if instance_variable_defined?(:@resource)
-    followable = Edge.where(owner_type: PERMITTED_CLASSES).find_by(uuid: permit_params[:gid])
-    return @resource = nil if followable.nil?
+    followable = Edge.find_by(uuid: permit_params[:gid])
+    return @resource = nil if followable.nil? || PERMITTED_CLASSES.detect { |klass| followable.is_a?(klass) }.nil?
     @resource = current_user.follows.find_or_initialize_by(
       followable_id: followable.uuid,
       followable_type: 'Edge'
