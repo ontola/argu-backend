@@ -30,8 +30,6 @@ class Motion < Edge
   alias_attribute :content, :description
   alias_attribute :title, :display_name
 
-  before_save :capitalize_title
-
   convertible questions: %i[activities media_objects], comments: %i[activities]
   counter_cache true
   paginates_per 30
@@ -40,8 +38,6 @@ class Motion < Edge
   validates :description, presence: true, length: {maximum: 5000}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 110}
   validates :creator, presence: true
-  auto_strip_attributes :title, squish: true
-  auto_strip_attributes :content
 
   VOTE_OPTIONS = %i[pro neutral con].freeze unless defined?(VOTE_OPTIONS)
 

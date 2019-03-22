@@ -14,14 +14,10 @@ class Argument < Edge
   include HasLinks
   include VotesHelper
 
-  before_save :capitalize_title
-
   validates :description, presence: false, length: {maximum: 5000}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 75}
   validates :creator, presence: true
 
-  auto_strip_attributes :title, squish: true
-  auto_strip_attributes :content
   convertible comments: %i[activities]
   counter_cache true
   paginates_per 10

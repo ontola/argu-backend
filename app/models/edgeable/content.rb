@@ -13,11 +13,16 @@ module Edgeable
       enhance Actionable
       enhance Followable
 
+      auto_strip_attributes :title, squish: true
+      auto_strip_attributes :content
       property :display_name, :string, NS::SCHEMA[:name]
       property :description, :text, NS::SCHEMA[:text]
       attribute :pinned, :boolean
 
+      before_save :capitalize_title
+
       def capitalize_title
+        return if display_name.blank?
         display_name[0] = display_name[0].upcase
         self.display_name = display_name
       end

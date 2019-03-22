@@ -27,7 +27,6 @@ class Comment < Edge
 
   validates :description, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :creator, presence: true
-  auto_strip_attributes :body
 
   attr_accessor :is_processed, :vote_id
 
