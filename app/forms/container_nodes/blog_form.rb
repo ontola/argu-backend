@@ -3,6 +3,8 @@
 class BlogForm < RailsLD::Form
   fields %i[
     display_name
+    bio
+    bio_long
     url
     language
     default_profile_photo
