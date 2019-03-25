@@ -38,11 +38,6 @@ class PageMenuList < MenuList
       :navigations,
       menus: lambda {
         [
-          menu_item(
-            :overview,
-            image: 'fa-th-large',
-            href: resource.iri
-          ),
           *container_nodes.map { |child| navigation_item(child) },
           *custom_menu_items(:navigations, resource),
           activity_link,

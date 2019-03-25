@@ -44,10 +44,9 @@ class MenusTest < ActionDispatch::IntegrationTest
     navigations_iri = resource_iri(argu.menu(user_context, :navigations), root: argu)
     expect_triple(navigations_iri, RDF[:type], NS::ARGU[:MenuItem])
     sequence = expect_sequence(navigations_iri, NS::ARGU[:menuItems])
-    expect_sequence_member(sequence, 0, RDF::URI("#{navigations_iri}#overview"))
-    expect_sequence_member(sequence, 1, RDF::URI("#{navigations_iri}#freetown"))
-    expect_sequence_member(sequence, 2, resource_iri(custom_menu_item, root: argu))
-    expect_sequence_member(sequence, 3, RDF::URI("#{navigations_iri}#activity"))
+    expect_sequence_member(sequence, 0, RDF::URI("#{navigations_iri}#freetown"))
+    expect_sequence_member(sequence, 1, resource_iri(custom_menu_item, root: argu))
+    expect_sequence_member(sequence, 2, RDF::URI("#{navigations_iri}#activity"))
   end
 
   ####################################
