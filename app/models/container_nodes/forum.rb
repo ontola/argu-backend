@@ -12,7 +12,7 @@ class Forum < ContainerNode
 
   belongs_to :default_decision_group, class_name: 'Group', foreign_key_property: :default_decision_group_id
 
-  self.default_widgets = %i[new_motion new_question new_topic discussions overview]
+  self.default_widgets = %i[new_motion new_question new_topic discussions]
 
   paginates_per 30
 

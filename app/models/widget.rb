@@ -139,19 +139,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         )
     end
 
-    def create_overview(owner)
-      overview
-        .create(
-          owner: owner.parent,
-          permitted_action: PermittedAction.find_by!(title: 'forum_show'),
-          primary_resource: owner,
-          resource_iri: [
-            [owner.iri, NS::SCHEMA[:name]],
-            [collection_iri(owner, :discussions, display: :card, page_size: 5), nil]
-          ]
-        )
-    end
-
     def preview_includes
       super + %i[resource_sequence property_shapes]
     end
