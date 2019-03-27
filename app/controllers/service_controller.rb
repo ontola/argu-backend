@@ -15,10 +15,12 @@ class ServiceController < ParentableController
       end
   end
 
-  def activity_comment
+  def activity_comment # rubocop:disable Metrics/AbcSize
     if vnext_request?
       activity_key = "#{action_name}_activity_attributes"
-      params.require(model_name).require(activity_key).require(:comment) if params.dig(model_name, activity_key)
+      if params.dig(model_name, activity_key, :comment).present?
+        params.require(model_name).require(activity_key).require(:comment)
+      end
     else
       params[:activity]&.permit(:comment).try(:[], :comment)
     end
