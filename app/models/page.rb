@@ -78,7 +78,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def iri(_opts = {})
-    @iri ||= RDF::URI("#{Rails.env.test? ? :http : :https}://#{iri_prefix}")
+    @iri ||=
+      if RequestStore.store[:old_frontend]
+        super
+      else
+        RDF::URI("#{Rails.env.test? ? :http : :https}://#{iri_prefix}")
+      end
   end
 
   def root_object?
