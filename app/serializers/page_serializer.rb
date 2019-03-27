@@ -30,7 +30,7 @@ class PageSerializer < RecordSerializer
   end
 
   def primary_container_node
-    EdgePolicy::Scope.new(scope, object.container_nodes).resolve.first
+    EdgePolicy::Scope.new(scope, object.container_nodes).resolve.first if ActsAsTenant.current_tenant
   end
 
   def default_profile_photo
