@@ -192,7 +192,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     (moderator? || administrator? || staff?) &&
       record.is_publishable? &&
       !record.is_a?(Decision) &&
-      (!record.is_published? || record.argu_publication&.reactions?)
+      (!record.argu_publication&.attribute_in_database(:published_at) || record.argu_publication&.reactions?)
   end
 
   def parent_policy(type = nil)
