@@ -18,7 +18,6 @@ class MotionForm < ApplicationForm
                    argu_publication
                    pinned
                    expires_at
-                   invert_arguments
                  ]
 
   property_group :footer,
