@@ -455,7 +455,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
       }, headers: argu_headers(accept: :json)
     end
     iri = "#{Forum.last.iri}/discussions?display=grid&type=infinite"
-    assert_equal Forum.last.widgets.last.resource_iri, [[iri, NS::AS[:name]], [iri, nil]]
+    assert_equal Forum.last.widgets.last.resource_iri, [[iri, nil]]
   end
 
   test 'service should post create ori forum' do

@@ -77,7 +77,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'motion_show'),
           primary_resource: owner,
-          resource_iri: [[discussions_iri, NS::AS[:name]], [discussions_iri, nil]],
+          resource_iri: [[discussions_iri, nil]],
           size: 3
         )
     end
