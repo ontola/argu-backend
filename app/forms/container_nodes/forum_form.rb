@@ -7,7 +7,6 @@ class ForumForm < ApplicationForm
     bio_long
     url
     language
-    default_profile_photo
     default_cover_photo
     public_grant
   ]
