@@ -22,8 +22,7 @@ class MediaObjectSerializer < RecordSerializer
     attribute format, predicate: NS::ARGU[:"imgUrl#{opts[:w]}x#{opts[:h]}"]
 
     define_method format do
-      url = object.content.url(format)
-      url && RDF::DynamicURI(url)
+      url_for_version(format)
     end
   end
 
@@ -39,5 +38,23 @@ class MediaObjectSerializer < RecordSerializer
     else
       NS::SCHEMA[:MediaObject]
     end
+  end
+
+  def url
+    url_for_version('default')
+  end
+
+  def content
+    url_for_version('content')
+  end
+
+  def thumbnail
+    url_for_version('thumbnail')
+  end
+
+  private
+
+  def url_for_version(version)
+    RDF::DynamicURI("#{object.iri}/content/#{version}")
   end
 end

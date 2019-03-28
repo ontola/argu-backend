@@ -278,7 +278,9 @@ Rails.application.routes.draw do
     get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
     resources :grants, only: %i[index]
   end
-  resources :media_objects, only: :show
+  resources :media_objects, only: :show do
+    resource :media_object_contents, only: :show, path: 'content/:version'
+  end
   resources :motions,
             path: 'm',
             only: %i[show] do
