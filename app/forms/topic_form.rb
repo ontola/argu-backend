@@ -9,13 +9,13 @@ class TopicForm < ApplicationForm
     :attachments,
     :custom_placement,
     :advanced,
+    :hidden,
     :footer
   ]
 
   property_group :advanced,
                  label: I18n.t('forms.advanced'),
                  properties: %i[
-                   argu_publication
                    pinned
                    expires_at
                  ]
@@ -25,4 +25,8 @@ class TopicForm < ApplicationForm
                  properties: [
                    creator: actor_selector
                  ]
+
+  property_group :hidden,
+                 iri: NS::ONTOLA[:hiddenGroup],
+                 properties: %i[argu_publication]
 end

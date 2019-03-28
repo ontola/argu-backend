@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PublicationForm < ApplicationForm
-  fields %i[
-    draft
+  fields [
+    draft: {default_value: true}
   ]
 end

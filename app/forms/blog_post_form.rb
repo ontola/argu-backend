@@ -7,19 +7,17 @@ class BlogPostForm < ApplicationForm
     :default_cover_photo,
     {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
     :attachments,
-    :advanced,
+    :hidden,
     :footer
   ]
-
-  property_group :advanced,
-                 label: I18n.t('forms.advanced'),
-                 properties: %i[
-                   argu_publication
-                 ]
 
   property_group :footer,
                  iri: NS::ONTOLA[:footerGroup],
                  properties: [
                    creator: actor_selector
                  ]
+
+  property_group :hidden,
+                 iri: NS::ONTOLA[:hiddenGroup],
+                 properties: %i[argu_publication]
 end
