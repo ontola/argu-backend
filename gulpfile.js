@@ -110,7 +110,7 @@ function browserifyBundleProduction(bundleName, entryPoint) {
 
 var bundles = [
   ['_bundle.js', 'App.js'],
-  ['controllers/_forums_bundle.js', 'controllers/forums.js'],
+  ['controllers/_container_nodes_bundle.js', 'controllers/container_nodes.js'],
   ['controllers/_info_bundle.js', 'controllers/info.js'],
   ['controllers/_pages_bundle.js', 'controllers/pages.js'],
   ['controllers/_static_pages_bundle.js', 'controllers/static_pages.js'],
