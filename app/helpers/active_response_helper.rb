@@ -19,9 +19,12 @@ module ActiveResponseHelper
   end
 
   def active_response_success_message # rubocop:disable Metrics/AbcSize
-    if (action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?) ||
-        resource_was_published?
-      t('type_publish_success', type: type_for(current_resource).capitalize)
+    if current_resource.try(:is_publishable?) && (action_name == 'create' || resource_was_published?)
+      if current_resource.try(:argu_publication)&.publish_time_lapsed?
+        t('type_publish_success', type: type_for(current_resource).capitalize)
+      else
+        t('type_draft_success', type: type_for(current_resource).capitalize)
+      end
     else
       t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
     end

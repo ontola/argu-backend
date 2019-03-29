@@ -229,6 +229,7 @@ en:
   type_update_success: "%{type} saved successfully"
   type_create_success: "%{type} created successfully"
   type_publish_success: "%{type} published successfully. It can take a few moments before it's visible on other pages."
+  type_draft_success: "%{type} created successfully. It will only be visible for others after you publish it."
   type_convert_success: "Successfully converted to %{type}"
   type_destroy_success: "%{type} deleted successfully"
   type_trash_success: "%{type} trashed successfully"
