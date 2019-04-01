@@ -28,11 +28,8 @@ module Users
 
     def update_execute
       return false unless valid_locale?
-      if current_user.guest?
-        Argu::Redis.set("guest_user.#{current_user.id}.language", locale_param)
-      else
-        return false unless current_user.update(language: locale_param)
-      end
+      I18n.locale = locale_param
+      return false unless current_user.guest? || current_user.update(language: locale_param)
       update_oauth_token(new_oauth_token.token)
     end
 

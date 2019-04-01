@@ -79,7 +79,7 @@ module OauthHelper
 
   def generate_guest_token(guest_id, application: nil)
     application ||= Doorkeeper::Application.argu
-    store_guest_language(guest_id)
+    set_language_for_guest
 
     Doorkeeper::AccessToken.find_or_create_for(
       application,

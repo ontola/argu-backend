@@ -188,7 +188,7 @@ Doorkeeper::JWT.configure do
       if opts[:scopes].include?('guest')
         GuestUser.new(
           id: opts[:resource_owner_id],
-          language: Argu::Redis.get("guest_user.#{opts[:resource_owner_id]}.language")
+          language: I18n.locale
         )
       else
         User.find(opts[:resource_owner_id])
