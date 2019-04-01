@@ -16,6 +16,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance Actionable
   enhance Settingable
   enhance Statable
+  enhance Stylable
   enhance Widgetable
 
   has_many :discussions, through: :forums
@@ -38,7 +39,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :last_accepted, presence: true
-  validates :base_color, css_hex_color: true
 
   after_create :create_default_groups
   after_create :create_staff_grant
@@ -53,7 +53,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   parentable :user
   property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {visible: 1, hidden: 3}
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
-  property :base_color, :string, NS::ARGU[:baseColor]
   property :iri_prefix, :string, NS::ARGU[:iriPrefix]
   property :use_new_frontend, :boolean, NS::ARGU[:useNewFrontend], default: false
 

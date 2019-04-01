@@ -182,7 +182,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   def set_tenant_header
     ActsAsTenant.current_tenant ||=
       tree_root_fallback || raise(ActiveRecord::RecordNotFound.new("No tenant found for #{request.url}"))
-    response.headers['Tenant-IRI'] = "https://#{tree_root.iri_prefix}" if tree_root
+    response.headers['Website-Meta'] = website_meta.to_query if tree_root
   end
 
   def set_vary
@@ -243,6 +243,16 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   def vnext_request?
     afe_request? || api_request?
+  end
+
+  def website_meta
+    {
+      accent_background_color: tree_root.accent_background_color,
+      accent_color: tree_root.accent_color,
+      iri: "https://#{tree_root.iri_prefix}",
+      navbar_background: tree_root.navbar_background,
+      navbar_color: tree_root.navbar_color
+    }
   end
 
   protected

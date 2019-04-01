@@ -5,7 +5,6 @@ class PageSerializer < RecordSerializer
 
   attribute :name, predicate: NS::SCHEMA[:name]
   attribute :about, predicate: NS::SCHEMA[:description]
-  attribute :base_color, predicate: NS::ARGU[:baseColor]
   attribute :visibility, predicate: NS::ARGU[:visibility]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
