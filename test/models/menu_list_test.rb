@@ -54,7 +54,7 @@ class MenuListTest < ActiveSupport::TestCase
   end
 
   test 'Menu for user should not include update' do
-    assert_equal freetown.menu(user_context, :actions).menus.call.compact.map(&:tag), %i[activity search]
+    assert_equal freetown.menu(user_context, :actions).menus.call.compact.map(&:tag), %i[activity]
   end
 
   test 'Page menu for administrator should include hidden forum' do

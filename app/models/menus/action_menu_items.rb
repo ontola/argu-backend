@@ -34,6 +34,8 @@ module Menus
     end
 
     def search_link
+      return unless afe_request?
+
       menu_item(
         :search,
         image: 'fa-search',
