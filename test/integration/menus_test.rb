@@ -27,13 +27,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path, headers: argu_headers(accept: :nt)
 
     assert_response 200
-    expect_triple(menu_url(:organizations), RDF[:type], NS::ARGU[:MenuItem])
     expect_triple(menu_url(:info), RDF[:type], NS::ARGU[:MenuItem])
-
-    sequence = expect_sequence(menu_url(:organizations), NS::ARGU[:menuItems])
-    expect_sequence_member(sequence, 0, menu_url(:organizations, argu.url))
-    expect_sequence_member(sequence, 1, menu_url(:organizations, 'discover'))
-    expect_sequence_size(sequence, 2)
   end
 
   test 'Guest should get show page menu with custom item' do
@@ -57,14 +51,8 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path, headers: argu_headers(accept: :nt)
 
     assert_response 200
-    expect_triple(menu_url(:organizations), RDF[:type], NS::ARGU[:MenuItem])
     expect_triple(menu_url(:user), RDF[:type], NS::ARGU[:MenuItem])
     expect_triple(menu_url(:info), RDF[:type], NS::ARGU[:MenuItem])
-
-    sequence = expect_sequence(menu_url(:organizations), NS::ARGU[:menuItems])
-    expect_sequence_member(sequence, 0, menu_url(:organizations, Page.last.url))
-    expect_sequence_member(sequence, 1, menu_url(:organizations, 'discover'))
-    expect_sequence_size(sequence, 2)
   end
 
   private

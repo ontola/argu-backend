@@ -50,7 +50,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   with_collection :groups
   with_collection :shortnames, association: :descendant_shortnames
 
-  parentable
+  parentable :user
   property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {visible: 1, hidden: 3}
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
   property :base_color, :string, NS::ARGU[:baseColor]

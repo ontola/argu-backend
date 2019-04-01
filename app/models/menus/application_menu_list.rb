@@ -4,7 +4,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
   include SettingsHelper
   include LanguageHelper
   cattr_accessor :defined_menus
-  has_menus %i[organizations info user]
+  has_menus %i[info user]
 
   def info_menu # rubocop:disable Metrics/AbcSize
     menu_item(
@@ -50,51 +50,11 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
     afe_request? ? "#{settings_user_users_url}#profile" : settings_user_users_url(tab: :profile)
   end
 
-  def discover_link
-    menu_item(
-      :discover,
-      image: 'fa-compass',
-      label: I18n.t('pages.discover'),
-      href: pages_url
-    )
-  end
-
-  def favorite_pages
-    return Page.none if user.guest?
-    return @favorite_pages if instance_variable_defined?('@favorite_pages')
-    page_ids =
-      Forum.joins(:favorites, :parent).where(favorites: {user_id: user.id}).pluck('parents_edges.uuid')
-    @favorite_pages ||=
-      Page.where(uuid: page_ids).includes(:shortname, profile: :default_profile_photo)
-  end
-
-  def favorite_page_links
-    return if favorite_pages.blank?
-    policy_scope(favorite_pages)
-      .distinct
-      .map do |page|
-      menu_item(
-        page.url,
-        image: page.profile.try(:default_profile_photo),
-        label: page.display_name,
-        href: page.iri
-      )
-    end
-  end
-
   def language_menu_item
     menu_item(
       :language,
       label: I18n.t('set_language'),
       href: RDF::DynamicURI(expand_uri_template(:languages_iri, with_hostname: true))
-    )
-  end
-
-  def organizations_menu
-    menu_item(
-      :organizations,
-      image: 'fa-comments',
-      menus: -> { [favorite_page_links, public_page_links, discover_link].flatten }
     )
   end
 
@@ -107,29 +67,6 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
         .pluck('parents_edges.uuid')
     @public_pages ||=
       Page.where(uuid: page_ids).includes(:shortname, profile: :default_profile_photo)
-  end
-
-  def public_page_links # rubocop:disable Metrics/AbcSize
-    return if favorite_pages.count > 20 || public_pages.blank?
-    menu_items = lambda {
-      (policy_scope(public_pages) - favorite_pages)
-        .uniq
-        .map do |page|
-        menu_item(
-          page.url,
-          image: page.profile.try(:default_profile_photo),
-          label: page.display_name,
-          href: page.iri
-        )
-      end
-    }
-    return menu_items.call if favorite_pages.count.zero?
-    menu_item(
-      :public_pages,
-      label: I18n.t('pages.discover_header'),
-      type: NS::ARGU[:MenuSection],
-      menus: menu_items
-    )
   end
 
   def sign_out_menu_item
@@ -169,7 +106,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
     items = user_base_items
     items << user_settings_item
     items << user_drafts_item
-    items << user_page_management_item
+    items << user_pages_item
     items << user_forum_management_item if !user_context.vnext && resource.forum_management?
     items << user_notifications_item
     items << sign_out_menu_item
@@ -186,12 +123,8 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def user_page_management_item
-    if resource.page_management?
-      menu_item(:pages, label: I18n.t('pages.management.title'), href: pages_user_url(resource), image: 'fa-building')
-    else
-      menu_item(:create_page, label: I18n.t('pages.create'), href: new_page_url, image: 'fa-building')
-    end
+  def user_pages_item
+    menu_item(:pages, label: I18n.t('pages.my_pages'), href: pages_user_url(resource), image: 'fa-building')
   end
 
   def user_settings_item

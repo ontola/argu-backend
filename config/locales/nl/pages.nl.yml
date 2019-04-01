@@ -5,8 +5,9 @@ nl:
     type_new: "Nieuwe organisatie"
     plural: "Organisaties"
     show: "Organisatie weergeven"
-    discover: "Ontdek organisaties"
+    discover: "Ontdek Argu websites"
     discover_header: "Ontdek"
+    my_pages: "Mijn Argu websites"
     settings:
       title: "Organisatie instellingen"
       menu:

@@ -29,10 +29,24 @@ module Users
     end
 
     def index_collection
-      @index_collection ||= current_user.managed_page_collection(collection_options)
+      @collection ||= ::Collection.new(
+        association_base: favorite_pages,
+        association_class: Page,
+        parent: current_user,
+        user_context: user_context,
+        title: t('pages.my_pages'),
+        type: :paginated
+      )
     end
 
-    def index_collection_name; end
+    def favorite_pages
+      return Page.none if user.guest?
+      ActsAsTenant.without_tenant do
+        page_ids =
+          Forum.joins(:favorites, :parent).where(favorites: {user_id: current_user.id}).pluck('parents_edges.uuid')
+        Kaminari.paginate_array(Page.where(uuid: page_ids).includes(:shortname, profile: :default_profile_photo).to_a)
+      end
+    end
 
     def user
       return @user if @user.present?
