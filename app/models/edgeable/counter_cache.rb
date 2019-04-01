@@ -48,8 +48,8 @@ module Edgeable
 
       def update_children_count_statement(id, name, operation)
         query = 'children_counts = children_counts || hstore(?, (cast(COALESCE(children_counts -> ?, \'0\') AS int) '\
-                "#{operation} 1)::text)"
-        Edge.unscoped.where(id: id).update_all(sanitize_sql([query, name, name]))
+                "#{operation} 1)::text), updated_at = ?"
+        Edge.unscoped.where(id: id).update_all(sanitize_sql([query, name, name, Time.current]))
       end
 
       private
@@ -96,14 +96,20 @@ module Edgeable
               wrong: model.send("#{cache_name}_count"),
               right: count
             }
-            Edge
-              .unscoped
-              .where(id: model.id)
-              .update_all([%(children_counts = children_counts || hstore(?,?)), cache_name, count.to_s])
+            update_counts(model.id, cache_name, count)
           end
           start += batch_size
         end
         fixed
+      end
+
+      def update_counts(model_id, name, count)
+        Edge
+          .unscoped
+          .where(id: model_id)
+          .update_all(
+            [%(children_counts = children_counts || hstore(?,?), updated_at = ?), name, count.to_s, Time.current]
+          )
       end
     end
   end

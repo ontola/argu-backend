@@ -6,6 +6,7 @@ require 'argu/api'
 class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
   include Argu::Announcements
   include Argu::Controller::Authentication
+  include Argu::Controller::Caching
   include Argu::Controller::ErrorHandling
 
   include ActiveResponse::Controller

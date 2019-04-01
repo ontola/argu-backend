@@ -8,7 +8,7 @@ class VoteEvent < Edge # rubocop:disable Metrics/ClassLength
   with_collection :votes, default_filters: [{'option' => 'no'}, {'option' => 'other'}, 'option' => 'yes']
 
   counter_cache true
-  parentable :motion, :linked_record
+  parentable :motion, :linked_record, touch: true
   property :starts_at, :datetime, NS::SCHEMA[:startDate]
 
   def con_count
@@ -118,8 +118,7 @@ class VoteEvent < Edge # rubocop:disable Metrics/ClassLength
   class << self
     def preview_includes
       [
-        :current_vote,
-        vote_collection: inc_nested_collection + [default_filtered_collections: inc_shallow_collection]
+        vote_collection: inc_shallow_collection
       ]
     end
   end

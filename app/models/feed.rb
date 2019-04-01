@@ -80,11 +80,7 @@ class Feed
 
   class << self
     def preview_includes
-      [
-        :trackable,
-        :recipient,
-        owner: [:default_profile_photo]
-      ]
+      %i[trackable recipient]
     end
   end
 end

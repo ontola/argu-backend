@@ -16,7 +16,8 @@ class Follow < ApplicationRecord
                   column_name: proc { |model|
                     !model.never? ? 'follows_count' : nil
                   },
-                  column_names: {['follows.follow_type != ?', Follow.follow_types[:never]] => 'follows_count'}
+                  column_names: {['follows.follow_type != ?', Follow.follow_types[:never]] => 'follows_count'},
+                  touch: true
   validates :follow_type, presence: true
   validate :terms_accepted
 

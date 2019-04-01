@@ -39,10 +39,6 @@ module Edgeable
         Arel::Nodes::NamedFunction.new('COALESCE', [casted, Arel::Nodes::SqlLiteral.new('0')]).send(direction)
       end
 
-      def preview_includes
-        super + [creator: Profile.preview_includes]
-      end
-
       def reindex_with_tenant(async: true)
         ActsAsTenant.without_tenant do
           Page.find_each do |page|
@@ -79,6 +75,11 @@ module Edgeable
                  foreign_key: :parent_id,
                  inverse_of: :parent,
                  dependent: dependent
+      end
+
+      def parentable(*relation, touch: false)
+        belongs_to :parent, class_name: 'Edge', inverse_of: :children, touch: true if touch
+        super(*relation)
       end
 
       def with_collection(name, options = {})

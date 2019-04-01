@@ -130,9 +130,5 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
         con: {collection: grouped['con'] || []}
       )
     end
-
-    def show_includes
-      [:partOf, voteable: :actions]
-    end
   end
 end

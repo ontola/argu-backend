@@ -12,7 +12,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def authorize_action
-    return super unless action_name == 'create'
+    return super unless %w[create new].include?(action_name)
     method = authenticated_resource.persisted? ? :update? : :create?
     authorize authenticated_resource, method
   end

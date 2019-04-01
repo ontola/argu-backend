@@ -75,9 +75,5 @@ class GroupMembership < ApplicationRecord
     def includes_for_serializer
       [user: {}, group: {}]
     end
-
-    def show_includes
-      super + %i[organization]
-    end
   end
 end

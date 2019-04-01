@@ -5,6 +5,14 @@ class ActorsController < ParentableController
 
   private
 
+  def cache_per_user?
+    true
+  end
+
+  def cache_key_timestamp
+    @cache_key_timestamp ||= [current_user.updated_at, current_profile.updated_at].max
+  end
+
   def current_resource
     current_actor
   end
@@ -16,9 +24,5 @@ class ActorsController < ParentableController
 
   def index_includes_collection
     [:default_profile_photo]
-  end
-
-  def show_includes
-    %i[default_profile_photo user actor]
   end
 end

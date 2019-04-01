@@ -29,7 +29,7 @@ class Decision < Edge
   validates :description, length: {maximum: 5000}
   validate :correctly_forwarded, if: :forwarded?
   validates :state, presence: true
-  parentable :motion
+  parentable :motion, touch: true
 
   def display_name
     return self[:display_name] if destroyed?

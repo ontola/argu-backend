@@ -24,6 +24,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                   column_name: proc { |model|
                     model.attachment? ? 'attachments_count' : nil
                   },
+                  touch: true,
                   column_names: {['media_objects.used_as = ?', MediaObject.used_as[:attachment]] => 'attachments_count'}
 
   delegate :file, :icon, :avatar, :is_image?, to: :content
