@@ -166,7 +166,8 @@ other_page = FactorySeeder.create(
   creator: staff.profile,
   is_published: true,
   profile_attributes: {name: 'Other page'},
-  base_color: '#800000',
+  accent_background_color: '#800000',
+  navbar_background: '#800000',
   url: 'other_page',
   iri_prefix: 'app.argu.localtest/other_page'
 )
