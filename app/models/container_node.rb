@@ -16,6 +16,7 @@ class ContainerNode < Edge
   enhance Widgetable
   enhance Actionable
   enhance Statable
+  enhance Tableable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]
@@ -25,6 +26,13 @@ class ContainerNode < Edge
   property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
 
   with_collection :grants
+  with_columns settings: [
+    NS::SCHEMA[:name],
+    NS::ARGU[:followsCount],
+    NS::ARGU[:updateAction],
+    NS::ARGU[:destroyAction]
+  ]
+
   parentable :page
 
   after_save :reset_country

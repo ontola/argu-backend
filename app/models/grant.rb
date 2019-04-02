@@ -4,6 +4,7 @@ class Grant < ApplicationRecord
   enhance Createable
   enhance Destroyable
   enhance Actionable
+  enhance Tableable
 
   include Parentable
 
@@ -22,6 +23,12 @@ class Grant < ApplicationRecord
   scope :staff, -> { where(grant_set_id: GrantSet.staff.id) }
 
   scope :custom, -> { where('group_id > 0') }
+
+  with_columns settings: [
+    NS::SCHEMA[:name],
+    NS::ARGU[:grantSet],
+    NS::ARGU[:destroyAction]
+  ]
 
   validates :grant_set, presence: true
   validates :group, presence: true

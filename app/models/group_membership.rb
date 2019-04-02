@@ -6,6 +6,7 @@ class GroupMembership < ApplicationRecord
   enhance Actionable
   enhance Createable
   enhance Destroyable
+  enhance Tableable
 
   include Parentable
 
@@ -24,6 +25,11 @@ class GroupMembership < ApplicationRecord
   scope :active, lambda {
     where('start_date <= statement_timestamp() AND (end_date IS NULL OR end_date > statement_timestamp())')
   }
+
+  with_columns settings: [
+    NS::ORG[:member],
+    NS::ARGU[:destroyAction]
+  ]
 
   validates :member, presence: true
   validates :start_date, presence: true

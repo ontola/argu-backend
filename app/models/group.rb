@@ -10,6 +10,7 @@ class Group < ApplicationRecord
   enhance Menuable
   enhance Settingable
   enhance Updateable
+  enhance Tableable
 
   include Parentable
   include Edgeable::PropertyAssociations
@@ -28,6 +29,12 @@ class Group < ApplicationRecord
 
   with_collection :grants
   with_collection :group_memberships
+  with_columns settings: [
+    NS::SCHEMA[:name],
+    NS::ORG[:hasMember],
+    NS::ARGU[:settingsMenu],
+    NS::ARGU[:destroyAction]
+  ]
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
   validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}

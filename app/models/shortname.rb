@@ -4,6 +4,7 @@ class Shortname < ApplicationRecord
   enhance Actionable
   enhance Createable
   enhance Destroyable
+  enhance Tableable
 
   include Parentable
 
@@ -17,6 +18,12 @@ class Shortname < ApplicationRecord
   before_save :remove_primary_shortname, if: :primary?
   after_save :cache_iri_path!, if: :primary?
   after_destroy :cache_iri_path!, if: :primary?
+
+  with_columns settings: [
+    NS::ARGU[:alias],
+    NS::ARGU[:shortnameable],
+    NS::ARGU[:destroyAction]
+  ]
 
   # Uniqueness is done in the database (since rails lowercase support sucks,
   # and this is a point where data consistency is critical)

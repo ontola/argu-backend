@@ -5,6 +5,7 @@ class EmailAddress < ApplicationRecord
   enhance Destroyable
   enhance Updateable, except: %i[Action]
   enhance Actionable
+  enhance Tableable
 
   include Broadcastable
   include Parentable
@@ -17,6 +18,14 @@ class EmailAddress < ApplicationRecord
   before_save :remove_other_primaries
   before_save { |user| user.email = email.downcase if email.present? }
   before_update :send_confirmation_instructions, if: :email_changed?
+
+  with_columns settings: [
+    NS::SCHEMA[:email],
+    NS::ARGU[:makePrimaryAction],
+    NS::ARGU[:sendConfirmationAction],
+    NS::ARGU[:destroyAction]
+  ]
+
   parentable :user
   self.default_sortings = [{key: NS::SCHEMA[:email], direction: :asc}]
 
