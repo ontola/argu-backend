@@ -5,6 +5,7 @@ module SettingsHelper
     {
       general: 'gear',
       advanced: 'gears',
+      container_nodes: 'cubes',
       delete: 'trash',
       grants: 'suitcase',
       groups: 'group',
