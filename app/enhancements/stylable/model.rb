@@ -9,13 +9,14 @@ module Stylable
       property :accent_background_color, :string, NS::ARGU[:accentBackgroundColor], default: '#475668'
       property :base_color, :string, NS::ARGU[:baseColor], default: '#475668'
       property :navbar_background, :string, NS::ARGU[:navbarBackground], default: '#475668'
+      property :navbar_color, :string, NS::ARGU[:navbarColor]
 
       validates :accent_color, css_hex_color: true
       validates :accent_background_color, css_hex_color: true
       validates :base_color, css_hex_color: true
 
       def navbar_color
-        accent_color
+        super || accent_color
       end
     end
   end
