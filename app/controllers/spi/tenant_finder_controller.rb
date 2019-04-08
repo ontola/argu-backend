@@ -8,10 +8,7 @@ module SPI
     skip_after_action :verify_authorized
 
     def show
-      render json: {
-        iri_prefix: tenant!.iri_prefix,
-        uuid: tenant!.uuid
-      }
+      render json: tenant_meta
     end
 
     private
@@ -31,6 +28,14 @@ module SPI
     def tenant_from_parsed_iri
       parsed_iri = resource_from_iri(iri_param)&.iri
       TenantFinder.from_url(parsed_iri) if parsed_iri
+    end
+
+    def tenant_meta
+      Hash[
+        %w[uuid iri_prefix accent_background_color accent_color navbar_background navbar_color].map do |key|
+          [key, tenant!.send(key)]
+        end
+      ]
     end
   end
 end
