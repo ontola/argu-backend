@@ -257,7 +257,13 @@ Rails.application.routes.draw do
     resources :comments, only: %i[index new create], path: 'c'
   end
   resources :comments, only: %i[show]
+  resources :datasets, only: %i[show] do
+    include_route_concerns
+  end
   resources :direct_messages, path: :dm, only: [:create]
+  resources :distributions, only: %i[show] do
+    include_route_concerns
+  end
   resources :exports, only: [] do
     include_route_concerns
   end
@@ -310,7 +316,7 @@ Rails.application.routes.draw do
     include_route_concerns
   end
 
-  %i[blogs forums open_data_portals].each do |container_node|
+  %i[blogs forums open_data_portals data_catalogs].each do |container_node|
     resources container_node, only: %i[index new create]
   end
   resources :container_nodes, only: %i[index]

@@ -21,7 +21,7 @@ class PageMenuList < MenuList
       policy: :create_child?,
       policy_arguments: %i[forums],
       menus: lambda {
-        %i[forum blog open_data_portal].map do |container_type|
+        %i[forum blog open_data_portal data_catalog].map do |container_type|
           menu_item(
             :"new_#{container_type}",
             href: new_iri(resource, container_type.to_s.pluralize),

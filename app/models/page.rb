@@ -45,6 +45,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   with_collection :container_nodes
   with_collection :blogs
+  with_collection :data_catalog
   with_collection :forums
   with_collection :open_data_portals
   with_collection :groups

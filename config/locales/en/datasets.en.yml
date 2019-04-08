@@ -1,0 +1,40 @@
+en:
+  datasets:
+    type: "Dataset"
+    type_new: "New dataset"
+    plural: "Datasets"
+  formtastic:
+    labels:
+      dataset:
+        display_name: Title
+        description: Description
+        issued_at: Release date
+        modified_at: Update/modification date
+        language: Language
+        publisher: Publisher
+        accrualPeriodicity: Frequency
+        identifier: Identifier
+        spatial: Geographical coverage
+        temporal: Temporal coverage
+        theme: Theme/category
+        keyword: Keyword/tag
+        contactPoint: Contact point
+        distribution: Dataset distribution
+        landingPage: Landing page
+    placeholders:
+      dataset:
+        display_name: A name given to the dataset.
+        description: free-text account of the dataset.
+        issued_at: Date of formal issuance (e.g., publication) of the dataset.
+        modified_at: Most recent date on which the dataset was changed, updated or modified.
+        language: The language of the dataset.
+        publisher: An entity responsible for making the dataset available.
+        accrualPeriodicity: The frequency at which dataset is published.
+        identifier: A unique identifier of the dataset.
+        spatial: Spatial coverage of the dataset.
+        temporal: The temporal period that the dataset covers.
+        theme: The main category of the dataset. A dataset can have multiple themes.
+        keyword:  A keyword or tag describing the dataset.
+        contactPoint: Link a dataset to relevant contact information which is provided using VCard [vcard-rdf].
+        distribution: Connects a dataset to its available distributions.
+        landingPage: A Web page that can be navigated to in a Web browser to gain access to the dataset, its distributions and/or additional information.

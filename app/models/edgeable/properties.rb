@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'types/uuid_type'
+require 'types/uri_type'
 
 module Edgeable
   module Properties
@@ -80,6 +81,7 @@ module Edgeable
         defined_properties << {name: name, type: type, predicate: predicate, default: default, enum: enum}
 
         attribute name, property_type(type), default: default
+        validates name, length: {maximum: 50_000} if type == :text
 
         enum name => enum if enum.present?
 
@@ -93,6 +95,8 @@ module Edgeable
         case type
         when :linked_edge_id
           UUIDType.new
+        when :iri
+          URIType.new
         else
           type
         end

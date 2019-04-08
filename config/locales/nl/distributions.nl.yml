@@ -1,0 +1,42 @@
+nl:
+  distributions:
+    type: "Distributie"
+    type_new: "Nieuwe distributie"
+    plural: "Distributies"
+  formtastic:
+    labels:
+      distribution:
+        access_url: Toegangs-URL
+        description: Omschrijving
+        format: Formaat
+        license: Licentie
+        byte_size: Grootte
+        checksum: Checksum
+        page: Documentatie
+        download_url: Download-URL
+        language: Taal
+        conforms_to: Voldoet aan
+        media_type: Media type
+        issued: Uitgiftedatum
+        rights: Rechten
+        status: Status
+        title: Titel
+        modified: Wijzigingsdatum
+    placeholders:
+      distribution:
+        access_url: Webpagina die toegang geeft tot een distributie.
+        description: Beschrijving van de distributie op basis waarvan een gebruiker kan bepalen of de distributie bruikbaar is en die de distributie onderscheidt van andere distributies.
+        format: Fileformaat van de distributie.
+        license: Licentie waaronder de distributie beschikbaar wordt gesteld.
+        byte_size: Omvang van de distributie in bytes.
+        checksum: Verificatiemiddel om te bepalen of de inhoud van de distributie is gewijzigd.
+        page: Een document of pagina over de distributie.
+        download_url: Directe link naar het downloadbare bestand in het gegeven formaat.
+        language: Taal van de inhoud van de dataset.
+        conforms_to: Standaard waaraan de distributie voldoet
+        media_type: Mediatype volgens de IANA media type register
+        issued: Datum waarop de distributie formeel beschikbaar is gesteld.
+        rights: De rechten die rusten op een distributie.
+        status: Levensfase van de distributie.
+        display_name: Naam waaronder de distributie bekend staat.
+        modified: Laatste datum waarop de distributie zelf is gewijzigd.

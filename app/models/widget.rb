@@ -11,7 +11,8 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :permitted_action
 
   enum widget_type: {
-    custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5, blog_posts: 6, new_topic: 7
+    custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4,
+    overview: 5, blog_posts: 6, new_topic: 7, datasets: 8
   }
 
   acts_as_list scope: :owner
@@ -66,6 +67,18 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
           permitted_action: PermittedAction.find_by!(title: 'blog_post_show'),
           primary_resource: owner,
           resource_iri: [[blog_posts_iri, nil]],
+          size: 3
+        )
+    end
+
+    def create_datasets(owner)
+      datasets_iri = collection_iri(owner, :datasets, display: :grid, type: :infinite)
+      datasets
+        .create(
+          owner: owner,
+          permitted_action: PermittedAction.find_by!(title: 'dataset_show'),
+          primary_resource: owner,
+          resource_iri: [[datasets_iri, nil]],
           size: 3
         )
     end

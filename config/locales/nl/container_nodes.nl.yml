@@ -11,3 +11,7 @@ nl:
     type: "Dataportaal"
     type_new: "Nieuw dataportaal"
     plural: "Dataportalen"
+  data_catalogs:
+    type: "Data catalogus"
+    type_new: "Nieuw data catalogus"
+    plural: "Data catalogen"

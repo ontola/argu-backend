@@ -1,0 +1,5 @@
+en:
+  distributions:
+    type: "Distribution"
+    type_new: "New distribution"
+    plural: "Distributions"

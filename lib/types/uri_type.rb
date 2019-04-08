@@ -6,6 +6,7 @@ class URIType < ActiveRecord::Type::Value
   end
 
   def cast(value)
+    return if value.blank?
     return RDF::DynamicURI(value) if Rails.env.production?
     RDF::DynamicURI(value&.to_s&.gsub('https://argu.co', Rails.application.config.origin))
   end

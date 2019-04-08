@@ -11,3 +11,7 @@ en:
     type: "Dataportal"
     type_new: "New dataportal"
     plural: "Dataportals"
+  data_catalogs:
+    type: "Data catalog"
+    type_new: "New data catalog"
+    plural: "Data catalogs"

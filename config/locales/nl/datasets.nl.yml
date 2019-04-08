@@ -1,0 +1,71 @@
+nl:
+  datasets:
+    type: "Dataset"
+    type_new: "Nieuwe dataset"
+    plural: "Datasets"
+  formtastic:
+    labels:
+      dataset:
+        identifier: Globale ID
+        description: Omschrijving
+        title: Titel
+        language: Taal
+        modified: Wijzigingsdatum
+        contact_point: Aanmelder
+        distribution: Distributie
+        keyword: Trefwoord
+        published_by: Verstrekker
+        theme: Thema
+        landing_page: Landingspagina
+        spatial: Locatie
+        temporal: Dekking in tijd
+        authority: Registratiehouder
+        access_rights: Openbaarheid
+        conforms_to: Conform
+        page: Documentatie
+        accrual_periodicity: Wijzigingsfrequentie
+        has_version: Heeft versie
+        is_version_of: Is versie van
+        provenance: Totstandkoming
+        relation: Heeft relatie met
+        issued: Uitgiftedatum
+        sample: Voorbeeld
+        source: Brongegevens
+        type: Type
+        version_info: Versie
+        version_notes: Versietoelichting
+        grondslag: Grondslag
+        doel: Doel
+        kwaliteit: Kwaliteit
+        LODStars: LODStars
+    placeholders:
+      dataset:
+        identifier: Uniforme identificatie van de dataset.
+        description: Beschrijving van de dataset op basis waarvan een gebruiker kan bepalen of de dataset bruikbaar is en die de dataset onderscheidt van andere datasets.
+        display_name: Naam waaronder de dataset bekend staat.
+        language: Taal van de inhoud van de dataset.
+        modified: Laatste datum waarop de dataset zelf is gewijzigd. Deze datum zegt niets over de wijzigingsdatum van de metadata van de dataset.
+        contact_point: Contactinformatie voor informatie over de dataset (link).
+        keyword: Trefwoord dat de dataset karakteriseert.
+        published_by: Persoon of organisatie die verantwoordelijk is voor het technisch beheer en publicatie van de dataset (link).
+        theme: Thema waar de Dataset onder valt.
+        landing_page: Webpagina, meestal bij de verstrekker, die toelichting geeft bij de dataset, de distributies en metadata die de verstrekker geeft.
+        spatial: Geografisch gebied waarop de dataset betrekking heeft (link).
+        temporal: Periode in de tijd waarop de dataset betrekking heeft (link).
+        authority: De organisatie die eindverantwoordelijk is voor de inhoud van de dataset (link).
+        access_rights: De mate waarin een dataset openbaar beschikbaar is.
+        conforms_to: Standaard waar de dataset aan voldoet (link).
+        page: Een document of pagina over de Dataset (link).
+        accrual_periodicity: Frequentie waarmee de dataset wordt gewijzigd.
+        is_version_of: Verwijzing naar een Dataset waar deze dataset een versie van is
+        provenance: Link naar een beschrijving over de totstandkoming van de dataset
+        relation: Link naar een gerelateerde resource
+        issued: Datum waarop de dataset formeel is uitgegeven.
+        sample: Voorbeelddata
+        source: Dataset waaruit deze dataset is afgeleid
+        type: Nadere aanduiding van het soort dataset
+        version_info: Versieaanduiding.
+        version_notes: Toelichting bij de versieaanduiding.
+
+
+
