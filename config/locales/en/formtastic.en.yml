@@ -14,10 +14,13 @@ en:
       question: "Question"
     labels:
       about: "About"
+      alias: 'Alias'
       are_votes_public: "Show my activity and my votes on my profile"
       attachments: "Attachments"
+      attachment_collection: "Attachments"
       audience: "Audience"
       birthday: "Year of birth"
+      confirmation_string: "Confirmation"
       content: "Content"
       country_code: "Country"
       cover_photo_attribution: "Copyright"
@@ -36,6 +39,10 @@ en:
       f_move: "Move"
       f_convert: "Convert"
       f_delete: "Delete"
+      follows_count: 'Followers'
+      grant_set: 'Permission set'
+      group_membership_collection: 'Members'
+      home_placement: "Address"
       is_public: "Show profile to non-members"
       is_trashed: "Is hidden"
       invert_arguments: "Invert argumens"
@@ -47,6 +54,7 @@ en:
       email: "Email"
       email_or_username: "Email or username"
       password: "Password"
+      path: "alias"
       pinned: "Pin"
       postal_code: "Postal code"
       require_location: "Location is required"
@@ -57,7 +65,7 @@ en:
       remove_content: "Remove image"
       remove_profile_photo: "Remove profile photo"
       remove_image: "Remove photo"
-      confirmation_string: "Confirmation"
+      settings_menu: 'Settings'
       title: "Title"
       time_zone: "Time zone"
       updated_at: "Updated at"
@@ -86,7 +94,10 @@ en:
       group:
         name: "Name"
         name_singular: "Name singular"
+      group_membership:
+        user: 'Member'
       shortname:
+        owner: 'Target'
         owner_type: "Resource type"
         owner_id: "Resource id"
         shortname: "Path"

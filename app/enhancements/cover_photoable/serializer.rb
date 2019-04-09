@@ -4,7 +4,7 @@ module CoverPhotoable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :default_cover_photo, predicate: NS::ARGU[:coverPhoto]
+      has_one :default_cover_photo, predicate: NS::ARGU[:coverPhoto], image: 'file-image-o'
     end
   end
 end

@@ -119,19 +119,35 @@ module NamesHelper
   private
 
   # @private
-  def icon_for(item) # rubocop:disable Metrics/AbcSize
-    if item.class == BlogPost
+  def icon_for(item) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    if [item.class, item].include?(BlogPost)
       blog_post_icon
     elsif item.class == Decision
       decision_icon(item)
-    elsif item.class == Motion
+    elsif item == Decision
+      'legal'
+    elsif [item.class, item].include?(Motion)
       motion_icon
-    elsif item.class == Question
+    elsif [item.class, item].include?(Question)
       question_icon
-    elsif item.class == Argument
+    elsif [item.class, item].include?(Argument)
       argument_icon
-    elsif item.class == Comment
-      I18n.t('comments.type')
+    elsif [item.class, item].include?(ProArgument)
+      'minus'
+    elsif [item.class, item].include?(ConArgument)
+      'plus'
+    elsif [item.class, item].include?(Comment)
+      'comment'
+    elsif [item.class, item].include?(Topic)
+      'comments'
+    elsif [item.class, item].include?(ProOpinion)
+      'thumbs-up'
+    elsif [item.class, item].include?(ConOpinion)
+      'thumbs-down'
+    elsif [item.class, item].include?(NeutralOpinion)
+      'pause'
+    elsif [item.class, item].include?(MediaObject)
+      'file'
     end
   end
 

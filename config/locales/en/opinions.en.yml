@@ -1,6 +1,10 @@
 en:
   opinions:
+    type: 'Opinion'
+    type_new: 'New opinion'
     plural: "Opinions"
+    tooltips:
+      info: 'An opinion is an explanation of why you are for or against something.'
     expired:
       pro: "%{user} was in favour when posting this comment"
       con: "%{user} was against when posting this comment"
@@ -26,3 +30,15 @@ en:
       or: "or"
       facebook_login: "Log in with Facebook"
       facebook_notice: "We never post to your Facebook wall."
+  con_opinions:
+    type: 'Opinion'
+    tooltips:
+      info: 'An opinion is an explanation of why you are for or against something.'
+  pro_opinions:
+    type: 'Opinion'
+    tooltips:
+      info: 'An opinion is an explanation of why you are for or against something.'
+  neutral_opinions:
+    type: 'Opinion'
+    tooltips:
+      info: 'An opinion is an explanation of why you are for or against something.'

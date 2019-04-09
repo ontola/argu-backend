@@ -7,7 +7,7 @@ en:
     plural: "Updates"
     unpublished: "Draft"
     tooltips:
-      info: "An update is a message in which the progress of a project is shared."
+      info: "An Blogpost is a message or article in which something is shared."
       count: "Amount of updates"
     header: "Blog"
     latest: "Latest news"

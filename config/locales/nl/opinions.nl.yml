@@ -1,6 +1,10 @@
 nl:
   opinions:
+    type: 'Mening'
+    type_new: 'Nieuwe mening'
     plural: "Meningen"
+    tooltips:
+      info: 'Een mening is een toelichting op jouw stem voor of tegen iets.'
     expired:
       pro: "%{user} was voor tijdens deze reactie"
       con: "%{user} was tegen tijdens deze reactie"
@@ -26,3 +30,15 @@ nl:
       or: "of"
       facebook_login: "Log in met Facebook"
       facebook_notice: "We plaatsen nooit iets op jouw Facebook pagina."
+  con_opinions:
+    type: 'Mening'
+    tooltips:
+      info: 'Een mening is een toelichting op jouw stem voor of tegen iets.'
+  pro_opinions:
+    type: 'Mening'
+    tooltips:
+      info: 'Een mening is een toelichting op jouw stem voor of tegen iets.'
+  neutral_opinions:
+    type: 'Mening'
+    tooltips:
+      info: 'Een mening is een toelichting op jouw stem voor of tegen iets.'

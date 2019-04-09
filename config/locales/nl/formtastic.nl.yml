@@ -14,10 +14,13 @@ nl:
       question: "Uitdaging"
     labels:
       about: "Over"
+      alias: 'Alias'
       are_votes_public: "Toon mijn activiteit en mijn stemmen in mijn profiel"
       attachments: "Bijlagen"
+      attachment_collection: "Bijlagen"
       audience: "Publiek"
       birthday: "Geboortejaar"
+      confirmation_string: "Bevestiging"
       content: "Inhoud"
       country_code: "Land"
       cover_photo_attribution: "Auteursrechten"
@@ -36,6 +39,10 @@ nl:
       f_move: "Verplaatsen"
       f_convert: "Omzetten"
       f_delete: "Verwijderen"
+      follows_count: 'Volgers'
+      grant_set: 'Rechtenset'
+      group_membership_collection: 'Leden'
+      home_placement: "Adres"
       is_public: "Profiel zichtbaar voor niet-leden"
       is_trashed: "Is verborgen"
       invert_arguments: "Argumenten omdraaien"
@@ -47,6 +54,7 @@ nl:
       email: "Email"
       email_or_username: "Email of gebruikersnaam"
       password: "Wachtwoord"
+      path: "alias"
       pinned: "Vastzetten"
       postal_code: "Postcode"
       require_location: "Locatie is verplicht"
@@ -57,7 +65,7 @@ nl:
       remove_content: "Afbeelding verwijderen"
       remove_profile_photo: "Profielfoto verwijderen"
       remove_image: "Foto verwijderen"
-      confirmation_string: "Bevestiging"
+      settings_menu: 'Instellingen'
       title: "Titel"
       time_zone: "Tijdzone"
       updated_at: "Aangepast op"
@@ -86,7 +94,10 @@ nl:
       group:
         name: "Naam"
         name_singular: "Naam enkelvoud"
+      group_membership:
+        user: 'Lid'
       shortname:
+        owner: 'Doel'
         owner_type: "Object type"
         owner_id: "Object id"
         shortname: "Pad"

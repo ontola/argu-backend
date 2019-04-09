@@ -1,4 +1,6 @@
 en:
   media_objects:
-    type: "File"
-    plural: "Files"
+    type: "Attachment"
+    plural: "Attachments"
+    tooltips:
+      info: 'An attachment is a file which has been appended to a document to provide more information.'

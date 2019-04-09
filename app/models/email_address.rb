@@ -94,4 +94,10 @@ class EmailAddress < ApplicationRecord
       email.update(primary: false)
     end
   end
+
+  class << self
+    def input_select_property
+      NS::SCHEMA[:email]
+    end
+  end
 end

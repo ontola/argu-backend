@@ -1,4 +1,6 @@
 nl:
   media_objects:
-    type: "Bestand"
-    plural: "Bestanden"
+    type: "Bijlage"
+    plural: "Bijlages"
+    tooltips:
+      info: 'Een bijlage is een bestand dat bij een document gevoegd is om meer informatie te verschaffen.'

@@ -6,3 +6,5 @@ en:
     call_to_action:
       title: "Discuss a topic?"
       body: "Do you want to start a conversation about a specific topic?"
+    tooltips:
+      info: "A topic is a general discussion about a specific subject."

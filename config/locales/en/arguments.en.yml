@@ -2,13 +2,17 @@
 
 en:
   pro_arguments:
-    type: "pro"
+    type: "Pro"
     type_new: "New pro"
     plural: "Pros"
+    tooltips:
+      info: "A pro argument is a reason to be in favor of something."
   con_arguments:
-    type: "con"
+    type: "Con"
     type_new: "New con"
     plural: "Cons"
+    tooltips:
+      info: "A con argument is a reason to be against something."
   arguments:
     type: "argument"
     type_new: "New argument"

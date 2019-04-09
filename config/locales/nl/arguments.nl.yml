@@ -5,10 +5,14 @@ nl:
     type: "Voordeel"
     type_new: "Nieuw voordeel"
     plural: "Voordelen"
+    tooltips:
+      info: "Een voorargument is een reden om ergens voor te zijn."
   con_arguments:
     type: "Nadeel"
     type_new: "Nieuw nadeel"
     plural: "Nadelen"
+    tooltips:
+      info: "Een tegenargument is een reden om ergens tegen te zijn."
   arguments:
     type: "Argument"
     type_new: "Nieuw argument"
