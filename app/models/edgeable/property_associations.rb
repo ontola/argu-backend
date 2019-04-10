@@ -38,7 +38,7 @@ module Edgeable
 
       def has_many(name, scope = nil, **options) # rubocop:disable Metrics/AbcSize
         opts = options.presence || scope
-        return super unless opts.key?(:foreign_key_property)
+        return super unless opts.is_a?(Hash) && opts.key?(:foreign_key_property)
         klass_name = (opts[:class_name] || name).to_s.classify
         property_options = klass_name.constantize.property_options(name: opts[:foreign_key_property])
         raise "Options for #{opts[:foreign_key_property]} not found" if property_options.nil?
