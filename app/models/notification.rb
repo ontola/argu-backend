@@ -46,7 +46,7 @@ class Notification < ApplicationRecord
   end
 
   def url_object
-    href = activity.present? ? activity.trackable.iri : url
+    href = activity.present? ? activity.trackable.iri_path : url
     href = path_with_hostname(href) if href.start_with?('/')
     RDF::DynamicURI(href)
   end
