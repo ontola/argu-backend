@@ -45,12 +45,13 @@ class GroupMembership < ApplicationRecord
 
   attr_accessor :token
 
-  def self.anonymize(collection)
-    collection.update_all(member_id: Profile::COMMUNITY_ID, end_date: Time.current)
-  end
-
-  def self.iri
-    [super, NS::ORG['Membership']]
+  # @todo this overwrite might not be needed when the old frontend is ditched
+  def iri(opts = {})
+    return super if ActsAsTenant.current_tenant.present?
+    return @iri if @iri && opts.blank?
+    iri = ActsAsTenant.with_tenant(root) { super }
+    @iri = iri if opts.blank?
+    iri
   end
 
   def publisher
@@ -78,8 +79,16 @@ class GroupMembership < ApplicationRecord
   end
 
   class << self
+    def anonymize(collection)
+      collection.update_all(member_id: Profile::COMMUNITY_ID, end_date: Time.current)
+    end
+
     def includes_for_serializer
       [user: {}, group: {}]
+    end
+
+    def iri
+      [super, NS::ORG['Membership']]
     end
 
     def show_includes

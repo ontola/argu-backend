@@ -2,24 +2,15 @@
 
 class RedirectController < ApplicationController
   def show
-    ActsAsTenant.without_tenant { redirect_to((resource_by_shortname || resource).iri) }
+    ActsAsTenant.without_tenant do
+      redirect_to(resource_by_shortname || resource_from_params)
+    end
   end
 
   private
 
-  def resource # rubocop:disable Metrics/AbcSize
-    case params[:resource]
-    when 'Decision'
-      Edge
-        .find_by!(owner_id: params[:id], owner_type: 'Motion')
-        .decisions
-        .find_by(step: params[:step])
-    when 'Argument'
-      Edge.find_by(owner_id: params[:id], owner_type: 'ConArgument') ||
-        Edge.find_by!(owner_id: params[:id], owner_type: 'ProArgument')
-    else
-      Edge.find_by!(owner_id: params[:id], owner_type: params[:resource])
-    end
+  def resource_from_params
+    resource_from_opts(nil, params)
   end
 
   def resource_by_shortname

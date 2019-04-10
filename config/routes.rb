@@ -155,17 +155,18 @@ Rails.application.routes.draw do
     root to: 'static_pages#home'
 
     {
-      q: 'Question',
-      m: 'Motion',
-      a: 'Argument',
-      pro: 'Argument',
-      con: 'Argument',
-      posts: 'BlogPost',
-      c: 'Comment'
+      q: Question,
+      m: Motion,
+      a: Argument,
+      pro: Argument,
+      con: Argument,
+      posts: BlogPost,
+      c: Comment,
+      group_memberships: GroupMembership
     }.each do |path, resource|
-      get "#{path}/:id", to: 'redirect#show', defaults: {resource: resource.to_s}
+      get "#{path}/:id", to: 'redirect#show', defaults: {class: resource}
     end
-    get 'm/:id/decision/:step', to: 'redirect#show', defaults: {resource: 'Decision'}
+    get 'm/:parent_id/decision/:id', to: 'redirect#show', defaults: {class: Decision}
     get ':shortname', to: 'redirect#show'
   end
   root to: 'pages#show'

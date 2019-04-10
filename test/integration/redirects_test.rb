@@ -20,48 +20,64 @@ class RedirectssTest < ActionDispatch::IntegrationTest
       state: 'approved'
     )
   end
+  let(:group) { Group.custom.first }
+  let(:group_membership) { create(:group_membership, parent: group) }
+
+  before do
+    ActsAsTenant.current_tenant = nil
+  end
 
   #####################################################
   # Unscoped routes
   #####################################################
 
+  test 'redirect unscoped forum route' do
+    get argu_url("/#{freetown.url}")
+    assert_redirected_to resource_iri(freetown).path
+  end
+
   test 'redirect unscoped question route' do
-    get argu_url("/q/#{question.owner_id}")
-    assert_redirected_to resource_iri(question)
+    get argu_url("/q/#{question.fragment}")
+    assert_redirected_to resource_iri(question).path
   end
 
   test 'redirect unscoped motion route' do
-    get argu_url("/m/#{motion.owner_id}")
-    assert_redirected_to resource_iri(motion)
+    get argu_url("/m/#{motion.fragment}")
+    assert_redirected_to resource_iri(motion).path
   end
 
   test 'redirect unscoped argument route' do
-    get argu_url("/a/#{pro_argument.owner_id}")
-    assert_redirected_to resource_iri(pro_argument)
+    get argu_url("/a/#{pro_argument.fragment}")
+    assert_redirected_to resource_iri(pro_argument).path
   end
 
   test 'redirect unscoped pro_argument route' do
-    get argu_url("/pro/#{pro_argument.owner_id}")
-    assert_redirected_to resource_iri(pro_argument)
+    get argu_url("/pro/#{pro_argument.fragment}")
+    assert_redirected_to resource_iri(pro_argument).path
   end
 
   test 'redirect unscoped con_argument route' do
-    get argu_url("/con/#{con_argument.owner_id}")
-    assert_redirected_to resource_iri(con_argument)
+    get argu_url("/con/#{con_argument.fragment}")
+    assert_redirected_to resource_iri(con_argument).path
   end
 
   test 'redirect unscoped blog_post route' do
-    get argu_url("/posts/#{blog_post.owner_id}")
-    assert_redirected_to resource_iri(blog_post)
+    get argu_url("/posts/#{blog_post.fragment}")
+    assert_redirected_to resource_iri(blog_post).path
   end
 
   test 'redirect unscoped comment route' do
-    get argu_url("/c/#{comment.owner_id}")
-    assert_redirected_to resource_iri(comment)
+    get argu_url("/c/#{comment.fragment}")
+    assert_redirected_to resource_iri(comment).path
   end
 
   test 'redirect unscoped decision route' do
-    get argu_url("/m/#{motion.owner_id}/decision/#{decision.step}")
-    assert_redirected_to resource_iri(decision)
+    get argu_url("/m/#{motion.fragment}/decision/#{decision.step}")
+    assert_redirected_to resource_iri(decision).path
+  end
+
+  test 'redirect unscoped group_membership route' do
+    get argu_url("/group_memberships/#{group_membership.id}")
+    assert_redirected_to resource_iri(group_membership).path
   end
 end
