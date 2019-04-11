@@ -7,6 +7,9 @@ class DirectMessage
   include RailsLD::Model
   include ApplicationModel
   include IRIHelper
+  include Parentable
+
+  parentable :resource
 
   enhance Actionable
   enhance Createable
