@@ -42,6 +42,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   after_create :create_default_groups
   after_create :create_staff_grant
+  after_create :reindex
 
   with_collection :container_nodes
   with_collection :blogs
@@ -83,6 +84,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       else
         RDF::URI("#{Rails.env.test? ? :http : :https}://#{iri_prefix}")
       end
+  end
+
+  def reindex(async: true)
+    ActsAsTenant.with_tenant(self) { Edge.reindex(async: async) } if Searchkick.callbacks?
   end
 
   def root_object?

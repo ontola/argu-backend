@@ -45,9 +45,7 @@ module Edgeable
 
       def reindex_with_tenant(async: true)
         ActsAsTenant.without_tenant do
-          Page.find_each do |page|
-            ActsAsTenant.with_tenant(page) { Edge.reindex(async: async) }
-          end
+          Page.find_each { |page| page.reindex(async: async) }
         end
       end
 
