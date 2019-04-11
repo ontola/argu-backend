@@ -172,6 +172,8 @@ nl:
         description: "Licht je update hier toe."
         display_name: "Plaats de kern van de update"
         title: "Plaats de kern van de update"
+      direct_message:
+        email: ""
       motion:
         content: "Plaats hier de details en achtergrondinformatie van jouw idee."
         description: "Plaats hier de details en achtergrondinformatie van jouw idee."

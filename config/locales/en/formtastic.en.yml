@@ -172,6 +172,8 @@ en:
         description: "Enter details and background information on your update here."
         display_name: "Enter the core of your update here"
         title: "Enter the core of your update here"
+      direct_message:
+        email: ""
       motion:
         content: "Enter details and background information on your idea here."
         description: "Enter details and background information on your idea here."
