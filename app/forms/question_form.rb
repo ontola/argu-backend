@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
 class QuestionForm < ApplicationForm
-  fields [
-    :display_name,
-    :description,
-    :default_cover_photo,
-    {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
-    :attachments,
-    :custom_placement,
-    :advanced,
-    :hidden,
-    :footer
+  fields %i[
+    display_name
+    description
+    default_cover_photo
+    attachments
+    custom_placement
+    advanced
+    hidden
+    footer
   ]
 
   property_group :advanced,
                  label: I18n.t('forms.advanced'),
-                 properties: %i[
-                   require_location
-                   pinned
-                   default_motion_sorting
-                   expires_at
+                 properties: [
+                   {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
+                   :require_location,
+                   :pinned,
+                   :default_motion_sorting,
+                   :expires_at
                  ]
 
   property_group :footer,

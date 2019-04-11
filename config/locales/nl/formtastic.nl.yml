@@ -30,6 +30,7 @@ nl:
       creator: "Plaatsen als"
       custom_placement: "Locatie"
       default_cover_photo: "Coverfoto"
+      default_motion_sorting: "Standaard sortering van ideeën"
       default_profile_photo: "Profielfoto"
       description: "Inhoud"
       dismissable: "Sluitbaar"

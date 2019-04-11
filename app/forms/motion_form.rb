@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
 class MotionForm < ApplicationForm
-  fields [
-    :display_name,
-    :description,
-    :default_cover_photo,
-    {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
-    :attachments,
-    :custom_placement,
-    :advanced,
-    :hidden,
-    :footer
+  fields %i[
+    display_name
+    description
+    default_cover_photo
+    attachments
+    custom_placement
+    advanced
+    hidden
+    footer
   ]
 
   property_group :advanced,
                  label: I18n.t('forms.advanced'),
-                 properties: %i[
-                   pinned
-                   expires_at
+                 properties: [
+                   {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
+                   :pinned,
+                   :expires_at
                  ]
 
   property_group :footer,

@@ -30,6 +30,7 @@ en:
       creator: "Post as"
       custom_placement: "Location"
       default_cover_photo: "Cover photo"
+      default_motion_sorting: "Default sorting of ideas"
       default_profile_photo: "Profile photo"
       description: "Content"
       dismissable: "Dismissable"
