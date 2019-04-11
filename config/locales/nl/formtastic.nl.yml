@@ -66,6 +66,7 @@ nl:
       remove_profile_photo: "Profielfoto verwijderen"
       remove_image: "Foto verwijderen"
       settings_menu: 'Instellingen'
+      status: 'Status'
       title: "Titel"
       time_zone: "Tijdzone"
       updated_at: "Aangepast op"

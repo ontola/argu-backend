@@ -3,6 +3,7 @@
 class Export < ApplicationRecord
   enhance Createable
   enhance Destroyable
+  enhance Tableable
   enhance Actionable
   include Parentable
 
@@ -12,6 +13,12 @@ class Export < ApplicationRecord
   enum status: {pending: 0, processing: 1, done: 2, failed: -1}
   mount_uploader :zip, ExportUploader
   parentable :edge
+  with_columns default: [
+    NS::SCHEMA[:dateCreated],
+    NS::SCHEMA[:url],
+    NS::ARGU[:exportStatus],
+    NS::ARGU[:destroyAction]
+  ]
 
   def display_name
     "Export #{created_at}"
