@@ -5,6 +5,7 @@ class BlogForm < RailsLD::Form
     display_name
     bio
     bio_long
+    locale
     url
     language
     default_cover_photo

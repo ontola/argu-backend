@@ -5,8 +5,26 @@ class ContainerNodeSerializer < EdgeSerializer
   attribute :bio_long, predicate: NS::SCHEMA[:text]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
   attribute :language, predicate: NS::SCHEMA[:language], datatype: NS::XSD[:string]
+  attribute :locale, predicate: NS::ARGU[:locale]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
   attribute :public_grant, predicate: NS::ARGU[:publicGrant]
+
+  enum :locale,
+       type: NS::SCHEMA[:Thing],
+       options: Hash[
+         ISO3166::Country.codes
+           .flat_map do |code|
+           ISO3166::Country.new(code).languages_official.map do |language|
+             [
+               "#{language}-#{code}".to_sym,
+               {
+                 iri: NS::ARGU["locale#{language}#{code}"],
+                 label: -> { "#{ISO3166::Country.translations(I18n.locale)[code]} (#{language.upcase})" }
+               }
+             ]
+           end
+         end
+       ]
 
   enum :public_grant,
        type: GrantSet.iri,
