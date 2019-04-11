@@ -19,6 +19,7 @@ class Comment < Edge
   belongs_to :commentable, polymorphic: true
 
   after_commit :set_vote, on: :create
+  after_trash :unlink_vote
 
   counter_cache comments: {}, threads: {in_reply_to_id: nil}
   with_collection :comment_children, association_class: Comment
@@ -65,6 +66,7 @@ class Comment < Edge
     Comment.transaction do
       trash unless is_trashed?
       Comment.anonymize(Comment.where(id: id))
+      unlink_vote
       update_attribute(:body, '')
     end
   end
@@ -76,6 +78,10 @@ class Comment < Edge
     vote = Edge.where_owner('Vote', creator: creator, uuid: vote_id, root_id: root_id).first ||
       raise(ActiveRecord::RecordNotFound)
     vote.update!(comment_id: uuid)
+  end
+
+  def unlink_vote
+    vote&.update(comment_id: nil)
   end
 
   class << self
