@@ -13,7 +13,7 @@ class MotionForm < ApplicationForm
   ]
 
   property_group :advanced,
-                 label: I18n.t('forms.advanced'),
+                 label: -> { I18n.t('forms.advanced') },
                  properties: [
                    {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
                    :pinned,
