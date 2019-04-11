@@ -47,7 +47,7 @@ RSpec.feature 'Page deletion', type: :feature do
 
     sign_in(user)
     visit settings_iri(forum_page)
-    click_link 'Advanced'
+    click_link 'General'
     within '.danger-zone' do
       click_link 'Delete'
     end
@@ -72,7 +72,7 @@ RSpec.feature 'Page deletion', type: :feature do
 
     sign_in(argu.publisher)
     visit settings_iri(argu)
-    click_link 'Advanced'
+    click_link 'General'
     within '.danger-zone' do
       click_link 'Delete'
     end

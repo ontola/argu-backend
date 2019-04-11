@@ -70,7 +70,8 @@ class PageMenuList < MenuList
       iri_base: -> { resource.iri_path },
       menus: lambda {
         [
-          setting_item(:profile, label: I18n.t('pages.settings.menu.general'), href: edit_iri(resource.profile)),
+          setting_item(:general, label: I18n.t('pages.settings.menu.general'), href: edit_iri(resource)),
+          setting_item(:profile, label: I18n.t('pages.settings.menu.profile'), href: edit_iri(resource.profile)),
           setting_item(
             :container_nodes,
             label: I18n.t('pages.settings.menu.container_nodes'),
@@ -81,7 +82,6 @@ class PageMenuList < MenuList
             label: I18n.t('pages.settings.menu.groups'),
             href: collection_iri(resource, :groups, display: :settingsTable)
           ),
-          setting_item(:advanced, label: I18n.t('pages.settings.menu.advanced'), href: edit_iri(resource)),
           setting_item(
             :shortnames,
             label: I18n.t('pages.settings.menu.shortnames'),

@@ -254,7 +254,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     get settings_iri(page)
     assert_response 200
 
-    %i[profile groups forums advanced shortnames].each do |tab|
+    %i[profile groups forums general shortnames].each do |tab|
       RequestStore.store[:old_frontend] = true
       get settings_iri(page, tab: tab)
       assert_response 200

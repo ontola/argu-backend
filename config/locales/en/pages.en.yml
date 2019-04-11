@@ -13,7 +13,7 @@ en:
       menu:
         return: "View %{resource}"
         general: 'General'
-        profile: 'General'
+        profile: 'Organisation profile'
         advanced: 'Advanced'
         groups: 'Groups'
         grants: 'Grants'

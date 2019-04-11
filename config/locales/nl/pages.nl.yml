@@ -13,7 +13,7 @@ nl:
       menu:
         return: "Bekijk %{resource}"
         general: 'Algemeen'
-        profile: 'Algemeen'
+        profile: 'Organisatieprofiel'
         advanced: 'Geavanceerd'
         groups: 'Groepen'
         grants: 'Rechten'
