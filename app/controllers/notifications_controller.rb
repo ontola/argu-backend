@@ -76,10 +76,11 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
 
   def index_collection
     @collection ||= ::Collection.new(
-      association_class: Notification,
-      default_type: :infinite,
-      user_context: user_context,
-      parent: nil
+      collection_options.merge(
+        association_class: Notification,
+        default_type: :infinite,
+        parent: nil
+      )
     )
   end
 
