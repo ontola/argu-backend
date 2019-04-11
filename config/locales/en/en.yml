@@ -253,6 +253,9 @@ en:
     staff_only: "Staff only"
     advanced: "Advanced"
     admin: "Administrative functions"
+    theme:
+      label: "Theme"
+      description: "Please reload the page after changing the theme."
   users:
     logged_in_banner_text: "%{name}"
     registrations:

@@ -14,6 +14,8 @@ en:
       question: "Question"
     labels:
       about: "About"
+      accent_background_color: "Background color of buttons"
+      accent_color: "Text color of buttons"
       alias: 'Alias'
       are_votes_public: "Show my activity and my votes on my profile"
       attachments: "Attachments"
@@ -51,6 +53,8 @@ en:
       language: "Language"
       mark_as_important: "Mark as important"
       name: "Name"
+      navbar_background: "Background of top bar"
+      navbar_color: "Text color of top bar"
       password_confirmation: "Confirm password"
       email: "Email"
       email_or_username: "Email or username"

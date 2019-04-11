@@ -14,6 +14,8 @@ nl:
       question: "Uitdaging"
     labels:
       about: "Over"
+      accent_background_color: "Achtergrondkleur van knoppen"
+      accent_color: "Tekstkleur van knoppen"
       alias: 'Alias'
       are_votes_public: "Toon mijn activiteit en mijn stemmen in mijn profiel"
       attachments: "Bijlagen"
@@ -51,6 +53,8 @@ nl:
       language: "Taal"
       mark_as_important: "Markeer als belangrijk"
       name: "Naam"
+      navbar_background: "Achtergrond van bovenste balk"
+      navbar_color: "Tekstkleur van bovenste balk"
       password_confirmation: "Wachtwoord bevestigen"
       email: "Email"
       email_or_username: "Email of gebruikersnaam"

@@ -254,6 +254,9 @@ nl:
     staff_only: "Staff only"
     advanced: "Geavanceerd"
     admin: "Administratieve functies"
+    theme:
+      label: "Thema"
+      description: "Herlaadt de pagina na het wijzigen van het thema"
   users:
     logged_in_banner_text: "%{name}"
     registrations:
