@@ -9,6 +9,8 @@ class ContainerNodeSerializer < EdgeSerializer
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
   attribute :public_grant, predicate: NS::ARGU[:publicGrant]
 
+  with_collection :grants, predicate: NS::ARGU[:grants]
+
   enum :locale,
        type: NS::SCHEMA[:Thing],
        options: Hash[

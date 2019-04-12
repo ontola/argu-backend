@@ -14,7 +14,7 @@ class GroupPolicy < EdgeTreePolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[name display_name name_singular]
-    attributes.append(grants_attributes: %i[id grant_set_id edge_id group_id])
+    attributes.append(grants_attributes: %i[id grant_set_id edge_id group_id _destroy])
     attributes.append :id if staff?
     attributes
   end

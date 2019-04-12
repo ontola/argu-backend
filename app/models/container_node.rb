@@ -42,13 +42,14 @@ class ContainerNode < Edge
   alias_attribute :name, :display_name
   alias_attribute :description, :bio
 
+  accepts_nested_attributes_for :grants, reject_if: :all_blank, allow_destroy: true
+
   auto_strip_attributes :name, :cover_photo_attribution, squish: true
   auto_strip_attributes :bio, nullify: false
   validates :url, presence: true, length: {minimum: 4, maximum: 75}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :bio, length: {maximum: 90}
   validates :bio_long, length: {maximum: 5000}
-  validates :public_grant, presence: true
 
   attr_writer :public_grant
 
@@ -96,6 +97,8 @@ class ContainerNode < Edge
   end
 
   def reset_public_grant # rubocop:disable Metrics/AbcSize
+    return if @public_grant.blank?
+
     if public_grant&.to_sym == :none
       grants.where(group_id: Group::PUBLIC_ID).destroy_all
     else

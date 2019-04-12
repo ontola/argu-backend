@@ -37,6 +37,7 @@ en:
       description: "Content"
       dismissable: "Dismissable"
       display_name: "Title"
+      edge_id: "Object"
       ends_at: "Ends at"
       expires_at: "Expires at"
       f_move: "Move"
@@ -44,7 +45,11 @@ en:
       f_delete: "Delete"
       follows_count: 'Followers'
       grant_set: 'Permission set'
+      grant_set_id: 'Permission set'
+      grants: "Grants"
+      grant_collection: "Grants"
       group_membership_collection: 'Members'
+      group_id: 'Group'
       home_placement: "Address"
       is_public: "Show profile to non-members"
       is_trashed: "Is hidden"

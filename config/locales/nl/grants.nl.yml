@@ -16,6 +16,8 @@ nl:
       edge: "Voor welk forum geldt deze rol?"
     errors:
       taken: "Deze groep heeft al rechten in dit forum. Verwijder dit recht eerst voordat je een nieuwe aanmaakt."
+    form:
+      description: "Je kan rechten toekennen aan groepen binnen dit forum. Rechten gelden voor ook voor onderliggen items. De volgende rechten zijn op een hoger niveau toegekend:"
   roles:
     type: "Recht"
     plural: "Rechten"

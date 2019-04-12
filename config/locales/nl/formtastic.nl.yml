@@ -37,6 +37,7 @@ nl:
       description: "Inhoud"
       dismissable: "Sluitbaar"
       display_name: "Titel"
+      edge_id: "Object"
       ends_at: "Eindigen op"
       expires_at: "Verloopt op"
       f_move: "Verplaatsen"
@@ -44,7 +45,11 @@ nl:
       f_delete: "Verwijderen"
       follows_count: 'Volgers'
       grant_set: 'Rechtenset'
+      grant_set_id: 'Rechtenset'
+      grants: "Rechten"
+      grant_collection: "Rechten"
       group_membership_collection: 'Leden'
+      group_id: 'Groep'
       home_placement: "Adres"
       is_public: "Profiel zichtbaar voor niet-leden"
       is_trashed: "Is verborgen"

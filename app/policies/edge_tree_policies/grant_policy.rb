@@ -5,7 +5,9 @@ class GrantPolicy < EdgeTreePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[group_id edge_id grant_set_id]
+    attributes.concat %i[grant_set_id _destroy id]
+    attributes.concat %i[group_id] if record.persisted? || record.group.blank?
+    attributes.concat %i[edge_id] if record.persisted? || record.edge.blank?
     attributes
   end
 

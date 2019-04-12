@@ -278,7 +278,7 @@ Rails.application.routes.draw do
     include_route_concerns
     get :settings, on: :member
     get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
-    resources :grants, only: %i[index]
+    resources :grants, only: %i[index new create]
   end
   resources :media_objects, only: :show do
     resource :media_object_contents, only: :show, path: 'content/:version'

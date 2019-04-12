@@ -52,9 +52,10 @@ class Grant < ApplicationRecord
     end
   end
 
-  def edgeable_record
-    @edgeable_record ||= edge
+  def parent
+    @parent ||= edge || group.root
   end
+  alias edgeable_record parent
 
   def grant_set=(value)
     value = GrantSet.find_by!(title: value) if value.is_a?(String)
@@ -62,6 +63,6 @@ class Grant < ApplicationRecord
   end
 
   def page
-    edge.root
+    parent.root
   end
 end

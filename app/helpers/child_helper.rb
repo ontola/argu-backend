@@ -16,14 +16,18 @@ module ChildHelper
       {edge: parent}
     when 'Grant'
       if parent.is_a?(Group)
-        {edge: parent.page, group: parent}
+        {group: parent}
       else
         {edge: parent}
       end
     when 'GroupMembership'
       {group: parent}
     when 'Group'
-      {page: parent}
+      if parent.is_a?(Grant)
+        {page: parent.edge.root}
+      else
+        {page: parent}
+      end
     when 'MediaObject', 'ImageObject'
       {about: parent}
     when 'Decision'

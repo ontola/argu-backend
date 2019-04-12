@@ -14,6 +14,7 @@ class ContainerNodePolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[display_name bio bio_long profile_id locale public_grant page]
+    attributes.append(grants_attributes: %i[id grant_set_id edge_id group_id _destroy])
     attributes.concat %i[discoverable] if staff?
     attributes.concat %i[owner_type] if service?
     attributes
