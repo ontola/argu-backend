@@ -43,10 +43,11 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def index_collection
     @collection ||= ::Collection.new(
-      association_base: discoverable_pages,
-      association_class: Page,
-      user_context: user_context,
-      type: :paginated
+      collection_options.merge(
+        association_base: discoverable_pages,
+        association_class: Page,
+        default_type: :paginated
+      )
     )
   end
 

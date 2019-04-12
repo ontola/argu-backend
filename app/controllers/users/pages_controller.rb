@@ -30,12 +30,13 @@ module Users
 
     def index_collection
       @collection ||= ::Collection.new(
-        association_base: favorite_pages,
-        association_class: Page,
-        parent: current_user,
-        user_context: user_context,
-        title: t('pages.my_pages'),
-        type: :paginated
+        collection_options.merge(
+          association_base: favorite_pages,
+          association_class: Page,
+          default_type: :paginated,
+          parent: current_user,
+          title: t('pages.my_pages')
+        )
       )
     end
 
