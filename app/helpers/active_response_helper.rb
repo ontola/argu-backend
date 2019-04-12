@@ -32,14 +32,8 @@ module ActiveResponseHelper
     show_includes
   end
 
-  def create_meta # rubocop:disable Metrics/AbcSize
-    data = []
-    return data if index_collection.blank? || !index_collection.is_a?(Collection)
-    meta_replace_collection_count(data, index_collection.unfiltered)
-    authenticated_resource.applicable_filters.each do |key, value|
-      meta_replace_collection_count(data, index_collection.unfiltered.new_child(filter: {key => value}))
-    end
-    data
+  def create_meta
+    invalidate_parent_collections
   end
 
   def create_success_location
@@ -68,13 +62,7 @@ module ActiveResponseHelper
   end
 
   def destroy_meta
-    data = []
-    return data if index_collection.blank?
-    meta_replace_collection_count(data, index_collection.unfiltered)
-    authenticated_resource.applicable_filters.each do |key, value|
-      meta_replace_collection_count(data, index_collection.unfiltered.new_child(filter: {key => value}))
-    end
-    data
+    invalidate_parent_collections
   end
 
   def destroy_success_location

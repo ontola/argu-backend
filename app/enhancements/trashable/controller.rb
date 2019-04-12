@@ -36,12 +36,18 @@ module Trashable
       update_failure_options
     end
 
+    def trash_meta
+      invalidate_parent_collections
+    end
+
     def trash_success
       respond_with_updated_resource(trash_success_options)
     end
 
     def trash_success_options
-      update_success_options
+      opts = update_success_options
+      opts[:meta] = trash_meta
+      opts
     end
 
     def untrash_failure
@@ -49,7 +55,13 @@ module Trashable
     end
 
     def untrash_failure_options
-      update_failure_options
+      opts = update_success_options
+      opts[:meta] = untrash_meta
+      opts
+    end
+
+    def untrash_meta
+      invalidate_parent_collections
     end
 
     def untrash_success

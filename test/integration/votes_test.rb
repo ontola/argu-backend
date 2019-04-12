@@ -577,10 +577,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::ONTOLA[:remove])
-    expect_triple(collection_iri(argument, :votes), NS::AS[:totalItems], 0, NS::ONTOLA[:replace])
-    expect_triple(
-      collection_iri(argument, :votes, 'filter%5B%5D' => 'option=yes'), NS::AS[:totalItems], 0, NS::ONTOLA[:replace]
-    )
     assert_response 200
   end
 
