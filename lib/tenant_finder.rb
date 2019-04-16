@@ -19,7 +19,7 @@ class TenantFinder
   def initialize(host, port, path)
     @host = host
     @port = port
-    @path = path
+    @path = path.downcase
   end
 
   def tenant

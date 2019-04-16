@@ -14,6 +14,10 @@ class IriHelperTest < ActiveSupport::TestCase
     assert_equal resource_from_iri(argu_url("/#{freetown.parent.url}/freetown/edit")), freetown
   end
 
+  test 'should find forum by a subview iri with upcase shortname' do
+    assert_equal resource_from_iri(argu_url("/#{freetown.parent.url}/Freetown/edit")), freetown
+  end
+
   test 'should find forum by its cannonical iri' do
     assert_equal resource_from_iri(argu_url("/edges/#{freetown.uuid}")), freetown
   end

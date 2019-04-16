@@ -56,6 +56,16 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 302
   end
 
+  test 'guest should get show by upcased shortname' do
+    get freetown.iri.to_s.gsub('freetown', 'Freetown')
+    assert_redirected_to freetown.iri
+  end
+
+  test 'guest should get show by upcased page shortname' do
+    get freetown.iri.to_s.gsub(argu.url, argu.url.upcase)
+    assert_response 200
+  end
+
   ####################################
   # As User
   ####################################
