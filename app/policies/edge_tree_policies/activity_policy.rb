@@ -35,9 +35,12 @@ class ActivityPolicy < RestrictivePolicy
     def filter_unpublished_and_unmanaged(scope)
       scope
         .joins(:trackable)
-        .with(managed_forum_paths)
+        .joins(
+          'LEFT JOIN edges AS ancestors ON ancestors.path @> edges.path AND ancestors.id != edges.id AND '\
+          '(ancestors.is_published = false OR ancestors.trashed_at IS NOT NULL)'
+        ).with(managed_forum_paths)
         .where(
-          'edges.is_published = true OR activities.owner_id IN (:profile_ids) OR '\
+          '(edges.is_published = true AND ancestors.id IS NULL) OR activities.owner_id IN (:profile_ids) OR '\
           '(SELECT array_agg(path) FROM managed_forum_paths) @> edges.path',
           profile_ids: user.managed_profile_ids
         )
