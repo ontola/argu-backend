@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class Feed
-  RELEVANT_KEYS = %w[question.publish motion.publish topic.publish argument.create pro_argument.create
-                     con_argument.create blog_post.publish decision.approved decision.rejected comment.create].freeze
+  PUBLISH_KEYS = %w[question.publish motion.publish topic.publish argument.create pro_argument.create
+                    con_argument.create blog_post.publish decision.approved decision.rejected comment.create].freeze
+  TRASH_KEYS = %w[question.trash motion.trash topic.trash argument.trash pro_argument.trash
+                  con_argument.trash blog_post.trash decision.trash comment.trash].freeze
+  RELEVANT_KEYS = PUBLISH_KEYS + TRASH_KEYS
 
   include ActiveModel::Model
   include RailsLD::Model
@@ -61,7 +64,7 @@ class Feed
               .where('edges.owner_type != ? OR recipients_activities.owner_type != ?', 'Vote', 'Argument')
     scope = scope.where(edges: {root_id: root_id}) if root_id
     return scope unless relevant_only
-    scope.where('key IN (?)', RELEVANT_KEYS)
+    scope.where("key IN (?) AND (edges.trashed_at IS NULL OR key ~ '*.trash')", RELEVANT_KEYS)
   end
 
   def edge_activities
