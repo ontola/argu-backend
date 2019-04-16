@@ -56,6 +56,7 @@ nl:
       invert_arguments: "Argumenten omdraaien"
       last_accepted: "Ik ga akkoord"
       language: "Taal"
+      locale: "Taal"
       mark_as_important: "Markeer als belangrijk"
       name: "Naam"
       navbar_background: "Achtergrond van bovenste balk"
