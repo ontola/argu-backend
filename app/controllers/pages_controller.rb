@@ -78,7 +78,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def permit_params
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
     @_permit_params = super
-    merge_photo_params(@_permit_params, Page.new)
+    merge_photo_params(@_permit_params)
     @_permit_params[:last_accepted] = Time.current if @_permit_params[:last_accepted] == '1'
     @_permit_params
   end

@@ -69,7 +69,7 @@ class ProfilesController < AuthorizedController
 
   def permit_params
     pm = params.require(:profile).permit(*policy(@profile || current_resource).permitted_attributes).to_h
-    merge_photo_params(pm, @resource.class)
+    merge_photo_params(pm)
     pm
   end
 
@@ -101,7 +101,7 @@ class ProfilesController < AuthorizedController
 
   def setup_permit_params
     pp = params.require(:user).permit(*policy(@resource || User).permitted_attribute_names(true)).to_h
-    merge_photo_params(pp, @resource.class)
+    merge_photo_params(pp)
     merge_placement_params(pp, User)
     pp
   end

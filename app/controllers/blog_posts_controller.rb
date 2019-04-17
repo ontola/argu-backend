@@ -17,7 +17,7 @@ class BlogPostsController < EdgeableController
 
   def permit_params
     pm = super
-    merge_photo_params(pm, BlogPost)
+    merge_photo_params(pm)
     pm
   end
 

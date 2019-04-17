@@ -80,7 +80,7 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
   def permit_params
     attrs = policy(resource_by_id || new_resource_from_params).permitted_attributes
     pm = params.require(model_name).permit(*attrs).to_h
-    merge_photo_params(pm, @resource.class)
+    merge_photo_params(pm)
     pm
   end
 

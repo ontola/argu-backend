@@ -38,7 +38,7 @@ class UsersController < AuthorizedController
   def permit_params(password = false) # rubocop:disable Metrics/AbcSize
     attrs = policy(authenticated_resource || User).permitted_attribute_names(password)
     pp = params.require(:user).permit(*attrs).to_h
-    merge_photo_params(pp, authenticated_resource.class)
+    merge_photo_params(pp)
     merge_placement_params(pp, User)
     pp['email_addresses_attributes'][pp[:primary_email][1..-2]][:primary] = true if pp[:primary_email].present?
     pp.except(:primary_email)

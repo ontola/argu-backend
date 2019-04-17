@@ -2,19 +2,19 @@
 
 module NestedAttributesHelper
   # @param [class] type The type of the photo#about
-  # @param [Forum] forum The forum the photo should be tenantanized in
-  def photo_params(type, forum = nil)
+  # @param [symbol] used_as The type of photo, should be a valid enum value
+  def photo_params(used_as)
     attrs = {publisher: current_user, creator: current_profile, forum: nil}
-    attrs[:forum] = forum unless [Page, User].include? type
+    attrs[:used_as] ||= used_as
     attrs
   end
 
-  def merge_photo_params(permit_params, klass)
+  def merge_photo_params(permit_params)
     profile = permit_params.dig(*photo_params_nested_path(:default_profile_photo_attributes))
-    profile&.merge!(photo_params(klass))
+    profile&.reverse_merge!(photo_params(:profile_photo))
 
     cover = permit_params.dig(*photo_params_nested_path(:default_cover_photo_attributes))
-    cover&.merge!(photo_params(klass))
+    cover&.reverse_merge!(photo_params(:cover_photo))
 
     permit_params
   end
