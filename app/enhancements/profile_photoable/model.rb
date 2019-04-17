@@ -49,7 +49,7 @@ module ProfilePhotoable
       default_profile_photo.save if default_profile_photo&.remove_content
     end
 
-    class << self
+    module ClassMethods
       def preview_includes
         super + [:default_profile_photo]
       end
