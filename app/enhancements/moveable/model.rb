@@ -7,7 +7,7 @@ module Moveable
     def move_to(new_parent) # rubocop:disable Metrics/AbcSize
       self.class.transaction do
         yield if block_given?
-        update_activities_on_move(new_parent)
+        ActsAsTenant.without_tenant { update_activities_on_move(new_parent) }
         if root_id != new_parent.root_id
           self.fragment = nil
           update_root_id(new_parent.root_id)

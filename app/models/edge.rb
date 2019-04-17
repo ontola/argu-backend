@@ -259,7 +259,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def root(*args)
     return self if parent_id.nil? && parent.nil?
-    return super if association_cached?(:root)
+    return @root || super if association_cached?(:root)
     @root ||= association_cached?(:parent) ? parent.root : association(:root).reader(*args)
   end
 

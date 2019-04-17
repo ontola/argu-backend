@@ -9,6 +9,6 @@ class CreateMove < CreateService
   def broadcast_event; end
 
   def commit
-    ActsAsTenant.without_tenant { super }
+    ActsAsTenant.with_tenant(ActsAsTenant.without_tenant { resource.new_parent.root }) { super }
   end
 end
