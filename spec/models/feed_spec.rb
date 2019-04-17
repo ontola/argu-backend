@@ -104,7 +104,7 @@ RSpec.describe Feed, type: :model do
     before do
       grant_set = GrantSet.participator.clone('adam_west_set', argu)
       grant_set.grant_sets_permitted_actions.joins(:permitted_action).where('title LIKE ?', 'comment_%').destroy_all
-      freetown.update!(public_grant: 'adam_west_set')
+      ActsAsTenant.with_tenant(argu) { freetown.update!(public_grant: 'adam_west_set') }
     end
 
     it 'does not include comment activities' do

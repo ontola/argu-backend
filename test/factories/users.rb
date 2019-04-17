@@ -89,23 +89,25 @@ FactoryBot.define do
     factory :user_with_votes do
       after(:create) do |user|
         motion = Motion.untrashed.first
-        CreateVote.new(
-          motion.default_vote_event,
-          attributes: {for: :pro},
-          options: {
-            creator: user.profile,
-            publisher: user
-          }
-        ).commit
-        trashed = Motion.trashed.first
-        CreateVote.new(
-          trashed.default_vote_event,
-          attributes: {for: :pro},
-          options: {
-            creator: user.profile,
-            publisher: user
-          }
-        ).commit
+        ActsAsTenant.with_tenant(motion.root) do
+          CreateVote.new(
+            motion.default_vote_event,
+            attributes: {for: :pro},
+            options: {
+              creator: user.profile,
+              publisher: user
+            }
+          ).commit
+          trashed = Motion.trashed.first
+          CreateVote.new(
+            trashed.default_vote_event,
+            attributes: {for: :pro},
+            options: {
+              creator: user.profile,
+              publisher: user
+            }
+          ).commit
+        end
       end
     end
 

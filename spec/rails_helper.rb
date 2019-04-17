@@ -31,8 +31,6 @@ WebMock.disable_net_connect!(
 Capybara.server_port = 42_000
 Capybara.always_include_port = true
 
-Searchkick.disable_callbacks
-
 module BrowserWrapper
   def press_key(code)
     find('body').native.send_keys code

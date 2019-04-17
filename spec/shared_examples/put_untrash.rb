@@ -15,7 +15,7 @@ RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:untrash_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
-          subject.trash
+          ActsAsTenant.with_tenant(subject.root) { subject.trash }
           sign_in(unauthorized_user, doorkeeper_application)
           assert_difference(no_differences) do
             put untrash_path, params: {format: format}
@@ -26,7 +26,7 @@ RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:untrash_authorized) || opts[:skip].include?(:authorized)
         it 'as authorized' do
-          subject.trash
+          ActsAsTenant.with_tenant(subject.root) { subject.trash }
           sign_in(authorized_user_trash, doorkeeper_application)
           assert_difference(untrash_differences) do
             put untrash_path, params: {format: format}

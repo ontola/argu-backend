@@ -183,7 +183,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
                                        content: 'Content')
             }
     end
-    reset_publication(Publication.last)
+    ActsAsTenant.with_tenant(motion.root) { reset_publication(Publication.last) }
 
     if changed
       motion.reload
@@ -196,7 +196,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     assert_response response
   end
 
-  def general_forward(response = 302, changed = false, group_id = nil, user_id = nil)
+  def general_forward(response = 302, changed = false, group_id = nil, user_id = nil) # rubocop:disable Metrics/AbcSize
     assert_difference('Activity.count' => changed ? 1 : 0,
                       'Decision.count' => changed ? 1 : 0) do
       post collection_iri(motion, :decisions),
@@ -209,7 +209,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
                                       forwarded_group_id: group_id)
            }
     end
-    reset_publication(Publication.last)
+    ActsAsTenant.with_tenant(motion.root) { reset_publication(Publication.last) }
     assert_response response
     assert_equal 'reactions', Decision.last.activities.last.follow_type if changed
   end

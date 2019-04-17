@@ -30,7 +30,7 @@ module Argu
           end
         end
 
-        def create_with_service(model_type, args, attributes) # rubocop:disable Metrics/AbcSize
+        def create_with_service(model_type, args, attributes) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           traits_with_args = attributes.delete(:traits_with_args) || {}
           klass = model_type.to_s.classify.constantize
 
@@ -48,25 +48,26 @@ module Argu
             end
           end
 
-          resource = create_resource(
-            klass,
-            attributes,
-            options
-          )
+          ActsAsTenant.with_tenant(attributes[:parent]&.root) do
+            resource = create_resource(
+              klass,
+              attributes,
+              options
+            )
 
-          args.each do |trait|
-            TraitListener.new(resource).public_send(trait)
-          end
-          traits_with_args.each do |trait|
-            TraitListener.new(resource).public_send(trait[0], trait[1])
-          end
+            args.each do |trait|
+              TraitListener.new(resource).public_send(trait)
+            end
+            traits_with_args.each do |trait|
+              TraitListener.new(resource).public_send(trait[0], trait[1])
+            end
 
-          if resource.respond_to?(:publications)
-            reset_publication(resource.publications.last)
-            resource.reload
+            if resource.respond_to?(:publications)
+              reset_publication(resource.publications.last)
+              resource.reload
+            end
+            resource
           end
-
-          resource
         end
 
         def create_guest_user(id: nil, app: Doorkeeper::Application.argu_front_end)
@@ -129,32 +130,35 @@ module Argu
         end
 
         def create_resource(klass, attributes = {}, options = {}) # rubocop:disable Metrics/AbcSize
-          if klass < Edge || klass < NewsBoy
-            options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
-            options[:creator] = options[:publisher].profile if options[:creator].nil?
-          end
-
           parent_edge = attributes.delete(:parent)
+          ActsAsTenant.with_tenant(parent_edge&.root || ActsAsTenant.current_tenant) do
+            if klass < Edge || klass < NewsBoy
+              options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
+              options[:creator] = options[:publisher].profile if options[:creator].nil?
+            end
 
-          service_class = "Create#{klass}".safe_constantize || CreateService
-          service = service_class.new(parent_edge, attributes: attributes, options: options)
-          service.commit
-          raise service.resource.errors.full_messages.first unless service.resource.valid?
-          service.resource.store_in_redis? ? service.resource : service.resource.reload
+            service_class = "Create#{klass}".safe_constantize || CreateService
+            service = service_class.new(parent_edge, attributes: attributes, options: options)
+            service.commit
+            raise service.resource.errors.full_messages.first unless service.resource.valid?
+            service.resource.store_in_redis? ? service.resource : service.resource.reload
+          end
         end
 
         def destroy_resource(resource, user = nil, profile = nil)
-          user ||= create(:user)
-          profile ||= user.profile
-          options = {}
-          options[:publisher] = user
-          options[:creator] = profile
-          service_class = "Destroy#{resource.class}".safe_constantize || DestroyService
-          service = service_class.new(resource, attributes: {}, options: options)
-          service.subscribe(ActivityListener.new(creator: profile,
-                                                 publisher: user))
-          service.commit
-          nil
+          ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
+            user ||= create(:user)
+            profile ||= user.profile
+            options = {}
+            options[:publisher] = user
+            options[:creator] = profile
+            service_class = "Destroy#{resource.class}".safe_constantize || DestroyService
+            service = service_class.new(resource, attributes: {}, options: options)
+            service.subscribe(ActivityListener.new(creator: profile,
+                                                   publisher: user))
+            service.commit
+            nil
+          end
         end
 
         def open_file(filename)
@@ -206,32 +210,36 @@ module Argu
           ActsAsTenant.current_tenant = resource.root
         end
 
-        def trash_resource(resource, user = nil, profile = nil)
-          user ||= create(:user)
-          profile ||= user.profile
-          options = {}
-          options[:publisher] = user
-          options[:creator] = profile
-          service_class = "Trash#{resource.class}".safe_constantize || TrashService
-          service = service_class.new(resource, attributes: {}, options: options)
-          service.subscribe(ActivityListener.new(creator: profile,
-                                                 publisher: user))
-          service.commit
-          resource.reload
+        def trash_resource(resource, user = nil, profile = nil) # rubocop:disable Metrics/AbcSize
+          ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
+            user ||= create(:user)
+            profile ||= user.profile
+            options = {}
+            options[:publisher] = user
+            options[:creator] = profile
+            service_class = "Trash#{resource.class}".safe_constantize || TrashService
+            service = service_class.new(resource, attributes: {}, options: options)
+            service.subscribe(ActivityListener.new(creator: profile,
+                                                   publisher: user))
+            service.commit
+            resource.reload
+          end
         end
 
-        def update_resource(resource, attributes = {}, user = nil, profile = nil)
-          user ||= create(:user)
-          profile ||= user.profile
-          options = {}
-          options[:publisher] = user
-          options[:creator] = profile
-          service_class = "Update#{resource.class}".safe_constantize || UpdateService
-          service = service_class.new(resource, attributes: attributes, options: options)
-          service.subscribe(ActivityListener.new(creator: profile,
-                                                 publisher: user))
-          service.commit
-          resource.reload
+        def update_resource(resource, attributes = {}, user = nil, profile = nil) # rubocop:disable Metrics/AbcSize
+          ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
+            user ||= create(:user)
+            profile ||= user.profile
+            options = {}
+            options[:publisher] = user
+            options[:creator] = profile
+            service_class = "Update#{resource.class}".safe_constantize || UpdateService
+            service = service_class.new(resource, attributes: attributes, options: options)
+            service.subscribe(ActivityListener.new(creator: profile,
+                                                   publisher: user))
+            service.commit
+            resource.reload
+          end
         end
       end
 

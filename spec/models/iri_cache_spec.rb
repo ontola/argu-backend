@@ -11,7 +11,7 @@ RSpec.describe '#iri_cache', type: :model do
   end
 
   context 'iri of a cleared motion' do
-    subject { motion.update!(iri_cache: nil) && motion.iri_path }
+    subject { ActsAsTenant.with_tenant(argu) { motion.update!(iri_cache: nil) } && motion.iri_path }
     it { is_expected.to eq("/m/#{motion.fragment}") }
   end
 

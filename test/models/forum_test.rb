@@ -27,6 +27,7 @@ class ForumTest < ActiveSupport::TestCase
   end
 
   test 'should reset public grant' do
+    ActsAsTenant.current_tenant = subject.root
     assert_equal subject.grants.where(group_id: -1).count, 1
     subject.update(public_grant: 'none')
     assert_equal subject.grants.where(group_id: -1).count, 0

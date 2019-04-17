@@ -41,8 +41,10 @@ RSpec.feature 'Page deletion', type: :feature do
 
   scenario 'user should delete destroy' do
     nederland
-    [argument, motion, question, blog_post, comment].each do |resource|
-      resource.update(created_at: 1.day.ago)
+    ActsAsTenant.with_tenant(argu) do
+      [argument, motion, question, blog_post, comment].each do |resource|
+        resource.update(created_at: 1.day.ago)
+      end
     end
 
     sign_in(user)
@@ -66,8 +68,10 @@ RSpec.feature 'Page deletion', type: :feature do
 
   scenario 'owner should not delete destroy' do
     nederland
-    [argument, motion, question, blog_post, comment].each do |resource|
-      resource.update(created_at: 1.day.ago)
+    ActsAsTenant.with_tenant(argu) do
+      [argument, motion, question, blog_post, comment].each do |resource|
+        resource.update(created_at: 1.day.ago)
+      end
     end
 
     sign_in(argu.publisher)

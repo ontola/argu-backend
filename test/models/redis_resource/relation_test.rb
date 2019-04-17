@@ -62,7 +62,7 @@ module RedisResource
 
       # persist votes
       assert_difference('Vote.count' => 1, 'Edge.where(confirmed: true).count' => 0) do
-        relation.persist(unconfirmed)
+        ActsAsTenant.with_tenant(argu) { relation.persist(unconfirmed) }
       end
     end
 

@@ -13,6 +13,10 @@ module RedisResource
     let(:vote) { create(:vote, publisher: user, parent: motion.default_vote_event) }
     let(:guest_vote) { create(:vote, publisher: guest_user, parent: motion.default_vote_event) }
 
+    before do
+      ActsAsTenant.current_tenant = argu
+    end
+
     test 'find by key string' do
       redis_resource =
         RedisResource::Resource

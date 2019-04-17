@@ -257,7 +257,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
   def assert_notifications(count, type, differences = {})
     assert_difference(differences.merge('Notification.count' => count)) do
-      reset_publication(Publication.last)
+      ActsAsTenant.with_tenant(Publication.last.publishable.root) { reset_publication(Publication.last) }
     end
     assert_equal Notification.last.notification_type, type
   end

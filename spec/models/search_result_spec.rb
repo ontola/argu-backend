@@ -11,13 +11,13 @@ RSpec.describe SearchResult, type: :model do
   let(:user) { create(:user) }
 
   before do
+    Thread.current[:mock_searchkick] = false
     ActsAsTenant.current_tenant = argu
-    Searchkick.enable_callbacks
     Edge.reindex_with_tenant(async: false)
   end
 
   after do
-    Searchkick.disable_callbacks
+    Thread.current[:mock_searchkick] = true
   end
 
   describe 'scoping' do

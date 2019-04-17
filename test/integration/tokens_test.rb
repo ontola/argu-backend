@@ -96,8 +96,8 @@ class TokensTest < ActionDispatch::IntegrationTest
     }
     assert_difference(differences) do
       Sidekiq::Testing.inline! do
-        post oauth_token_path,
-             headers: argu_headers(host: 'argu.co'),
+        post "/#{argu.url}#{oauth_token_path}",
+             headers: argu_headers(host: Rails.configuration.host_name),
              params: {
                email: user.email,
                password: user.password,
@@ -145,7 +145,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              username: user.email,
              password: user.password,
@@ -175,7 +175,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              username: user.email.capitalize,
              password: user.password,
@@ -190,7 +190,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              username: user.url,
              password: user.password,
@@ -205,7 +205,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              username: user.url,
              password: user.password,
@@ -287,7 +287,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              email: user.email,
              password: 'wrong',
@@ -302,7 +302,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              email: user.email,
              password: 'wrong',
@@ -318,7 +318,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(accept: :json, host: 'argu.co'),
+           headers: argu_headers(accept: :json, host: Rails.configuration.host_name),
            params: {
              email: user.email,
              password: 'wrong',
@@ -352,7 +352,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              email: 'wrong@example.com',
              password: 'wrong',
@@ -367,7 +367,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              email: 'wrong@example.com',
              password: 'wrong',
@@ -383,7 +383,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(accept: :json, host: 'argu.co'),
+           headers: argu_headers(accept: :json, host: Rails.configuration.host_name),
            params: {
              email: 'wrong@example.com',
              password: 'wrong',
@@ -417,7 +417,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              username: 'wrong',
              password: 'wrong',
@@ -432,7 +432,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              username: 'wrong',
              password: 'wrong',
@@ -448,7 +448,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(accept: :json, host: 'argu.co'),
+           headers: argu_headers(accept: :json, host: Rails.configuration.host_name),
            params: {
              username: 'wrong',
              password: 'wrong',
@@ -482,7 +482,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              email: user.email,
              password: user.password,
@@ -512,7 +512,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(host: Rails.configuration.host_name),
            params: {
              email: user.email,
              password: user.password,
@@ -560,8 +560,8 @@ class TokensTest < ActionDispatch::IntegrationTest
                       'Argu::Redis.keys("temporary*").count' => -1,
                       'Favorite.count' => 1) do
       Sidekiq::Testing.inline! do
-        post oauth_token_path,
-             headers: argu_headers(host: 'argu.co'),
+        post "/#{argu.url}#{oauth_token_path}",
+             headers: argu_headers(host: Rails.configuration.host_name),
              params: {
                username: unconfirmed_user.email,
                password: unconfirmed_user.password,

@@ -37,8 +37,10 @@ RSpec.feature 'Account deletion', type: :feature do
   end
 
   scenario 'user should delete destroy' do
-    [argument, motion, question, blog_post, comment].each do |resource|
-      resource.update(created_at: 1.day.ago)
+    ActsAsTenant.with_tenant(argu) do
+      [argument, motion, question, blog_post, comment].each do |resource|
+        resource.update(created_at: 1.day.ago)
+      end
     end
 
     sign_in_manually(user)

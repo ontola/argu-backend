@@ -88,7 +88,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def reindex(async: true)
-    ActsAsTenant.with_tenant(self) { Edge.reindex(async: async) } if Searchkick.callbacks?
+    ActsAsTenant.with_tenant(self) { Edge.reindex(async: async) }
   end
 
   def root_object?

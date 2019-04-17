@@ -18,6 +18,7 @@ require 'argu/test_helpers'
 require 'minitest/reporters'
 require 'rspec/matchers'
 require 'rspec/expectations'
+
 Minitest::Reporters.use!
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
@@ -26,10 +27,11 @@ Minitest::Reporters.use!
 
 DatabaseCleaner.strategy = :transaction
 WebMock.disable_net_connect!(
-  allow: "https://#{Rails.application.config.rakismet[:key]}.rest.akismet.com"
+  allow: [
+    "https://#{Rails.application.config.rakismet[:key]}.rest.akismet.com",
+    'http://localhost:9200'
+  ]
 )
-
-Searchkick.disable_callbacks
 
 module TestHelper
   include RSpec::Expectations

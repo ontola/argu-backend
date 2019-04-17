@@ -67,7 +67,7 @@ class LinkedRecord < Edge
 
   def self.create_for_forum(organization_shortname, forum_shortname, id)
     record = new_for_forum(organization_shortname, forum_shortname, id)
-    record.save!
+    ActsAsTenant.with_tenant(record.root) { record.save! }
     record
   end
 

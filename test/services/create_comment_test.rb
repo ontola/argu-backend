@@ -21,6 +21,7 @@ class CreateCommentTest < ActiveSupport::TestCase
   end
 
   test 'it creates a comment' do
+    ActsAsTenant.current_tenant = argu
     c = CreateComment.new(
       commentable,
       attributes: comment_attributes,

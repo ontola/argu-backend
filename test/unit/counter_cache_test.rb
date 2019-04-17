@@ -36,6 +36,10 @@ class CounterCacheTest < ActiveSupport::TestCase
     create(:vote, parent: motion.default_vote_event, creator: unconfirmed.profile, publisher: unconfirmed)
   end
 
+  before do
+    ActsAsTenant.current_tenant = argu
+  end
+
   test 'fix counts for motion' do
     assert_counts(motion, blog_posts: 1, pro_arguments: 2, con_arguments: 2)
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)

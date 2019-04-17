@@ -111,7 +111,7 @@ class MarkAsImportantTest < ActionDispatch::IntegrationTest
 
   private
 
-  def create_motion(mark, follow_type)
+  def create_motion(mark, follow_type) # rubocop:disable Metrics/AbcSize
     sign_in moderator
     attributes = attributes_for(:motion)
     attributes[:mark_as_important] = mark unless mark.nil?
@@ -119,7 +119,7 @@ class MarkAsImportantTest < ActionDispatch::IntegrationTest
     assert_difference('Motion.count', 1) do
       post collection_iri(freetown, :motions), params: {motion: attributes}
     end
-    PublicationsWorker.drain
+    ActsAsTenant.with_tenant(argu) { PublicationsWorker.drain }
     assert_equal Motion.last.argu_publication.follow_type, follow_type
   end
 
@@ -130,7 +130,7 @@ class MarkAsImportantTest < ActionDispatch::IntegrationTest
 
     put motion, params: {motion: attributes}
 
-    PublicationsWorker.drain
+    ActsAsTenant.with_tenant(argu) { PublicationsWorker.drain }
 
     motion.reload
     assert_equal motion.title, 'New title'

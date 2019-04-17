@@ -6,18 +6,20 @@ class UserTest < ActiveSupport::TestCase
   define_freetown
   subject do
     user = create(:user)
-    create(:notification,
-           user: user,
-           root_id: argu.uuid,
-           activity: create(
-             :activity,
-             recipient: freetown,
-             recipient_type: 'Forum',
-             trackable: create(:motion, parent: freetown),
-             trackable_type: 'Motion',
-             root_id: freetown.root_id
-           ),
-           forum: freetown)
+    ActsAsTenant.with_tenant(argu) do
+      create(:notification,
+             user: user,
+             root_id: argu.uuid,
+             activity: create(
+               :activity,
+               recipient: freetown,
+               recipient_type: 'Forum',
+               trackable: create(:motion, parent: freetown),
+               trackable_type: 'Motion',
+               root_id: freetown.root_id
+             ),
+             forum: freetown)
+    end
     user
   end
 

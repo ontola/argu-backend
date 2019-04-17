@@ -11,10 +11,12 @@ class QuestionTest < ActiveSupport::TestCase
   end
 
   test 'convert to motion' do
-    result = subject.convert_to(Motion)
-    assert result[:new].is_a?(Motion)
-    assert result[:old].is_a?(Question)
-    assert_equal result[:new].display_name, result[:old].display_name
+    ActsAsTenant.with_tenant(subject.root) do
+      result = subject.convert_to(Motion)
+      assert result[:new].is_a?(Motion)
+      assert result[:old].is_a?(Question)
+      assert_equal result[:new].display_name, result[:old].display_name
+    end
   end
 
   test 'raise when converting to non-convertible class' do

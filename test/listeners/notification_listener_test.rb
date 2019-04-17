@@ -12,14 +12,16 @@ class NotificationListenerTest < ActiveSupport::TestCase
   end
   let!(:news_motion_activity) { news_motion.activities.second }
   let!(:vote_activity) do
-    create(
-      :activity,
-      trackable: create(:vote, parent: motion.default_vote_event),
-      trackable_type: 'Vote',
-      recipient: motion.default_vote_event,
-      recipient_type: 'VoteEvent',
-      root_id: freetown.root_id
-    )
+    ActsAsTenant.with_tenant(motion.root) do
+      create(
+        :activity,
+        trackable: create(:vote, parent: motion.default_vote_event),
+        trackable_type: 'Vote',
+        recipient: motion.default_vote_event,
+        recipient_type: 'VoteEvent',
+        root_id: freetown.root_id
+      )
+    end
   end
   let(:user) { create(:user) }
 
@@ -55,12 +57,14 @@ class NotificationListenerTest < ActiveSupport::TestCase
   test 'service should create notifications for new argument' do
     last_activity_at = motion.last_activity_at
     assert_difference('Argument.count' => 1, 'Activity.count' => 1, 'Notification.count' => 1) do
-      service = CreateArgument.new(
-        motion,
-        attributes: {title: 'argument title'},
-        options: {publisher: user, creator: user.profile}
-      )
-      service.commit
+      ActsAsTenant.with_tenant(motion.root) do
+        service = CreateArgument.new(
+          motion,
+          attributes: {title: 'argument title'},
+          options: {publisher: user, creator: user.profile}
+        )
+        service.commit
+      end
     end
     assert_not_equal last_activity_at, motion.reload.last_activity_at
   end
@@ -68,12 +72,14 @@ class NotificationListenerTest < ActiveSupport::TestCase
   test 'silent service should not create notifications for new argument' do
     last_activity_at = motion.last_activity_at
     assert_difference('Argument.count' => 1, 'Notification.count' => 0) do
-      service = CreateArgument.new(
-        motion,
-        attributes: {title: 'argument title'},
-        options: {publisher: user, creator: user.profile, silent: true}
-      )
-      service.commit
+      ActsAsTenant.with_tenant(motion.root) do
+        service = CreateArgument.new(
+          motion,
+          attributes: {title: 'argument title'},
+          options: {publisher: user, creator: user.profile, silent: true}
+        )
+        service.commit
+      end
     end
     assert_equal last_activity_at, motion.last_activity_at
   end

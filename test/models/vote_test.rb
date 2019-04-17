@@ -15,6 +15,7 @@ class VoteTest < ActiveSupport::TestCase
   end
 
   def test_duplicate_constraint # rubocop:disable Metrics/AbcSize
+    ActsAsTenant.current_tenant = motion.root
     first = create_vote
     second = create_vote
     assert motion.save, motion.errors.full_messages

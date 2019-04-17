@@ -14,6 +14,7 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test 'destroy nested comments when destroying parent' do
+    ActsAsTenant.current_tenant = motion.root
     nested_comment
     assert_difference('Comment.count', -2) do
       DestroyService

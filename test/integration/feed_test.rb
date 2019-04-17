@@ -11,7 +11,9 @@ class FeedTest < ActionDispatch::IntegrationTest
   let(:publisher) { create(:user) }
   let(:trashed_motion) do
     m = create(:motion, parent: freetown)
-    TrashService.new(m, options: {creator: publisher.profile, publisher: publisher}).commit
+    ActsAsTenant.with_tenant(argu) do
+      TrashService.new(m, options: {creator: publisher.profile, publisher: publisher}).commit
+    end
     m
   end
   let(:unpublished_motion_argument) { create(:argument, parent: unpublished_motion) }
