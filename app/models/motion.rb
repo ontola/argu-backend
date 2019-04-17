@@ -34,6 +34,7 @@ class Motion < Edge
   counter_cache true
   paginates_per 30
   parentable :question, :container_node
+  placeable :custom
 
   validates :description, presence: true, length: {maximum: 5000}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 110}

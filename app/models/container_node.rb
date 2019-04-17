@@ -34,6 +34,7 @@ class ContainerNode < Edge
   ]
 
   parentable :page
+  placeable :country, :custom
 
   after_save :reset_country
   after_save :reset_public_grant

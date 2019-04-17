@@ -24,6 +24,7 @@ class Question < Edge
   convertible motions: %i[activities media_objects]
   counter_cache true
   parentable :container_node
+  placeable :custom
 
   validates :description, presence: true, length: {minimum: 5, maximum: 5000}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 110}

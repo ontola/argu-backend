@@ -6,7 +6,9 @@ module Placeable
 
     def permitted_attribute_names
       attributes = super
-      attributes.append(custom_placement_attributes: %i[id lat lon placement_type zoom_level _destroy])
+      record.class.placeable_types.each do |type|
+        attributes.append("#{type}_placement_attributes".to_sym => %i[id lat lon placement_type zoom_level _destroy])
+      end
       attributes
     end
   end

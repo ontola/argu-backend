@@ -5,29 +5,11 @@ module Placeable
     extend ActiveSupport::Concern
 
     included do
+      class_attribute :placeable_types, default: []
+
       has_many :placements, as: :placeable, dependent: :destroy, primary_key: :uuid
-      has_one :custom_placement,
-              -> { custom },
-              class_name: 'Placement',
-              as: :placeable,
-              inverse_of: :placeable,
-              primary_key: :uuid
-      has_one :country_placement,
-              -> { country },
-              class_name: 'Placement',
-              as: :placeable,
-              inverse_of: :placeable,
-              primary_key: :uuid
-      has_one :home_placement,
-              -> { home },
-              as: :placeable,
-              inverse_of: :placeable,
-              primary_key: :uuid
       has_many :places, through: :placements
       accepts_nested_attributes_for :placements, allow_destroy: true
-      accepts_nested_attributes_for :custom_placement, allow_destroy: true
-
-      validates :custom_placement, presence: true, if: :requires_location?
     end
 
     def requires_location?
@@ -35,14 +17,28 @@ module Placeable
     end
 
     module ClassMethods
+      def define_placement_associations(type)
+        has_one "#{type}_placement".to_sym,
+                -> { send(type) },
+                as: :placeable,
+                class_name: 'Placement',
+                primary_key: :uuid
+        accepts_nested_attributes_for "#{type}_placement".to_sym, reject_if: :all_blank, allow_destroy: true
+
+        validates :custom_placement, presence: true, if: :requires_location? if type == :custom
+      end
+
       def includes_for_serializer
-        super.merge(custom_placement: :place)
+        super.merge(Hash[placeable_types.map { |type| ["#{type}_placement".to_sym, :place] }])
+      end
+
+      def placeable(*types)
+        self.placeable_types = types
+        types.each(&method(:define_placement_associations))
       end
 
       def show_includes
-        super + [
-          custom_placement: :place
-        ]
+        super + placeable_types.map { |type| {"#{type}_placement".to_sym => :place} }
       end
     end
   end

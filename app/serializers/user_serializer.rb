@@ -29,7 +29,6 @@ class UserSerializer < RecordSerializer
   attribute :time_zone, predicate: NS::TIME[:timeZone], if: :service_or_self?
   attribute :email, predicate: NS::SCHEMA[:email], if: :service_or_self?
 
-  has_one :home_placement, predicate: NS::SCHEMA[:homeLocation], if: :self?
   attribute :has_analytics, predicate: NS::ARGU[:hasAnalytics], if: :self?
   attribute :birth_year, predicate: NS::DBO[:birthYear], datatype: NS::XSD[:gYear], if: :self?
   attribute :news_email, predicate: NS::ARGU[:newsEmails], if: :self?
