@@ -8,13 +8,13 @@ class MediaObjectContentsController < ParentableController
   private
 
   def authorize_action
-    authorize parent_resource
+    authorize parent_resource!
   end
 
-  def url_for_version
+  def url_for_version # rubocop:disable Metrics/AbcSize
     case params[:version]
     when 'content'
-      parent_resource.content
+      parent_resource.content.url
     when 'thumbnail'
       parent_resource.thumbnail
     when *MediaObjectUploader::VERSIONS.keys
