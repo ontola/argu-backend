@@ -3,7 +3,7 @@
 class RedirectController < ApplicationController
   def show
     ActsAsTenant.without_tenant do
-      redirect_to(resource_by_shortname || resource_from_params)
+      redirect_to(resource_by_shortname || resource_from_params || raise(ActiveRecord::RecordNotFound))
     end
   end
 
