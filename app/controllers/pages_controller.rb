@@ -51,6 +51,11 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     )
   end
 
+  def index_success_html
+    skip_verify_policy_scoped(true)
+    redirect_to discover_forums_path
+  end
+
   def discoverable_pages
     ActsAsTenant.without_tenant { Kaminari.paginate_array(Page.discover.to_a) }
   end
@@ -111,7 +116,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def show_success_html # rubocop:disable Metrics/AbcSize
     if resource_by_id != ActsAsTenant.current_tenant
-      redirect_to "#{request.protocol}#{DynamicUriHelper.tenant_prefix(resource_by_id)}"
+      redirect_to "#{request.protocol}#{DynamicUriHelper.tenant_prefix(resource_by_id, true)}"
       return
     end
 
