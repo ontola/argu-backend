@@ -5,8 +5,6 @@ module Menus
     include RailsLD::Helpers::OntolaActions
 
     def share_menu_items(opts = {})
-      return menu_item(:share, menus: -> { [] }) unless resource.is_published?
-
       url = resource.iri
       menu_item(
         :share,
@@ -60,6 +58,10 @@ module Menus
       menu_item(:no_social_media, item_type: 'notice')
     end
 
+    def not_published_notice
+      menu_item(:not_published, item_type: 'notice')
+    end
+
     def linkedin_share_link(url)
       menu_item(
         :linked_in,
@@ -97,6 +99,7 @@ module Menus
     end
 
     def share_menu_links(url) # rubocop:disable Metrics/AbcSize
+      return [not_published_notice] unless resource.is_published?
       items = [invite_link]
       if is_public?
         items.concat([

@@ -11,6 +11,7 @@ nl:
       share: "Delen"
       copy: "Kopieer link"
       no_social_media: "Delen op social media kan alleen in openbare forums"
+      not_published: "Je kan alleen gepubliceerde items delen"
       follow: "Meldingen"
       never: 'Nooit meldingen ontvangen'
       reactions: 'Alle items'
