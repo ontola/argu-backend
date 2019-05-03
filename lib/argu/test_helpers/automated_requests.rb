@@ -250,7 +250,7 @@ module Argu
         end
 
         def default_formats
-          %i[html json_api].concat(RDF_CONTENT_TYPES.shuffle[1..2])
+          %i[html json_api].concat((RDF_CONTENT_TYPES - [:ttl]).shuffle[1..2])
         end
 
         def show_formats
