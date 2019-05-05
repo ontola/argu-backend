@@ -17,6 +17,7 @@ class TopicMenuList < ApplicationMenuList
       comments_link,
       activity_link,
       search_link,
+      new_update_link,
       edit_link,
       convert_link,
       move_link,
