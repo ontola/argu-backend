@@ -82,6 +82,10 @@ module ActiveResponseHelper
     super
   end
 
+  def invalidate_resource(resource)
+    [resource.iri, LinkedRails::NS::SP[:Variable], LinkedRails::NS::SP[:Variable], NS::ONTOLA[:invalidate]]
+  end
+
   def redirect_location
     return current_resource.iri if current_resource.persisted? || !current_resource.respond_to?(:parent)
     current_resource.parent.iri
@@ -152,12 +156,8 @@ module ActiveResponseHelper
   def update_meta
     meta = super
     if resource_was_published?
-      meta << [
-        current_resource.actions(user_context).detect { |a| a.tag == :publish }.iri,
-        NS::SCHEMA[:target],
-        nil,
-        NS::LL[:remove]
-      ]
+      meta.concat(invalidate_parent_collections)
+      meta << invalidate_resource(current_resource)
     end
     meta
   end
