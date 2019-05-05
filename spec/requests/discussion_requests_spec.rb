@@ -9,29 +9,25 @@ RSpec.describe 'Discussions', type: :request do
     super - %i[html]
   end
 
-  def self.new_formats
-    %i[html]
-  end
+  let(:table_sym) { :discussions }
 
   context 'for page' do
-    let(:subject) { Discussion.new(page: argu) }
+    let(:subject_parent) { argu }
     it_behaves_like 'get index', skip: %i[unauthorized]
   end
 
   context 'for discoverable forum' do
-    let(:subject) { Discussion.new(forum: freetown) }
+    let(:subject_parent) { freetown }
     let(:expect_redirect_to_login) { expect_get_form_html }
-    it_behaves_like 'get new'
     it_behaves_like 'get index'
   end
 
   context 'for hidden forum' do
-    let(:subject) { Discussion.new(forum: holland) }
+    let(:subject_parent) { holland }
     let(:expect_unauthorized) { expect_not_found }
     let(:expect_redirect_to_login) { expect_not_found }
     let(:expect_get_index_guest_html) { expect_not_found }
     let(:expect_get_index_guest_serializer) { expect_not_found }
-    it_behaves_like 'get new'
     it_behaves_like 'get index'
   end
 end

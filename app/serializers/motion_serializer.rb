@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MotionSerializer < ContentEdgeSerializer
+class MotionSerializer < DiscussionSerializer
   attribute :current_vote, predicate: NS::ARGU[:currentVote], unless: :system_scope?
 
   attribute :lat, if: :export_scope?

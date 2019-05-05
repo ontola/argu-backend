@@ -144,7 +144,7 @@ module Argu
           let(:expect_post_move_unauthorized_serializer) { expect_unauthorized }
           let(:expect_post_move) do
             subject.reload
-            assert_equal other_page_forum, subject.parent
+            assert_equal other_page_forum, subject_parent
             case subject
             when Motion
               assert subject.arguments.count.positive?
@@ -182,12 +182,13 @@ module Argu
             create(:user)
           end
 
+          let(:subject_parent) { subject.parent }
           # Symbols
           let(:class_sym) { subject.class.name.underscore.to_sym }
           let(:table_sym) { subject.class.name.tableize.to_sym }
-          let(:parent_class_sym) { subject.parent.class.name.underscore.to_sym }
+          let(:parent_class_sym) { subject_parent.class.name.underscore.to_sym }
           let(:parent_table_sym) do
-            subject.parent.is_a?(Forum) ? :container_nodes : subject.parent.class.name.tableize.to_sym
+            subject_parent.is_a?(Forum) ? :container_nodes : subject_parent.class.name.tableize.to_sym
           end
 
           # Params
@@ -201,7 +202,7 @@ module Argu
           let(:destroy_params) { {} }
 
           # Paths
-          let(:index_path) { collection_iri(subject.parent, table_sym).path }
+          let(:index_path) { collection_iri(subject_parent, table_sym).path }
           let(:create_path) { index_path }
           let(:new_path) { new_iri(create_path).path }
           let(:show_path) { resource_iri(subject).path }
@@ -240,7 +241,7 @@ module Argu
           let(:non_existing_untrash_path) { untrash_iri(non_existing_show_path, root: argu).path }
 
           # Result paths
-          let(:parent_path) { subject.parent.iri.path }
+          let(:parent_path) { subject_parent.iri.path }
           let(:created_resource_path) { subject.class.last.iri.path }
           let(:updated_resource_path) { show_path }
           let(:create_failed_path) { parent_path }

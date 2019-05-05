@@ -1,19 +1,28 @@
 # frozen_string_literal: true
 
-class DiscussionsController < ParentableController
+class DiscussionsController < EdgeableController
+  # @todo remove after release of new FE
   active_response :new
-  skip_before_action :check_if_registered
+
+  # @todo remove after release of new FE
+  def default_form_options(_action)
+    return super unless controller_name == 'discussions'
+    {action: :form}
+  end
 
   private
 
+  # @todo remove after release of new FE
   def authorize_action
-    return super unless action_name == 'index'
-    authorize parent_resource!, :index_children?, controller_name
+    authorize parent_resource, :list?
+    return super unless action_name == 'new' && controller_name == 'discussions'
+
+    true
   end
 
-  def resource_by_id; end
+  def check_if_registered?
+    return super unless controller_name == 'discussions'
 
-  def resource_new_params
-    HashWithIndifferentAccess.new(forum: parent_resource!)
+    super && !%w[new index].include?(action_name)
   end
 end

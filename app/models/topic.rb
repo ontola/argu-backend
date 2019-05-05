@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
-class Topic < Edge
-  enhance Attachable
-  enhance Commentable
-  enhance Contactable
-  enhance Convertible
-  enhance CoverPhotoable
-  enhance Exportable
-  enhance Feedable
-  enhance Inviteable
-  enhance MarkAsImportant
-  enhance Moveable
-  enhance Placeable
-  enhance Statable
-
+class Topic < Discussion
   include Edgeable::Content
 
-  counter_cache true
   paginates_per 30
   parentable :container_node
   placeable :custom

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class QuestionPolicy < EdgePolicy
+class QuestionPolicy < DiscussionPolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[id display_name description forum_id cover_photo

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TopicSerializer < ContentEdgeSerializer
+class TopicSerializer < DiscussionSerializer
   attribute :lat, if: :export_scope?
   attribute :lon, if: :export_scope?
 

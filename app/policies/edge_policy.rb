@@ -83,6 +83,10 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     administrator? || staff?
   end
 
+  def list?
+    true
+  end
+
   def move?
     false
   end

@@ -9,7 +9,7 @@ RSpec.describe 'Exports', type: :request do
   end
 
   include Argu::TestHelpers::AutomatedRequests
-  let(:index_path) { collection_iri(subject.parent.iri.path, table_sym).path }
+  let(:index_path) { collection_iri(subject_parent.iri.path, table_sym).path }
   let(:parent_path) { index_path }
   let(:created_resource_path) { parent_path }
   let(:destroy_failed_path) { parent_path }

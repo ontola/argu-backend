@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MotionPolicy < EdgePolicy
+class MotionPolicy < DiscussionPolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[display_name description votes question_id]

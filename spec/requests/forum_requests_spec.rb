@@ -7,7 +7,7 @@ RSpec.describe 'Forums', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:authorized_user) { staff }
 
-  let(:index_path) { collection_iri(subject.parent, :forums).path }
+  let(:index_path) { collection_iri(subject_parent, :forums).path }
   let(:create_params) { {forum: attributes_for(class_sym).merge(url: 'new_forum')} }
   let(:create_differences) { {'Forum.count' => 1} }
   let(:invalid_create_params) { {page_id: argu.url, forum: {name: 'n1'}} }

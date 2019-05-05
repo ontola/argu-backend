@@ -1,29 +1,14 @@
 # frozen_string_literal: true
 
-class Motion < Edge
+class Motion < Discussion
   include ActionView::Helpers::NumberHelper
 
   enhance Argumentable
-  enhance Attachable
-  enhance BlogPostable
-  enhance Commentable
-  enhance Contactable
-  enhance Convertible
-  enhance CoverPhotoable
   enhance Decisionable
-  enhance Exportable
-  enhance Feedable
-  enhance Inviteable
   enhance Opinionable
-  enhance MarkAsImportant
-  enhance Moveable
-  enhance Placeable
-  enhance Statable
-  enhance Timelineable
   enhance VoteEventable
 
   include Edgeable::Content
-  include HasLinks
 
   attr_accessor :current_vote
 
@@ -31,7 +16,6 @@ class Motion < Edge
   alias_attribute :title, :display_name
 
   convertible questions: %i[activities media_objects], comments: %i[activities]
-  counter_cache true
   paginates_per 30
   parentable :question, :container_node
   placeable :custom

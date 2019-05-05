@@ -10,6 +10,10 @@ module Edgeable
         collection.update_all(creator_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
       end
 
+      def base_class
+        Edge
+      end
+
       def edge_includes_for_index
         {
           published_publications: {},

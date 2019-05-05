@@ -1,28 +1,13 @@
 # frozen_string_literal: true
 
-class Question < Edge
-  enhance Attachable
-  enhance BlogPostable
-  enhance Commentable
-  enhance Convertible
-  enhance Contactable
+class Question < Discussion
   enhance CoverPhotoable
-  enhance Exportable
-  enhance Feedable
-  enhance Inviteable
-  enhance MarkAsImportant
   enhance Motionable
-  enhance Moveable
-  enhance Placeable
-  enhance Statable
-  enhance Timelineable
 
   include Edgeable::Content
-  include HasLinks
   include CustomGrants
 
   convertible motions: %i[activities media_objects]
-  counter_cache true
   parentable :container_node
   placeable :custom
 
