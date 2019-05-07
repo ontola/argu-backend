@@ -37,7 +37,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   delegate :description, :default_profile_photo, to: :profile
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
-  validates :profile, :last_accepted, presence: true
+  validates :profile, :last_accepted, :iri_prefix, presence: true
 
   after_create :create_default_groups
   after_create :create_staff_grant

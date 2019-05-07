@@ -57,8 +57,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should get show by upcased shortname' do
-    get freetown.iri.to_s.gsub('freetown', 'Freetown')
-    assert_redirected_to freetown.iri
+    get freetown.iri_path.gsub('freetown', 'Freetown')
+    assert_redirected_to freetown.iri.path
   end
 
   test 'guest should get show by upcased page shortname' do
