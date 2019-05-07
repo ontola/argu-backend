@@ -46,6 +46,8 @@ module ChildHelper
       {placeable: parent}
     when 'Widget'
       {owner: parent}
+    when 'Profile'
+      {profileable: parent}
     else
       raw_klass <= Edge && parent.is_a?(Edge) ? {parent: parent} : {}
     end

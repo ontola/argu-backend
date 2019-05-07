@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class PageForm < ApplicationForm
-  fields %i[
-    visibility
-    url
-    last_accepted
-    theme
+  fields [
+    {profile: {if: ->(resource) { resource.new_record? }}},
+    :visibility,
+    :url,
+    :last_accepted,
+    :theme
   ]
 
   property_group :theme,
