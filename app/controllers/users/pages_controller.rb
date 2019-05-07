@@ -40,11 +40,12 @@ module Users
       )
     end
 
-    def favorite_pages
+    def favorite_pages # rubocop:disable Metrics/AbcSize
       return Page.none if user.guest?
       ActsAsTenant.without_tenant do
         page_ids =
           Forum.joins(:favorites, :parent).where(favorites: {user_id: current_user.id}).pluck('parents_edges.uuid')
+        page_ids += user.page_ids
         Kaminari.paginate_array(Page.where(uuid: page_ids).includes(:shortname, profile: :default_profile_photo).to_a)
       end
     end

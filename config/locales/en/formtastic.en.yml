@@ -92,6 +92,7 @@ en:
       page:
         name: "Page name"
         shortname: "Argu URL"
+        last_accepted: "I accept the terms of use"
       forum:
         bio: "Forum goal"
         bio_long: "More information"

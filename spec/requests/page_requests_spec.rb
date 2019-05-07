@@ -38,7 +38,7 @@ RSpec.describe 'Pages', type: :request do
   let(:update_params) { {page: {profile_attributes: {id: subject.profile.id, name: 'new_name'}}} }
   let(:invalid_update_params) do
     nominatim_netherlands
-    {page: {last_accepted: nil}}
+    {page: {profile_attributes: {name: 'a'}}}
   end
   let(:destroy_params) { {page: {confirmation_string: 'remove'}} }
   let(:expect_get_show_unauthorized_serializer) { expect_success }
@@ -57,6 +57,8 @@ RSpec.describe 'Pages', type: :request do
     expect(response.code).to eq('303')
     expect(response).to redirect_to(root_path)
   end
+  let(:expect_post_create_json_api) { expect_created }
+  let(:expect_post_create_serializer) { expect_success }
 
   context 'public page' do
     subject { create_page }

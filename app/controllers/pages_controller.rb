@@ -17,6 +17,11 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     super
   end
 
+  def create_success_rdf
+    ActsAsTenant.current_tenant = authenticated_resource
+    respond_with_redirect(location: settings_iri(authenticated_resource), reload: true)
+  end
+
   def destroy_success_html
     redirect_to root_path, status: 303, notice: t('type_destroy_success', type: t('pages.type'))
   end
@@ -84,7 +89,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
     @_permit_params = super
     merge_photo_params(@_permit_params)
-    @_permit_params[:last_accepted] = Time.current if @_permit_params[:last_accepted] == '1'
+    @_permit_params[:last_accepted] = Time.current if %w[true 1].include?(@_permit_params[:last_accepted].to_s)
     @_permit_params
   end
 
@@ -111,6 +116,8 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def resource_by_id
+    return if %w[new create].include?(action_name)
+
     @resource_by_id ||= ActsAsTenant.without_tenant { super } || ActsAsTenant.current_tenant
   end
 

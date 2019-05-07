@@ -92,6 +92,7 @@ nl:
       page:
         name: "Naam van pagina"
         shortname: "Argu URL"
+        last_accepted: "Ik ga akkoord met de gebruiksvoorwaarden"
       forum:
         bio: "Doel van forum"
         bio_long: "Meer informatie"

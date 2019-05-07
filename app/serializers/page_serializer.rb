@@ -3,11 +3,12 @@
 class PageSerializer < RecordSerializer
   include ProfilePhotoable::Serializer
 
-  attribute :name, predicate: NS::SCHEMA[:name]
+  attribute :name, predicate: NS::FOAF[:name]
   attribute :about, predicate: NS::SCHEMA[:description]
   attribute :visibility, predicate: NS::ARGU[:visibility]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
+  attribute :last_accepted, predicate: NS::ARGU[:lastAccepted], datatype: NS::XSD[:boolean], if: :never
 
   has_one :primary_container_node, predicate: NS::FOAF[:homepage], unless: :service_scope?
   has_one :profile, predicate: NS::ARGU[:profile]

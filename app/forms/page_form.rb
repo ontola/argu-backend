@@ -4,6 +4,7 @@ class PageForm < ApplicationForm
   fields %i[
     visibility
     url
+    last_accepted
     theme
   ]
 

@@ -1,4 +1,6 @@
 en:
+  websites:
+    type_new: "New website"
   pages:
     resource_name: "Organizations"
     type: "Organization"

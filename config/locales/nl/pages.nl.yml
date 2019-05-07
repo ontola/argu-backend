@@ -1,4 +1,6 @@
 nl:
+  websites:
+    type_new: "Nieuwe website"
   pages:
     resource_name: "Organisatie"
     type: "Organisatie"
