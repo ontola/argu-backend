@@ -18,10 +18,11 @@ module Placeable
 
     module ClassMethods
       def define_placement_associations(type)
+        class_name = type == :home ? 'HomePlacement' : 'Placement'
         has_one "#{type}_placement".to_sym,
                 -> { send(type) },
                 as: :placeable,
-                class_name: 'Placement',
+                class_name: class_name,
                 primary_key: :uuid
         accepts_nested_attributes_for "#{type}_placement".to_sym, reject_if: :all_blank, allow_destroy: true
 
