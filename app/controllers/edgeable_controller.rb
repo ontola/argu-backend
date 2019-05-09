@@ -56,8 +56,7 @@ class EdgeableController < ServiceController
     end
     if params[:lat] && params[:lon]
       resource
-        .custom_placement
-        .new(params.permit(:lat, :lon, :zoom_level))
+        .build_custom_placement(params.permit(:lat, :lon, :zoom_level))
     end
     resource
   end
