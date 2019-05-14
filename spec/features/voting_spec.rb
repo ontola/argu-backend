@@ -62,7 +62,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).not_to have_css('.vote-count')
     find('span', text: 'Disagree').click
     within('.opinion-form') do
-      expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
+      expect(page).to have_content('Please confirm your vote by clicking the link we\'ve sent to ')
       expect(page).to have_content('This is my opinion')
       expect(page).to have_content('Argument title')
       fill_in 'opinion-body', with: 'This is my new opinion'

@@ -15,8 +15,8 @@ en:
       title: 'Receive notifications for:'
     permanent:
       confirm_account:
-        one: "Please confirm your vote by clicking the link we've send to %{email}"
-        other: "Please confirm your %{count} votes by clicking the link we've send to %{email}"
+        one: "Please confirm your vote by clicking the link we've sent to %{email}"
+        other: "Please confirm your %{count} votes by clicking the link we've sent to %{email}"
       finish_intro: "Finish your profile to be more recognizable."
     unsubscribe:
       success: "You no longer receive notifications for '%{item}'."

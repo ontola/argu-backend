@@ -10,7 +10,7 @@ en:
       con: "%{user} was against when posting this comment"
       neutral: "%{user} was neutral when posting this comment"
     form:
-      confirm_notice: "Please confirm your vote by clicking the link we've send to"
+      confirm_notice: "Please confirm your vote by clicking the link we've sent to"
       placeholder: "Explain your opinion (optional)"
       arguments: "Which arguments are important to you?"
       edit: "Edit"
