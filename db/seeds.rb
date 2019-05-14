@@ -70,8 +70,11 @@ ActiveRecord::Base.transaction do
       profile_attributes: {name: 'Argu'},
       url: 'argu',
       last_accepted: Time.current,
-      is_published: true
+      is_published: true,
+      iri_prefix: 'app.argu.localdev/argu'
     )
+
+  ActsAsTenant.current_tenant = argu
 
   public_group = Group.new(
     id: Group::PUBLIC_ID,
