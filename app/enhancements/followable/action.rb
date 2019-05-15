@@ -6,7 +6,7 @@ module Followable
 
     included do
       %i[news reactions never].each do |follow_type|
-        define_action(
+        has_action(
           :"follow_#{follow_type}",
           type: [NS::SCHEMA[:Action]],
           url: -> { follow_iri(follow_type) },

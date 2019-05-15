@@ -89,9 +89,6 @@ nl:
         follows: "Items die ik volg"
         memberships: "Mijn forums"
         created: "Mijn items"
-      profile:
-        name: "Volledige naam"
-        are_votes_public: "Toon mijn activiteit en mijn stemmen in mijn profiel"
       page:
         name: "Naam van pagina"
         shortname: "Argu URL"

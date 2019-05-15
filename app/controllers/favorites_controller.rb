@@ -17,6 +17,10 @@ class FavoritesController < ParentableController
     @parent_resource ||= resource_from_iri(params[:iri])&.ancestor(:forum) || super
   end
 
+  def permit_params
+    {}
+  end
+
   def resource_by_id
     @resource_by_id ||= current_user.favorites.find_by(edge: parent_resource)
   end

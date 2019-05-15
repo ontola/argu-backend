@@ -4,14 +4,13 @@ require 'argu'
 require 'argu/api'
 
 class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
+  include ActiveResponse::Controller
+  include LinkedRails::Controller
   include Argu::Announcements
   include Argu::Controller::Authentication
   include Argu::Controller::ErrorHandling
-
-  include ActiveResponse::Controller
   include ActiveResponseHelper
   include FrontendTransitionHelper
-  include RailsLD::Helpers::OntolaActions
   include RedirectHelper
   include JsonApiHelper
   include NestedAttributesHelper
@@ -249,6 +248,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     {
       accent_background_color: tree_root.accent_background_color,
       accent_color: tree_root.accent_color,
+      application_name: 'Argu',
       iri: "https://#{tree_root.iri_prefix}",
       navbar_background: tree_root.navbar_background,
       navbar_color: tree_root.navbar_color

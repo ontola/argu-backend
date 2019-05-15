@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 module ActiveResponseHelper
-  include RailsLD::ActiveResponse::Controller::CrudDefaults
-
   private
 
   def action_delta(data, delta, object, action, opts = {})
-    [NS::SCHEMA[:potentialAction], opts[:include_favorite] ? NS::ARGU[:favoriteAction] : nil].compact.each do |pred|
+    [NS::SCHEMA[:potentialAction], opts[:include_favorite] ? NS::ONTOLA[:favoriteAction] : nil].compact.each do |pred|
       [object, opts[:include_parent] ? object.parent : nil].compact.each do |obj|
         data << [
           obj.iri,
@@ -27,12 +25,6 @@ module ActiveResponseHelper
       end
     else
       t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
-    end
-  end
-
-  def changes_triples
-    current_resource.previous_changes_by_predicate.map do |predicate, (_old_value, new_value)|
-      [current_resource.iri, predicate, new_value, NS::ARGU[:replace]]
     end
   end
 
@@ -72,7 +64,7 @@ module ActiveResponseHelper
   end
 
   def delta_iri(delta)
-    delta == :remove ? NS::ARGU[delta] : NS::LL[delta]
+    delta == :remove ? NS::ONTOLA[delta] : NS::LL[delta]
   end
 
   def destroy_meta
@@ -170,7 +162,7 @@ module ActiveResponseHelper
   end
 
   def update_meta
-    meta = changes_triples
+    meta = super
     if resource_was_published?
       meta << [
         current_resource.actions(user_context).detect { |a| a.tag == :publish }.iri,
@@ -189,6 +181,6 @@ module ActiveResponseHelper
   def meta_replace_collection_count(data, collection)
     collection.clear_total_count
     data.push [collection.iri, NS::AS[:pages], nil, NS::LL[:remove]]
-    data.push [collection.iri, NS::AS[:totalItems], collection.total_count, NS::ARGU[:replace]]
+    data.push [collection.iri, NS::AS[:totalItems], collection.total_count, NS::ONTOLA[:replace]]
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BlogForm < RailsLD::Form
+class BlogForm < ApplicationForm
   fields %i[
     display_name
     bio

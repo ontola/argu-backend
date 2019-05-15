@@ -199,14 +199,14 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       authenticated_resource.parent_iri,
       NS::ARGU[:currentVote],
       authenticated_resource.iri,
-      NS::ARGU[:remove]
+      NS::ONTOLA[:remove]
     ]
     if authenticated_resource.parent.is_a?(Argument)
       data.push [
         authenticated_resource.parent_iri,
         NS::ARGU[:votesProCount],
         authenticated_resource.parent.reload.children_counts['votes_pro'].to_i,
-        NS::ARGU[:replace]
+        NS::ONTOLA[:replace]
       ]
     end
     action_delta(data, :remove, authenticated_resource.parent, :destroy_vote, include_favorite: true)
@@ -214,16 +214,16 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     data
   end
 
-  def opinion_delta(data, voteable)
+  def opinion_delta(data, voteable) # rubocop:disable Metrics/AbcSize
     [
-      voteable.action(user_context, :update_opinion),
-      voteable.comment_collection.action(user_context, :create_opinion)
-    ].each do |object|
+      voteable.action(:update_opinion, user_context),
+      voteable.comment_collection.action(:create_opinion, user_context)
+    ].compact.each do |object|
       data << [
         object.iri,
         NS::SCHEMA[:result],
         "#{authenticated_resource.for.classify}Opinion".constantize.iri,
-        NS::ARGU[:replace]
+        NS::ONTOLA[:replace]
       ]
     end
   end
@@ -240,7 +240,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
         iri,
         NS::ARGU[:voteableVoteEvent],
         parent_resource.iri,
-        NS::ARGU[:replace]
+        NS::ONTOLA[:replace]
       ]
     )
   end

@@ -35,11 +35,15 @@ require 'argu/whitelist_constraint'
 # z:
 
 Rails.application.routes.draw do
-  concerns_from_enhancements
-
   concern :votable do
     resources :votes, only: %i[new create index]
-    resource :vote, only: %i[destroy show]
+    resource :vote, only: %i[destroy show], path: :vote
+  end
+
+  concern :nested_actionable do
+    namespace :actions do
+      resources :items, path: '', only: %i[index show], collection: @scope.parent.try(:[], :controller)
+    end
   end
 
   constraints(Argu::WhitelistConstraint) do
@@ -235,7 +239,7 @@ Rails.application.routes.draw do
   get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
 
   resource :pages, path: '' do
-    concerns Page.route_concerns
+    include_route_concerns(klass: Page)
   end
 
   resources :actors, only: :index
@@ -319,7 +323,7 @@ Rails.application.routes.draw do
   resources :container_nodes,
             only: %i[show],
             path: '' do
-    concerns ContainerNode.descendants.map(&:route_concerns).flatten.uniq
+    include_route_concerns(klass: ContainerNode.descendants)
     resources :motions, path: :m, only: [] do
       get :search, to: 'motions#search', on: :collection
     end

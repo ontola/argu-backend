@@ -3,10 +3,9 @@
 class GrantTree
   class Node
     include ActiveModel::Model
-    include RailsLD::Model
+    include LinkedRails::Model
 
     attr_accessor :edge, :id, :children, :grant_tree, :parent, :permitted_actions, :grant_sets
-    alias read_attribute_for_serialization send
 
     def initialize(edge, parent, grant_tree)
       self.edge = edge

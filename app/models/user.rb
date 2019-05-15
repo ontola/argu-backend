@@ -3,10 +3,10 @@
 class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance ConfirmedDestroyable
   enhance Placeable
-  enhance Updateable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Updateable
   enhance Settingable
-  enhance Menuable
-  enhance Actionable
+  enhance LinkedRails::Enhancements::Menuable
 
   include Broadcastable
   include RedirectHelper

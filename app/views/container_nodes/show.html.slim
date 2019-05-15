@@ -16,7 +16,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
     .col-1
       h3= t('blog_posts.latest')
       =link_to t('blog_posts.see_all'), collection_iri(authenticated_resource, :blog_posts), class: 'btn-subtle', style: 'top: 0; right: 1em; position: absolute;'
-      =render partial: 'blog_posts/show', locals: {model: policy_scope(authenticated_resource.blog_posts).last}
+      =render partial: 'blog_posts/show', locals: {model: Pundit.policy_scope(user_context, authenticated_resource.blog_posts).last}
   - if policy(authenticated_resource).show?
     .btns-center-container
       -if can_start_discussion?(authenticated_resource)

@@ -2,10 +2,10 @@
 
 module Users
   class Password < VirtualResource
-    include RailsLD::Model
-    enhance Actionable
-    enhance Createable, except: %i[Controller]
-    enhance Updateable, except: %i[Controller Serializer]
+    include LinkedRails::Model
+    enhance LinkedRails::Enhancements::Actionable
+    enhance LinkedRails::Enhancements::Createable, except: %i[Controller]
+    enhance LinkedRails::Enhancements::Updateable, except: %i[Controller Serializer]
     attr_accessor :email, :password, :password_confirmation, :user, :reset_password_token
 
     def iri_template_name

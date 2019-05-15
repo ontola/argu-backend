@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Term < VirtualResource
-  include RailsLD::Model
-  enhance Actionable
-  enhance Createable
+  include LinkedRails::Model
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
   attr_accessor :referrer
 
   def id; end

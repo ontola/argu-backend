@@ -35,12 +35,25 @@ GIT
 
 GIT
   remote: https://github.com/ontola/active_response
-  revision: ec8182902cafa10d8dc562f7838bdde145324242
+  revision: edc79b7195b4b11a1768d4cde44d0c303fdb4888
   branch: master
   specs:
     active_response (0.0.1)
       active_model_serializers (~> 0.10)
       railties (>= 4.2.0, < 6)
+
+GIT
+  remote: https://github.com/ontola/linked_rails
+  revision: 9b92b49f56e5ec283f5afb4ff4fd68cc790b2f15
+  specs:
+    linked_rails (0.0.0)
+      active_response
+      kaminari
+      pundit
+      rails (~> 5.2.2)
+      rdf
+      rdf-serializers
+      uri_template
 
 GIT
   remote: https://github.com/ontola/rdf-serializers
@@ -112,7 +125,7 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    active_model_serializers (0.10.7)
+    active_model_serializers (0.10.9)
       actionpack (>= 4.1, < 6)
       activemodel (>= 4.1, < 6)
       case_transform (>= 0.2)
@@ -491,7 +504,7 @@ GEM
     puma (3.11.0)
     pundit (1.0.1)
       activesupport (>= 3.0.0)
-    rack (2.0.6)
+    rack (2.0.7)
     rack-attack (4.3.1)
       rack
     rack-contrib (2.0.1)
@@ -815,6 +828,7 @@ DEPENDENCIES
   koala (~> 2.5.0)
   libv8 (~> 3.16.14.13)
   license_finder
+  linked_rails!
   logstasher (~> 1.2.0)
   ltree_hierarchy
   meta_request

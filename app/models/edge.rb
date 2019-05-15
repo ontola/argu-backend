@@ -16,6 +16,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Shortnameable
   include Uuidable
 
+  enhance LinkedRails::Enhancements::Actionable
   enhance Grantable
   enhance Searchable
 
@@ -97,6 +98,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
           inverse_of: :parent,
           dependent: :destroy
   has_one :default_vote_event,
+          -> { order(created_at: :asc) },
           class_name: 'VoteEvent',
           foreign_key: :parent_id,
           inverse_of: :parent,

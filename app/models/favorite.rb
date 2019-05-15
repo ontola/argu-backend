@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Favorite < ApplicationRecord
-  enhance Createable
-  enhance Destroyable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Destroyable
 
   include Parentable
 

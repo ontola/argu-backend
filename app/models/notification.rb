@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
-  enhance Createable
-  enhance Updateable
-  enhance Actionable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Updateable
 
   include BlogPostsHelper
   include ActivityHelper

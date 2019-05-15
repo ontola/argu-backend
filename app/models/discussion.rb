@@ -4,10 +4,7 @@ class Discussion < Edge
   attr_accessor :forum, :page, :publisher
   parentable :container_node, :page
   filterable pinned: {key: :pinned_at, values: {yes: 'NOT NULL', no: 'NULL'}}
-
-  def self.default_per_page
-    12
-  end
+  paginates_per 12
 
   def parent
     forum || page

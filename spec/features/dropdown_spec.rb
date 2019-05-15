@@ -17,7 +17,7 @@ RSpec.feature 'Dropdown', type: :feature do
     end
 
     expect(page).to have_content houten.display_name
-    expect(page).to have_current_path resource_iri(houten)
+    expect(page).to have_current_path resource_iri(houten).path
   end
 
   # scenario 'Dropdown still works after navigating back and forth' do

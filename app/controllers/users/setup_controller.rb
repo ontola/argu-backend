@@ -8,8 +8,8 @@ module Users
 
     private
 
-    def active_response_action(_action)
-      authenticated_resource.action(user_context, :setup)
+    def ld_action(_action)
+      authenticated_resource.action(:setup, user_context)
     end
 
     def edit_execute

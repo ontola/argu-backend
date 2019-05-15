@@ -59,9 +59,9 @@ class UserTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
     subject.r = '/users/sign_in'
     assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.r = 'https://argu.dev/users/sign_in'
+    subject.r = 'https://app.argu.localtest/users/sign_in'
     assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.r = 'https://argu.dev/users/sign_in?param=blabla'
+    subject.r = 'https://app.argu.localtest/users/sign_in?param=blabla'
     assert subject.valid?, subject.errors.to_a.join(',').to_s
     subject.r = 'https://beta.argu.dev/users/sign_in?param=blabla'
     assert_not subject.valid?

@@ -2,17 +2,7 @@
 
 module Menus
   module ShareMenuItems
-    include RailsLD::Helpers::OntolaActions
-
-    def share_menu_items(opts = {})
-      url = resource.iri
-      menu_item(
-        :share,
-        image: 'fa-share-alt',
-        link_opts: opts.merge(iri: url),
-        menus: -> { share_menu_links(url) }
-      )
-    end
+    include LinkedRails::Helpers::OntolaActionsHelper
 
     def invite_link
       menu_item(
@@ -98,8 +88,10 @@ module Menus
         .include?(Group::PUBLIC_ID)
     end
 
-    def share_menu_links(url) # rubocop:disable Metrics/AbcSize
+    def share_menu_items # rubocop:disable Metrics/AbcSize
       return [not_published_notice] unless resource.is_published?
+      url = resource.iri
+
       items = [invite_link]
       if is_public?
         items.concat([
@@ -108,7 +100,7 @@ module Menus
                        linkedin_share_link(url),
                        whatsapp_share_link(url)
                      ])
-        items << email_share_link(url) unless policy(resource).invite?
+        items << email_share_link(url) unless Pundit.policy(user_context, resource).invite?
         items << copy_share_link(url)
       else
         items.concat(

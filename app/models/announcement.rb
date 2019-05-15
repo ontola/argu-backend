@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Announcement < NewsBoy
-  enhance Createable
-  enhance Destroyable
-  enhance Updateable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Destroyable
+  enhance LinkedRails::Enhancements::Updateable
 
   belongs_to :publisher, class_name: 'Profile'
 

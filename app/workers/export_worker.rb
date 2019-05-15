@@ -63,7 +63,7 @@ class ExportWorker
     when Array
       value.map { |v| format_value_xls(v) }.join(', ')
     when Hash
-      if value[:type] == NS::ARGU[:Collection]
+      if value[:type] == NS::ONTOLA[:Collection]
         value[:totalCount]
       elsif value[:iri].present?
         Spreadsheet::Link.new(value[:iri].to_s)

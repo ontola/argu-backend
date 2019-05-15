@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Shortname < ApplicationRecord
-  enhance Actionable
-  enhance Createable
-  enhance Destroyable
-  enhance Tableable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Destroyable
+  enhance LinkedRails::Enhancements::Tableable
 
   include Parentable
 
@@ -22,7 +22,7 @@ class Shortname < ApplicationRecord
   with_columns settings: [
     NS::ARGU[:alias],
     NS::ARGU[:shortnameable],
-    NS::ARGU[:destroyAction]
+    NS::ONTOLA[:destroyAction]
   ]
 
   # Uniqueness is done in the database (since rails lowercase support sucks,

@@ -5,7 +5,7 @@ class CurrentActorSerializer < BaseSerializer
   include ProfilePhotoable::Serializer
 
   attribute :a_uuid, predicate: NS::ARGU[:anonymousID]
-  attribute :actor_type, predicate: NS::ARGU[:actorType], key: :body
+  attribute :actor_type, predicate: NS::ONTOLA[:actorType], key: :body
   attribute :has_analytics?, predicate: NS::ARGU[:hasAnalytics]
   attribute :shortname
   attribute :url
@@ -14,7 +14,7 @@ class CurrentActorSerializer < BaseSerializer
             if: :afe_request?
 
   has_one :user, predicate: NS::ARGU[:user]
-  has_one :actor, predicate: NS::ARGU[:actor] do
+  has_one :actor, predicate: NS::ONTOLA[:actor] do
     object.actor&.profileable
   end
 
@@ -35,6 +35,6 @@ class CurrentActorSerializer < BaseSerializer
   end
 
   def type
-    NS::ARGU[object.actor_type]
+    NS::ONTOLA[object.actor_type]
   end
 end

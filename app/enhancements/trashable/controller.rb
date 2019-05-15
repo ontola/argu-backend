@@ -5,7 +5,7 @@ module Trashable
     extend ActiveSupport::Concern
 
     included do
-      include Destroyable::Controller
+      include LinkedRails::Enhancements::Destroyable::Controller
 
       active_response :bin, :trash, :unbin, :untrash
     end

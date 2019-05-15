@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class Vote < Edge # rubocop:disable Metrics/ClassLength
-  enhance Createable
-  enhance Destroyable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Destroyable
   enhance Loggable
-  enhance Updateable
-  enhance Actionable
+  enhance LinkedRails::Enhancements::Updateable
 
   include RedisResource::Concern
 

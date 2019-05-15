@@ -2,6 +2,7 @@
 
 class RestrictivePolicy # rubocop:disable Metrics/ClassLength
   include TuplesHelper
+  include LinkedRails::Policy
 
   class Scope
     attr_reader :context, :user, :scope
@@ -19,7 +20,7 @@ class RestrictivePolicy # rubocop:disable Metrics/ClassLength
              allow_nil: true
 
     def resolve
-      scope if staff?
+      staff? ? scope : scope.none
     end
 
     def staff?
@@ -46,6 +47,7 @@ class RestrictivePolicy # rubocop:disable Metrics/ClassLength
   def initialize(context, record)
     @context = context
     @record = record
+    super()
   end
 
   def permitted_attribute_names

@@ -2,4 +2,8 @@
 
 class GuestUserSerializer < BaseSerializer
   attribute :display_name, predicate: NS::SCHEMA[:name]
+
+  def self?
+    object == scope&.user
+  end
 end

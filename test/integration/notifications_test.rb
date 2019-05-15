@@ -71,9 +71,9 @@ class NotificationsTest < ActionDispatch::IntegrationTest
       resource_iri(notification),
       NS::SCHEMA[:dateRead],
       notification.read_at.to_datetime,
-      NS::ARGU[:replace]
+      NS::ONTOLA[:replace]
     )
-    expect_triple(resource_iri(notification), NS::ARGU[:unread], false, NS::ARGU[:replace])
+    expect_triple(resource_iri(notification), NS::ARGU[:unread], false, NS::ONTOLA[:replace])
   end
 
   test 'follower should mark as read' do

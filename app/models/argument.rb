@@ -3,7 +3,7 @@
 class Argument < Edge
   VOTE_OPTIONS = [:pro].freeze unless defined?(VOTE_OPTIONS)
 
-  enhance Createable
+  enhance LinkedRails::Enhancements::Createable
   enhance Commentable
   enhance Convertible
   enhance Contactable

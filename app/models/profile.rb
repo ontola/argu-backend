@@ -3,8 +3,8 @@
 class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance ProfilePhotoable
   enhance CoverPhotoable
-  enhance Updateable
-  enhance Actionable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Updateable
 
   include Uuidable
 

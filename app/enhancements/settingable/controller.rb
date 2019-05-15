@@ -30,7 +30,7 @@ module Settingable
     def settings_success
       return settings_success_html if %i[html js].include?(active_response_type)
       respond_with_resource(
-        resource: authenticated_resource!.menu(user_context, :settings),
+        resource: authenticated_resource!.menu(:settings, user_context),
         include: [menu_sequence: [members: [:image, menu_sequence: [members: [:image]]]]]
       )
     end

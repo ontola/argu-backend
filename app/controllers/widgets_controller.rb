@@ -7,7 +7,7 @@ class WidgetsController < ServiceController
 
   def index_collection
     @index_collection ||=
-      RDF::Sequence.new(
+      LinkedRails::Sequence.new(
         policy_scope(parent_resource.widgets),
         id: collection_iri(parent_resource, :widgets)
       )

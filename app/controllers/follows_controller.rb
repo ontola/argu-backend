@@ -11,7 +11,7 @@ class FollowsController < AuthorizedController
   def create_meta
     authenticated_resource
       .followable
-      .menu(user_context, :follow)
+      .menu(:follow, user_context)
       .menu_sequence
       .members
       .map(&method(:menu_item_image_triple))
@@ -35,10 +35,17 @@ class FollowsController < AuthorizedController
   end
 
   def destroy_success_rdf
-    respond_with_redirect(
-      location: authenticated_resource.followable.iri,
-      notice: t('notifications.unsubscribe.success', item: authenticated_resource.followable.display_name)
+    add_exec_action_header(
+      headers,
+      ontola_snackbar_action(
+        t('notifications.unsubscribe.success', item: authenticated_resource.followable.display_name)
+      )
     )
+    add_exec_action_header(
+      headers,
+      ontola_redirect_action(authenticated_resource.followable.iri)
+    )
+    head 200
   end
 
   def destroy_execute
@@ -46,34 +53,38 @@ class FollowsController < AuthorizedController
     @unsubscribed = !authenticated_resource.never? && authenticated_resource.never!
   end
 
-  def index_collection_name; end
+  def collection_from_parent_name; end
 
   def active_response_success_message
     t('notifications.changed_successfully')
+  end
+
+  def find_params
+    params.permit %i[follow_type gid]
   end
 
   def menu_item_image_triple(menu_item)
     [
       menu_item.iri,
       NS::SCHEMA[:image],
-      RDF::URI("http://fontawesome.io/icon/#{menu_item.image.gsub('fa-', '')}"), NS::ARGU[:replace]
+      RDF::URI("http://fontawesome.io/icon/#{menu_item.image.gsub('fa-', '')}"), NS::ONTOLA[:replace]
     ]
   end
 
   def new_resource_from_params # rubocop:disable Metrics/AbcSize
     return @resource if instance_variable_defined?(:@resource)
-    followable = Edge.find_by(uuid: permit_params[:gid])
+    followable = Edge.find_by(uuid: find_params[:gid])
     return @resource = nil if followable.nil? || PERMITTED_CLASSES.detect { |klass| followable.is_a?(klass) }.nil?
     @resource = current_user.follows.find_or_initialize_by(
       followable_id: followable.uuid,
       followable_type: 'Edge'
     )
-    @resource.follow_type = action_name == 'create' ? permit_params[:follow_type] || :reactions : :never
+    @resource.follow_type = action_name == 'create' ? find_params[:follow_type] || :reactions : :never
     @resource
   end
 
   def permit_params
-    params.permit %i[follow_type gid]
+    {}
   end
 
   def redirect_location

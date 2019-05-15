@@ -20,7 +20,7 @@ class DraftsController < AuthorizedController
     )
   end
 
-  def index_collection_name; end
+  def collection_from_parent_name; end
 
   def index_success_html # rubocop:disable Metrics/AbcSize
     skip_verify_policy_scoped(true)

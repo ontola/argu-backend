@@ -4,15 +4,6 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
   include UriTemplateHelper
   skip_before_action :check_if_registered, only: :index
 
-  def new
-    comment = params[:comment]
-    render locals: {
-      parent_id: comment.is_a?(Hash) ? comment[:parent_id] : nil,
-      commentable: authenticated_resource.parent,
-      comment: authenticated_resource
-    }
-  end
-
   private
 
   def comment_body
@@ -59,7 +50,7 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
     render
   end
 
-  def index_collection_name
+  def collection_from_parent_name
     return super unless parent_resource.is_a?(Comment)
     :comment_child_collection
   end
@@ -78,6 +69,15 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
   def index_success_js
     @comment_edges = policy_scope(parent_resource!.filtered_threads(show_trashed?, params[:comments_page]))
     render locals: {commentable: parent_resource!}
+  end
+
+  def new_html
+    comment = params[:comment]
+    render locals: {
+      parent_id: comment.is_a?(Hash) ? comment[:parent_id] : nil,
+      commentable: authenticated_resource.parent,
+      comment: authenticated_resource
+    }
   end
 
   def redirect_location

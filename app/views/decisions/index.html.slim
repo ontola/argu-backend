@@ -39,7 +39,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
       .box
         =semantic_form_for(local_assigns[:edit_decision], url: local_assigns[:edit_decision], class: 'decision_form', remote: true, authenticity_token: true) do |f|
           =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: local_assigns[:edit_decision]}
-    - policy_scope(decisionable.decisions).reverse.each do |d|
+    - Pundit.policy_scope(user_context, decisionable.decisions).reverse.each do |d|
       .box
         - if d == local_assigns[:edit_decision]
           =semantic_form_for(local_assigns[:edit_decision], url: local_assigns[:edit_decision], class: 'decision_form', remote: true, authenticity_token: true) do |f|

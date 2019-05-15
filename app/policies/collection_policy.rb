@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-class CollectionPolicy < RestrictivePolicy
-  def create_child?
-    parent_policy&.create_child?(record.association_class.name.tableize.to_sym)
-  end
-
+class CollectionPolicy < LinkedRails::CollectionPolicy
   def create_opinion?
     return false unless record.parent.try(:enhanced_with?, Opinionable)
     vote = record.parent.vote_for(user_context.user)

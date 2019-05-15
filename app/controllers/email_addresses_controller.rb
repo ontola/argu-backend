@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EmailAddressesController < ParentableController
-  include Createable::Controller
+  include LinkedRails::Enhancements::Createable::Controller
 
   private
 
@@ -29,7 +29,7 @@ class EmailAddressesController < ParentableController
     current_user
       .email_addresses
       .map do |e|
-      action = e.action(user_context, :make_primary)
+      action = e.action(:make_primary, user_context)
       [
         action.iri,
         NS::SCHEMA[:actionStatus],

@@ -20,7 +20,7 @@ json.current_actor do
       json.url @profile.default_profile_photo.url(:avatar)
     end
   end
-  json.groups policy_scope(@profile.groups) do |group|
+  json.groups Pundit.policy_scope(user_context, @profile.groups) do |group|
     json.id group.id
     json.name group.name
   end

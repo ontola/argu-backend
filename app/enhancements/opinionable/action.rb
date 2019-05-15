@@ -5,7 +5,7 @@ module Opinionable
     extend ActiveSupport::Concern
 
     included do
-      define_action(
+      has_action(
         :update_opinion,
         result: -> { "#{resource.vote_for(user_context.user).for.classify}Opinion".safe_constantize },
         type: -> { [NS::ARGU['Update::Opinion'], NS::SCHEMA[:UpdateAction]] },
@@ -13,7 +13,7 @@ module Opinionable
         http_method: :put,
         form: OpinionForm,
         url: -> { resource.opinion_for(user_context.user)&.iri },
-        resource: -> { resource.opinion_for(user_context.user) },
+        policy_resource: -> { resource.opinion_for(user_context.user) },
         condition: -> { resource.opinion_for(user_context.user).present? }
       )
     end

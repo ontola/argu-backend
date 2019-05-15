@@ -2,7 +2,7 @@
 
 module Portal
   class UsersController < PortalBaseController
-    include Destroyable::Controller
+    include LinkedRails::Enhancements::Destroyable::Controller
 
     private
 

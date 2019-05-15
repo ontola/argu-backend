@@ -7,7 +7,8 @@ class BannerDismissal
   include StubbornCookie
 
   include ApplicationModel
-  enhance Createable
+  include LinkedRails::Model::Enhancements
+  enhance LinkedRails::Enhancements::Createable
 
   attr_accessor :banner_class, :banner_key
   attr_reader :banner, :user
@@ -31,6 +32,10 @@ class BannerDismissal
   def banner_id=(value)
     banner_will_change!
     @banner = @banner_class.find(value)
+  end
+
+  def new_record?
+    true
   end
 
   def persisted?

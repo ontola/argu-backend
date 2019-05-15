@@ -104,7 +104,7 @@ RSpec.feature 'Signup', type: :feature do
                    selector: /Netherlands$/
     click_button 'Save'
 
-    expect(page).to have_current_path(resource_iri(User.last, root: argu))
+    expect(page).to have_current_path(resource_iri(User.last, root: argu).path)
     expect(User.last.country).to eq('NL')
     assert_email_sent
   end

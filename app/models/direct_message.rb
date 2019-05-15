@@ -4,15 +4,15 @@ require 'argu/api'
 
 class DirectMessage
   include ActiveModel::Model
-  include RailsLD::Model
+  include LinkedRails::Model
   include ApplicationModel
   include IRIHelper
   include Parentable
 
   parentable :resource
 
-  enhance Actionable
-  enhance Createable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
 
   attr_accessor :actor, :body, :subject
   attr_reader :email
@@ -24,7 +24,6 @@ class DirectMessage
   validates :resource_iri, presence: true
   validates :subject, presence: true
 
-  alias read_attribute_for_serialization send
   delegate :root, to: :resource
 
   def edgeable_record

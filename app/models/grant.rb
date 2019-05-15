@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Grant < ApplicationRecord
-  enhance Createable
-  enhance Destroyable
-  enhance Actionable
-  enhance Tableable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Destroyable
+  enhance LinkedRails::Enhancements::Tableable
 
   include Parentable
 
@@ -27,7 +27,7 @@ class Grant < ApplicationRecord
   with_columns settings: [
     NS::SCHEMA[:name],
     NS::ARGU[:grantSet],
-    NS::ARGU[:destroyAction]
+    NS::ONTOLA[:destroyAction]
   ]
 
   validates :grant_set, presence: true

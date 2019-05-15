@@ -3,7 +3,7 @@
 class GrantsController < ServiceController
   private
 
-  def active_response_action_name(_view)
+  def ld_action_name(_view)
     ACTION_MAP[action_name.to_sym] || action_name.to_sym
   end
 

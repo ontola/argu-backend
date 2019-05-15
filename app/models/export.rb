@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Export < ApplicationRecord
-  enhance Createable
-  enhance Destroyable
-  enhance Tableable
-  enhance Actionable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Destroyable
+  enhance LinkedRails::Enhancements::Tableable
   include Parentable
 
   belongs_to :user
@@ -17,7 +17,7 @@ class Export < ApplicationRecord
     NS::SCHEMA[:dateCreated],
     NS::SCHEMA[:url],
     NS::ARGU[:exportStatus],
-    NS::ARGU[:destroyAction]
+    NS::ONTOLA[:destroyAction]
   ]
 
   def display_name

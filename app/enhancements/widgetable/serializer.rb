@@ -4,7 +4,7 @@ module Widgetable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      attribute :widgets_iri, predicate: NS::ARGU[:widgets], unless: :export_scope?
+      attribute :widgets_iri, predicate: NS::ONTOLA[:widgets], unless: :export_scope?
     end
 
     def widgets_iri

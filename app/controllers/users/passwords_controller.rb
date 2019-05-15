@@ -25,8 +25,8 @@ class Users::PasswordsController < Devise::PasswordsController
 
   private
 
-  def active_response_action(opts = {})
-    opts[:resource].action(user_context, ACTION_MAP[action_name.to_sym] || action_name)
+  def ld_action(opts = {})
+    opts[:resource].action(ACTION_MAP[action_name.to_sym] || action_name, user_context)
   end
 
   def after_sending_reset_password_instructions_path_for(_resource_name)

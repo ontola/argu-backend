@@ -6,8 +6,8 @@ class Move < VirtualResource
 
   parentable :edge
 
-  enhance Createable
-  enhance Actionable, only: %i[Model]
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
 
   attr_accessor :edge, :new_parent
 

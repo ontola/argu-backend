@@ -27,7 +27,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path, headers: argu_headers(accept: :nt)
 
     assert_response 200
-    expect_triple(menu_url(:info), RDF[:type], NS::ARGU[:MenuItem])
+    expect_triple(menu_url(:info), RDF[:type], NS::ONTOLA[:MenuItem])
   end
 
   test 'Guest should get show page menu with custom item' do
@@ -35,9 +35,9 @@ class MenusTest < ActionDispatch::IntegrationTest
 
     assert_response 200
 
-    navigations_iri = resource_iri(argu.menu(user_context, :navigations), root: argu)
-    expect_triple(navigations_iri, RDF[:type], NS::ARGU[:MenuItem])
-    sequence = expect_sequence(navigations_iri, NS::ARGU[:menuItems])
+    navigations_iri = resource_iri(argu.menu(:navigations, user_context), root: argu)
+    expect_triple(navigations_iri, RDF[:type], NS::ONTOLA[:MenuItem])
+    sequence = expect_sequence(navigations_iri, NS::ONTOLA[:menuItems])
     expect_sequence_member(sequence, 0, RDF::URI("#{navigations_iri}#freetown"))
     expect_sequence_member(sequence, 1, resource_iri(custom_menu_item, root: argu))
     expect_sequence_member(sequence, 2, RDF::URI("#{navigations_iri}#activity"))
@@ -51,8 +51,8 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path, headers: argu_headers(accept: :nt)
 
     assert_response 200
-    expect_triple(menu_url(:user), RDF[:type], NS::ARGU[:MenuItem])
-    expect_triple(menu_url(:info), RDF[:type], NS::ARGU[:MenuItem])
+    expect_triple(menu_url(:user), RDF[:type], NS::ONTOLA[:MenuItem])
+    expect_triple(menu_url(:info), RDF[:type], NS::ONTOLA[:MenuItem])
   end
 
   private

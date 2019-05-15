@@ -3,7 +3,7 @@
 require 'publishable'
 
 class Identity < ApplicationRecord
-  enhance Actionable
+  enhance LinkedRails::Enhancements::Actionable
 
   attr_accessor :connecting_user, :jwt_token
 

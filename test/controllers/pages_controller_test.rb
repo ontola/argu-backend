@@ -20,7 +20,7 @@ class PagesControllerTest < ActionController::TestCase
     expect_no_relationship('partOf')
 
     expect_default_view
-    expect_included(argu_url("/#{argu.url}/o", page: 1))
+    expect_included(argu_url("/#{argu.url}/o", page: 1, page_size: 10))
     expect_included(page1.iri)
     expect_not_included(hidden_page.iri)
     expect_not_included(page2.iri)

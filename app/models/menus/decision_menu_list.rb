@@ -1,19 +1,15 @@
 # frozen_string_literal: true
 
-class DecisionMenuList < MenuList
+class DecisionMenuList < ApplicationMenuList
   include SettingsHelper
   include DecisionsHelper
   include Menus::ActionMenuItems
-  cattr_accessor :defined_menus
-  has_menus %i[actions]
+
+  has_action_menu
 
   private
 
-  def actions_menu
-    menu_item(
-      :actions,
-      image: 'fa-ellipsis-v',
-      menus: -> { [edit_link] }
-    )
+  def action_menu_items
+    [edit_link]
   end
 end

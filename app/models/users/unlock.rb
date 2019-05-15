@@ -2,9 +2,9 @@
 
 module Users
   class Unlock < VirtualResource
-    include RailsLD::Model
-    enhance Actionable
-    enhance Createable, except: %i[Controller]
+    include LinkedRails::Model
+    enhance LinkedRails::Enhancements::Actionable
+    enhance LinkedRails::Enhancements::Createable, except: %i[Controller]
     attr_accessor :email
 
     def iri_template_name

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class Activity < PublicActivity::Activity
-  include RailsLD::Model
-  include Enhanceable
+  include LinkedRails::Model
   has_many :notifications, dependent: :destroy
   # The creator of the activity
   # @example Create action

@@ -8,8 +8,8 @@ class ConversionsController < ServiceController
 
   private
 
-  def active_response_action(opts)
-    opts[:resource].action(user_context, :create)
+  def ld_action(opts)
+    opts[:resource].action(:create, user_context)
   end
 
   def authenticated_resource!

@@ -4,7 +4,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend UriTemplateHelper
   include Parentable
 
-  enhance Createable
+  enhance LinkedRails::Enhancements::Createable
 
   belongs_to :owner, polymorphic: true, primary_key: :uuid
   belongs_to :primary_resource, class_name: 'Edge', primary_key: :uuid
@@ -32,7 +32,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def resource_sequence
     @resource_sequence ||=
-      RDF::Sequence.new(
+      LinkedRails::Sequence.new(
         resource_iri
           .map { |iri, predicate| predicate.present? ? property_shape(iri, predicate).iri : RDF::DynamicURI(iri) }
       )
@@ -51,13 +51,17 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def property_shape(iri, predicate)
     @property_shapes ||= {}
     @property_shapes[[iri, predicate]] ||=
-      RailsLD::PropertyQuery.new(
+      LinkedRails::PropertyQuery.new(
         target_node: RDF::DynamicURI(iri),
         path: RDF::DynamicURI(predicate)
       )
   end
 
   class << self
+    def iri
+      NS::ONTOLA[:Widget]
+    end
+
     def create_blog_posts(owner)
       blog_posts_iri = collection_iri(owner, :blog_posts, type: :infinite)
       discussions

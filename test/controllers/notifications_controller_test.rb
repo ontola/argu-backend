@@ -79,7 +79,7 @@ class NotificationsControllerTest < ActionController::TestCase
 
     assert_response 200
     expect_included(user.notifications.map(&:iri))
-    expect_included(user.notifications.first.actions(:read).first.iri)
+    expect_included(user.notifications.first.action(:read).iri)
   end
 
   test 'user with notifications should get index nq' do
@@ -91,7 +91,7 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200
-    user.notifications.each { |n| expect_triple(n.iri, NS::ARGU[:readAction], nil) }
+    user.notifications.each { |n| expect_triple(n.iri, NS::ONTOLA[:readAction], nil) }
   end
 
   private

@@ -23,17 +23,9 @@ module Menus
       end
     end
 
-    def follow_menu_items(opts = {})
-      follow_types = opts.delete(:follow_types) || %i[news reactions never]
-      menu_item(
-        :follow,
-        policy: :follow_items?,
-        policy_resource: user,
-        description: I18n.t('notifications.receive.title'),
-        image: -> { follow_menu_icon(follow_type) },
-        link_opts: opts,
-        menus: -> { follow_types.map { |type| follow_menu_item(type, follow, follow_type) } }
-      )
+    def follow_menu_items(follow_types)
+      follow_types ||= %i[news reactions never]
+      follow_types.map { |type| follow_menu_item(type, follow, follow_type) }
     end
 
     def follow_menu_item(type, follow, follow_type)
@@ -45,7 +37,7 @@ module Menus
         href = follows_url(gid: resource.uuid, follow_type: type)
       end
       image = follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o'
-      action = resource.action(user_context, :"follow_#{type}")
+      action = resource.action(:"follow_#{type}", user_context)
       menu_item(type, action: action, href: href, image: image, link_opts: {data: {remote: true, method: method}})
     end
   end

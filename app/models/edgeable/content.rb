@@ -5,12 +5,11 @@ module Edgeable
     extend ActiveSupport::Concern
 
     included do
-      enhance Createable
+      enhance LinkedRails::Enhancements::Createable
       enhance Loggable
-      enhance Menuable
+      enhance LinkedRails::Enhancements::Menuable
       enhance Trashable
-      enhance Updateable
-      enhance Actionable
+      enhance LinkedRails::Enhancements::Updateable
       enhance Followable
 
       auto_strip_attributes :title, squish: true

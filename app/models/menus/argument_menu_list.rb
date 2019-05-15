@@ -1,28 +1,18 @@
 # frozen_string_literal: true
 
-class ArgumentMenuList < MenuList
+class ArgumentMenuList < ApplicationMenuList
   include SettingsHelper
   include Menus::FollowMenuItems
   include Menus::ShareMenuItems
   include Menus::ActionMenuItems
-  cattr_accessor :defined_menus
-  has_menus %i[actions follow share]
+
+  has_action_menu
+  has_follow_menu follow_types: %i[reactions never]
+  has_share_menu
 
   private
 
-  def actions_menu
-    menu_item(
-      :actions,
-      image: 'fa-ellipsis-v',
-      menus: -> { [activity_link, edit_link, *trash_and_destroy_links, contact_link] }
-    )
-  end
-
-  def follow_menu
-    follow_menu_items(follow_types: %i[reactions never])
-  end
-
-  def share_menu
-    share_menu_items
+  def action_menu_items
+    [activity_link, edit_link, *trash_and_destroy_links, contact_link]
   end
 end

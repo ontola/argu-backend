@@ -1,23 +1,16 @@
 # frozen_string_literal: true
 
-class CommentMenuList < MenuList
+class CommentMenuList < ApplicationMenuList
   include SettingsHelper
   include Menus::FollowMenuItems
   include Menus::ActionMenuItems
-  cattr_accessor :defined_menus
-  has_menus %i[actions follow]
+
+  has_action_menu
+  has_follow_menu follow_types: %i[reactions never]
 
   private
 
-  def actions_menu
-    menu_item(
-      :actions,
-      image: 'fa-ellipsis-v',
-      menus: -> { [edit_link, *trash_and_destroy_links] }
-    )
-  end
-
-  def follow_menu
-    follow_menu_items(follow_types: %i[reactions never])
+  def action_menu_items
+    [edit_link, *trash_and_destroy_links]
   end
 end

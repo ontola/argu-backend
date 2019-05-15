@@ -2,7 +2,8 @@
 nl:
   actions:
     default:
-      submit: "Opslaan"
+      create:
+        submit: "Opslaan"
       create_comment:
         label: "Reageer"
       destroy:

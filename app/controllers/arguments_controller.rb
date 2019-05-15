@@ -18,7 +18,7 @@ class ArgumentsController < EdgeableController
     {keys: {name: :title, text: :content}}
   end
 
-  def index_collection_name
+  def collection_from_parent_name
     "#{argument_type}_argument_collection"
   end
 

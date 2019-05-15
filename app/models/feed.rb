@@ -8,7 +8,7 @@ class Feed
   RELEVANT_KEYS = PUBLISH_KEYS + TRASH_KEYS
 
   include ActiveModel::Model
-  include RailsLD::Model
+  include LinkedRails::Model
   attr_accessor :parent, :relevant_only, :root_id
 
   with_collection :activities,

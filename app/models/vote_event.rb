@@ -3,8 +3,6 @@
 class VoteEvent < Edge # rubocop:disable Metrics/ClassLength
   DEFAULT_ID = 'default'
 
-  enhance Actionable
-
   with_collection :votes, default_filters: [{'option' => 'no'}, {'option' => 'other'}, 'option' => 'yes']
 
   counter_cache true

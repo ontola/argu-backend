@@ -2,16 +2,15 @@
 
 class SearchResult
   include ActiveModel::Model
-  include RailsLD::Model
+  include LinkedRails::Model
   include ActionDispatch::Routing
+  include UriTemplateHelper
   include Rails.application.routes.url_helpers
   include Pundit
 
   attr_accessor :page, :page_size, :parent, :q, :user_context
   delegate :user, :afe_request?, to: :user_context
   delegate :total_count, :took, to: :search_result
-
-  alias read_attribute_for_serialization send
 
   def iri_opts
     opts = {}
@@ -45,6 +44,10 @@ class SearchResult
     RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.next_page)))
   end
 
+  def route_key
+    :search
+  end
+
   def search_result
     @search_result ||= Edge.search(
       q,
@@ -56,7 +59,7 @@ class SearchResult
   end
 
   def results
-    @results ||= RDF::Sequence.new(search_result)
+    @results ||= LinkedRails::Sequence.new(search_result)
   end
 
   private

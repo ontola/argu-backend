@@ -10,12 +10,14 @@ module DropdownHelper
   end
 
   def dropdown_menu(resource, menu_tag, trigger_opts: {}, item_opts: {}) # rubocop:disable Metrics/AbcSize
-    menu = if resource.nil?
-             ApplicationMenuList.new(resource: current_user, user_context: user_context).send("#{menu_tag}_menu")
-           else
-             resource.menu(user_context, menu_tag)
-           end
-    link_items = menu.menus.call.compact.map do |menu_item|
+    menu_list =
+      if resource.nil?
+        AppMenuList.new(resource: current_user, user_context: user_context)
+      else
+        resource.menu_list(user_context)
+      end
+    menu = menu_list.menu(menu_tag)
+    link_items = menu.menus.compact.map do |menu_item|
       item(
         menu_item.item_type || 'link',
         menu_item.label,

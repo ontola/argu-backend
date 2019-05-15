@@ -4,13 +4,13 @@ class Group < ApplicationRecord
   PUBLIC_ID = -1
   STAFF_ID = -2
 
-  enhance Actionable
   enhance ConfirmedDestroyable
-  enhance Createable
-  enhance Menuable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Menuable
   enhance Settingable
-  enhance Updateable
-  enhance Tableable
+  enhance LinkedRails::Enhancements::Updateable
+  enhance LinkedRails::Enhancements::Tableable
 
   include Parentable
   include Edgeable::PropertyAssociations
@@ -33,8 +33,8 @@ class Group < ApplicationRecord
   with_columns settings: [
     NS::SCHEMA[:name],
     NS::ORG[:hasMember],
-    NS::ARGU[:settingsMenu],
-    NS::ARGU[:destroyAction]
+    NS::ONTOLA[:settingsMenu],
+    NS::ONTOLA[:destroyAction]
   ]
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}

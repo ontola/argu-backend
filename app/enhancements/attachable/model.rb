@@ -5,6 +5,8 @@ module Attachable
     extend ActiveSupport::Concern
 
     included do
+      enhance Mediable
+
       has_many :attachments,
                -> { where(used_as: MediaObject.used_as[:attachment]) },
                class_name: 'MediaObject',

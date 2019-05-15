@@ -5,6 +5,8 @@ module CoverPhotoable
     extend ActiveSupport::Concern
 
     included do
+      enhance Mediable
+
       has_one :default_cover_photo,
               -> { where(used_as: MediaObject.used_as[:cover_photo]) },
               as: :about,

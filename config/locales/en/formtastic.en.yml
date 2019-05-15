@@ -89,9 +89,6 @@ en:
         follows: "Items I follow"
         memberships: "My forums"
         created: "My items"
-      profile:
-        name: "Full name"
-        are_votes_public: "Show my activity and my votes on my profile"
       page:
         name: "Page name"
         shortname: "Argu URL"

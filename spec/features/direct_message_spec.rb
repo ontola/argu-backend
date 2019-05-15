@@ -19,7 +19,7 @@ RSpec.feature 'Direct message', type: :feature do
         },
         body: 'Body of email',
         email: administrator.email,
-        resource: {iri: resource_iri(motion), display_name: motion.display_name},
+        resource: {iri: resource_iri(motion).to_s.sub('app.', ''), display_name: motion.display_name},
         subject: 'Subject of email'
       )
     end

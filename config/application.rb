@@ -6,9 +6,10 @@ require_relative './initializers/version'
 require_relative './initializers/build'
 
 require_relative '../lib/ns'
-require_relative '../lib/rails_ld/middleware/linked_data_params'
+require_relative '../lib/tenant_finder'
 require_relative '../lib/tenant_middleware'
 require 'rails/all'
+require 'linked_rails/middleware/linked_data_params'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -28,7 +29,6 @@ module Argu
     %i[controllers forms models policies serializers].each do |type|
       config.autoload_paths += %W[#{config.root}/app/#{type}/container_nodes]
     end
-    config.autoload_paths += %W[#{config.root}/app/models/actions]
     config.autoload_paths += %W[#{config.root}/app/models/menus]
     config.autoload_paths += %W[#{config.root}/app/models/menus/container_nodes]
     config.autoload_paths += %W[#{config.root}/app/responders]
@@ -87,7 +87,7 @@ module Argu
     # config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
     config.middleware.use TenantMiddleware
-    config.middleware.use RailsLD::Middleware::LinkedDataParams
+    config.middleware.use LinkedRails::Middleware::LinkedDataParams
 
     ############################
     # Assets

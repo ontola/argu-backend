@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RDF
-  class LazySequence < Sequence
+  class LazySequence < LinkedRails::Sequence
     def members
       @_members ||= @members.call
     end

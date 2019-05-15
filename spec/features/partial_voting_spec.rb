@@ -42,7 +42,7 @@ RSpec.feature 'Partial Voting', type: :feature do
       end
     end
 
-    expect(page).to have_current_path(resource_iri(question).path.to_s)
+    expect(page).to have_current_path(resource_iri(question).path)
     expect(page).to have_css('.btn-con[data-voted-on=true]')
     expect(page).to have_content('Please confirm your vote by clicking the link we\'ve sent to ')
     assert_email_sent(skip_sidekiq: true)

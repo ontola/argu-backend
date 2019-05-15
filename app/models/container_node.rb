@@ -3,20 +3,19 @@
 class ContainerNode < Edge
   enhance ConfirmedDestroyable
   enhance CoverPhotoable
-  enhance Createable
+  enhance LinkedRails::Enhancements::Createable
   enhance Exportable
   enhance Favorable
   enhance Feedable
   enhance Followable
-  enhance Menuable
+  enhance LinkedRails::Enhancements::Menuable
   enhance Moveable
   enhance Placeable
   enhance ProfilePhotoable
-  enhance Updateable
+  enhance LinkedRails::Enhancements::Updateable
   enhance Widgetable
-  enhance Actionable
   enhance Statable
-  enhance Tableable
+  enhance LinkedRails::Enhancements::Tableable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]
@@ -29,8 +28,8 @@ class ContainerNode < Edge
   with_columns settings: [
     NS::SCHEMA[:name],
     NS::ARGU[:followsCount],
-    NS::ARGU[:updateAction],
-    NS::ARGU[:destroyAction]
+    NS::ONTOLA[:updateAction],
+    NS::ONTOLA[:destroyAction]
   ]
 
   parentable :page

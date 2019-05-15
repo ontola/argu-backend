@@ -5,7 +5,7 @@ module ConfirmedDestroyable
     extend ActiveSupport::Concern
 
     included do
-      enhance Destroyable, except: %i[Action]
+      enhance LinkedRails::Enhancements::Destroyable, except: %i[Action]
 
       attr_accessor :confirmation_string
 

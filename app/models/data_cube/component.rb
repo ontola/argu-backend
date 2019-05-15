@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DataCube
-  class Component < RailsLD::Resource
+  class Component < LinkedRails::Resource
     attr_accessor :data_set, :order, :predicate
 
     def description

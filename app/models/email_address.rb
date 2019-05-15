@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class EmailAddress < ApplicationRecord
-  enhance Createable
-  enhance Destroyable
-  enhance Updateable, except: %i[Action]
-  enhance Actionable
-  enhance Tableable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Destroyable
+  enhance LinkedRails::Enhancements::Updateable, except: %i[Action]
+  enhance LinkedRails::Enhancements::Tableable
 
   include Broadcastable
   include Parentable
@@ -21,9 +21,9 @@ class EmailAddress < ApplicationRecord
 
   with_columns settings: [
     NS::SCHEMA[:email],
-    NS::ARGU[:makePrimaryAction],
-    NS::ARGU[:sendConfirmationAction],
-    NS::ARGU[:destroyAction]
+    NS::ONTOLA[:makePrimaryAction],
+    NS::ONTOLA[:sendConfirmationAction],
+    NS::ONTOLA[:destroyAction]
   ]
 
   parentable :user

@@ -2,8 +2,8 @@
 
 module Request
   class TrashRequestForm < ApplicationForm
-    fields %i[
-      trash_activity
+    fields [
+      {trash_activity: {path: NS::ARGU[:trashActivity]}}
     ]
   end
 end

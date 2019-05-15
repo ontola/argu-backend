@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class OpenDataPortalMenuList < ContainerNodeMenuList
-  cattr_accessor :defined_menus
-
-  has_menus %i[actions follow navigations share]
+  has_action_menu link_opts: {triggerClass: 'btn--transparant'}
+  has_follow_menu link_opts: {triggerClass: 'btn--transparant'}
+  has_share_menu link_opts: {triggerClass: 'btn--transparant'}
+  has_navigation_menu
 end

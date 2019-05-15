@@ -6,7 +6,7 @@ module Users
 
     private
 
-    def active_response_action_name(_view)
+    def ld_action_name(_view)
       :language
     end
 

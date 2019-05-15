@@ -28,7 +28,7 @@ RSpec.feature 'Grant resets', type: :feature do
     end
 
     visit edit_iri(question)
-    expect(page).to have_current_path edit_iri(question)
+    expect(page).to have_current_path edit_iri(question).path
     expect(find_field('question[reset_create_motion]', with: 'false')).not_to be_checked
     expect(find_field('question[reset_create_motion]', with: 'true')).to be_checked
 

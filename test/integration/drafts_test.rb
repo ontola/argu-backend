@@ -60,7 +60,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
     sign_in user
     get drafts_user_path(user), headers: argu_headers(accept: :nq)
     assert 200
-    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ARGU[:replace])
+    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
   end
 
   ####################################
@@ -83,7 +83,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
     sign_in user
     get drafts_user_path(user), headers: argu_headers(accept: :nq)
     assert 200
-    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 2, NS::ARGU[:replace])
+    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 2, NS::ONTOLA[:replace])
   end
 
   ####################################
@@ -102,6 +102,6 @@ class DraftsTest < ActionDispatch::IntegrationTest
     sign_in staff
     get drafts_user_path(user), headers: argu_headers(accept: :nq)
     assert 200
-    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ARGU[:replace])
+    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
   end
 end

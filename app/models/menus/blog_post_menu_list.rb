@@ -1,23 +1,16 @@
 # frozen_string_literal: true
 
-class BlogPostMenuList < MenuList
+class BlogPostMenuList < ApplicationMenuList
   include SettingsHelper
   include Menus::ShareMenuItems
   include Menus::ActionMenuItems
-  cattr_accessor :defined_menus
-  has_menus %i[actions share]
+
+  has_action_menu
+  has_share_menu
 
   private
 
-  def actions_menu
-    menu_item(
-      :actions,
-      image: 'fa-ellipsis-v',
-      menus: -> { [edit_link, *trash_and_destroy_links] }
-    )
-  end
-
-  def share_menu
-    share_menu_items
+  def action_menu_items
+    [edit_link, *trash_and_destroy_links]
   end
 end

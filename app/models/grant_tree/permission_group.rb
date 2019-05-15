@@ -3,10 +3,9 @@
 class GrantTree
   class PermissionGroup
     include ActiveModel::Model
-    include RailsLD::Model
+    include LinkedRails::Model
 
     attr_accessor :node, :group_id
-    alias read_attribute_for_serialization send
 
     def initialize(group_id, node)
       self.group_id = group_id

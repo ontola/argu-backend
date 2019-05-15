@@ -9,7 +9,7 @@ class PageSerializer < RecordSerializer
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
 
-  has_one :primary_container_node, predicate: NS::ARGU[:primaryContainerNode], unless: :service_scope?
+  has_one :primary_container_node, predicate: NS::FOAF[:homepage], unless: :service_scope?
   has_one :profile, predicate: NS::ARGU[:profile]
 
   enum :visibility

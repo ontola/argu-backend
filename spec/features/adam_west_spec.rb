@@ -70,7 +70,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'guest should post a new motion' do
-    redirect_url = new_iri(question, :motions)
+    redirect_url = new_iri(question, :motions).to_s.sub('app.', '')
     create_motion_for_question do
       expect(page).to have_content 'Sign up'
 
@@ -208,7 +208,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_current_path("#{Motion.last.iri.path}?start_motion_tour=true")
     press_key :escape
     click_on question.title
-    expect(page).to have_current_path(resource_iri(question))
+    expect(page).to have_current_path(resource_iri(question).path)
     expect(page).to have_content(question.content)
   end
 

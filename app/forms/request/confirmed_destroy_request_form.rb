@@ -2,8 +2,8 @@
 
 module Request
   class ConfirmedDestroyRequestForm < ApplicationForm
-    fields %i[
-      confirmation_string
+    fields [
+      {confirmation_string: {path: NS::ARGU[:confirmationString], datatype: NS::XSD[:string]}}
     ]
   end
 end

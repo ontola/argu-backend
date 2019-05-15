@@ -37,7 +37,7 @@ module VoteEventable
           default_vote_event: [
             :current_vote,
             vote_collection: {
-              operation: RailsLD::Model::ACTION_FORM_INCLUDES,
+              operation: LinkedRails::Enhancements::Actionable::FORM_INCLUDES,
               filters: [],
               sortings: [],
               default_filtered_collections: inc_shallow_collection

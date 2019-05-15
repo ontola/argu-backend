@@ -20,6 +20,13 @@ module Users
       parent_resource.follows.update_all(follow_type: :never)
     end
 
+    def destroy_success_options
+      {
+        location: destroy_success_location,
+        notice: active_response_success_message
+      }
+    end
+
     def redirect_location
       parent_resource.iri
     end

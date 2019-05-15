@@ -16,7 +16,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     -unless motion.is_published?
       = render partial: 'application/publish', locals: {resource: motion}
 =render partial: 'happenings/timeline',
-        locals: { resource: motion, happenings: policy_scope(motion.happenings).includes(trackable: :published_publications) }
+        locals: { resource: motion, happenings: Pundit.policy_scope(user_context, motion.happenings).includes(trackable: :published_publications) }
 - if motion.custom_placement.present?
   .col-1
     =react_component_store 'MapViewer', props: map_resource_props(motion)

@@ -3,10 +3,10 @@
 class GroupMembership < ApplicationRecord
   belongs_to :group
 
-  enhance Actionable
-  enhance Createable
-  enhance Destroyable
-  enhance Tableable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Destroyable
+  enhance LinkedRails::Enhancements::Tableable
 
   include Parentable
 
@@ -28,7 +28,7 @@ class GroupMembership < ApplicationRecord
 
   with_columns settings: [
     NS::ORG[:member],
-    NS::ARGU[:destroyAction]
+    NS::ONTOLA[:destroyAction]
   ]
 
   validates :member, presence: true

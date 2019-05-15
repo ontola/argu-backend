@@ -52,6 +52,6 @@ class GuestUser < User
   end
 
   def self.iri
-    NS::ARGU[:GuestUser]
+    NS::ONTOLA[:GuestUser]
   end
 end

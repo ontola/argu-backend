@@ -26,7 +26,7 @@ RSpec.feature 'Shortname', type: :feature do
     visit settings_iri(argu, tab: 'shortnames')
 
     click_link 'New Redirect'
-    expect(page).to have_current_path new_iri(argu, :shortnames)
+    expect(page).to have_current_path new_iri(argu, :shortnames).path
 
     shortname_attrs = attributes_for(:shortname)
 

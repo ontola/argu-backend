@@ -5,7 +5,7 @@ module ConfirmedDestroyable
     extend ActiveSupport::Concern
 
     included do
-      define_action(
+      has_action(
         :destroy,
         type: [NS::SCHEMA[:Action], NS::ARGU[:DestroyAction]],
         policy: :destroy?,
@@ -13,7 +13,7 @@ module ConfirmedDestroyable
         url: -> { resource.iri(destroy: true) },
         http_method: :delete,
         form: Request::ConfirmedDestroyRequestForm,
-        iri_template: :delete_iri
+        iri_path: -> { expand_uri_template(:delete_iri, parent_iri: resource.iri_path) }
       )
     end
   end

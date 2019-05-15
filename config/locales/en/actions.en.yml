@@ -2,7 +2,8 @@
 en:
   actions:
     default:
-      submit: "Save"
+      create:
+        submit: "Save"
       create_comment:
         label: "Comment"
       destroy:

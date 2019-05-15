@@ -50,19 +50,19 @@ class MenuListTest < ActiveSupport::TestCase
   end
 
   test 'Menu for administrator should include update' do
-    assert freetown.menu(administrator_context, :actions).menus.call.compact.map(&:tag).include?(:edit)
+    assert freetown.menu(:actions, administrator_context).menus.compact.map(&:tag).include?(:edit)
   end
 
   test 'Menu for user should not include update' do
-    assert_equal freetown.menu(user_context, :actions).menus.call.compact.map(&:tag), %i[activity]
+    assert_equal freetown.menu(:actions, user_context).menus.compact.map(&:tag), %i[activity]
   end
 
   test 'Page menu for administrator should include hidden forum' do
-    assert argu.menu(administrator_context, :navigations).menus.call.compact.map(&:tag).include?(:second)
+    assert argu.menu(:navigations, administrator_context).menus.compact.map(&:tag).include?(:second)
   end
 
   test 'Page menu for user should not include hidden forum' do
-    assert_not argu.menu(user_context, :navigations).menus.call.compact.map(&:tag).include?(:second)
+    assert_not argu.menu(:navigations, user_context).menus.compact.map(&:tag).include?(:second)
   end
 
   test 'Include custom menu items' do
@@ -70,9 +70,8 @@ class MenuListTest < ActiveSupport::TestCase
       'Custom label',
       freetown
         .root
-        .menu(user_context, :navigations)
+        .menu(:navigations, user_context)
         .menus
-        .call
         .compact
         .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
         .label
@@ -83,9 +82,8 @@ class MenuListTest < ActiveSupport::TestCase
     ActsAsTenant.with_tenant(other_page) do
       assert_nil(
         other_page
-          .menu(other_page_context, :navigations)
+          .menu(:navigations, other_page_context)
           .menus
-          .call
           .compact
           .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
       )

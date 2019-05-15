@@ -4,7 +4,7 @@ require 'spam_checker'
 
 class RegistrationsController < Devise::RegistrationsController
   include Argu::Controller::Authorization
-  include Destroyable::Controller
+  include LinkedRails::Enhancements::Destroyable::Controller
   include RedisResourcesHelper
   include OauthHelper
   include NestedResourceHelper

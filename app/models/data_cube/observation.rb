@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DataCube
-  class Observation < RailsLD::Resource
+  class Observation < LinkedRails::Resource
     attr_accessor :data_set, :dimensions, :measures
 
     class << self

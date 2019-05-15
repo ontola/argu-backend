@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ChildHelper
+  module_function
+
   def child_instance(parent, klass)
     child = klass.new(child_attrs(parent, klass))
     prepare_edge_child(parent, child) if child.is_a?(Edge)

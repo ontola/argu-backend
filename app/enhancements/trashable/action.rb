@@ -5,9 +5,9 @@ module Trashable
     extend ActiveSupport::Concern
 
     included do
-      include Destroyable::Action
+      include LinkedRails::Enhancements::Destroyable::Action
 
-      define_action(
+      has_action(
         :trash,
         type: [NS::ARGU[:TrashAction], NS::SCHEMA[:Action]],
         policy: :trash?,
@@ -15,10 +15,10 @@ module Trashable
         url: -> { resource.iri },
         http_method: :delete,
         form: Request::TrashRequestForm,
-        iri_template: :trash_iri
+        iri_path: -> { expand_uri_template(:trash_iri, parent_iri: resource.iri_path) }
       )
 
-      define_action(
+      has_action(
         :untrash,
         type: [NS::ARGU[:UntrashAction], NS::SCHEMA[:Action]],
         policy: :untrash?,
@@ -26,7 +26,7 @@ module Trashable
         url: -> { untrash_iri(resource) },
         http_method: :put,
         form: Request::UntrashRequestForm,
-        iri_template: :untrash_iri
+        iri_path: -> { expand_uri_template(:untrash_iri, parent_iri: resource.iri_path) }
       )
     end
   end

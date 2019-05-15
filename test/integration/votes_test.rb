@@ -137,25 +137,25 @@ class VotesTest < ActionDispatch::IntegrationTest
       resource_iri(vote_event.vote_collection(user_context: context), root: argu),
       NS::AS[:totalItems],
       1,
-      NS::ARGU[:replace]
+      NS::ONTOLA[:replace]
     )
     expect_triple(
       resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :yes}), root: argu),
       NS::AS[:totalItems],
       1,
-      NS::ARGU[:replace]
+      NS::ONTOLA[:replace]
     )
     expect_triple(
       resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :other}), root: argu),
       NS::AS[:totalItems],
       0,
-      NS::ARGU[:replace]
+      NS::ONTOLA[:replace]
     )
     expect_triple(
       resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :no}), root: argu),
       NS::AS[:totalItems],
       0,
-      NS::ARGU[:replace]
+      NS::ONTOLA[:replace]
     )
 
     assert_response 201
@@ -576,10 +576,10 @@ class VotesTest < ActionDispatch::IntegrationTest
       delete argument_vote.iri.path, headers: argu_headers(accept: :nq)
     end
 
-    expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::ARGU[:remove])
-    expect_triple(collection_iri(argument, :votes), NS::AS[:totalItems], 0, NS::ARGU[:replace])
+    expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::ONTOLA[:remove])
+    expect_triple(collection_iri(argument, :votes), NS::AS[:totalItems], 0, NS::ONTOLA[:replace])
     expect_triple(
-      collection_iri(argument, :votes, 'filter%5B%5D' => 'option=yes'), NS::AS[:totalItems], 0, NS::ARGU[:replace]
+      collection_iri(argument, :votes, 'filter%5B%5D' => 'option=yes'), NS::AS[:totalItems], 0, NS::ONTOLA[:replace]
     )
     assert_response 200
   end
@@ -613,25 +613,25 @@ class VotesTest < ActionDispatch::IntegrationTest
       resource_iri(vote_event.vote_collection(user_context: context), root: argu),
       NS::AS[:totalItems],
       2,
-      NS::ARGU[:replace]
+      NS::ONTOLA[:replace]
     )
     expect_triple(
       resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :yes}), root: argu),
       NS::AS[:totalItems],
       1,
-      NS::ARGU[:replace]
+      NS::ONTOLA[:replace]
     )
     expect_triple(
       resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :other}), root: argu),
       NS::AS[:totalItems],
       0,
-      NS::ARGU[:replace]
+      NS::ONTOLA[:replace]
     )
     expect_triple(
       resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :no}), root: argu),
       NS::AS[:totalItems],
       1,
-      NS::ARGU[:replace]
+      NS::ONTOLA[:replace]
     )
 
     assert_response 201

@@ -5,6 +5,8 @@ module MarkAsImportant
     extend ActiveSupport::Concern
 
     included do
+      enhance ActivePublishable
+
       attribute :mark_as_important, :boolean
     end
 

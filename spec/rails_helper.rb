@@ -81,6 +81,7 @@ RSpec.configure do |config|
   end
 
   config.before(:all, type: :feature) do
+    Rails.application.config.frontend_url = 'https://app.127.0.0.1:42000'
     Rails.application.config.host_name = '127.0.0.1:42000'
     Rails.application.config.origin = 'http://127.0.0.1:42000'
   end

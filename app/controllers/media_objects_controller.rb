@@ -14,7 +14,7 @@ class MediaObjectsController < ParentableController
     @current_forum ||= parent_resource.try(:ancestor, :forum)
   end
 
-  def index_collection_name
+  def collection_from_parent_name
     return super if params[:used_as].blank?
     "#{params[:used_as]}_collection"
   end

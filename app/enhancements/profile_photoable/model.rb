@@ -5,6 +5,8 @@ module ProfilePhotoable
     extend ActiveSupport::Concern
 
     included do
+      enhance Mediable
+
       has_one :default_profile_photo,
               -> { where(used_as: MediaObject.used_as[:profile_photo]) },
               as: :about,

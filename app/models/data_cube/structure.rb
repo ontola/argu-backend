@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DataCube
-  class Structure < RailsLD::Resource
+  class Structure < LinkedRails::Resource
     attr_accessor :data_set
 
     def dimensions

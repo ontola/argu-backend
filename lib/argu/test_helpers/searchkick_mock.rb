@@ -11,3 +11,12 @@ module SearchkickMock
 end
 
 Searchkick::Index.send(:prepend, SearchkickMock)
+
+module ElasticsearchAPIMock
+  def bulk(_arguments = {})
+    return super unless Thread.current[:mock_searchkick]
+    {}
+  end
+end
+
+Elasticsearch::Transport::Client.send(:prepend, ElasticsearchAPIMock)

@@ -2,9 +2,10 @@
 
 class CurrentActor
   include ProfilesHelper
-  include RailsLD::Model
+  include LinkedRails::Model
   include ActiveModel::Serialization
   include ActiveModel::Model
+  include ApplicationModel
   include Rails.application.routes.url_helpers
 
   attr_accessor :actor, :user

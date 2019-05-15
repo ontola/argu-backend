@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DataCube
-  class Set < RailsLD::Resource
+  class Set < LinkedRails::Resource
     attr_accessor :description, :dimensions, :label, :measures, :observations
 
     def initialize(opts = {})
