@@ -109,7 +109,7 @@ module Argu
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.enforce_available_locales = true
     I18n.enforce_available_locales = true
-    config.i18n.default_locale = :nl
+    config.i18n.default_locale = ENV['DEFAULT_LOCALE'] || :nl
     I18n.locale = :nl
   end
 end
