@@ -293,9 +293,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     create_email_mock('confirmation_reminder', attrs[:email], token: /.+/)
 
     Sidekiq::Testing.inline! do
+      # rubocop:disable Rails/SkipsModelValidations
       Notification
         .where('notification_type != ?', Notification.notification_types[:confirmation_reminder])
         .update_all(read_at: Time.current)
+      # rubocop:enable Rails/SkipsModelValidations
       travel 2.days do
         DirectNotificationsSchedulerWorker.new.perform
       end

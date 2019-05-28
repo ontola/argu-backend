@@ -37,7 +37,7 @@ class EmailAddress < ApplicationRecord
   delegate :greeting, to: :user
 
   def after_confirmation
-    user.edges.update_all(confirmed: true)
+    user.edges.update_all(confirmed: true) # rubocop:disable Rails/SkipsModelValidations
     Vote.fix_counts
   end
 

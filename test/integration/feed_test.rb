@@ -167,7 +167,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   def init_content(_resources = subject)
-    Activity.update_all(created_at: 1.second.ago)
+    Activity.update_all(created_at: 1.second.ago) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def feed(parent)

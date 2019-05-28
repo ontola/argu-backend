@@ -10,7 +10,9 @@ namespace :iris do
   end
 
   def convert_iris(from, to)
+    # rubocop:disable Rails/SkipsModelValidations
     Property.where(predicate: NS::ARGU[:iriPrefix].to_s).update_all("string = replace(string, '#{from}', '#{to}')")
     Widget.update_all("resource_iri = replace(resource_iri::text, '#{from}', '#{to}')::text[]")
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end

@@ -102,7 +102,7 @@ class SendActivityNotificationsWorker
         @user,
         follows: prepared_notifications
       )
-    @user.update_column(:notifications_viewed_at, Time.current)
+    @user.update_column(:notifications_viewed_at, Time.current) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def wrong_delivery_type?(delivery_type)

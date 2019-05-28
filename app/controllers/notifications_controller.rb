@@ -18,6 +18,7 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
   end
 
   def read
+    # rubocop:disable Rails/SkipsModelValidations
     if policy_scope(Notification)
          .where(read_at: nil, permanent: false)
          .update_all(read_at: Time.current)
@@ -27,6 +28,7 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     else
       head 400
     end
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   private

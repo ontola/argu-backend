@@ -80,7 +80,9 @@ class GroupMembership < ApplicationRecord
 
   class << self
     def anonymize(collection)
+      # rubocop:disable Rails/SkipsModelValidations
       collection.update_all(member_id: Profile::COMMUNITY_ID, end_date: Time.current)
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     def includes_for_serializer

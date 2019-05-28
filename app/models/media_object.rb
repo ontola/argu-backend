@@ -40,12 +40,12 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Hands over publication of a collection to the Community profile
   def self.anonymize(collection)
-    collection.update_all(creator_id: Profile::COMMUNITY_ID)
+    collection.update_all(creator_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
   end
 
   # Hands over ownership of a collection to the Community user
   def self.expropriate(collection)
-    collection.update_all(publisher_id: User::COMMUNITY_ID)
+    collection.update_all(publisher_id: User::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def allowed_content_types

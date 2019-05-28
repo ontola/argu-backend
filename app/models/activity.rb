@@ -41,7 +41,7 @@ class Activity < PublicActivity::Activity
 
   # Hands over publication of a collection to the Community profile
   def self.anonymize(collection)
-    collection.update_all(owner_id: Profile::COMMUNITY_ID)
+    collection.update_all(owner_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def identifier
@@ -74,7 +74,9 @@ class Activity < PublicActivity::Activity
 
   def touch_edges
     return if %w[destroy trash untrash].include?(action) || silent
+    # rubocop:disable Rails/SkipsModelValidations
     trackable.touch(:last_activity_at) if trackable&.persisted?
     recipient.touch(:last_activity_at) if recipient&.persisted? && !%w[Vote].include?(trackable_type)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end

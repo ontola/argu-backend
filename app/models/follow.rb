@@ -21,7 +21,7 @@ class Follow < ApplicationRecord
   validate :terms_accepted
 
   def block!
-    update_attribute(:blocked, true)
+    update_attribute(:blocked, true) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def unsubscribe_iri

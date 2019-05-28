@@ -86,7 +86,7 @@ class Shortname < ApplicationRecord
   def remove_primary_shortname
     scope = owner.shortnames
     scope = scope.where('id != ?', id) if id
-    scope.update_all(primary: false)
+    scope.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def cache_iri_path!

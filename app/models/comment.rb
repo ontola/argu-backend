@@ -67,7 +67,7 @@ class Comment < Edge
       trash unless is_trashed?
       Comment.anonymize(Comment.where(id: id))
       unlink_vote
-      update_attribute(:body, '')
+      update_attribute(:body, '') # rubocop:disable Rails/SkipsModelValidations
     end
   end
 

@@ -22,7 +22,7 @@ class VoteTest < ActiveSupport::TestCase
     assert_not first.reload.primary?
     assert second.reload.primary?
     assert_raises ActiveRecord::RecordNotUnique do
-      Vote.where(id: [first.id, second.id]).update_all(primary: true)
+      Vote.where(id: [first.id, second.id]).update_all(primary: true) # rubocop:disable Rails/SkipsModelValidations
     end
   end
 

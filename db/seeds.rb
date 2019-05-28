@@ -161,7 +161,7 @@ ActiveRecord::Base.transaction do
     scopes: 'service worker export'
   )
 
-  Notification.update_all(read_at: nil)
+  Notification.update_all(read_at: nil) # rubocop:disable Rails/SkipsModelValidations
 
   Setting.set('quotes', 'Argumenten moet men wegen, niet tellen.')
 

@@ -12,7 +12,7 @@ module Moveable
           self.fragment = nil
           update_root_id(new_parent.root_id)
           @root = new_parent.root
-          descendants.update_all(root_id: new_parent.root_id)
+          descendants.update_all(root_id: new_parent.root_id) # rubocop:disable Rails/SkipsModelValidations
           shortnameable? && shortname.update(root_id: new_parent.root_id)
         end
         self.parent = new_parent
@@ -25,12 +25,14 @@ module Moveable
 
     def update_activities_on_move(new_parent)
       return unless is_loggable? && new_parent.ancestor(:forum) != ancestor(:forum)
+      # rubocop:disable Rails/SkipsModelValidations
       activities
         .lock(true)
         .update_all(
           recipient_id: new_parent.id,
           recipient_type: new_parent.owner_type
         )
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     def update_root_id(new_root_id)

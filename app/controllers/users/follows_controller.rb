@@ -17,7 +17,7 @@ module Users
     end
 
     def destroy_execute
-      parent_resource.follows.update_all(follow_type: :never)
+      parent_resource.follows.update_all(follow_type: :never) # rubocop:disable Rails/SkipsModelValidations
     end
 
     def destroy_success_options

@@ -379,8 +379,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
         .model
         .expropriate(send(association))
     end
+    # rubocop:disable Rails/SkipsModelValidations
     email_addresses.update_all(primary: false)
-    edges.update_all publisher_id: User::COMMUNITY_ID, creator_id: Profile::COMMUNITY_ID
+    edges.update_all(publisher_id: User::COMMUNITY_ID, creator_id: Profile::COMMUNITY_ID)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def minor?

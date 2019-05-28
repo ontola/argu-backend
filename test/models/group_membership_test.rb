@@ -73,14 +73,18 @@ class GroupMembershipTest < ActiveSupport::TestCase
   test 'constraint allows no partial overlapping group_memberships' do
     subject.update(end_date: 2.days.from_now)
     assert_raises(ActiveRecord::StatementInvalid) do
+      # rubocop:disable Rails/SkipsModelValidations
       second_record.update_columns(member_id: user.profile.id, start_date: Time.current, end_date: nil)
+      # rubocop:enable Rails/SkipsModelValidations
     end
   end
 
   test 'constraint allows no completely overlapping group_memberships' do
     subject.update(end_date: 2.days.from_now)
     assert_raises(ActiveRecord::StatementInvalid) do
+      # rubocop:disable Rails/SkipsModelValidations
       second_record.update_columns(member_id: user.profile.id, start_date: 1.day.ago, end_date: 4.days.from_now)
+      # rubocop:enable Rails/SkipsModelValidations
     end
   end
 

@@ -49,7 +49,9 @@ module Edgeable
       def update_children_count_statement(id, name, operation)
         query = 'children_counts = children_counts || hstore(?, (cast(COALESCE(children_counts -> ?, \'0\') AS int) '\
                 "#{operation} 1)::text)"
+        # rubocop:disable Rails/SkipsModelValidations
         Edge.unscoped.where(id: id).update_all(sanitize_sql([query, name, name]))
+        # rubocop:enable Rails/SkipsModelValidations
       end
 
       private
@@ -96,10 +98,12 @@ module Edgeable
               wrong: model.send("#{cache_name}_count"),
               right: count
             }
+            # rubocop:disable Rails/SkipsModelValidations
             Edge
               .unscoped
               .where(id: model.id)
               .update_all([%(children_counts = children_counts || hstore(?,?)), cache_name, count.to_s])
+            # rubocop:enable Rails/SkipsModelValidations
           end
           start += batch_size
         end

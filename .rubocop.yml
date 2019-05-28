@@ -24,8 +24,6 @@ Rails/DynamicFindBy:
     - find_by_iri
     - find_by_iri!
     - find_by_path
-Rails/SkipsModelValidations:
-  Enabled: false
 Style/RaiseArgs:
   EnforcedStyle: compact
 Layout/SpaceInsideHashLiteralBraces:
