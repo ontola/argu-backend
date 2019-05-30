@@ -4,6 +4,8 @@ nl:
     default:
       create:
         submit: "Opslaan"
+      update:
+        submit: "Opslaan"
       create_comment:
         label: "Reageer"
       destroy:
@@ -61,9 +63,15 @@ nl:
     users:
       notifications:
         description: "Wanneer wil je een email ontvangen over items die je volgt? Beheerders van een organisatie kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt."
+        submit: "Opslaan"
       setup:
         label: "Welkom!"
         description: "Stel in hoe je zichtbaar bent voor anderen op Argu. De meesten mensen gebruiken hun echte voor- en achternaam. Je kunt deze altijd nog wijzigen, maar je gebruikersnaam staat vast."
+        submit: "Opslaan"
+      authentication:
+        submit: "Opslaan"
+      privacy:
+        submit: "Opslaan"
     pages:
       create:
         label: "Nieuwe website"
