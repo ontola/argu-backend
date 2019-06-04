@@ -3,11 +3,16 @@
 class CreativeWork < Edge
   property :display_name, :string, NS::SCHEMA[:name]
   property :description, :text, NS::SCHEMA[:text]
+  property :url_path, :string, NS::SCHEMA[:url]
   property :creative_work_type,
            :integer,
            NS::ARGU[:CreativeWorkType],
            default: 0,
            enum: {custom: 0, new_motion: 1, new_question: 2, new_topic: 3}
+
+  def link_url
+    RDF::DynamicURI(LinkedRails.iri(path: url_path)) if url_path
+  end
 
   class << self
     def iri
