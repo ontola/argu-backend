@@ -78,12 +78,9 @@ class EdgeTreePolicy < RestrictivePolicy
   include ChildOperations
   delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?,
            :persisted_edge, :spectator?, :participator?, :moderator?, :administrator?, :staff?, to: :edgeable_policy
-  attr_reader :grant_tree
 
-  def initialize(context, record)
-    super
-    raise('No edgeable record avaliable in policy') unless edgeable_record
-    @grant_tree = context.grant_tree_for(edgeable_record)
+  def grant_tree
+    @grant_tree ||= context.grant_tree_for(edgeable_record)
   end
 
   private
@@ -93,6 +90,6 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def edgeable_record
-    record.try(:edgeable_record)
+    record.try(:edgeable_record) || raise('No edgeable record avaliable in policy')
   end
 end

@@ -25,10 +25,10 @@ class GroupPolicy < EdgeTreePolicy
     tabs.concat %i[email_invite bearer_invite delete] if vnext? && edgeable_policy.update?
     tabs
   end
-  delegate :update?, :show?, to: :edgeable_policy
+  delegate :update?, to: :edgeable_policy
 
   def show?
-    is_member? || service? || edgeable_policy.update?
+    [Group::PUBLIC_ID, Group::STAFF_ID].include?(record.id) || is_member? || service? || edgeable_policy.update?
   end
 
   def create?
