@@ -18,6 +18,8 @@ en:
       taken: "This group already has a grant on this forum. Please remove this grant before creating a new one."
     form:
       description: "You can grant certain rights to groups in this forum. Grants also apply to the underlying content. The following grants are defined at a higher level:"
+      group:
+        label: "Groep"
   roles:
     type: "Grant"
     plural: "Grants"

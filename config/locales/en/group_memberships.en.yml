@@ -8,3 +8,8 @@ en:
     welcome: "You are successfully added to the group '%{group}'"
     already_member: "You're already member of '%{group}'"
     destroy_confirmation: "Are you sure you want to remove %{user} from the group %{group}?"
+    form:
+      user:
+        label: "User"
+      group:
+        label: "Group"

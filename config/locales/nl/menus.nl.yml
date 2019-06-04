@@ -49,3 +49,6 @@ nl:
       new_question: "Nieuwe uitdaging"
       move: "Verplaats"
       search: "Zoeken"
+      general: "Algemeen"
+      grants: "Rechten"
+      delete: "Verwijderen"

@@ -9,6 +9,9 @@ en:
       to: "To"
       delete: "Delete"
     errors:
+    form:
+      shortname:
+        label: "URL"
   activerecord:
     errors:
       models:

@@ -8,6 +8,9 @@ nl:
       from: "Van"
       to: "Naar"
       delete: "Verwijderen"
+    form:
+      shortname:
+        label: "URL"
   activerecord:
     errors:
       models:

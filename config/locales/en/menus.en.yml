@@ -49,3 +49,6 @@ en:
       new_question: "New question"
       move: "Move"
       search: "Search"
+      general: "General"
+      grants: "Grants"
+      delete: "Delete"

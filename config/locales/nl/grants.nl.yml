@@ -18,6 +18,8 @@ nl:
       taken: "Deze groep heeft al rechten in dit forum. Verwijder dit recht eerst voordat je een nieuwe aanmaakt."
     form:
       description: "Je kan rechten toekennen aan groepen binnen dit forum. Rechten gelden voor ook voor onderliggen items. De volgende rechten zijn op een hoger niveau toegekend:"
+      group:
+        label: "Group"
   roles:
     type: "Recht"
     plural: "Rechten"
