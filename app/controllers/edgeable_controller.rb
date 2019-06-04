@@ -22,21 +22,32 @@ class EdgeableController < ServiceController
       end
   end
 
-  def create_meta # rubocop:disable Metrics/AbcSize
+  def create_meta
     data = super
-    if authenticated_resource.try(:counter_cache_options).present?
-      data << [
+    data.concat(counter_cache_delta)
+    data
+  end
+
+  def counter_cache_delta # rubocop:disable Metrics/AbcSize
+    return [] if authenticated_resource.try(:counter_cache_options).blank?
+    [
+      [
         authenticated_resource.parent.iri,
         NS::ARGU["#{authenticated_resource.class_name.camelcase(:lower)}Count".to_sym],
-        authenticated_resource.children_count(authenticated_resource.class_name) + 1,
+        authenticated_resource.parent.reload.children_count(authenticated_resource.class_name),
         delta_iri(:replace)
       ]
-    end
-    data
+    ]
   end
 
   def default_publication_follow_type
     'reactions'
+  end
+
+  def destroy_meta
+    data = super
+    data.concat(counter_cache_delta)
+    data
   end
 
   def redirect_current_resource?(resource)

@@ -193,7 +193,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     data
   end
 
-  def destroy_meta # rubocop:disable Metrics/AbcSize
+  def destroy_meta
     data = super
     data.push [
       authenticated_resource.parent_iri,
@@ -201,17 +201,21 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       authenticated_resource.iri,
       NS::ONTOLA[:remove]
     ]
-    if authenticated_resource.parent.is_a?(Argument)
-      data.push [
-        authenticated_resource.parent_iri,
-        NS::ARGU[:votesProCount],
-        authenticated_resource.parent.reload.children_counts['votes_pro'].to_i,
-        NS::ONTOLA[:replace]
-      ]
-    end
     action_delta(data, :remove, authenticated_resource.parent, :destroy_vote, include_favorite: true)
     action_delta(data, :add, authenticated_resource.parent, :create_vote, include_favorite: true)
     data
+  end
+
+  def counter_cache_delta
+    return super unless authenticated_resource.parent.is_a?(Argument)
+    [
+      [
+        authenticated_resource.parent_iri,
+        NS::ARGU[:votesProCount],
+        authenticated_resource.parent.reload.children_count(:votes_pro),
+        delta_iri(:replace)
+      ]
+    ]
   end
 
   def opinion_delta(data, voteable) # rubocop:disable Metrics/AbcSize
