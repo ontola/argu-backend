@@ -14,7 +14,7 @@ RSpec.feature 'Direct message', type: :feature do
         motion.publisher.email,
         actor: {
           display_name: administrator.display_name,
-          iri: administrator.iri,
+          iri: administrator.iri.to_s.sub('app.', ''),
           thumbnail: administrator.profile.default_profile_photo.thumbnail
         },
         body: 'Body of email',
