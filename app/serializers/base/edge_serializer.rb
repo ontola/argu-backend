@@ -8,6 +8,7 @@ class EdgeSerializer < RecordSerializer
   has_one :creator, predicate: NS::SCHEMA[:creator] do
     object.creator.profileable
   end
+  has_many :granted_groups, predicate: NS::ARGU[:grantedGroups], unless: :system_scope?
 
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
   attribute :last_activity_at, predicate: NS::ARGU[:lastActivityAt]
@@ -21,5 +22,9 @@ class EdgeSerializer < RecordSerializer
     define_method "#{type}_count" do
       object.children_count(type)
     end
+  end
+
+  def granted_groups
+    scope.grant_tree.granted_groups(object.persisted_edge)
   end
 end

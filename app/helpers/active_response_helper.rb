@@ -58,7 +58,7 @@ module ActiveResponseHelper
   end
 
   def delta_iri(delta)
-    delta == :remove ? NS::ONTOLA[delta] : NS::LL[delta]
+    %i[remove replace invalidate].include?(delta) ? NS::ONTOLA[delta] : NS::LL[delta]
   end
 
   def destroy_meta
