@@ -105,6 +105,8 @@ Rails.application.routes.draw do
     get 'settings', to: 'users#settings', as: 'settings_user', on: :collection
     put 'settings', to: 'users#update', on: :collection
     get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings', on: :collection
+    get 'profile', to: 'menus#show', id: 'profile'
+    get 'profile/menus', to: 'sub_menus#index', menu_id: 'profile'
 
     include_route_concerns
   end

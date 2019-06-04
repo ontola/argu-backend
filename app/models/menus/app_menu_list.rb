@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
+class AppMenuList < ApplicationMenuList
   include SettingsHelper
   include LanguageHelper
 
@@ -98,19 +98,8 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     items << user_drafts_item
     items << user_pages_item
     items << user_forum_management_item if !user_context.vnext && resource.forum_management?
-    items << user_notifications_item
     items << sign_out_menu_item
     items
-  end
-
-  def user_notifications_item
-    unread_count = user.notifications.where(read_at: nil).count
-    menu_item(
-      :notifications,
-      label: "#{I18n.t('users.settings.menu.notifications')}#{unread_count.positive? ? " (#{unread_count})" : ''}",
-      href: collection_iri(nil, :notifications),
-      image: 'fa-bell'
-    )
   end
 
   def user_pages_item

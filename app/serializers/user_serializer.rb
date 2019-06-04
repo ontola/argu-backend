@@ -22,7 +22,6 @@ class UserSerializer < RecordSerializer
   attribute :hide_last_name, predicate: NS::ARGU[:hideLastName], if: :service_or_self?
   attribute :are_votes_public, predicate: NS::ARGU[:votesPublic]
   attribute :is_public, predicate: NS::ARGU[:public]
-  attribute :feed, predicate: NS::ARGU[:feed]
 
   has_many :email_addresses, predicate: NS::ARGU[:emails], if: :service_or_self?
   attribute :language, predicate: NS::SCHEMA[:language], if: :service_or_self?
@@ -97,10 +96,6 @@ class UserSerializer < RecordSerializer
 
   def default_profile_photo
     object.profile.default_profile_photo
-  end
-
-  def feed
-    feeds_iri(object)
   end
 
   def is_public

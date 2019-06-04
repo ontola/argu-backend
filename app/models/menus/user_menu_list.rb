@@ -8,8 +8,18 @@ class UserMenuList < ApplicationMenuList
   has_menu :settings,
            iri_base: -> { '/u' },
            menus: -> { setting_menu_items }
+  has_menu :profile,
+           iri_base: -> { resource.iri_path },
+           menus: -> { profile_menu_items }
 
   private
+
+  def profile_menu_items
+    [
+      menu_item(:activity, href: feeds_iri(resource)),
+      resource == user ? menu_item(:notifications, href: Notification.root_collection.iri) : nil
+    ]
+  end
 
   def setting_menu_items # rubocop:disable Metrics/AbcSize
     [
