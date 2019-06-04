@@ -32,7 +32,7 @@ class SubMenusController < ParentableController
 
   def menu
     if parent_resource.present?
-      parent_resource.menus(user_context: user_context).menu(menu_id)
+      parent_resource.menus(user_context).menu(menu_id)
     else
       AppMenuList.new(resource: current_user, user_context: user_context).menu(menu_id)
     end
