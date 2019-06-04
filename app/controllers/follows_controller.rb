@@ -9,12 +9,11 @@ class FollowsController < AuthorizedController
   private
 
   def create_meta
-    authenticated_resource
-      .followable
-      .menu(:follow, user_context)
+    followable_menu
       .menu_sequence
       .members
       .map(&method(:menu_item_image_triple))
+      .append(menu_item_image_triple(authenticated_resource.followable.menu(:follow, user_context)))
   end
 
   def destroy_failure_html
@@ -61,6 +60,10 @@ class FollowsController < AuthorizedController
 
   def find_params
     params.permit %i[follow_type gid]
+  end
+
+  def followable_menu
+    @followable_menu ||= authenticated_resource.followable.menu(:follow, user_context)
   end
 
   def menu_item_image_triple(menu_item)
