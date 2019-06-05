@@ -61,7 +61,7 @@ RSpec.describe 'Tokens', type: :request do
     it 'creates a guest token' do
       expect do
         post_token auth: request_token
-      end.to change { Doorkeeper::AccessToken.count }.by(1)
+      end.to change { Doorkeeper::AccessToken.count }.by(0)
 
       expect(response.status).to eq 201
       expect(parsed_body[:token_type]).to eq 'Bearer'

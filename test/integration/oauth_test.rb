@@ -9,11 +9,11 @@ class OauthTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'guest should assign guest token' do
-    assert_difference('Doorkeeper::AccessToken.count', 1) do
+    assert_difference('Doorkeeper::AccessToken.count', 0) do
       get freetown
     end
 
-    assert_equal %w[guest], Doorkeeper::AccessToken.last.scopes.to_a
+    assert_equal %w[guest], client_token_from_cookie['scopes']
 
     assert_no_difference('Doorkeeper::AccessToken.count',
                          'Guest tokens should only be set when expired') do
@@ -29,12 +29,12 @@ class OauthTest < ActionDispatch::IntegrationTest
       1.minute,
       false
     )
-    t.update(created_at: 2.minutes.ago)
+    t.update!(created_at: 2.minutes.ago)
     get freetown,
         headers: argu_headers(bearer: t.token)
 
-    assert_equal %w[guest], Doorkeeper::AccessToken.last.scopes.to_a
-    assert_equal session.id, Doorkeeper::AccessToken.last.resource_owner_id
+    assert_equal %w[guest], client_token_from_cookie['scopes'].to_a
+    assert_equal session.id, client_token_from_cookie['user']['id']
   end
 
   ####################################

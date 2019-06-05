@@ -53,7 +53,7 @@ module SPI
     def previous_token
       @previous_token ||=
         params[:userToken] &&
-        Doorkeeper::AccessToken.find_by(token: params[:userToken])
+        Doorkeeper::AccessToken.by_token(params[:userToken])
     end
 
     def process_previous_token(res)

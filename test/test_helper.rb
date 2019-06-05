@@ -250,6 +250,7 @@ module ActionDispatch
         )
     end
 
+    # rubocop:disable Metrics/AbcSize
     def sign_in(resource = create(:user), requested_app = Doorkeeper::Application.argu)
       additional_scope = requested_app.id == Doorkeeper::Application::AFE_ID && 'afe'
       id, role, app =
@@ -261,15 +262,15 @@ module ActionDispatch
         else
           [resource.id, ['user', additional_scope].join(' '), requested_app]
         end
-      t = Doorkeeper::AccessToken.find_or_create_for(
-        app,
-        id,
-        role,
-        10.minutes,
-        false
-      )
+      t = Doorkeeper::AccessToken.new(application: app, resource_owner_id: id, scopes: role, expires_in: 10.minutes)
+      if resource.is_a?(GuestUser)
+        t.send(:generate_token)
+      else
+        t.save!
+      end
       @_argu_headers = (@_argu_headers || {}).merge(argu_headers(bearer: t.token))
     end
+    # rubocop:enable Metrics/AbcSize
     alias log_in_user sign_in
     deprecate :log_in_user
 

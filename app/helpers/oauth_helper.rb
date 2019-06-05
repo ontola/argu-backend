@@ -81,13 +81,14 @@ module OauthHelper
     application ||= Doorkeeper::Application.argu
     set_language_for_guest
 
-    Doorkeeper::AccessToken.find_or_create_for(
-      application,
-      guest_id,
-      new_token_scopes(:guest, application.id),
-      2.days,
-      false
+    token = Doorkeeper::AccessToken.new(
+      application: application,
+      resource_owner_id: guest_id,
+      scopes: new_token_scopes(:guest, application.id),
+      expires_in: 2.days
     )
+    token.send(:generate_token)
+    token
   end
 
   def new_token_scopes(requested_scope, application_id)

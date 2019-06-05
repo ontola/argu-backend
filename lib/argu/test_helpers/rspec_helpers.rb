@@ -32,17 +32,22 @@ module Argu
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
-      def sign_in(user, app = Doorkeeper::Application.argu) # rubocop:disable Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+      def sign_in(user, app = Doorkeeper::Application.argu)
         scopes = user == :guest ? 'guest' : 'user'
         scopes += ' afe' if app.id == Doorkeeper::Application::AFE_ID
-        t = Doorkeeper::AccessToken.find_or_create_for(
-          app,
-          user == :guest ? (@request&.session&.id || SecureRandom.hex) : user.id,
-          scopes,
-          10.minutes,
-          false
+        user_id = user == :guest ? (@request&.session&.id || SecureRandom.hex) : user.id
+        t = Doorkeeper::AccessToken.new(
+          application: app,
+          resource_owner_id: user_id,
+          scopes: scopes,
+          expires_in: 10.minutes
         )
+        if scopes.include?('guest')
+          t.send(:generate_token)
+        else
+          t.save!
+        end
         if defined?(cookies) && defined?(cookies.encrypted)
           set_argu_client_token_cookie(t.token)
         else
@@ -64,9 +69,9 @@ module Argu
             click_button 'Log in'
           end
           expect(page).to have_current_path redirect_to
-        end.to change { Doorkeeper::AccessToken.last.id }.by(1)
+        end.to change { Doorkeeper::AccessToken.count }.by(1)
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
       def visit(url)
         super (url.try(:iri)&.path || url).to_s.sub('app.', '')

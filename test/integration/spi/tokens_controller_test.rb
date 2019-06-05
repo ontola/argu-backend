@@ -35,7 +35,7 @@ module SPI
     test 'service should post create guest token' do
       sign_in :service
 
-      assert_difference('Doorkeeper::AccessToken.count', 1) do
+      assert_difference('Doorkeeper::AccessToken.count', 0) do
         post spi_token_path,
              params: {
                scope: :guest

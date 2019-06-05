@@ -27,16 +27,21 @@ class TokensTest < ActionDispatch::IntegrationTest
   ####################################
   # GENERATE GUEST TOKEN
   # ##################################
-  test 'Guest should get guest token if none is present' do
-    assert_difference("Doorkeeper::AccessToken.where(scopes: 'guest').count", 1) do
+  test 'Guest should get guest token if none is present and reuse it' do
+    assert_difference("Doorkeeper::AccessToken.where(scopes: 'guest').count", 0) do
       get motion.iri.path
     end
+    assert response.cookies['argu_client_token']
+
+    get motion.iri.path
+    assert_nil response.cookies['argu_client_token']
   end
 
   test 'Guest should not get guest token if none is present on HEAD' do
     assert_difference("Doorkeeper::AccessToken.where(scopes: 'guest').count", 0) do
       head motion.iri.path
     end
+    assert_nil response.cookies['argu_client_token']
   end
 
   ####################################

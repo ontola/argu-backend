@@ -20,6 +20,13 @@ module Argu
           key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
         end
 
+        def client_token_from_cookie
+          JWT.decode(
+            ActionDispatch::Cookies::CookieJar.build(request, response.cookies).encrypted[:argu_client_token],
+            Rails.application.secrets.jwt_encryption_token
+          ).first
+        end
+
         def create(model_type, *args)
           attributes = HashWithIndifferentAccess.new
           attributes.merge!(args.pop) if args.last.is_a?(Hash)
@@ -70,17 +77,8 @@ module Argu
           end
         end
 
-        def create_guest_user(id: nil, app: Doorkeeper::Application.argu_front_end)
-          scopes = 'guest'
-          scopes += ' afe' if app.id == Doorkeeper::Application::AFE_ID
-          token =
-            Doorkeeper::AccessToken
-              .create!(
-                application: app,
-                resource_owner_id: id || @request&.session&.id || SecureRandom.hex,
-                scopes: scopes
-              )
-          GuestUser.new(id: token.resource_owner_id)
+        def create_guest_user(id: nil)
+          GuestUser.new(id: id || @request&.session&.id || SecureRandom.hex)
         end
 
         def create_moderator(record, user = nil)

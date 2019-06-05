@@ -37,10 +37,6 @@ class LocalesTest < ActionDispatch::IntegrationTest
 
   def assert_locale(locale)
     assert_response :success
-    assert_equal token_payload['user']['language'], locale
-  end
-
-  def token_payload
-    decode_token(Doorkeeper::AccessToken.last.token)
+    assert_equal client_token_from_cookie['user']['language'], locale
   end
 end

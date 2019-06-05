@@ -435,29 +435,29 @@ class UsersTest < ActionDispatch::IntegrationTest
   ####################################
   test 'guest should get language cookie' do
     get freetown
-    assert_equal 'en', token_payload['user']['language']
+    assert_equal 'en', client_token_from_cookie['user']['language']
     assert_nil flash[:error]
   end
 
   test 'guest should get language cookie when visiting dutch forum' do
     get dutch_forum
-    assert_equal 'nl', token_payload['user']['language']
+    assert_equal 'nl', client_token_from_cookie['user']['language']
     assert_nil flash[:error]
   end
 
   test 'guest should put language' do
     get freetown
-    assert_equal 'en', token_payload['user']['language']
+    assert_equal 'en', client_token_from_cookie['user']['language']
     put language_users_path(:nl)
-    assert_equal 'nl', token_payload['user']['language']
+    assert_equal 'nl', client_token_from_cookie['user']['language']
     assert_nil flash[:error]
   end
 
   test 'guest should put language with nested param' do
     get freetown
-    assert_equal 'en', token_payload['user']['language']
+    assert_equal 'en', client_token_from_cookie['user']['language']
     put '/u/language', params: {user: {language: :nl}}
-    assert_equal 'nl', token_payload['user']['language']
+    assert_equal 'nl', client_token_from_cookie['user']['language']
     assert_nil flash[:error]
   end
 
@@ -688,9 +688,5 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_have_tag response.body,
                     '.settings-tabs .tab--current .icon-left',
                     tab.to_s.capitalize
-  end
-
-  def token_payload
-    decode_token(Doorkeeper::AccessToken.last.token)
   end
 end

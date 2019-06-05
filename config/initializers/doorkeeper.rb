@@ -197,6 +197,7 @@ Doorkeeper::JWT.configure do
     payload = {
       iat: Time.current.to_i,
       scopes: opts[:scopes].entries,
+      application_id: opts[:application]&.id,
       user: {
         type: user.guest? ? 'guest' : 'user',
         '@id': user.iri,
@@ -228,4 +229,32 @@ Doorkeeper::JWT.configure do
   # https://github.com/progrium/ruby-jwt
   # defaults to nil
   encryption_method :hs512
+end
+
+module Doorkeeper
+  class AccessToken < ActiveRecord::Base
+    class << self
+      def by_token(token)
+        guest_token(token) || find_by(token: token.to_s)
+      end
+
+      private
+
+      def guest_token(token) # rubocop:disable Metrics/AbcSize
+        return if token.blank?
+
+        data = ::JWT.decode(token, ::Rails.application.secrets.jwt_encryption_token).first
+        return unless data['scopes'].include?('guest')
+
+        new(
+          token: token,
+          application_id: data['application_id'],
+          resource_owner_id: data['user']['id'],
+          scopes: data['scopes'].join(' '),
+          created_at: Time.zone.at(data['iat']),
+          expires_in: data['exp'] - data['iat']
+        )
+      end
+    end
+  end
 end
