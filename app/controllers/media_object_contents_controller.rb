@@ -12,13 +12,13 @@ class MediaObjectContentsController < ParentableController
   end
 
   def url_for_version # rubocop:disable Metrics/AbcSize
-    case params[:version]
-    when 'content'
+    case params[:version].to_sym
+    when :content
       parent_resource.content.url
-    when 'thumbnail'
+    when :thumbnail
       parent_resource.thumbnail
     when *MediaObjectUploader::VERSIONS.keys
-      object.content.url(params[:version])
+      parent_resource.content.url(params[:version])
     else
       parent_resource.url
     end
