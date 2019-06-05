@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class CollectionView < LinkedRails::Collection::View
-  include UriTemplateHelper
+  include IRITemplateHelper
+  delegate :iri_template_name, to: :collection
 
   def canonical_iri(opts = {})
     RDF::URI(path_with_hostname(canonical_iri_path(opts)))
