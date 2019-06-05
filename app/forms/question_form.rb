@@ -15,7 +15,7 @@ class QuestionForm < ApplicationForm
   property_group :advanced,
                  label: -> { I18n.t('forms.advanced') },
                  properties: [
-                   {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
+                   {mark_as_important: {description: -> { mark_as_important_label(target) }}},
                    :require_location,
                    :pinned,
                    :default_motion_sorting,

@@ -5,7 +5,7 @@ class ShortnameForm < ApplicationForm
     :shortname,
     {
       destination: {
-        description: ->(r) { I18n.t('formtastic.hints.shortname.destination', iri_prefix: r.root.iri_prefix) }
+        description: -> { I18n.t('formtastic.hints.shortname.destination', iri_prefix: target.root.iri_prefix) }
       }
     },
     :unscoped

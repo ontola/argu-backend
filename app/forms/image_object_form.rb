@@ -7,5 +7,5 @@ class ImageObjectForm < ApplicationForm
   ]
 
   field :content_type,
-        sh_in: ->(resource) { resource.form.target.allowed_content_types }
+        sh_in: -> { target.allowed_content_types }
 end

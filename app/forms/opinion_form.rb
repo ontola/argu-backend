@@ -2,7 +2,7 @@
 
 class OpinionForm < ApplicationForm
   fields [
-    {description: {description: ->(_r) { I18n.t('opinions.form.placeholder') }}},
+    {description: {description: -> { I18n.t('opinions.form.placeholder') }}},
     :hidden
   ]
 

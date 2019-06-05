@@ -1,7 +1,17 @@
 # frozen_string_literal: true
 
 class ApplicationForm < LinkedRails::Form
-  extend UriTemplateHelper
+  include UriTemplateHelper
+
+  private
+
+  def mark_as_important_label(resource)
+    I18n.t(
+      'publications.follow_type.helper',
+      news_audience: resource.parent.potential_audience(:news),
+      reactions_audience: resource.parent.potential_audience(:reactions)
+    )
+  end
 
   class << self
     private
@@ -10,18 +20,10 @@ class ApplicationForm < LinkedRails::Form
       {
         custom: true,
         datatype: NS::XSD[:string],
-        default_value: ->(resource) { resource.form.user_context.user.iri },
+        default_value: -> { user_context.user.iri },
         max_count: 1,
-        sh_in: ->(resource) { actors_iri(resource.form.target.root) }
+        sh_in: -> { actors_iri(target.root) }
       }
-    end
-
-    def mark_as_important_label(resource)
-      I18n.t(
-        'publications.follow_type.helper',
-        news_audience: resource.parent.potential_audience(:news),
-        reactions_audience: resource.parent.potential_audience(:reactions)
-      )
     end
   end
 end

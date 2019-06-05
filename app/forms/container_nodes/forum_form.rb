@@ -9,9 +9,9 @@ class ForumForm < ApplicationForm
     :url,
     :default_cover_photo,
     grants: {
-      description: lambda do |r|
+      description: lambda do
         grants_list =
-          r.root.grants.joins(:grant_set).where("grant_sets.title != 'staff'").map do |grant|
+          target.root.grants.joins(:grant_set).where("grant_sets.title != 'staff'").map do |grant|
             "#{grant.group.display_name}: #{I18n.t("roles.types.#{grant.grant_set.title}")}"
           end.join("\n")
         "#{I18n.t('grants.form.description')}\n#{grants_list}"

@@ -2,7 +2,7 @@
 
 class PageForm < ApplicationForm
   fields [
-    {profile: {if: ->(resource) { resource.new_record? }}},
+    {profile: {if: -> { target.new_record? }}},
     :visibility,
     :url,
     :last_accepted,

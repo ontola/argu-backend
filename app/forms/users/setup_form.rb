@@ -2,10 +2,10 @@
 
 module Users
   class SetupForm < ApplicationForm
-    extend UsersHelper
+    include UsersHelper
 
     fields [
-      {url: {default_value: ->(resource) { resource.form.target.url || suggested_shortname(resource.form.target) }}},
+      {url: {default_value: -> { target.url || suggested_shortname(target) }}},
       :first_name,
       :last_name
     ]

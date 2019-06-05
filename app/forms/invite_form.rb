@@ -8,13 +8,13 @@ class InviteForm < ApplicationForm
       {addresses: {max_length: 5000, pattern: /\A(#{RegexHelper::SINGLE_EMAIL.source},?\s?)+\z/}},
       {
         message: {
-          default_value: lambda do |r|
-            I18n.t('tokens.discussion.default_message', resource: r.form.target.edge.display_name)
+          default_value: lambda do
+            I18n.t('tokens.discussion.default_message', resource: target.edge.display_name)
           end,
           max_length: 5000
         }
       },
-      {group_id: {sh_in: ->(r) { r.form.target.edge.root.groups.map(&:iri) }}},
+      {group_id: {sh_in: -> { target.edge.root.groups.map(&:iri) }}},
       :hidden,
       :footer
     ]
@@ -27,10 +27,10 @@ class InviteForm < ApplicationForm
       {send_mail: {default_value: true}},
       {
         root_id: {
-          default_value: ->(r) { r.form.target.edge.root_id }
+          default_value: -> { target.edge.root_id }
         }
       },
-      {redirect_url: {default_value: ->(r) { r.form.target.edge.iri }}}
+      {redirect_url: {default_value: -> { target.edge.iri }}}
     ]
   )
 
