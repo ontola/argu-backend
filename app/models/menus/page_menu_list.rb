@@ -39,7 +39,7 @@ class PageMenuList < ApplicationMenuList
     [
       *container_nodes.map { |child| navigation_item(child) },
       *custom_menu_items(:navigations, resource),
-      activity_link,
+      container_nodes.any? ? activity_link : nil,
       menu_item(
         :settings,
         image: 'fa-gear',
