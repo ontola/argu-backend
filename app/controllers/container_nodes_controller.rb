@@ -29,7 +29,7 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
 
   def authorize_action
     authorize authenticated_resource, :list?
-    return super unless action_name == 'show'
+    return super unless action_name == 'show' && format_html?
   end
 
   def collect_children(resource)
