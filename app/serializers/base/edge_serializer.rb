@@ -8,7 +8,7 @@ class EdgeSerializer < RecordSerializer
   has_one :creator, predicate: NS::SCHEMA[:creator] do
     object.creator.profileable
   end
-  has_many :granted_groups, predicate: NS::ARGU[:grantedGroups], unless: :system_scope?
+  attribute :granted_groups, predicate: NS::ARGU[:grantedGroups], unless: :system_scope?
 
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
   attribute :last_activity_at, predicate: NS::ARGU[:lastActivityAt]
@@ -25,6 +25,8 @@ class EdgeSerializer < RecordSerializer
   end
 
   def granted_groups
-    scope.grant_tree.granted_groups(object.persisted_edge)
+    scope.grant_tree.granted_groups(object.persisted_edge).pluck(:id).map do |id|
+      RDF::DynamicURI(expand_uri_template(:groups_iri, id: id, with_hostname: true))
+    end
   end
 end

@@ -24,4 +24,5 @@ class Discussion < Edge
   parentable :container_node, :page
   filterable pinned: {key: :pinned_at, values: {yes: 'NOT NULL', no: 'NULL'}}
   paginates_per 12
+  placeable :custom
 end

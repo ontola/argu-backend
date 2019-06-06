@@ -9,7 +9,6 @@ class Question < Discussion
 
   convertible motions: %i[activities media_objects]
   parentable :container_node
-  placeable :custom
 
   validates :description, presence: true, length: {minimum: 5, maximum: 5000}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 110}

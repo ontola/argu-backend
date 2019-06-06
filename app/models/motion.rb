@@ -18,7 +18,6 @@ class Motion < Discussion
   convertible questions: %i[activities media_objects], comments: %i[activities]
   paginates_per 30
   parentable :question, :container_node
-  placeable :custom
 
   validates :description, presence: true, length: {maximum: 5000}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 110}

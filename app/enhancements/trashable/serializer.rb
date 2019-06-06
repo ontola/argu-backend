@@ -10,8 +10,12 @@ module Trashable
                 if: :is_trashable?
       delegate :is_trashable?, to: :object
 
-      has_one :trash_activity, predicate: NS::ARGU[:trashActivity]
-      has_one :untrash_activity, predicate: NS::ARGU[:untrashActivity]
+      has_one :trash_activity, predicate: NS::ARGU[:trashActivity], if: :trashed?
+      has_one :untrash_activity, predicate: NS::ARGU[:untrashActivity], if: :never
+    end
+
+    def trashed?
+      object.trashed_at.present?
     end
   end
 end
