@@ -49,7 +49,7 @@ module Edgeable
 
       def reindex_with_tenant(async: true)
         ActsAsTenant.without_tenant do
-          Page.find_each { |page| page.reindex(async: async) }
+          Page.find_each { |page| page.reindex_tree(async: async) }
         end
       end
 

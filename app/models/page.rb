@@ -86,7 +86,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       end
   end
 
-  def reindex(async: true)
+  def reindex_tree(async: true)
     ActsAsTenant.with_tenant(self) { Edge.reindex(async: async) }
   end
 

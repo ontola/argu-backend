@@ -319,6 +319,12 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     true
   end
 
+  def reindex(method_name = nil, **options)
+    ActsAsTenant.with_tenant(ActsAsTenant.current_tenant || root) do
+      Searchkick::RecordIndexer.new(self).reindex(method_name, **options)
+    end
+  end
+
   def reload(_opts = {})
     @is_trashed = nil
     @persisted_edge = nil
