@@ -13,4 +13,10 @@ class EdgesControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: motion.uuid}
     assert_redirected_to motion.iri.path
   end
+
+  test 'should redirect to owner with uuid with other tenant' do
+    ActsAsTenant.current_tenant = create(:page)
+    get :show, params: {format: :json_api, id: motion.uuid}
+    assert_redirected_to motion.iri.path
+  end
 end
