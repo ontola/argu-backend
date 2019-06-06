@@ -15,6 +15,10 @@ class Document < ApplicationRecord
   end
 
   class << self
+    def iri
+      NS::SCHEMA[:CreativeWork]
+    end
+
     def markdown_renderer
       @markdown_renderer ||= Redcarpet::Markdown.new(
         Redcarpet::Render::HTML.new,
