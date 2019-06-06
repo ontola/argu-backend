@@ -6,7 +6,7 @@ namespace :iris do
     argu_hostname = ApplicationRecord.connection.quote_string(Rails.application.config.host_name)
     convert_iris('argu.co/', "#{argu_hostname}/")
     demo_hostname = ApplicationRecord.connection.quote_string(ENV['DEMO_HOSTNAME'] || 'demogemeente.localdev')
-    convert_iris('demogemeente.nl/', "#{demo_hostname}/")
+    convert_iris('demogemeente.nl', demo_hostname)
   end
 
   def convert_iris(from, to)
