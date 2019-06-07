@@ -89,7 +89,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_difference('User.count' => 0,
                       'Favorite.count' => 0,
-                      'Sidekiq::Worker.jobs.count' => 0) do
+                      worker_count_string('RedisResourceWorker') => 0,
+                      worker_count_string('SendEmailWorker') => 0) do
       post user_registration_path,
            params: {user: attrs, accept_terms: true, r: r}
       assert_response 200
@@ -107,7 +108,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_difference('User.count' => 1,
                       'Favorite.count' => 0,
-                      'Sidekiq::Worker.jobs.count' => 2) do
+                      worker_count_string('RedisResourceWorker') => 1,
+                      worker_count_string('SendEmailWorker') => 1) do
       post user_registration_path,
            params: {user: attrs, accept_terms: true, r: r}
       assert_response 302
@@ -160,7 +162,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_difference('User.count' => 1,
                       'Favorite.count' => 0,
-                      'Sidekiq::Worker.jobs.count' => 2) do
+                      worker_count_string('RedisResourceWorker') => 1,
+                      worker_count_string('SendEmailWorker') => 1) do
       post user_registration_path,
            params: {user: attrs}
       assert_redirected_to setup_users_path
@@ -177,7 +180,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_difference('User.count' => 1,
                       'Favorite.count' => 1,
-                      'Sidekiq::Worker.jobs.count' => 2) do
+                      worker_count_string('RedisResourceWorker') => 1,
+                      worker_count_string('SendEmailWorker') => 1) do
       post user_registration_path,
            params: {user: attrs}
       assert_redirected_to setup_users_path
@@ -310,7 +314,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     user_params = attributes_for(:user)
 
     assert_difference('User.count' => 0,
-                      'ActionMailer::Base.deliveries.count' => 0) do
+                      worker_count_string('RedisResourceWorker') => 0,
+                      worker_count_string('SendEmailWorker') => 0) do
       post user_registration_path,
            params: {
              user: {

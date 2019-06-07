@@ -207,7 +207,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     )
 
     assert_difference('EmailAddress.count' => 1,
-                      'Sidekiq::Worker.jobs.count' => 1) do
+                      worker_count_string('SendEmailWorker') => 1) do
       put user_path(user),
           params: {
             user: {
@@ -236,7 +236,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_not_equal user.primary_email_record.email, second_email.email
 
     assert_difference('EmailAddress.count' => 0,
-                      'Sidekiq::Worker.jobs.count' => 0) do
+                      worker_count_string('SendEmailWorker') => 0) do
       put user_path(user),
           params: {
             user: {
@@ -263,7 +263,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     second_email
 
     assert_difference('EmailAddress.count' => -1,
-                      'Sidekiq::Worker.jobs.count' => 0) do
+                      worker_count_string('SendEmailWorker') => 0) do
       put user_path(user),
           params: {
             user: {
@@ -285,7 +285,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     second_email
 
     assert_difference('EmailAddress.count' => 0,
-                      'Sidekiq::Worker.jobs.count' => 0) do
+                      worker_count_string('SendEmailWorker') => 0) do
       put user_path(user),
           params: {
             user: {
@@ -317,7 +317,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       email: 'changed@argu.co'
     )
     assert_difference('EmailAddress.count' => 0,
-                      'Sidekiq::Worker.jobs.count' => 1) do
+                      worker_count_string('SendEmailWorker') => 1) do
       put user_path(user),
           params: {
             user: {
@@ -341,7 +341,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user
     second_email
     assert_difference('EmailAddress.count' => 0,
-                      'Sidekiq::Worker.jobs.count' => 0) do
+                      worker_count_string('SendEmailWorker') => 0) do
       put user_path(user),
           params: {
             user: {

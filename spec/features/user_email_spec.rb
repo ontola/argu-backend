@@ -30,7 +30,9 @@ RSpec.feature 'User email' do
 
     fill_in 'user_current_password', with: user.password
 
-    assert_difference('EmailAddress.count' => 1, 'Sidekiq::Worker.jobs.count' => 1) do
+    new_email_count = worker_count_string('BroadcastWorker', "['EmailAddress', #{EmailAddress.last.id + 1}]")
+
+    assert_difference('EmailAddress.count' => 1, new_email_count => 1) do
       click_button 'Save'
       confirm_msg = 'We have send you a mail to the new address. Please '\
         'confirm the change by clicking the link in this mail.'

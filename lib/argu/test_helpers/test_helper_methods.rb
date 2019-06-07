@@ -239,6 +239,13 @@ module Argu
             resource.reload
           end
         end
+
+        def worker_count_string(worker, args = nil)
+          str = "Sidekiq::Worker.jobs.select { |job| job['class'] == '#{worker}'"
+          str += " && job['args'] == #{args}" if args
+          str += '}.count'
+          str
+        end
       end
 
       module ClassMethods
