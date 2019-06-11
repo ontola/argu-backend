@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Request
-  class TrashRequest < Base
+  class TrashRequest < Request::Base
     enhance Trashable, only: %i[Model Serializer]
   end
 end
