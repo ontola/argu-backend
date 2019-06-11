@@ -25,8 +25,6 @@ class EdgeSerializer < RecordSerializer
   end
 
   def granted_groups
-    scope.grant_tree.granted_groups(object.persisted_edge).pluck(:id).map do |id|
-      RDF::DynamicURI(expand_uri_template(:groups_iri, id: id, with_hostname: true))
-    end
+    RDF::DynamicURI("#{object.iri}/granted")
   end
 end
