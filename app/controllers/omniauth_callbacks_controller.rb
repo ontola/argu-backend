@@ -5,7 +5,6 @@ require 'omniauth/omniauth_facebook'
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController # rubocop:disable Metrics/ClassLength
   include RedisResourcesHelper
   include OauthHelper
-  include NestedResourceHelper
 
   def self.provides_callback_for(provider)
     class_eval <<-RUBY, __FILE__, __LINE__ + 1

@@ -228,6 +228,18 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @favorite_forum_ids ||= favorite_forums.pluck(:id)
   end
 
+  def favorite_pages
+    return Page.none if guest?
+
+    @favorite_pages ||=
+      ActsAsTenant.without_tenant do
+        pids = favorite_forums.joins(:parent).pluck('parents_edges.uuid') + page_ids
+        Kaminari.paginate_array(
+          Page.where(uuid: pids).includes(:shortname, profile: :default_profile_photo).to_a
+        )
+      end
+  end
+
   def greeting
     first_name.presence || url.presence || email.split('@').first
   end
@@ -278,6 +290,18 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       else
         managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)
       end
+  end
+
+  def page_collection(options)
+    @page_collection ||= ::Collection.new(
+      options.merge(
+        association_base: favorite_pages,
+        association_class: Page,
+        default_type: :paginated,
+        parent: self,
+        title: I18n.t('pages.my_pages')
+      )
+    )
   end
 
   def page_count

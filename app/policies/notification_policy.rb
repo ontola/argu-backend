@@ -31,7 +31,7 @@ class NotificationPolicy < RestrictivePolicy
   end
 
   def create?
-    staff?
+    false
   end
 
   def update?

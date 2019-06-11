@@ -6,6 +6,10 @@ module Users
       false
     end
 
+    def create_include_resource?
+      true
+    end
+
     def create_policy; end
 
     def create_url

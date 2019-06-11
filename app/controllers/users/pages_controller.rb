@@ -29,25 +29,7 @@ module Users
     end
 
     def index_collection
-      @collection ||= ::Collection.new(
-        collection_options.merge(
-          association_base: favorite_pages,
-          association_class: Page,
-          default_type: :paginated,
-          parent: current_user,
-          title: t('pages.my_pages')
-        )
-      )
-    end
-
-    def favorite_pages # rubocop:disable Metrics/AbcSize
-      return Page.none if user.guest?
-      ActsAsTenant.without_tenant do
-        page_ids =
-          Forum.joins(:favorites, :parent).where(favorites: {user_id: current_user.id}).pluck('parents_edges.uuid')
-        page_ids += user.page_ids
-        Kaminari.paginate_array(Page.where(uuid: page_ids).includes(:shortname, profile: :default_profile_photo).to_a)
-      end
+      current_user.page_collection(collection_options)
     end
 
     def user

@@ -35,15 +35,19 @@ require 'argu/whitelist_constraint'
 # z:
 
 Rails.application.routes.draw do
-  concern :votable do
-    resources :votes, only: %i[new create index]
-    resource :vote, only: %i[destroy show], path: :vote
-  end
-
   concern :nested_actionable do
     namespace :actions do
       resources :items, path: '', only: %i[index show], collection: @scope.parent.try(:[], :controller)
     end
+  end
+
+  concern :votable do
+    resources :votes, only: %i[new create index] do
+      collection do
+        concerns :nested_actionable
+      end
+    end
+    resource :vote, only: %i[destroy show], path: :vote
   end
 
   constraints(Argu::WhitelistConstraint) do
@@ -86,7 +90,11 @@ Rails.application.routes.draw do
             path: 'u',
             only: %i[show edit] do
     resources :identities, only: :destroy, controller: 'users/identities'
-    resources :email_addresses, only: %i[index new create]
+    resources :email_addresses, only: %i[index new create] do
+      collection do
+        concerns :nested_actionable
+      end
+    end
     resource :follows, only: :destroy, controller: 'users/follows'
 
     get :connect, to: 'users/identities#connect', on: :member
@@ -96,6 +104,11 @@ Rails.application.routes.draw do
     put :setup, to: 'users/setup#update', on: :collection
 
     get :pages, to: 'users/pages#index', on: :member, path: :o
+    resources :pages, only: %i[], path: :o do
+      collection do
+        concerns :nested_actionable
+      end
+    end
     get :forums, to: 'users/forums#index', on: :member
     get :drafts, to: 'drafts#index', on: :member
 
@@ -156,6 +169,9 @@ Rails.application.routes.draw do
             path: 'n' do
     patch :read, on: :collection
     include_route_concerns
+    collection do
+      concerns :nested_actionable
+    end
   end
 
   constraints(Argu::NoTenantConstraint) do
@@ -236,7 +252,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :pages, path: 'o', only: %i[new create index show]
+  resources :pages, path: 'o', only: %i[new create index show] do
+    collection do
+      concerns :nested_actionable
+    end
+  end
   get :settings, to: 'pages#settings'
   get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
 

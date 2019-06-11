@@ -2,7 +2,6 @@
 
 module Actions
   class ItemsController < LinkedRails::Actions::ItemsController
-    include NestedResourceHelper
     skip_before_action :check_if_registered
     before_action :authorize_action
 
@@ -18,10 +17,6 @@ module Actions
     end
 
     def current_forum; end
-
-    def parent_resource
-      super if parent_id_from_params.present?
-    end
 
     def resource_by_id_parent; end
 

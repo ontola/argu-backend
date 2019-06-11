@@ -6,6 +6,10 @@ module Users
       I18n.t('devise.passwords.new.helper')
     end
 
+    def create_include_resource?
+      true
+    end
+
     def create_on_collection?
       false
     end
@@ -18,6 +22,10 @@ module Users
 
     def create_label
       I18n.t('devise.passwords.new.header')
+    end
+
+    def update_include_resource?
+      true
     end
 
     def update_label

@@ -28,10 +28,6 @@ module ActiveResponseHelper
     end
   end
 
-  def create_includes
-    show_includes
-  end
-
   def create_meta
     invalidate_parent_collections
   end

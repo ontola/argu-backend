@@ -79,7 +79,6 @@ class NotificationsControllerTest < ActionController::TestCase
 
     assert_response 200
     expect_included(user.notifications.map(&:iri))
-    expect_included(user.notifications.first.action(:read).iri)
   end
 
   test 'user with notifications should get index nq' do

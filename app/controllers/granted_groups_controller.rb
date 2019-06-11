@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class GrantedGroupsController < AuthorizedController
-  include NestedResourceHelper
   skip_before_action :check_if_registered, only: :index
 
   private

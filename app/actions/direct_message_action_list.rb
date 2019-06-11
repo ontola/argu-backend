@@ -7,6 +7,10 @@ class DirectMessageActionList < ApplicationActionList
     I18n.t('actions.direct_messages.create.description', creator: resource.resource.publisher.display_name)
   end
 
+  def create_include_resource?
+    true
+  end
+
   def create_on_collection?
     false
   end

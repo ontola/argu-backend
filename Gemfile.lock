@@ -44,7 +44,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 72e00013b3a596498b7bf1c72eb1f7078b6a189c
+  revision: e7ed6d8d169c2d49f1048815cfa35ef493ee7d9a
   specs:
     linked_rails (0.0.0)
       active_response
@@ -388,7 +388,7 @@ GEM
     json-ld (3.0.2)
       multi_json (~> 1.12)
       rdf (>= 2.2.8, < 4.0)
-    jsonapi-renderer (0.2.0)
+    jsonapi-renderer (0.2.2)
     jwt (1.5.6)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
@@ -747,9 +747,9 @@ GEM
       activesupport (>= 4.2)
       multi_json (~> 1.2)
       railties (>= 4.2)
-    websocket-driver (0.7.0)
+    websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.3)
+    websocket-extensions (0.1.4)
     whodunnit (0.0.5)
       rails (>= 4.0.0)
     wisper (1.6.1)

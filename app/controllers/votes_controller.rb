@@ -189,7 +189,9 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     else
       data = super
     end
+    data << [authenticated_resource.parent_iri, NS::ARGU[:currentVote], authenticated_resource.iri]
     action_delta(data, :remove, authenticated_resource.parent, :create_vote, include_favorite: true)
+    action_delta(data, :add, authenticated_resource.parent, :destroy_vote, include_favorite: true)
     data
   end
 

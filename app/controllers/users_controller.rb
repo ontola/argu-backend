@@ -3,7 +3,6 @@
 class UsersController < AuthorizedController
   include VotesHelper
   include UrlHelper
-  include NestedResourceHelper
   helper_method :authenticated_resource
 
   def wrong_email

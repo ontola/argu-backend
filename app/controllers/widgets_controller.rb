@@ -5,6 +5,10 @@ class WidgetsController < ServiceController
 
   private
 
+  def create_includes
+    show_includes
+  end
+
   def index_collection
     @index_collection ||=
       LinkedRails::Sequence.new(

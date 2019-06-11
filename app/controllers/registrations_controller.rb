@@ -7,7 +7,6 @@ class RegistrationsController < Devise::RegistrationsController
   include LinkedRails::Enhancements::Destroyable::Controller
   include RedisResourcesHelper
   include OauthHelper
-  include NestedResourceHelper
   respond_to :json
 
   alias new_resource build_resource

@@ -31,7 +31,8 @@ module NestedResourceHelper
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
   # @return [ApplicationRecord, nil] A resource model if found
   def parent_from_params(root = tree_root, opts = params)
-    return root if parent_resource_param(opts).blank?
+    return root if parent_resource_param(opts).blank? && opts[:collection].blank?
+
     opts = opts.dup
     opts[:class] = parent_resource_class(opts)
     opts[:id] = opts.delete(parent_resource_param(opts))
@@ -68,12 +69,25 @@ module NestedResourceHelper
   # @return [ApplicationRecord] The parent resource class object
   # @note Whether the given parent is allowed for the requested resource is not validated here.
   def parent_resource_klass(opts = params)
-    ApplicationRecord.descendants.detect { |m| m.to_s == parent_resource_type(opts).classify }
+    ApplicationRecord.descendants.detect { |m| m.to_s == parent_resource_type(opts)&.classify }
   end
 
   def parent_resource_or_collection(root, opts)
     resource = resource_from_opts(root, opts.merge(type: controller_name))
-    opts[:collection].present? ? resource.send("#{opts[:collection].to_s.singularize}_collection") : resource
+    return resource if opts[:collection].blank?
+
+    parent_collection(resource, opts)
+  end
+
+  def parent_collection(resource, opts)
+    collection_class = opts[:collection].classify.constantize
+    collection_opts = collection_params(opts, collection_class)
+
+    if resource.present?
+      resource.send("#{opts[:collection].to_s.singularize}_collection", collection_opts)
+    else
+      collection_class.try(:root_collection, collection_opts)
+    end
   end
 
   # Extracts the parent resource param from the url to get to its value
@@ -97,7 +111,8 @@ module NestedResourceHelper
     if resource_params[:parent].present?
       opts_from_iri(resource_params[:parent])[:type]
     else
-      parent_resource_key(opts)[0..-4]
+      key = parent_resource_key(opts)
+      key[0..-4] if key
     end
   end
 

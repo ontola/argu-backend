@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Vote < Edge # rubocop:disable Metrics/ClassLength
+class Vote < Edge
   enhance LinkedRails::Enhancements::Createable
   enhance LinkedRails::Enhancements::Destroyable
   enhance Loggable
@@ -128,10 +128,6 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
         neutral: {collection: grouped['neutral'] || []},
         con: {collection: grouped['con'] || []}
       )
-    end
-
-    def show_includes
-      [:partOf, voteable: :actions]
     end
   end
 end

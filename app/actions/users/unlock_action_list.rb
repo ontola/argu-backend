@@ -6,6 +6,10 @@ module Users
       I18n.t('devise.unlocks.new.helper')
     end
 
+    def create_include_resource?
+      true
+    end
+
     def create_on_collection?
       false
     end

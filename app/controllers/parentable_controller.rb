@@ -5,7 +5,6 @@
 #
 # Subclassed models are assumed to have `Parentable` included.
 class ParentableController < AuthorizedController
-  include NestedResourceHelper
   include UriTemplateHelper
   prepend_before_action :redirect_edge_parent_requests, only: :index
   helper_method :parent_resource

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class GrantTreesController < AuthorizedController
-  include NestedResourceHelper
-
   private
 
   def authorize_action
