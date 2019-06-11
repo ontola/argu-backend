@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TopicForm < ApplicationForm
+  visibility_text
+
   fields %i[
     display_name
     description

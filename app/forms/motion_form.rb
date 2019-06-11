@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class MotionForm < ApplicationForm
-  include VisibilityHelper
+  visibility_text
 
-  resource visibility_text: {
-    description: -> { visible_for_string(target) },
-    if: -> { target.new_record? }
-  }
   fields %i[
     display_name
     description

@@ -2,6 +2,7 @@
 
 class ApplicationForm < LinkedRails::Form
   include UriTemplateHelper
+  include VisibilityHelper
 
   private
 
@@ -23,6 +24,13 @@ class ApplicationForm < LinkedRails::Form
         default_value: -> { user_context.user.iri },
         max_count: 1,
         sh_in: -> { actors_iri(target.root) }
+      }
+    end
+
+    def visibility_text
+      resource visibility_text: {
+        description: -> { visible_for_string(target) },
+        if: -> { target.new_record? }
       }
     end
   end
