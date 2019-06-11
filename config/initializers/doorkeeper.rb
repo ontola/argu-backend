@@ -244,7 +244,7 @@ module Doorkeeper
         return if token.blank?
 
         data = ::JWT.decode(token, ::Rails.application.secrets.jwt_encryption_token).first
-        return unless data['scopes'].include?('guest')
+        return unless data['scopes']&.include?('guest')
 
         new(
           token: token,
@@ -254,6 +254,8 @@ module Doorkeeper
           created_at: Time.zone.at(data['iat']),
           expires_in: data['exp'] - data['iat']
         )
+      rescue JWT::DecodeError
+        nil
       end
     end
   end
