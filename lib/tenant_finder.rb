@@ -41,7 +41,7 @@ class TenantFinder
   end
 
   def tenant_by_prefix
-    Page.find_by(iri_prefix: matching_iris)
+    Page.joins(Page.property_join_string(:iri_prefix)).find_by('lower(iri_prefix_filter.value) IN (?)', matching_iris)
   end
 
   def tenant_by_shortname
