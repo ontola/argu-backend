@@ -22,7 +22,7 @@ module ActivePublishable
             ].join('?')
           )
         },
-        condition: -> { !resource.is_published? }
+        condition: -> { !resource.argu_publication&.publish_time_lapsed? }
       )
     end
   end
