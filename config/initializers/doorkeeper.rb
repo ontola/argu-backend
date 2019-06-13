@@ -254,7 +254,7 @@ module Doorkeeper
           created_at: Time.zone.at(data['iat']),
           expires_in: data['exp'] - data['iat']
         )
-      rescue JWT::DecodeError
+      rescue ::JWT::DecodeError
         nil
       end
     end
