@@ -1,5 +1,5 @@
 .box.box-grid.profile-box[itemscope="itemscope" itemprop="creator" itemtype="http://schema.org/Organization"]
-  =link_to DynamicUriHelper.revert(dual_profile_url(profile, only_path: false), ActsAsTenant.current_tenant) do
+  =link_to DynamicUriHelper.revert(dual_profile_url(profile, only_path: false)) do
     section.unpadded.cover--small.cover--light
       .cover-image[style="background-image: url('#{profile.default_cover_photo&.url(:box)}'); "]
         =image_tag profile.default_profile_photo.url(:avatar).to_s, class: 'profile-picture profile-picture--medium'

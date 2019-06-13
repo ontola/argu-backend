@@ -23,6 +23,7 @@ RSpec.feature 'User email' do
     expect(page).not_to have_link('Send confirmation mail')
 
     click_link 'Add email'
+
     all("input[name*='user[email_addresses_attributes]']:not(:disabled)")
       .find("input[name*='[email]']")
       .first
@@ -30,8 +31,11 @@ RSpec.feature 'User email' do
 
     fill_in 'user_current_password', with: user.password
 
-    new_email_count = worker_count_string('BroadcastWorker', "['EmailAddress', #{EmailAddress.last.id + 1}]")
-
+    next_id = EmailAddress.last.id + 1
+    new_email_count = worker_count_string(
+      'BroadcastWorker',
+      "['resource_id' => #{next_id}, 'resource_type' => 'emailAddresses', 'event' => 'create', 'changes' => nil]"
+    )
     assert_difference('EmailAddress.count' => 1, new_email_count => 1) do
       click_button 'Save'
       confirm_msg = 'We have send you a mail to the new address. Please '\

@@ -2,7 +2,7 @@
 
 module RecognizePathHelper
   def recognize_path(path, _environment = {})
-    path = DynamicUriHelper.revert(path, ActsAsTenant.current_tenant)
+    path = DynamicUriHelper.revert(path)
     super
   end
 end
