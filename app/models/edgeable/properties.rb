@@ -135,10 +135,12 @@ module ActiveRecord
       unless klass <= Edge && opts.is_a?(Hash) && opts.present? && (properties = properties_from_opts(opts)).presence
         return super
       end
-      properties.reduce(where(opts.except(*properties.keys), *rest)) do |q, condition|
+      properties.reduce(where(opts.except(*properties.keys), *rest)) do |query, condition|
         key = condition.first.to_sym
         value = property_filter_value(key, condition.second)
-        q.joins(target_class.property_join_string(key)).where(target_class.property_filter_string(key, value), *value)
+        query
+          .joins(target_class.property_join_string(key))
+          .where(target_class.property_filter_string(key, value), *(value.is_a?(Array) ? value.compact : value))
       end
     end
 
