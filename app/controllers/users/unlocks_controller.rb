@@ -15,6 +15,10 @@ module Users
       yield resource if block_given?
     end
 
+    def default_form_view(action)
+      action
+    end
+
     def new_execute
       self.resource = resource_class.new
     end
