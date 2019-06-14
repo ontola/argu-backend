@@ -7,6 +7,7 @@ class SearchResult
   include UriTemplateHelper
   include Rails.application.routes.url_helpers
   include Pundit
+  include IRITemplateHelper
 
   attr_accessor :page, :page_size, :parent, :q, :user_context
   delegate :user, :afe_request?, to: :user_context
