@@ -6,9 +6,14 @@ class SearchResultSerializer < BaseSerializer
   attribute :total_count, predicate: NS::AS[:totalItems]
   attribute :took, predicate: NS::ARGU[:took]
   attribute :q, predicate: NS::ARGU[:query]
+  attribute :display, predicate: NS::ONTOLA[:collectionDisplay]
 
   %i[first prev next last].each do |attr|
     attribute attr, predicate: NS::AS[attr], unless: :system_scope?
+  end
+
+  def display
+    NS::ONTOLA['collectionDisplay/grid']
   end
 
   def type
