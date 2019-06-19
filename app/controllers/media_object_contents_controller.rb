@@ -2,7 +2,7 @@
 
 class MediaObjectContentsController < ParentableController
   def show
-    redirect_to url_for_version
+    redirect_to url_for_version || raise(ActiveRecord::RecordNotFound)
   end
 
   private
