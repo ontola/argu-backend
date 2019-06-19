@@ -5,6 +5,7 @@ class FollowsController < AuthorizedController
   skip_before_action :check_if_registered, if: :unsubscribe?
   skip_before_action :authorize_action, if: :unsubscribe?
   skip_before_action :verify_authenticity_token, if: :unsubscribe?
+  prepend_before_action :set_tenant
 
   private
 
@@ -88,6 +89,10 @@ class FollowsController < AuthorizedController
 
   def permit_params
     {}
+  end
+
+  def set_tenant
+    ActsAsTenant.current_tenant = authenticated_resource.followable.root
   end
 
   def redirect_location

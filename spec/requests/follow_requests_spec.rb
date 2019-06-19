@@ -25,10 +25,10 @@ RSpec.describe 'Follows', type: :request do
     expect(response).to redirect_to(parent_path)
   end
   let(:unsubscribe_path) do
-    ActsAsTenant.with_tenant(argu) { iri_from_template(:follows_unsubscribe_iri, id: subject) }
+    iri_from_template(:follows_unsubscribe_iri, id: subject)
   end
   let(:non_existing_unsubscribe_path) do
-    ActsAsTenant.with_tenant(argu) { iri_from_template(:follows_unsubscribe_iri, id: non_existing_id) }
+    iri_from_template(:follows_unsubscribe_iri, id: non_existing_id)
   end
 
   subject { create(:follow, follower: staff, followable: freetown) }
