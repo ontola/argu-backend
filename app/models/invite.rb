@@ -9,7 +9,7 @@ class Invite < VirtualResource
 
   enhance LinkedRails::Enhancements::Createable
 
-  attr_accessor :edge, :new_parent
+  attr_accessor :edge, :new_parent, :addresses, :message, :group_id
 
   def edgeable_record
     @edgeable_record ||= edge

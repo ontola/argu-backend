@@ -11,6 +11,10 @@ class InviteActionList < ApplicationActionList
     I18n.t('tokens.discussion.description')
   end
 
+  def create_include_resource?
+    true
+  end
+
   def create_on_collection?
     false
   end
