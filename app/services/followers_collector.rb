@@ -14,21 +14,26 @@ class FollowersCollector
   delegate :count, to: :followers
 
   def call
-    followers.includes(:profile)
+    granted_followers.includes(:profile)
   end
 
   private
 
-  def followers # rubocop:disable Metrics/AbcSize
+  def followers
     User
-      .joins(follows: :followable, profile: {grants: :edge})
+      .joins(follows: :followable)
       .where(edges: {id: @resource.id})
-      .where('edges_grants.path @> ?', @resource.path)
       .where(
         'users.id NOT IN (?)',
         (@activity&.notifications&.pluck(:user_id) || []).append(@activity&.audit_data.try(:[], 'user_id') || 0)
       )
       .where('follow_type >= ?', Follow.follow_types[@follow_type])
       .distinct
+  end
+
+  def granted_followers
+    followers
+      .joins(profile: {grants: :edge})
+      .where('edges_grants.path @> ?', @resource.path)
   end
 end
