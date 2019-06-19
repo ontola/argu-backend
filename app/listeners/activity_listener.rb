@@ -16,14 +16,10 @@ class ActivityListener
   # Dynamically declare the listener publication methods
   # @see {ApplicationService#commit} and {ApplicationService#signal_base} for the naming.
   %w[create destroy trash untrash update publish].each do |method|
-    %w[pro_argument con_argument blog_post motion question topic].each do |model|
+    %w[pro_argument con_argument blog_post comment motion question topic].each do |model|
       define_method "#{method}_#{model}_successful" do |resource|
         create_activity(resource, resource.parent, method)
       end
-    end
-
-    define_method "#{method}_comment_successful" do |resource|
-      create_activity(resource, resource.subscribable, method)
     end
 
     define_method "#{method}_decision_successful" do |resource|

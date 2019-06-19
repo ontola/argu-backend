@@ -16,4 +16,9 @@ class CreateComment < PublishedCreateService
       .vote_cache
       .by_parent(parent.default_vote_event)
   end
+
+  def object_attributes=(obj)
+    obj.creator ||= resource.creator
+    obj.publisher ||= resource.publisher
+  end
 end

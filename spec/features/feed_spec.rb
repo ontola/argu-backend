@@ -11,9 +11,9 @@ RSpec.feature 'Feed', type: :feature do
 
   scenario 'Guest views feed of forum' do
     motion
-    # 1x Motion#create, 1x Motion#publish, 6x Argument#create, 2x Argument#trash,
-    # 3x Vote#create, 3x HiddenVote#create, 6x Comment#create
-    expect(Activity.count).to eq(22)
+    # 1x Motion#create, 1x Motion#publish, 6x Argument#create, 6x Argument#publish, 2x Argument#trash,
+    # 3x Vote#create, 3x HiddenVote#create, 6x Comment#create, 6x Comment#publish
+    expect(Activity.count).to eq(34)
     Activity.order(:created_at).each_with_index do |activity, i|
       activity.update(created_at: i.minutes.ago)
     end

@@ -21,6 +21,7 @@ RSpec.describe 'Arguments', type: :request do
     expect_success
     invalid_update_params[:pro_argument].each_value { |v| expect(response.body).to(include(v)) }
   end
+  let(:create_differences) { {"#{subject.class}.count" => 1, 'Activity.count' => 2} }
 
   context 'with motion parent' do
     subject { argument }

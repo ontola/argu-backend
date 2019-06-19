@@ -19,11 +19,13 @@ module Argu
           service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           reset_publication(service.resource.publications.last)
-          CreateArgument
-            .new(service.resource,
-                 attributes: attributes_for(:argument),
-                 options: service_options)
-            .commit
+          service = CreateArgument.new(
+            service.resource,
+            attributes: attributes_for(:argument),
+            options: service_options
+          )
+          service.commit
+          reset_publication(service.resource.publications.last)
         end
         3.times do
           service = CreateMotion
@@ -63,14 +65,15 @@ module Argu
       end
 
       # Adds 3 pro (1 trashed) and 3 con (1 trashed) arguments to the resource
-      def with_arguments
+      def with_arguments # rubocop:disable Metrics/AbcSize
         [true, false].each do |pro|
           3.times do
-            CreateArgument
-              .new(@resource,
-                   attributes: attributes_for(:argument).merge(pro: pro),
-                   options: service_options)
-              .commit
+            service = CreateArgument
+                        .new(@resource,
+                             attributes: attributes_for(:argument).merge(pro: pro),
+                             options: service_options)
+            service.commit
+            reset_publication(service.resource.publications.last)
           end
           create_redis_vote(Argument.last, :pro)
           TrashService.new(Argument.last, options: service_options).commit
@@ -95,11 +98,12 @@ module Argu
       # Adds 3 comments (1 trashed) to the resource
       def with_comments
         3.times do
-          CreateComment
-            .new(@resource,
-                 attributes: attributes_for(:comment),
-                 options: service_options)
-            .commit
+          service = CreateComment
+                      .new(@resource,
+                           attributes: attributes_for(:comment),
+                           options: service_options)
+          service.commit
+          reset_publication(service.resource.publications.last)
         end
         TrashService.new(Comment.last, options: service_options).commit
       end
@@ -170,11 +174,13 @@ module Argu
       end
 
       def create_comment_for_vote(vote)
-        CreateComment.new(
+        service = CreateComment.new(
           vote.voteable,
           attributes: {content: 'opinion'},
           options: {creator: vote.creator, publisher: vote.publisher}
-        ).commit
+        )
+        service.commit
+        reset_publication(service.resource.publications.last)
       end
 
       def create_redis_vote(edge, side)

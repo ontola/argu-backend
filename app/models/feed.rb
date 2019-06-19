@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Feed
-  PUBLISH_KEYS = %w[question.publish motion.publish topic.publish argument.create pro_argument.create
-                    con_argument.create blog_post.publish decision.approved decision.rejected comment.create].freeze
+  PUBLISH_KEYS = %w[question.publish motion.publish topic.publish argument.publish pro_argument.publish
+                    con_argument.publish blog_post.publish decision.approved decision.rejected comment.publish].freeze
   TRASH_KEYS = %w[question.trash motion.trash topic.trash argument.trash pro_argument.trash
                   con_argument.trash blog_post.trash decision.trash comment.trash].freeze
   RELEVANT_KEYS = PUBLISH_KEYS + TRASH_KEYS

@@ -72,11 +72,11 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
 
   test 'should send multiple notifications as a digest' do
     create_list :notification, 10,
-                activity: argument.activities.first,
+                activity: argument.activities.last,
                 root_id: argument.root_id,
                 user: follower
     create_list :notification, 10,
-                activity: argument.activities.first,
+                activity: argument.activities.last,
                 root_id: argument.root_id,
                 user: follower,
                 created_at: Time.current - 1.day
@@ -119,13 +119,13 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
     [Time.current, 1.day.ago].each do |created_at|
       create(:notification,
              created_at: created_at,
-             activity: argument.activities.first,
+             activity: argument.activities.last,
              root_id: argument.root_id,
              user: user)
     end
 
     create(:follow,
-           followable: argument.activities.first.recipient,
+           followable: argument.activities.last.recipient,
            follower: user)
   end
 

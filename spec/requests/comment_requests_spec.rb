@@ -28,6 +28,7 @@ RSpec.describe 'Comments', type: :request do
   let(:authorized_user_update) { subject.publisher }
   let(:authorized_user_trash) { staff }
   let(:update_failed_path) { redirect_url }
+  let(:create_differences) { {"#{subject.class}.count" => 1, 'Activity.count' => 2} }
 
   context 'with comment parent' do
     subject { nested_comment }

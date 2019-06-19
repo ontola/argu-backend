@@ -25,9 +25,13 @@ en:
       untrash: "%{owner} untrashed %{subject}"
       update: "%{owner} updated %{subject}"
     arguments:
-      create: "%{owner} posted a %{type} %{side} %{parent}"
+      create: "%{owner} posted a draft %{type} %{side} %{parent}"
       pro: "in favour of"
       con: "against"
+    pro_arguments:
+      create: "%{owner} posted a draft %{type} %{side} %{parent}"
+    con_arguments:
+      create: "%{owner} posted a draft %{type} %{side} %{parent}"
     blog_posts:
       create: "%{owner} posted a draft %{type} in %{parent}"
     motions:
@@ -35,7 +39,8 @@ en:
     questions:
       create: "%{owner} posted a draft %{type} in %{parent}"
     comments:
-      create: "%{owner} replied to %{parent}"
+      create: "%{owner} posted a draft %{type} to %{parent}"
+      publish: "%{owner} replied to %{parent}"
       destroy: "%{owner} deleted a %{type} for %{parent}"
       trash: "%{owner} trashed a %{subject} for %{parent}"
       untrash: "%{owner} untrashed a %{subject} for %{parent}"

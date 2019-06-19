@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Comment < Edge
+  enhance ActivePublishable
   enhance Convertible
 
   include Edgeable::Content

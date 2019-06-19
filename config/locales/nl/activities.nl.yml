@@ -25,9 +25,13 @@ nl:
       untrash: "%{owner} heeft %{subject} teruggeplaatst"
       update: "%{owner} heeft %{subject} gewijzigd"
     arguments:
-      create: "%{owner} heeft een %{type} geplaatst %{side} %{parent}"
+      create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
       pro: "vóór"
       con: "tegen"
+    pro_arguments:
+      create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
+    con_arguments:
+      create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
     blog_posts:
       create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
     motions:
@@ -35,7 +39,8 @@ nl:
     questions:
       create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
     comments:
-      create: "%{owner} heeft gereageerd op %{parent}"
+      create: "%{owner} heeft concept %{type} geplaatst op %{parent}"
+      publish: "%{owner} heeft gereageerd op %{parent}"
       destroy: "%{owner} heeft een %{type} op %{parent} permanent verwijderd"
       trash: "%{owner} heeft een %{subject} op %{parent} verwijderd"
       untrash: "%{owner} heeft een %{subject} op %{parent} teruggeplaatst"
