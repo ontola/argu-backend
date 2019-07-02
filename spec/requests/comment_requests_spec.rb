@@ -14,7 +14,7 @@ RSpec.describe 'Comments', type: :request do
   end
   let(:expect_post_create_failed_html) do
     expect(response).to(
-      redirect_to("#{subject_parent.iri.path}?#{{comment: {body: '1', parent_id: nil}}.to_param}")
+      redirect_to("#{subject_parent.iri.path}?#{{comment: {body: nil, parent_id: nil}}.to_param}")
     )
   end
   let(:expect_delete_trash_html) { expect(response).to redirect_to(redirect_url) }
@@ -34,7 +34,7 @@ RSpec.describe 'Comments', type: :request do
     let(:index_path) { collection_iri(subject.parent_comment, table_sym).path }
     let(:expect_post_create_failed_html) do
       expect(response).to(
-        redirect_to("#{subject_parent.iri.path}?#{{comment: {body: '1', parent_id: comment.uuid}}.to_param}")
+        redirect_to("#{subject_parent.iri.path}?#{{comment: {body: nil, parent_id: comment.uuid}}.to_param}")
       )
     end
     let(:expect_get_index_guest_html) { expect_get_index_html }

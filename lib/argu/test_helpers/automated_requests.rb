@@ -195,7 +195,7 @@ module Argu
           let(:required_keys) { %w[title] }
           let(:create_params) { {class_sym => attributes_for(class_sym)} }
           let(:non_existing_create_params) { create_params }
-          let(:invalid_create_params) { {class_sym => Hash[required_keys.map { |k| [k, '1'] }]} }
+          let(:invalid_create_params) { {class_sym => Hash[required_keys.map { |k| [k, ' '] }]} }
           let(:update_params) { {class_sym => Hash[required_keys.map { |k| [k, '12345'] }]} }
           let(:invalid_update_params) { invalid_create_params }
           let(:move_params) { {move: {new_parent_id: other_page_forum.uuid}} }

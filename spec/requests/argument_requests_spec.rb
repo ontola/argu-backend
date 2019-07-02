@@ -11,7 +11,7 @@ RSpec.describe 'Arguments', type: :request do
   let(:class_sym) { :pro_argument }
   let(:table_sym) { :pro_arguments }
   let(:update_params) { {pro_argument: Hash[required_keys.map { |k| [k, '12345'] }]} }
-  let(:invalid_update_params) { {pro_argument: Hash[required_keys.map { |k| [k, '1'] }]} }
+  let(:invalid_update_params) { {pro_argument: Hash[required_keys.map { |k| [k, ' '] }]} }
   let(:expect_put_update_html) do
     expect(response).to redirect_to(updated_resource_path)
     subject.reload

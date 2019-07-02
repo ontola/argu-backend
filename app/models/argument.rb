@@ -15,7 +15,7 @@ class Argument < Edge
   include VotesHelper
 
   validates :description, presence: false, length: {maximum: 5000}
-  validates :display_name, presence: true, length: {minimum: 5, maximum: 75}
+  validates :display_name, presence: true, length: {maximum: 75}
   validates :creator, presence: true
 
   convertible comments: %i[activities]
