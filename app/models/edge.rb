@@ -144,7 +144,9 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     association(:children).reader(*args)
   end
 
-  def children_count(association)
+  def children_count(association, include_descendants = false)
+    return descendants.active.where(owner_type: association.to_s.classify).count if include_descendants
+
     children_counts[association.to_s].to_i || 0
   end
 

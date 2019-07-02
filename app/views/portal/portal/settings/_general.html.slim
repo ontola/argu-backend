@@ -66,6 +66,6 @@ h2= t('portal.forums')
           /td= l f.updated_at, format: :short
           td= f.follows_count || '-'
           td= f.children_count(:questions) || '-'
-          td= f.children_count(:motions) || '-'
+          td= f.children_count(:motions, true) || '-'
           td= link_to t('portal.settings.title'), edit_iri(f), data: {turbolinks: false}
   =paginate @forums, param_name: :forums_page

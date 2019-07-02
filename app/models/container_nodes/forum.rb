@@ -27,11 +27,6 @@ class Forum < ContainerNode
       .order('edges.follows_count DESC')
   }
 
-  def children_count(association)
-    return super unless association.to_sym == :motions
-    descendants.active.where(owner_type: 'Motion').count
-  end
-
   def default_decision_user
     nil
   end
