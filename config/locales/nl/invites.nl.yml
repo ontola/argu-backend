@@ -11,3 +11,5 @@ nl:
         description: "Voer een of meerdere email adressen in"
       group_id:
         label: "Aan welke groep wil je deze mensen toevoegen?"
+      redirect_url:
+        label: "Landingspagina voor de uitgenodigde"

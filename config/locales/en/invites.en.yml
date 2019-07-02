@@ -11,3 +11,5 @@ en:
         description: "Enter one or multiple email addresses"
       group_id:
         label: "To which group do you want to add these people?"
+      redirect_url:
+        label: "Landingspage for the invitee"

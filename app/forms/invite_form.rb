@@ -15,6 +15,7 @@ class InviteForm < ApplicationForm
         }
       },
       {group_id: {sh_in: -> { target.edge.root.groups.map(&:iri) }}},
+      {redirect_url: {default_value: -> { target.edge.iri.to_s }}},
       :hidden,
       :footer
     ]
@@ -29,8 +30,7 @@ class InviteForm < ApplicationForm
         root_id: {
           default_value: -> { target.edge.root_id }
         }
-      },
-      {redirect_url: {default_value: -> { target.edge.iri }}}
+      }
     ]
   )
 
