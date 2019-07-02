@@ -13,7 +13,7 @@ module ConfirmedDestroyable
         url: -> { resource.iri(destroy: true) },
         http_method: :delete,
         form: Request::ConfirmedDestroyRequestForm,
-        iri_path: -> { expand_uri_template(:delete_iri, parent_iri: resource.iri_path) }
+        root_relative_iri: -> { expand_uri_template(:delete_iri, parent_iri: split_iri_segments(resource.iri_path)) }
       )
     end
   end

@@ -34,8 +34,12 @@ class DirectMessage
     "#{resource.identifier}_dm"
   end
 
+  def canonical_iri_opts
+    {parent_iri: split_iri_segments(resource.iri_path)}
+  end
+
   def iri_opts
-    {parent_iri: resource.iri_path}
+    {parent_iri: split_iri_segments(resource.iri_path)}
   end
 
   def email=(value)

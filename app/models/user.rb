@@ -12,6 +12,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include RedirectHelper
   include Shortnameable
   include Uuidable
+  include CacheableIri
 
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place

@@ -13,7 +13,7 @@ module Widgetable
     end
 
     def cache_iri_path!
-      previous = iri_cache || iri_path_from_template
+      previous = iri_cache || root_relative_iri(cache: true).to_s
       super
       widgets.find_each { |w| w.replace_path(previous, iri_path) } if previous != iri_cache
       iri_cache

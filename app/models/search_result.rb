@@ -15,33 +15,33 @@ class SearchResult
 
   def iri_opts
     opts = {}
-    opts[:parent_iri] = parent&.iri_path if parent&.iri_path
+    opts[:parent_iri] = split_iri_segments(parent&.iri_path) if parent&.iri_path
     opts[:page] = page if page
     opts[:q] = q if q
     opts
   end
 
-  def iri_path(_opts = {})
-    super.gsub('%20', '+')
+  def root_relative_iri(_opts = {})
+    RDF::URI(super.to_s.gsub('%20', '+'))
   end
 
   def first
-    return nil if search_result.total_pages == 1
-    RDF::DynamicURI(path_with_hostname(iri_path(page: nil)))
+    return nil if search_result.total_pages <= 1
+    RDF::DynamicURI(path_with_hostname(iri_path(page: 1)))
   end
 
   def last
-    return nil if search_result.total_pages == 1
+    return nil if search_result.total_pages <= 1
     RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.total_pages)))
   end
 
   def prev
-    return nil if search_result.total_pages == 1
+    return nil if search_result.total_pages <= 1
     RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.previous_page)))
   end
 
   def next
-    return nil if search_result.total_pages == 1 || search_result.next_page.nil?
+    return nil if search_result.total_pages <= 1 || search_result.next_page.nil?
     RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.next_page)))
   end
 

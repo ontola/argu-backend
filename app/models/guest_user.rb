@@ -22,8 +22,6 @@ class GuestUser < User
     {id: id}
   end
 
-  def iri_path_from_cache(_opts = {}); end
-
   def favorite_forum_ids
     []
   end

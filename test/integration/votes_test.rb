@@ -83,7 +83,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'guest should get show vote by parent' do
     get root_path
     guest_vote
-    get expand_uri_template(:vote_iri, parent_iri: vote_event.iri.path),
+    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
         headers: argu_headers(accept: :json_api)
     assert_response 200
 
@@ -96,7 +96,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     guest_vote2
     other_guest_vote
-    get expand_uri_template(:vote_iri, parent_iri: vote_event.iri.path),
+    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
         headers: argu_headers(accept: :json_api)
     assert_response 404
   end
@@ -169,7 +169,8 @@ class VotesTest < ActionDispatch::IntegrationTest
          },
          headers: argu_headers(accept: :json_api)
     assert_response 403
-    get expand_uri_template(:vote_iri, parent_iri: closed_question_motion.default_vote_event.iri.path),
+    parent_segments = split_iri_segments(closed_question_motion.default_vote_event.iri.path)
+    get expand_uri_template(:vote_iri, parent_iri: parent_segments),
         headers: argu_headers(accept: :json_api)
     assert_response 404
   end
@@ -177,7 +178,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'guest should post update vote' do
     get root_path
     guest_vote
-    get expand_uri_template(:vote_iri, parent_iri: vote_event.iri.path),
+    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
         headers: argu_headers(accept: :json_api)
     assert_response 200
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:yes]
@@ -188,7 +189,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
     assert_response 201
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
-    get expand_uri_template(:vote_iri, parent_iri: vote_event.iri.path),
+    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
         headers: argu_headers(accept: :json_api)
     assert_response 200
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
@@ -198,7 +199,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     argument_guest_vote
     assert_difference('Argu::Redis.keys("temporary.*").count', -1) do
-      delete expand_uri_template(:vote_iri, parent_iri: argument.iri.path, for: :pro)
+      delete expand_uri_template(:vote_iri, parent_iri: split_iri_segments(argument.iri.path), for: :pro)
       assert_response 303
     end
   end
@@ -212,7 +213,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in unconfirmed
     get root_path
     unconfirmed_vote
-    get expand_uri_template(:vote_iri, parent_iri: vote_event.iri.path),
+    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
         headers: argu_headers(accept: :json_api)
     assert_response 200
 
@@ -226,7 +227,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     other_guest_vote
     unconfirmed_vote2
-    get expand_uri_template(:vote_iri, parent_iri: vote_event.iri.path),
+    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
         headers: argu_headers(accept: :json_api)
     assert_response 404
   end

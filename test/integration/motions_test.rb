@@ -62,10 +62,9 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in guest_user, Doorkeeper::Application.argu_front_end
     guest_vote
     get subject, headers: argu_headers(accept: :nq)
+    parent_segments = split_iri_segments(subject.default_vote_event.iri.path)
     expect(response.body).to(
-      include(
-        "<#{expand_uri_template(:vote_iri, parent_iri: subject.default_vote_event.iri.path, with_hostname: true)}>"
-      )
+      include("<#{expand_uri_template(:vote_iri, parent_iri: parent_segments, with_hostname: true)}>")
     )
   end
 
@@ -75,10 +74,9 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in other_guest_user, Doorkeeper::Application.argu_front_end
     guest_vote
     get subject, headers: argu_headers(accept: :nq)
+    parent_segments = split_iri_segments(subject.default_vote_event.iri.path)
     expect(response.body).not_to(
-      include(
-        "<#{expand_uri_template(:vote_iri, parent_iri: subject.default_vote_event.iri.path, with_hostname: true)}>"
-      )
+      include("<#{expand_uri_template(:vote_iri, parent_iri: parent_segments, with_hostname: true)}>")
     )
   end
 

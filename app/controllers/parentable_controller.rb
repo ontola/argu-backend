@@ -31,11 +31,11 @@ class ParentableController < AuthorizedController
     @parent_resource ||= linked_record_parent || resource_by_id_parent || super
   end
 
-  def redirect_edge_parent_requests
+  def redirect_edge_parent_requests # rubocop:disable Metrics/AbcSize
     return unless parent_resource == Edge
     path = expand_uri_template(
       "#{controller_name}_collection_iri",
-      parent_iri: parent_resource.iri
+      parent_iri: split_iri_segments(parent_resource.iri)
     )
     redirect_to request.original_url.gsub(URI(request.original_url).path, path)
   end

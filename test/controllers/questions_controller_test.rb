@@ -37,7 +37,7 @@ class QuestionsControllerTest < ActionController::TestCase
     expect_relationship('partOf')
 
     expect_default_view
-    expect_included(collection_iri(holland, :questions, page: 1, page_size: 10))
+    expect_included(collection_iri(holland, :questions, page: 1))
     expect_included(holland.questions.untrashed.map(&:iri))
     expect_not_included(holland.questions.trashed.map(&:iri))
   end

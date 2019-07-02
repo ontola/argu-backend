@@ -38,7 +38,7 @@ module Users
 
     def update_template_opts
       {
-        parent_iri: resource.iri_path,
+        parent_iri: split_iri_segments(resource.iri_path),
         reset_password_token: resource.reset_password_token
       }
     end

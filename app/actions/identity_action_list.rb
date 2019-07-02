@@ -25,7 +25,7 @@ class IdentityActionList < ApplicationActionList
         )
       )
     },
-    iri_path: lambda {
+    root_relative_iri: lambda {
       expand_uri_template(:user_connect, id: resource.connecting_user.to_param, token: resource.jwt_token)
     }
   )

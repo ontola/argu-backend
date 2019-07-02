@@ -27,7 +27,11 @@ class Invite < VirtualResource
     "invite_#{edge.id}"
   end
 
+  def canonical_iri_opts
+    {parent_iri: split_iri_segments(edge&.iri_path)}
+  end
+
   def iri_opts
-    {parent_iri: edge&.iri_path}
+    {parent_iri: split_iri_segments(edge&.iri_path)}
   end
 end

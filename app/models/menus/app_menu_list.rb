@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AppMenuList < ApplicationMenuList
+class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   include SettingsHelper
   include LanguageHelper
 
@@ -15,8 +15,12 @@ class AppMenuList < ApplicationMenuList
            link_opts: -> { {triggerClass: 'navbar-item', defaultAction: user_url(user)} },
            menus: -> { user_menu_items }
 
-  def iri_path(opts = {})
-    expand_uri_template('menu_lists_iri', opts.merge(parent_iri: '/apex'))
+  def iri_opts
+    {parent_iri: 'apex'}
+  end
+
+  def iri_template
+    uri_template('menu_lists_iri')
   end
 
   private

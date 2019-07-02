@@ -4,7 +4,7 @@ class PageActionList < EdgeActionList
   private
 
   def create_iri_path
-    expand_uri_template(:new_iri, parent_iri: '/o')
+    expand_uri_template(:new_iri, parent_iri: 'o')
   end
 
   def create_label

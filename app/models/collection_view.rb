@@ -2,19 +2,6 @@
 
 class CollectionView < LinkedRails::Collection::View
   include IRITemplateHelper
-  delegate :iri_template_name, to: :collection
-
-  def canonical_iri(opts = {})
-    RDF::URI(path_with_hostname(canonical_iri_path(opts)))
-  end
-
-  def canonical_iri_path(opts = {})
-    collection.unfiltered.canonical_iri_template.expand(iri_opts.merge(opts))
-  end
-
-  def iri(opts = {})
-    super(opts.except(:parent_iri))
-  end
 
   def members
     m = super

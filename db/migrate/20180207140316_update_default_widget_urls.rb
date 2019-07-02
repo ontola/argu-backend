@@ -6,7 +6,7 @@ class UpdateDefaultWidgetUrls < ActiveRecord::Migration[5.1]
       w.update(
         resource_iri: expand_uri_template(
           'motions_collection_iri',
-          parent_iri: w.owner.iri(only_path: true),
+          parent_iri: split_iri_segments(w.owner.iri(only_path: true)),
           type: :paginated
         )
       )
@@ -15,7 +15,7 @@ class UpdateDefaultWidgetUrls < ActiveRecord::Migration[5.1]
       w.update(
         resource_iri: expand_uri_template(
           'questions_collection_iri',
-          parent_iri: w.owner.iri(only_path: true),
+          parent_iri: split_iri_segments(w.owner.iri(only_path: true)),
           type: :paginated
         )
       )

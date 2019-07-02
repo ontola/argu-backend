@@ -15,7 +15,7 @@ module Trashable
         url: -> { resource.iri },
         http_method: :delete,
         form: Request::TrashRequestForm,
-        iri_path: -> { expand_uri_template(:trash_iri, parent_iri: resource.iri_path) }
+        root_relative_iri: -> { expand_uri_template(:trash_iri, parent_iri: split_iri_segments(resource.iri_path)) }
       )
 
       has_action(
@@ -26,7 +26,7 @@ module Trashable
         url: -> { untrash_iri(resource) },
         http_method: :put,
         form: Request::UntrashRequestForm,
-        iri_path: -> { expand_uri_template(:untrash_iri, parent_iri: resource.iri_path) }
+        root_relative_iri: -> { expand_uri_template(:untrash_iri, parent_iri: split_iri_segments(resource.iri_path)) }
       )
     end
   end

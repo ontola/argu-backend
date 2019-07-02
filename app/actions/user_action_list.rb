@@ -11,7 +11,9 @@ class UserActionList < ApplicationActionList
     url: -> { resource.iri },
     http_method: :put,
     form: ::Users::PrivacyForm,
-    iri_path: -> { expand_uri_template(:edit_iri, form: :privacy, parent_iri: resource.iri_path) }
+    root_relative_iri: lambda do
+      expand_uri_template(:edit_iri, form: :privacy, parent_iri: split_iri_segments(resource.iri_path))
+    end
   )
 
   has_action(
@@ -22,7 +24,9 @@ class UserActionList < ApplicationActionList
     url: -> { resource.iri },
     http_method: :put,
     form: ::Users::NotificationsForm,
-    iri_path: -> { expand_uri_template(:edit_iri, form: :notifications, parent_iri: resource.iri_path) }
+    root_relative_iri: lambda do
+      expand_uri_template(:edit_iri, form: :notifications, parent_iri: split_iri_segments(resource.iri_path))
+    end
   )
 
   has_action(
@@ -33,7 +37,9 @@ class UserActionList < ApplicationActionList
     url: -> { resource.iri },
     http_method: :put,
     form: ::Users::AuthenticationForm,
-    iri_path: -> { expand_uri_template(:edit_iri, form: :authentication, parent_iri: resource.iri_path) }
+    root_relative_iri: lambda do
+      expand_uri_template(:edit_iri, form: :authentication, parent_iri: split_iri_segments(resource.iri_path))
+    end
   )
 
   has_action(
@@ -44,7 +50,7 @@ class UserActionList < ApplicationActionList
     url: -> { iri_from_template(:setup_iri) },
     http_method: :put,
     form: ::Users::SetupForm,
-    iri_path: -> { expand_uri_template(:setup_iri) }
+    root_relative_iri: -> { expand_uri_template(:setup_iri) }
   )
 
   has_action(
@@ -56,6 +62,6 @@ class UserActionList < ApplicationActionList
     url: -> { iri_from_template(:languages_iri) },
     http_method: :put,
     form: ::Users::LanguageForm,
-    iri_path: -> { expand_uri_template(:languages_iri) }
+    root_relative_iri: -> { expand_uri_template(:languages_iri) }
   )
 end

@@ -35,14 +35,6 @@ class LinkedRecord < Edge
     self
   end
 
-  def canonical_iri_path(opts = {})
-    super.sub('/od/', '/lr/')
-  end
-
-  def iri_path(opts = {})
-    super.sub('/od/', '/lr/')
-  end
-
   def iri_opts
     @iri_opts ||= {container_node_id: parent.url, linked_record_id: deku_id}
   end
@@ -69,6 +61,14 @@ class LinkedRecord < Edge
     record = new_for_forum(organization_shortname, forum_shortname, id)
     ActsAsTenant.with_tenant(record.root) { record.save! }
     record
+  end
+
+  def root_relative_canonical_iri(opts = {})
+    RDF::URI(super.to_s.sub('/od/', '/lr/'))
+  end
+
+  def root_relative_iri(opts = {})
+    RDF::URI(super.to_s.sub('/od/', '/lr/'))
   end
 
   def to_param

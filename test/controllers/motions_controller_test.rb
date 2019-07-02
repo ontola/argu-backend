@@ -50,7 +50,7 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('partOf')
 
     expect_default_view
-    expect_included(collection_iri(holland, :motions, page: 1, page_size: 30))
+    expect_included(collection_iri(holland, :motions, page: 1))
     expect_included(holland.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.map(&:iri))
     expect_not_included(holland.motions.trashed.map(&:iri))
@@ -94,7 +94,7 @@ class MotionsControllerTest < ActionController::TestCase
     filtered_collections = expect_relationship('defaultFilteredCollections', parent: vote_event_votes, size: 3)
     expect_included(filtered_collections['data'].map { |d| d['id'] })
 
-    expect_included(collection_iri(question, :motions, page: 1, page_size: 30))
+    expect_included(collection_iri(question, :motions, page: 1))
     expect_included(question.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.trashed.map(&:iri))
     expect_included(question.motions.untrashed.map { |m| m.default_vote_event.iri })

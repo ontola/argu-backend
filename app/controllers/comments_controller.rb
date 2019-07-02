@@ -95,7 +95,7 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
     else
       expand_uri_template(
         'comments_collection_iri',
-        parent_iri: authenticated_resource.parent.iri.path,
+        parent_iri: split_iri_segments(authenticated_resource.parent.iri.path),
         with_hostname: true
       )
     end

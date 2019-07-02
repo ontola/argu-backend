@@ -11,6 +11,10 @@ class Move < VirtualResource
 
   attr_accessor :edge, :new_parent
 
+  def canonical_iri_opts
+    iri_opts
+  end
+
   def edgeable_record
     @edgeable_record ||= edge
   end
@@ -36,7 +40,7 @@ class Move < VirtualResource
   end
 
   def iri_opts
-    {parent_iri: edge&.iri_path}
+    {parent_iri: split_iri_segments(edge&.iri_path)}
   end
 
   def save

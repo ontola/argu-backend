@@ -73,10 +73,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     'anonymous'
   end
 
-  def iri_path_from_template(_opts = {})
-    ''
-  end
-
   def iri(_opts = {})
     @iri ||=
       if RequestStore.store[:old_frontend]

@@ -234,7 +234,9 @@ module Argu
           end
           let(:non_existing_edit_path) { edit_iri(non_existing_show_path, root: argu).path }
           let(:non_existing_shift_path) { new_iri(non_existing_move_path, root: argu).path }
-          let(:non_existing_move_path) { expand_uri_template(:moves_iri, parent_iri: non_existing_show_path) }
+          let(:non_existing_move_path) do
+            expand_uri_template(:moves_iri, parent_iri: split_iri_segments(non_existing_show_path))
+          end
           let(:non_existing_update_path) { non_existing_show_path }
           let(:non_existing_delete_path) { delete_iri(non_existing_show_path, root: argu).path }
           let(:non_existing_trash_path) { non_existing_show_path }

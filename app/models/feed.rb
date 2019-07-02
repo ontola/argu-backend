@@ -29,25 +29,25 @@ class Feed
       end
   end
 
-  def canonical_iri_path(opts = {})
+  def root_relative_canonical_iri(opts = {})
     case parent
     when User
-      ''
+      RDF::URI('')
     when Profile
-      parent&.profileable&.canonical_iri_path(opts.merge(root: root.url))
+      parent&.profileable&.root_relative_canonical_iri(opts.merge(root: root.url))
     else
-      parent&.canonical_iri_path(opts)
+      parent&.root_relative_canonical_iri(opts)
     end
   end
 
-  def iri_path(opts = {})
+  def root_relative_iri(opts = {})
     case parent
     when User
-      '/argu/staff'
+      RDF::URI('/argu/staff')
     when Profile
-      parent&.profileable&.iri_path(opts.merge(root: root.url))
+      parent&.profileable&.root_relative_iri(opts.merge(root: root.url))
     else
-      parent&.iri_path(opts)
+      parent&.root_relative_iri(opts)
     end
   end
 

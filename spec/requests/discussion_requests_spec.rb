@@ -13,6 +13,7 @@ RSpec.describe 'Discussions', type: :request do
 
   context 'for page' do
     let(:subject_parent) { argu }
+    let(:non_existing_index_path) { '/non_existing/discussions' }
     it_behaves_like 'get index', skip: %i[unauthorized]
   end
 

@@ -15,6 +15,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Parentable
   include Shortnameable
   include Uuidable
+  include CacheableIri
 
   enhance LinkedRails::Enhancements::Actionable
   enhance Grantable
@@ -136,8 +137,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   alias user publisher
   alias profile creator
 
-  def canonical_iri_path(_opts = {})
-    expand_uri_template(:edges_iri, id: uuid)
+  def root_relative_canonical_iri(_opts = {})
+    RDF::URI(expand_uri_template(:edges_iri, id: uuid))
   end
 
   def children(*args)

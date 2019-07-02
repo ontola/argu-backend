@@ -7,7 +7,7 @@ class CustomMenuItem < ApplicationRecord
     {
       id: id,
       menu_type: menu_type,
-      parent_iri: resource.iri_path
+      parent_iri: split_iri_segments(resource.iri_path)
     }
   end
 
