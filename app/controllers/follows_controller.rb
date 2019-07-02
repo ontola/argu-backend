@@ -14,6 +14,7 @@ class FollowsController < AuthorizedController
       .menu_sequence
       .members
       .map(&method(:menu_item_image_triple))
+      .compact
       .append(menu_item_image_triple(authenticated_resource.followable.menu(:follow, user_context)))
   end
 
@@ -68,6 +69,8 @@ class FollowsController < AuthorizedController
   end
 
   def menu_item_image_triple(menu_item)
+    return if menu_item.image.blank?
+
     [
       menu_item.iri,
       NS::SCHEMA[:image],

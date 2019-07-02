@@ -13,6 +13,7 @@ en:
       no_social_media: "Sharing on social media is only possible in public forums"
       not_published: "You can only share published items"
       follow: "Notifications"
+      follow_header: "Receive notifications for:"
       never: 'Never receive notifications'
       reactions: 'All items'
       news: 'Important items'

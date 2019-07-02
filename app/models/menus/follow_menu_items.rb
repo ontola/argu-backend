@@ -25,7 +25,10 @@ module Menus
 
     def follow_menu_items(follow_types)
       follow_types ||= %i[news reactions never]
-      follow_types.map { |type| follow_menu_item(type, follow, follow_type) }
+      items = follow_types.map { |type| follow_menu_item(type, follow, follow_type) }
+      return items unless afe_request?
+
+      [menu_item(:follow_header, item_type: 'notice')] + items
     end
 
     def follow_menu_item(type, follow, follow_type)
