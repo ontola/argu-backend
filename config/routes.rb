@@ -300,7 +300,14 @@ Rails.application.routes.draw do
     post :index, action: :index, on: :collection
   end
   resources :groups, path: 'g', only: %i[show create new index] do
-    resources :group_memberships, only: %i[new create index]
+    collection do
+      concerns :nested_actionable
+    end
+    resources :group_memberships, only: %i[new create index] do
+      collection do
+        concerns :nested_actionable
+      end
+    end
     include_route_concerns
     get :settings, on: :member
     get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'

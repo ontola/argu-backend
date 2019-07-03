@@ -81,6 +81,10 @@ class Group < ApplicationRecord
       @public ||= Group.find_by(id: Group::PUBLIC_ID)
     end
 
+    def root_collection_opts
+      super.merge(parent: ActsAsTenant.current_tenant)
+    end
+
     def staff
       @staff ||= Group.find_by(id: Group::STAFF_ID)
     end
