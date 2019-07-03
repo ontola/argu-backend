@@ -270,7 +270,7 @@ module Argu
         end
 
         def define_spec_objects
-          let(:argu) { Page.find_via_shortname('argu') }
+          let(:argu) { Page.argu }
           let(:other_page) { Page.find_via_shortname('other_page') }
           let(:other_page_forum) { Forum.find_via_shortname('other_page_forum') }
 

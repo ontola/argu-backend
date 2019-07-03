@@ -112,6 +112,6 @@ class UsersController < AuthorizedController
   end
 
   def user_root_fallback
-    resource_by_id&.edges&.last&.root || Page.find_via_shortname('argu')
+    resource_by_id&.edges&.last&.root || Page.argu
   end
 end

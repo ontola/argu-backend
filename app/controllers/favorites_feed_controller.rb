@@ -20,7 +20,7 @@ class FavoritesFeedController < FeedController
     collection = super
     collection.instance_variable_set(
       :@iri,
-      RDF::URI(DynamicUriHelper.rewrite(path_with_hostname('/staff/feed'), argu_page))
+      RDF::URI(DynamicUriHelper.rewrite(path_with_hostname('/staff/feed'), Page.argu))
     )
     collection
   end
@@ -31,9 +31,5 @@ class FavoritesFeedController < FeedController
     super
     ActsAsTenant.current_tenant = nil
     @tree_root = nil
-  end
-
-  def argu_page
-    @argu_page ||= Page.find_via_shortname('argu')
   end
 end

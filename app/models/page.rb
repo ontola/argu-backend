@@ -122,6 +122,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   class << self
+    def argu
+      find_via_shortname('argu')
+    end
+
     def preview_includes
       super + %i[default_profile_photo]
     end
