@@ -74,9 +74,12 @@ class Activity < PublicActivity::Activity
 
   def touch_edges
     return if %w[destroy trash untrash].include?(action) || silent
-    # rubocop:disable Rails/SkipsModelValidations
-    trackable.touch(:last_activity_at) if trackable&.persisted?
-    recipient.touch(:last_activity_at) if recipient&.persisted? && !%w[Vote].include?(trackable_type)
-    # rubocop:enable Rails/SkipsModelValidations
+    touch_edge(trackable) if trackable&.persisted?
+    touch_edge(recipient) if recipient&.persisted? && !%w[Vote].include?(trackable_type)
+  end
+
+  def touch_edge(edge)
+    edge.last_activity_at = Time.current
+    edge.save(touch: false)
   end
 end

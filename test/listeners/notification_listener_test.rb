@@ -55,6 +55,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
   end
 
   test 'service should create notifications for new argument' do
+    updated_at = motion.updated_at
     last_activity_at = motion.last_activity_at
     assert_difference('Argument.count' => 1, 'Activity.count' => 1, 'Notification.count' => 1) do
       ActsAsTenant.with_tenant(motion.root) do
@@ -66,6 +67,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
         service.commit
       end
     end
+    assert_equal updated_at, motion.reload.updated_at
     assert_not_equal last_activity_at, motion.reload.last_activity_at
   end
 
