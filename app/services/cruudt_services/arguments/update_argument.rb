@@ -10,6 +10,6 @@ class UpdateArgument < EdgeableUpdateService
   end
 
   def object_attributes=(obj)
-    obj.creator ||= resource.creator
+    obj.creator ||= resource.creator if obj.respond_to?(:creator)
   end
 end
