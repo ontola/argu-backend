@@ -12,7 +12,7 @@ class Publication < ApplicationRecord
 
   validates :creator, :publisher, :channel, presence: true
 
-  attribute :draft, :boolean, default: false
+  attribute :draft, :boolean
   enum follow_type: {news: 2, reactions: 3}
 
   alias edgeable_record publishable
@@ -23,6 +23,12 @@ class Publication < ApplicationRecord
     publishable.publish!
     return unless publishable.is_published
     publish("publish_#{publishable.model_name.singular}_successful", publishable)
+  end
+
+  def draft
+    return attributes['draft'] unless attributes['draft'].nil?
+
+    !publishable&.is_published? || false
   end
 
   def publish_time_lapsed?
