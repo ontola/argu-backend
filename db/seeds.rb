@@ -126,7 +126,7 @@ ActiveRecord::Base.transaction do
   forum.grants.new(group: public_group, grant_set: GrantSet.participator)
   forum.save!
 
-  g = forum.grants.new(group: staff_group, grant_set: GrantSet.staff)
+  g = argu.grants.new(group: staff_group, grant_set: GrantSet.staff)
   g.save!(validate: false)
 
   forum.publish!
