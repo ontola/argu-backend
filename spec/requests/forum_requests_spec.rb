@@ -31,6 +31,14 @@ RSpec.describe 'Forums', type: :request do
   let(:update_differences) { {'Forum.count' => 0} }
   let(:destroy_differences) { {'Forum.count' => -1} }
 
+  def self.new_formats
+    %i[html].concat((RDF_CONTENT_TYPES - %i[ttl n3]).shuffle[1..2])
+  end
+
+  def self.edit_formats
+    new_formats
+  end
+
   context 'with public forum' do
     subject { freetown }
     it_behaves_like 'requests', skip: %i[trash untrash index show_unauthorized]
