@@ -18,6 +18,7 @@ class PagePolicy < EdgePolicy
   def permitted_attribute_names # rubocop:disable Metrics/AbcSize
     attributes = super
     attributes.concat %i[display_name about visibility url]
+    attributes.concat %i[primary_container_node_id] if record.container_nodes.any?
     attributes.concat %i[last_accepted] unless record.persisted? && record.last_accepted?
     attributes.append(shortname_attributes: %i[shortname]) if new_record?
     attributes.append(profile_attributes: ProfilePolicy

@@ -149,6 +149,7 @@ freetown = ActsAsTenant.with_tenant(page) do
     public_grant: 'initiator'
   )
 end
+page.update(primary_container_node: freetown)
 holland = ActsAsTenant.with_tenant(page) do
   FactorySeeder.create_forum(
     :populated_forum,

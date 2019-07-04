@@ -56,6 +56,11 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
   property :iri_prefix, :string, NS::ARGU[:iriPrefix]
   property :use_new_frontend, :boolean, NS::ARGU[:useNewFrontend], default: false
+  property :primary_container_node_id, :linked_edge_id, NS::FOAF[:homepage]
+  belongs_to :primary_container_node,
+             foreign_key_property: :primary_container_node_id,
+             class_name: 'Forum',
+             dependent: false
 
   def build_profile(*options)
     super(*options) if profile.nil?

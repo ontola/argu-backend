@@ -70,6 +70,7 @@ en:
       postal_code: "Postal code"
       require_location: "Location is required"
       current_password: "Current password"
+      primary_container_node_id: "Homepage"
       profile_photo: "Profile photo"
       remember_me: "Remember data"
       remove_cover_photo: "Remove cover photo"

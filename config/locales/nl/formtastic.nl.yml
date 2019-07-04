@@ -70,6 +70,7 @@ nl:
       postal_code: "Postcode"
       require_location: "Locatie is verplicht"
       current_password: "Huidig wachtwoord"
+      primary_container_node_id: "Homepage"
       profile_photo: "Profielfoto"
       remember_me: "Gegevens onthouden"
       remove_cover_photo: "Omslagfoto verwijderen"

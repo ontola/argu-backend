@@ -5,6 +5,13 @@ class PageForm < ApplicationForm
     {profile: {if: -> { target.new_record? }}},
     :visibility,
     :url,
+    {
+      primary_container_node_id: {
+        datatype: NS::XSD[:string],
+        max_count: 1,
+        sh_in: -> { target.container_nodes.map(&:iri) }
+      }
+    },
     :last_accepted,
     :theme
   ]

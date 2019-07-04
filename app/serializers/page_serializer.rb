@@ -10,7 +10,7 @@ class PageSerializer < RecordSerializer
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
   attribute :last_accepted, predicate: NS::ARGU[:lastAccepted], datatype: NS::XSD[:boolean], if: :never
 
-  has_one :primary_container_node, predicate: NS::FOAF[:homepage], unless: :service_scope?
+  belongs_to :primary_container_node, predicate: NS::FOAF[:homepage], unless: :service_scope?
   has_one :profile, predicate: NS::ARGU[:profile]
 
   enum :visibility
@@ -27,10 +27,6 @@ class PageSerializer < RecordSerializer
 
   def object
     super.is_a?(Profile) ? super.profileable : super
-  end
-
-  def primary_container_node
-    EdgePolicy::Scope.new(scope, object.container_nodes).resolve.first if ActsAsTenant.current_tenant
   end
 
   def default_profile_photo
