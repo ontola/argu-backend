@@ -30,8 +30,9 @@ class SubMenusController < ParentableController
     ]
   end
 
-  def menu
+  def menu # rubocop:disable Metrics/AbcSize
     if parent_resource.present?
+      raise(ActiveRecord::RecordNotFound) unless parent_resource.is_a?(LinkedRails::Menus::List)
       parent_resource.menus(user_context).menu(menu_id)
     else
       AppMenuList.new(resource: current_user, user_context: user_context).menu(menu_id)
