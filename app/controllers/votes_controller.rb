@@ -208,18 +208,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     data
   end
 
-  def counter_cache_delta
-    return super unless authenticated_resource.parent.is_a?(Argument)
-    [
-      [
-        authenticated_resource.parent_iri,
-        NS::ARGU[:votesProCount],
-        authenticated_resource.parent.reload.children_count(:votes_pro),
-        delta_iri(:replace)
-      ]
-    ]
-  end
-
   def opinion_delta(data, voteable) # rubocop:disable Metrics/AbcSize
     [
       voteable.action(:update_opinion, user_context),

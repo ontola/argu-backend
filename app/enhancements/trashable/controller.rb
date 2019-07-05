@@ -37,7 +37,7 @@ module Trashable
     end
 
     def trash_meta
-      invalidate_parent_collections
+      remove_resource_delta(current_resource)
     end
 
     def trash_success
@@ -61,7 +61,7 @@ module Trashable
     end
 
     def untrash_meta
-      invalidate_parent_collections
+      add_resource_delta(current_resource)
     end
 
     def untrash_success

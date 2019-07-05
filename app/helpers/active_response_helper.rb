@@ -3,19 +3,6 @@
 module ActiveResponseHelper
   private
 
-  def action_delta(data, delta, object, action, opts = {})
-    [NS::SCHEMA[:potentialAction], opts[:include_favorite] ? NS::ONTOLA[:favoriteAction] : nil].compact.each do |pred|
-      [object, opts[:include_parent] ? object.parent : nil].compact.each do |obj|
-        data << [
-          obj.iri,
-          pred,
-          ::RDF::DynamicURI("#{object.iri}/actions/#{action}"),
-          delta_iri(delta)
-        ]
-      end
-    end
-  end
-
   def active_response_success_message # rubocop:disable Metrics/AbcSize
     if current_resource.try(:is_publishable?) && (action_name == 'create' || resource_was_published?)
       if current_resource.try(:argu_publication)&.publish_time_lapsed?
@@ -29,7 +16,7 @@ module ActiveResponseHelper
   end
 
   def create_meta
-    invalidate_parent_collections
+    add_resource_delta(current_resource)
   end
 
   def create_success_location
@@ -53,12 +40,8 @@ module ActiveResponseHelper
     }
   end
 
-  def delta_iri(delta)
-    %i[remove replace invalidate].include?(delta) ? NS::ONTOLA[delta] : NS::LL[delta]
-  end
-
   def destroy_meta
-    invalidate_parent_collections
+    remove_resource_delta(current_resource)
   end
 
   def destroy_success_location
@@ -76,10 +59,6 @@ module ActiveResponseHelper
   def index_success_options_rdf
     skip_verify_policy_scoped(true) if index_collection_or_view.present?
     super
-  end
-
-  def invalidate_resource(resource)
-    [resource.iri, LinkedRails::NS::SP[:Variable], LinkedRails::NS::SP[:Variable], NS::ONTOLA[:invalidate]]
   end
 
   def redirect_location
@@ -147,15 +126,6 @@ module ActiveResponseHelper
       model_name => current_resource,
       resource: current_resource
     }
-  end
-
-  def update_meta
-    meta = super
-    if resource_was_published?
-      meta.concat(invalidate_parent_collections)
-      meta << invalidate_resource(current_resource)
-    end
-    meta
   end
 
   def update_success_location

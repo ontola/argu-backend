@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   include ApplicationHelper
   include AnalyticsHelper
   include ActorsHelper
+  include DeltaHelper
   include NestedResourceHelper
 
   helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context, :tree_root
