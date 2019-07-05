@@ -133,9 +133,9 @@ module NamesHelper
     elsif [item.class, item].include?(Argument)
       argument_icon
     elsif [item.class, item].include?(ProArgument)
-      'minus'
-    elsif [item.class, item].include?(ConArgument)
       'plus'
+    elsif [item.class, item].include?(ConArgument)
+      'minus'
     elsif [item.class, item].include?(Comment)
       'comment'
     elsif [item.class, item].include?(Topic)
