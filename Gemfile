@@ -117,6 +117,7 @@ gem 'devise-multi_email', '~> 2.0.1', git: 'https://github.com/allenwq/devise-mu
 gem 'omniauth', '~> 1.6.1'
 gem 'omniauth-oauth2', '~> 1.4.0'
 gem 'omniauth-facebook', '~> 5.0.0'
+gem 'omniauth-rails_csrf_protection'
 gem 'koala', '~> 2.5.0'
 gem 'omniauth-twitter', '~> 1.2.0'
 # gem 'omniauth-openid'

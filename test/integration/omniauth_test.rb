@@ -269,7 +269,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   end
 
   def visit_facebook_oauth_path(opts) # rubocop:disable Metrics/AbcSize
-    get user_facebook_omniauth_authorize_path(r: opts[:r])
+    post user_facebook_omniauth_authorize_path(r: opts[:r])
     assert_redirected_to user_facebook_omniauth_callback_path
 
     guest_vote

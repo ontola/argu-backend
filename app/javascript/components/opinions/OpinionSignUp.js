@@ -56,7 +56,7 @@ export const OpinionSignUp = React.createClass({
                 <button type="submit" disabled={submitting}>{I18n.t('opinions.form.continue')}</button>
                 <div className="margin-bottom">
                     <label className="inline">{I18n.t('opinions.form.or')}&nbsp;</label>
-                    <a className="btn btn--facebook" data-turbolinks="false" href={this.props.facebookUrl}>
+                    <a className="btn btn--facebook" data-method="post" data-turbolinks="false" href={this.props.facebookUrl}>
                         <span className="fa fa-facebook" />
                         <span className="icon-left">{I18n.t('opinions.form.facebook_login')}</span>
                     </a>
