@@ -21,8 +21,8 @@ module Argu
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"
 
-    OmniAuth.config.full_host = lambda { |env|
-      env['HTTP_X_ARGU_BACK'] == 'true' ? Rails.application.config.frontend_url : Rails.application.config.origin
+    OmniAuth.config.full_host = lambda { |_env|
+      RequestStore.store[:old_frontend] ? Rails.application.config.origin : Rails.application.config.frontend_url
     }
 
     config.autoload_paths += %w[lib]
