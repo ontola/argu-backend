@@ -23,8 +23,6 @@ class Activity < PublicActivity::Activity
              foreign_key: :recipient_edge_id
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
-  attr_accessor :silent
-
   validates :key, presence: true
   validates :trackable, :recipient, :owner,
             presence: {on: :create, if: proc { |a| a.action != 'destroy' }}
@@ -71,7 +69,7 @@ class Activity < PublicActivity::Activity
   end
 
   def touch_edges
-    return if %w[destroy trash untrash].include?(action) || silent
+    return if %w[destroy trash untrash].include?(action)
     touch_edge(trackable) if trackable&.persisted?
     touch_edge(recipient) if recipient&.persisted? && !%w[Vote].include?(trackable_type)
   end

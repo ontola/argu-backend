@@ -71,19 +71,4 @@ class NotificationListenerTest < ActiveSupport::TestCase
     assert_equal updated_at, motion.reload.updated_at
     assert_not_equal last_activity_at, motion.reload.last_activity_at
   end
-
-  test 'silent service should not create notifications for new argument' do
-    last_activity_at = motion.last_activity_at
-    assert_difference('Argument.count' => 1, 'Notification.count' => 0) do
-      ActsAsTenant.with_tenant(motion.root) do
-        service = CreateArgument.new(
-          motion,
-          attributes: {title: 'argument title'},
-          options: {publisher: user, creator: user.profile, silent: true}
-        )
-        service.commit
-      end
-    end
-    assert_equal last_activity_at, motion.last_activity_at
-  end
 end
