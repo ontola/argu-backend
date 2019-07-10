@@ -135,6 +135,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     return unless resource.is_a?(Edge)
     prepare_argu_publication_attributes
     prepare_placement_attributes
+    prepare_media_object_attributes
     @attributes.permit! if @attributes.is_a?(ActionController::Parameters)
   end
 
@@ -145,6 +146,16 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
 
   def prepare_placement_attributes
     @attributes[:custom_placement_attributes]&.merge!(creator: @options[:creator], publisher: @options[:publisher])
+  end
+
+  def prepare_media_object_attributes
+    %i[cover_photo profile_photo].select { |type| @attributes.key?(:"default_#{type}_attributes") }.each do |type|
+      @attributes[:"default_#{type}_attributes"]&.reverse_merge!(
+        creator: @options[:creator],
+        publisher: @options[:publisher],
+        used_as: type
+      )
+    end
   end
 
   def signal_base

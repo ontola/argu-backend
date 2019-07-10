@@ -33,6 +33,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
       'motion_with_cover.n3',
       "<#{NS::LL['blobs/randomString']}>" => fixture_file_upload('cover_photo.jpg', 'image/jpg')
     )
+    assert File.exist?(Motion.last.default_cover_photo.content.cover.file.path)
   end
 
   test 'post create motion with attachments as nquads' do

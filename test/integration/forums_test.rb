@@ -228,6 +228,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_equal 'new bio', holland.bio
     assert_equal 'profile_photo.png', holland.default_profile_photo.content_identifier
     assert_equal 'cover_photo.jpg', holland.default_cover_photo.content_identifier
+    assert File.exist?(holland.default_cover_photo.content.cover.file.path)
     assert_equal 2, holland.media_objects.count
   end
 

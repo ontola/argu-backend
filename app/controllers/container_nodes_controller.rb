@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContainerNodesController < EdgeableController # rubocop:disable Metrics/ClassLength
+class ContainerNodesController < EdgeableController
   prepend_before_action :redirect_generic_shortnames, only: :show
   prepend_before_action :set_layout
   skip_before_action :authorize_action, only: %i[discover index]
@@ -75,13 +75,6 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
 
   def model_name
     controller_classes.map { |klass| klass.name.underscore }.detect { |k| params.key?(k) }
-  end
-
-  def permit_params
-    attrs = policy(resource_by_id || new_resource_from_params).permitted_attributes
-    pm = params.require(model_name).permit(*attrs).to_h
-    merge_photo_params(pm)
-    pm
   end
 
   def photo_params_nesting_path

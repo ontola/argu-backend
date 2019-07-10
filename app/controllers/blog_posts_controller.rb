@@ -15,12 +15,6 @@ class BlogPostsController < EdgeableController
     {blog_posts: parent_resource!.blog_posts.active.page(params[:page]).reorder(created_at: :desc)}
   end
 
-  def permit_params
-    pm = super
-    merge_photo_params(pm)
-    pm
-  end
-
   def show_success_html
     @comment_edges = authenticated_resource.filtered_threads(show_trashed?, params[:comments_page])
     respond_with_resource(show_success_options)
