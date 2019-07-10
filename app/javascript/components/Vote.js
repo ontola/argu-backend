@@ -90,6 +90,7 @@ export const VoteButtons = React.createClass({
         percent: React.PropTypes.object,
         r: React.PropTypes.string,
         submittingVote: React.PropTypes.string,
+        upvoteOnly: React.PropTypes.bool,
         vote_path: React.PropTypes.string
     },
 
@@ -113,7 +114,8 @@ export const VoteButtons = React.createClass({
     },
 
     render () {
-        const voteButtons = ['pro', 'neutral' , 'con']
+        const sides = this.props.upvoteOnly ? ['pro'] : ['pro', 'neutral' , 'con'];
+        const voteButtons = sides
             .map((side, i) => {
                 return <VoteButton actor={this.props.actor}
                                    clickHandler={this.props[`${side}Handler`]}

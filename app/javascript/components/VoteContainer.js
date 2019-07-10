@@ -36,6 +36,7 @@ export const VoteContainer = React.createClass({
         r: React.PropTypes.string,
         selectedArguments: React.PropTypes.array,
         totalVotes: React.PropTypes.number,
+        upvoteOnly: React.PropTypes.bool,
         userRegistrationUrl: React.PropTypes.string,
         vote_path: React.PropTypes.string
     },
@@ -81,7 +82,7 @@ export const VoteContainer = React.createClass({
                                         conHandler={this.conHandler}
                                         neutralHandler={this.neutralHandler}
                                         proHandler={this.proHandler}/>;
-        if (this.props.totalVotes > 0) {
+        if (this.props.totalVotes > 0 && !this.props.upvoteOnly) {
             voteResultsComponent = <VoteResults
             {...this.state}
             alwaysExpanded={(this.props.buttonsType === 'big')}

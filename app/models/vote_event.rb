@@ -8,6 +8,7 @@ class VoteEvent < Edge # rubocop:disable Metrics/ClassLength
   counter_cache true
   parentable :motion, :linked_record
   property :starts_at, :datetime, NS::SCHEMA[:startDate]
+  property :upvote_only, :boolean, NS::ARGU[:upvoteOnly]
 
   def con_count
     children_count(:votes_con)

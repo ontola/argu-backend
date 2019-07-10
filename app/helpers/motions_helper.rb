@@ -51,6 +51,7 @@ module MotionsHelper
       userRegistrationUrl: user_registration_url(r: request.original_fullpath),
       selectedArguments: vote&.argument_ids || [],
       totalVotes: motion.default_vote_event.total_vote_count,
+      upvoteOnly: motion.default_vote_event.upvote_only,
       vote_path: collection_iri(motion.default_vote_event, :votes)
     }.merge(opts))
   end
