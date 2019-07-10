@@ -102,6 +102,9 @@ nl:
         public_grant: "Gebruikers zonder groep mogen"
         discoverable: "Toon in overzichten"
         shortname: "URL"
+      blog:
+        bio: "Doel van blog"
+        bio_long: "Meer informatie"
       group:
         name: "Naam"
         name_singular: "Naam enkelvoud"
@@ -140,6 +143,9 @@ nl:
       forum:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
         bio_long: "Hier kan je verder toelichten over het forum en jouw organisatie. Je kunt hier markdown gebruiken."
+      blog:
+        bio: "Zet in één zin neer waar het blog voor dient. Deze tekst verschijnt onder de naam van het blog. Maximaal 80 karakters."
+        bio_long: "Hier kan je verder toelichten over het blog. Je kunt hier markdown gebruiken."
       user:
         shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
       shortname:

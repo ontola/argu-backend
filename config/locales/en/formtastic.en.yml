@@ -102,6 +102,9 @@ en:
         public_grant: "Everybody may"
         discoverable: "List in overviews"
         shortname: "URL"
+      blog:
+        bio: "Blog goal"
+        bio_long: "More information"
       group:
         name: "Name"
         name_singular: "Name singular"
@@ -140,6 +143,8 @@ en:
         content: "Explain why this is an important argument. Use sources to underpin your argument."
       forum:
         bio: "Summarize in one sentence what function the forum has. This text will appear under the name of the forum. There's a maximum of 80 characters."
+      blog:
+        bio: "Summarize in one sentence what function the blog has. This text will appear under the name of the forum. There's a maximum of 80 characters."
       user:
         shortname: "No spaces. Only letters, numbers and _. Start with a letter."
       shortname:
