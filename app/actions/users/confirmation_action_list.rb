@@ -2,22 +2,15 @@
 
 module Users
   class ConfirmationActionList < ApplicationActionList
-    def create_on_collection?
-      false
-    end
-
-    def create_include_resource?
-      true
-    end
-
-    def create_policy; end
-
-    def create_url
-      iri_from_template(:confirmations_iri)
-    end
-
-    def create_label
-      I18n.t('devise.confirmations.edit.header')
-    end
+    has_action(
+      :create,
+      create_options.merge(
+        collection: false,
+        include_resource: true,
+        label: -> { I18n.t('devise.confirmations.edit.header') },
+        policy: nil,
+        url: -> { iri_from_template(:confirmations_iri) }
+      )
+    )
   end
 end

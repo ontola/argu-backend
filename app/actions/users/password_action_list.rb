@@ -2,49 +2,33 @@
 
 module Users
   class PasswordActionList < ApplicationActionList
-    def create_description
-      I18n.t('devise.passwords.new.helper')
-    end
+    has_action(
+      :create,
+      create_options.merge(
+        collection: false,
+        description: -> { I18n.t('devise.passwords.new.helper') },
+        include_resource: true,
+        label: -> { I18n.t('devise.passwords.new.header') },
+        policy: nil,
+        url: -> { iri_from_template(:passwords_iri) }
+      )
+    )
 
-    def create_include_resource?
-      true
-    end
-
-    def create_on_collection?
-      false
-    end
-
-    def create_policy; end
-
-    def create_url
-      iri_from_template(:passwords_iri)
-    end
-
-    def create_label
-      I18n.t('devise.passwords.new.header')
-    end
-
-    def update_include_resource?
-      true
-    end
-
-    def update_label
-      I18n.t("devise.passwords.#{resource.user.encrypted_password.present? ? :edit : :set}.header")
-    end
-
-    def update_iri_path
-      expand_uri_template(:edit_iri, update_template_opts)
-    end
+    has_action(
+      :update,
+      update_options.merge(
+        include_resource: true,
+        label: -> { I18n.t("devise.passwords.#{resource.user.encrypted_password.present? ? :edit : :set}.header") },
+        root_relative_iri: -> { expand_uri_template(:edit_iri, update_template_opts) },
+        url: -> { iri_from_template(:passwords_iri) }
+      )
+    )
 
     def update_template_opts
       {
         parent_iri: split_iri_segments(resource.iri_path),
         reset_password_token: resource.reset_password_token
       }
-    end
-
-    def update_url
-      iri_from_template(:passwords_iri)
     end
   end
 end

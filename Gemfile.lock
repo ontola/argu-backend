@@ -44,7 +44,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 047cb9696bc3e1d30e848f5339bc9d51f6b77c35
+  revision: e5caeed3b50147ace4165ced86fc3d32cfa13289
   specs:
     linked_rails (0.0.0)
       active_response
@@ -423,7 +423,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2018.0812)
     mimemagic (0.3.3)
-    mini_mime (1.0.1)
+    mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.10.3)
     minitest-bang (1.0.4)
@@ -451,7 +451,7 @@ GEM
       connection_pool (~> 2.2)
     net_http_timeout_errors (0.3.0)
     netrc (0.11.0)
-    nio4r (2.3.1)
+    nio4r (2.4.0)
     nokogiri (1.10.3)
       mini_portile2 (~> 2.4.0)
     oauth (0.5.4)

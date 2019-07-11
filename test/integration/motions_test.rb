@@ -109,6 +109,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
   test 'initiator should post create motion with latlon' do
     sign_in initiator
 
+    Thread.current[:mock_searchkick] = false
+
     general_create(
       results: {should: true, response: 302},
       parent: :freetown,
@@ -122,6 +124,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
       },
       differences: [['Motion', 1], ['Placement', 1], ['Place', 1], ['Activity', 2]]
     )
+
+    Thread.current[:mock_searchkick] = true
 
     assert_equal 1, Motion.last.placements.first.lat
     assert_equal 1, Motion.last.placements.first.lon

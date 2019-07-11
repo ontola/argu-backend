@@ -5,6 +5,7 @@ module Users
     include LinkedRails::Model
     enhance LinkedRails::Enhancements::Actionable
     enhance LinkedRails::Enhancements::Createable, except: %i[Controller]
+    enhance LinkedRails::Enhancements::Updateable, except: %i[Controller Serializer]
     attr_accessor :email
 
     def iri_template_name
