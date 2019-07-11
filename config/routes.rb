@@ -348,7 +348,7 @@ Rails.application.routes.draw do
   %i[blogs forums open_data_portals].each do |container_node|
     resources container_node, only: %i[index new create]
   end
-  resources :container_nodes, only: %i[index]
+  resources :container_nodes, only: %i[index new]
   resources :container_nodes,
             only: %i[show],
             path: '' do

@@ -28,14 +28,7 @@ class PageMenuList < ApplicationMenuList
       :new_component,
       policy: :create_child?,
       policy_arguments: %i[forums],
-      menus: %i[forum blog open_data_portal].map do |container_type|
-        menu_item(
-          :"new_#{container_type}",
-          href: new_iri(resource, container_type.to_s.pluralize),
-          policy: :create_child?,
-          policy_arguments: [container_type]
-        )
-      end
+      href: RDF::DynamicURI(path_with_hostname(expand_uri_template(:new_container_node_iri, display: :grid)))
     )
   end
 

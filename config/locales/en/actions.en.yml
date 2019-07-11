@@ -37,6 +37,9 @@ en:
     terms:
       create:
         submit: "Accept"
+    blogs:
+      create:
+        description: "Keep people informed through blog posts."
     conversions:
       convert:
         label: "Convert"
@@ -50,6 +53,9 @@ en:
     email_addresses:
       create:
         submit: "Add"
+    forums:
+      create:
+        description: "A place for different kind of discussions."
     pro_arguments:
       create_vote:
         submit: "Upvote"

@@ -1,4 +1,6 @@
 nl:
+  container_nodes:
+    type_new: "Nieuwe pagina"
   blogs:
     type: "Blog"
     type_new: "Nieuw blog"

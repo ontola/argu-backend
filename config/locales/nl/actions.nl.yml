@@ -37,6 +37,9 @@ nl:
     terms:
       create:
         submit: "Accepteer"
+    blogs:
+      create:
+        description: "Hou mensen op de hoogte via blog posts."
     conversions:
       create:
         label: "Omzetten"
@@ -50,6 +53,9 @@ nl:
     email_addresses:
       create:
         submit: "Voeg toe"
+    forums:
+      create:
+        description: "Een verzamelplaats voor verschillende soorten discussies."
     pro_arguments:
       create_vote:
         submit: "Upvote"
