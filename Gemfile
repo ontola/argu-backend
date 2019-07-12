@@ -31,6 +31,7 @@ gem 'rdf-rdfa'
 gem 'rdf-rdfxml', git: 'https://github.com/ruby-rdf/rdf-rdfxml', ref: 'dd99a73'
 gem 'ebnf', git: 'https://github.com/dryruby/ebnf', ref: '3631273'
 gem 'erubis'
+gem 'puma', platform: :ruby
 gem 'sequenced'
 gem 'spreadsheet'
 
@@ -177,13 +178,11 @@ group :development do
   gem 'web-console', '~> 3.5.1'
   gem 'active_record_query_trace'
   gem 'bullet'
-  gem 'puma', platform: :ruby
 end
 
 group :production, :staging do
   gem 'libv8', '~> 3.16.14.13'
   gem 'therubyracer', '~> 0.12.3'
-  gem 'unicorn', '5.0.1'
 end
 
 group :staging, :development do
