@@ -117,7 +117,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
 
-  def parent_from_params(root = tree_root, opts = params)
+  def parent_from_params(root = tree_root, opts = params_for_parent)
     return super unless default_vote_event_id?
     super(root, opts.except(:vote_event_id))&.default_vote_event if parent_resource_key(opts.except(:vote_event_id))
   end

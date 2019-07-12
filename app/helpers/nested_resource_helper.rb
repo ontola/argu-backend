@@ -7,8 +7,12 @@
 module NestedResourceHelper
   include IRIHelper
 
+  def params_for_parent
+    params.dup
+  end
+
   def parent_resource
-    @parent_resource ||= parent_from_params(tree_root, params)
+    @parent_resource ||= parent_from_params(tree_root, params_for_parent)
   end
 
   def parent_resource!
@@ -30,7 +34,7 @@ module NestedResourceHelper
   # @note This method knows {Shortnameable}
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
   # @return [ApplicationRecord, nil] A resource model if found
-  def parent_from_params(root = tree_root, opts = params)
+  def parent_from_params(root = tree_root, opts = params_for_parent)
     return root if parent_resource_param(opts).blank? && opts[:collection].blank?
 
     opts = opts.dup
