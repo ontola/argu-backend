@@ -93,10 +93,6 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     @_permit_params
   end
 
-  def preview_includes
-    super - %w[navigations_menu settings_men]
-  end
-
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = ActsAsTenant.without_tenant { Shortname.find_resource(params[:id]) }
