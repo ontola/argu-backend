@@ -273,6 +273,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def search_data
+    preload_properties(true)
     data = serializable_hash.except(:id)
     data[:published_branch] = !has_unpublished_ancestors?
     data
