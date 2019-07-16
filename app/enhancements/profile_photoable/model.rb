@@ -19,6 +19,7 @@ module ProfilePhotoable
 
       accepts_nested_attributes_for :default_profile_photo,
                                     allow_destroy: true,
+                                    update_only: true,
                                     reject_if: proc { |attrs|
                                       attrs['content'].blank? &&
                                         attrs['content_cache'].blank? &&
