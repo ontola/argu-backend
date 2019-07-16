@@ -55,6 +55,6 @@ class MediaObjectSerializer < RecordSerializer
   private
 
   def url_for_version(version)
-    RDF::DynamicURI("#{object.iri}/content/#{version}")
+    RDF::DynamicURI(path_with_hostname("#{object.root_relative_iri}/content/#{version}"))
   end
 end
