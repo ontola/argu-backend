@@ -74,4 +74,10 @@ class Placement < ApplicationRecord
       errors.add(:postal_code, I18n.t('placements.postal_with_county_not_found')) if place.nil?
     end
   end
+
+  class << self
+    def preview_includes
+      super + [:place]
+    end
+  end
 end
