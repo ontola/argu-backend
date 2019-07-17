@@ -15,6 +15,7 @@ class IdentityActionList < ApplicationActionList
     label: -> { I18n.t('users.connect.title') },
     http_method: :post,
     form: Users::ConnectForm,
+    include_resource: true,
     url: lambda {
       RDF::DynamicURI(
         expand_uri_template(

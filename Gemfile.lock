@@ -44,7 +44,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 66666401019201aa8d92db3ae7f3db936a6362ec
+  revision: c1f8f9c99a267556c29cbd62f363ece1be057c3f
   specs:
     linked_rails (0.0.0)
       active_response
@@ -117,9 +117,9 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    active_model_serializers (0.10.9)
-      actionpack (>= 4.1, < 6)
-      activemodel (>= 4.1, < 6)
+    active_model_serializers (0.10.10)
+      actionpack (>= 4.1, < 6.1)
+      activemodel (>= 4.1, < 6.1)
       case_transform (>= 0.2)
       jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     active_record_query_trace (1.5.4)

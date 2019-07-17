@@ -42,7 +42,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   test 'guest should sign in with facebook' do
     facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
     visit_facebook_oauth_path(
-      expected_r: root_path,
+      expected_r: "/#{argu.url}/",
       favorites: 1,
       votes: 1
     )
@@ -51,7 +51,23 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   test 'guest should sign in with facebook with r' do
     facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
 
-    visit_facebook_oauth_path(expected_r: user_path(user), favorites: 1, r: user_path(user), votes: 1)
+    visit_facebook_oauth_path(
+      expected_r: "/#{argu.url}#{user_path(user)}",
+      favorites: 1,
+      r: user_path(user),
+      votes: 1
+    )
+  end
+
+  test 'guest should sign in with facebook with tenantized r' do
+    facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
+
+    visit_facebook_oauth_path(
+      expected_r: "/#{argu.url}#{user_path(user)}",
+      favorites: 1,
+      r: "/#{argu.url}#{user_path(user)}",
+      votes: 1
+    )
   end
 
   test 'guest should sign in with facebook with encoded r' do
@@ -65,7 +81,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   test 'guest should sign in with facebook with wrong r' do
     facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
 
-    visit_facebook_oauth_path(favorites: 1, votes: 1, r: 'https://evil.co', expected_r: root_path)
+    visit_facebook_oauth_path(favorites: 1, votes: 1, r: 'https://evil.co', expected_r: "/#{argu.url}/")
   end
 
   ####################################
@@ -142,7 +158,14 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   test 'guest should sign up with facebook' do
     facebook_mock
 
-    visit_facebook_oauth_path(emails: 1, expected_r: setup_users_path, favorites: 1, identities: 1, users: 1, votes: 1)
+    visit_facebook_oauth_path(
+      emails: 1,
+      expected_r: "/#{argu.url}#{setup_users_path}",
+      favorites: 1,
+      identities: 1,
+      users: 1,
+      votes: 1
+    )
 
     assert User.last.confirmed?
     assert User.last.accepted_terms?
@@ -168,10 +191,10 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     visit_facebook_oauth_path(
       emails: 1,
-      expected_r: user_path(user),
+      expected_r: "/#{argu.url}/#{user_path(user)}",
       favorites: 1,
       identities: 1,
-      r: user_path(user),
+      r: "/#{argu.url}/#{user_path(user)}",
       users: 1,
       votes: 1
     )
@@ -182,7 +205,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     visit_facebook_oauth_path(
       emails: 1,
-      expected_r: setup_users_path,
+      expected_r: "/#{argu.url}#{setup_users_path}",
       favorites: 1,
       identities: 1,
       r: 'https://evil.co',

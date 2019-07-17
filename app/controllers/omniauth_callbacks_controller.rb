@@ -68,7 +68,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
     if current_user.guest?
       raise NotImplementedError unless identity_from_response.save
       token = identity_token(identity_from_response)
-      redirect_to connect_user_path(user, token: token, r: r_param(request.env))
+      redirect_to RDF::DynamicURI(path_with_hostname(connect_user_path(user, token: token, r: r_param(request.env))))
     elsif current_user == user
       create_identity_for_current_user
     else
@@ -133,6 +133,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
         after_sign_in_path_for(resource_or_scope)
       end
     schedule_redis_resource_worker(GuestUser.new(id: session_id), resource_or_scope, redirect)
-    redirect_to redirect
+    redirect_to dynamic_iri(redirect)
+  end
+
+  def dynamic_iri(url)
+    uri = URI.parse(url)
+    relative = uri.nil? || uri.hostname.nil?
+    RDF::DynamicURI(DynamicUriHelper.revert(relative ? path_with_hostname(url) : url))
   end
 end
