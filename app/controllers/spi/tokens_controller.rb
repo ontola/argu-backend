@@ -13,6 +13,7 @@ module SPI
 
     include Argu::Controller::ErrorHandling::DataStructures
     include Argu::Controller::ErrorHandling::Helpers
+    include LinkedRails::Helpers::OntolaActionsHelper
 
     def create
       return if doorkeeper_authorize! :service
@@ -46,8 +47,23 @@ module SPI
     end
 
     def handle(e)
-      render status: error_status(e), json: json_error_hash(e).to_json
+      user = user_without_password(e)
+      if user
+        token = user.send(:set_reset_password_token)
+        SendEmailWorker.perform_async(:set_password, user.id, passwordToken: token)
+        body = {code: :NO_PASSWORD}
+      else
+        body = json_error_hash(e)
+      end
+
+      render status: error_status(e), json: body.to_json
       nil
+    end
+
+    def user_without_password(e)
+      return false unless e.is_a?(Argu::Errors::WrongPassword) && params[:password].blank?
+      user = EmailAddress.find_by(email: params[:username])&.user
+      user unless user&.has_password?
     end
 
     def previous_token
