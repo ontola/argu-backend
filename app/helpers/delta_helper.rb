@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module DeltaHelper
+  include LinkedRails::Helpers::DeltaHelper
+
   def action_delta(data, delta, object, action, opts = {})
     [NS::SCHEMA[:potentialAction], opts[:include_favorite] ? NS::ONTOLA[:favoriteAction] : nil].compact.each do |pred|
       [object, opts[:include_parent] ? object.parent : nil].compact.each do |obj|
@@ -12,13 +14,6 @@ module DeltaHelper
         ]
       end
     end
-  end
-
-  def add_resource_delta(resource)
-    invalidate_parent_collections_delta(resource) + counter_cache_delta(resource) + [
-      invalidate_resource_delta(resource),
-      resource.try(:is_publishable?) ? invalidate_resource_delta(resource.action(:publish)) : nil
-    ].compact
   end
 
   def counter_cache_delta(resource)
@@ -40,29 +35,19 @@ module DeltaHelper
     ]
   end
 
-  def delta_iri(delta)
-    %i[remove replace invalidate].include?(delta) ? NS::ONTOLA[delta] : NS::LL[delta]
-  end
-
-  def invalidate_collection_delta(collection)
-    [LinkedRails::NS::SP[:Variable], NS::ONTOLA[:baseCollection], collection.iri, NS::ONTOLA[:invalidate]]
-  end
-
-  def invalidate_parent_collections_delta(resource)
-    resource.parent_collections.map(&method(:invalidate_collection_delta))
-  end
-
-  def invalidate_resource_delta(resource)
-    [resource.iri, LinkedRails::NS::SP[:Variable], LinkedRails::NS::SP[:Variable], NS::ONTOLA[:invalidate]]
-  end
-
   def n3_delta(array)
     repo = RDF::Repository.new
     array.each { |nquad| repo << nquad }
     repo.dump(:nquads)
   end
 
-  def remove_resource_delta(resource)
-    invalidate_parent_collections_delta(resource) + counter_cache_delta(resource)
+  def resource_added_delta(resource)
+    delta = super + counter_cache_delta(resource)
+    delta << invalidate_resource_delta(resource.action(:publish)) if resource.try(:is_publishable?)
+    delta
+  end
+
+  def resource_removed_delta(resource)
+    super + counter_cache_delta(resource)
   end
 end

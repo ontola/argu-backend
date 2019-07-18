@@ -23,7 +23,7 @@ class EdgeableController < ServiceController
   end
 
   def create_meta
-    !resource.is_publishable? || resource.is_published? ? add_resource_delta(resource) : []
+    !resource.is_publishable? || resource.is_published? ? resource_added_delta(resource) : []
   end
 
   def default_publication_follow_type

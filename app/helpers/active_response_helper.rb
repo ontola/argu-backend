@@ -15,10 +15,6 @@ module ActiveResponseHelper
     end
   end
 
-  def create_meta
-    add_resource_delta(current_resource)
-  end
-
   def create_success_location
     redirect_location
   end
@@ -41,7 +37,7 @@ module ActiveResponseHelper
   end
 
   def destroy_meta
-    remove_resource_delta(current_resource)
+    resource_removed_delta(current_resource)
   end
 
   def destroy_success_location

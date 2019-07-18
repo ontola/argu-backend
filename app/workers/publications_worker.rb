@@ -25,7 +25,7 @@ class PublicationsWorker
   end
 
   def publish_delta
-    n3_delta(add_resource_delta(resource))
+    n3_delta(resource_added_delta(resource))
   end
 
   def resource

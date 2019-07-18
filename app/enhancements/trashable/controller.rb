@@ -37,7 +37,7 @@ module Trashable
     end
 
     def trash_meta
-      remove_resource_delta(current_resource)
+      resource_removed_delta(current_resource)
     end
 
     def trash_success
@@ -61,7 +61,7 @@ module Trashable
     end
 
     def untrash_meta
-      add_resource_delta(current_resource)
+      resource_added_delta(current_resource)
     end
 
     def untrash_success
