@@ -86,20 +86,22 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     )
   end
 
-  def index_meta
+  def index_meta # rubocop:disable Metrics/AbcSize
     m = []
     m <<
       if index_collection.is_a?(CollectionView)
         [
           index_collection.collection.iri,
           NS::AS[:page],
-          index_collection.iri
+          index_collection.iri,
+          delta_iri(:replace)
         ]
       else
         [
           index_collection.iri,
           NS::ARGU[:unreadCount],
-          unread_notification_count
+          unread_notification_count,
+          delta_iri(:replace)
         ]
       end
     m

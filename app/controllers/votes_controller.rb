@@ -189,7 +189,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     else
       data = super
     end
-    data << [authenticated_resource.parent_iri, NS::ARGU[:currentVote], authenticated_resource.iri]
+    data << [authenticated_resource.parent_iri, NS::ARGU[:currentVote], authenticated_resource.iri, delta_iri(:replace)]
     action_delta(data, :remove, authenticated_resource.parent, :create_vote, include_favorite: true)
     action_delta(data, :add, authenticated_resource.parent, :destroy_vote, include_favorite: true)
     data
@@ -217,7 +217,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
         object.iri,
         NS::SCHEMA[:result],
         "#{authenticated_resource.for.classify}Opinion".constantize.iri,
-        NS::ONTOLA[:replace]
+        delta_iri(:replace)
       ]
     end
   end
@@ -234,7 +234,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
         iri,
         NS::ARGU[:voteableVoteEvent],
         parent_resource.iri,
-        NS::ONTOLA[:replace]
+        delta_iri(:replace)
       ]
     )
   end

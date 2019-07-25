@@ -131,6 +131,6 @@ module ActiveResponseHelper
   def meta_replace_collection_count(data, collection)
     collection.clear_total_count
     data.push [collection.iri, NS::AS[:pages], nil, NS::LL[:remove]]
-    data.push [collection.iri, NS::AS[:totalItems], collection.total_count, NS::ONTOLA[:replace]]
+    data.push [collection.iri, NS::AS[:totalItems], collection.total_count, delta_iri(:replace)]
   end
 end

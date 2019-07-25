@@ -22,8 +22,8 @@ class FeedTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
 
-  test 'guest should get motion/feed nt' do
-    visit_motion_feed(accept: :nt)
+  test 'guest should get motion/feed nq' do
+    visit_motion_feed(accept: :nq)
   end
 
   test 'guest should get motion/feed html' do
@@ -40,15 +40,15 @@ class FeedTest < ActionDispatch::IntegrationTest
     visit_freetown_feed
   end
 
-  test 'user should get forum/feed nt' do
+  test 'user should get forum/feed nq' do
     sign_in user
-    visit_freetown_feed(accept: :nt)
+    visit_freetown_feed(accept: :nq)
   end
 
-  test 'user should get motion/feed nt' do
+  test 'user should get motion/feed nq' do
     sign_in user
 
-    visit_motion_feed(accept: :nt)
+    visit_motion_feed(accept: :nq)
   end
 
   test 'user should get motion/feed html' do
@@ -57,10 +57,10 @@ class FeedTest < ActionDispatch::IntegrationTest
     visit_motion_feed
   end
 
-  test 'user should get complete motion/feed nt' do
+  test 'user should get complete motion/feed nq' do
     sign_in user
 
-    visit_motion_feed(accept: :nt, complete: true)
+    visit_motion_feed(accept: :nq, complete: true)
   end
 
   test 'user should get complete motion/feed html' do
@@ -88,15 +88,15 @@ class FeedTest < ActionDispatch::IntegrationTest
     visit_freetown_feed(count: 9)
   end
 
-  test 'staff should get forum/feed nt' do
+  test 'staff should get forum/feed nq' do
     sign_in staff
-    visit_freetown_feed(accept: :nt, count: 9)
+    visit_freetown_feed(accept: :nq, count: 9)
   end
 
-  test 'staff should get motion/feed nt' do
+  test 'staff should get motion/feed nq' do
     sign_in staff
 
-    visit_motion_feed(accept: :nt)
+    visit_motion_feed(accept: :nq)
   end
 
   test 'staff should get motion/feed html' do
@@ -105,10 +105,10 @@ class FeedTest < ActionDispatch::IntegrationTest
     visit_motion_feed
   end
 
-  test 'staff should get complete motion/feed nt' do
+  test 'staff should get complete motion/feed nq' do
     sign_in staff
 
-    visit_motion_feed(accept: :nt, complete: true)
+    visit_motion_feed(accept: :nq, complete: true)
   end
 
   test 'staff should get complete motion/feed html' do
@@ -157,7 +157,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     case accept
     when :html
       assert_select '.activity-feed .activity', count
-    when :nt
+    when :nq
       collection = RDF::URI("#{resource_iri(feed(parent))}/feed#{complete ? '?complete=true' : ''}")
       puts "looking for #{collection}"
       view = rdf_body.query([collection, NS::AS[:pages]]).first.object

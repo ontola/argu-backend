@@ -52,7 +52,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'follower should get index as nt' do
     argument
     sign_in follower
-    get collection_iri(argu, :notifications), headers: argu_headers(accept: :nt)
+    get collection_iri(argu, :notifications), headers: argu_headers(accept: :nq)
     assert_response 200
     expect_triple(RDF::URI(argu_url("/#{argu.url}/n")), NS::ARGU[:unreadCount], 1)
   end

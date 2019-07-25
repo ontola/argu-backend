@@ -33,7 +33,7 @@ module Argu
         expect(response.headers['Exec-Action']).to(include(action))
       end
 
-      def expect_triple(subject, predicate, object, graph = nil)
+      def expect_triple(subject, predicate, object, graph = NS::LL[:supplant])
         statement = RDF::Statement(subject, predicate, object, graph_name: graph)
         match = rdf_body.query(statement)
         assert match.present?, "Expected to find #{statement} in\n#{response.body}"

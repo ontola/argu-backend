@@ -24,14 +24,14 @@ class MenusTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'Guest should get show application menu' do
-    get menus_path, headers: argu_headers(accept: :nt)
+    get menus_path, headers: argu_headers(accept: :nq)
 
     assert_response 200
     expect_triple(menu_url(:info), RDF[:type], NS::ONTOLA[:MenuItem])
   end
 
   test 'Guest should get show page menu with custom item' do
-    get "/#{argu.url}/menus", headers: argu_headers(accept: :nt)
+    get "/#{argu.url}/menus", headers: argu_headers(accept: :nq)
 
     assert_response 200
 
@@ -48,7 +48,7 @@ class MenusTest < ActionDispatch::IntegrationTest
   ####################################
   test 'User should get show application menu' do
     sign_in user
-    get menus_path, headers: argu_headers(accept: :nt)
+    get menus_path, headers: argu_headers(accept: :nq)
 
     assert_response 200
     expect_triple(menu_url(:user), RDF[:type], NS::ONTOLA[:MenuItem])

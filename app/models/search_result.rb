@@ -21,10 +21,6 @@ class SearchResult
     opts
   end
 
-  def root_relative_iri(_opts = {})
-    RDF::URI(super.to_s.gsub('%20', '+'))
-  end
-
   def first
     return nil if search_result.total_pages <= 1
     RDF::DynamicURI(path_with_hostname(iri_path(page: 1)))

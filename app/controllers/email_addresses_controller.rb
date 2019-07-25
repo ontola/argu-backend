@@ -33,7 +33,8 @@ class EmailAddressesController < ParentableController
       [
         action.iri,
         NS::SCHEMA[:actionStatus],
-        action.action_status
+        action.action_status,
+        delta_iri(:replace)
       ]
     end
   end

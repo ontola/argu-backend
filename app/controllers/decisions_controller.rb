@@ -25,7 +25,8 @@ class DecisionsController < EdgeableController
     data << [
       authenticated_resource.parent.iri,
       NS::ARGU[:decision],
-      authenticated_resource.iri
+      authenticated_resource.iri,
+      delta_iri(:replace)
     ]
     data
   end
