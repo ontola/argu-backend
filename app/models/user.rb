@@ -128,7 +128,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def ancestor(_type); end
 
   def self.anonymous
-    @anonymous ||= User.find(User::ANONYMOUS_ID)
+    User.find(User::ANONYMOUS_ID)
   end
 
   def apply_omniauth(omniauth)
@@ -146,7 +146,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.community
-    @community ||= User.find(User::COMMUNITY_ID)
+    User.find(User::COMMUNITY_ID)
   end
 
   def confirmed?

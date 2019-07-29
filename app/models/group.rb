@@ -72,7 +72,7 @@ class Group < ApplicationRecord
     end
 
     def public
-      @public ||= Group.find_by(id: Group::PUBLIC_ID)
+      Group.find_by(id: Group::PUBLIC_ID)
     end
 
     def root_collection_opts
@@ -80,7 +80,7 @@ class Group < ApplicationRecord
     end
 
     def staff
-      @staff ||= Group.find_by(id: Group::STAFF_ID)
+      Group.find_by(id: Group::STAFF_ID)
     end
 
     def show_includes
