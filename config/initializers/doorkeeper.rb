@@ -46,7 +46,7 @@ Doorkeeper.configure do
       User.find_by(id: doorkeeper_token.resource_owner_id)
     elsif doorkeeper_token&.acceptable?('service') && doorkeeper_token.resource_owner_id.to_i == User::SERVICE_ID
       User.service
-    elsif doorkeeper_token&.acceptable?('guest')
+    elsif doorkeeper_token&.acceptable?('guest') && doorkeeper_token_payload['user']
       GuestUser.new(
         id: doorkeeper_token.resource_owner_id,
         language: doorkeeper_token_payload['user']['language']
@@ -190,22 +190,24 @@ Doorkeeper::JWT.configure do
           id: opts[:resource_owner_id],
           language: I18n.locale
         )
-      else
+      elsif opts[:resource_owner_id]
         User.find(opts[:resource_owner_id])
       end
 
     payload = {
       iat: Time.current.to_i,
       scopes: opts[:scopes].entries,
-      application_id: opts[:application]&.id,
-      user: {
+      application_id: opts[:application]&.id
+    }
+    if opts[:resource_owner_id]
+      payload[:user] = {
         type: user.guest? ? 'guest' : 'user',
         '@id': user.iri,
         id: user.id,
         email: user.email,
         language: user.language
       }
-    }
+    end
     payload[:exp] = (opts[:created_at] + opts[:expires_in].seconds).to_i if opts[:expires_in].present?
     payload
   end
@@ -249,7 +251,7 @@ module Doorkeeper
         new(
           token: token,
           application_id: data['application_id'],
-          resource_owner_id: data['user']['id'],
+          resource_owner_id: data['user'].try(:[], 'id'),
           scopes: data['scopes'].join(' '),
           created_at: Time.zone.at(data['iat']),
           expires_in: data['exp'] - data['iat']

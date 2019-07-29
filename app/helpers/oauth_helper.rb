@@ -78,7 +78,7 @@ module OauthHelper
   end
 
   def generate_guest_token(guest_id, application: nil)
-    application ||= Doorkeeper::Application.argu
+    application ||= vnext_request? ? Doorkeeper::Application.argu_front_end : Doorkeeper::Application.argu
     set_language_for_guest
 
     token = Doorkeeper::AccessToken.new(
@@ -91,22 +91,26 @@ module OauthHelper
     token
   end
 
+  def guest_session_id
+    return doorkeeper_token&.resource_owner_id || SecureRandom.hex if session.is_a?(Doorkeeper::AccessToken)
+
+    session[:load] = true unless session.loaded?
+    session_id.to_s
+  end
+
   def new_token_scopes(requested_scope, application_id)
     return requested_scope unless application_id == Doorkeeper::Application::AFE_ID
     [requested_scope, :afe].join(' ')
   end
 
   def needs_new_guest_token?
-    return false if afe_request? || request.head?
-
     doorkeeper_token.blank? || doorkeeper_token&.expired? || current_resource_owner.blank?
   end
 
   def refresh_guest_token
     doorkeeper_token.destroy! if doorkeeper_token&.expired?
-    session[:load] = true unless session.loaded?
-    @doorkeeper_token = generate_guest_token(session_id.to_s)
-    set_argu_client_token_cookie(doorkeeper_token.token)
+    @doorkeeper_token = generate_guest_token(guest_session_id)
+    update_oauth_token(doorkeeper_token.token)
     true
   end
 
@@ -115,6 +119,6 @@ module OauthHelper
   end
 
   def update_oauth_token(token)
-    afe_request? ? response.headers['New-Authorization'] = token : set_argu_client_token_cookie(token)
+    vnext_request? ? response.headers['New-Authorization'] = token : set_argu_client_token_cookie(token)
   end
 end

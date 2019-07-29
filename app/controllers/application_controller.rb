@@ -118,12 +118,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     )
   end
 
-  def api_request?
-    request.headers['Authorization'].present? &&
-      cookies[Rails.configuration.cookie_name].blank? &&
-      !request.format.html?
-  end
-
   def authorize_forum(forum)
     return if forum.nil?
     return unless user_context.with_root(forum.root) do
@@ -241,10 +235,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     return super unless obj.is_a?(RDF::URI)
 
     obj.to_s
-  end
-
-  def vnext_request?
-    afe_request? || api_request?
   end
 
   def website_meta

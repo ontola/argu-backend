@@ -8,11 +8,21 @@ module FrontendTransitionHelper
     @_new_fe_request ||= doorkeeper_token&.scopes&.include?('afe')
   end
 
+  def api_request?
+    return if try(:cookies).try(:[], Rails.configuration.cookie_name).present?
+
+    request.headers['Authorization'].present? && !request.format.html?
+  end
+
   def session
     afe_request? ? doorkeeper_token : super
   end
 
   def session_id
     @_session_id ||= afe_request? ? doorkeeper_token.resource_owner_id : session.id
+  end
+
+  def vnext_request?
+    afe_request? || api_request?
   end
 end
