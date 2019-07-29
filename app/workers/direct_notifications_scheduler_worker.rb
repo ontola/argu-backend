@@ -7,9 +7,13 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
   recurrence { minutely }
 
   def perform
-    send_activity_notifications(User.reactions_emails[:direct_reactions_email])
+    ActsAsTenant.without_tenant do
+      Apartment::Tenant.each do
+        send_activity_notifications(User.reactions_emails[:direct_reactions_email])
 
-    send_individual_notifications
+        send_individual_notifications
+      end
+    end
   end
 
   private
@@ -23,13 +27,15 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
       .where(t_notifications[:send_mail_after].lt(Time.current))
       .each do |notification|
       notification.update!(send_mail_after: nil)
-      Argu::API
-        .service_api
-        .create_email(
-          notification.notification_type,
-          notification.user,
-          token: notification.user.primary_email_record.confirmation_token
-        )
+      ActsAsTenant.with_tenant(notification.root) do
+        Argu::API
+          .service_api
+          .create_email(
+            notification.notification_type,
+            notification.user,
+            token: notification.user.primary_email_record.confirmation_token
+          )
+      end
     end
   end
 end

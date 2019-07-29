@@ -21,6 +21,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   accepts_nested_attributes_for :profile, update_only: true
+  has_one :tenant, dependent: :destroy, foreign_key: :root_id, primary_key: :uuid, inverse_of: :page
   has_many :descendant_shortnames,
            -> { where(primary: false) },
            class_name: 'Shortname',
@@ -35,13 +36,17 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   }
 
   delegate :description, :default_profile_photo, to: :profile
+  delegate :database_schema, to: :tenant, allow_nil: true
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :last_accepted, :iri_prefix, presence: true
 
+  after_create :create_or_update_tenant
   after_create :create_default_groups
   after_create :create_staff_grant
   after_create :reindex
+
+  attr_writer :iri_prefix
 
   with_collection :container_nodes
   with_collection :blogs
@@ -54,7 +59,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   placeable :custom
   property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {visible: 1, hidden: 3}
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
-  property :iri_prefix, :string, NS::ARGU[:iriPrefix]
   property :use_new_frontend, :boolean, NS::ARGU[:useNewFrontend], default: false
   property :primary_container_node_id, :linked_edge_id, NS::FOAF[:homepage]
   belongs_to :primary_container_node,
@@ -87,6 +91,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       end
   end
 
+  def iri_prefix
+    @iri_prefix || tenant&.iri_prefix
+  end
+
   def reindex_tree(async: true)
     ActsAsTenant.with_tenant(self) { Edge.reindex(async: async) }
   end
@@ -117,6 +125,13 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       raise gm.errors.full_messages.join('\n')
     end
     service.commit
+  end
+
+  def create_or_update_tenant
+    Tenant.find_or_create_by!(root_id: uuid) do |t|
+      t.iri_prefix = iri_prefix
+      t.database_schema = Apartment::Tenant.current
+    end
   end
 
   def create_staff_grant

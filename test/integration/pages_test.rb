@@ -105,7 +105,9 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_difference(
-      'Page.count' => 1, "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
+      'Tenant.count' => 1,
+      'Page.count' => 1,
+      "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
     ) do
       post pages_path,
            params: {
@@ -351,6 +353,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in page.publisher
 
     assert_difference('Page.count' => -1,
+                      'Tenant.count' => -1,
                       'Argument.anonymous.count' => 1,
                       'Comment.anonymous.count' => 1,
                       'Motion.anonymous.count' => 1) do
@@ -366,7 +369,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'administrator should delete destroy when page not owns a forum' do
     sign_in page.publisher
 
-    assert_difference('Page.count', -1) do
+    assert_difference('Page.count' => -1, 'Tenant.count' => -1) do
       delete page,
              params: {
                page: {

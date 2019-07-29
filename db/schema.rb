@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_05_123406) do
+ActiveRecord::Schema.define(version: 2019_07_26_093359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -449,6 +449,13 @@ ActiveRecord::Schema.define(version: 2019_07_05_123406) do
     t.string "ip"
     t.string "referrer"
     t.string "user_agent"
+  end
+
+  create_table "tenants", force: :cascade do |t|
+    t.string "iri_prefix", null: false
+    t.string "database_schema", default: "argu", null: false
+    t.uuid "root_id", null: false
+    t.index ["iri_prefix"], name: "index_tenants_on_iri_prefix", unique: true
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

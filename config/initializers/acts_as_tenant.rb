@@ -1,3 +1,1 @@
-# frozen_string_literal: true
-
-require 'acts_as_tenant/sidekiq'
+../../service_module/config/initializers/acts_as_tenant.rb

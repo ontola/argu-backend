@@ -15,6 +15,8 @@ require 'linked_rails/middleware/linked_data_params'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative '../lib/acts_as_tenant/sidekiq_with_tenant'
+
 module Argu
   class Application < Rails::Application
     config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || "app.#{ENV['HOSTNAME']}"}"

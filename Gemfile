@@ -6,6 +6,7 @@ ruby = '2.6.1'
 
 gem 'active_response', git: 'https://github.com/ontola/active_response', branch: :master
 gem 'acts_as_tenant', git: 'https://github.com/ArthurWD/acts_as_tenant', branch: :master
+gem 'apartment'
 gem 'rakismet'
 gem 'bootsnap', require: false
 gem 'bunny', '~> 2.6.1'
