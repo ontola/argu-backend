@@ -19,6 +19,8 @@ require 'minitest/reporters'
 require 'rspec/matchers'
 require 'rspec/expectations'
 
+require 'support/database_cleaner'
+
 Minitest::Reporters.use!
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
@@ -40,99 +42,6 @@ module TestHelper
   MiniTest::Reporters.use!
 
   MiniTest.after_run { FileUtils.rm_rf(Rails.root.join('public', 'photos', '[^.]*')) }
-
-  Grant.delete_all
-  GrantSetsPermittedAction.delete_all
-  PermittedAction.delete_all
-  GrantSet.delete_all
-  load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0])
-
-  User.find_or_create_by!(id: User::COMMUNITY_ID) do |user|
-    user.shortname = Shortname.new(shortname: 'community')
-    user.email = 'community@argu.co'
-    user.first_name = nil
-    user.last_name = nil
-    user.password = 'password'
-    user.profile = Profile.new(id: Profile::COMMUNITY_ID)
-  end
-
-  User.find_or_create_by!(id: User::ANONYMOUS_ID) do |user|
-    user.shortname = Shortname.new(shortname: 'anonymous')
-    user.email = 'anonymous@argu.co'
-    user.first_name = nil
-    user.last_name = nil
-    user.password = 'password'
-    user.profile = Profile.new(id: Profile::ANONYMOUS_ID)
-  end
-
-  User.find_or_create_by!(id: User::SERVICE_ID) do |user|
-    user.shortname = Shortname.new(shortname: 'service')
-    user.email = 'service_user@argu.co'
-    user.last_accepted = Time.current
-    user.first_name = nil
-    user.last_name = nil
-    user.password = 'password'
-    user.profile = Profile.new(id: Profile::SERVICE_ID)
-  end
-
-  page_owner = User.find_or_create_by!(first_name: 'page_owner') do |user|
-    user.shortname = Shortname.new(shortname: 'page_owner')
-    user.profile = Profile.new
-    user.email = 'page_owner@argu.co'
-  end
-
-  Page.find_or_create_by!(owner_id: 0) do |page|
-    page.publisher = page_owner
-    page.creator = page_owner.profile
-    page.url = 'public_page'
-    page.last_accepted = Time.current
-    page.profile = Profile.new(name: 'public page profile')
-    page.iri_prefix = "app.#{Rails.application.config.host_name}/public_page"
-  end
-
-  public_group = Group.find_or_create_by!(id: Group::PUBLIC_ID) do |group|
-    group.name = 'Public group'
-    group.name_singular = 'User'
-    group.page = Page.find_by(owner_id: 0)
-  end
-
-  Group.find_or_create_by!(id: Group::STAFF_ID) do |group|
-    group.name = 'Staff group'
-    group.name_singular = 'Staff'
-    group.page = Page.find_by(owner_id: 0)
-  end
-
-  public_membership =
-    CreateGroupMembership.new(
-      public_group,
-      attributes: {member: Profile.community},
-      options: {publisher: User.community, creator: Profile.community}
-    ).resource
-  public_membership.save!(validate: false)
-
-  door_app = Doorkeeper::Application
-  door_app.find_or_create_by(id: door_app::ARGU_ID) do |app|
-    app.id = door_app::ARGU_ID
-    app.name = 'Argu'
-    app.owner = Profile.community
-    app.redirect_uri = 'http://example.com/'
-    app.scopes = 'guest user'
-  end
-  door_app.find_or_create_by(id: door_app::AFE_ID) do |app|
-    app.id = door_app::AFE_ID
-    app.name = 'Argu Front End'
-    app.owner = Profile.community
-    app.redirect_uri = 'http://example.com/'
-    app.scopes = 'guest user afe'
-  end
-  door_app.find_or_create_by(id: door_app::SERVICE_ID) do |app|
-    app.id = door_app::SERVICE_ID
-    app.name = 'Argu Service'
-    app.owner = Profile.community
-    app.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
-    app.scopes = 'service worker export'
-  end
-  ActiveRecord::Base.connection.execute("ALTER SEQUENCE #{door_app.table_name}_id_seq RESTART WITH #{door_app.count}")
 end
 
 module SidekiqMinitestSupport

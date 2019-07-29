@@ -6,91 +6,22 @@
 raise 'NOMINATIM_KEY is empty, please edit your .env' if ENV['NOMINATIM_KEY'].nil?
 
 ActiveRecord::Base.transaction do
-  load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0])
+  Tenant.create_system_users
 
-  community_profile =
-    Profile.new(
-      id: Profile::COMMUNITY_ID,
-      profileable:
-        User
-          .new(
-            id: User::COMMUNITY_ID,
-            shortname: Shortname.new(shortname: 'community'),
-            email: 'community@argu.co',
-            password: SecureRandom.hex(32)
-          )
-    )
-  community_profile.save!(validate: false)
-  community_profile.profileable.update(encrypted_password: '')
+  Tenant.setup_schema('argu', "app.#{Rails.application.config.host_name}/argu")
 
-  service_profile =
-    Profile.new(
-      id: Profile::SERVICE_ID,
-      profileable:
-        User
-          .new(
-            id: User::SERVICE_ID,
-            shortname: Shortname.new(shortname: 'service'),
-            email: 'service_user@argu.co',
-            password: SecureRandom.hex(32),
-            last_accepted: Time.current
-          )
-    )
-  service_profile.save!(validate: false)
-  service_profile.profileable.update(encrypted_password: '')
-
-  Profile.new(
-    id: Profile::ANONYMOUS_ID,
-    profileable:
-      User
-        .new(
-          id: User::ANONYMOUS_ID,
-          shortname: Shortname.new(shortname: 'anonymous'),
-          email: 'anonymous@argu.co',
-          password: SecureRandom.hex(32)
-        )
-  )
-
-  staff = User
-            .create!(
-              email: 'staff@argu.co',
-              shortname_attributes: {shortname: 'staff_account'},
-              password: 'arguargu',
-              password_confirmation: 'arguargu',
-              first_name: 'Douglas',
-              last_name: 'Engelbart',
-              profile: Profile.new,
-              last_accepted: Time.current
-            )
-
-  argu =
-    Page.create!(
-      publisher: staff,
-      creator: staff.profile,
-      profile_attributes: {name: 'Argu'},
-      url: 'argu',
-      last_accepted: Time.current,
-      is_published: true,
-      iri_prefix: 'app.argu.localdev/argu'
-    )
-
-  ActsAsTenant.current_tenant = argu
-
-  public_group = Group.new(
-    id: Group::PUBLIC_ID,
-    name: 'Public',
-    name_singular: 'Public',
-    page: argu
-  )
-  public_group.save!
-
-  staff_group = Group.new(
-    id: Group::STAFF_ID,
-    name: 'Staff',
-    name_singular: 'Staff',
-    page: argu
-  )
-  staff_group.save!
+  staff =
+    User
+      .create!(
+        email: 'staff@argu.co',
+        shortname_attributes: {shortname: 'staff_account'},
+        password: 'arguargu',
+        password_confirmation: 'arguargu',
+        first_name: 'Douglas',
+        last_name: 'Engelbart',
+        profile: Profile.new,
+        last_accepted: Time.current
+      )
 
   staff_membership =
     CreateGroupMembership.new(
@@ -100,14 +31,6 @@ ActiveRecord::Base.transaction do
     ).resource
   staff_membership.save!(validate: false)
 
-  public_membership =
-    CreateGroupMembership.new(
-      public_group,
-      attributes: {member: community_profile},
-      options: {publisher: community_profile.profileable, creator: community_profile}
-    ).resource
-  public_membership.save!(validate: false)
-
   public_staff_membership =
     CreateGroupMembership.new(
       public_group,
@@ -116,53 +39,20 @@ ActiveRecord::Base.transaction do
     ).resource
   public_staff_membership.save!(validate: false)
 
-  forum = Forum.new(name: 'Nederland',
-                    public_grant: 'participator',
-                    root_id: argu.root_id,
-                    url: 'nederland',
-                    creator: User.find_via_shortname!('staff_account').profile,
-                    publisher: User.find_via_shortname!('staff_account'),
-                    parent: argu)
-  forum.grants.new(group: public_group, grant_set: GrantSet.participator)
+  ActsAsTenant.current_tenant = Page.argu
+
+  forum = Forum.new(
+    name: 'Nederland',
+    public_grant: 'participator',
+    root_id: argu.root_id,
+    url: 'nederland',
+    creator: User.find_via_shortname!('staff_account').profile,
+    publisher: User.find_via_shortname!('staff_account'),
+    parent: argu
+  )
+  forum.grants.new(group_id: Group::PUBLIC_ID, grant_set: GrantSet.participator)
   forum.save!
-
-  g = argu.grants.new(group: staff_group, grant_set: GrantSet.staff)
-  g.save!(validate: false)
-
   forum.publish!
-
-  Doorkeeper::Application.create!(
-    id: Doorkeeper::Application::ARGU_ID,
-    name: 'Argu',
-    owner: community_profile,
-    redirect_uri: 'https://argu.co/',
-    scopes: 'user guest'
-  )
-  Doorkeeper::AccessToken.create!(
-    application: Doorkeeper::Application.argu,
-    resource_owner_id: User::COMMUNITY_ID,
-    scopes: 'service'
-  )
-  Doorkeeper::Application.create!(
-    id: Doorkeeper::Application::AFE_ID,
-    name: 'Argu Front End',
-    owner: community_profile,
-    redirect_uri: 'https://argu.co/',
-    scopes: 'user guest afe'
-  )
-  Doorkeeper::AccessToken.create!(
-    application: Doorkeeper::Application.argu_front_end,
-    resource_owner_id: User::COMMUNITY_ID,
-    scopes: 'service'
-  )
-
-  Doorkeeper::Application.create!(
-    id: Doorkeeper::Application::SERVICE_ID,
-    name: 'Argu Service',
-    owner: community_profile,
-    redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
-    scopes: 'service worker export'
-  )
 
   Notification.update_all(read_at: nil) # rubocop:disable Rails/SkipsModelValidations
 

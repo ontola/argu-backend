@@ -2,42 +2,38 @@
 
 require 'factory_seeder'
 
-load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0])
+load(Dir[Rails.root.join('db', 'seeds', 'doorkeeper_apps.seeds.rb')][0])
 
-FactorySeeder.create(
-  :user,
-  id: User::COMMUNITY_ID,
-  shortname: FactorySeeder.build(:shortname, shortname: 'community'),
-  email: 'community@argu.co',
-  first_name: nil,
-  last_name: nil,
-  profile: FactorySeeder.build(:profile, id: Profile::COMMUNITY_ID)
-)
-FactorySeeder.create(
-  :user,
-  id: User::ANONYMOUS_ID,
-  shortname: FactorySeeder.build(:shortname, shortname: 'anonymous'),
-  email: 'anonymous@argu.co',
-  first_name: nil,
-  last_name: nil,
-  profile: FactorySeeder.build(:profile, id: Profile::ANONYMOUS_ID)
-)
-FactorySeeder.create(
-  :user,
-  id: User::SERVICE_ID,
-  shortname: FactorySeeder.build(:shortname, shortname: 'service'),
-  email: 'service@argu.co',
-  first_name: nil,
-  last_name: nil,
-  profile: FactorySeeder.build(:profile, id: Profile::SERVICE_ID),
-  last_accepted: Time.current
-)
+Apartment::Tenant.switch('public') do
+  Tenant.delete_all
+  Tenant.create_system_users unless User.any?
+end
+
+Apartment::Tenant.drop('argu') if ApplicationRecord.connection.schema_exists?('argu')
+Tenant.setup_schema('argu', "app.#{Rails.application.config.host_name}/first_page", 'first_page')
+
+ActsAsTenant.current_tenant.update(url: 'first_page')
+ActsAsTenant.current_tenant = nil
 
 staff = FactorySeeder.create(
   :user,
   shortname: FactorySeeder.build(:shortname, shortname: 'argu_owner'),
   email: 'staff@example.com'
 )
+staff_group = Group.find(Group::STAFF_ID)
+staff_membership =
+  CreateGroupMembership.new(
+    staff_group,
+    attributes: {member: staff.profile},
+    options: {publisher: staff, creator: staff.profile}
+  ).resource
+staff_membership.save(validate: false)
+
+FactorySeeder.create(
+  :unconfirmed_user,
+  email: 'unconfirmed@example.com'
+)
+
 page = FactorySeeder.create(
   :page,
   id: 0,
@@ -50,94 +46,6 @@ page = FactorySeeder.create(
   is_published: true,
   uuid: 'deadbeef-bfc5-4e68-993f-430037bd5bd3',
   root_id: 'deadbeef-bfc5-4e68-993f-430037bd5bd3'
-)
-
-public_group = FactorySeeder.create(
-  :group,
-  id: Group::PUBLIC_ID,
-  parent: Page.find(0),
-  name: 'Public group',
-  name_singular: 'User'
-)
-%i[community service anonymous].each do |user_type|
-  public_membership =
-    CreateGroupMembership.new(
-      public_group,
-      attributes: {member: Profile.send(user_type)},
-      options: {publisher: User.send(user_type), creator: Profile.send(user_type)}
-    ).resource
-  public_membership.save(validate: false)
-end
-FactorySeeder.create(:group_membership, parent: public_group, member: staff.profile)
-
-staff_group = FactorySeeder.create(
-  :group,
-  id: Group::STAFF_ID,
-  parent: Page.find(0),
-  name: 'Staff group',
-  name_singular: 'Staff'
-)
-staff_membership =
-  CreateGroupMembership.new(
-    staff_group,
-    attributes: {member: staff.profile},
-    options: {publisher: staff, creator: staff.profile}
-  ).resource
-staff_membership.save(validate: false)
-
-page.send(:create_staff_grant)
-
-FactorySeeder.create(
-  :unconfirmed_user,
-  email: 'unconfirmed@example.com'
-)
-
-Doorkeeper::Application.create!(
-  id: Doorkeeper::Application::ARGU_ID,
-  name: 'Argu',
-  owner: Profile.community,
-  redirect_uri: 'https://argu.localdev/',
-  scopes: 'guest user',
-  secret: 'secret',
-  uid: 'uid'
-)
-
-token = Doorkeeper::AccessToken.find_or_create_for(
-  Doorkeeper::Application.argu,
-  User::SERVICE_ID,
-  'service',
-  Doorkeeper.configuration.access_token_expires_in,
-  false
-)
-token.update(token: ENV['SERVICE_TOKEN'])
-
-Doorkeeper::Application.create!(
-  id: Doorkeeper::Application::AFE_ID,
-  name: 'Argu Front End',
-  owner: Profile.community,
-  redirect_uri: 'https://argu.localdev/',
-  scopes: 'guest user afe',
-  secret: 'afe_secret',
-  uid: 'afe_uid'
-)
-
-afe_token = Doorkeeper::AccessToken.find_or_create_for(
-  Doorkeeper::Application.argu_front_end,
-  User::COMMUNITY_ID,
-  'service afe',
-  Doorkeeper.configuration.access_token_expires_in,
-  false
-)
-afe_token.update(token: ENV['RAILS_OAUTH_TOKEN'])
-
-Doorkeeper::Application.create!(
-  id: Doorkeeper::Application::SERVICE_ID,
-  name: 'Argu Service',
-  owner: Profile.community,
-  redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
-  scopes: 'service worker export',
-  secret: 'service_secret',
-  uid: 'service_uid'
 )
 
 freetown = ActsAsTenant.with_tenant(page) do
