@@ -241,11 +241,16 @@ Rails.application.routes.draw do
   end
 
   constraints(Argu::WhitelistConstraint) do
+    namespace :_public do
+      namespace :spi do
+        get 'find_tenant', to: 'tenant_finder#show'
+        get 'tenants', to: 'tenants#index'
+      end
+    end
     namespace :spi do
       get 'authorize', to: 'authorize#show'
       get 'current_user', to: 'users#current'
       get 'email_addresses', to: 'email_addresses#show'
-      get 'find_tenant', to: 'tenant_finder#show'
       scope :oauth do
         post :token, to: 'tokens#create'
       end
