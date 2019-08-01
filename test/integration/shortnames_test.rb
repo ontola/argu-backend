@@ -38,7 +38,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   test 'guest should get comment' do
     general_show(302, comment, comment_shortname) do
-      assert_redirected_to comment.parent.iri(fragment: comment.identifier)
+      assert_redirected_to "#{comment.parent.iri.path}##{comment.identifier}"
     end
   end
 

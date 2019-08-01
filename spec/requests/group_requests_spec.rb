@@ -15,6 +15,7 @@ RSpec.describe 'Groups', type: :request do
 
   let(:expect_get_index_guest_serializer) { expect_not_a_user }
   let(:expect_get_show_guest_serializer) { expect_unauthorized }
+  let(:expect_get_new_guest_serializer) { expect_unauthorized }
 
   it_behaves_like 'requests', skip: %i[html trash untrash]
 end

@@ -72,7 +72,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_difference('User.count' => 0,
                       'Favorite.count' => 0,
                       'Notification.confirmation_reminder.count' => 0) do
-      post user_registration_path,
+      post "/#{argu.url}#{user_registration_path}",
            params: {
              user: {
                email: user.email
@@ -219,8 +219,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       'test@example.com',
       confirmationToken: /.+/,
       motions: [
-        {display_name: motion.display_name, option: 'pro', url: motion.iri},
-        {display_name: motion2.display_name, option: 'pro', url: motion2.iri}
+        {display_name: motion.display_name, option: 'pro', url: argu_url(motion.iri.path)},
+        {display_name: motion2.display_name, option: 'pro', url: argu_url(motion2.iri.path)}
       ]
     )
 
@@ -276,8 +276,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       attrs[:email],
       confirmationToken: /.+/,
       motions: [
-        {display_name: motion.display_name, option: 'pro', url: motion.iri},
-        {display_name: motion2.display_name, option: 'pro', url: motion2.iri}
+        {display_name: motion.display_name, option: 'pro', url: argu_url(motion.iri.path)},
+        {display_name: motion2.display_name, option: 'pro', url: argu_url(motion2.iri.path)}
       ]
     )
 
@@ -287,7 +287,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                         'Argu::Redis.keys("temporary*").count' => -3,
                         'Favorite.count' => 1,
                         'Notification.confirmation_reminder.count' => 1) do
-        post user_registration_path,
+        post "/#{argu.url}#{user_registration_path}",
              params: {user: attrs}
       end
     end

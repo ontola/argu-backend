@@ -35,7 +35,7 @@ module Argu
     module ClassMethods
       def define_page
         let!(:argu) do
-          create(:page, profile_attributes: {name: 'Argu'})
+          Page.find_via_shortname('argu') || create(:page, url: 'argu', profile_attributes: {name: 'Argu'})
         end
       end
 

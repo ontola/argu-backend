@@ -85,7 +85,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_redirected_to argument.iri.path
+    assert_redirected_to argu_url(argument.iri.path)
   end
 
   ####################################
@@ -106,6 +106,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_redirected_to argument.iri.path
+    assert_redirected_to argu_url(argument.iri.path)
   end
 end

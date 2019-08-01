@@ -39,7 +39,7 @@ RSpec.feature 'Page deletion', type: :feature do
   let!(:forum_page) { create_page(publisher: user, creator: user.profile) }
   let(:nederland) { create(:place, address: {'country_code' => 'nl'}) }
 
-  scenario 'user should delete destroy' do
+  scenario 'user should delete destroy page without forums' do
     nederland
     ActsAsTenant.with_tenant(argu) do
       [argument, motion, question, blog_post, comment].each do |resource|
@@ -66,16 +66,17 @@ RSpec.feature 'Page deletion', type: :feature do
     end
   end
 
-  scenario 'owner should not delete destroy' do
+  scenario 'user should not delete destroy page with forums' do
     nederland
     ActsAsTenant.with_tenant(argu) do
       [argument, motion, question, blog_post, comment].each do |resource|
         resource.update(created_at: 1.day.ago)
       end
     end
+    create_forum(parent: forum_page)
 
-    sign_in(argu.publisher)
-    visit settings_iri(argu)
+    sign_in(user)
+    visit settings_iri(forum_page)
     click_link 'General'
     within '.danger-zone' do
       click_link 'Delete'

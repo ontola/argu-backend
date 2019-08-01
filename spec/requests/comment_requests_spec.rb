@@ -28,7 +28,7 @@ RSpec.describe 'Comments', type: :request do
   let(:authorized_user_update) { subject.publisher }
   let(:authorized_user_trash) { staff }
   let(:update_failed_path) { redirect_url }
-  let(:create_differences) { {"#{subject.class}.count" => 1, 'Activity.count' => 2} }
+  let(:create_differences) { {"#{subject.class}.count" => 1, 'Activity.count' => @request_format == :html ? 2 : 1} }
 
   context 'with comment parent' do
     subject { nested_comment }
@@ -39,7 +39,7 @@ RSpec.describe 'Comments', type: :request do
       )
     end
     let(:expect_get_index_guest_html) { expect_get_index_html }
-    let(:expect_get_index_html) { expect(response).to(redirect_to(collection_iri(argument, :comments))) }
+    let(:expect_get_index_html) { expect(response).to(redirect_to(collection_iri(argument, :comments).path)) }
 
     it_behaves_like 'requests'
   end

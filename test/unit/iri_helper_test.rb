@@ -7,19 +7,19 @@ class IriHelperTest < ActiveSupport::TestCase
   define_freetown
 
   test 'should find forum by its iri' do
-    assert_equal resource_from_iri(argu_url("/#{freetown.parent.url}/freetown")), freetown
+    freetown_from_path('/freetown')
   end
 
   test 'should find forum by a subview iri' do
-    assert_equal resource_from_iri(argu_url("/#{freetown.parent.url}/freetown/edit")), freetown
+    freetown_from_path('/freetown/edit')
   end
 
   test 'should find forum by a subview iri with upcase shortname' do
-    assert_equal resource_from_iri(argu_url("/#{freetown.parent.url}/Freetown/edit")), freetown
+    freetown_from_path('/Freetown/edit')
   end
 
   test 'should find forum by its cannonical iri' do
-    assert_equal resource_from_iri(argu_url("/edges/#{freetown.uuid}")), freetown
+    freetown_from_path("/edges/#{freetown.uuid}")
   end
 
   test 'should not find forum by non existing iri' do
@@ -30,5 +30,10 @@ class IriHelperTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordNotFound do
       resource_from_iri!(argu_url('/non_existent'))
     end
+  end
+
+  def freetown_from_path(path)
+    assert_equal resource_from_iri(argu_url("/#{freetown.parent.url}#{path}", frontend: false)), freetown
+    assert_equal resource_from_iri(argu_url("/#{freetown.parent.url}#{path}", frontend: true)), freetown
   end
 end

@@ -9,6 +9,8 @@ RSpec.describe 'BlogPosts', type: :request do
     super - %i[html]
   end
 
+  let(:expect_get_new_guest_serializer) { expect_unauthorized }
+
   context 'with motion parent' do
     subject { motion_blog_post }
     it_behaves_like 'requests'

@@ -18,6 +18,7 @@ RSpec.describe 'Exports', type: :request do
   let(:expect_get_index_guest_html) { expect(response.code).to eq('302') }
   let(:expect_get_index_guest_serializer) { expect_not_a_user }
   let(:non_existing_id) { SecureRandom.uuid }
+  let(:expect_get_new_guest_serializer) { expect_get_form_guest_serializer }
 
   context 'with forum parent' do
     subject { forum_export }

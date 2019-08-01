@@ -27,7 +27,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
     assert_equal 1, snw.send(:collect_activity_notifications).length
 
     email_type = User.reactions_emails[:direct_reactions_email]
-    snw.perform(follower.id, email_type)
+    ActsAsTenant.with_tenant(argu) { snw.perform(follower.id, email_type) }
 
     assert_email_sent(skip_sidekiq: true)
 
@@ -44,7 +44,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
     assert_equal 1, snw.send(:collect_activity_notifications).length
 
     email_type = User.reactions_emails[:daily_reactions_email]
-    snw.perform(follower_daily.id, email_type)
+    ActsAsTenant.with_tenant(argu) { snw.perform(follower_daily.id, email_type) }
 
     assert_email_sent(skip_sidekiq: true)
 
@@ -61,7 +61,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
     assert_equal 1, snw.send(:collect_activity_notifications).length
 
     email_type = User.reactions_emails[:weekly_reactions_email]
-    snw.perform(follower_weekly.id, email_type)
+    ActsAsTenant.with_tenant(argu) { snw.perform(follower_weekly.id, email_type) }
 
     assert_email_sent(skip_sidekiq: true)
 
@@ -87,7 +87,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
     assert_equal 10, snw.send(:collect_activity_notifications).length
 
     email_type = User.reactions_emails[:direct_reactions_email]
-    snw.perform(follower.id, email_type)
+    ActsAsTenant.with_tenant(argu) { snw.perform(follower.id, email_type) }
 
     assert_email_sent(skip_sidekiq: true)
 
@@ -136,7 +136,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
       follows: [
         {
           notifications: WebMock::Matchers::AnyArgMatcher.new(false),
-          follow_id: user.follow_for(motion)&.unsubscribe_iri,
+          follow_id: ActsAsTenant.with_tenant(argu) { user.follow_for(motion)&.unsubscribe_iri },
           followable: {display_name: motion.display_name, id: motion.iri, pro: nil, type: 'Motion'},
           organization: {display_name: motion.root.display_name}
         }

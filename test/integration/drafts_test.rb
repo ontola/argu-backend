@@ -57,8 +57,8 @@ class DraftsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get index nq' do
-    sign_in user
-    get drafts_user_path(user), headers: argu_headers(accept: :nq)
+    sign_in user, Doorkeeper::Application.argu_front_end
+    get "/#{argu.url}#{drafts_user_path(user)}", headers: argu_headers(accept: :nq)
     assert 200
     expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
   end
@@ -80,8 +80,8 @@ class DraftsTest < ActionDispatch::IntegrationTest
     group = create(:group, parent: argu)
     create(:group_membership, parent: group, shortname: user.url)
     create(:grant, edge: argu, group: group, grant_set: GrantSet.administrator)
-    sign_in user
-    get drafts_user_path(user), headers: argu_headers(accept: :nq)
+    sign_in user, Doorkeeper::Application.argu_front_end
+    get "/#{argu.url}#{drafts_user_path(user)}", headers: argu_headers(accept: :nq)
     assert 200
     expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 2, NS::ONTOLA[:replace])
   end
@@ -99,8 +99,8 @@ class DraftsTest < ActionDispatch::IntegrationTest
   end
 
   test 'staff should get index nq' do
-    sign_in staff
-    get drafts_user_path(user), headers: argu_headers(accept: :nq)
+    sign_in staff, Doorkeeper::Application.argu_front_end
+    get "/#{argu.url}#{drafts_user_path(user)}", headers: argu_headers(accept: :nq)
     assert 200
     expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
   end

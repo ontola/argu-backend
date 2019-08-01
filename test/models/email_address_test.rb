@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class EmailAddressTest < ActiveSupport::TestCase
+  define_page
   let(:user) { create(:user) }
   let(:email_address) { EmailAddress.new(user: user) }
 
@@ -36,7 +37,7 @@ class EmailAddressTest < ActiveSupport::TestCase
 
     original_email = user.primary_email_record
     assert original_email.reload.primary?
-    new_email = user.email_addresses.create(email: 'test@example.com')
+    new_email = ActsAsTenant.with_tenant(argu) { user.email_addresses.create(email: 'test@example.com') }
     assert_email_sent
 
     new_email.update(primary: true)

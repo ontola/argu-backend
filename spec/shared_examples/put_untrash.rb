@@ -7,8 +7,8 @@ RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
     context "as #{format}" do
       unless opts[:skip].include?(:untrash_guest) || opts[:skip].include?(:guest)
         it 'as guest' do
-          sign_in(:guest, doorkeeper_application)
-          put untrash_path, params: {format: format}
+          sign_in(:guest, doorkeeper_application(format))
+          put untrash_path, headers: request_headers(format)
           send("expect_put_untrash_guest_#{format}")
         end
       end
@@ -16,9 +16,9 @@ RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
       unless opts[:skip].include?(:untrash_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
           ActsAsTenant.with_tenant(subject.root) { subject.trash }
-          sign_in(unauthorized_user, doorkeeper_application)
+          sign_in(unauthorized_user, doorkeeper_application(format))
           assert_difference(no_differences) do
-            put untrash_path, params: {format: format}
+            put untrash_path, headers: request_headers(format)
           end
           send("expect_put_untrash_unauthorized_#{format}")
         end
@@ -27,9 +27,9 @@ RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
       unless opts[:skip].include?(:untrash_authorized) || opts[:skip].include?(:authorized)
         it 'as authorized' do
           ActsAsTenant.with_tenant(subject.root) { subject.trash }
-          sign_in(authorized_user_trash, doorkeeper_application)
+          sign_in(authorized_user_trash, doorkeeper_application(format))
           assert_difference(untrash_differences) do
-            put untrash_path, params: {format: format}
+            put untrash_path, headers: request_headers(format)
           end
           send("expect_put_untrash_#{format}")
         end
@@ -37,8 +37,8 @@ RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:untrash_non_existing) || opts[:skip].include?(:non_existing)
         it 'non existing' do
-          sign_in(authorized_user, doorkeeper_application)
-          put non_existing_untrash_path, params: {format: format}
+          sign_in(authorized_user, doorkeeper_application(format))
+          put non_existing_untrash_path, headers: request_headers(format)
           expect_not_found
         end
       end

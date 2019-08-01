@@ -51,22 +51,22 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
   test 'follower should get index as nt' do
     argument
-    sign_in follower
+    sign_in follower, Doorkeeper::Application.argu_front_end
     get collection_iri(argu, :notifications), headers: argu_headers(accept: :nq)
     assert_response 200
-    expect_triple(RDF::URI(argu_url("/#{argu.url}/n")), NS::ARGU[:unreadCount], 1)
+    expect_triple(RDF::URI("#{argu.iri}/n"), NS::ARGU[:unreadCount], 1)
   end
 
   test 'follower should put update as nt' do
     argument
-    sign_in follower
+    sign_in follower, Doorkeeper::Application.argu_front_end
     notification = follower.notifications.where(read_at: nil).first
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => -1) do
       put resource_iri(notification), headers: argu_headers(accept: :nq)
     end
     assert_response 200
     notification.reload
-    expect_triple(RDF::URI(argu_url("/#{argu.url}/n")), NS::ARGU[:unreadCount], 0)
+    expect_triple(RDF::URI("#{argu.iri}/n"), NS::ARGU[:unreadCount], 0)
     expect_triple(
       resource_iri(notification),
       NS::SCHEMA[:dateRead],

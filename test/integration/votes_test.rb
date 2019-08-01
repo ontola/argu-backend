@@ -462,7 +462,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_redirected_to motion.iri.path
+    assert_redirected_to argu_url(motion.iri.path)
     assert assigns(:create_service).resource.valid?
   end
 

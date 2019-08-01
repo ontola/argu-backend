@@ -26,7 +26,7 @@ RSpec.describe 'Grants', type: :request do
   let(:expect_get_show_guest_serializer) { expect_unauthorized }
   let(:expect_delete_destroy_html) do
     expect(response.code).to eq('303')
-    expect(response).to redirect_to("#{settings_iri(argu)}?tab=groups")
+    expect(response).to redirect_to("#{settings_iri(argu).path}?tab=groups")
   end
 
   context 'with page parent' do

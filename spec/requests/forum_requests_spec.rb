@@ -8,6 +8,8 @@ RSpec.describe 'Forums', type: :request do
   let(:authorized_user) { staff }
 
   let(:index_path) { collection_iri(subject_parent, :forums).path }
+  let(:non_existing_index_path) { collection_iri(non_existing_id, :forums).path }
+
   let(:create_params) { {forum: attributes_for(class_sym).merge(url: 'new_forum')} }
   let(:create_differences) { {'Forum.count' => 1} }
   let(:invalid_create_params) { {page_id: argu.url, forum: {name: 'n1'}} }
@@ -27,6 +29,7 @@ RSpec.describe 'Forums', type: :request do
     subject.reload
     expect(subject.name).to eq('name')
   end
+  let(:expect_get_new_guest_serializer) { expect_unauthorized }
 
   let(:update_differences) { {'Forum.count' => 0} }
   let(:destroy_differences) { {'Forum.count' => -1} }

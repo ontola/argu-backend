@@ -4,6 +4,7 @@ require 'test_helper'
 
 module SPI
   class UsersControllerTest < ActionDispatch::IntegrationTest
+    define_page
     let(:guest_user) { create_guest_user }
 
     ####################################
@@ -12,7 +13,7 @@ module SPI
     test 'guest should not get show' do
       sign_in guest_user
 
-      get spi_current_user_path
+      get "/#{argu.url}#{spi_current_user_path}"
 
       assert_response 401
     end
@@ -25,7 +26,7 @@ module SPI
     test 'user should get show' do
       sign_in user
 
-      get spi_current_user_path
+      get "/#{argu.url}#{spi_current_user_path}"
 
       assert_response 200
     end

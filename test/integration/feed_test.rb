@@ -23,6 +23,8 @@ class FeedTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'guest should get motion/feed nq' do
+    sign_in create_guest_user, Doorkeeper::Application.argu_front_end
+
     visit_motion_feed(accept: :nq)
   end
 
@@ -41,12 +43,12 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get forum/feed nq' do
-    sign_in user
+    sign_in user, Doorkeeper::Application.argu_front_end
     visit_freetown_feed(accept: :nq)
   end
 
   test 'user should get motion/feed nq' do
-    sign_in user
+    sign_in user, Doorkeeper::Application.argu_front_end
 
     visit_motion_feed(accept: :nq)
   end
@@ -58,7 +60,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get complete motion/feed nq' do
-    sign_in user
+    sign_in user, Doorkeeper::Application.argu_front_end
 
     visit_motion_feed(accept: :nq, complete: true)
   end
@@ -89,12 +91,12 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   test 'staff should get forum/feed nq' do
-    sign_in staff
+    sign_in staff, Doorkeeper::Application.argu_front_end
     visit_freetown_feed(accept: :nq, count: 9)
   end
 
   test 'staff should get motion/feed nq' do
-    sign_in staff
+    sign_in staff, Doorkeeper::Application.argu_front_end
 
     visit_motion_feed(accept: :nq)
   end
@@ -106,7 +108,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   test 'staff should get complete motion/feed nq' do
-    sign_in staff
+    sign_in staff, Doorkeeper::Application.argu_front_end
 
     visit_motion_feed(accept: :nq, complete: true)
   end

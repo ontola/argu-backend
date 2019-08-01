@@ -59,6 +59,7 @@ RSpec.describe 'Pages', type: :request do
   end
   let(:expect_post_create_json_api) { expect_created }
   let(:expect_post_create_serializer) { expect_success }
+  let(:expect_get_new_guest_serializer) { expect_unauthorized }
 
   context 'public page' do
     subject { create_page }
@@ -67,8 +68,8 @@ RSpec.describe 'Pages', type: :request do
       create_unauthorized index_non_existing index_unauthorized
     ]
     context 'user pages' do
-      let(:index_path) { pages_user_path(authorized_user) }
-      let(:non_existing_index_path) { pages_user_path(non_existing_id) }
+      let(:index_path) { "/#{argu.url}#{pages_user_path(authorized_user)}" }
+      let(:non_existing_index_path) { "/#{argu.url}#{pages_user_path(non_existing_id)}" }
       let(:expect_get_index_guest_html) { expect(response.code).to eq('302') }
       let(:expect_get_index_guest_serializer) { expect(response.code).to eq('401') }
       it_behaves_like 'get index'

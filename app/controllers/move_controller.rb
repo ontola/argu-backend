@@ -12,6 +12,10 @@ class MoveController < ServiceController
     end
   end
 
+  def check_if_registered?
+    action_name != 'show'
+  end
+
   def create_success
     add_exec_action_header(headers, ontola_redirect_action(authenticated_resource.edge.iri, reload: true))
     super

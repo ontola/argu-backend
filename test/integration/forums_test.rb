@@ -62,7 +62,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should get show by upcased page shortname' do
-    get freetown.iri.to_s.gsub(argu.url, argu.url.upcase)
+    get freetown.iri.to_s.gsub("/#{argu.url}", "/#{argu.url.upcase}")
     assert_response 200
   end
 

@@ -29,7 +29,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
 
-    assert_redirected_to freetown.iri.path
+    assert_redirected_to freetown.iri
   end
 
   test 'user not accepted terms should post create with valid token for forum_group' do
@@ -40,7 +40,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create, params: {group_id: forum_group, token: '1234567890', root_id: argu.url}
     end
 
-    assert_redirected_to argu.iri.path
+    assert_redirected_to argu.iri
   end
 
   test 'user not accepted terms should post create with valid token for page_group' do
@@ -51,7 +51,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create, params: {group_id: page_group, token: '1234567890', root_id: argu.url}
     end
 
-    assert_redirected_to argu.iri.path
+    assert_redirected_to argu.iri
   end
 
   ####################################
@@ -110,7 +110,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
     assert_equal user.reload.following_type(freetown), 'news'
 
-    assert_redirected_to freetown.iri.path
+    assert_redirected_to freetown.iri
   end
 
   test 'user should post create with valid token for single_forum_group with never follow present' do
@@ -125,7 +125,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
     assert_equal user.reload.following_type(freetown), 'never'
 
-    assert_redirected_to freetown.iri.path
+    assert_redirected_to freetown.iri
   end
 
   test 'user should post create with valid token for forum_group' do
@@ -136,7 +136,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create, params: {group_id: forum_group, token: '1234567890', root_id: argu.url}
     end
 
-    assert_redirected_to argu.iri.path
+    assert_redirected_to argu.iri
   end
 
   test 'user should post create with valid token for page_group' do
@@ -147,7 +147,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create, params: {group_id: page_group, token: '1234567890', root_id: argu.url}
     end
 
-    assert_redirected_to argu.iri.path
+    assert_redirected_to argu.iri
   end
 
   ####################################
@@ -158,7 +158,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
-    assert_redirected_to argu.iri.path
+    assert_redirected_to argu.iri
   end
 
   test 'member should get show with forum grant' do
@@ -167,7 +167,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
-    assert_redirected_to freetown.iri.path
+    assert_redirected_to freetown.iri
   end
 
   test 'member should get show with page grant' do
@@ -176,7 +176,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
-    assert_redirected_to argu.iri.path
+    assert_redirected_to argu.iri
   end
 
   test 'member should get show with r' do
@@ -218,7 +218,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       delete :destroy, params: {id: member.profile.group_memberships.second, root_id: argu.url}
     end
 
-    assert_redirected_to argu.iri.path
+    assert_redirected_to argu.iri
   end
 
   ####################################

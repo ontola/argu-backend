@@ -52,7 +52,7 @@ module SPI
       token = JWT.decode(parsed_body['access_token'], nil, false)[0]
       assert_not_nil token['user']
       assert_equal 'guest', token['user']['type']
-      id_base = "http://#{Rails.application.config.host_name}/sessions/"
+      id_base = "#{argu.iri}/sessions/"
       assert token['user']['@id'].starts_with?(id_base)
       assert_equal SecureRandom.hex.length, token['user']['@id'].split(id_base).last.length
 
@@ -152,6 +152,10 @@ module SPI
 
     private
 
+    def spi_token_path(*args)
+      "/#{argu.url}#{super}"
+    end
+
     def validate_error(error)
       assert_response Argu::Errors::TYPES[error.to_s][:status]
       assert_equal Argu::Errors::TYPES[error.to_s][:id], parsed_body['code']
@@ -167,7 +171,7 @@ module SPI
       assert_not_nil token['user']
       assert_equal 'user', token['user']['type']
       assert_equal user.id, token['user']['id']
-      assert_equal user.iri, token['user']['@id']
+      assert_equal ActsAsTenant.with_tenant(argu) { user.iri }, token['user']['@id']
       assert_equal user.email, token['user']['email']
     end
   end

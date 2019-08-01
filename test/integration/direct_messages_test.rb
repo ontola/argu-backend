@@ -12,7 +12,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   test 'guest should not post create direct_message' do
     post direct_messages_path(root_id: argu.url),
          params: {direct_message: valid_params}
-    assert_redirected_to new_user_session_path(r: motion.iri)
+    assert_redirected_to new_user_session_path(r: argu_url(motion.iri.path))
   end
 
   ####################################
@@ -39,12 +39,12 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
       motion.publisher.email,
       actor: {
         display_name: administrator.display_name,
-        iri: resource_iri(administrator, root: argu),
+        iri: argu_url(resource_iri(administrator, root: argu).path),
         thumbnail: administrator.profile.default_profile_photo.thumbnail
       },
       body: 'body',
       email: administrator.email,
-      resource: {iri: motion.iri, display_name: motion.display_name},
+      resource: {iri: argu_url(motion.iri.path), display_name: motion.display_name},
       subject: 'subject'
     )
 

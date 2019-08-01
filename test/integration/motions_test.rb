@@ -62,10 +62,11 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in guest_user, Doorkeeper::Application.argu_front_end
     guest_vote
     get subject, headers: argu_headers(accept: :nq)
-    parent_segments = split_iri_segments(subject.default_vote_event.iri.path)
-    expect(response.body).to(
-      include("<#{expand_uri_template(:vote_iri, parent_iri: parent_segments, with_hostname: true)}>")
-    )
+    parent_segments = split_iri_segments(subject.default_vote_event.iri_path)
+    vote_iri = ActsAsTenant.with_tenant(argu) do
+      RDF::DynamicURI(argu_url(expand_uri_template(:vote_iri, parent_iri: parent_segments)))
+    end
+    expect(response.body).to(include("<#{vote_iri}>"))
   end
 
   test 'guest should not get other guest_vote included' do
@@ -91,7 +92,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       }
     )
     assert_not_nil assigns(:create_service).resource
-    assert_redirected_to assigns(:create_service).resource.iri(start_motion_tour: true)
+    assert_redirected_to argu_url(assigns(:create_service).resource.iri.path, start_motion_tour: true)
     WebMock.reset!
 
     general_create(
@@ -103,7 +104,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     )
     assert_not_nil assigns(:create_service).resource
 
-    assert_redirected_to assigns(:create_service).resource.iri
+    assert_redirected_to assigns(:create_service).resource.iri.path
   end
 
   test 'initiator should post create motion with latlon' do

@@ -16,6 +16,16 @@ module Argu
         SERVICE_MODELS = %i[argument pro_argument con_argument blog_post comment forum group_membership motion export
                             group question vote decision grant vote_event page topic].freeze
 
+        def argu_headers(accept: nil, bearer: nil, host: nil)
+          headers = {}
+          if accept
+            headers['Accept'] = accept.is_a?(Symbol) ? Mime::Type.lookup_by_extension(accept).to_s : accept
+          end
+          headers['Authorization'] = "Bearer #{bearer}" if bearer
+          headers['HTTP_HOST'] = host if host
+          headers
+        end
+
         def cascaded_forum(key, opts)
           key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
         end

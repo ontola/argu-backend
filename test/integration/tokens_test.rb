@@ -37,13 +37,6 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_nil response.cookies['argu_client_token']
   end
 
-  test 'Guest should not get guest token if none is present on HEAD' do
-    assert_difference("Doorkeeper::AccessToken.where(scopes: 'guest').count", 0) do
-      head motion.iri.path
-    end
-    assert_nil response.cookies['argu_client_token']
-  end
-
   ####################################
   # WITHOUT CREDENTIALS
   ####################################
@@ -565,7 +558,7 @@ class TokensTest < ActionDispatch::IntegrationTest
                       'Argu::Redis.keys("temporary*").count' => -1,
                       'Favorite.count' => 1) do
       Sidekiq::Testing.inline! do
-        post "/#{argu.url}#{oauth_token_path}",
+        post oauth_token_path,
              headers: argu_headers(host: Rails.configuration.host_name),
              params: {
                username: unconfirmed_user.email,
@@ -588,8 +581,8 @@ class TokensTest < ActionDispatch::IntegrationTest
 
     user.update!(failed_attempts: 19)
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post oauth_token_path,
-           headers: argu_headers(host: 'other.example'),
+      post "/#{argu.url}#{oauth_token_path}",
+           headers: argu_headers,
            params: {
              email: user.email,
              password: 'wrong',

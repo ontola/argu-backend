@@ -22,6 +22,10 @@ class ExportsController < ServiceController
     authorize parent_resource!, :index_children?, controller_name
   end
 
+  def check_if_registered?
+    action_name != 'show'
+  end
+
   def index_collection
     parent_resource!.export_collection(collection_options)
   end

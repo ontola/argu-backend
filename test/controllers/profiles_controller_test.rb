@@ -37,7 +37,7 @@ class ProfilesControllerTest < ActionController::TestCase
     user.profile.reload
     assert_equal 'profile_photo.png', user.profile.default_profile_photo.content_identifier
     assert_equal 'cover_photo.jpg', user.profile.default_cover_photo.content_identifier
-    assert_redirected_to resource_iri(user, root: argu).to_s
+    assert_redirected_to resource_iri(user, root: argu).path
   end
 
   test 'user should put setup and redirect to token from cookie' do

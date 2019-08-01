@@ -21,6 +21,10 @@ require 'rspec/expectations'
 
 require 'support/database_cleaner'
 
+Sidekiq::Testing.server_middleware do |chain|
+  chain.add ActsAsTenant::Sidekiq::Server
+end
+
 Minitest::Reporters.use!
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
@@ -101,16 +105,6 @@ module ActionDispatch
 
     teardown do
       reset_tenant
-    end
-
-    def argu_headers(accept: nil, bearer: nil, host: nil)
-      headers = {}
-      if accept
-        headers['Accept'] = accept.is_a?(Symbol) ? Mime::Type.lookup_by_extension(accept).to_s : accept
-      end
-      headers['Authorization'] = "Bearer #{bearer}" if bearer
-      headers['HTTP_HOST'] = host if host
-      headers
     end
 
     def follow_redirect!

@@ -281,5 +281,11 @@ module SPI
 
       assert_response 200
     end
+
+    private
+
+    def spi_authorize_path(*args)
+      "/#{argu.url}#{super}"
+    end
   end
 end

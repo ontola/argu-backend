@@ -221,5 +221,13 @@ module Users
             }
           }
     end
+
+    def user_confirmation_path(*args)
+      "/#{argu.url}#{super}"
+    end
+
+    def users_confirm_path
+      "/#{argu.url}#{super}"
+    end
   end
 end

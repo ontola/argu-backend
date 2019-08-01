@@ -7,7 +7,7 @@ module Argu
         email_only = options.delete(:email_only)
         recipient =
           email_only ? {email: email, language: /.+/} : {display_name: /.+/, id: /.+/, language: /.+/, email: email}
-        stub_request(:post, expand_service_url(:email, '/email/spi/emails'))
+        stub_request(:post, expand_service_url(:email, '/argu/email/spi/emails'))
           .with(
             body: {
               email: {

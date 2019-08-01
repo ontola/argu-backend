@@ -31,6 +31,8 @@ class MenusTest < ActionDispatch::IntegrationTest
   end
 
   test 'Guest should get show page menu with custom item' do
+    sign_in create_guest_user, Doorkeeper::Application.argu_front_end
+
     get "/#{argu.url}/menus", headers: argu_headers(accept: :nq)
 
     assert_response 200

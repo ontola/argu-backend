@@ -30,7 +30,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     get user_path(user_public.id)
 
     ActsAsTenant.current_tenant = argu
-    assert_redirected_to user_public.reload.iri.to_s
+    assert_redirected_to user_public.reload.iri.path
   end
 
   test 'guest should get show by id user without shortname' do
@@ -68,7 +68,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     get user_path(user_public.id)
 
     ActsAsTenant.current_tenant = argu
-    assert_redirected_to user_public.reload.iri.to_s
+    assert_redirected_to user_public.reload.iri.path
   end
 
   test 'user should get show by id user without shortname' do
@@ -98,9 +98,9 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get show self with hidden last name nq' do
-    sign_in user_hidden_last_name
+    sign_in user_hidden_last_name, Doorkeeper::Application.argu_front_end
 
-    get user_path(user_hidden_last_name.id), headers: argu_headers(accept: :nq)
+    get "/#{argu.url}#{user_path(user_hidden_last_name.id)}", headers: argu_headers(accept: :nq)
 
     assert_response 200
     user_iri = resource_iri(user_hidden_last_name, root: argu)
@@ -116,9 +116,9 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get show non public nq' do
-    sign_in user
+    sign_in user, Doorkeeper::Application.argu_front_end
 
-    get user_path(user_non_public), headers: argu_headers(accept: :nq)
+    get "/#{argu.url}#{user_path(user_non_public)}", headers: argu_headers(accept: :nq)
 
     assert_response 200
     assert_not_includes(response.body, user_non_public.email)
@@ -307,7 +307,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       confirmationToken: /.+/,
       email: 'unconfirmed@argu.co'
     )
-    unconfirmed_email
+    ActsAsTenant.with_tenant(argu) { unconfirmed_email }
     assert_email_sent
 
     create_email_mock(

@@ -13,6 +13,21 @@ module Argu
         base.define_spec_objects
       end
 
+      def doorkeeper_application(format)
+        @request_format = format
+        if %i[html json].include?(format)
+          host! 'argu.localtest'
+          Doorkeeper::Application.argu
+        else
+          host! 'app.argu.localtest'
+          Doorkeeper::Application.argu_front_end
+        end
+      end
+
+      def request_headers(format)
+        argu_headers(accept: format, bearer: Doorkeeper::OAuth::Token.cookie_token_extractor(nil))
+      end
+
       module ClassMethods # rubocop:disable Metrics/ModuleLength
         def expectations_for(action)
           %i[json_api].concat(RDF_CONTENT_TYPES) .each do |format|
@@ -24,15 +39,6 @@ module Argu
         end
 
         def define_spec_variables # rubocop:disable Metrics/AbcSize
-          let(:request_format) { :html }
-          let(:doorkeeper_application) do
-            if %i[html json].include?(request_format)
-              Doorkeeper::Application.argu
-            else
-              Doorkeeper::Application.argu_front_end
-            end
-          end
-
           # Differences
           let(:create_differences) { {"#{subject.class}.count" => 1, 'Activity.count' => 1} }
           let(:create_guest_differences) { {} }
@@ -168,6 +174,16 @@ module Argu
           let(:expect_get_form_unauthorized_serializer) { expect_unauthorized }
           let(:expect_get_form_html) { expect_success }
           let(:expect_get_form_serializer) { expect_success }
+
+          # New Forms
+          expectations_for(:get_new)
+          let(:expect_get_new_guest_html) { expect_get_form_guest_html }
+          let(:expect_get_new_guest_json_api) { expect_get_form_guest_json_api }
+          let(:expect_get_new_guest_serializer) { expect_success }
+          let(:expect_get_new_unauthorized_html) { expect_get_form_unauthorized_html }
+          let(:expect_get_new_unauthorized_serializer) { expect_get_form_unauthorized_serializer }
+          let(:expect_get_new_html) { expect_get_form_html }
+          let(:expect_get_new_serializer) { expect_get_form_serializer }
 
           # Users
           let(:staff) { EmailAddress.find_by(email: 'staff@example.com').user }

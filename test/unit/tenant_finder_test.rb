@@ -16,7 +16,7 @@ class TenantFinderTest < ActiveSupport::TestCase
   end
 
   test 'should find tenant by forum iri with upcase page shortname' do
-    assert_equal TenantFinder.from_url(freetown.iri.to_s.gsub(argu.url, argu.url.upcase)), argu
+    assert_equal TenantFinder.from_url(freetown.iri.to_s.gsub("/#{argu.url}", "/#{argu.url.upcase}")), argu
   end
 
   test 'should find tenant by invalid iri' do

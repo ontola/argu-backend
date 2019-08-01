@@ -51,7 +51,7 @@ RSpec.feature 'User Password', type: :feature do
       click_button 'Save'
     end
     expect(page).to have_content('Changes saved successfully')
-    expect(page).to have_current_path "#{settings_iri("/#{argu.url}/u").path}?tab=authentication"
+    expect(page).to have_current_path "/#{argu.url}#{settings_iri('/u').path}?tab=authentication"
 
     visit destroy_user_session_path
     expect(page).to have_current_path(root_path)
