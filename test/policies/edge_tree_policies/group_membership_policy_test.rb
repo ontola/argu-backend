@@ -34,7 +34,7 @@ class GroupMembershipPolicyTest < PolicyTest
   private
 
   def create_results
-    nobody_results.merge(administrator: true, staff: true)
+    nobody_results
   end
 
   def show_results

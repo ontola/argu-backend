@@ -5,7 +5,7 @@ require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'GroupMemberships', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  let(:create_differences) { {'group.reload.reload.group_memberships.count' => 1} }
+  let(:create_differences) { {'group.reload.reload.group_memberships.count' => 0} }
   let(:create_guest_differences) { {} }
   let(:update_differences) { {'group.reload.group_memberships.count' => 0} }
   let(:destroy_differences) { {'group.reload.group_memberships.count' => -1} }
@@ -14,6 +14,7 @@ RSpec.describe 'GroupMemberships', type: :request do
   let(:created_resource_path) { argu.iri.path }
   let(:expect_get_index_guest_serializer) { expect_not_a_user }
   let(:expect_get_show_guest_serializer) { expect_unauthorized }
+  let(:expect_post_create_serializer) { expect_unauthorized }
 
   subject { group_membership }
 

@@ -239,7 +239,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            }
     end
 
-    assert_redirected_to settings_iri(freetown, tab: :groups)
+    assert_response 403
   end
 
   test 'administrator should not post create member json' do
@@ -259,10 +259,10 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test 'administrator should post create other' do
+  test 'administrator should not post create other' do
     sign_in administator
     user
-    assert_difference 'GroupMembership.count', 1 do
+    assert_difference 'GroupMembership.count', 0 do
       post :create,
            params: {
              group_id: group,
@@ -272,7 +272,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            }
     end
 
-    assert_redirected_to settings_iri(freetown, tab: :groups)
+    assert_response 403
   end
 
   test 'administrator should not post create other json' do
@@ -338,12 +338,12 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As Page
+  # As admin
   ####################################
-  test 'page should post create other' do
+  test 'page should not post create other' do
     sign_in administator
     user
-    assert_difference 'GroupMembership.count', 1 do
+    assert_difference 'GroupMembership.count', 0 do
       post :create,
            params: {
              actor_iri: argu.iri,
@@ -354,6 +354,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            }
     end
 
-    assert_redirected_to settings_iri(freetown, tab: :groups)
+    assert_response 403
   end
 end
