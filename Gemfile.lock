@@ -17,6 +17,17 @@ GIT
       request_store (>= 1.0.5)
 
 GIT
+  remote: https://github.com/ArthurWD/apartment
+  revision: 9d2db15de7c412321245f48680aae880157c400d
+  ref: 9d2db15
+  specs:
+    apartment (2.2.1)
+      activerecord (>= 3.1.2, < 6.1)
+      parallel (>= 0.7.1)
+      public_suffix (>= 2)
+      rack (>= 1.3.6)
+
+GIT
   remote: https://github.com/allenwq/devise-multi_email
   revision: c38230c02f5b8e8e4f07bb2bcff7ef16f79bf480
   ref: c3823
@@ -149,11 +160,6 @@ GEM
       activesupport (>= 3.0.0)
     amq-protocol (2.2.0)
     ansi (1.5.0)
-    apartment (2.2.1)
-      activerecord (>= 3.1.2, < 6.0)
-      parallel (>= 0.7.1)
-      public_suffix (>= 2)
-      rack (>= 1.3.6)
     archive-zip (0.7.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
@@ -487,7 +493,7 @@ GEM
       json (~> 1.3)
       omniauth-oauth (~> 1.1)
     orm_adapter (0.5.0)
-    parallel (1.12.1)
+    parallel (1.17.0)
     parser (2.4.0.2)
       ast (~> 2.3)
     parslet (1.8.1)
@@ -787,7 +793,7 @@ DEPENDENCIES
   acts_as_list
   acts_as_tenant!
   addressable (~> 2.3.8)
-  apartment
+  apartment!
   auto_strip_attributes (~> 2.0.6)
   babel-transpiler
   bcrypt-ruby (>= 3.1.5)
