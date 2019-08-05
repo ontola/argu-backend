@@ -55,6 +55,10 @@ class SearchResult
     )
   end
 
+  def search_template
+    "#{iri_template.expand}{?q,page}{#fragment}"[1..-1]
+  end
+
   def results
     @results ||= LinkedRails::Sequence.new(search_result)
   end

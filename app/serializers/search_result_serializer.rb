@@ -7,6 +7,7 @@ class SearchResultSerializer < BaseSerializer
   attribute :took, predicate: NS::ARGU[:took]
   attribute :q, predicate: NS::ARGU[:query]
   attribute :display, predicate: NS::ONTOLA[:collectionDisplay]
+  attribute :search_template, predicate: NS::ONTOLA[:searchTemplate]
 
   %i[first prev next last].each do |attr|
     attribute attr, predicate: NS::AS[attr], unless: :system_scope?
