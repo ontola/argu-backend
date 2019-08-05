@@ -65,6 +65,8 @@ module Argu
 
     ActiveModelSerializers.config.key_transform = :camel_lower
 
+    ActiveJob::Base.queue_adapter = :sidekiq
+
     VideoInfo.provider_api_keys = {youtube: ENV['YOUTUBE_KEY'], vimeo: ENV['VIMEO_KEY']}
 
     ############################
