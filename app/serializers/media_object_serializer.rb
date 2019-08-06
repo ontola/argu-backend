@@ -3,7 +3,6 @@
 class MediaObjectSerializer < RecordSerializer
   include Parentable::Serializer
 
-  attribute :url, predicate: NS::SCHEMA[:url]
   attribute :content, predicate: NS::SCHEMA[:contentUrl]
   attribute :content_type,
             predicate: NS::SCHEMA[:encodingFormat],
