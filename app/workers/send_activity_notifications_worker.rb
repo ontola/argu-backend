@@ -8,22 +8,24 @@ class SendActivityNotificationsWorker
   COOLDOWN_PERIOD = 4.minutes
 
   def perform(user_id, delivery_type) # rubocop:disable Metrics/AbcSize
-    @user = User.find(user_id)
+    ActsAsTenant.without_tenant do
+      @user = User.find(user_id)
 
-    return if wrong_delivery_type?(delivery_type)
+      return if wrong_delivery_type?(delivery_type)
 
-    ActiveRecord::Base.transaction do
-      begin
-        collect_activity_notifications
-        if @notifications.length.zero?
-          logger.warn 'No notifications to send'
-        else
-          logger.info "Preparing to possibly send #{@notifications.length} notifications"
-          send_activity_notifications_mail if outside_cooldown_period
+      ActiveRecord::Base.transaction do
+        begin
+          collect_activity_notifications
+          if @notifications.length.zero?
+            logger.warn 'No notifications to send'
+          else
+            logger.info "Preparing to possibly send #{@notifications.length} notifications"
+            send_activity_notifications_mail if outside_cooldown_period
+          end
+        rescue ActiveRecord::StatementInvalid => e
+          logger.error 'Queue collision occurred' if e.message.include? 'LockNotAvailable'
+          Bugsnag.auto_notify(e) if Rails.env.production?
         end
-      rescue ActiveRecord::StatementInvalid => e
-        logger.error 'Queue collision occurred' if e.message.include? 'LockNotAvailable'
-        Bugsnag.auto_notify(e) if Rails.env.production?
       end
     end
   end
@@ -95,13 +97,15 @@ class SendActivityNotificationsWorker
 
   def send_activity_notifications_mail
     logger.info "Sending #{@notifications.length} notification(s) to #{@user.email}"
-    Argu::API
-      .service_api
-      .create_email(
-        :activity_notifications,
-        @user,
-        follows: prepared_notifications
-      )
+    ActsAsTenant.with_tenant(Page.first) do
+      Argu::API
+        .service_api
+        .create_email(
+          :activity_notifications,
+          @user,
+          follows: prepared_notifications
+        )
+    end
     @user.update_column(:notifications_viewed_at, Time.current) # rubocop:disable Rails/SkipsModelValidations
   end
 
