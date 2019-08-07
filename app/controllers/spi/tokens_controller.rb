@@ -16,7 +16,7 @@ module SPI
     include LinkedRails::Helpers::OntolaActionsHelper
 
     def create
-      return if doorkeeper_authorize! :service
+      return if doorkeeper_authorize! :service, :guest
 
       token = params[:scope] == 'user' ? user_token : guest_token
       return if token.nil?

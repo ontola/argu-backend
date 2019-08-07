@@ -10,11 +10,11 @@ module SPI
     ####################################
     # As Guest
     ####################################
-    test 'guest should not post create' do
+    test 'guest should post create' do
       sign_in guest_user
 
       post spi_token_path
-      assert_response 403
+      assert_response 201
     end
 
     ####################################
