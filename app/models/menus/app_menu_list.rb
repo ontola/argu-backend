@@ -48,7 +48,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     menu_item(
       :language,
       label: I18n.t('set_language'),
-      href: RDF::DynamicURI(expand_uri_template(:languages_iri, with_hostname: true))
+      href: iri_from_template(:languages_iri)
     )
   end
 

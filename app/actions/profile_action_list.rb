@@ -4,7 +4,7 @@ class ProfileActionList < EdgeActionList
   has_action(
     :update,
     update_options.merge(
-      url: -> { RDF::DynamicURI(expand_uri_template(:profiles_iri, id: resource.id, with_hostname: true)) }
+      url: -> { iri_from_template(:profiles_iri, id: resource.id) }
     )
   )
 end

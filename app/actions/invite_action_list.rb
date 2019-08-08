@@ -9,7 +9,7 @@ class InviteActionList < ApplicationActionList
       include_resource: true,
       label: -> { I18n.t('tokens.discussion.title') },
       policy: :create?,
-      url: -> { RDF::DynamicURI(expand_uri_template(:tokens_iri, with_hostname: true)) }
+      url: -> { iri_from_template(:tokens_iri) }
     )
   )
 
