@@ -2,7 +2,7 @@
 
 require 'spam_checker'
 
-class RegistrationsController < Devise::RegistrationsController
+class RegistrationsController < Devise::RegistrationsController # rubocop:disable Metrics/ClassLength
   include Argu::Controller::Authorization
   include LinkedRails::Enhancements::Destroyable::Controller
   include RedisResourcesHelper
@@ -103,15 +103,19 @@ class RegistrationsController < Devise::RegistrationsController
       SendEmailWorker.perform_async(
         :confirm_votes,
         user.id,
-        confirmationToken: user.confirmation_token,
+        token_url: user_confirmation_url(user),
         motions: guest_votes.map do |guest_vote|
           m = guest_vote.resource.ancestor(:motion)
           {display_name: m.display_name, url: m.iri, option: guest_vote.resource.for} if m
         end.compact
       )
     elsif resource.password.present?
-      SendEmailWorker.perform_async(:confirmation, user.id, confirmationToken: user.confirmation_token)
+      SendEmailWorker.perform_async(:confirmation, user.id, token_url: user_confirmation_url(user))
     end
+  end
+
+  def user_confirmation_url(user)
+    iri_from_template(:user_confirmation, confirmation_token: user.confirmation_token)
   end
 
   def is_spam? # rubocop:disable Metrics/AbcSize

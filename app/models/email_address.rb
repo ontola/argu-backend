@@ -82,7 +82,7 @@ class EmailAddress < ApplicationRecord
     SendEmailWorker.perform_async(
       :confirm_secondary,
       user.guest? ? nil : user.id,
-      confirmationToken: confirmation_token,
+      token_url: iri_from_template(:user_confirmation, confirmation_token: confirmation_token),
       email: email
     )
   end

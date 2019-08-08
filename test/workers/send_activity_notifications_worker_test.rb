@@ -29,7 +29,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
     email_type = User.reactions_emails[:direct_reactions_email]
     ActsAsTenant.with_tenant(argu) { snw.perform(follower.id, email_type) }
 
-    assert_email_sent(skip_sidekiq: true)
+    assert_email_sent(root: :public_page, skip_sidekiq: true)
 
     follower.reload
     assert_equal 0, snw.send(:collect_activity_notifications).length, 'Notifications will be send twice'
@@ -46,7 +46,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
     email_type = User.reactions_emails[:daily_reactions_email]
     ActsAsTenant.with_tenant(argu) { snw.perform(follower_daily.id, email_type) }
 
-    assert_email_sent(skip_sidekiq: true)
+    assert_email_sent(root: :public_page, skip_sidekiq: true)
 
     follower_daily.reload
     assert_equal 0, snw.send(:collect_activity_notifications).length, 'Notifications will be send twice'
@@ -63,7 +63,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
     email_type = User.reactions_emails[:weekly_reactions_email]
     ActsAsTenant.with_tenant(argu) { snw.perform(follower_weekly.id, email_type) }
 
-    assert_email_sent(skip_sidekiq: true)
+    assert_email_sent(root: :public_page, skip_sidekiq: true)
 
     follower_weekly.reload
     assert_equal 0,
@@ -89,7 +89,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
     email_type = User.reactions_emails[:direct_reactions_email]
     ActsAsTenant.with_tenant(argu) { snw.perform(follower.id, email_type) }
 
-    assert_email_sent(skip_sidekiq: true)
+    assert_email_sent(root: :public_page, skip_sidekiq: true)
 
     follower.reload
     assert_equal 0, snw.send(:collect_activity_notifications).length, 'Notifications will be send twice'
@@ -140,7 +140,8 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
           followable: {display_name: motion.display_name, id: motion.iri, pro: nil, type: 'Motion'},
           organization: {display_name: motion.root.display_name}
         }
-      ]
+      ],
+      tenant: :public_page
     )
   end
 end

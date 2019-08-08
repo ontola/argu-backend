@@ -110,7 +110,7 @@ module Users
     end
 
     test 'user should post create password for existing email' do
-      create_email_mock('reset_password_instructions', user.email, token: /.+/)
+      create_email_mock('reset_password_instructions', user.email, token_url: /.+/)
 
       sign_in user
       post user_password_path, params: {user: {email: user.email}}

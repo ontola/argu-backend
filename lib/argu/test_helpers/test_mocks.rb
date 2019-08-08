@@ -5,9 +5,10 @@ module Argu
     module TestMocks
       def create_email_mock(template, email, options)
         email_only = options.delete(:email_only)
+        tenant = options.delete(:tenant) || :argu
         recipient =
           email_only ? {email: email, language: /.+/} : {display_name: /.+/, id: /.+/, language: /.+/, email: email}
-        stub_request(:post, expand_service_url(:email, '/argu/email/spi/emails'))
+        stub_request(:post, expand_service_url(:email, "/#{tenant}/email/spi/emails"))
           .with(
             body: {
               email: {

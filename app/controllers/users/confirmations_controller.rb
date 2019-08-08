@@ -5,12 +5,12 @@ class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop
   before_action :head_200, only: :show
   active_response :new
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     email = email_for_user
     create_email = SendEmailWorker.perform_async(
       :requested_confirmation,
       current_user.guest? ? {email: email.email, language: I18n.locale} : current_user.id,
-      confirmationToken: email.confirmation_token,
+      token_url: iri_from_template(:user_confirmation, confirmation_token: email.confirmation_token),
       email: email.email
     )
     set_flash_message :notice, :send_instructions if create_email

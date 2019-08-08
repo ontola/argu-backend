@@ -12,7 +12,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
   # As User without accepted terms
   ####################################
   scenario 'User without password should accept terms before posting motion' do
-    create_email_mock('set_password', user_without_password.email, passwordToken: /.+/)
+    create_email_mock('set_password', user_without_password.email, token_url: /.+/)
     accept_terms_before_posting_motion(user_without_password)
     assert_email_sent
   end
@@ -22,7 +22,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
   end
 
   scenario 'User without password should accept terms before voting' do
-    create_email_mock('set_password', user_without_password.email, passwordToken: /.+/)
+    create_email_mock('set_password', user_without_password.email, token_url: /.+/)
     accept_terms_before_voting(user_without_password)
     assert_email_sent
   end

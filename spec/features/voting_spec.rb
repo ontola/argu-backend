@@ -16,7 +16,7 @@ RSpec.feature 'Voting', type: :feature do
     create_email_mock(
       'confirm_votes',
       user_attr[:email],
-      confirmationToken: /.+/,
+      token_url: /.+/,
       motions: [
         {display_name: motion.display_name, option: 'con', url: "#{Rails.application.config.origin}#{motion.iri.path}"}
       ]

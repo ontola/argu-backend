@@ -13,7 +13,7 @@ RSpec.feature 'User email' do
     create_email_mock(
       'confirm_secondary',
       user.email,
-      confirmationToken: /.+/,
+      token_url: /.+/,
       email: new_email
     )
 

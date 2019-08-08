@@ -31,7 +31,7 @@ class EmailAddressTest < ActiveSupport::TestCase
     create_email_mock(
       'confirm_secondary',
       user.email,
-      confirmationToken: /.+/,
+      token_url: /.+/,
       email: 'test@example.com'
     )
 

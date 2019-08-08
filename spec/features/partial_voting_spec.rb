@@ -25,7 +25,7 @@ RSpec.feature 'Partial Voting', type: :feature do
     create_email_mock(
       'confirm_votes',
       user_attr[:email],
-      confirmationToken: /.+/,
+      token_url: /.+/,
       motions: [{display_name: subject.display_name, option: 'con', url: resource_iri(subject).to_s.sub('app.', '')}]
     )
 

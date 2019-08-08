@@ -11,19 +11,19 @@ module Argu
         assert_equal true, assigns(:_not_authorized_caught)
       end
 
-      def assert_email_sent(count: 1, skip_sidekiq: false) # rubocop:disable Metrics/AbcSize
+      def assert_email_sent(count: 1, skip_sidekiq: false, root: :argu) # rubocop:disable Metrics/AbcSize
         unless skip_sidekiq
           assert_equal count, Sidekiq::Worker.jobs.select { |j| j['class'] == 'SendEmailWorker' }.count
           SendEmailWorker.drain
         end
 
-        assert_requested :post, expand_service_url(:email, '/argu/email/spi/emails'), times: count
+        assert_requested :post, expand_service_url(:email, "/#{root}/email/spi/emails"), times: count
         last_match = WebMock::RequestRegistry
                        .instance
                        .requested_signatures
                        .hash
                        .keys
-                       .detect { |r| r.uri.to_s == expand_service_url(:email, '/argu/email/spi/emails') }
+                       .detect { |r| r.uri.to_s == expand_service_url(:email, "/#{root}/email/spi/emails") }
         WebMock.reset!
         last_match
       end

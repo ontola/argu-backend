@@ -203,7 +203,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       'confirm_secondary',
       /.+/,
       email: 'secondary@argu.co',
-      confirmationToken: /.+/
+      token_url: /.+/
     )
 
     assert_difference('EmailAddress.count' => 1,
@@ -304,7 +304,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     create_email_mock(
       'confirm_secondary',
       /.+/,
-      confirmationToken: /.+/,
+      token_url: /.+/,
       email: 'unconfirmed@argu.co'
     )
     ActsAsTenant.with_tenant(argu) { unconfirmed_email }
@@ -313,7 +313,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     create_email_mock(
       'confirm_secondary',
       /.+/,
-      confirmationToken: /.+/,
+      token_url: /.+/,
       email: 'changed@argu.co'
     )
     assert_difference('EmailAddress.count' => 0,
@@ -390,7 +390,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
   test 'user with other email should redirect to r on wrong_email' do
     sign_in user
-    create_email_mock('confirm_secondary', /.+/, email: 'new@email.com', confirmationToken: /.+/)
+    create_email_mock('confirm_secondary', /.+/, email: 'new@email.com', token_url: /.+/)
 
     assert_difference('EmailAddress.count') do
       put user_path(user),

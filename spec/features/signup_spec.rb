@@ -83,7 +83,7 @@ RSpec.feature 'Signup', type: :feature do
     create_email_mock(
       'confirmation',
       user_attrs[:email],
-      confirmationToken: /.+/
+      token_url: /.+/
     )
 
     expect(page).not_to have_content('Sign up with email')

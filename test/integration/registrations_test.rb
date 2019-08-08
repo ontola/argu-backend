@@ -120,7 +120,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     locale = :en
     put language_users_path(locale: locale)
-    create_email_mock('confirmation', 'test@example.com', confirmationToken: /.+/)
+    create_email_mock('confirmation', 'test@example.com', token_url: /.+/)
 
     Sidekiq::Testing.inline! do
       assert_difference('User.count' => 1,
@@ -158,7 +158,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     locale = :nl
     put language_users_path(locale: locale)
     attrs = attributes_for(:user)
-    create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
+    create_email_mock('confirmation', attrs[:email], token_url: /.+/)
 
     assert_difference('User.count' => 1,
                       'Favorite.count' => 0,
@@ -175,7 +175,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     locale = :nl
     put language_users_path(locale: locale)
     attrs = attributes_for(:user)
-    create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
+    create_email_mock('confirmation', attrs[:email], token_url: /.+/)
     get freetown.iri.path
 
     assert_difference('User.count' => 1,
@@ -217,7 +217,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     create_email_mock(
       'confirm_votes',
       'test@example.com',
-      confirmationToken: /.+/,
+      token_url: /.+/,
       motions: [
         {display_name: motion.display_name, option: 'pro', url: argu_url(motion.iri.path)},
         {display_name: motion2.display_name, option: 'pro', url: argu_url(motion2.iri.path)}
@@ -274,7 +274,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     create_email_mock(
       'confirm_votes',
       attrs[:email],
-      confirmationToken: /.+/,
+      token_url: /.+/,
       motions: [
         {display_name: motion.display_name, option: 'pro', url: argu_url(motion.iri.path)},
         {display_name: motion2.display_name, option: 'pro', url: argu_url(motion2.iri.path)}
@@ -294,7 +294,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_redirected_to setup_users_path
     assert_email_sent(skip_sidekiq: true)
 
-    create_email_mock('confirmation_reminder', attrs[:email], token: /.+/)
+    create_email_mock('confirmation_reminder', attrs[:email], token_url: /.+/)
 
     Sidekiq::Testing.inline! do
       # rubocop:disable Rails/SkipsModelValidations

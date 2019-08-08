@@ -39,7 +39,7 @@ class SendActivityNotificationsWorker
     return if followable.nil?
 
     result[followable.id] ||= Struct::Follow.new(
-      @user.follow_for(followable)&.unsubscribe_iri,
+      ActsAsTenant.with_tenant(followable.root) { @user.follow_for(followable)&.unsubscribe_iri },
       {display_name: followable.root.display_name},
       {
         id: followable.iri,
@@ -97,14 +97,11 @@ class SendActivityNotificationsWorker
 
   def send_activity_notifications_mail
     logger.info "Sending #{@notifications.length} notification(s) to #{@user.email}"
+    notifications = prepared_notifications
     ActsAsTenant.with_tenant(Page.first) do
       Argu::API
         .service_api
-        .create_email(
-          :activity_notifications,
-          @user,
-          follows: prepared_notifications
-        )
+        .create_email(:activity_notifications, @user, follows: notifications)
     end
     @user.update_column(:notifications_viewed_at, Time.current) # rubocop:disable Rails/SkipsModelValidations
   end

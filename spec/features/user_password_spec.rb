@@ -114,7 +114,7 @@ RSpec.feature 'User Password', type: :feature do
                          last_name: user_omni_only.last_name,
                          middle_name: nil,
                          uid: '111907595807605')
-    create_email_mock('reset_password_instructions', user_omni_only.email, token: /.+/)
+    create_email_mock('reset_password_instructions', user_omni_only.email, token_url: /.+/)
 
     expect(user_omni_only.has_password?).to be_falsey
 
@@ -134,7 +134,7 @@ RSpec.feature 'User Password', type: :feature do
     end
 
     match = assert_email_sent(skip_sidekiq: true)
-    token = Rack::Utils.parse_nested_query(match.body)['email']['options']['token']
+    token = Rack::Utils.parse_nested_query(match.body)['email']['options']['token_url'].split('=').last
     visit edit_user_password_path(reset_password_token: token)
 
     expect(page).to have_content('Choose a password')

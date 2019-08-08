@@ -74,7 +74,7 @@ module Users
         'requested_confirmation',
         user.email,
         email: user.email,
-        confirmationToken: /.+/,
+        token_url: /.+/,
         email_only: true
       )
       post user_confirmation_path(user: {email: user.email})
@@ -131,7 +131,7 @@ module Users
         'requested_confirmation',
         user.email,
         email: user.email,
-        confirmationToken: /.+/
+        token_url: /.+/
       )
       post user_confirmation_path(user: {email: user.email})
       assert_equal user.primary_email_record.confirmation_sent_at.iso8601(6),

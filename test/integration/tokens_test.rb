@@ -577,7 +577,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   ####################################
   test 'User should lock after exceeding failed_attempts limit' do
     sign_in guest_user
-    create_email_mock('unlock_instructions', user.email, token: /.+/)
+    create_email_mock('unlock_instructions', user.email, token_url: /.+/)
 
     user.update!(failed_attempts: 19)
     assert_no_difference('Doorkeeper::AccessToken.count') do
