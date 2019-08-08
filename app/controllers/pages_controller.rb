@@ -19,7 +19,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def create_success_rdf
     ActsAsTenant.current_tenant = authenticated_resource
-    respond_with_redirect(location: settings_iri(authenticated_resource), reload: true)
+    respond_with_redirect(location: authenticated_resource.iri, reload: true)
   end
 
   def destroy_success_html
