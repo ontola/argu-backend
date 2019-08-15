@@ -371,6 +371,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
       }
     end
 
+    assert_equal '/new_forum/m/new', Forum.last.creative_works.new_motion.first.url_path
     assert_equal 1, Forum.last.placements.first.lat
     assert_equal 1, Forum.last.placements.first.lon
   end
