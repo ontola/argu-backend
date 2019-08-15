@@ -258,7 +258,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
             password_confirmation: 'password'
           }
         }
-    assert_redirected_to setup_users_path
+    assert_redirected_to "/#{argu.url}#{setup_users_path}"
     assert_not User.last.encrypted_password == ''
     assert_email_sent(skip_sidekiq: true)
   end

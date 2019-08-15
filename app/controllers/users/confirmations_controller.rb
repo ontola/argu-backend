@@ -30,11 +30,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop
       else
         token = resource.send(:set_reset_password_token)
         respond_with_redirect(
-          location:
-            expand_uri_template(
-              :user_set_password,
-              reset_password_token: token
-            ),
+          location: iri_from_template(:user_set_password, reset_password_token: token),
           notice: flash[:notice]
         )
       end
@@ -80,7 +76,8 @@ class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop
 
   def after_sign_in_path_for(resource)
     return super if resource.url.present?
-    setup_users_path
+
+    iri_from_template(:setup_iri)
   end
 
   def correct_mail

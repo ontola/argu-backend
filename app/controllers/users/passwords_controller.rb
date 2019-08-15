@@ -35,7 +35,8 @@ class Users::PasswordsController < Devise::PasswordsController
 
   def after_resetting_password_path_for(resource)
     return super if resource.url.present?
-    setup_users_url
+
+    iri_from_template(:setup_iri)
   end
 
   def current_resource

@@ -90,7 +90,7 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_redirected_to setup_users_url
+      assert_redirected_to "/#{argu.url}#{setup_users_path}"
       assert_not_equal user_no_shortname.encrypted_password, user_no_shortname.reload.encrypted_password
     end
 
@@ -188,7 +188,7 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_redirected_to setup_users_url
+      assert_redirected_to "/#{argu.url}#{setup_users_path}"
       assert_not_equal user_no_shortname.encrypted_password, user_no_shortname.reload.encrypted_password
     end
   end
