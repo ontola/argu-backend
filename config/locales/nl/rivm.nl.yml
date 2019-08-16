@@ -1,0 +1,17 @@
+nl:
+  risks:
+    type: "Gevaar"
+    type_new: "Nieuw gevaar"
+    plural: "Gevaren"
+  intervention_types:
+    type: "Maatregel"
+    type_new: "Nieuwe maatregel"
+    plural: "Maatregelen"
+    collection_for: "Maatregelen tegen %{parent}"
+  interventions:
+    type: "Voorbeeld"
+    type_new: "Nieuw voorbeeld"
+    plural: "Voorbeelden"
+  formtastic:
+    labels:
+      example_of_id: "Beschermt tegen"

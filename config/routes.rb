@@ -354,6 +354,18 @@ Rails.application.routes.draw do
     include_route_concerns
   end
 
+  {risks: 'gevaren', intervention_types: 'interventie_types'}.each do |key, value|
+    resources key, path: value, only: %i[index new create show] do
+      include_route_concerns
+      collection do
+        concerns :nested_actionable
+      end
+    end
+  end
+  resources :interventions, path: 'interventies', only: %i[index new create show] do
+    include_route_concerns
+  end
+
   %i[blogs forums open_data_portals].each do |container_node|
     resources container_node, only: %i[index new create]
   end

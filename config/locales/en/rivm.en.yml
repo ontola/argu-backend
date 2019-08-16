@@ -1,0 +1,17 @@
+en:
+  risks:
+    type: "Danger"
+    type_new: "New danger"
+    plural: "Dangers"
+  intervention_types:
+    type: "Intervention types"
+    type_new: "New intervention type"
+    plural: "Intervention types"
+    collection_for: "Maatregelen tegen %{parent}"
+  interventions:
+    type: "Interventions"
+    type_new: "New intervention"
+    plural: "Intervention"
+  formtastic:
+    labels:
+      example_of_id: "Protects against"

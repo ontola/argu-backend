@@ -70,8 +70,11 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :blogs, dependent: :restrict_with_exception
   has_many_children :forums, dependent: :restrict_with_exception
   has_many_children :open_data_portals, dependent: :restrict_with_exception
+  has_many_children :interventions
+  has_many_children :intervention_types
   has_many_children :motions
   has_many_children :questions
+  has_many_children :risks
   has_many_children :topics
   has_many_children :vote_events
   has_many_children :votes
@@ -195,7 +198,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def iri_opts
-    {id: fragment}
+    {id: url || fragment}
   end
 
   def is_child_of?(edge)
@@ -228,6 +231,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return @persisted_edge if @persisted_edge.present?
     persisted = self
     persisted = persisted.parent until persisted.persisted? || persisted.parent.nil?
+    persisted = persisted.root unless persisted.persisted?
     @persisted_edge = persisted if persisted.persisted?
   end
 
@@ -258,10 +262,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     true
   end
 
-  def root(*args)
-    return self if parent_id.nil? && parent.nil?
+  def root(*args) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+    return self if root_object? && parent_id.nil? && parent.nil?
     return @root || super if association_cached?(:root)
-    @root ||= association_cached?(:parent) ? parent.root : association(:root).reader(*args)
+    @root ||= association_cached?(:parent) && parent ? parent.root : association(:root).reader(*args)
   end
 
   def root_object?

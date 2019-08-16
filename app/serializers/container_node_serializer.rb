@@ -3,7 +3,6 @@
 class ContainerNodeSerializer < EdgeSerializer
   attribute :bio, predicate: NS::SCHEMA[:description]
   attribute :bio_long, predicate: NS::SCHEMA[:text]
-  attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
   attribute :language, predicate: NS::SCHEMA[:language], datatype: NS::XSD[:string]
   attribute :locale, predicate: NS::ARGU[:locale]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]

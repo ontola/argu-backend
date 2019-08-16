@@ -13,6 +13,7 @@ class EdgeSerializer < RecordSerializer
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
   attribute :last_activity_at, predicate: NS::ARGU[:lastActivityAt]
   attribute :pinned_at, predicate: NS::ARGU[:pinnedAt]
+  attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
 
   delegate :is_publishable?, to: :object
 
@@ -26,5 +27,11 @@ class EdgeSerializer < RecordSerializer
 
   def granted_groups
     RDF::DynamicURI("#{object.iri}/granted")
+  end
+
+  def parent
+    return object.parent unless object.parent.is_a?(Page) && object.parent_collections.count == 1
+
+    object.parent_collections.first
   end
 end
