@@ -9,12 +9,12 @@ class Comment < Edge
 
   property :in_reply_to_id, :linked_edge_id, NS::ARGU[:inReplyTo], default: nil
 
-  has_one :vote, foreign_key_property: :comment_id, dependent: false
+  has_one :vote, primary_key_property: :comment_id, dependent: false
   belongs_to :parent_comment, foreign_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
-  has_many :comment_children, foreign_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
+  has_many :comment_children, primary_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
   has_many :active_comment_children,
            -> { active },
-           foreign_key_property: :in_reply_to_id,
+           primary_key_property: :in_reply_to_id,
            class_name: 'Comment',
            dependent: false
   belongs_to :commentable, polymorphic: true
