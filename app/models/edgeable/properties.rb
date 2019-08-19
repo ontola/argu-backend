@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'types/uuid_type'
-
 module Edgeable
   module Properties
     extend ActiveSupport::Concern
@@ -92,7 +90,7 @@ module Edgeable
       def property_type(type)
         case type
         when :linked_edge_id
-          UUIDType.new
+          :uuid
         else
           type
         end
