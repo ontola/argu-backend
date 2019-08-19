@@ -8,22 +8,23 @@ module Edgeable
       has_many :properties, primary_key: :uuid, autosave: true, dependent: :destroy
 
       attr_accessor :properties_preloaded
+      attr_accessor :property_managers
       class_attribute :defined_properties
     end
 
-    def preload_properties(force = false) # rubocop:disable Metrics/AbcSize
+    def preload_properties(force = false)
       return if !force && (properties_preloaded || !association_cached?(:properties))
+      self.property_managers = {}
+
       defined_properties&.each do |p|
-        property = properties.detect { |prop| prop.predicate == p[:predicate] }
-        value = property.present? ? property.value : p[:default]
-        send("#{p[:name]}=", value) unless value.nil?
+        property_manager(p[:predicate]).preload
         clear_attribute_change(p[:name])
       end
       self.properties_preloaded = true
     end
 
-    def property_instance(predicate)
-      properties.detect { |p| p.predicate == predicate } || properties.build(predicate: predicate)
+    def property_manager(predicate)
+      property_managers[predicate] ||= Manager.new(self, predicate)
     end
 
     def reload(_opt = {})
@@ -73,16 +74,19 @@ module Edgeable
         self.defined_properties = superclass.try(:defined_properties)&.dup || []
       end
 
-      def property(name, type, predicate, default: nil, enum: nil)
+      def property(name, type, predicate, opts = {})
         initialize_defined_properties
-        defined_properties << {name: name, type: type, predicate: predicate, default: default, enum: enum}
+        defined_properties << {name: name, type: type, predicate: predicate}.merge(opts)
 
-        attribute name, property_type(type), default: default
+        attr_opts = {default: opts[:default]}
+        attr_opts[:array] = true if opts[:array]
 
-        enum name => enum if enum.present?
+        attribute name, property_type(type), attr_opts
+
+        enum name => opts[:enum] if opts[:enum].present?
 
         define_method "#{name}=" do |value|
-          property_instance(predicate)&.value = value
+          property_manager(predicate).value = value
           super(value)
         end
       end

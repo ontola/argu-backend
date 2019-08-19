@@ -15,12 +15,37 @@ class PropertiesTest < ActiveSupport::TestCase
   let(:intervention_type) { create(:intervention_type, parent: argu) }
 
   test 'property assignment' do
-    motion.update!(description: 'New name')
-    assert_equal 'New name', Edge.find_by(uuid: motion.uuid).description
-    assert_equal 'New name', Edge.find_by(uuid: motion.uuid).property_instance(NS::SCHEMA[:text]).text
-    motion.update!(description: nil)
-    assert_equal nil, Edge.find_by(uuid: motion.uuid).description
-    assert_equal nil, Edge.find_by(uuid: motion.uuid).property_instance(NS::SCHEMA[:text]).text
+    motion
+    name_id = motion.property_manager(NS::SCHEMA[:name]).send(:properties).first.id
+    text_id = motion.property_manager(NS::SCHEMA[:text]).send(:properties).first.id
+
+    assert_no_difference('Property.count') do
+      motion.update!(description: 'New description')
+    end
+
+    assert_not_equal(text_id, reloaded_motion.property_manager(NS::SCHEMA[:text]).send(:properties).first.id)
+    assert_equal(name_id, reloaded_motion.property_manager(NS::SCHEMA[:name]).send(:properties).first.id)
+    assert_equal 'New description', reloaded_motion.description
+    assert_equal 'New description', reloaded_motion.property_manager(NS::SCHEMA[:text]).value
+
+    assert_no_difference('Property.count') do
+      motion.update!(description: nil)
+    end
+
+    assert_nil reloaded_motion.description
+    assert_nil reloaded_motion.property_manager(NS::SCHEMA[:text]).value
+  end
+
+  test 'property array assignment' do
+    assert_empty intervention_type.example_of_id
+    assert_empty intervention_type.example_of
+    risk1
+    risk2
+    assert_difference('Property.count' => 2) do
+      intervention_type.update!(example_of_id: [risk1.uuid, risk2.uuid])
+    end
+    assert_equal [risk1.uuid, risk2.uuid], reloaded_intervention_type.example_of_id
+    assert_equal [risk1, risk2], reloaded_intervention_type.example_of
   end
 
   test 'property associations' do
@@ -35,5 +60,15 @@ class PropertiesTest < ActiveSupport::TestCase
     assert_not_nil freetown.default_decision_group
     second_page.destroy
     assert_not_nil freetown.reload.default_decision_group
+  end
+
+  private
+
+  def reloaded_intervention_type
+    Edge.find_by(uuid: intervention_type.uuid)
+  end
+
+  def reloaded_motion
+    Edge.find_by(uuid: motion.uuid)
   end
 end
