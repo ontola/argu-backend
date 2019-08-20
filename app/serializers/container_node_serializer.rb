@@ -7,7 +7,6 @@ class ContainerNodeSerializer < EdgeSerializer
   attribute :language, predicate: NS::SCHEMA[:language], datatype: NS::XSD[:string]
   attribute :locale, predicate: NS::ARGU[:locale]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
-  attribute :public_grant, predicate: NS::ARGU[:publicGrant]
 
   with_collection :grants, predicate: NS::ARGU[:grants]
 
@@ -25,14 +24,6 @@ class ContainerNodeSerializer < EdgeSerializer
                }
              ]
            end
-         end
-       ]
-
-  enum :public_grant,
-       type: GrantSet.iri,
-       options: Hash[
-         [:none].concat(GrantSet::SELECTABLE_TITLES).map do |title|
-           [title.to_sym, {iri: NS::ARGU["grantSet#{title}"], label: -> { I18n.t("roles.types.#{title}").capitalize }}]
          end
        ]
 end

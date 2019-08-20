@@ -12,6 +12,7 @@ class ContainerNode < Edge
   enhance Moveable
   enhance Placeable
   enhance ProfilePhotoable
+  enhance PublicGrantable
   enhance LinkedRails::Enhancements::Updateable
   enhance Widgetable
   enhance Statable
@@ -36,7 +37,6 @@ class ContainerNode < Edge
   placeable :country, :custom
 
   after_save :reset_country
-  after_save :reset_public_grant
 
   alias_attribute :description, :bio
   alias_attribute :name, :display_name
@@ -50,8 +50,6 @@ class ContainerNode < Edge
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :bio, length: {maximum: 90}
   validates :bio_long, length: {maximum: 5000}
-
-  attr_writer :public_grant
 
   def enforce_hidden_last_name?
     url == 'youngbelegen'
@@ -75,10 +73,6 @@ class ContainerNode < Edge
     end
   end
 
-  def public_grant
-    @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.grant_set&.title&.to_sym || :none
-  end
-
   private
 
   def reset_country # rubocop:disable Metrics/AbcSize
@@ -94,19 +88,6 @@ class ContainerNode < Edge
         p.place = place
       end
     placement.update!(place: place) unless placement.place == place
-  end
-
-  def reset_public_grant # rubocop:disable Metrics/AbcSize
-    return if @public_grant.blank?
-
-    if public_grant&.to_sym == :none
-      grants.where(group_id: Group::PUBLIC_ID).destroy_all
-    else
-      grants.joins(:grant_set).where('group_id = ? AND title != ?', Group::PUBLIC_ID, public_grant).destroy_all
-      unless grants.joins(:grant_set).find_by(group_id: Group::PUBLIC_ID, grant_sets: {title: public_grant})
-        grants.create!(group_id: Group::PUBLIC_ID, grant_set: GrantSet.find_by!(title: public_grant))
-      end
-    end
   end
 
   class << self
