@@ -5,8 +5,10 @@ module Public
     class TenantFinderController < SPI::SPIController
       include IRIHelper
 
-      TENANT_META_ATTRS =
-        %w[uuid iri_prefix accent_background_color accent_color navbar_background navbar_color database_schema].freeze
+      TENANT_META_ATTRS = %w[
+        uuid iri_prefix accent_background_color accent_color navbar_background navbar_color
+        database_schema use_new_frontend
+      ].freeze
 
       skip_before_action :authorize_action
       skip_after_action :verify_authorized
