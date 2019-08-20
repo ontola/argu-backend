@@ -241,7 +241,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     {
       accent_background_color: tree_root.accent_background_color,
       accent_color: tree_root.accent_color,
-      application_name: 'Argu',
+      application_name: Setting.get('app_name') || 'Argu',
       iri: "https://#{tree_root.iri_prefix}",
       navbar_background: tree_root.navbar_background,
       navbar_color: tree_root.navbar_color
