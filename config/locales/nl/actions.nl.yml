@@ -39,7 +39,7 @@ nl:
         submit: "Accepteer"
     blogs:
       create:
-        description: "Hou mensen op de hoogte via blog posts."
+        description: "Houd mensen op de hoogte via blog posts."
     conversions:
       create:
         label: "Omzetten"
