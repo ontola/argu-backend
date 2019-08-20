@@ -77,9 +77,9 @@ module OauthHelper
     )
   end
 
-  def generate_guest_token(guest_id, application: nil)
+  def generate_guest_token(guest_id, application: nil, locale: nil)
     application ||= vnext_request? ? Doorkeeper::Application.argu_front_end : Doorkeeper::Application.argu
-    set_language_for_guest
+    I18n.locale = locale || language_for_guest
 
     token = Doorkeeper::AccessToken.new(
       application: application,

@@ -6,8 +6,8 @@ module Users
 
     private
 
-    def ld_action_name(_view)
-      :language
+    def ld_action(_opts = {})
+      current_user.action(:language, user_context)
     end
 
     def locale_param
@@ -16,7 +16,7 @@ module Users
 
     def new_oauth_token
       if current_user.guest?
-        generate_guest_token(current_user.id, application: doorkeeper_token.application)
+        generate_guest_token(current_user.id, application: doorkeeper_token.application, locale: I18n.locale)
       else
         generate_user_token(current_user, application: doorkeeper_token.application)
       end

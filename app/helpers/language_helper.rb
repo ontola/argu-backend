@@ -32,6 +32,10 @@ module LanguageHelper
     }
   end
 
+  def language_for_guest
+    language_from_edge_tree || language_from_r || language_from_header || I18n.locale.to_s
+  end
+
   def language_from_edge_tree; end
 
   def language_from_header
@@ -60,9 +64,5 @@ module LanguageHelper
           ["#{ISO3166::Country.translations(I18n.locale)[code]} (#{language.upcase})", "#{language}-#{code}"]
         end
       end
-  end
-
-  def set_language_for_guest
-    I18n.locale = language_from_edge_tree || language_from_r || language_from_header || I18n.locale.to_s
   end
 end
