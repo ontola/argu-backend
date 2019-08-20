@@ -133,6 +133,6 @@ module IRIHelper
   end
 
   def shortnameable_from_opts?(opts)
-    opts[:class].try(:shortnameable?) && (/[a-zA-Z]/i =~ opts[:id]).present?
+    opts[:class].try(:shortnameable?) && !uuid?(opts[:id]) && (/[a-zA-Z]/i =~ opts[:id]).present?
   end
 end

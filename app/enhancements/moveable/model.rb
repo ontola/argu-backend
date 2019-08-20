@@ -13,7 +13,7 @@ module Moveable
           update_root_id(new_parent.root_id)
           @root = new_parent.root
           descendants.update_all(root_id: new_parent.root_id) # rubocop:disable Rails/SkipsModelValidations
-          shortnameable? && shortname.update(root_id: new_parent.root_id)
+          shortnameable? && shortname&.update(root_id: new_parent.root_id)
         end
         self.parent = new_parent
         save!

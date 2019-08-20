@@ -59,11 +59,11 @@ module Parentable
   end
 
   module ActiveRecordExtension
-    def self.included(base)
-      base.class_eval do
-        def self.is_fertile?
-          false
-        end
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      def is_fertile?
+        false
       end
     end
 

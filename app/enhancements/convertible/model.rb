@@ -76,11 +76,11 @@ module Convertible
   end
 
   module ActiveRecordExtension
-    def self.included(base)
-      base.class_eval do
-        def self.is_convertible?
-          false
-        end
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      def is_convertible?
+        false
       end
     end
 

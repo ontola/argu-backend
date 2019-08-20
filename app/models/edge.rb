@@ -212,10 +212,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parent&.persisted_edge&.path&.split('.')&.map(&:to_i)
   end
 
-  def shortnameable?
-    %w[Forum Page].include?(owner_type)
-  end
-
   def parent(*args)
     association(:parent).reader(*args)
   end
@@ -290,10 +286,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # @return [Array] The ids of (persisted) ancestors, including self if persisted
   def self_and_ancestor_ids
     persisted_edge.path.split('.').map(&:to_i)
-  end
-
-  def self.shortnameable?
-    false
   end
 
   def trash

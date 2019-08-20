@@ -113,10 +113,6 @@ class ContainerNode < Edge
     def iri
       [super, NS::ARGU[:ContainerNode]]
     end
-
-    def shortnameable?
-      true
-    end
   end
 end
 

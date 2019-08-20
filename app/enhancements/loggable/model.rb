@@ -31,11 +31,11 @@ module Loggable
   end
 
   module ActiveRecordExtension
-    def self.included(base)
-      base.class_eval do
-        def self.is_loggable?
-          false
-        end
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      def is_loggable?
+        false
       end
     end
 

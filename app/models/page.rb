@@ -149,9 +149,5 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     def preview_includes
       super + %i[default_profile_photo] - %w[navigations_menu settings_men]
     end
-
-    def shortnameable?
-      true
-    end
   end
 end
