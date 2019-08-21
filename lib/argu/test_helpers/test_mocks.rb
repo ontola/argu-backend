@@ -174,15 +174,15 @@ module Argu
           .to_return(body: [].to_json)
       end
 
-      def validate_valid_bearer_token
+      def validate_valid_bearer_token(root: :argu)
         stub_request(:get,
-                     Addressable::Template.new("#{service_url(:token)}/tokens/verify{?jwt}"))
+                     Addressable::Template.new("#{service_url(:token)}/#{root}/tokens/verify{?jwt}"))
           .to_return(status: 200)
       end
 
-      def validate_invalid_bearer_token
+      def validate_invalid_bearer_token(root: :argu)
         stub_request(:get,
-                     Addressable::Template.new("#{service_url(:token)}/tokens/verify{?jwt}"))
+                     Addressable::Template.new("#{service_url(:token)}/#{root}/tokens/verify{?jwt}"))
           .to_return(status: 404)
       end
     end

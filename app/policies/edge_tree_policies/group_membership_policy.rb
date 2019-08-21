@@ -2,8 +2,7 @@
 
 class GroupMembershipPolicy < EdgeTreePolicy
   include UriTemplateHelper
-  include ServiceHelper
-  include JWTHelper
+
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -47,15 +46,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   def valid_token?
     return if record.token.blank?
-    response =
-      HTTParty
-        .get(
-          expand_service_url(
-            :token,
-            expand_uri_template(:verify_token),
-            jwt: sign_payload(secret: record.token, group_id: record.group_id)
-          )
-        )
-    response.code == 200
+
+    Argu::API.service_api.verify_token(record.token, record.group_id)
   end
 end
