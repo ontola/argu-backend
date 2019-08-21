@@ -49,10 +49,10 @@ module SPI
     def handle(e)
       user = user_without_password(e)
       if user
-        token = set_reset_password_token
+        token = user.send(:set_reset_password_token)
         SendEmailWorker.perform_async(
           :set_password,
-          id,
+          user.id,
           token_url: iri_from_template(:user_set_password, reset_password_token: token)
         )
         body = {code: :NO_PASSWORD}
