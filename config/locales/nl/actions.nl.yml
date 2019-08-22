@@ -45,6 +45,9 @@ nl:
         label: "Omzetten"
         description: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
         submit: "Zet om"
+    dashboards:
+      create:
+        description: "Een dashboard kan widgets bevatten."
     direct_messages:
       create:
         label: "Verstuur bericht"

@@ -105,6 +105,9 @@ nl:
       blog:
         bio: "Doel van blog"
         bio_long: "Meer informatie"
+      dashboard:
+        bio: "Doel van deze pagina"
+        bio_long: "Meer informatie"
       group:
         name: "Naam"
         name_singular: "Naam enkelvoud"

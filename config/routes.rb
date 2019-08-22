@@ -366,7 +366,7 @@ Rails.application.routes.draw do
     include_route_concerns
   end
 
-  %i[blogs forums open_data_portals].each do |container_node|
+  %i[blogs forums open_data_portals dashboards].each do |container_node|
     resources container_node, only: %i[index new create]
   end
   resources :container_nodes, only: %i[index new]

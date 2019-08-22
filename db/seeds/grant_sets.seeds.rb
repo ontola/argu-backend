@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 @actions = HashWithIndifferentAccess.new
-%w[Page Forum Blog OpenDataPortal Topic Question Motion LinkedRecord
+%w[Page Forum Blog Dashboard OpenDataPortal Topic Question Motion LinkedRecord
    ConArgument ProArgument Comment VoteEvent Vote BlogPost Decision].each do |type|
   %w[create show update destroy trash]
     .each do |action|
@@ -23,7 +23,7 @@ end
   )
 
 show_actions =
-  %i[page_show forum_show blog_show open_data_portal_show question_show motion_show linked_record_show
+  %i[page_show forum_show blog_show dashboard_show open_data_portal_show question_show motion_show linked_record_show
      pro_argument_show con_argument_show comment_show vote_event_show vote_show blog_post_show decision_show
      topic_show].map { |a| @actions[a] }
 
@@ -64,28 +64,28 @@ administrate.permitted_actions <<
   %i[question_create motion_create topic_create pro_argument_create con_argument_create comment_create
      vote_create blog_post_create decision_create].map { |a| @actions[a] }
 administrate.permitted_actions <<
-  %i[page_update forum_update blog_update question_update motion_update topic_update
+  %i[page_update forum_update blog_update dashboard_update question_update motion_update topic_update
      pro_argument_update con_argument_update blog_post_update decision_update].map { |a| @actions[a] }
 administrate.permitted_actions <<
   %i[question_trash motion_trash topic_trash pro_argument_trash con_argument_trash blog_post_trash
      comment_trash].map { |a| @actions[a] }
 administrate.permitted_actions <<
-  %i[page_destroy forum_destroy blog_destroy].map { |a| @actions[a] }
+  %i[page_destroy forum_destroy blog_destroy dashboard_destroy].map { |a| @actions[a] }
 administrate.save!(validate: false)
 
 staff = GrantSet.new(title: 'staff')
 staff.permitted_actions << show_actions
 staff.permitted_actions <<
-  %i[forum_create blog_create question_create motion_create topic_create pro_argument_create
+  %i[forum_create blog_create dashboard_create question_create motion_create topic_create pro_argument_create
      con_argument_create comment_create vote_create blog_post_create decision_create].map { |a| @actions[a] }
 staff.permitted_actions <<
-  %i[page_update forum_update blog_update open_data_portal_update question_update motion_update
+  %i[page_update forum_update blog_update dashboard_update open_data_portal_update question_update motion_update
      topic_update pro_argument_update con_argument_update blog_post_update decision_update].map { |a| @actions[a] }
 staff.permitted_actions <<
   %i[question_trash motion_trash topic_trash pro_argument_trash con_argument_trash
      blog_post_trash comment_trash].map { |a| @actions[a] }
 staff.permitted_actions <<
-  %i[page_destroy forum_destroy blog_destroy open_data_portal_destroy question_destroy
+  %i[page_destroy forum_destroy blog_destroy dashboard_destroy open_data_portal_destroy question_destroy
      motion_destroy topic_destroy pro_argument_destroy con_argument_destroy blog_post_destroy
      comment_destroy].map { |a| @actions[a] }
 staff.save!(validate: false)

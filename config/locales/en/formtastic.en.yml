@@ -105,6 +105,9 @@ en:
       blog:
         bio: "Blog goal"
         bio_long: "More information"
+      dashboard:
+        bio: "Dashboard goal"
+        bio_long: "More information"
       group:
         name: "Name"
         name_singular: "Name singular"
