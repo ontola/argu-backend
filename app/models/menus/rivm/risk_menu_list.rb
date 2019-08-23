@@ -18,7 +18,8 @@ class RiskMenuList < ApplicationMenuList
       search_link,
       edit_link,
       statistics_link,
-      export_link
+      export_link,
+      *trash_and_destroy_links
     ]
   end
 end
