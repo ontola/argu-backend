@@ -18,6 +18,16 @@ module Actions
 
     def current_forum; end
 
+    def requested_resource
+      resource = super
+      return resource unless parent_resource.is_a?(Page) && resource_id == 'redirect'
+
+      resource.label = params[:label]
+      resource.target = {id: RDF::URI(params[:location])}
+      resource.instance_variable_set(:@iri, RDF::URI(request.original_url))
+      resource
+    end
+
     def resource_by_id_parent; end
 
     def resource_from_params
