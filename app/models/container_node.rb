@@ -24,6 +24,7 @@ class ContainerNode < Edge
   property :cover_photo_attribution, :string, NS::ARGU[:photoAttribution]
   property :discoverable, :boolean, NS::ARGU[:discoverable], default: true
   property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
+  property :show_header, :boolean, NS::ARGU[:showHeader], default: true
 
   with_collection :grants
   with_columns settings: [

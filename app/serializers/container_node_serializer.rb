@@ -6,6 +6,7 @@ class ContainerNodeSerializer < EdgeSerializer
   attribute :language, predicate: NS::SCHEMA[:language], datatype: NS::XSD[:string]
   attribute :locale, predicate: NS::ARGU[:locale]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
+  attribute :show_header, predicate: NS::ARGU[:showHeader]
 
   with_collection :grants, predicate: NS::ARGU[:grants]
 
