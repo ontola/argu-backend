@@ -9,7 +9,9 @@ module Riskable
 
       has_many :example_of, foreign_key_property: :example_of_id, class_name: 'Risk', dependent: false
 
-      with_collection :risks, association: :example_of
+      with_collection :risks,
+                      association: :example_of,
+                      title: ->(_r) { I18n.t('intervention_types.example_of') }
     end
 
     def risks_id=(ids)

@@ -7,7 +7,8 @@ en:
     type: "Intervention types"
     type_new: "New intervention type"
     plural: "Intervention types"
-    collection_for: "Maatregelen tegen %{parent}"
+    collection_for: "intervention against %{parent}"
+    example_of: "Protects against"
   interventions:
     type: "Interventions"
     type_new: "New intervention"

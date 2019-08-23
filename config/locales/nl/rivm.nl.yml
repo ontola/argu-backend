@@ -8,6 +8,7 @@ nl:
     type_new: "Nieuwe maatregel"
     plural: "Maatregelen"
     collection_for: "Maatregelen tegen %{parent}"
+    example_of: "Beschermt tegen"
   interventions:
     type: "Voorbeeld"
     type_new: "Nieuw voorbeeld"
