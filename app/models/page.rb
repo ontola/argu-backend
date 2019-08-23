@@ -65,7 +65,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :primary_container_node_id, :linked_edge_id, NS::FOAF[:homepage]
   belongs_to :primary_container_node,
              foreign_key_property: :primary_container_node_id,
-             class_name: 'Forum',
+             class_name: 'ContainerNode',
              dependent: false
 
   def build_profile(*options)
