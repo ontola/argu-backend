@@ -46,7 +46,7 @@ module Edgeable
       end
 
       def property?(name)
-        property_options(name: name.to_sym).present?
+        property_options(name: name.try(:to_sym)).present?
       end
 
       def property_join(key)
