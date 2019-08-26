@@ -9,5 +9,5 @@ class PageActionList < EdgeActionList
       url: -> { RDF::DynamicURI(LinkedRails.iri(path: '/o')) }
     )
   )
-  has_action(:redirect, type: NS::SCHEMA[:Action])
+  has_action(:redirect, http_method: :get, type: NS::SCHEMA[:Action])
 end
