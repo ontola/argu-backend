@@ -25,7 +25,7 @@ ActiveRecord::Base.transaction do
 
   staff_membership =
     CreateGroupMembership.new(
-      staff_group,
+      Group.staff,
       attributes: {member: staff.profile},
       options: {publisher: staff, creator: staff.profile}
     ).resource
