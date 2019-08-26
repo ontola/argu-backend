@@ -88,7 +88,7 @@ module IRIHelper
   end
 
   def resource_by_id_from_opts(opts)
-    opts[:class]&.find_by(id: opts[:id])
+    opts[:class].try(:find_by, id: opts[:id])
   end
 
   # Converts an Argu URI into a resource
