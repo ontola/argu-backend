@@ -6,7 +6,7 @@ class ContainerNodeSerializer < EdgeSerializer
   attribute :language, predicate: NS::SCHEMA[:language], datatype: NS::XSD[:string]
   attribute :locale, predicate: NS::ARGU[:locale]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
-  attribute :show_header, predicate: NS::ARGU[:showHeader]
+  attribute :hide_header, predicate: NS::ARGU[:hideHeader]
 
   with_collection :grants, predicate: NS::ARGU[:grants]
 
@@ -26,4 +26,8 @@ class ContainerNodeSerializer < EdgeSerializer
            end
          end
        ]
+
+  def hide_header
+    !object.show_header
+  end
 end
