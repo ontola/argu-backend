@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 class EdgeSerializer < RecordSerializer
-  has_one :parent, key: :partOf, predicate: NS::SCHEMA[:isPartOf]
+  has_one :parent, key: :partOf, predicate: NS::SCHEMA[:isPartOf] do
+    if object.parent.is_a?(Page) && object.parent_collections(scope).count == 1
+      object.parent_collections(scope).first
+    else
+      object.parent
+    end
+  end
   has_one :organization, predicate: NS::SCHEMA[:organization] do
     object.root
   end
@@ -27,11 +33,5 @@ class EdgeSerializer < RecordSerializer
 
   def granted_groups
     RDF::DynamicURI("#{object.iri}/granted")
-  end
-
-  def parent
-    return object.parent unless object.parent.is_a?(Page) && object.parent_collections.count == 1
-
-    object.parent_collections.first
   end
 end
