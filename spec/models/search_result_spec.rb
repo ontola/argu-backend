@@ -41,7 +41,8 @@ RSpec.describe SearchResult, type: :model do
 
   describe 'search in branch' do
     it { expect(subject(parent: question).total_count).to eq(1) }
-    it { expect(subject(parent: motion).total_count).to eq(0) }
+    it { expect(subject(parent: motion).total_count).to eq(1) }
+    it { expect(subject(parent: argument).total_count).to eq(0) }
   end
 
   describe 'keeping index up to date' do
