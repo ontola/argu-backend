@@ -10,6 +10,9 @@ en:
     discover: "Discover Argu websites"
     discover_header: "Discover"
     my_pages: "My Argu websites"
+    visibility:
+      visible: 'Visible'
+      hidden: 'Hidden'
     settings:
       title: "Organization settings"
       menu:
