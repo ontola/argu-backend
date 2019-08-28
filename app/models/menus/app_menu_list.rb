@@ -34,9 +34,8 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       menu_item(:governments, label: I18n.t('about.governments'), href: RDF::URI(info_url(:governments))),
       menu_item(:press_media, label: I18n.t('press_media'), href: RDF::URI('https://argu.pr.co')),
       menu_item(:support, label: I18n.t('help_support'), href: RDF::URI('https://argu.freshdesk.com/support/home')),
-      menu_item(:contact, label: I18n.t('about.contact'), href: RDF::URI(info_url(:contact))),
       afe_request? ? menu_item(:discover, label: I18n.t('pages.discover'), href: collection_iri(nil, :pages)) : nil,
-      afe_request? ? language_menu_item : nil
+      menu_item(:contact, label: I18n.t('about.contact'), href: RDF::URI(info_url(:contact)))
     ]
   end
 
@@ -48,7 +47,8 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     menu_item(
       :language,
       label: I18n.t('set_language'),
-      href: iri_from_template(:languages_iri)
+      href: iri_from_template(:languages_iri),
+      image: 'fa-language'
     )
   end
 
@@ -97,11 +97,14 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   end
 
   def user_menu_items # rubocop:disable Metrics/AbcSize
+    return [language_menu_item] if resource.guest?
+
     items = user_base_items
     items << user_settings_item
     items << user_drafts_item
     items << user_pages_item
     items << user_forum_management_item if !user_context.vnext && resource.forum_management?
+    items << language_menu_item if afe_request?
     items << sign_out_menu_item
     items
   end
