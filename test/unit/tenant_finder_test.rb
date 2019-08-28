@@ -4,23 +4,35 @@ require 'test_helper'
 
 class TenantFinderTest < ActiveSupport::TestCase
   define_freetown
-  let!(:demogemeente) { create(:page, iri_prefix: 'demogemeente.nl/test') }
+  let!(:demogemeente) { create(:page, iri_prefix: 'demogemeente.nl/test', url: 'demogemeente') }
   let!(:upcase_page) { create(:page, iri_prefix: 'example.com/Upcase') }
 
+  before do
+    Apartment::Tenant.switch! nil
+  end
+
+  after do
+    Apartment::Tenant.switch! 'argu'
+  end
+
   test 'should find tenant by forum iri' do
-    assert_equal TenantFinder.from_url(freetown.iri), argu
+    assert_equal TenantFinder.from_url(freetown_iri), argu
   end
 
   test 'should find tenant by forum iri with upcase shortname' do
-    assert_equal TenantFinder.from_url(freetown.iri.to_s.gsub('freetown', 'Freetown')), argu
+    assert_equal TenantFinder.from_url(freetown_iri.to_s.gsub('freetown', 'Freetown')), argu
   end
 
   test 'should find tenant by forum iri with upcase page shortname' do
-    assert_equal TenantFinder.from_url(freetown.iri.to_s.gsub("/#{argu.url}", "/#{argu.url.upcase}")), argu
+    assert_equal TenantFinder.from_url(freetown_iri.to_s.gsub("/#{argu.url}", "/#{argu.url.upcase}")), argu
   end
 
   test 'should find tenant by invalid iri' do
     assert_nil TenantFinder.from_url('https://example.com/invalid')
+  end
+
+  test 'should find demogemeente by old url' do
+    assert_equal TenantFinder.from_url("https://#{Rails.application.config.host_name}/demogemeente"), demogemeente
   end
 
   test 'should find demogemeente' do
@@ -45,5 +57,11 @@ class TenantFinderTest < ActiveSupport::TestCase
 
   test 'should find upcase sub url with downcase page shortname' do
     assert_equal TenantFinder.from_url('https://example.com/upcase/forum'), upcase_page
+  end
+
+  private
+
+  def freetown_iri
+    ActsAsTenant.with_tenant(argu) { freetown.iri }
   end
 end

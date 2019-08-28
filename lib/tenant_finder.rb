@@ -23,7 +23,7 @@ class TenantFinder
   end
 
   def tenant
-    tenant = ActsAsTenant.without_tenant { tenant_by_prefix || tenant_by_uuid }
+    tenant = ActsAsTenant.without_tenant { tenant_by_prefix || tenant_by_uuid || tenant_by_shortname }
     return if tenant.blank?
 
     Apartment::Tenant.switch(tenant.database_schema) { tenant.page }
@@ -45,6 +45,17 @@ class TenantFinder
 
   def tenant_by_prefix
     Tenant.find_by('lower(iri_prefix) IN (?)', matching_iris)
+  end
+
+  def tenant_by_shortname
+    return unless @host == Rails.application.config.host_name
+
+    Apartment::Tenant.each do
+      match = Page.find_via_shortname(iri_suffix)
+      return match.tenant if match
+    end
+
+    nil
   end
 
   def tenant_by_uuid
