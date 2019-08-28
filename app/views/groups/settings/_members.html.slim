@@ -12,6 +12,6 @@ h3= t('group_memberships.plural')
               span.fa.fa-close
               span.icon-left= t('destroy')
   =paginate @members
-=link_to new_iri(resource, :group_memberships), class: 'btn--light btn--smaller' do
+=link_to settings_iri(resource, tab: :invite), class: 'btn--light btn--smaller' do
   span.fa.fa-plus
   span.icon-left= t('groups.settings.menu.invite', singular: resource.name_singular)

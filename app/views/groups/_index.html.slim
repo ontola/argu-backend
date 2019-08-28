@@ -14,7 +14,7 @@ table.styled
         =link_to group.group_memberships.count, settings_iri(group)
       td
         - if policy(group).create_child?(:group_memberships)
-          =link_to new_iri(group, :group_memberships), class: 'btn--light btn--smaller' do
+          =link_to settings_iri(group, tab: :invite), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
       td
         - if group.grants.empty?

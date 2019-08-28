@@ -44,7 +44,7 @@
                     =link_to grant.group.group_memberships.count, settings_iri(grant.group)
                   td
                     - if policy(grant.group).create_child?(:group_memberships)
-                      =link_to new_iri(grant.group, :group_memberships), class: 'btn--light btn--smaller' do
+                      =link_to settings_iri(grant.group, tab: :invite), class: 'btn--light btn--smaller' do
                         span.fa.fa-plus
                   td
                     =t("roles.types.#{grant.grant_set.title}")
