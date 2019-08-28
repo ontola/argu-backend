@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ActivityListener
+  AUTO_GENERATED_LISTENER_CLASSES = Edge.descendants.map(&:name).map(&:underscore) - %w[decision vote vote_event page]
+
   # @param [Hash] opts
   # @option opts [User] publisher The person that made the action
   # @option opts [Profile] creator The Profile under whose name it was published
@@ -14,7 +16,7 @@ class ActivityListener
   # Dynamically declare the listener publication methods
   # @see {ApplicationService#commit} and {ApplicationService#signal_base} for the naming.
   %w[create destroy trash untrash update publish].each do |method|
-    %w[pro_argument con_argument blog_post comment motion question topic].each do |model|
+    AUTO_GENERATED_LISTENER_CLASSES.each do |model|
       define_method "#{method}_#{model}_successful" do |resource|
         create_activity(resource, resource.parent, method)
       end
