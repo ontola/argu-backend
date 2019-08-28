@@ -47,8 +47,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     menu_item(
       :language,
       label: I18n.t('set_language'),
-      href: iri_from_template(:languages_iri),
-      image: 'fa-language'
+      href: iri_from_template(:languages_iri)
     )
   end
 
@@ -64,36 +63,37 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   end
 
   def sign_out_menu_item
-    menu_item(:signout,
-              action: NS::ONTOLA['actions/logout'],
-              label: I18n.t('sign_out'),
-              href: destroy_user_session_url,
-              image: 'fa-sign-out')
+    menu_item(
+      :signout,
+      action: NS::ONTOLA['actions/logout'],
+      label: I18n.t('sign_out'),
+      href: destroy_user_session_url
+    )
   end
 
   def user_base_items
     if resource.url.present?
       [
         menu_item(
-          :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_url(user), image: 'fa-user'
+          :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_url(user)
         ),
         menu_item(
-          :profile, label: I18n.t('profiles.edit.title'), href: edit_profile_link, image: 'fa-pencil'
+          :profile, label: I18n.t('profiles.edit.title'), href: edit_profile_link
         )
       ]
     else
-      [menu_item(:setup, label: I18n.t('profiles.setup.link'), href: setup_users_url, image: 'fa-user')]
+      [menu_item(:setup, label: I18n.t('profiles.setup.link'), href: setup_users_url)]
     end
   end
 
   def user_drafts_item
     menu_item(
-      :drafts, label: I18n.t('users.drafts.title'), href: drafts_user_url(resource), image: 'fa-pencil-square-o'
+      :drafts, label: I18n.t('users.drafts.title'), href: drafts_user_url(resource)
     )
   end
 
   def user_forum_management_item
-    menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource), image: 'fa-group')
+    menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource))
   end
 
   def user_menu_items # rubocop:disable Metrics/AbcSize
@@ -110,15 +110,14 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   end
 
   def user_pages_item
-    menu_item(:pages, label: I18n.t('pages.my_pages'), href: pages_user_url(resource), image: 'fa-building')
+    menu_item(:pages, label: I18n.t('pages.my_pages'), href: pages_user_url(resource))
   end
 
   def user_settings_item
     menu_item(
       :settings,
       label: I18n.t('users.settings.title'),
-      href: settings_user_users_url,
-      image: 'fa-gear'
+      href: settings_user_users_url
     )
   end
 end
