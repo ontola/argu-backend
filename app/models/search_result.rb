@@ -51,7 +51,11 @@ class SearchResult
       aggs: parent.searchable_aggregations,
       page: page,
       per_page: page_size || 15,
-      where: {path: allowed_path_expression, published_branch: true}
+      where: {
+        path: allowed_path_expression,
+        published_branch: true,
+        trashed_at: nil
+      }
     )
   end
 
