@@ -59,7 +59,6 @@ gem 'ltree_hierarchy'
 
 ################## Features ########################
 gem 'whodunnit', '0.0.5'
-gem 'simple_settings', '1.0.3'
 gem 'public_activity', '~> 1.5'
 gem 'acts_as_follower',
     git: 'https://github.com/tcocca/acts_as_follower.git',

@@ -663,8 +663,6 @@ GEM
       celluloid (>= 0.17.3)
       ice_cube (~> 0.14.0)
       sidekiq (>= 4.1.0)
-    simple_settings (1.0.3)
-      rails (>= 4.0.0)
     simple_text (0.0.23)
       kaminari (>= 0.16.0)
       rails (>= 4.0.0)
@@ -903,7 +901,6 @@ DEPENDENCIES
   sidekiq (~> 4.2.2)
   sidekiq-logging-json!
   sidetiq (~> 0.7.2)
-  simple_settings (= 1.0.3)
   simple_text (~> 0.0.23)
   simplecov
   slim (~> 3.0.6)
