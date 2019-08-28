@@ -13,9 +13,11 @@ module Portal
     def destroy_execute
       authorize requested_resource, :destroy?
 
-      ApplicationRecord.transaction do
-        requested_resource.edges.destroy_all if params.require(:user)['destroy_content'].to_s == 'true'
-        requested_resource.destroy
+      ActsAsTenant.without_tenant do
+        ApplicationRecord.transaction do
+          requested_resource.edges.destroy_all if params.require(:user)['destroy_content'].to_s == 'true'
+          requested_resource.destroy
+        end
       end
     end
 
