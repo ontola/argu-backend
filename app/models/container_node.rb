@@ -76,6 +76,10 @@ class ContainerNode < Edge
 
   private
 
+  def create_menu_item?
+    true
+  end
+
   def reset_country # rubocop:disable Metrics/AbcSize
     country_code = locale.split('-').second
     return if country_placement&.country_code == country_code

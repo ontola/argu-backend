@@ -45,6 +45,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   after_create :create_default_groups
   after_create :create_staff_grant
   after_create :reindex
+  after_update :update_primary_node_menu_item, if: :primary_container_node_id_previously_changed?
 
   attr_writer :iri_prefix
 
@@ -141,6 +142,19 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     return if staff_group.nil?
     grant = Grant.new(grant_set: GrantSet.staff, edge: self, group: staff_group)
     grant.save!(validate: false)
+  end
+
+  def update_primary_node_menu_item
+    if previous_changes[:primary_container_node_id].first
+      CustomMenuItem
+        .navigations
+        .find_or_create_by(resource: self, edge_id: previous_changes[:primary_container_node_id].first)
+    end
+    CustomMenuItem
+      .navigations
+      .find_by(resource: self, edge_id: previous_changes[:primary_container_node_id].second)
+      .destroy
+    true
   end
 
   class << self

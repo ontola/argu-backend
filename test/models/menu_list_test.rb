@@ -58,11 +58,11 @@ class MenuListTest < ActiveSupport::TestCase
   end
 
   test 'Page menu for administrator should include hidden forum' do
-    assert argu.menu(:navigations, administrator_context).menus.compact.map(&:tag).include?(:second)
+    assert argu.menu(:navigations, administrator_context).menus.compact.map(&:href).include?(second.iri)
   end
 
   test 'Page menu for user should not include hidden forum' do
-    assert_not argu.menu(:navigations, user_context).menus.compact.map(&:tag).include?(:second)
+    assert_not argu.menu(:navigations, user_context).menus.compact.map(&:href).include?(second.iri)
   end
 
   test 'Include custom menu items' do
@@ -73,7 +73,7 @@ class MenuListTest < ActiveSupport::TestCase
         .menu(:navigations, user_context)
         .menus
         .compact
-        .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
+        .find { |f| f.tag == "menu_item_#{custom_menu_item.id}" }
         .label
     )
   end
@@ -85,7 +85,7 @@ class MenuListTest < ActiveSupport::TestCase
           .menu(:navigations, other_page_context)
           .menus
           .compact
-          .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
+          .find { |f| f.tag == "menu_item_#{custom_menu_item.id}" }
       )
     end
   end

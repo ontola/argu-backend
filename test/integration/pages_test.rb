@@ -319,6 +319,22 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_equal 2, page.custom_placement.lon
   end
 
+  test 'administrator should put update page change homepage' do
+    sign_in argu.publisher
+    assert_equal CustomMenuItem.pluck(:edge_id).sort, [amsterdam.uuid, utrecht.uuid].sort
+    assert_nil argu.primary_container_node
+
+    put argu, params: {id: argu.url, page: {primary_container_node_id: amsterdam.url}}
+    argu.reload
+    assert_equal argu.primary_container_node, amsterdam
+    assert_equal CustomMenuItem.pluck(:edge_id).sort, [utrecht.uuid].sort
+
+    put argu, params: {id: argu.url, page: {primary_container_node_id: utrecht.url}}
+    argu.reload
+    assert_equal argu.primary_container_node, utrecht
+    assert_equal CustomMenuItem.pluck(:edge_id).sort, [amsterdam.uuid].sort
+  end
+
   test 'administrator should get new' do
     sign_in page.publisher
 

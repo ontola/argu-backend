@@ -19,10 +19,6 @@ class PageMenuList < ApplicationMenuList
         .includes(:default_profile_photo, :shortname)
   end
 
-  def container_menu_items
-    container_nodes.reject { |node| node == resource.primary_container_node }.map { |child| navigation_item(child) }
-  end
-
   def new_container_node_item
     menu_item(
       :new_component,
@@ -34,7 +30,6 @@ class PageMenuList < ApplicationMenuList
 
   def navigations_menu_items
     [
-      *container_menu_items,
       *custom_menu_items(:navigations, resource),
       container_nodes.any? ? activity_link : nil,
       menu_item(

@@ -78,9 +78,10 @@ ActiveRecord::Schema.define(version: 2019_08_22_102116) do
     t.string "label"
     t.boolean "label_translation", default: false, null: false
     t.string "image"
-    t.string "href", null: false
+    t.string "href"
     t.string "policy"
     t.uuid "resource_id", null: false
+    t.uuid "edge_id"
   end
 
   create_table "documents", id: :serial, force: :cascade do |t|

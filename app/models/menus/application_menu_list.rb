@@ -13,19 +13,28 @@ class ApplicationMenuList < LinkedRails::Menus::List
     super
   end
 
+  private
+
   def custom_menu_items(menu_type, resource)
-    CustomMenuItem
-      .where(menu_type: menu_type, resource_type: resource.class.base_class.name, resource_id: resource.uuid)
-      .order(:order)
+    scoped_menu_items(menu_type, resource)
       .map do |menu_item|
       menu_item(
-        "custom_#{menu_item.id}",
+        "menu_item_#{menu_item.id}",
         label: menu_item.label,
         image: menu_item.image,
         href: RDF::URI(menu_item.href),
         policy: menu_item.policy
       )
     end
+  end
+
+  def scoped_menu_items(menu_type, resource)
+    Pundit.policy_scope!(
+      user_context,
+      CustomMenuItem
+        .where(menu_type: menu_type, resource_type: resource.class.base_class.name, resource_id: resource.uuid)
+        .order(:order)
+    )
   end
 
   class << self

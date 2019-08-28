@@ -125,6 +125,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_destroy :destroy_redis_children
   after_initialize :set_root_id, if: :new_record?
   before_create :set_confirmed
+  after_create :create_menu_item, if: :create_menu_item?
   before_save :set_publisher_id
   after_save :enforce_hidden_last_name
 
@@ -333,6 +334,18 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   private
+
+  def create_menu_item
+    CustomMenuItem.create(
+      menu_type: 'navigations',
+      resource: parent,
+      edge: self
+    )
+  end
+
+  def create_menu_item?
+    false
+  end
 
   def destroy_children
     return if owner_type == 'Page'
