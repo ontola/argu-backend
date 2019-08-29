@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ContainerNodeSerializer < EdgeSerializer
+  has_one :parent, key: :partOf, predicate: NS::SCHEMA[:isPartOf] do
+    object.parent
+  end
+
   attribute :bio, predicate: NS::SCHEMA[:description]
   attribute :bio_long, predicate: NS::SCHEMA[:text]
   attribute :language, predicate: NS::SCHEMA[:language], datatype: NS::XSD[:string]
