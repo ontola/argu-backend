@@ -5,7 +5,9 @@ class UpdatePage < EdgeableUpdateService
 
   def initialize(resource, attributes: {}, options: {})
     node_id = attributes[:primary_container_node_id]
-    attributes[:primary_container_node_id] = Forum.find_via_shortname!(node_id).uuid if node_id && !uuid?(node_id)
+    if node_id && !uuid?(node_id)
+      attributes[:primary_container_node_id] = ContainerNode.find_via_shortname!(node_id).uuid
+    end
     super
   end
 end
