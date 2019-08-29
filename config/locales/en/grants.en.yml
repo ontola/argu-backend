@@ -37,6 +37,7 @@ en:
       initiator: "initiate"
       moderator: "moderate"
       administrator: "manage"
+      staff: "staff"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-remote='true' data-confirm='Are you sure to revoke this grant?'><span class='fa fa-close'></span></a>"
   grant_resets:

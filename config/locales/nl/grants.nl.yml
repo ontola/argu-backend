@@ -37,6 +37,7 @@ nl:
       initiator: "initiëren"
       moderator: "modereren"
       administrator: "beheren"
+      staff: "staff"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-remote='true' data-confirm='Weet je zeker dat je dit recht wilt intrekken?'><span class='fa fa-close'></span></a>"
   grant_resets:
