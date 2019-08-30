@@ -77,7 +77,7 @@ class SearchResult
     exp = allowed_paths
             .map { |p| "(#{Regexp.quote(p)}[$|(\\.0-9+)]*)" }
             .join('|')
-    Regexp.new(exp)
+    Regexp.new("\\A#{exp}\\z")
   end
 
   def granted_paths
