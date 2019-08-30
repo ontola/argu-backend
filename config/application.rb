@@ -72,6 +72,8 @@ module Argu
 
     VideoInfo.provider_api_keys = {youtube: ENV['YOUTUBE_KEY'], vimeo: ENV['VIMEO_KEY']}
 
+    Searchkick.redis = Redis.new
+
     ############################
     # Middlewares
     ############################

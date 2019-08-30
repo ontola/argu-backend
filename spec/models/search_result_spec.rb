@@ -22,45 +22,74 @@ RSpec.describe SearchResult, type: :model do
 
   describe 'scoping' do
     context 'as user' do
-      it { expect(subject.total_count).to eq(4) }
+      it { expect(search_result.total_count).to eq(4) }
     end
 
     context 'as admin' do
       let(:user) { create_administrator(argu) }
-      it { expect(subject.total_count).to eq(8) }
+      it { expect(search_result.total_count).to eq(8) }
     end
 
-    it { expect(subject(parent: unpublished_question).total_count).to eq(0) }
+    it { expect(search_result(parent: unpublished_question).total_count).to eq(0) }
   end
 
   describe 'pagination' do
-    it { expect(subject.total_count).to eq(4) }
-    it { expect(subject(page_size: 3).search_result.count).to eq(3) }
-    it { expect(subject(page_size: 3, page: 2).search_result.count).to eq(1) }
+    it { expect(search_result.total_count).to eq(4) }
+    it { expect(search_result(page_size: 3).search_result.count).to eq(3) }
+    it { expect(search_result(page_size: 3, page: 2).search_result.count).to eq(1) }
   end
 
   describe 'search in branch' do
-    it { expect(subject(parent: question).total_count).to eq(1) }
-    it { expect(subject(parent: motion).total_count).to eq(1) }
-    it { expect(subject(parent: argument).total_count).to eq(0) }
+    it { expect(search_result(parent: question).total_count).to eq(1) }
+    it { expect(search_result(parent: motion).total_count).to eq(1) }
+    it { expect(search_result(parent: argument).total_count).to eq(0) }
   end
 
   describe 'keeping index up to date' do
     it 'keeps trashed items in index' do
+      expect(search_result.search_result.count).to eq(4)
       motion.trash
-      expect(subject.search_result.count).to eq(4)
+      expect(search_result.search_result.count).to eq(4)
     end
 
     it 'remove destroyed items from index' do
+      expect(search_result.search_result.count).to eq(4)
       motion.destroy
-      expect(subject.search_result.count).to eq(3)
-      expect(subject.search_result.reject(&:is_published?)).to be_empty
+      expect(search_result.search_result.count).to eq(3)
+      expect(search_result.search_result.reject(&:is_published?)).to be_empty
+    end
+
+    it 'updates a record' do
+      wait_for_count(question.display_name, 1)
+      wait_for_count('New_name', 0)
+      Sidekiq::Testing.inline! do
+        question.update!(display_name: 'New_name')
+      end
+      wait_for_count(question.display_name, 0)
+      wait_for_count('New_name', 1)
+    end
+  end
+
+  describe 'reindex with tenant' do
+    it 'reindexes a record' do
+      wait_for_count(question.display_name, 1)
+      wait_for_count('New_name', 0)
+      Sidekiq::Testing.inline! do
+        question.property_manager(NS::SCHEMA[:name]).send(:properties).first.update!(string: 'New_name')
+      end
+      wait_for_count(question.display_name, 1)
+      wait_for_count('New_name', 0)
+      Sidekiq::Testing.inline! do
+        Page.reindex_with_tenant
+      end
+      wait_for_count('New_name', 1)
+      wait_for_count(question.display_name, 0)
     end
   end
 
   private
 
-  def subject(opts = {})
+  def search_result(opts = {})
     SearchResult.new(
       {
         page: page,
@@ -69,5 +98,11 @@ RSpec.describe SearchResult, type: :model do
         user_context: user_context
       }.merge(opts)
     )
+  end
+
+  def wait_for_count(q, count)
+    Timeout.timeout(Capybara.default_max_wait_time, Timeout::Error, "Expecting #{count} results for #{q}") do
+      sleep(0.1) until search_result(q: q).total_count == count
+    end
   end
 end

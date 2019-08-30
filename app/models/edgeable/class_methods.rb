@@ -47,7 +47,7 @@ module Edgeable
         super + [creator: Profile.preview_includes]
       end
 
-      def reindex_with_tenant(async: true)
+      def reindex_with_tenant(async: {wait: true})
         ActsAsTenant.without_tenant do
           Page.find_each { |page| page.reindex_tree(async: async) }
         end
