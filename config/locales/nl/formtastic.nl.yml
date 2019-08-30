@@ -143,6 +143,8 @@ nl:
       argument:
         title: "Probeer jouw argument kernachtig samen te vatten."
         content: "Leg uit waarom dit een belangrijk argument is. Geef bronnen om jouw argument te onderbouwen."
+      container_nodes:
+        url: "Het gedeelte van de url dat komt na %{iri_prefix}/"
       forum:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
         bio_long: "Hier kan je verder toelichten over het forum en jouw organisatie. Je kunt hier markdown gebruiken."

@@ -144,6 +144,8 @@ en:
       argument:
         title: "Try to summarize your argument."
         content: "Explain why this is an important argument. Use sources to underpin your argument."
+      container_nodes:
+        url: "The part of the url following %{iri_prefix}/"
       forum:
         bio: "Summarize in one sentence what function the forum has. This text will appear under the name of the forum. There's a maximum of 80 characters."
       blog:
