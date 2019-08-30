@@ -25,12 +25,19 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
 
   private
 
-  def info_menu_items # rubocop:disable Metrics/AbcSize
-    blog_url = RDF::URI("https://#{RequestStore.store[:old_frontend] ? '' : 'app.'}argu.co/argu/blog/posts")
+  def info_menu_items
+    return old_info_menu_items if RequestStore.store[:old_frontend]
+    [
+      *custom_menu_items(:info, ActsAsTenant.current_tenant),
+      menu_item(:powered_by, label: I18n.t('about.powered_by'), href: RDF::URI('https://ontola.io/nl/webdevelopment'))
+    ]
+  end
+
+  def old_info_menu_items # rubocop:disable Metrics/AbcSize
     [
       menu_item(:about, label: I18n.t('about.about'), href: RDF::URI(i_about_url)),
       menu_item(:team, label: I18n.t('about.team'), href: RDF::URI(info_url(:team))),
-      menu_item(:blog, label: I18n.t('about.blog'), href: blog_url),
+      menu_item(:blog, label: I18n.t('about.blog'), href: RDF::URI('https://argu.co/argu/blog/posts')),
       menu_item(:governments, label: I18n.t('about.governments'), href: RDF::URI(info_url(:governments))),
       menu_item(:press_media, label: I18n.t('press_media'), href: RDF::URI('https://argu.pr.co')),
       menu_item(:support, label: I18n.t('help_support'), href: RDF::URI('https://argu.freshdesk.com/support/home')),

@@ -27,7 +27,7 @@ class CustomMenuItem < ApplicationRecord
   private
 
   def set_order
-    self.order ||= (CustomMenuItem.where(resource: resource).maximum(:order) || 0) + 1
+    self.order ||= (CustomMenuItem.where(resource: resource, menu_type: menu_type).maximum(:order) || 0) + 1
   end
 
   class << self
