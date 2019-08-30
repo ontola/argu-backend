@@ -49,7 +49,7 @@ class ContainerNode < Edge
   auto_strip_attributes :bio, nullify: false
   validates :url, presence: true, length: {minimum: 4, maximum: 75}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
-  validates :bio, length: {maximum: 90}
+  validates :bio, length: {maximum: 260}
   validates :bio_long, length: {maximum: 5000}
 
   def enforce_hidden_last_name?

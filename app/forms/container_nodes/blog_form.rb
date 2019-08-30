@@ -4,7 +4,6 @@ class BlogForm < ApplicationForm
   fields [
     :display_name,
     :bio,
-    :bio_long,
     :locale,
     :url,
     :default_cover_photo,
