@@ -44,6 +44,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   after_create :create_or_update_tenant
   after_create :create_default_groups
   after_create :create_staff_grant
+  after_create :create_activity_menu_item
   after_create :reindex
   after_update :update_primary_node_menu_item, if: :primary_container_node_id_previously_changed?
 
@@ -107,6 +108,16 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   private
+
+  def create_activity_menu_item
+    CustomMenuItem.navigations.create(
+      href: feeds_iri(self),
+      label: 'menus.default.activity',
+      label_translation: true,
+      order: 100,
+      resource: self
+    )
+  end
 
   def create_default_groups # rubocop:disable Metrics/AbcSize
     group = Group.new(

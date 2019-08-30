@@ -31,7 +31,6 @@ class PageMenuList < ApplicationMenuList
   def navigations_menu_items
     [
       *custom_menu_items(:navigations, resource),
-      container_nodes.any? ? activity_link : nil,
       menu_item(
         :settings,
         image: 'fa-gear',
