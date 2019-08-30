@@ -10,13 +10,17 @@ module Rails
       available_str = available.map.with_index { |tenant, index| "#{index}: #{tenant}" }.join(', ')
 
       until available.include?(current)
-        puts "Set Apartment tenant: (#{available_str})" # rubocop:disable Rails/Output
+        Rails.logger.info(
+          ActiveSupport::LogSubscriber.new.send(:color, "Set Apartment tenant: (#{available_str})", :yellow)
+        )
         current = STDIN.gets.chomp
         current = available[current.to_i] if current.scan(/\D/).empty?
       end
 
       Apartment::Tenant.switch! current
-      puts "Switched to #{Apartment::Tenant.current}" # rubocop:disable Rails/Output
+      Rails.logger.info(
+        ActiveSupport::LogSubscriber.new.send(:color, "Switched to #{Apartment::Tenant.current}", :yellow)
+      )
     end
   end
 end
