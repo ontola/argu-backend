@@ -9,13 +9,13 @@ class GrantSetsTest < ActionDispatch::IntegrationTest
 
   test 'guest not get show grant_set' do
     get grant_set_path('participator')
-    assert_not_authorized
+    assert 200
   end
 
   test 'user not get show grant_set' do
     sign_in user
     get grant_set_path('participator')
-    assert_not_authorized
+    assert 200
   end
 
   test 'staff get show grant_set' do
