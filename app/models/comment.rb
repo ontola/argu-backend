@@ -11,8 +11,8 @@ class Comment < Edge
 
   has_one :vote, primary_key_property: :comment_id, dependent: false
   belongs_to :parent_comment, foreign_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
-  has_many :comment_children, primary_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
-  has_many :active_comment_children,
+  has_many :comments, primary_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
+  has_many :active_comments,
            -> { active },
            primary_key_property: :in_reply_to_id,
            class_name: 'Comment',
@@ -23,7 +23,7 @@ class Comment < Edge
   after_trash :unlink_vote
 
   counter_cache comments: {}, threads: {in_reply_to_id: nil}
-  with_collection :comment_children, association_class: Comment
+  with_collection :comments, counter_cache_column: nil
   paginates_per 30
   parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :linked_record, :topics,
              :risk, :intervention, :intervention_type
@@ -51,7 +51,13 @@ class Comment < Edge
 
   # helper method to check if a comment has children
   def has_children?
-    comment_children.any?
+    comments.any?
+  end
+
+  def parent_collections(user_context)
+    return super if parent_comment.blank?
+
+    [parent_comment.comment_collection(user_context: user_context)]
   end
 
   def shallow_wipe
@@ -60,7 +66,7 @@ class Comment < Edge
       self.creator = nil
       self.is_processed = true
     end
-    comment_children.each(&:shallow_wipe) if comment_children.present?
+    comments.each(&:shallow_wipe) if comments.present?
   end
 
   # Comments can't be deleted since all comments below would be hidden as well
@@ -88,12 +94,12 @@ class Comment < Edge
 
   class << self
     def includes_for_serializer
-      super.merge(comment_children: {})
+      super.merge(comments: {})
     end
 
     def show_includes
       super + [
-        comment_child_collection: inc_shallow_collection
+        comment_collection: inc_shallow_collection
       ]
     end
   end

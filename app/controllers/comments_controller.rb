@@ -58,11 +58,6 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
     render
   end
 
-  def collection_from_parent_name
-    return super unless parent_resource.is_a?(Comment)
-    :comment_child_collection
-  end
-
   def index_success_html
     parent = parent_resource!
     if parent.is_a?(Comment)

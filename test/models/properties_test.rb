@@ -53,7 +53,7 @@ class PropertiesTest < ActiveSupport::TestCase
       assert_equal parent_comment, reply.parent_comment
     end
 
-    assert_equal [reply1, reply2], parent_comment.comment_children
+    assert_equal [reply1, reply2], parent_comment.comments
   end
 
   test 'property destruction' do

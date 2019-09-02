@@ -287,7 +287,11 @@ Rails.application.routes.draw do
   resources :creative_works, only: %i[show]
   resources :comments, only: %i[show], path: 'c' do
     include_route_concerns
-    resources :comments, only: %i[index new create], path: 'c'
+    resources :comments, only: %i[index new create], path: 'c' do
+      collection do
+        concerns :nested_actionable
+      end
+    end
   end
   resources :comments, only: %i[show]
   resources :direct_messages, path: :dm, only: [:create]
