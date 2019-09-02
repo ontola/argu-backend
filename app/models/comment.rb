@@ -60,6 +60,12 @@ class Comment < Edge
     [parent_comment.comment_collection(user_context: user_context)]
   end
 
+  def resource_added_delta
+    [
+      [parent.iri, NS::ARGU[:topComment], iri, NS::ONTOLA[:replace]]
+    ]
+  end
+
   def shallow_wipe
     if is_trashed?
       self.body = '[DELETED]'
