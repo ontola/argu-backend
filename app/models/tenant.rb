@@ -92,7 +92,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
         app,
         user_id,
         scopes,
-        Doorkeeper.configuration.access_token_expires_in,
+        10.years.to_i,
         false
       )
       token.update(token: secret)
