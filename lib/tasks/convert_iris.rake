@@ -14,6 +14,7 @@ namespace :iris do
     Tenant.update_all("iri_prefix = replace(iri_prefix, '#{from}', '#{to}')")
     Apartment::Tenant.each do
       Widget.update_all("resource_iri = replace(resource_iri::text, '#{from}', '#{to}')::text[]")
+      CustomMenuItem.update_all("href = replace(href, '#{from}', '#{to}')")
     end
     # rubocop:enable Rails/SkipsModelValidations
   end
