@@ -55,7 +55,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 88c593d770a1f4ce8b9be7137237eeccef51ccc7
+  revision: 0541231dda5f195cb46543c5c5183ae04e0a176a
   specs:
     linked_rails (0.0.0)
       active_response
@@ -462,7 +462,7 @@ GEM
       connection_pool (~> 2.2)
     net_http_timeout_errors (0.3.0)
     netrc (0.11.0)
-    nio4r (2.4.0)
+    nio4r (2.5.1)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     oauth (0.5.4)
