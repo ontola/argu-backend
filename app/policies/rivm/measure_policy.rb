@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InterventionTypePolicy < EdgePolicy
+class MeasurePolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[display_name description]

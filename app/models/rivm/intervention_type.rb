@@ -7,11 +7,10 @@ class InterventionType < Edge
   enhance Feedable
   enhance Statable
   enhance Interventionable
-  enhance Riskable
   enhance PublicGrantable
   enhance LinkedRails::Enhancements::Tableable
 
-  parentable :page, :risk
+  parentable :page
   with_columns default: [
     NS::SCHEMA[:name],
     NS::SCHEMA[:dateCreated]
@@ -26,6 +25,10 @@ class InterventionType < Edge
   class << self
     def iri_namespace
       NS::RIVM
+    end
+
+    def unknown
+      find_or_create_by(parent: ActsAsTenant.current_tenant, display_name: 'Weet ik niet')
     end
   end
 end

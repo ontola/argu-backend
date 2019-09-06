@@ -11,7 +11,7 @@ module DataCube
 
     def measures
       @measures ||=
-        data_set.measures.each_with_index.map { |predicate, i| Measure.new(order: i, predicate: predicate) }
+        data_set.measures.each_with_index.map { |predicate, i| DataCube::Measure.new(order: i, predicate: predicate) }
     end
 
     class << self

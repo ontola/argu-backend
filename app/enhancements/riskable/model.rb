@@ -11,7 +11,7 @@ module Riskable
 
       with_collection :risks,
                       association: :example_of,
-                      title: ->(_r) { I18n.t('intervention_types.example_of') }
+                      title: ->(_r) { I18n.t('measure_types.example_of') }
     end
 
     def risks_id=(ids)

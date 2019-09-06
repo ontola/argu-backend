@@ -26,7 +26,7 @@ class Comment < Edge
   with_collection :comments, counter_cache_column: nil
   paginates_per 30
   parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :linked_record, :topics,
-             :risk, :intervention, :intervention_type
+             :risk, :intervention, :intervention_type, :measure, :measure_type
 
   validates :description, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :creator, presence: true

@@ -358,7 +358,7 @@ Rails.application.routes.draw do
     include_route_concerns
   end
 
-  {risks: 'gevaren', intervention_types: 'interventie_types'}.each do |key, value|
+  {risks: 'gevaren', intervention_types: 'interventie_types', measure_types: 'measure_types'}.each do |key, value|
     resources key, path: value, only: %i[index new create show] do
       include_route_concerns
       collection do
@@ -367,6 +367,9 @@ Rails.application.routes.draw do
     end
   end
   resources :interventions, path: 'interventies', only: %i[index new create show] do
+    include_route_concerns
+  end
+  resources :measures, path: 'voorbeelden', only: %i[index new create show] do
     include_route_concerns
   end
 

@@ -7,12 +7,20 @@ en:
     type: "Intervention types"
     type_new: "New intervention type"
     plural: "Intervention types"
-    collection_for: "intervention against %{parent}"
-    example_of: "Protects against"
   interventions:
     type: "Interventions"
     type_new: "New intervention"
     plural: "Intervention"
+  measure_types:
+    type: "Measure"
+    type_new: "New measure"
+    plural: "Measure"
+    collection_for: "Measure against %{parent}"
+    example_of: "Protects against"
+  measures:
+    type: "Example"
+    type_new: "New example"
+    plural: "Examples"
   formtastic:
     labels:
       example_of_id: "Protects against"

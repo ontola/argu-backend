@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InterventionTypeForm < ApplicationForm
+class MeasureForm < ApplicationForm
   fields [
     :display_name,
     {description: {datatype: NS::FHIR[:markdown]}},

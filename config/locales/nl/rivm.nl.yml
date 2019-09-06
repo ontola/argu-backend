@@ -4,15 +4,152 @@ nl:
     type_new: "Nieuw gevaar"
     plural: "Gevaren"
   intervention_types:
+    type: "Interventie type"
+    type_new: "Nieuw interventie type"
+    plural: "Interventie types"
+  interventions:
+    type: "Interventie"
+    type_new: "Nieuwe interventie"
+    plural: "Interventies"
+    plans_and_procedure:
+      usability: "De begrijpbaarheid en bruikbaarheid van regels, richtlijnen en procedures"
+      planning: "Het goed plannen van werkzaamheden"
+      procedures: "Organisatie en procedures voor onderhoud"
+      responsibilities: "Afspraken rondom taken, verantwoordelijkheden en bevoegdheden"
+      preparation: "Voorbereiding voor noodsituaties"
+      other_plans: "Een ander aspect van plannen en procedures"
+    people_and_resources:
+      labor_force: "Voldoende bezetting en genoeg collega’s"
+      resources: "Beschikbaarheid van voldoende middelen"
+      other_people_resource: "Een ander aspect van mensen en middelen"
+    competence:
+      craftsmanship: "Vakmanschap in de uitvoering van het werk"
+      training: "Training en opleidingssystemen"
+      knowledge: "Kennis van veiligheid, risico’s en regels"
+      unexpected_situation: "Hoe om te gaan met onverwachte situaties"
+      other_competence: "Een ander aspect van competentie/deskundigheid,"
+    communication:
+      open_communication: "Open communicatie"
+      communication_processed: "Communicatieprocessen en afspraken"
+      communication_resources: "Communicatiemiddelen (bijv. telefoons, porto’s enz.)"
+      other_communication: "Een ander aspect van communicatie"
+    motivation_and_commitment:
+      rules_and_behavior: "Regelovertreding en gedrag"
+      leading_by_example: "Voorbeeldgedrag van leidinggevenden"
+      participation: "Participatie van medewerkers en betrokkenheid bij veiligheid"
+      other_motivation: "Een ander aspect van motivatie en commitment"
+    conflict_and_prioritization:
+      leadership_priorities: "De prioriteit voor veiligheid bij leidinggevenden"
+      consitent_leadership: "Consistent leiderschap"
+      dilemmas: "Omgaan met dilemma’s / afwegingen"
+      other_conflict: "Een ander aspect van conflictoplossing en prioriteiten"
+    ergonomics:
+      buttons_and_devices: "Ergonomie van knoppen, afsluiters en apparaten"
+      software: "Ergonomie van controlesystemen, schermen en software"
+      housekeeping: "Opgeruimdheid / housekeeping"
+      other_ergonomics: "Een ander aspect van ergonomie"
+    tools:
+      tool_availability: "Beschikbaarheid (reserve) onderdelen"
+      design_process: "Ontwerp processen"
+      technical_state: "Technische staat en onderhoud"
+      personal_protection: "Persoonlijke beschermingsmiddelen"
+      other_tools: "Een ander aspect van gereedschap, materiaal en (reserve) onderdelen"
+    target_audience:
+      operational_employess: "Operationele medewerkers"
+      contractors: "(Onder)aannemers"
+      hired_peronel: "Ingehuurde medewerkers"
+      managers: "Direct leidinggevenden"
+      higher_management: "Hoger management"
+      safety_professionals: "Veiligheidsprofessionals"
+      trainers: "Trainers, opleiders of adviseurs"
+    risk_reduction:
+      removal_from_danger: "Het geheel wegnemen van een bepaald gevaar (bronmaatregel)"
+      change_of_technique: "Fundamentele aanpassingen aan de gebruikte techniek."
+      technical_adjustment: "Technische aanpassingen om groepen medewerkers te beschermen (bijvoorbeeld afscherming)"
+      change_personal_protection: "Verbeterde inzet van persoonlijke beschermingsmiddelen"
+      change_knowledge: "Verandering van kennis, motivatie of instelling"
+      change_behavior: "Verandering van gedrag van de doelgroep"
+      change_culture: "Verandering van het klimaat of de cultuur binnen de organisatie"
+      change_organisation: "Structurele aanpassing van de organisatie"
+      unknown_reduction: "Weet niet"
+    continuous:
+      is_continuous: "Doorlopende interventie"
+      is_not_continuous: "Interventie met einddatum"
+      continuous_unknown: "Weet niet"
+    independent:
+      fully_independent: "Volledig zelfstandig"
+      optionally_independent: "Optioneel zelfstandig, maar idealiter met een externe partij met onafhankelijke rol"
+      external_party_required: "Alleen met behulp van een externe partij met onafhankelijke rol"
+    management_involvement:
+      management_very_important: "Zeer belangrijk"
+      management_important: "Belangrijk"
+      management_not_very_important: "Niet zo belangrijk"
+      management_not_important: "Niet belangrijk"
+    training_required:
+      training_is_required: "Ja"
+      training_is_not_required: "Nee"
+      training_unkown_required: "Weet niet"
+  measure_types:
     type: "Maatregel"
     type_new: "Nieuwe maatregel"
     plural: "Maatregelen"
     collection_for: "Maatregelen tegen %{parent}"
     example_of: "Beschermt tegen"
-  interventions:
+  measures:
     type: "Voorbeeld"
     type_new: "Nieuw voorbeeld"
     plural: "Voorbeelden"
   formtastic:
     labels:
       example_of_id: "Beschermt tegen"
+      parent_id: "Onder welke op deze website beschreven interventietypes is de interventie in te delen?"
+      goal: "Welke doel(en) hoopt u te bereiken met uw interventie?"
+      plans_and_procedure: "Plannen en procedures"
+      people_and_resources: "Beschikbaarheid van mensen en middelen"
+      competence: "Competentie / deskundigheid"
+      communication: "Communicatie"
+      motivation_and_commitment: "Motivatie en commitment"
+      conflict_and_prioritization: "Conflictoplossing en prioriteiten"
+      ergonomics: "Ergonomie"
+      tools: "Gereedschap, materiaal en (reserve) onderdelen"
+      target_audience: "Wie is of wie zijn de doelgroep(en) van de interventie? Meerdere antwoorden mogelijk"
+      risk_reduction: "Op welke manier verlaagt de interventie volgens u de kans op ongevallen?"
+      continuous: "Is de interventie doorlopend of heeft deze een vaste einddatum?"
+      independent: "Kan de interventie zelfstandig worden uitgevoerd of is ondersteuning vanuit een externe partij met een onafhankelijke rol noodzakelijk?"
+      specific_tools_required: "Zijn er specifieke materialen nodig om de interventie in te voeren?"
+      management_involvement: "Is het belangrijk dat het management van het bedrijf betrokken wordt bij deze interventie?"
+      training_required: "Is het nodig om een training of opleiding te volgen om deze interventie in te kunnen voeren in een bedrijf?"
+      additional_introduction_information: "Kunt u nog extra informatie geven over de invoering van de interventie? [open vraag]"
+    placeholders:
+      intervention:
+        description: |
+          Neem hier in ieder geval de volgende onderdelen in op:
+            • Wat zijn de activiteiten van bedrijf?
+            • Wat houdt de interventie in?
+            • Waarom is deze interventie ingevoerd?
+            • Hoe is de interventie uitgevoerd?"
+        goal: |
+          Probeer het doel of de doelen zo specifiek en helder mogelijk te verwoorden.
+          Neem hier ook bij mee:
+            • Wat is de doelgroep van de interventie?
+            • Wat probeert u met de interventie bij deze doelgroep te bereiken?
+        additional_introduction_information: |
+          Geef hierbij bijvoorbeeld aan:
+            • Welke externe ondersteuning mogelijk gewenst is?
+            • Welke trainingen en of opleidingen eventueel noodzakelijk zijn?
+            • Waar eventueel benodigde materialen te verkrijgen zijn?
+        specific_tools_required: "Denk bijvoorbeeld aan een handboek, protocol, flyers, video’s, vragenlijsten, software of presentaties."
+  actions:
+    interventions:
+      create:
+        description: "Door het delen van veiligheidsinterventies leren andere Arboprofessionals van uw ervaringen. Met behulp van dit invulformulier kunt u eenvoudig interventies delen. Door interventies in de praktijk toe te passen zal de veiligheid binnen organisaties worden verbeterd."
+  forms:
+    goal_and_effect:
+      label: "Doelen en effecten van de interventie"
+      description: "Een interventie wordt ingezet om een doel te bereiken: het voorkomen of verminderen van problemen of risico’s, dan wel het bevorderen van een positieve ontwikkeling. Het is belangrijk om de doelen van uw interventie goed vast te leggen."
+      goal_and_audience_info:
+        label: "Waarop heeft de interventie effect?"
+        description: "Selecteer uit onderstaande elementen, u kunt meerdere antwoorden aanvinken."
+    intervention_introduction:
+      label: "Invoeren van de interventie"
+      description: "De volgende vragen gaan over hoe de interventie in het bedrijf is ingevoerd. Tijdens de invoering worden vaak allerlei stappen gezet om de interventie tot een succes te maken."

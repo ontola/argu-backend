@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :intervention_type do
-    sequence(:title) { |n| "fg risk title #{n}end" }
-    sequence(:content) { |i| "fg risk content #{i}end" }
+    sequence(:title) { |n| "fg intervention type title #{n}end" }
+    sequence(:content) { |i| "fg intervention type content #{i}end" }
   end
 end

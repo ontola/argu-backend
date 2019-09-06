@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module InterventionTypeable
+module MeasureTypeable
   module Serializer
     extend ActiveSupport::Concern
 
     included do
-      with_collection :intervention_types, predicate: NS::RIVM[:interventionTypes]
+      with_collection :measure_types, predicate: NS::RIVM[:measureTypes]
     end
   end
 end

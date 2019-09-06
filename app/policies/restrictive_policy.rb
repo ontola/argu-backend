@@ -139,6 +139,11 @@ class RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   private
 
+  def add_array_attributes(array, *attrs)
+    array.concat(attrs)
+    array.concat(attrs.map { |attr| {attr => []} })
+  end
+
   def assert!(assertion, query = nil)
     raise Argu::Errors::Forbidden.new(record: record, query: query) unless assertion
   end

@@ -12,7 +12,7 @@ class PropertiesTest < ActiveSupport::TestCase
   let(:reply2) { create(:comment, parent: motion, in_reply_to_id: parent_comment.uuid) }
   let(:risk1) { create(:risk, parent: argu) }
   let(:risk2) { create(:risk, parent: argu) }
-  let(:intervention_type) { create(:intervention_type, parent: argu) }
+  let(:measure_type) { create(:measure_type, parent: argu) }
 
   test 'property assignment' do
     motion
@@ -37,15 +37,32 @@ class PropertiesTest < ActiveSupport::TestCase
   end
 
   test 'property array assignment' do
-    assert_empty intervention_type.example_of_id
-    assert_empty intervention_type.example_of
+    assert_empty measure_type.example_of_id
+    assert_empty measure_type.example_of
     risk1
     risk2
     assert_difference('Property.count' => 2) do
-      intervention_type.update!(example_of_id: [risk1.uuid, risk2.uuid])
+      measure_type.update!(example_of_id: [risk1.uuid, risk2.uuid])
     end
-    assert_equal [risk1.uuid, risk2.uuid], reloaded_intervention_type.example_of_id
-    assert_equal [risk1, risk2], reloaded_intervention_type.example_of
+    prop_id = measure_type.property_manager(NS::RIVM[:exampleOf]).send(:properties).first.id
+    assert_difference('Property.count' => 0) do
+      measure_type.update!(example_of_id: [risk1.uuid, risk2.uuid])
+    end
+    assert_equal [risk1.uuid, risk2.uuid], reloaded_measure_type.example_of_id
+    assert_equal [risk1, risk2], reloaded_measure_type.example_of
+    assert_equal prop_id, measure_type.property_manager(NS::RIVM[:exampleOf]).send(:properties).first.id
+
+    assert_difference('Property.count' => -1) do
+      measure_type.update!(example_of_id: [risk1.uuid])
+    end
+    assert_not_equal prop_id, measure_type.property_manager(NS::RIVM[:exampleOf]).send(:properties).first.id
+    prop_id = measure_type.property_manager(NS::RIVM[:exampleOf]).send(:properties).first.id
+    assert_difference('Property.count' => 0) do
+      measure_type.update!(example_of_id: [risk1.uuid])
+    end
+    assert_equal prop_id, measure_type.property_manager(NS::RIVM[:exampleOf]).send(:properties).first.id
+    assert_equal [risk1.uuid], reloaded_measure_type.example_of_id
+    assert_equal [risk1], reloaded_measure_type.example_of
   end
 
   test 'property associations' do
@@ -64,8 +81,8 @@ class PropertiesTest < ActiveSupport::TestCase
 
   private
 
-  def reloaded_intervention_type
-    Edge.find_by(uuid: intervention_type.uuid)
+  def reloaded_measure_type
+    Edge.find_by(uuid: measure_type.uuid)
   end
 
   def reloaded_motion
