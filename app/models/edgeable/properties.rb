@@ -201,3 +201,30 @@ module ActiveRecord
     end
   end
 end
+
+module EnumTypeExtensions
+  def cast(value)
+    return super unless value.is_a?(Array)
+
+    value.map(&method(:cast))
+  end
+
+  def deserialize(value)
+    return super unless value.is_a?(Array)
+
+    value.map(&method(:deserialize))
+  end
+
+  def serialize(value)
+    return super unless value.is_a?(Array)
+
+    value.map(&method(:serialize))
+  end
+
+  def assert_valid_value(value)
+    return super unless value.is_a?(Array)
+
+    value.each(&method(:assert_valid_value))
+  end
+end
+ActiveRecord::Enum::EnumType.send(:prepend, EnumTypeExtensions)
