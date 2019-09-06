@@ -2,8 +2,6 @@
 
 module Menus
   module ShareMenuItems
-    include LinkedRails::Helpers::OntolaActionsHelper
-
     def invite_link
       menu_item(
         :invite,
@@ -11,16 +9,6 @@ module Menus
         link_opts: {data: {remote: 'true'}},
         href: new_iri(invites_iri_path(resource)),
         policy: :invite?
-      )
-    end
-
-    def copy_share_link(url)
-      menu_item(
-        :copy,
-        action: ontola_copy_action(url),
-        item_type: 'copy',
-        image: 'fa-clipboard',
-        href: url
       )
     end
 

@@ -19,6 +19,7 @@ class RiskMenuList < ApplicationMenuList
       edit_link,
       statistics_link,
       export_link,
+      copy_share_link(resource.iri),
       *trash_and_destroy_links
     ]
   end

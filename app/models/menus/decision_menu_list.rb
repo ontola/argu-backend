@@ -10,6 +10,6 @@ class DecisionMenuList < ApplicationMenuList
   private
 
   def action_menu_items
-    [edit_link]
+    [edit_link, copy_share_link(resource.iri)]
   end
 end

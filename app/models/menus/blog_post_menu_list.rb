@@ -11,6 +11,6 @@ class BlogPostMenuList < ApplicationMenuList
   private
 
   def action_menu_items
-    [edit_link, *trash_and_destroy_links]
+    [edit_link, copy_share_link(resource.iri), *trash_and_destroy_links]
   end
 end

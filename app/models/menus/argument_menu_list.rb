@@ -13,6 +13,6 @@ class ArgumentMenuList < ApplicationMenuList
   private
 
   def action_menu_items
-    [activity_link, edit_link, *trash_and_destroy_links, contact_link]
+    [activity_link, edit_link, copy_share_link(resource.iri), *trash_and_destroy_links, contact_link]
   end
 end

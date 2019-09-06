@@ -4,6 +4,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
   include ActionDispatch::Routing
   include Rails.application.routes.url_helpers
   include UriTemplateHelper
+  include LinkedRails::Helpers::OntolaActionsHelper
 
   delegate :afe_request?, :user, to: :user_context
 
@@ -14,6 +15,16 @@ class ApplicationMenuList < LinkedRails::Menus::List
   end
 
   private
+
+  def copy_share_link(url)
+    menu_item(
+      :copy,
+      action: ontola_copy_action(url),
+      item_type: 'copy',
+      image: 'fa-clipboard',
+      href: url
+    )
+  end
 
   def custom_menu_items(menu_type, resource)
     scoped_menu_items(menu_type, resource)

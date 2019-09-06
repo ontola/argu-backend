@@ -9,7 +9,16 @@ class ContainerNodeMenuList < ApplicationMenuList
   private
 
   def action_menu_items
-    [activity_link, search_link, statistics_link, export_link, move_link, destroy_link, edit_link]
+    [
+      activity_link,
+      search_link,
+      statistics_link,
+      export_link,
+      move_link,
+      copy_share_link(resource.iri),
+      destroy_link,
+      edit_link
+    ]
   end
 
   def navigation_menu_items

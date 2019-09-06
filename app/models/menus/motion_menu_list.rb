@@ -25,6 +25,7 @@ class MotionMenuList < ApplicationMenuList
       statistics_link,
       export_link,
       contact_link,
+      copy_share_link(resource.iri),
       *trash_and_destroy_links
     ]
   end
