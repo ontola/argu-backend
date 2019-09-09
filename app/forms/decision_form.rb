@@ -4,12 +4,7 @@ class DecisionForm < ApplicationForm
   fields [
     {
       state: {
-        sh_in: lambda do
-          self.class.form_options(
-            'state',
-            DecisionSerializer.default_enum_opts('state', %w[rejected approved])
-          )
-        end
+        sh_in: form_options('state', DecisionSerializer.default_enum_opts('state', %w[approved rejected]))
       }
     },
     :description,

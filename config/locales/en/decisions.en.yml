@@ -9,7 +9,7 @@ en:
     forwarded: "Forwarded"
     forwarded_to: "Forwarded to %{to}"
     edit_draft: "Edit draft"
-    action:
+    state:
       approved: "Approve"
       rejected: "Reject"
       forwarded: "Forward"

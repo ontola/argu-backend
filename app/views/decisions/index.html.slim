@@ -23,12 +23,12 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
             p
               - if decisionable.assigned_to_user?(current_user)
                 - Decision.actioned_keys.each do |state|
-                  =link_to(t("decisions.action.#{state}"),
+                  =link_to(t("decisions.state.#{state}"),
                           new_iri(decisionable, :decisions, query: {state: state}),
                           class: 'btn btn--smaller btn--neutral')
                   span &nbsp;
               - else
-                =link_to(t('decisions.action.forwarded'),
+                =link_to(t('decisions.state.forwarded'),
                         new_iri(decisionable, :decisions, query: {state: 'forwarded'}),
                         class: 'btn btn--smaller btn--neutral')
     - if local_assigns[:new_decision]

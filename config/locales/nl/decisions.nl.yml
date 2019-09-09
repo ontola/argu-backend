@@ -9,7 +9,7 @@ nl:
     forwarded: "Doorgestuurd"
     forwarded_to: "Doorgestuurd naar %{to}"
     edit_draft: "Pas concept aan"
-    action:
+    state:
       approved: "Aannemen"
       rejected: "Verwerpen"
       forwarded: "Doorsturen"

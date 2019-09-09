@@ -27,7 +27,7 @@ module DecisionsHelper
     if decision.forwarded? && decision.persisted?
       t('decisions.forwarded_to', to: assigned_name(decision.forwarded_user, decision.forwarded_group, false))
     elsif decision.state_changed?
-      t("decisions.action.#{decision.state}")
+      t("decisions.state.#{decision.state}")
     else
       t("decisions.#{decision.state}")
     end
