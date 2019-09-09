@@ -2,7 +2,7 @@
 
 class DirectMessagePolicy < EdgeTreePolicy
   def permitted_attribute_names
-    %i[body email resource_iri subject actor]
+    %i[body email_address_id resource_iri subject actor]
   end
 
   def create?

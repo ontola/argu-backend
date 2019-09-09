@@ -2,7 +2,7 @@
 
 class DirectMessageForm < ApplicationForm
   fields [
-    {email: {sh_in: -> { user_context.user.email_addresses }}},
+    {email_address_id: {sh_in: -> { user_context.user.email_addresses }}},
     :subject,
     {body: {max_length: 5000}},
     :footer

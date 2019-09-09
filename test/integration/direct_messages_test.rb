@@ -59,7 +59,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
          params: {
-           direct_message: valid_params.merge(email: unconfirmed_email.email),
+           direct_message: valid_params.merge(email_address_id: unconfirmed_email.iri),
            actor_iri: resource_iri(administrator, root: argu)
          }
     assert_not_authorized
@@ -69,7 +69,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
          params: {
-           direct_message: valid_params.merge(email: user.email),
+           direct_message: valid_params.merge(email_address_id: user.primary_email_record.iri),
            actor_iri: resource_iri(administrator, root: argu)
          }
     assert_not_authorized
@@ -102,7 +102,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   def valid_params
     {
       body: 'body',
-      email: administrator.email,
+      email_address_id: administrator.primary_email_record.iri,
       subject: 'subject',
       resource_iri: motion.iri
     }
