@@ -72,6 +72,7 @@ nl:
       current_password: "Huidig wachtwoord"
       primary_container_node_id: "Homepage"
       profile_photo: "Profielfoto"
+      published_at: "Publicatie"
       remember_me: "Gegevens onthouden"
       remove_cover_photo: "Omslagfoto verwijderen"
       remove_content: "Afbeelding verwijderen"

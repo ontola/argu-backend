@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateIntervention < EdgeableCreateService
+class UpdateIntervention < EdgeableUpdateService
   include UUIDHelper
 
   def initialize(resource, attributes: {}, options: {})

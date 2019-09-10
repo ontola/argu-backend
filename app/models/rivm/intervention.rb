@@ -10,6 +10,7 @@ class Intervention < Edge
 
   parentable :intervention_type
 
+  property :employment_id, :linked_edge_id, NS::RIVM[:employmentId]
   property :goal, :text, NS::RIVM[:interventionGoal]
   property :specific_tools_required, :text, NS::RIVM[:specificToolsRequired]
   property :additional_introduction_information, :text, NS::RIVM[:additionalIntroductionInformation]
@@ -50,13 +51,46 @@ class Intervention < Edge
     enum: management_involvement_options
   )
   property :training_required, :integer, NS::RIVM[:trainingRequired], array: true, enum: training_required_options
+  property :nature_of_costs, :integer, NS::RIVM[:natureOfCosts], array: true, enum: nature_of_costs_options
+  property :one_off_costs, :integer, NS::RIVM[:oneOffCosts], enum: one_off_costs_options
+  property :recurring_costs, :integer, NS::RIVM[:recurringCosts], enum: recurring_costs_options
+  property :cost_explanation, :text, NS::RIVM[:costExplanation]
+  property :effectivity_research_method, :integer, NS::RIVM[:effectivityResearchMethod], enum: research_method_options
+  property :security_improved, :integer, NS::RIVM[:securityImproved], enum: security_improved_options
+  property :security_improvement_reason, :text, NS::RIVM[:securityImprovementReason]
+  property :business_section, :integer, NS::RIVM[:businessSection], enum: business_section_options
+  property :business_section_employees, :integer, NS::RIVM[:businessSectionEmployees], enum: section_employees_options
+  property :comments_allowed, :integer, NS::RIVM[:commentsAllowed], enum: comments_allowed_options
+
+  counter_cache true
+
+  belongs_to :employment,
+             foreign_key_property: :employment_id,
+             class_name: 'Employment',
+             dependent: false
 
   validates :description, length: {maximum: 5000}
   validates :display_name, presence: true, length: {maximum: 110}
   validates :goal, length: {maximum: 5000}
   validates :specific_tools_required, length: {maximum: 5000}
   validates :additional_introduction_information, length: {maximum: 5000}
+  validates :cost_explanation, length: {maximum: 5000}
+  validates :security_improvement_reason, length: {maximum: 5000}
+  # rubocop:disable Rails/Validation
+  validates_presence_of(
+    :goal, :risk_reduction, :continuous, :independent, :management_involvement, :training_required, :nature_of_costs,
+    :one_off_costs, :recurring_costs, :effectivity_research_method, :security_improved, :business_section,
+    :business_section_employees, :comments_allowed, :employment_id
+  )
+  # rubocop:enable Rails/Validation
   validate :validate_parent_type
+
+  def effects
+    %i[plans_and_procedure people_and_resources competence communication
+       motivation_and_commitment conflict_and_prioritization ergonomics tools].map do |attr|
+      send(attr).map { |option| InterventionSerializer.enum_options(attr)[:options][option.to_sym][:iri] }
+    end.flatten
+  end
 
   private
 

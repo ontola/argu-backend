@@ -13,7 +13,6 @@ module ProfilePhotoable
               class_name: 'ImageObject',
               dependent: :destroy,
               inverse_of: :about,
-              required: true,
               autosave: true,
               primary_key: :uuid
 
@@ -27,7 +26,8 @@ module ProfilePhotoable
                                         attrs['remote_content_url'].blank?
                                     }
 
-      before_validation :build_profile_photo
+      validates :default_profile_photo, presence: true, if: :require_profile_photo?
+      before_validation :build_profile_photo, if: :require_profile_photo?
       before_save :remove_marked_profile_photo
     end
 
@@ -52,9 +52,19 @@ module ProfilePhotoable
       default_profile_photo.save if default_profile_photo&.remove_content
     end
 
+    private
+
+    def require_profile_photo?
+      self.class.require_profile_photo?
+    end
+
     module ClassMethods
       def preview_includes
         super + [:default_profile_photo]
+      end
+
+      def require_profile_photo?
+        true
       end
     end
   end

@@ -13,7 +13,8 @@ class InterventionType < Edge
   parentable :page
   with_columns default: [
     NS::SCHEMA[:name],
-    NS::SCHEMA[:dateCreated]
+    NS::ARGU[:interventionsCount],
+    NS::SCHEMA[:datePublished]
   ]
   validates :description, length: {maximum: 5000}
   validates :display_name, presence: true, length: {maximum: 110}

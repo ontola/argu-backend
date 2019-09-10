@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateInterventionType < EdgeableCreateService
+class CreateEmployment < EdgeableCreateService
   private
 
   def object_attributes=(obj); end

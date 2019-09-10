@@ -70,7 +70,7 @@ class PropertiesTest < ActiveSupport::TestCase
       assert_equal parent_comment, reply.parent_comment
     end
 
-    assert_equal [reply1, reply2], parent_comment.comments
+    assert_equal [reply1, reply2], parent_comment.comments.order(:id)
   end
 
   test 'property destruction' do

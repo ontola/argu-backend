@@ -68,6 +68,7 @@ en:
       path: "alias"
       pinned: "Pin"
       postal_code: "Postal code"
+      published_at: "Published"
       require_location: "Location is required"
       current_password: "Current password"
       primary_container_node_id: "Homepage"

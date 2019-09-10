@@ -55,7 +55,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 6345a143a97035b61b79b6711fd70e5e9f8f0b4e
+  revision: 49f2e96e594f4fecf874c51f49d47a81ecb71d35
   specs:
     linked_rails (0.0.0)
       active_response
@@ -68,7 +68,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/rdf-serializers
-  revision: 5f545d02a29c2cab8603911cfcb5a1e755bac73d
+  revision: 99245b7bd00551549fd7723f200b4ac6feabde3d
   specs:
     rdf-serializers (0.0.6)
       active_model_serializers (~> 0.10)

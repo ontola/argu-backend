@@ -52,6 +52,12 @@ class PagePolicy < EdgePolicy
     'profile'
   end
 
+  def index_children?(raw_klass)
+    return show? if raw_klass.to_sym == :interventions
+
+    super
+  end
+
   private
 
   def group_member?
