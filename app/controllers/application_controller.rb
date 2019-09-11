@@ -237,14 +237,16 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     obj.to_s
   end
 
-  def website_meta
+  def website_meta # rubocop:disable Metrics/AbcSize
     {
       accent_background_color: tree_root.accent_background_color,
       accent_color: tree_root.accent_color,
       application_name: Setting.get('app_name') || 'Argu',
       iri: "https://#{tree_root.iri_prefix}",
       navbar_background: tree_root.navbar_background,
-      navbar_color: tree_root.navbar_color
+      navbar_color: tree_root.navbar_color,
+      template: tree_root.template,
+      template_options: JSON.parse(tree_root.template_options).to_query
     }
   end
 
