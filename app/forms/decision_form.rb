@@ -13,6 +13,7 @@ class DecisionForm < ApplicationForm
 
   property_group :footer,
                  iri: NS::ONTOLA[:footerGroup],
+                 order: 99,
                  properties: [
                    creator: actor_selector
                  ]

@@ -9,6 +9,7 @@ class OpinionForm < ApplicationForm
   property_group(
     :hidden,
     iri: NS::ONTOLA[:hiddenGroup],
+    order: 98,
     properties: [
       is_opinion: {
         default_value: true

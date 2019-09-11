@@ -26,11 +26,13 @@ class QuestionForm < ApplicationForm
 
   property_group :footer,
                  iri: NS::ONTOLA[:footerGroup],
+                 order: 99,
                  properties: [
                    creator: actor_selector
                  ]
 
   property_group :hidden,
+                 order: 98,
                  iri: NS::ONTOLA[:hiddenGroup],
                  properties: %i[argu_publication]
 end

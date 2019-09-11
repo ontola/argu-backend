@@ -24,11 +24,13 @@ class TopicForm < ApplicationForm
 
   property_group :footer,
                  iri: NS::ONTOLA[:footerGroup],
+                 order: 99,
                  properties: [
                    creator: actor_selector
                  ]
 
   property_group :hidden,
                  iri: NS::ONTOLA[:hiddenGroup],
+                 order: 98,
                  properties: %i[argu_publication]
 end

@@ -10,6 +10,7 @@ class DirectMessageForm < ApplicationForm
 
   property_group :footer,
                  iri: NS::ONTOLA[:footerGroup],
+                 order: 99,
                  properties: [
                    actor: actor_selector
                  ]

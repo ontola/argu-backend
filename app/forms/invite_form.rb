@@ -24,6 +24,7 @@ class InviteForm < ApplicationForm
   property_group(
     :hidden,
     iri: NS::ONTOLA[:hiddenGroup],
+    order: 98,
     properties: [
       {send_mail: {default_value: true}},
       {
@@ -37,6 +38,7 @@ class InviteForm < ApplicationForm
   property_group(
     :footer,
     iri: NS::ONTOLA[:footerGroup],
+    order: 99,
     properties: [
       creator: actor_selector
     ]
