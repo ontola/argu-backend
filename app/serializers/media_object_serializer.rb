@@ -13,12 +13,12 @@ class MediaObjectSerializer < RecordSerializer
   attribute :filename, predicate: NS::DBO[:filename]
   attribute :thumbnail, predicate: NS::SCHEMA[:thumbnail]
   attribute :position_y,
-            predicate: NS::ARGU[:imagePositionY],
+            predicate: NS::ONTOLA[:imagePositionY],
             datatype: NS::XSD[:integer]
   attribute :used_as
 
   MediaObjectUploader::VERSIONS.each do |format, opts|
-    attribute format, predicate: NS::ARGU[:"imgUrl#{opts[:w]}x#{opts[:h]}"]
+    attribute format, predicate: NS::ONTOLA[:"imgUrl#{opts[:w]}x#{opts[:h]}"]
 
     define_method format do
       url_for_version(format)
