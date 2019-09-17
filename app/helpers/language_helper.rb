@@ -33,7 +33,7 @@ module LanguageHelper
   end
 
   def language_for_guest
-    language_from_edge_tree || language_from_r || language_from_header || I18n.locale.to_s
+    language_from_edge_tree || language_from_r || language_from_root || language_from_header || I18n.locale.to_s
   end
 
   def language_from_edge_tree; end
@@ -49,6 +49,10 @@ module LanguageHelper
     return if resource.nil? || !resource.is_a?(Edge) || resource.ancestor(:forum).nil?
     language = resource.ancestor(:forum).language
     I18n.available_locales.include?(language) ? language : :en
+  end
+
+  def language_from_root
+    try(:tree_root)&.locale
   end
 
   def language_select_items
