@@ -68,6 +68,14 @@ module Edgeable
 
       private
 
+      def define_property_setter(name, predicate, array)
+        define_method "#{name}=" do |value|
+          value = [value] if array && !value.is_a?(Array)
+          property_manager(predicate).value = value
+          super(value)
+        end
+      end
+
       def initialize_defined_properties
         return if defined_properties && method(:defined_properties).owner == singleton_class
 
@@ -85,10 +93,7 @@ module Edgeable
 
         enum name => opts[:enum] if opts[:enum].present?
 
-        define_method "#{name}=" do |value|
-          property_manager(predicate).value = value
-          super(value)
-        end
+        define_property_setter(name, predicate, opts[:array])
       end
 
       def property_type(type)

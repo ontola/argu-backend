@@ -65,6 +65,21 @@ class PropertiesTest < ActiveSupport::TestCase
     assert_equal [risk1], reloaded_measure_type.example_of
   end
 
+  test 'property array assignment with non array' do
+    measure_type
+    risk1
+    assert_difference('Property.count' => 1) do
+      measure_type.update!(example_of_id: risk1.uuid)
+    end
+    prop_id = measure_type.property_manager(NS::RIVM[:exampleOf]).send(:properties).first.id
+    assert_difference('Property.count' => 0) do
+      measure_type.update!(example_of_id: [risk1.uuid])
+    end
+    assert_equal prop_id, measure_type.property_manager(NS::RIVM[:exampleOf]).send(:properties).first.id
+    assert_equal [risk1.uuid], reloaded_measure_type.example_of_id
+    assert_equal [risk1], reloaded_measure_type.example_of
+  end
+
   test 'property associations' do
     [reply1, reply2].each do |reply|
       assert_equal parent_comment, reply.parent_comment
