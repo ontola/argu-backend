@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_11_102156) do
+ActiveRecord::Schema.define(version: 2019_09_23_095657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -118,7 +118,9 @@ ActiveRecord::Schema.define(version: 2019_09_11_102156) do
     t.integer "attachments_count", default: 0, null: false
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
     t.index ["parent_id", "creator_id"], name: "index_edges_on_parent_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
+    t.index ["path"], name: "index_edges_on_path", using: :gist
     t.index ["root_id", "fragment"], name: "index_edges_on_root_id_and_fragment", unique: true
+    t.index ["root_id", "path"], name: "index_edges_on_root_id_and_path"
     t.index ["root_id"], name: "index_edges_on_root_id"
     t.index ["uuid"], name: "index_edges_on_uuid", unique: true
   end
@@ -209,6 +211,7 @@ ActiveRecord::Schema.define(version: 2019_09_11_102156) do
     t.uuid "edge_id", null: false
     t.index ["edge_id"], name: "index_grants_on_edge_id"
     t.index ["group_id", "edge_id"], name: "index_grants_on_group_id_and_edge_id", unique: true
+    t.index ["group_id"], name: "index_grants_on_group_id"
   end
 
   create_table "group_memberships", id: :serial, force: :cascade do |t|
