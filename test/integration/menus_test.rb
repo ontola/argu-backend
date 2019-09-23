@@ -39,13 +39,15 @@ class MenusTest < ActionDispatch::IntegrationTest
     navigations_iri = resource_iri(argu.menu(:navigations, user_context), root: argu)
     expect_triple(navigations_iri, RDF[:type], NS::ONTOLA[:MenuItem])
     sequence = expect_sequence(navigations_iri, NS::ONTOLA[:menuItems])
+    home_menu_iri = RDF::URI("#{navigations_iri}#home")
     freetown_menu_iri = RDF::URI("#{navigations_iri}#menu_item_#{CustomMenuItem.find_by(edge: freetown).id}")
     feed_menu_iri = RDF::URI("#{navigations_iri}#menu_item_#{CustomMenuItem.find_by(resource: argu, order: 100).id}")
     expect_triple(freetown_menu_iri, NS::ONTOLA[:href], freetown.iri)
     expect_triple(feed_menu_iri, NS::ONTOLA[:href], feeds_iri(argu))
-    expect_sequence_member(sequence, 0, freetown_menu_iri)
-    expect_sequence_member(sequence, 1, resource_iri(custom_menu_item, root: argu))
-    expect_sequence_member(sequence, 2, feed_menu_iri)
+    expect_sequence_member(sequence, 0, home_menu_iri)
+    expect_sequence_member(sequence, 1, freetown_menu_iri)
+    expect_sequence_member(sequence, 2, resource_iri(custom_menu_item, root: argu))
+    expect_sequence_member(sequence, 3, feed_menu_iri)
   end
 
   ####################################

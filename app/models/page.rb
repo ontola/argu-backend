@@ -69,6 +69,8 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :primary_container_node_id, :linked_edge_id, NS::FOAF[:homepage]
   property :template, :string, NS::ONTOLA[:template], default: :default
   property :template_options, :text, NS::ONTOLA[:templateOpts], default: '{}'
+  property :home_menu_label, :string, NS::ONTOLA[:homeMenuLabel]
+  property :home_menu_image, :string, NS::ONTOLA[:homeMenuImage]
 
   belongs_to :primary_container_node,
              foreign_key_property: :primary_container_node_id,
@@ -89,6 +91,16 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   def email
     'anonymous'
+  end
+
+  def home_menu_image
+    return default_profile_photo.iri unless super
+
+    RDF::URI(super)
+  end
+
+  def home_menu_label
+    super || display_name
   end
 
   def iri(_opts = {})

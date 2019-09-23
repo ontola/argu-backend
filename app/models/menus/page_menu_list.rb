@@ -30,6 +30,12 @@ class PageMenuList < ApplicationMenuList
 
   def navigations_menu_items
     [
+      menu_item(
+        :home,
+        image: resource.home_menu_image,
+        label: resource.home_menu_label,
+        href: resource.iri
+      ),
       *custom_menu_items(:navigations, resource),
       menu_item(
         :settings,
