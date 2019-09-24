@@ -50,11 +50,9 @@ module HeaderHelper
       end
     items << link_item(t('users.settings.title'), settings_iri('/u'), fa: 'gear')
     items << link_item(t('users.drafts.title'), collection_iri(current_user, :drafts), fa: 'pencil-square-o')
-    items << if current_user.page_management?
-               link_item(t('pages.management.title').capitalize, collection_iri(current_user, :pages), fa: 'building')
-             else
-               link_item(t('pages.create'), new_iri(nil, :pages), fa: 'building')
-             end
+    if current_user.page_management?
+      items << link_item(t('pages.management.title').capitalize, collection_iri(current_user, :pages), fa: 'building')
+    end
     if current_user.forum_management?
       items << link_item(t('forums.management.title'), collection_iri(current_user, :forums), fa: 'group')
     end
