@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module MapHelper
-  def map_access_token
+  def map_access_token(times = 0)
     JSON.parse(
       HTTParty
         .post(
@@ -14,6 +14,8 @@ module MapHelper
         )
         .body
     )['token']
+  rescue JSON::ParserError
+    map_access_token(times + 1) if times < 5
   end
 
   def map_marker_props(placement)
