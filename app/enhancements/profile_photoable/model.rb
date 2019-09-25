@@ -26,13 +26,14 @@ module ProfilePhotoable
                                         attrs['remote_content_url'].blank?
                                     }
 
-      validates :default_profile_photo, presence: true, if: :require_profile_photo?
       before_validation :build_profile_photo, if: :require_profile_photo?
       before_save :remove_marked_profile_photo
     end
 
     def build_profile_photo
-      build_default_profile_photo(photo_params) if default_profile_photo.blank?
+      return if default_profile_photo.present? && !default_profile_photo.marked_for_destruction?
+
+      build_default_profile_photo(photo_params)
     end
 
     def photo_params
