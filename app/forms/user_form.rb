@@ -6,7 +6,6 @@ class UserForm < ApplicationForm
     last_name
     hide_last_name
     time_zone
-    home_placement
     birth_year
   ]
 end
