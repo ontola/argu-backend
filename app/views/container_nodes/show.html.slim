@@ -12,7 +12,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
         =render partial: 'blog_posts/show', locals: {model: authenticated_resource.blog_posts.first, hide_details: true}
       .col-2-1[style="margin-bottom: 0"]
         =render partial: 'blog_posts/show', locals: {model: authenticated_resource.blog_posts.second, hide_details: true}
-  - if authenticated_resource.children_count(:blog_posts) > 0
+  - if authenticated_resource.children_count(:blog_posts) > 0 && Pundit.policy_scope(user_context, authenticated_resource.blog_posts).count > 0
     .col-1
       h3= t('blog_posts.latest')
       =link_to t('blog_posts.see_all'), collection_iri(authenticated_resource, :blog_posts), class: 'btn-subtle', style: 'top: 0; right: 1em; position: absolute;'
