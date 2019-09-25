@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_23_095657) do
+ActiveRecord::Schema.define(version: 2019_09_25_150144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -530,6 +530,7 @@ ActiveRecord::Schema.define(version: 2019_09_23_095657) do
 
   add_foreign_key "activities", "edges", column: "recipient_edge_id", primary_key: "uuid"
   add_foreign_key "activities", "edges", column: "trackable_edge_id", primary_key: "uuid"
+  add_foreign_key "custom_menu_items", "edges", primary_key: "uuid"
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "profiles", column: "creator_id"
   add_foreign_key "edges", "users", column: "publisher_id"

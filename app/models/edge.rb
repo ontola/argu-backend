@@ -46,6 +46,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
            inverse_of: :parent,
            foreign_key: :parent_id,
            dependent: false
+  has_many :custom_menu_items, dependent: :destroy, primary_key: :uuid
   has_many :exports, dependent: :destroy, primary_key: :uuid
   has_many :favorites, dependent: :destroy, primary_key: :uuid
   has_many :followings,
@@ -338,7 +339,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   private
 
   def create_menu_item
-    CustomMenuItem.create(
+    custom_menu_items.create(
       menu_type: 'navigations',
       resource: parent,
       edge: self
