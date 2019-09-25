@@ -6,6 +6,10 @@ module Users
 
     private
 
+    def edit_success_html
+      respond_with_redirect location: root_url
+    end
+
     def ld_action(_opts = {})
       current_user.action(:language, user_context)
     end
