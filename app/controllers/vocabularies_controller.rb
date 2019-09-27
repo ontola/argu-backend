@@ -26,4 +26,10 @@ class VocabulariesController < LinkedRails::VocabulariesController
       end
     @graph << RDF::Statement.new(iri, NS::RDFS[:subClassOf], parent.is_a?(Array) ? parent.first : parent)
   end
+
+  def vocab_graph
+    Rails.cache.fetch([::VERSION, 'ns_core'].join('.')) do
+      super
+    end
+  end
 end
