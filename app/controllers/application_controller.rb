@@ -178,7 +178,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   def set_tenant_header
     ActsAsTenant.current_tenant ||=
       tree_root_fallback || raise(ActiveRecord::RecordNotFound.new("No tenant found for #{request.url}"))
-    response.headers['Website-Meta'] = website_meta.to_query if tree_root
+    response.headers['Manifest'] = "#{tree_root.iri}/manifest.json" if tree_root
   end
 
   def set_vary
@@ -235,20 +235,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     return super unless obj.is_a?(RDF::URI)
 
     obj.to_s
-  end
-
-  def website_meta # rubocop:disable Metrics/AbcSize
-    {
-      accent_background_color: tree_root.accent_background_color,
-      accent_color: tree_root.accent_color,
-      application_name: Setting.get('app_name') || 'Argu',
-      css_class: tree_root.template,
-      iri: "https://#{tree_root.iri_prefix}",
-      navbar_background: tree_root.navbar_background,
-      navbar_color: tree_root.navbar_color,
-      template: tree_root.template,
-      template_options: JSON.parse(tree_root.template_options).to_query
-    }
   end
 
   protected

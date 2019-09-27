@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   get '/developers', to: 'static_pages#developers'
   get '/token', to: 'static_pages#token'
   get '/ns/core', to: 'vocabularies#show'
+  get '/manifest', to: 'manifests#show'
 
   devise_for :users,
              controllers: {
