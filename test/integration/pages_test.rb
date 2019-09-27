@@ -125,6 +125,30 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_iri(Page.last, tab: :profile).to_s
   end
 
+  test 'user should post create with unnested params' do
+    sign_in user
+
+    assert_difference(
+      'Tenant.count' => 1,
+      'Page.count' => 1,
+      "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
+    ) do
+      post pages_path,
+           params: {
+             page: {
+               name: 'Utrecht Two',
+               about: 'Utrecht Two bio',
+               url: 'UtrechtNumberTwo',
+               last_accepted: '1'
+             }
+           }
+    end
+    RequestStore.store[:old_frontend] = true
+    assert_redirected_to settings_iri(Page.last, tab: :profile).to_s
+    assert_equal Page.last.profile.name, 'Utrecht Two'
+    assert_equal Page.last.profile.about, 'Utrecht Two bio'
+  end
+
   test 'user should not post create invalid' do
     sign_in user
 

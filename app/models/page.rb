@@ -35,7 +35,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       .distinct
   }
 
-  delegate :description, :default_profile_photo, to: :profile
+  delegate :about, :description, :default_profile_photo, to: :profile
   delegate :database_schema, to: :tenant, allow_nil: true
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
@@ -76,9 +76,20 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
              foreign_key_property: :primary_container_node_id,
              class_name: 'ContainerNode',
              dependent: false
+  validates :about, length: {maximum: 3000}
 
   def build_profile(*options)
     super(*options) if profile.nil?
+  end
+
+  def about=(value)
+    build_profile
+    profile.about = value
+  end
+
+  def display_name=(value)
+    build_profile
+    profile.name = value
   end
 
   def display_name

@@ -2,7 +2,8 @@
 
 class PageForm < ApplicationForm
   fields [
-    {profile: {if: -> { target.new_record? }}},
+    :name,
+    :about,
     :visibility,
     :url,
     {

@@ -3,8 +3,8 @@
 class PageSerializer < RecordSerializer
   include ProfilePhotoable::Serializer
 
-  attribute :name, predicate: NS::FOAF[:name]
-  attribute :about, predicate: NS::SCHEMA[:description]
+  attribute :name, predicate: NS::FOAF[:name], datatype: NS::XSD[:string]
+  attribute :about, predicate: NS::SCHEMA[:description], datatype: NS::XSD[:string]
   attribute :visibility, predicate: NS::ARGU[:visibility]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
