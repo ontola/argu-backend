@@ -48,12 +48,14 @@ class LDParamsTest < ActionDispatch::IntegrationTest
   end
 
   test 'post create motion with arguments as nquads' do
-    create_with_ld_params(
-      collection_iri(freetown, :motions),
-      Motion,
-      {'Motion.count' => 1, 'Argument.count' => 3},
-      'motion_with_arguments.n3'
-    )
+    Sidekiq::Testing.inline! do
+      create_with_ld_params(
+        collection_iri(freetown, :motions),
+        Motion,
+        {'Motion.count' => 1, 'Argument.count' => 3, 'Motion.published.count' => 1, 'Argument.published.count' => 3},
+        'motion_with_arguments.n3'
+      )
+    end
   end
 
   private

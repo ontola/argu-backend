@@ -20,6 +20,8 @@ module ActivePublishable
               foreign_key: :publishable_id,
               primary_key: :uuid
       accepts_nested_attributes_for :argu_publication
+      validates :argu_publication, presence: true
+      before_validation :build_default_publication
 
       def is_draft?
         published_publications.empty?
@@ -32,6 +34,17 @@ module ActivePublishable
       def published_at
         argu_publication.try(:published_at)
       end
+    end
+
+    private
+
+    def build_default_publication
+      argu_publication || build_argu_publication(
+        channel: :argu,
+        creator: creator,
+        publisher: publisher,
+        published_at: Time.current
+      )
     end
 
     module ClassMethods
