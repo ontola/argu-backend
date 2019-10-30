@@ -301,9 +301,6 @@ class PagesTest < ActionDispatch::IntegrationTest
               default_profile_photo_attributes: {
                 id: page.profile.default_profile_photo.id,
                 content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
-              },
-              default_cover_photo_attributes: {
-                content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
               }
             }
           }
@@ -312,9 +309,8 @@ class PagesTest < ActionDispatch::IntegrationTest
     RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri(page, tab: :profile)
     page.reload
-    assert_equal 2, page.profile.media_objects.count
+    assert_equal 1, page.profile.media_objects.count
     assert_equal 'profile_photo.png', page.profile.default_profile_photo.content_identifier
-    assert_equal 'cover_photo.jpg', page.profile.default_cover_photo.content_identifier
     assert_equal 'new_about', page.profile.about
   end
 
@@ -461,9 +457,6 @@ class PagesTest < ActionDispatch::IntegrationTest
                about: 'Utrecht Two bio',
                default_profile_photo_attributes: {
                  content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
-               },
-               default_cover_photo_attributes: {
-                 content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
                }
              },
              url: 'UtrechtNumberTwo',
@@ -474,8 +467,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     page = Page.last
     assert_response 302
     assert_equal 'profile_photo.png', page.profile.default_profile_photo.content_identifier
-    assert_equal 'cover_photo.jpg', page.profile.default_cover_photo.content_identifier
-    assert_equal 2, page.profile.media_objects.count
+    assert_equal 1, page.profile.media_objects.count
   end
 
   test 'staff should not post create a page with existing url' do

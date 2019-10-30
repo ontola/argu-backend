@@ -11,10 +11,5 @@
                     relation: :default_profile_photo,
                     type: :profile_photo,
                     preview_style: 'max-height: 256px;'}
-    =render partial: 'photos/form',
-            locals: {form: f,
-                    relation: :default_cover_photo,
-                    type: :cover_photo,
-                    preview_style: 'max-height: 256px;'}
   =p.actions do
     =p.action :submit, :as => :button
