@@ -346,7 +346,11 @@ Rails.application.routes.draw do
     include_route_concerns
     resources :placements, only: %i[index]
   end
-  resources :shortnames, only: %i[new create index]
+  resources :shortnames, only: %i[new create index] do
+    collection do
+      concerns :nested_actionable
+    end
+  end
   resources :topics,
             path: 't',
             only: %i[show] do

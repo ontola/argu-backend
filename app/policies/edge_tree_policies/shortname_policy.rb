@@ -12,12 +12,14 @@ class ShortnamePolicy < EdgeTreePolicy
   def update?
     return unless valid_owner_type?
     return if record.primary?
-    return staff? if record.root_id.blank?
+
     edgeable_policy.update?
   end
 
   def create?
-    update?
+    return unless valid_owner_type?
+
+    edgeable_policy.update?
   end
 
   def destroy?

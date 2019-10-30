@@ -6,17 +6,12 @@ require 'argu/test_helpers/policy_test'
 class ShortnamePolicyTest < PolicyTest
   include DefaultPolicyTests
   let(:subject) { create(:discussion_shortname, owner: motion, root_id: motion.root_id, primary: false) }
-  let(:unscoped_subject) { create(:discussion_shortname, owner: motion, primary: false) }
   let(:primary_subject) { create(:discussion_shortname, owner: motion, root_id: motion.root_id) }
 
   generate_crud_tests
 
-  test 'should create unscoped shortname' do
-    test_policy(unscoped_subject, :create, staff_only_results)
-  end
-
-  test 'should not create primary shortname' do
-    test_policy(primary_subject, :create, nobody_results)
+  test 'should create primary shortname' do
+    test_policy(primary_subject, :create, create_results)
   end
 
   test 'should not destroy primary shortname' do

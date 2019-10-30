@@ -57,8 +57,16 @@ class Shortname < ApplicationRecord
     Shortname.where(root_id: root_id).find_by('lower(shortname) = lower(?)', shortname).try(:owner)
   end
 
+  def owner
+    super || ActsAsTenant.current_tenant
+  end
+
   def parent
     owner
+  end
+
+  def parent_collections(user_context)
+    [self.class.root_collection(user_context: user_context)]
   end
 
   def path
