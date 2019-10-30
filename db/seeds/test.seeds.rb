@@ -44,6 +44,7 @@ page = FactorySeeder.create(
   publisher: staff,
   creator: staff.profile,
   is_published: true,
+  locale: 'en-GB',
   uuid: 'deadbeef-bfc5-4e68-993f-430037bd5bd3',
   root_id: 'deadbeef-bfc5-4e68-993f-430037bd5bd3'
 )
@@ -78,6 +79,7 @@ other_page = FactorySeeder.create(
   accent_background_color: '#800000',
   navbar_background: '#800000',
   url: 'other_page',
+  locale: 'en-GB',
   iri_prefix: 'app.argu.localtest/other_page'
 )
 other_page_forum = ActsAsTenant.with_tenant(other_page) do

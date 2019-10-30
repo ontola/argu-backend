@@ -52,7 +52,7 @@ module LanguageHelper
   end
 
   def language_from_root
-    try(:tree_root)&.locale
+    ActsAsTenant.current_tenant&.language
   end
 
   def language_select_items
