@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Vote < Edge
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
   enhance Loggable
-  enhance LinkedRails::Enhancements::Updateable
+  enhance LinkedRails::Enhancements::Updatable
 
   include RedisResource::Concern
 

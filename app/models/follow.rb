@@ -4,7 +4,7 @@ class Follow < ApplicationRecord
   extend ActsAsFollower::FollowerLib
   extend ActsAsFollower::FollowScopes
 
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
 
   # NOTE: Follows belong to the "followable" interface, and also to followers

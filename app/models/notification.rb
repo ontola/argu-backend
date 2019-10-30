@@ -2,8 +2,8 @@
 
 class Notification < ApplicationRecord
   enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Createable
-  enhance LinkedRails::Enhancements::Updateable
+  enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Updatable
 
   include BlogPostsHelper
   include ActivityHelper

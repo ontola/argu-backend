@@ -4,8 +4,8 @@ module Users
   class Unlock < VirtualResource
     include LinkedRails::Model
     enhance LinkedRails::Enhancements::Actionable
-    enhance LinkedRails::Enhancements::Createable, except: %i[Controller]
-    enhance LinkedRails::Enhancements::Updateable, except: %i[Controller Serializer]
+    enhance LinkedRails::Enhancements::Creatable, except: %i[Controller]
+    enhance LinkedRails::Enhancements::Updatable, except: %i[Controller Serializer]
     attr_accessor :email
 
     def iri_template_name

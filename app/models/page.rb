@@ -6,13 +6,13 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance BlogPostable
   enhance ConfirmedDestroyable
   enhance CoverPhotoable
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   enhance Discussable
   enhance Exportable
   enhance Feedable
   enhance LinkedRails::Enhancements::Menuable
   enhance Placeable
-  enhance LinkedRails::Enhancements::Updateable
+  enhance LinkedRails::Enhancements::Updatable
   enhance Settingable
   enhance Statable
   enhance Stylable

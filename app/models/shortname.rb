@@ -2,7 +2,7 @@
 
 class Shortname < ApplicationRecord
   enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
   enhance LinkedRails::Enhancements::Tableable
 

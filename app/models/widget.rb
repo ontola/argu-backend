@@ -4,7 +4,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend UriTemplateHelper
   include Parentable
 
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
 
   belongs_to :owner, polymorphic: true, primary_key: :uuid
   belongs_to :primary_resource, class_name: 'Edge', primary_key: :uuid

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Decision < Edge
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   enhance Loggable
   enhance MarkAsImportant
   enhance LinkedRails::Enhancements::Menuable
-  enhance LinkedRails::Enhancements::Updateable
+  enhance LinkedRails::Enhancements::Updatable
 
   include HasLinks
 

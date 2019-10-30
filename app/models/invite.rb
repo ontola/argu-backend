@@ -7,7 +7,7 @@ class Invite < VirtualResource
 
   parentable :edge
 
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
 
   attr_accessor :edge, :new_parent, :addresses, :message, :group_id
 

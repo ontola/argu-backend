@@ -8,7 +8,7 @@ class EdgeSerializer < RecordSerializer
       object.parent
     end
   end
-  has_one :organization, predicate: NS::SCHEMA[:organization] do
+  has_one :organization, predicate: NS::ONTOLA[:organization] do
     object.root
   end
   has_one :creator, predicate: NS::SCHEMA[:creator] do

@@ -4,7 +4,7 @@ module Users
   class Confirmation < VirtualResource
     include LinkedRails::Model
     enhance LinkedRails::Enhancements::Actionable
-    enhance LinkedRails::Enhancements::Createable, except: %i[Controller]
+    enhance LinkedRails::Enhancements::Creatable, except: %i[Controller]
     attr_accessor :email, :user
 
     def iri_template_name

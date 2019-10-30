@@ -6,10 +6,10 @@ class Group < ApplicationRecord
 
   enhance ConfirmedDestroyable
   enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Menuable
   enhance Settingable
-  enhance LinkedRails::Enhancements::Updateable
+  enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Tableable
 
   include Parentable

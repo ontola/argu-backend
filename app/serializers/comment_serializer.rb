@@ -3,7 +3,7 @@
 class CommentSerializer < ContentEdgeSerializer
   has_one :vote, predicate: NS::ARGU[:opinion]
   attribute :is_opinion, predicate: NS::ARGU[:isOpinion], datatype: NS::XSD[:boolean], if: :never
-  with_collection :comments, predicate: NS::SCHEMA[:comments]
+  with_collection :comments, predicate: NS::SCHEMA.comment
 
   def description
     object.is_trashed? ? I18n.t('trashed') : object.description || I18n.t('deleted')

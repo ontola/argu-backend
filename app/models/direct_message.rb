@@ -12,7 +12,7 @@ class DirectMessage
   parentable :resource
 
   enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
 
   attr_accessor :actor, :body, :subject, :email_address
   attr_writer :resource, :resource_iri

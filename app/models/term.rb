@@ -3,7 +3,7 @@
 class Term < VirtualResource
   include LinkedRails::Model
   enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   attr_accessor :referrer
 
   def id; end

@@ -8,7 +8,7 @@ class BannerDismissal
 
   include ApplicationModel
   include LinkedRails::Model::Enhancements
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
 
   attr_accessor :banner_class, :banner_key
   attr_reader :banner, :user

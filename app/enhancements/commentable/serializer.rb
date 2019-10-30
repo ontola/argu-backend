@@ -6,7 +6,7 @@ module Commentable
 
     included do
       count_attribute :comments
-      with_collection :comments, predicate: NS::SCHEMA[:comments]
+      with_collection :comments, predicate: NS::SCHEMA.comment
       has_one :top_comment, predicate: NS::ARGU[:topComment]
     end
   end

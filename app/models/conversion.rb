@@ -5,7 +5,7 @@ class Conversion < VirtualResource
 
   parentable :edge
 
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Actionable, only: %i[Model]
 
   validates :edge, presence: true

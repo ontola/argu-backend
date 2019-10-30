@@ -2,8 +2,8 @@
 
 class Employment < Edge
   enhance ProfilePhotoable
-  enhance LinkedRails::Enhancements::Createable
-  enhance LinkedRails::Enhancements::Updateable
+  enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Updatable
 
   property :organization_name, :string, NS::ARGU[:organizationName]
   property :job_title, :string, NS::SCHEMA[:roleName]

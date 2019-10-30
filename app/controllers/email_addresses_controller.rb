@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EmailAddressesController < ParentableController
-  include LinkedRails::Enhancements::Createable::Controller
+  include LinkedRails::Enhancements::Creatable::Controller
 
   private
 

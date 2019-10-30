@@ -162,7 +162,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     when :nq
       collection = RDF::URI("#{resource_iri(feed(parent))}/feed#{complete ? '?complete=true' : ''}")
       puts "looking for #{collection}"
-      view = rdf_body.query([collection, NS::AS[:pages]]).first.object
+      view = rdf_body.query([collection, NS::ONTOLA[:pages]]).first.object
       expect_triple(view, NS::AS[:totalItems], count)
     else
       raise 'Wrong format'

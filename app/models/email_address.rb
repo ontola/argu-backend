@@ -2,9 +2,9 @@
 
 class EmailAddress < ApplicationRecord
   enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
-  enhance LinkedRails::Enhancements::Updateable, except: %i[Action]
+  enhance LinkedRails::Enhancements::Updatable, except: %i[Action]
   enhance LinkedRails::Enhancements::Tableable
 
   include Broadcastable

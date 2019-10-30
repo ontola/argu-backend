@@ -5,7 +5,6 @@ require_relative 'boot'
 require_relative './initializers/version'
 require_relative './initializers/build'
 
-require_relative '../lib/ns'
 require_relative '../lib/tenant_finder'
 require_relative '../lib/tenant_middleware'
 require 'rails/all'
@@ -15,6 +14,7 @@ require 'linked_rails/middleware/linked_data_params'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative '../lib/ns'
 require_relative '../lib/acts_as_tenant/sidekiq_with_tenant'
 
 module Argu

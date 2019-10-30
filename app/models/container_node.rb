@@ -3,7 +3,7 @@
 class ContainerNode < Edge
   enhance ConfirmedDestroyable
   enhance CoverPhotoable
-  enhance LinkedRails::Enhancements::Createable
+  enhance LinkedRails::Enhancements::Creatable
   enhance Exportable
   enhance Favorable
   enhance Feedable
@@ -13,7 +13,7 @@ class ContainerNode < Edge
   enhance Placeable
   enhance ProfilePhotoable
   enhance PublicGrantable
-  enhance LinkedRails::Enhancements::Updateable
+  enhance LinkedRails::Enhancements::Updatable
   enhance Widgetable
   enhance Statable
   enhance LinkedRails::Enhancements::Tableable
