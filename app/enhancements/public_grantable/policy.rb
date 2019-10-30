@@ -4,7 +4,7 @@ module PublicGrantable
   module Policy
     extend ActiveSupport::Concern
 
-    def has_grant?(action)
+    def has_grant?(action, check_class = class_name)
       has_grant = super
       return has_grant if has_grant || action != :show || record.persisted?
 

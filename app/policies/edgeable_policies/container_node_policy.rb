@@ -20,6 +20,10 @@ class ContainerNodePolicy < EdgePolicy
     attributes
   end
 
+  def create?
+    ContainerNode.descendants.detect { |klass| has_grant?(:create, klass.name) }
+  end
+
   def list?
     raise(ActiveRecord::RecordNotFound) unless record.discoverable? || show?
     true

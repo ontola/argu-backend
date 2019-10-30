@@ -387,7 +387,11 @@ Rails.application.routes.draw do
   %i[blogs forums open_data_portals dashboards].each do |container_node|
     resources container_node, only: %i[index new create]
   end
-  resources :container_nodes, only: %i[index new]
+  resources :container_nodes, only: %i[index new] do
+    collection do
+      concerns :nested_actionable
+    end
+  end
   resources :container_nodes,
             only: %i[show],
             path: '' do

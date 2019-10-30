@@ -45,7 +45,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     grant_tree.unpublished?(persisted_edge)
   end
 
-  def has_grant?(action)
+  def has_grant?(action, check_class = class_name)
     return true if service?
 
     group_ids =
@@ -53,7 +53,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
         .granted_group_ids(
           persisted_edge,
           action: action,
-          resource_type: class_name,
+          resource_type: check_class,
           parent_type: record&.parent&.owner_type
         )
     (group_ids & user.profile.group_ids).any?

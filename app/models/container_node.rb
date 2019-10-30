@@ -3,7 +3,6 @@
 class ContainerNode < Edge
   enhance ConfirmedDestroyable
   enhance CoverPhotoable
-  enhance LinkedRails::Enhancements::Creatable
   enhance Exportable
   enhance Favorable
   enhance Feedable
@@ -51,6 +50,11 @@ class ContainerNode < Edge
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :bio, length: {maximum: 260}
   validates :bio_long, length: {maximum: 5000}
+
+  def self.inherited(klass)
+    klass.enhance LinkedRails::Enhancements::Creatable
+    super
+  end
 
   def enforce_hidden_last_name?
     url == 'youngbelegen'

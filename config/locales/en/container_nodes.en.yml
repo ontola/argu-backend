@@ -1,6 +1,8 @@
 en:
   container_nodes:
+    type: "Component"
     type_new: "New page"
+    plural: "Components"
   blogs:
     type: "Blog"
     type_new: "New blog"

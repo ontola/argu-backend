@@ -7,6 +7,7 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
   skip_before_action :check_if_registered, only: %i[discover index]
   skip_after_action :verify_authorized, only: :discover
   helper_method :forum_grants
+  active_response :new
 
   def discover
     ActsAsTenant.without_tenant do
