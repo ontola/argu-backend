@@ -33,7 +33,7 @@ ActiveRecord::Base.transaction do
 
   public_staff_membership =
     CreateGroupMembership.new(
-      public_group,
+      Group.public,
       attributes: {member: staff.profile},
       options: {publisher: staff, creator: staff.profile}
     ).resource
