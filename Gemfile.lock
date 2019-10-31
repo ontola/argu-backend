@@ -559,7 +559,7 @@ GEM
     rainbow (3.0.0)
     rake (13.0.0)
     rakismet (1.5.4)
-    rdf (3.0.12)
+    rdf (3.0.13)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (2.2.1)
