@@ -6,6 +6,18 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   private
 
+  def abstain_vote
+    return unless action_name == 'show'
+
+    vote = Vote.new(
+      parent: parent_resource,
+      publisher: current_user,
+      creator: current_profile
+    )
+    vote.instance_variable_set(:@iri, iri_without_id)
+    vote
+  end
+
   def active_response_success_message
     return super unless action_name == 'create'
     I18n.t('votes.alerts.success')
@@ -87,6 +99,10 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     redirect_to parent_resource!.iri
   end
 
+  def iri_without_id
+    current_vote_iri(parent_resource)
+  end
+
   def new_form_locals
     {
       resource: resource.parent,
@@ -96,14 +112,29 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def resource_by_id
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
+
     @_resource_by_id ||=
       Edge
         .where_owner('Vote', creator: current_profile, root_id: tree_root_id)
-        .find_by(parent: parent_resource)
+        .find_by(parent: parent_resource, primary: true) || abstain_vote
+  end
+
+  def same_as_statement
+    [
+      iri_without_id,
+      NS::OWL.sameAs,
+      current_resource.iri
+    ]
   end
 
   def show_success_html
     redirect_to authenticated_resource.voteable.iri
+  end
+
+  def show_meta
+    meta = super
+    meta << same_as_statement if params[:id].nil?
+    meta
   end
 
   def for_param # rubocop:disable Metrics/AbcSize
@@ -187,9 +218,9 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       action_delta(data, :add, voteable.comment_collection, :create_opinion, include_parent: true)
       opinion_delta(data, voteable)
     else
-      data = super
+      data = counter_cache_delta(authenticated_resource)
     end
-    data << [authenticated_resource.parent_iri, NS::ARGU[:currentVote], authenticated_resource.iri, delta_iri(:replace)]
+    data << same_as_statement
     action_delta(data, :remove, authenticated_resource.parent, :create_vote, include_favorite: true)
     action_delta(data, :add, authenticated_resource.parent, :destroy_vote, include_favorite: true)
     data
@@ -197,12 +228,9 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def destroy_meta
     data = super
-    data.push [
-      authenticated_resource.parent_iri,
-      NS::ARGU[:currentVote],
-      authenticated_resource.iri,
-      NS::ONTOLA[:remove]
-    ]
+    data.push(
+      [current_vote_iri(authenticated_resource.parent), NS::SCHEMA.option, NS::ARGU[:abstain], delta_iri(:replace)]
+    )
     action_delta(data, :remove, authenticated_resource.parent, :destroy_vote, include_favorite: true)
     action_delta(data, :add, authenticated_resource.parent, :create_vote, include_favorite: true)
     data

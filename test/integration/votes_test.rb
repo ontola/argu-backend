@@ -96,9 +96,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     guest_vote2
     other_guest_vote
-    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
-        headers: argu_headers(accept: :json_api)
-    assert_response 404
+    current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(vote_event) }
+    get current_vote, headers: argu_headers(accept: :json_api)
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:abstain].to_s
   end
 
   test 'guest should post create for motion json' do
@@ -169,10 +169,9 @@ class VotesTest < ActionDispatch::IntegrationTest
          },
          headers: argu_headers(accept: :json_api)
     assert_response 403
-    parent_segments = split_iri_segments(closed_question_motion.default_vote_event.iri.path)
-    get expand_uri_template(:vote_iri, parent_iri: parent_segments),
-        headers: argu_headers(accept: :json_api)
-    assert_response 404
+    current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(closed_question_motion.default_vote_event) }
+    get current_vote, headers: argu_headers(accept: :json_api)
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:abstain].to_s
   end
 
   test 'guest should post update vote' do
@@ -227,9 +226,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     other_guest_vote
     unconfirmed_vote2
-    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
-        headers: argu_headers(accept: :json_api)
-    assert_response 404
+    current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(vote_event) }
+    get current_vote, headers: argu_headers(accept: :json_api)
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:abstain].to_s
   end
 
   test 'unconfirmed should post create for motion with json' do
@@ -569,7 +568,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'creator should delete destroy vote for argument new fe' do
     sign_in creator, Doorkeeper::Application.argu_front_end
-    vote_iri = argument_vote.iri
+    vote_iri = ActsAsTenant.with_tenant(argu) { current_vote_iri(argument) }
 
     assert_difference('Vote.count' => -1,
                       'Edge.count' => -1,
@@ -577,7 +576,7 @@ class VotesTest < ActionDispatch::IntegrationTest
       delete argument_vote.iri.path, headers: argu_headers(accept: :nq)
     end
 
-    expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::ONTOLA[:remove])
+    expect_triple(vote_iri, NS::SCHEMA[:option], NS::ARGU[:abstain], NS::ONTOLA[:replace])
     assert_response 200
   end
 

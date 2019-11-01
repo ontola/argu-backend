@@ -7,16 +7,13 @@ class VoteEventSerializer < EdgeSerializer
   attribute :pro_count
   attribute :con_count
   attribute :neutral_count
+  attribute :current_vote, predicate: NS::ARGU[:currentVote]
   link(:self) { object.iri if object.persisted? }
-
-  has_one :current_vote,
-          predicate: NS::ARGU[:currentVote],
-          unless: :system_scope?
 
   with_collection :votes, predicate: NS::ARGU[:votes]
 
   def current_vote
-    @vote ||= scope.actor.vote_cache.by_parent(object)
+    current_vote_iri(object)
   end
 
   def option_counts

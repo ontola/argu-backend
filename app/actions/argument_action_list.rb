@@ -10,7 +10,7 @@ class ArgumentActionList < EdgeActionList
     image: 'fa-arrow-up',
     policy: :create_child?,
     policy_resource: -> { resource.vote_collection },
-    url: -> { RDF::DynamicURI(vote_iri(resource, current_vote)) },
+    url: -> { collection_iri(resource, :votes, for: :pro) },
     http_method: :post,
     favorite: true,
     condition: -> { current_vote.nil? }

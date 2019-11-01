@@ -46,6 +46,7 @@ class ParentableController < AuthorizedController
 
   def resource_new_params
     HashWithIndifferentAccess.new(
+      creator: current_actor.actor,
       publisher: current_user
     )
   end

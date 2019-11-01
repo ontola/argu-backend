@@ -28,8 +28,8 @@ RSpec.describe 'Votes', type: :request do
     let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('200') }
     let(:expect_delete_destroy_unauthorized_serializer) { expect_not_found }
     let(:expect_delete_destroy_unauthorized_html) { expect_not_found }
-    let(:expect_get_show_unauthorized_serializer) { expect_not_found }
-    let(:expect_get_show_unauthorized_html) { expect_not_found }
+    let(:expect_get_show_unauthorized_serializer) { expect_success }
+    let(:expect_get_show_unauthorized_html) { expect_redirect_to_login }
     it_behaves_like 'get show', opts
     it_behaves_like 'delete destroy', opts
   end

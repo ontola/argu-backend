@@ -4,14 +4,11 @@ class ArgumentSerializer < ContentEdgeSerializer
   include VotesHelper
 
   with_collection :votes, predicate: NS::ARGU[:votes]
-  has_one :current_vote,
-          predicate: NS::ARGU[:currentVote],
-          unless: :system_scope?
-
+  attribute :current_vote, predicate: NS::ARGU[:currentVote]
   attribute :pro, predicate: NS::SCHEMA[:option]
   count_attribute :votes_pro
 
   def current_vote
-    @current_vote ||= upvote_for(object, scope.user.profile)
+    current_vote_iri(object)
   end
 end

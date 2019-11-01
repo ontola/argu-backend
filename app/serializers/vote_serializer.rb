@@ -15,6 +15,6 @@ class VoteSerializer < EdgeSerializer
   attribute :display_name, predicate: NS::SCHEMA[:name], unless: :export_scope?
 
   def option
-    NS::ARGU[object.option]
+    NS::ARGU[object.option || :abstain]
   end
 end
