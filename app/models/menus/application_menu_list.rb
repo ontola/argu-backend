@@ -59,8 +59,6 @@ class ApplicationMenuList < LinkedRails::Menus::List
     def has_follow_menu(opts = {})
       follow_types = opts.delete(:follow_types)
       has_menu :follow, {
-        policy: :follow_items?,
-        policy_resource: -> { user },
         description: I18n.t('notifications.receive.title'),
         image: -> { follow_menu_icon(follow_type) },
         menus: -> { follow_menu_items(follow_types) }
