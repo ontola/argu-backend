@@ -27,7 +27,6 @@ class MotionsControllerTest < ActionController::TestCase
 
     expect_relationship('attachmentCollection')
     expect_included(collection_iri(motion, :attachments))
-    expect_included(motion.attachments.map(&:iri))
 
     expect_relationship('voteEventCollection')
     expect_included(vote_event.iri)
@@ -51,7 +50,6 @@ class MotionsControllerTest < ActionController::TestCase
 
     expect_default_view
     expect_included(collection_iri(holland, :motions, page: 1))
-    expect_included(holland.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.map(&:iri))
     expect_not_included(holland.motions.trashed.map(&:iri))
   end
@@ -72,7 +70,6 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('collection')
 
     expect_view_members(primary_resource, holland.motions.untrashed.count)
-    expect_included(holland.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.map(&:iri))
     expect_not_included(holland.motions.trashed.map(&:iri))
   end
@@ -86,18 +83,8 @@ class MotionsControllerTest < ActionController::TestCase
 
     expect_relationship('partOf')
 
-    members = expect_view_members(expect_default_view, question.motions.active.count)
-    vote_event = expect_included(expect_relationship('defaultVoteEvent', parent: members.first)['data']['id'])
-
-    vote_event_votes = expect_included(expect_relationship('voteCollection', parent: vote_event)['data']['id'])
-
-    filtered_collections = expect_relationship('defaultFilteredCollections', parent: vote_event_votes, size: 3)
-    expect_included(filtered_collections['data'].map { |d| d['id'] })
-
-    expect_included(collection_iri(question, :motions, page: 1))
-    expect_included(question.motions.untrashed.map(&:iri))
+    expect_view_members(expect_default_view, question.motions.active.count)
     expect_not_included(question.motions.trashed.map(&:iri))
-    expect_included(question.motions.untrashed.map { |m| m.default_vote_event.iri })
   end
 
   test 'should get index motions of question page 1' do
@@ -108,23 +95,8 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('collection')
 
     expect_view_members(primary_resource, question.motions.untrashed.count)
-    expect_included(question.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.trashed.map(&:iri))
 
-    expect_included(question.motions.untrashed.map { |m| m.default_vote_event.iri })
     expect_not_included(question.motions.trashed.map { |m| m.default_vote_event.votes }.map(&:iri))
-  end
-
-  test 'should include current_vote in get index motions of question page 1' do
-    user_vote = question_motion.default_vote_event.votes.first
-    user = user_vote.publisher
-
-    sign_in user
-
-    get :index,
-        params: {format: :json_api, root_id: argu.url, question_id: question.fragment, type: 'paginated', page: 1}
-    assert_response 200
-
-    expect_included(user_vote.iri)
   end
 end

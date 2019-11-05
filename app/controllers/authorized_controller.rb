@@ -63,11 +63,15 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     !(action_name == 'show' || (afe_request? && action_name == 'new'))
   end
 
+  def collection_include_map
+    JSONAPI::IncludeDirective::Parser.parse_include_args([:root] + [show_includes])
+  end
+
   def collection_options
     super.merge(
       filter: parse_filter(params[:filter], controller_class.try(:filter_options)),
       user_context: user_context,
-      include_map: JSONAPI::IncludeDirective::Parser.parse_include_args([:root] + [show_includes])
+      include_map: collection_include_map
     )
   end
 

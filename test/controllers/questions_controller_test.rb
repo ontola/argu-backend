@@ -19,7 +19,6 @@ class QuestionsControllerTest < ActionController::TestCase
 
     expect_relationship('attachmentCollection', size: 1)
     expect_included(collection_iri(question, :attachments))
-    expect_included(question.attachments.map(&:iri))
 
     expect_relationship('motionCollection', size: 1)
     expect_included(collection_iri(question, :motions))
@@ -38,7 +37,6 @@ class QuestionsControllerTest < ActionController::TestCase
 
     expect_default_view
     expect_included(collection_iri(holland, :questions, page: 1))
-    expect_included(holland.questions.untrashed.map(&:iri))
     expect_not_included(holland.questions.trashed.map(&:iri))
   end
 
@@ -50,7 +48,6 @@ class QuestionsControllerTest < ActionController::TestCase
     expect_relationship('collection')
 
     expect_view_members(primary_resource, holland.questions.untrashed.count)
-    expect_included(holland.questions.untrashed.map(&:iri))
     expect_not_included(holland.questions.trashed.map(&:iri))
   end
 end

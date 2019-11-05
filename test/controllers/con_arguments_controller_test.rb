@@ -35,7 +35,6 @@ class ConArgumentsControllerTest < ActionController::TestCase
 
     expect_default_view
     expect_included(collection_iri(motion, :con_arguments, page: 1))
-    expect_included(motion.con_arguments.untrashed.map(&:iri))
     expect_not_included(motion.con_arguments.trashed.map(&:iri))
     expect_not_included(motion.pro_arguments.trashed.map(&:iri))
     expect_not_included(motion.pro_arguments.map(&:iri))
@@ -48,7 +47,6 @@ class ConArgumentsControllerTest < ActionController::TestCase
     expect_relationship('collection')
 
     expect_view_members(primary_resource, motion.con_arguments.untrashed.count)
-    expect_included(motion.con_arguments.untrashed.map(&:iri))
     expect_not_included(motion.con_arguments.trashed.map(&:iri))
     expect_not_included(motion.pro_arguments.trashed.map(&:iri))
     expect_not_included(motion.pro_arguments.map(&:iri))
@@ -66,7 +64,6 @@ class ConArgumentsControllerTest < ActionController::TestCase
     expect_view_members(expect_default_view, 1)
     expect_included(collection_iri(linked_record, :con_arguments, page: 1))
     expect_not_included(collection_iri(linked_record, :pro_arguments, page: 1))
-    expect_included(linked_record.con_arguments.untrashed.map(&:iri))
     expect_not_included(linked_record.pro_arguments.trashed.map(&:iri))
     expect_not_included(linked_record.pro_arguments.map(&:iri))
   end
@@ -78,7 +75,6 @@ class ConArgumentsControllerTest < ActionController::TestCase
     expect_relationship('collection')
 
     expect_view_members(primary_resource, linked_record.con_arguments.untrashed.count)
-    expect_included(linked_record.con_arguments.untrashed.map(&:iri))
     expect_not_included(linked_record.pro_arguments.trashed.map(&:iri))
     expect_not_included(linked_record.pro_arguments.map(&:iri))
   end

@@ -33,7 +33,6 @@ class CommentsControllerTest < ActionController::TestCase
 
     expect_default_view
     expect_included(collection_iri(argument, :comments, page: 1))
-    expect_included(argument.comments.untrashed.map(&:iri))
     expect_not_included(argument.comments.trashed.map(&:iri))
   end
 
@@ -45,7 +44,6 @@ class CommentsControllerTest < ActionController::TestCase
     expect_relationship('collection')
 
     expect_view_members(primary_resource, argument.comments.untrashed.count)
-    expect_included(argument.comments.untrashed.map(&:iri))
     expect_not_included(argument.comments.trashed.map(&:iri))
   end
 
@@ -60,7 +58,6 @@ class CommentsControllerTest < ActionController::TestCase
 
     expect_default_view
     expect_included(collection_iri(blog_post, :comments, page: 1))
-    expect_included(blog_post.comments.untrashed.map(&:iri))
     expect_not_included(blog_post.comments.trashed.map(&:iri))
   end
 
@@ -72,7 +69,6 @@ class CommentsControllerTest < ActionController::TestCase
     expect_relationship('collection')
 
     expect_view_members(primary_resource, blog_post.comments.untrashed.count)
-    expect_included(blog_post.comments.untrashed.map(&:iri))
     expect_not_included(blog_post.comments.trashed.map(&:iri))
   end
 end

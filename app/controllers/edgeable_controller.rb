@@ -22,6 +22,14 @@ class EdgeableController < ServiceController
       end
   end
 
+  def collection_include_map
+    nil
+  end
+
+  def collection_view_includes(_member_includes = {})
+    {member_sequence: {}}
+  end
+
   def create_meta
     !resource.is_publishable? || resource.is_published? ? resource_added_delta(resource) : []
   end

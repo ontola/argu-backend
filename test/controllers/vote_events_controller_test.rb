@@ -58,18 +58,6 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('partOf')
     expect_view_members(expect_default_view, 2)
 
-    expect_included(motion.vote_events.map(&:iri))
-    expect_included(motion.vote_events.map { |ve| collection_iri(ve, :votes) })
-    %w[yes other no].each do |side|
-      expect_included(
-        motion
-          .vote_events
-          .map { |ve| collection_iri(ve, :votes, 'filter%5B%5D' => "option=#{side}") }
-      )
-    end
-    expect_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri)
-    )
     expect_not_included(
       vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri)
     )
@@ -113,12 +101,6 @@ class VoteEventsControllerTest < ActionController::TestCase
 
     expect_relationship('partOf')
     expect_view_members(expect_default_view, 1)
-
-    expect_included(lr_vote_event.iri)
-    expect_included(collection_iri(lr_vote_event, :votes))
-    %w[yes other no].each do |side|
-      expect_included(collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
-    end
   end
 
   ############################################

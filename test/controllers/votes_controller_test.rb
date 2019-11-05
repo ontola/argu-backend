@@ -50,7 +50,6 @@ class VotesControllerTest < ActionController::TestCase
 
     included_votes = vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true})
     expect_view_members(expect_default_view, included_votes.count)
-    expect_included(included_votes.map(&:iri))
     expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
   end
 
@@ -69,7 +68,6 @@ class VotesControllerTest < ActionController::TestCase
 
     included_votes = vote_event.votes.joins(:creator).where(for: :pro, profiles: {are_votes_public: true})
     expect_view_members(expect_default_view, included_votes.count)
-    expect_included(included_votes.map(&:iri))
     expect_not_included(vote_event.votes.where(for: :con))
   end
 end
