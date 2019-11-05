@@ -9,7 +9,6 @@ RSpec.describe 'Decisions', type: :request do
 
   let(:created_resource_path) { parent_path }
   let(:updated_resource_path) { parent_path }
-  let(:expect_get_new_guest_serializer) { expect_unauthorized }
 
   let(:authorized_user) { subject.forwarded_user }
   let(:create_params) do

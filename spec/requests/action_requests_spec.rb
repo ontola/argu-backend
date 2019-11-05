@@ -35,7 +35,6 @@ RSpec.describe 'Actions', type: :request do
     end
     let(:notification) { Notification.first }
     let(:non_existing_notification) { Notification.new(id: non_existing_id) }
-    let(:unauthorized_user) { create(:user) }
     let(:authorized_user) { notification.user }
     let(:non_existing_index_path) do
       expand_uri_template(

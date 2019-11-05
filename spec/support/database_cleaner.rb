@@ -13,6 +13,7 @@ RSpec.configure do |config|
       extend Argu::TestHelpers::TestHelperMethods::InstanceMethods
 
       load(Dir[Rails.root.join('db', 'seeds', 'test.seeds.rb')][0])
+      Forum.find_via_shortname('freetown').update(public_grant: :spectator)
     end
 
     config.before(:each) do

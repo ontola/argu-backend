@@ -7,6 +7,12 @@ module Actions
       (link_opts || {}).merge(fa: image).merge(opts)
     end
 
+    def error
+      return super unless action_status == NS::ONTOLA[:DisabledActionStatus]
+
+      resource_policy.message || super
+    end
+
     # @todo this overwrite might not be needed when the old frontend is ditched
     def iri(opts = {})
       return super if ActsAsTenant.current_tenant.present?

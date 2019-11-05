@@ -9,6 +9,15 @@ RSpec.describe 'Votes', type: :request do
     super - %i[html]
   end
 
+  before do
+    freetown.update(public_grant: :participator)
+  end
+  let(:unauthorized_user) do
+    freetown.grants.destroy_all
+    create_forum(public_grant: 'participator', parent: create(:page))
+    create(:user)
+  end
+
   let(:destroy_differences) { {'Vote.count' => -1} }
   let(:update_differences) { {'Vote.count' => 0} }
   let(:destroy_path) { show_path }

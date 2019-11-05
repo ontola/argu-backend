@@ -59,7 +59,9 @@ RSpec.describe 'Pages', type: :request do
   end
   let(:expect_post_create_json_api) { expect_created }
   let(:expect_post_create_serializer) { expect_success }
-  let(:expect_get_new_guest_serializer) { expect_unauthorized }
+  let(:expect_get_form_guest_serializer) { expect_get_form_serializer }
+  let(:expect_get_form_unauthorized_serializer) { expect_get_form_serializer }
+  let(:expect_get_form_unauthorized_json_api) { expect_unauthorized }
 
   context 'public page' do
     subject { create_page }

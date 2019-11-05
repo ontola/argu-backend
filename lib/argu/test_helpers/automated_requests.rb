@@ -169,9 +169,10 @@ module Argu
           # Forms
           expectations_for(:get_form)
           let(:expect_get_form_guest_html) { expect_redirect_to_login }
-          let(:expect_get_form_guest_serializer) { expect(response.code).to eq('401') }
+          let(:expect_get_form_guest_serializer) { expect_get_form_serializer }
+          let(:expect_get_form_guest_json_api) { expect(response.code).to eq('401') }
           let(:expect_get_form_unauthorized_html) { expect_unauthorized }
-          let(:expect_get_form_unauthorized_serializer) { expect_unauthorized }
+          let(:expect_get_form_unauthorized_serializer) { expect_get_form_serializer }
           let(:expect_get_form_html) { expect_success }
           let(:expect_get_form_serializer) { expect_success }
 
@@ -179,7 +180,7 @@ module Argu
           expectations_for(:get_new)
           let(:expect_get_new_guest_html) { expect_get_form_guest_html }
           let(:expect_get_new_guest_json_api) { expect_get_form_guest_json_api }
-          let(:expect_get_new_guest_serializer) { expect_success }
+          let(:expect_get_new_guest_serializer) { expect_get_form_guest_serializer }
           let(:expect_get_new_unauthorized_html) { expect_get_form_unauthorized_html }
           let(:expect_get_new_unauthorized_serializer) { expect_get_form_unauthorized_serializer }
           let(:expect_get_new_html) { expect_get_form_html }
@@ -191,12 +192,7 @@ module Argu
           let(:authorized_user_update) { authorized_user }
           let(:authorized_user_destroy) { staff }
           let(:authorized_user_trash) { authorized_user_update }
-          let(:unauthorized_user) do
-            holland.grants.destroy_all
-            freetown.grants.destroy_all
-            create_forum(public_grant: 'participator', parent: create(:page))
-            create(:user)
-          end
+          let(:unauthorized_user) { create(:user) }
 
           let(:subject_parent) { subject.parent }
           # Symbols

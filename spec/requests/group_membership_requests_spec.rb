@@ -15,6 +15,8 @@ RSpec.describe 'GroupMemberships', type: :request do
   let(:expect_get_index_guest_serializer) { expect_not_a_user }
   let(:expect_get_show_guest_serializer) { expect_unauthorized }
   let(:expect_post_create_serializer) { expect_unauthorized }
+  let(:expect_get_form_guest_serializer) { expect_unauthorized }
+  let(:expect_get_form_unauthorized_serializer) { expect_unauthorized }
 
   subject { group_membership }
 

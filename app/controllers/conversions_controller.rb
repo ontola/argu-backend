@@ -23,12 +23,14 @@ class ConversionsController < ServiceController
   end
 
   def authorize_action
+    return authorize parent_resource!, :show? if afe_request? && form_action?
+
     authorize parent_resource!, :convert?
     authorize authenticated_resource, :new?
   end
 
   def check_if_registered?
-    action_name != 'show'
+    action_name != 'show' && !(afe_request? && form_action?)
   end
 
   def create_service_parent

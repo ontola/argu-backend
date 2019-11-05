@@ -30,6 +30,11 @@ RSpec.describe 'Follows', type: :request do
   let(:non_existing_unsubscribe_path) do
     iri_from_template(:follows_unsubscribe_iri, id: non_existing_id, root_id: argu.url)
   end
+  let(:unauthorized_user) do
+    freetown.grants.destroy_all
+    create_forum(public_grant: 'participator', parent: create(:page))
+    create(:user)
+  end
 
   subject { create(:follow, follower: staff, followable: freetown) }
 

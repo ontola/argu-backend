@@ -1,6 +1,10 @@
 
 en:
   actions:
+    status:
+      CompletedActionStatus: "This action is already completed"
+      ExpiredActionStatus: "This action is no longer available"
+      DisabledActionStatus: "This action is currently not available"
     default:
       create:
         submit: "Save"

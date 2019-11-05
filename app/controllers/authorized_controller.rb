@@ -24,6 +24,8 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   end
 
   def authorize_action
+    return authorize authenticated_resource, :show? if afe_request? && form_action?
+
     authorize authenticated_resource, "#{params[:action].chomp('!')}?" unless action_name == 'index'
   end
 
@@ -60,7 +62,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   end
 
   def check_if_registered?
-    !(action_name == 'show' || (afe_request? && action_name == 'new'))
+    !(action_name == 'show' || (afe_request? && form_action?))
   end
 
   def collection_include_map
@@ -76,6 +78,10 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   end
 
   def current_forum; end
+
+  def form_action?
+    %w[new edit delete bin unbin shift settings].include?(action_name)
+  end
 
   def language_from_edge_tree
     return if current_forum.blank?

@@ -29,10 +29,11 @@ RSpec.describe 'Forums', type: :request do
     subject.reload
     expect(subject.name).to eq('name')
   end
-  let(:expect_get_new_guest_serializer) { expect_unauthorized }
 
   let(:update_differences) { {'Forum.count' => 0} }
   let(:destroy_differences) { {'Forum.count' => -1} }
+  let(:expect_get_new_guest_serializer) { expect_unauthorized }
+  let(:expect_get_new_unauthorized_serializer) { expect_unauthorized }
 
   def self.new_formats
     %i[html].concat((RDF_CONTENT_TYPES - %i[ttl n3]).shuffle[1..2])
@@ -52,6 +53,8 @@ RSpec.describe 'Forums', type: :request do
 
     let(:expect_get_show_guest_html) { expect_not_found }
     let(:expect_get_show_guest_serializer) { expect_not_found }
+    let(:expect_get_form_guest_serializer) { expect_not_found }
+    let(:expect_get_form_unauthorized_serializer) { expect_not_found }
     let(:expect_unauthorized) { expect_not_found }
 
     it_behaves_like 'requests', skip: %i[trash untrash index new create]

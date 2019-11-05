@@ -1,6 +1,10 @@
 
 nl:
   actions:
+    status:
+      CompletedActionStatus: "Deze actie is al uitgevoerd"
+      ExpiredActionStatus: "Deze actie is niet langer beschikbaar"
+      DisabledActionStatus: "Deze actie is momenteel niet beschikbaar"
     default:
       create:
         submit: "Opslaan"

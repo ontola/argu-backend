@@ -18,12 +18,14 @@ class ExportsController < ServiceController
   end
 
   def authorize_action
+    return authorize parent_resource!, :show? if afe_request? && form_action?
     return super unless action_name == 'index'
+
     authorize parent_resource!, :index_children?, controller_name
   end
 
   def check_if_registered?
-    action_name != 'show'
+    action_name != 'show' && !(afe_request? && form_action?)
   end
 
   def index_collection

@@ -15,6 +15,7 @@ RSpec.shared_examples_for 'get index' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:index_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
+          freetown.grants.destroy_all
           sign_in(unauthorized_user, doorkeeper_application(format))
           get index_path, headers: request_headers(format)
           send("expect_get_index_unauthorized_#{format}")

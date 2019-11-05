@@ -13,6 +13,7 @@ RSpec.shared_examples_for 'get show' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:show_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
+          freetown.grants.destroy_all
           sign_in(unauthorized_user, doorkeeper_application(format))
           get show_path, headers: request_headers(format)
           send("expect_get_show_unauthorized_#{format}")
