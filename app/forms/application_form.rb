@@ -27,6 +27,13 @@ class ApplicationForm < LinkedRails::Form
       }
     end
 
+    def actor_step
+      {
+        type: :resource,
+        url: -> { user_context.user.profile.iri }
+      }
+    end
+
     def visibility_text
       resource visibility_text: {
         description: -> { visible_for_string(target) },

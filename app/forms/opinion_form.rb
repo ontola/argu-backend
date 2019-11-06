@@ -3,8 +3,18 @@
 class OpinionForm < ApplicationForm
   fields [
     {description: {description: -> { I18n.t('opinions.form.placeholder') }}},
-    :hidden
+    :hidden,
+    :footer
   ]
+
+  property_group(
+    :footer,
+    iri: NS::ONTOLA[:footerGroup],
+    order: 99,
+    properties: [
+      creator: actor_step
+    ]
+  )
 
   property_group(
     :hidden,
