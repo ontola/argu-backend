@@ -19,8 +19,14 @@ class InterventionPolicy < EdgePolicy
     attributes
   end
 
-  def new?
-    return true if record.parent.is_a?(Page)
+  def create?
+    return true if record.parent.is_a?(Page) || record.parent.nil?
+
+    super
+  end
+
+  def show?
+    return true if record.parent.is_a?(Page) || record.parent.nil?
 
     super
   end
