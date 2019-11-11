@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
-class Intervention < Edge
+class Intervention < Edge # rubocop:disable Metrics/ClassLength
   include Edgeable::Content
   extend InterventionOptions
   enhance Attachable
   enhance Commentable
   enhance Feedable
   enhance Statable
+  enhance GrantResettable
 
   parentable :intervention_type
 
@@ -90,6 +91,17 @@ class Intervention < Edge
        motivation_and_commitment conflict_and_prioritization ergonomics tools].map do |attr|
       send(attr).map { |option| InterventionSerializer.enum_options(attr)[:options][option.to_sym][:iri] }
     end.flatten
+  end
+
+  def comments_allowed=(value)
+    super
+
+    current_reset = grant_resets.find_by(action: 'create', resource_type: 'Comment')
+    if comments_are_allowed?
+      self.grant_resets_attributes = [id: current_reset.id, _destroy: true] if current_reset
+    else
+      self.grant_resets_attributes = [action: 'create', resource_type: 'Comment'] unless current_reset
+    end
   end
 
   private

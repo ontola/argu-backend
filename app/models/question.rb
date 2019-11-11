@@ -3,9 +3,9 @@
 class Question < Discussion
   enhance CoverPhotoable
   enhance Motionable
+  enhance GrantResettable
 
   include Edgeable::Content
-  include CustomGrants
 
   convertible motions: %i[activities media_objects]
   parentable :container_node

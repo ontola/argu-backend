@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+module GrantResettable
+  module Serializer
+    extend ActiveSupport::Concern
+
+    included do
+      has_many :grant_resets, if: :never
+    end
+  end
+end
