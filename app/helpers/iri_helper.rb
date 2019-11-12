@@ -103,7 +103,9 @@ module IRIHelper
     root = TenantFinder.from_url(iri)
     return if root.blank?
 
-    opts = opts_from_iri("/#{iri.to_s.split("#{root.iri.path}/").last}", root)
+    slashed_iri = iri.ends_with?('/') ? iri.to_s : "#{iri}/"
+    path = root.iri.path.present? ? slashed_iri.split("#{root.iri.path}/").last : URI(slashed_iri).path
+    opts = opts_from_iri(path, root)
     return root if opts == {}
     return if opts[:type].blank? || opts[:id].blank?
 
