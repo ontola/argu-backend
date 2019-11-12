@@ -21,7 +21,8 @@ module ApplicationCable
     end
 
     def find_verified_user
-      user = User.find_by(id: doorkeeper_token.try(:resource_owner_id))
+      owner_id = doorkeeper_token.try(:resource_owner_id)
+      user = owner_id !~ /\D/ && User.find_by(id: owner_id)
 
       user || reject_unauthorized_connection
     end
