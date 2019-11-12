@@ -105,7 +105,7 @@ class EdgeableController < ServiceController
   def update_meta # rubocop:disable Metrics/AbcSize
     meta = super
     if current_resource.previously_changed_relations.include?('grant_collection')
-      meta << [current_resource.iri, NS::ARGU[:grantedGroups], LinkedRails::NS::SP[:Variable], NS::LL[:remove]]
+      meta << [current_resource.iri, NS::ARGU[:grantedGroups], NS::SP[:Variable], NS::LL[:remove]]
       meta.concat(
         GrantTree.new(current_resource.root).granted_groups(current_resource).map do |granted_group|
           [current_resource.iri, NS::ARGU[:grantedGroups], granted_group.iri, delta_iri(:add)]
