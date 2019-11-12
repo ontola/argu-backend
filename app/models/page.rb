@@ -105,9 +105,9 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def home_menu_image
-    return default_profile_photo.iri unless super
+    return default_profile_photo.iri if super.nil?
 
-    RDF::URI(super)
+    RDF::URI(super) if super.present?
   end
 
   def home_menu_label
