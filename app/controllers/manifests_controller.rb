@@ -13,10 +13,6 @@ class ManifestsController < ApplicationController
 
   private
 
-  def app_name
-    @app_name ||= Setting.get('app_name') || 'Argu'
-  end
-
   def icons
     ICON_FORMATS.map { |name, sizes| sizes.map { |size| icon(name, size) } }.flatten
   end
@@ -37,7 +33,7 @@ class ManifestsController < ApplicationController
       display: :standalone,
       icons: icons,
       lang: tree_root.locale,
-      name: "#{tree_root.display_name} - #{app_name}",
+      name: tree_root.display_name,
       ontola: {
         secondary_main: tree_root.accent_background_color,
         secondary_text: tree_root.accent_color,
@@ -52,7 +48,7 @@ class ManifestsController < ApplicationController
         src: "#{scope}/sw.js?manifestLocation=#{Rack::Utils.escape("#{scope}/manifest.json")}",
         scope: scope
       },
-      short_name: app_name,
+      short_name: tree_root.display_name,
       start_url: scope,
       theme_color: tree_root.navbar_background
     }
