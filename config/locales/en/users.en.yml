@@ -5,6 +5,7 @@ en:
     type: "User"
     plural: "Users"
     guest: 'Guest user'
+    anonymous: 'Anonymous'
     settings:
       title: "User settings"
       menu:

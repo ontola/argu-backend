@@ -5,6 +5,7 @@ nl:
     type: "Gebruiker"
     plural: "Gebruikers"
     guest: 'Gast gebruiker'
+    anonymous: 'Anoniem'
     settings:
       title: "Gebruikersinstellingen"
       menu:

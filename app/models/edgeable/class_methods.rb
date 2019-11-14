@@ -43,10 +43,6 @@ module Edgeable
         Arel::Nodes::NamedFunction.new('COALESCE', [casted, Arel::Nodes::SqlLiteral.new('0')]).send(direction)
       end
 
-      def preview_includes
-        super + [creator: Profile.preview_includes]
-      end
-
       def reindex_with_tenant(async: {wait: true})
         ActsAsTenant.without_tenant do
           Page.find_each { |page| page.reindex_tree(async: async) }

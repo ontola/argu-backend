@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UsersController < AuthorizedController
+class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLength
   include VotesHelper
   include UrlHelper
   helper_method :authenticated_resource
@@ -11,18 +11,26 @@ class UsersController < AuthorizedController
 
   private
 
+  def authorized_current_user
+    return current_resource_owner unless current_resource_owner.guest?
+
+    flash[:error] = t('devise.failure.unauthenticated')
+    raise Argu::Errors::Unauthorized.new
+  end
+
   def resource_by_id
     @resource_by_id ||=
       case action_name
       when 'show'
-        User.preload(:profile).find_via_shortname_or_id(params[:id])
+        user = User.preload(:profile).find_via_shortname_or_id(params[:id])
+        show_anonymous_user?(user) ? AnonymousUser.new(id: params[:id]) : user
       else
-        if current_resource_owner.guest?
-          flash[:error] = t('devise.failure.unauthenticated')
-          raise Argu::Errors::Unauthorized.new
-        end
-        current_resource_owner
+        authorized_current_user
       end
+  end
+
+  def show_anonymous_user?(user)
+    afe_request? && current_resource_owner.guest? && !user.profile.is_public?
   end
 
   def email_changed? # rubocop:disable Metrics/AbcSize
