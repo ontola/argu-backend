@@ -18,6 +18,10 @@ module ApplicationCable
 
     private
 
+    def allow_request_origin?
+      env['HTTP_ORIGIN'].ends_with?(ActsAsTenant.current_tenant.iri.host)
+    end
+
     def current_resource_owner
       instance_eval(&Doorkeeper.configuration.authenticate_resource_owner)
     end
