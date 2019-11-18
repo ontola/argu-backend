@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PublicationPolicy < EdgeTreePolicy
+  delegate :show?, to: :edgeable_policy
+
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[id]
