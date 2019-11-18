@@ -37,5 +37,9 @@ module ApplicationCable
     def find_verified_user
       current_resource_owner || reject_unauthorized_connection
     end
+
+    def send_welcome_message
+      transmit type: ActionCable::INTERNAL[:message_types][:welcome], user: current_user.display_name
+    end
   end
 end
