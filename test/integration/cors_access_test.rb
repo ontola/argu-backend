@@ -57,6 +57,7 @@ class CorsAccessTest < ActionDispatch::IntegrationTest
               'Access-Control-Request-Method': 'GET',
               'Access-Control-Request-Headers': 'X-Requested-With'
             }
-    assert_response 404
+    assert_nil response.headers['Access-Control-Allow-Origin']
+    assert_nil response.headers['Access-Control-Allow-Methods']
   end
 end
