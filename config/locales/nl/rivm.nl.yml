@@ -197,6 +197,9 @@ nl:
     type: "Voorbeeld"
     type_new: "Nieuw voorbeeld"
     plural: "Voorbeelden"
+    comments_allowed:
+      comments_are_allowed: "Ja"
+      comments_not_allowed: "Nee"
   employments:
     type: "Bedrijf"
     type_new: "Bedrijf toevoegen"
@@ -282,6 +285,8 @@ nl:
         security_improvement_reason: "Waarom denkt u dat de interventie wel of niet de veiligheid verbeterd heeft? Waaraan is de effectiviteit van de interventie merkbaar?"
         business_section: "Is de interventie gericht op het gehele bedrijf of op een deel van het bedrijf zoals een afdeling, regio, land of vestiging?"
         business_section_employees: "Hoeveel medewerkers zijn er ongeveer werkzaam in het land, de regio, vestiging of afdeling van het bedrijf?"
+        comments_allowed: "Wilt u openbaar commentaar op uw interventie mogelijk maken?"
+      measure:
         comments_allowed: "Wilt u openbaar commentaar op uw interventie mogelijk maken?"
       employment:
         organization_name: "Bedrijf"
