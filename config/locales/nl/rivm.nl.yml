@@ -272,7 +272,7 @@ nl:
         specific_tools_required: "Zijn er specifieke materialen nodig om de interventie in te voeren?"
         management_involvement: "Is het belangrijk dat het management van het bedrijf betrokken wordt bij deze interventie?"
         training_required: "Is het nodig om een training of opleiding te volgen om deze interventie in te kunnen voeren in een bedrijf?"
-        additional_introduction_information: "Kunt u nog extra informatie geven over de invoering van de interventie? [open vraag]"
+        additional_introduction_information: "Kunt u nog extra informatie geven over de invoering van de interventie?"
         nature_of_costs: "Wat is de aard van de kosten die het bedrijf voor deze interventie heeft gemaakt?"
         one_off_costs: "Eenmalige kosten (bijvoorbeeld op maat maken, lanceren, uitleggen, etc.)"
         recurring_costs: "Doorlopende kosten (gericht op het blijvend gebruiken van de interventie)"
@@ -292,7 +292,7 @@ nl:
       intervention:
         description: |
           Neem hier in ieder geval de volgende onderdelen in op:
-            • Wat zijn de activiteiten van bedrijf?
+            • Wat zijn de activiteiten van het bedrijf?
             • Wat houdt de interventie in?
             • Waarom is deze interventie ingevoerd?
             • Hoe is de interventie uitgevoerd?"
@@ -330,7 +330,7 @@ nl:
 
           Het invullen van één interventie duurt ongeveer 30 minuten. U heeft een account nodig om interventies op te slaan en te delen. U kunt een concept van een (onvolledig) ingevulde interventie opslaan op uw account. Wij delen geen bedrijfs- of persoonsgegevens als u dat niet wenst, dit kunt u per interventie aangeven in het invulformulier. U kunt uw account te allen tijde weer verwijderen. Wel behouden wij recht op de informatie die u heeft gedeeld.
 
-          Voor dit invulformulier en deze interventiedatabase richten we ons op ‘veiligheidsinterventies’. Als u meer wilt weten over interventies, de achtergrond van dit project en privacy, kunt u naar [Over *website titel*](link).
+          Voor dit invulformulier en deze interventiedatabase richten we ons op ‘veiligheidsinterventies’. Als u meer wilt weten over interventies, de achtergrond van dit project en privacy, kunt u naar [Privacy](https://app.argu.co/arbeidsveiligheid/privacy).
   forms:
     goal_and_effect:
       label: "Doelen en effecten van de interventie"
