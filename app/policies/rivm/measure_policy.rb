@@ -6,4 +6,10 @@ class MeasurePolicy < EdgePolicy
     attributes.concat %i[display_name description]
     attributes
   end
+
+  private
+
+  def trash?
+    super || is_creator?
+  end
 end

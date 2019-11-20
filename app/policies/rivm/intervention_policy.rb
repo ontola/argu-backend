@@ -30,4 +30,8 @@ class InterventionPolicy < EdgePolicy
 
     super
   end
+
+  def trash?
+    super || is_creator?
+  end
 end
