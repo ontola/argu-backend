@@ -132,6 +132,10 @@ en:
         decisions_email: "For official decisions"
         url: "Username"
         hide_last_name: 'Hide my last name'
+      setup:
+        first_name: "First name"
+        last_name: "Last name"
+        url: "Username"
     hints:
       username: "At least 4 characters. Numbers, letters and '_'. only."
       cover_photo_attribution: "If you do not posess the copyright to a photo, you can name the author and the license here. For example: CC-BY @argu_joep"

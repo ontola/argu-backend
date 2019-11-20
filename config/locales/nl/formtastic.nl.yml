@@ -132,6 +132,10 @@ nl:
         decisions_email: "Bij officiele besluiten"
         url: "Gebruikersnaam"
         hide_last_name: 'Verberg mijn achternaam'
+      setup:
+        first_name: "Voornaam"
+        last_name: "Achternaam"
+        url: "Gebruikersnaam"
     hints:
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."
       cover_photo_attribution: "Als jij niet de auteursrechten van de afbeelding bezit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"

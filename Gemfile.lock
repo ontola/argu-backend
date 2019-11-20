@@ -55,7 +55,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 39dc5f5546da78128692043ded31dc6e1a0cb817
+  revision: 22f7fdfcaaf87b98a610e7084585bda921241ad6
   specs:
     linked_rails (0.0.0)
       active_response
@@ -558,7 +558,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.19.0, < 2.0)
     rainbow (3.0.0)
-    rake (13.0.0)
+    rake (13.0.1)
     rakismet (1.5.4)
     rdf (3.0.13)
       hamster (~> 3.0)

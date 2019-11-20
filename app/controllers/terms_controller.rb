@@ -7,7 +7,6 @@ class TermsController < ApplicationController
 
   def create_execute
     current_user.accept_terms!
-    add_exec_action_header(response.headers, params[:referrer])
   end
 
   def create_success
@@ -15,6 +14,6 @@ class TermsController < ApplicationController
   end
 
   def current_resource
-    Term.new(referrer: params[:referrer])
+    @current_resource ||= Term.new
   end
 end

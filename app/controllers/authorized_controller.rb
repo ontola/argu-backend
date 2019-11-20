@@ -5,6 +5,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   include Argu::Controller::Authorization
 
   before_action :verify_terms_accepted, only: %i[update create]
+  before_action :verify_setup, only: %i[update create]
   before_action :authorize_current_actor
   before_bugsnag_notify :add_errors_tab
   helper_method :authenticated_resource, :policy, :user_context
@@ -83,6 +84,10 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     %w[new edit delete bin unbin shift settings].include?(action_name)
   end
 
+  def has_shortname?
+    current_user.url.present?
+  end
+
   def language_from_edge_tree
     return if current_forum.blank?
     I18n.available_locales.include?(current_forum.language) ? current_forum.language : :en
@@ -135,6 +140,20 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     !%i[new create].include? params[:action]
   end
 
+  def requires_setup?
+    !(current_user.guest? || RequestStore.store[:old_frontend] || !tree_root.requires_intro? || has_shortname?)
+  end
+
+  def verify_setup
+    return unless requires_setup?
+
+    active_response_block do
+      action = iri_from_template(:setup_iri)
+      add_exec_action_header(response.headers, ontola_dialog_action(action))
+      head 449
+    end
+  end
+
   def verify_terms_accepted # rubocop:disable Metrics/AbcSize
     return if current_user.guest? || current_user.accepted_terms?
     if accept_terms_param
@@ -151,9 +170,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
                    code: 'TERMS_NOT_ACCEPTED'
                  }
         else
-          action = new_iri(
-            expand_uri_template(:terms_iri), nil, query: {referrer: request.headers['Request-Referrer']}.to_param
-          )
+          action = new_iri(expand_uri_template(:terms_iri), nil)
           add_exec_action_header(response.headers, ontola_dialog_action(action))
           head 449
         end
