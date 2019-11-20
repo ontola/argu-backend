@@ -26,10 +26,9 @@ module ApplicationHelper
   end
 
   def allowed_publish_types(resource)
+    resource_policy = policy(resource)
     types =
-      if policy(resource)
-           .permitted_nested_attributes(:argu_publication_attributes)
-           .include?(:published_at)
+      if resource_policy.moderator? || resource_policy.administrator? || resource_policy.staff?
         %i[direct draft schedule]
       else
         %i[direct draft]

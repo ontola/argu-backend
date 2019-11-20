@@ -57,7 +57,9 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     pub_attrs = @attributes[:argu_publication_attributes] || {}
     pub_attrs[:id] = resource.argu_publication.id if resource.argu_publication.present?
     unless resource.is_published?
-      pub_attrs[:published_at] ||= pub_attrs[:draft].to_s == 'true' ? nil : Time.current
+      if resource.argu_publication.blank?
+        pub_attrs[:published_at] ||= pub_attrs[:draft].to_s == 'true' ? nil : Time.current
+      end
       if resource.new_record?
         pub_attrs[:publisher] ||= @options[:publisher]
         pub_attrs[:creator] ||= @options[:creator]

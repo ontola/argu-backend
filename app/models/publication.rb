@@ -31,6 +31,10 @@ class Publication < ApplicationRecord
     !publishable&.is_published? || false
   end
 
+  def draft=(value)
+    self.published_at = Time.current if value.to_s == 'false'
+  end
+
   def publish_time_lapsed?
     published_at.present? && published_at <= 10.seconds.from_now
   end

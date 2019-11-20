@@ -63,6 +63,59 @@ class DraftsTest < ActionDispatch::IntegrationTest
     expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
   end
 
+  test 'user should publish draft with draft=false' do
+    sign_in user, Doorkeeper::Application.argu_front_end
+    assert_nil motion.argu_publication.published_at
+    assert_not motion.is_published?
+    Sidekiq::Testing.inline! do
+      patch update_path(motion),
+            headers: argu_headers,
+            params: {motion: {argu_publication_attributes: {draft: 'false'}}}
+    end
+    assert_not_nil motion.argu_publication.reload.published_at
+    assert motion.reload.is_published?
+  end
+
+  test 'user should publish draft with published_at' do
+    sign_in user, Doorkeeper::Application.argu_front_end
+    assert_nil motion.argu_publication.published_at
+    assert_not motion.is_published?
+    Sidekiq::Testing.inline! do
+      patch update_path(motion),
+            headers: argu_headers,
+            params: {motion: {argu_publication_attributes: {published_at: Time.current}}}
+    end
+    assert_not_nil motion.argu_publication.reload.published_at
+    assert motion.reload.is_published?
+  end
+
+  test 'user should not publish draft with draft=true' do
+    sign_in user, Doorkeeper::Application.argu_front_end
+    assert_nil motion.argu_publication.published_at
+    assert_not motion.is_published?
+    Sidekiq::Testing.inline! do
+      patch update_path(motion),
+            headers: argu_headers,
+            params: {motion: {argu_publication_attributes: {draft: 'true'}}}
+    end
+    assert_nil motion.argu_publication.reload.published_at
+    assert_not motion.reload.is_published?
+  end
+
+  test 'user should not publish draft without draft' do
+    sign_in user, Doorkeeper::Application.argu_front_end
+    assert_nil motion.argu_publication.published_at
+    assert_not motion.is_published?
+    Sidekiq::Testing.inline! do
+      patch update_path(motion),
+            headers: argu_headers,
+            params: {motion: {display_name: 'new title'}}
+    end
+    assert_equal motion.reload.title, 'New title'
+    assert_nil motion.argu_publication.reload.published_at
+    assert_not motion.reload.is_published?
+  end
+
   ####################################
   # As administrator
   ####################################
