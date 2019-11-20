@@ -1,6 +1,6 @@
 nl:
   comments:
-    type: "reactie"
+    type: "Reactie"
     type_new: "Nieuwe reactie"
     plural: "Reacties"
     show_all:

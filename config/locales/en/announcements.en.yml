@@ -1,6 +1,6 @@
 en:
   announcements:
-    type: 'announcement'
+    type: 'Announcement'
     audiences:
       guests: 'Guests'
       users: 'Users'

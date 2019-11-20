@@ -2,7 +2,7 @@
 
 nl:
   search:
-    type: "zoeken"
+    type: "Zoeken"
     title: "zoekresultaten voor %{q}"
     placeholder: "Zoek op thema, inhoud..."
     results_found:

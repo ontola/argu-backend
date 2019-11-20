@@ -1,6 +1,6 @@
 en:
   decisions:
-    type: "decision"
+    type: "Decision"
     type_new: "Take a decision"
     plural: "Decisions"
     menu: "Take decision"

@@ -14,7 +14,7 @@ en:
     tooltips:
       info: "A con argument is a reason to be against something."
   arguments:
-    type: "argument"
+    type: "Argument"
     type_new: "New argument"
     plural: "Arguments"
     vote: "vote"

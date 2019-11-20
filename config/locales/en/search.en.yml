@@ -2,7 +2,7 @@
 
 en:
   search:
-    type: "search"
+    type: "Search"
     title: "search results for %{q}"
     placeholder: "Search for theme, content..."
     results_found:

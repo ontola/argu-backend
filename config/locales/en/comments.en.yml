@@ -1,6 +1,6 @@
 en:
   comments:
-    type: "comment"
+    type: "Comment"
     type_new: "New comment"
     plural: "Comments"
     show_all:

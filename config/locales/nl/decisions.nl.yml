@@ -1,6 +1,6 @@
 nl:
   decisions:
-    type: "besluit"
+    type: "Besluit"
     type_new: "Neem een besluit"
     plural: "Besluiten"
     menu: "Besluit nemen"

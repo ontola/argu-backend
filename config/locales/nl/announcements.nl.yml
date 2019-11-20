@@ -1,6 +1,6 @@
 nl:
   announcements:
-    type: 'aankondiging'
+    type: 'Aankondiging'
     audiences:
       guests: 'Gasten'
       users: 'Gebruikers'
