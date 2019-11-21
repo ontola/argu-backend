@@ -11,6 +11,7 @@ module SearchkickMock
 end
 
 Searchkick::Index.send(:prepend, SearchkickMock)
+Searchkick::RecordIndexer.send(:prepend, SearchkickMock)
 
 module ElasticsearchAPIMock
   def bulk(_arguments = {})
