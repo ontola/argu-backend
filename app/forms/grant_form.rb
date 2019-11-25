@@ -20,7 +20,12 @@ class GrantForm < ApplicationForm
       grant_set_id: {
         datatype: NS::XSD[:string],
         max_count: 1,
-        sh_in: -> { GrantSet.selectable.map(&:iri) }
+        sh_in: lambda {
+          GrantSet
+            .where(root_id: [nil, ActsAsTenant.current_tenant&.uuid])
+            .where('title NOT IN (?)', %i[empty staff motion_create])
+            .map(&:iri)
+        }
       }
     }
   ]

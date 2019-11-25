@@ -29,7 +29,7 @@ class GrantSet < ApplicationRecord
   end
 
   def display_name
-    I18n.t("roles.types.#{title}").capitalize
+    I18n.t("roles.types.#{title}", default: title).capitalize
   end
 
   def self.for_one_action(resource_type, action)
