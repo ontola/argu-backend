@@ -23,6 +23,24 @@ class InterventionType < Edge
     :participator
   end
 
+  def one_off_costs_score
+    average_score(NS::RIVM[:oneOffCosts])
+  end
+
+  def recurring_costs_score
+    average_score(NS::RIVM[:recurringCosts])
+  end
+
+  def security_improved_score
+    average_score(NS::RIVM[:securityImproved])
+  end
+
+  private
+
+  def average_score(predicate)
+    descendants.joins(:properties).where(properties: {predicate: predicate.to_s}).average(:integer).to_f
+  end
+
   class << self
     def iri_namespace
       NS::RIVM
