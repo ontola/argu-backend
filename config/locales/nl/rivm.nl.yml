@@ -1,4 +1,8 @@
 nl:
+  categories:
+    type: "Categorie"
+    type_new: "Nieuwe categorie"
+    plural: "Categorieën"
   risks:
     type: "Gevaar"
     type_new: "Nieuw gevaar"
@@ -193,6 +197,9 @@ nl:
     plural: "Maatregelen"
     collection_for: "Maatregelen tegen %{parent}"
     example_of: "Beschermt tegen"
+    properties:
+      measures_count:
+        label: "Voorbeelden"
   measures:
     type: "Voorbeeld"
     type_new: "Nieuw voorbeeld"
@@ -254,6 +261,7 @@ nl:
   formtastic:
     labels:
       example_of_id: "Beschermt tegen"
+      category_id: "Categorie"
       parent_id: "Onder welke op deze website beschreven interventietypes is de interventie in te delen?"
       employment_id: "Bij welk bedrijf is deze interventie toegepast?"
       intervention:

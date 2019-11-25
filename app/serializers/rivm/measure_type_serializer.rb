@@ -2,6 +2,8 @@
 
 class MeasureTypeSerializer < ContentEdgeSerializer
   has_one :parent, key: :partOf, predicate: NS::SCHEMA[:isPartOf] do
-    Dashboard.find_via_shortname('maatregelen')
+    Category.root_collection
   end
+
+  count_attribute :measures
 end

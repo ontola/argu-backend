@@ -7,6 +7,7 @@ class PropertiesTest < ActiveSupport::TestCase
   define_freetown('second')
   let(:second_page) { create_page }
   let(:motion) { create(:motion, parent: freetown) }
+  let(:comment) { create(:comment, parent: motion) }
   let(:parent_comment) { create(:comment, parent: motion) }
   let(:reply1) { create(:comment, parent: motion, in_reply_to_id: parent_comment.uuid) }
   let(:reply2) { create(:comment, parent: motion, in_reply_to_id: parent_comment.uuid) }
@@ -80,12 +81,25 @@ class PropertiesTest < ActiveSupport::TestCase
     assert_equal [risk1], reloaded_measure_type.example_of
   end
 
-  test 'property associations' do
+  test 'property has_one association' do
     [reply1, reply2].each do |reply|
       assert_equal parent_comment, reply.parent_comment
     end
 
     assert_equal [reply1, reply2], parent_comment.comments.order(:id)
+  end
+
+  test 'property has_one assignment by record' do
+    comment.parent_comment = parent_comment
+    assert_equal parent_comment, comment.parent_comment
+    comment.save
+    assert_equal parent_comment, comment.reload.parent_comment
+  end
+
+  test 'property has_one assignment by id' do
+    comment.in_reply_to_id = parent_comment.uuid
+    comment.save
+    assert_equal parent_comment, comment.reload.parent_comment
   end
 
   test 'property destruction' do

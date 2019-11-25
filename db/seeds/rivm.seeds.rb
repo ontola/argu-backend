@@ -5,7 +5,7 @@ Tenant.setup_schema('rivm', "app.#{Rails.application.config.host_name}/omgevings
 Apartment::Tenant.switch('rivm') do # rubocop:disable Metrics/BlockLength
   @actions = HashWithIndifferentAccess.new
 
-  %w[Risk InterventionType Intervention Measure MeasureType].each do |type|
+  %w[Category Risk InterventionType Intervention Measure MeasureType].each do |type|
     %w[create show update destroy trash]
       .each do |action|
       @actions["#{type.underscore}_#{action}"] =
@@ -19,7 +19,8 @@ Apartment::Tenant.switch('rivm') do # rubocop:disable Metrics/BlockLength
   end
 
   show_actions =
-    %i[risk_show intervention_show measure_show intervention_type_show measure_type_show].map { |a| @actions[a] }
+    %i[category_show risk_show intervention_show measure_show intervention_type_show measure_type_show]
+      .map { |a| @actions[a] }
 
   spectate = GrantSet.spectator
   spectate.permitted_actions << show_actions
@@ -39,43 +40,47 @@ Apartment::Tenant.switch('rivm') do # rubocop:disable Metrics/BlockLength
   moderate = GrantSet.moderator
   moderate.permitted_actions << show_actions
   moderate.permitted_actions <<
-    %i[risk_create intervention_create measure_create intervention_type_create measure_type_create]
+    %i[category_create risk_create intervention_create measure_create intervention_type_create measure_type_create]
       .map { |a| @actions[a] }
   moderate.permitted_actions <<
-    %i[risk_update intervention_update measure_update intervention_type_update measure_type_update]
+    %i[category_update risk_update intervention_update measure_update intervention_type_update measure_type_update]
       .map { |a| @actions[a] }
   moderate.permitted_actions <<
-    %i[risk_trash intervention_trash measure_trash intervention_type_trash measure_type_trash].map { |a| @actions[a] }
+    %i[category_trash risk_trash intervention_trash measure_trash intervention_type_trash measure_type_trash]
+      .map { |a| @actions[a] }
   moderate.save!(validate: false)
 
   administrate = GrantSet.administrator
   administrate.permitted_actions << show_actions
   administrate.permitted_actions <<
-    %i[risk_create intervention_create measure_create intervention_type_create measure_type_create]
+    %i[category_create risk_create intervention_create measure_create intervention_type_create measure_type_create]
       .map { |a| @actions[a] }
   administrate.permitted_actions <<
-    %i[risk_update intervention_update measure_update intervention_type_update measure_type_update]
+    %i[category_update risk_update intervention_update measure_update intervention_type_update measure_type_update]
       .map { |a| @actions[a] }
   administrate.permitted_actions <<
-    %i[risk_trash intervention_trash measure_trash intervention_type_trash measure_type_trash].map { |a| @actions[a] }
+    %i[category_trash risk_trash intervention_trash measure_trash intervention_type_trash measure_type_trash]
+      .map { |a| @actions[a] }
   administrate.permitted_actions <<
-    %i[risk_destroy intervention_destroy measure_destroy intervention_type_destroy measure_type_destroy]
+    %i[category_destroy risk_destroy intervention_destroy measure_destroy
+       intervention_type_destroy measure_type_destroy]
       .map { |a| @actions[a] }
   administrate.save!(validate: false)
 
   staff = GrantSet.staff
   staff.permitted_actions << show_actions
   staff.permitted_actions <<
-    %i[risk_create intervention_create measure_create intervention_type_create measure_type_create]
+    %i[category_create risk_create intervention_create measure_create intervention_type_create measure_type_create]
       .map { |a| @actions[a] }
   staff.permitted_actions <<
-    %i[risk_update intervention_update measure_update intervention_type_update measure_type_update]
+    %i[category_update risk_update intervention_update measure_update intervention_type_update measure_type_update]
       .map { |a| @actions[a] }
   staff.permitted_actions <<
-    %i[risk_trash intervention_trash measure_trash intervention_type_trash measure_type_trash]
+    %i[category_trash risk_trash intervention_trash measure_trash intervention_type_trash measure_type_trash]
       .map { |a| @actions[a] }
   staff.permitted_actions <<
-    %i[risk_destroy intervention_destroy measure_destroy intervention_type_destroy measure_type_destroy]
+    %i[category_destroy risk_destroy intervention_destroy measure_destroy
+       intervention_type_destroy measure_type_destroy]
       .map { |a| @actions[a] }
   staff.save!(validate: false)
 

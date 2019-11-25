@@ -35,6 +35,12 @@ module Edgeable
 
     private
 
+    def assign_property(name, value)
+      property_opts = self.class.property_options(name: name)
+      value = [value] if property_opts[:array] && !value.is_a?(Array)
+      property_manager(property_opts[:predicate]).value = value
+    end
+
     def initialize_internals_callback
       super
       preload_properties(true)
@@ -68,10 +74,9 @@ module Edgeable
 
       private
 
-      def define_property_setter(name, predicate, array)
+      def define_property_setter(name)
         define_method "#{name}=" do |value|
-          value = [value] if array && !value.is_a?(Array)
-          property_manager(predicate).value = value
+          assign_property(name, value)
           super(value)
         end
       end
@@ -93,7 +98,7 @@ module Edgeable
 
         enum name => opts[:enum] if opts[:enum].present?
 
-        define_property_setter(name, predicate, opts[:array])
+        define_property_setter(name)
       end
 
       def property_type(type)

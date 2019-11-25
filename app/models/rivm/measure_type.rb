@@ -8,13 +8,15 @@ class MeasureType < Edge
   enhance Statable
   enhance Measureable
   enhance Riskable
+  enhance Categorizable
   enhance PublicGrantable
   enhance LinkedRails::Enhancements::Tableable
 
-  parentable :page, :risk
+  parentable :page, :risk, :category
   with_columns default: [
     NS::SCHEMA[:name],
-    NS::SCHEMA[:dateCreated]
+    NS::ARGU[:measuresCount],
+    NS::SCHEMA[:datePublished]
   ]
   validates :description, length: {maximum: 5000}
   validates :display_name, presence: true, length: {maximum: 110}
