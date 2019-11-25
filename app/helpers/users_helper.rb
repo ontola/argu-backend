@@ -72,7 +72,7 @@ module UsersHelper
   end
 
   def shortname_from_email(email)
-    email[/[^@]+/].tr('.', '_').downcase
+    email[/[^@]+/].tr('.', '_').downcase if email
   end
 
   def shortname_gap(integers)
