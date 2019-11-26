@@ -36,7 +36,7 @@ module Users
     def update_success
       return super if RequestStore.store[:old_frontend]
 
-      head 200
+      respond_with_resource(resource: current_actor)
     end
 
     def update_success_location
