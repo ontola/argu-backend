@@ -16,6 +16,13 @@ en:
       title: "Looking for good ideas?"
       body: "Are you looking for good ideas to a burning question?"
       action: "Share your challenge"
+    default_motion_sorting:
+      popular: "Votes in favour (most first)"
+      created_at: "Creation date (newest first)"
+      updated_at: "Activity (most recent first)"
+      popular_asc: "Votes in favour (least first)"
+      created_at_asc: "Creation date (oldest first)"
+      updated_at_asc: "Activity (oldest first)"
     form:
       title:
         label: "Give your challenge a fitting title"

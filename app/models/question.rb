@@ -22,7 +22,7 @@ class Question < Discussion
            :integer,
            NS::ARGU[:defaultSorting],
            default: 0,
-           enum: {popular: 0, created_at: 1, updated_at: 2}
+           enum: {popular: 0, created_at: 1, updated_at: 2, popular_asc: 3, created_at_asc: 4, updated_at_asc: 5}
 
   def expired?
     expires_at.present? && expires_at < Time.current

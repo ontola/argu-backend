@@ -19,7 +19,7 @@ module Motionable
         ]
       end
 
-      def default_motion_sorting_opts(parent)
+      def default_motion_sorting_opts(parent) # rubocop:disable Metrics/CyclomaticComplexity
         return {key: NS::ARGU[:lastActivityAt], direction: :desc} unless parent.try(:default_motion_sorting)
         case parent.default_motion_sorting
         when 'popular'
@@ -28,6 +28,12 @@ module Motionable
           {key: NS::ARGU[:createdAt], direction: :desc}
         when 'updated_at'
           {key: NS::ARGU[:lastActivityAt], direction: :desc}
+        when 'popular_asc'
+          {key: NS::ARGU[:votesProCount], direction: :asc}
+        when 'created_at_asc'
+          {key: NS::ARGU[:createdAt], direction: :asc}
+        when 'updated_at_asc'
+          {key: NS::ARGU[:lastActivityAt], direction: :asc}
         end
       end
 

@@ -16,6 +16,13 @@ nl:
       title: "Oplossing nodig?"
       body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
       action: "Deel jouw uitdaging."
+    default_motion_sorting:
+      popular: "Stemmen voor (meeste eerst)"
+      created_at: "Aanmaakdatum (nieuwste eerst)"
+      updated_at: "Activiteit (recenste eerst)"
+      popular_asc: "Stemmen voor (minste eerst)"
+      created_at_asc: "Aanmaakdatum (oudste eerst)"
+      updated_at_asc: "Activiteit (oudste eerst)"
     form:
       title:
         label: "Geef jouw uitdaging een titel"
