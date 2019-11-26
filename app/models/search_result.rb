@@ -60,7 +60,7 @@ class SearchResult
   end
 
   def search_template
-    "#{iri_template.expand}{?q,page}{#fragment}"[1..-1]
+    "#{iri_template.expand(parent_iri: split_iri_segments(parent.iri_path))}{?q,page}{#fragment}"[1..-1]
   end
 
   def results
