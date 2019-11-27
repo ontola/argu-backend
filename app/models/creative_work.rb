@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class CreativeWork < Edge
+  enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Updatable
+  enhance LinkedRails::Enhancements::Menuable
+
   property :display_name, :string, NS::SCHEMA[:name]
   property :description, :text, NS::SCHEMA[:text]
   property :url_path, :string, NS::SCHEMA[:url]
@@ -9,6 +13,10 @@ class CreativeWork < Edge
            NS::ARGU[:CreativeWorkType],
            default: 0,
            enum: {custom: 0, new_motion: 1, new_question: 2, new_topic: 3}
+
+  parentable :page, :container_node
+  validates :description, length: {maximum: 5000}
+  validates :display_name, presence: true, length: {maximum: 110}
 
   def link_url
     RDF::DynamicURI(LinkedRails.iri(path: url_path)) if url_path

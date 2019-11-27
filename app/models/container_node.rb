@@ -16,6 +16,7 @@ class ContainerNode < Edge
   enhance Widgetable
   enhance Statable
   enhance LinkedRails::Enhancements::Tableable
+  enhance CreativeWorkable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]

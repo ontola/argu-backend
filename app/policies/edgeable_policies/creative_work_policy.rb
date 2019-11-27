@@ -6,6 +6,4 @@ class CreativeWorkPolicy < EdgePolicy
     attributes.concat %i[display_name description]
     attributes
   end
-
-  delegate :show?, to: :parent_policy
 end

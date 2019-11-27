@@ -1,0 +1,5 @@
+en:
+  creative_works:
+    type: "Document"
+    type_new: "New document"
+    plural: "Documents"
