@@ -95,7 +95,8 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
           creative_work_type: :new_motion,
           display_name: I18n.t('motions.call_to_action.title'),
           description: I18n.t('motions.call_to_action.body'),
-          url_path: new_iri_path(owner, :motions)
+          url_path: new_iri_path(owner, :motions),
+          is_published: true
         )
       new_motion
         .create(
@@ -115,7 +116,8 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
           creative_work_type: :new_question,
           display_name: I18n.t('questions.call_to_action.title'),
           description: I18n.t('questions.call_to_action.body'),
-          url_path: new_iri_path(owner, :questions)
+          url_path: new_iri_path(owner, :questions),
+          is_published: true
         )
       new_question
         .create(
@@ -135,7 +137,8 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
           creative_work_type: :new_topic,
           display_name: I18n.t('topics.call_to_action.title'),
           description: I18n.t('topics.call_to_action.body'),
-          url_path: new_iri_path(owner, :topics)
+          url_path: new_iri_path(owner, :topics),
+          is_published: true
         )
       new_topic
         .create(
