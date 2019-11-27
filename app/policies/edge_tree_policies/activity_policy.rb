@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActivityPolicy < RestrictivePolicy
+class ActivityPolicy < EdgeTreePolicy
   class Scope < EdgeTreePolicy::Scope
     def resolve
       @scope = @scope.where(root_id: grant_tree.tree_root_id) if grant_tree&.tree_root_id&.present?

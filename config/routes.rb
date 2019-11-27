@@ -271,6 +271,7 @@ Rails.application.routes.draw do
   end
 
   resources :actors, only: :index
+  resources :activities, only: :show
   resources :arguments, only: %i[show], path: 'a'
   %i[pro_arguments con_arguments].each do |model|
     resources model,

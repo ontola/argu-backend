@@ -24,6 +24,7 @@ class Activity < PublicActivity::Activity
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
   validates :key, presence: true
+  validates :comment, length: {maximum: 5000}
   validates :trackable, :recipient, :owner,
             presence: {on: :create, if: proc { |a| a.action != 'destroy' }}
 
