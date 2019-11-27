@@ -17,7 +17,7 @@ class Category < Edge
 
   with_collection :measure_types,
                   association: :measure_type_examples,
-                  display: :table,
+                  default_display: :table,
                   title: ->(r) { r.display_name }
 
   def default_public_grant
