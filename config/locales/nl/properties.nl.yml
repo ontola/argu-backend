@@ -2,3 +2,7 @@ nl:
   properties:
     display_name:
       label: "Titel"
+    trash_activity:
+      label: "Toelichting"
+    untrash_activity:
+      label: "Toelichting"

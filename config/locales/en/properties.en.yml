@@ -2,3 +2,7 @@ en:
   properties:
     display_name:
       label: "Title"
+    trash_activity:
+      label: "Explanation"
+    untrash_activity:
+      label: "Explanation"
