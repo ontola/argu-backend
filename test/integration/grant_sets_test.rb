@@ -21,12 +21,12 @@ class GrantSetsTest < ActionDispatch::IntegrationTest
   test 'staff get show grant_set' do
     sign_in staff
     checked = []
-    checked << should_show_grant_set('spectator', should: 16, should_not: 63)
-    checked << should_show_grant_set('participator', should: 20, should_not: 58, conditional: 1)
-    checked << should_show_grant_set('initiator', should: 23, should_not: 56)
-    checked << should_show_grant_set('moderator', should: 39, should_not: 40)
-    checked << should_show_grant_set('administrator', should: 47, should_not: 32)
-    checked << should_show_grant_set('staff', should: 59, should_not: 20)
+    checked << should_show_grant_set('spectator', should: 17, should_not: 67)
+    checked << should_show_grant_set('participator', should: 21, should_not: 62, conditional: 1)
+    checked << should_show_grant_set('initiator', should: 24, should_not: 60)
+    checked << should_show_grant_set('moderator', should: 40, should_not: 44)
+    checked << should_show_grant_set('administrator', should: 52, should_not: 32)
+    checked << should_show_grant_set('staff', should: 64, should_not: 20)
     assert_empty GrantSet::RESERVED_TITLES - checked, "Grantsets #{GrantSet::RESERVED_TITLES - checked} are not tested"
   end
 
