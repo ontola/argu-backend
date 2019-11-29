@@ -3,6 +3,7 @@
 class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   include UriTemplateHelper
   skip_before_action :check_if_registered, only: %i[index show create destroy]
+  skip_before_action :verify_setup
 
   private
 
