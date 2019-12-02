@@ -6,30 +6,40 @@ module Edgeable
 
     included do
       before_destroy :decrement_counter_caches, unless: :is_trashed?
+    end
 
-      private
+    def reload_children_counts
+      self.children_counts = Edge.unscoped.where(id: id).pluck('children_counts').first
+    end
 
-      def counter_cache_names
-        return [class_name] if self.class.counter_cache_options == true
-        matches = self.class.counter_cache_options.select do |_, conditions|
-          conditions.all? { |key, value| send("#{key}_before_type_cast") == value }
-        end
-        matches.map { |name, _options| name.to_s }
+    private
+
+    def counter_cache_names
+      return [class_name] if self.class.counter_cache_options == true
+      matches = self.class.counter_cache_options.select do |_, conditions|
+        conditions.all? { |key, value| send("#{key}_before_type_cast") == value }
       end
+      matches.map { |name, _options| name.to_s }
+    end
 
-      def decrement_counter_caches
-        return unless self.class.class_variable_defined?(:@@counter_cache_options)
-        counter_cache_names.each do |counter_cache_name|
-          self.class.update_children_count_statement(parent_id, counter_cache_name, :-)
-        end
-      end
+    def decrement_counter_caches # rubocop:disable Metrics/AbcSize
+      return unless self.class.class_variable_defined?(:@@counter_cache_options) && parent.present?
 
-      def increment_counter_caches
-        return unless self.class.class_variable_defined?(:@@counter_cache_options)
-        counter_cache_names.each do |counter_cache_name|
-          self.class.update_children_count_statement(parent_id, counter_cache_name, :+)
-        end
+      parent.reload_children_counts
+      counter_cache_names.each do |counter_cache_name|
+        parent.children_counts[counter_cache_name] = parent.children_count(counter_cache_name) - 1
       end
+      parent.save(touch: false)
+    end
+
+    def increment_counter_caches # rubocop:disable Metrics/AbcSize
+      return unless self.class.class_variable_defined?(:@@counter_cache_options) && parent.present?
+
+      parent.reload_children_counts
+      counter_cache_names.each do |counter_cache_name|
+        parent.children_counts[counter_cache_name] = parent.children_count(counter_cache_name) + 1
+      end
+      parent.save(touch: false)
     end
 
     module ClassMethods
@@ -44,14 +54,6 @@ module Edgeable
         else
           counter_cache_options.map { |options| fix_counts_with_options(*options) }.flatten
         end
-      end
-
-      def update_children_count_statement(id, name, operation)
-        query = 'children_counts = children_counts || hstore(?, (cast(COALESCE(children_counts -> ?, \'0\') AS int) '\
-                "#{operation} 1)::text)"
-        # rubocop:disable Rails/SkipsModelValidations
-        Edge.unscoped.where(id: id).update_all(sanitize_sql([query, name, name]))
-        # rubocop:enable Rails/SkipsModelValidations
       end
 
       private
@@ -98,12 +100,9 @@ module Edgeable
               wrong: model.send("#{cache_name}_count"),
               right: count
             }
-            # rubocop:disable Rails/SkipsModelValidations
-            Edge
-              .unscoped
-              .where(id: model.id)
-              .update_all([%(children_counts = children_counts || hstore(?,?)), cache_name, count.to_s])
-            # rubocop:enable Rails/SkipsModelValidations
+            edge = Edge.find(model.id)
+            edge.children_counts[cache_name] = count
+            edge.save(touch: false)
           end
           start += batch_size
         end
