@@ -6,4 +6,10 @@ class CategoryPolicy < EdgePolicy
     attributes.concat %i[display_name]
     attributes
   end
+
+  def show?
+    return true if record.parent.is_a?(Page) || record.parent.nil?
+
+    super
+  end
 end
