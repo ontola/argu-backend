@@ -53,7 +53,7 @@ class PagePolicy < EdgePolicy
   end
 
   def index_children?(raw_klass)
-    return show? if raw_klass.to_sym == :interventions
+    return show? if %i[interventions measures].include?(raw_klass.to_sym)
 
     super
   end
