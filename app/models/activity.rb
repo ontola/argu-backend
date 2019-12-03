@@ -58,6 +58,8 @@ class Activity < PublicActivity::Activity
     case action
     when 'publish'
       %w[blog_post motion question topic con_argument pro_argument comment].include?(object)
+    when 'create'
+      %w[intervention measure].include?(object)
     when 'approved', 'rejected', 'forwarded'
       true
     else
