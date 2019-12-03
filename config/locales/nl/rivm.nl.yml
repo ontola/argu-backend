@@ -284,7 +284,7 @@ nl:
         management_involvement: "Is het belangrijk dat het management van het bedrijf betrokken wordt bij deze interventie?"
         training_required: "Is het nodig om een training of opleiding te volgen om deze interventie in te kunnen voeren in een bedrijf?"
         additional_introduction_information: "Kunt u nog extra informatie geven over de invoering van de interventie?"
-        nature_of_costs: "Wat is de aard van de kosten die het bedrijf voor deze interventie heeft gemaakt?"
+        nature_of_costs: "Wat is de aard van de kosten die het bedrijf voor deze interventie heeft gemaakt? (Meerdere opties mogelijk)"
         one_off_costs: "Eenmalige kosten (bijvoorbeeld op maat maken, lanceren, uitleggen, etc.)"
         recurring_costs: "Doorlopende kosten (gericht op het blijvend gebruiken van de interventie)"
         cost_explanation: "Geef desgewenst een toelichting bij deze kosten."
