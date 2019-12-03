@@ -299,6 +299,7 @@ nl:
         parent_id: "Onder welke op deze website beschreven maatregelen is dit voorbeeld in te delen?"
       employment:
         organization_name: "Bedrijf"
+        show_organization_name: "De bedrijfsnaam mag getoond worden"
         job_title: "Functie"
         industry: "Sector"
         default_profile_photo: "Logo"

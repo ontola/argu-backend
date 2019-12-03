@@ -9,7 +9,7 @@ class EmploymentPolicy < EdgePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[organization_name job_title industry]
+    attributes.concat %i[organization_name job_title industry show_organization_name]
     attributes
   end
 

@@ -2,6 +2,7 @@
 
 class EmploymentSerializer < EdgeSerializer
   attribute :organization_name, predicate: NS::ARGU[:organizationName], if: :never
+  attribute :show_organization_name, predicate: NS::ARGU[:showOrganizationName], if: :never
   attribute :job_title, predicate: NS::SCHEMA[:roleName]
   attribute :industry, predicate: NS::SCHEMA[:industry]
 

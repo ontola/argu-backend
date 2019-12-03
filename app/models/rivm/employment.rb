@@ -5,6 +5,7 @@ class Employment < Edge
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
 
+  property :show_organization_name, :boolean, NS::ARGU[:anonymous], default: true
   property :organization_name, :string, NS::ARGU[:organizationName]
   property :job_title, :string, NS::SCHEMA[:roleName]
   property :industry, :integer, NS::SCHEMA[:industry], enum: {
@@ -28,7 +29,11 @@ class Employment < Edge
   validates :job_title, presence: true, length: {maximum: 110}
   validates :industry, presence: true
 
-  alias_attribute :display_name, :organization_name
+  def display_name
+    return organization_name if show_organization_name
+
+    "Een bedrijf in de #{I18n.t("employments.industry.#{industry}").downcase} industrie"
+  end
 
   def parent_collections(user_context = nil)
     [Employment.root_collection(user_context: user_context)]

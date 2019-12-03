@@ -5,6 +5,7 @@ class EmploymentForm < ApplicationForm
     organization_name
     job_title
     industry
+    show_organization_name
     default_profile_photo
   ]
 end
