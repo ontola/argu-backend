@@ -66,7 +66,7 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
       {ergonomics: {max_count: 99}},
       {tools: {max_count: 99}},
       {target_audience: {max_count: 99}},
-      :risk_reduction
+      {risk_reduction: {max_count: 99}}
     ]
   )
 
