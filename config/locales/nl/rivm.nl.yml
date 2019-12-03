@@ -303,26 +303,31 @@ nl:
         job_title: "Functie"
         industry: "Sector"
         default_profile_photo: "Logo"
-    placeholders:
-      intervention:
-        description: |
+  properties:
+    interventions:
+      description:
+        helper_text: |
           Neem hier in ieder geval de volgende onderdelen in op:
             • Wat zijn de activiteiten van het bedrijf?
             • Wat houdt de interventie in?
             • Waarom is deze interventie ingevoerd?
             • Hoe is de interventie uitgevoerd?"
-        goal: |
+      goal:
+        helper_text: |
           Probeer het doel of de doelen zo specifiek en helder mogelijk te verwoorden.
           Neem hier ook bij mee:
             • Wat is de doelgroep van de interventie?
             • Wat probeert u met de interventie bij deze doelgroep te bereiken?
-        additional_introduction_information: |
+      additional_introduction_information:
+        helper_text: |
           Geef hierbij bijvoorbeeld aan:
             • Welke externe ondersteuning mogelijk gewenst is?
             • Welke trainingen en of opleidingen eventueel noodzakelijk zijn?
             • Waar eventueel benodigde materialen te verkrijgen zijn?
-        specific_tools_required: "Denk bijvoorbeeld aan een handboek, protocol, flyers, video’s, vragenlijsten, software of presentaties."
-        employment_id: "Voeg jouw bedrijf toe als je dat nog niet hebt gedaan."
+      specific_tools_required:
+        helper_text: "Denk bijvoorbeeld aan een handboek, protocol, flyers, video’s, vragenlijsten, software of presentaties."
+      employment_id:
+        helper_text: "Voeg jouw bedrijf toe als je dat nog niet hebt gedaan."
   actions:
     interventions:
       create:
