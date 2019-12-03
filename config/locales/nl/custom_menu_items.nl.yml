@@ -1,0 +1,16 @@
+nl:
+  custom_menu_items:
+    type: "Menu item"
+    type_new: "Nieuw menu item"
+    plural: "Menu items"
+    form:
+      raw_label:
+        label: "Label"
+      label_translation:
+        label: "Gebruik vertaling"
+      raw_href:
+        label: "URL"
+      raw_image:
+        label: "Icoon"
+      order:
+        label: "Positie"

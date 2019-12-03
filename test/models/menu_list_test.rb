@@ -73,7 +73,7 @@ class MenuListTest < ActiveSupport::TestCase
         .menu(:navigations, user_context)
         .menus
         .compact
-        .find { |f| f.tag == "menu_item_#{custom_menu_item.id}" }
+        .find { |f| f == custom_menu_item }
         .label
     )
   end
@@ -85,7 +85,7 @@ class MenuListTest < ActiveSupport::TestCase
           .menu(:navigations, other_page_context)
           .menus
           .compact
-          .find { |f| f.tag == "menu_item_#{custom_menu_item.id}" }
+          .find { |f| f == custom_menu_item }
       )
     end
   end

@@ -15,4 +15,8 @@ class MenuItemSerializer < LinkedRails::Menus::ItemSerializer
   def image
     serialize_image(object.image)
   end
+
+  def type
+    object.try(:type) || NS::ONTOLA[:MenuItem]
+  end
 end

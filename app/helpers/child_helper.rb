@@ -12,6 +12,8 @@ module ChildHelper
   # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
   def child_attrs(parent, raw_klass) # rubocop:disable Metrics/AbcSize
     case raw_klass.to_s
+    when 'CustomMenuItem'
+      {resource: parent}
     when 'Discussion'
       {forum: parent}
     when 'Export', 'Favorite', 'GrantTree'

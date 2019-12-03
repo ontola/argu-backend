@@ -30,6 +30,7 @@ class PagePolicy < EdgePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i[general profile container_nodes groups shortnames]
+    tabs.concat %i[custom_menu_items] if staff?
     tabs
   end
 

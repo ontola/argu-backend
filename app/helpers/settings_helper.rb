@@ -6,6 +6,7 @@ module SettingsHelper
       general: 'gear',
       advanced: 'gears',
       container_nodes: 'cubes',
+      custom_menu_items: 'bars',
       delete: 'trash',
       grants: 'suitcase',
       groups: 'group',

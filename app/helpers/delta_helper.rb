@@ -49,6 +49,8 @@ module DeltaHelper
   end
 
   def resource_removed_delta(resource)
-    super + counter_cache_delta(resource)
+    delta = super + counter_cache_delta(resource)
+    delta.concat(resource.resource_removed_delta) if resource.respond_to?(:resource_removed_delta)
+    delta
   end
 end

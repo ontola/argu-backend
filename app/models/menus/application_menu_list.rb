@@ -28,15 +28,6 @@ class ApplicationMenuList < LinkedRails::Menus::List
 
   def custom_menu_items(menu_type, resource)
     scoped_menu_items(menu_type, resource)
-      .map do |menu_item|
-      menu_item(
-        "menu_item_#{menu_item.id}",
-        label: menu_item.label,
-        image: menu_item.image,
-        href: RDF::URI(menu_item.href),
-        policy: menu_item.policy
-      )
-    end
   end
 
   def scoped_menu_items(menu_type, resource)

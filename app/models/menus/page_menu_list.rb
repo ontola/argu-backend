@@ -76,6 +76,11 @@ class PageMenuList < ApplicationMenuList
         :shortnames,
         label: I18n.t('pages.settings.menu.shortnames'),
         href: collection_iri(resource, :shortnames, display: :settingsTable)
+      ),
+      setting_item(
+        :custom_menu_items,
+        label: I18n.t('custom_menu_items.plural'),
+        href: collection_iri(resource, :custom_menu_items, display: :table)
       )
     ]
   end

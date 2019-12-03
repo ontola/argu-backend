@@ -286,9 +286,6 @@ Rails.application.routes.draw do
             only: %i[show] do
     include_route_concerns
   end
-  resources :creative_works, only: %i[show new create] do
-    include_route_concerns
-  end
   resources :comments, only: %i[show], path: 'c' do
     include_route_concerns
     resources :comments, only: %i[index new create], path: 'c' do
@@ -298,6 +295,12 @@ Rails.application.routes.draw do
     end
   end
   resources :comments, only: %i[show]
+  resources :creative_works, only: %i[show new create] do
+    include_route_concerns
+  end
+  resources :custom_menu_items, only: %i[index show new create] do
+    include_route_concerns
+  end
   resources :direct_messages, path: :dm, only: [:create]
   resources :exports, only: [] do
     include_route_concerns
