@@ -12,6 +12,7 @@ class Measure < Edge
   validates :description, length: {maximum: 5000}
   validates :display_name, presence: true, length: {maximum: 110}
   validates :comments_allowed, presence: true
+  validate :validate_parent_type
 
   property :comments_allowed, :integer, NS::RIVM[:commentsAllowed], enum: {
     comments_are_allowed: 1,
@@ -27,6 +28,12 @@ class Measure < Edge
     else
       self.grant_resets_attributes = [action: 'create', resource_type: 'Comment'] unless current_reset
     end
+  end
+
+  private
+
+  def validate_parent_type
+    errors.add(:parent_id, "Invalid parent (#{parent.class})") unless parent.is_a?(MeasureType)
   end
 
   class << self

@@ -262,7 +262,6 @@ nl:
     labels:
       example_of_id: "Beschermt tegen"
       category_id: "Categorie"
-      parent_id: "Onder welke op deze website beschreven interventietypes is de interventie in te delen?"
       employment_id: "Bij welk bedrijf is deze interventie toegepast?"
       intervention:
         display_name: "Wat is de naam van de interventie?"
@@ -275,6 +274,7 @@ nl:
         motivation_and_commitment: "Motivatie en commitment"
         conflict_and_prioritization: "Conflictoplossing en prioriteiten"
         ergonomics: "Ergonomie"
+        parent_id: "Onder welke op deze website beschreven interventietypes is de interventie in te delen?"
         tools: "Gereedschap, materiaal en (reserve) onderdelen"
         target_audience: "Wie is of wie zijn de doelgroep(en) van de interventie?"
         risk_reduction: "Op welke manier verlaagt de interventie volgens u de kans op ongevallen?"
@@ -296,6 +296,7 @@ nl:
         comments_allowed: "Wilt u openbaar commentaar op uw interventie mogelijk maken?"
       measure:
         comments_allowed: "Wilt u openbaar commentaar op uw interventie mogelijk maken?"
+        parent_id: "Onder welke op deze website beschreven maatregelen is dit voorbeeld in te delen?"
       employment:
         organization_name: "Bedrijf"
         job_title: "Functie"
