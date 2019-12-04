@@ -2,6 +2,7 @@ nl:
   menus:
     copy_successful: "'%{url}' is gekopieerd naar het klembord"
     default:
+      authentication: "Authenticatie"
       facebook: "Facebook"
       twitter: "Twitter"
       linked_in: "LinkedIn"
@@ -45,6 +46,7 @@ nl:
       take_decision: "Besluit nemen"
       contact: "Contacteer plaatser"
       overview: "Overzicht"
+      profile: "Profiel"
       new_discussion: "Nieuwe discussie"
       new_motion: "Nieuw idee"
       new_question: "Nieuwe uitdaging"

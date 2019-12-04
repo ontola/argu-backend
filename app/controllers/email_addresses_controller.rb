@@ -10,7 +10,7 @@ class EmailAddressesController < ParentableController
   end
 
   def redirect_location
-    iri_from_template(:settings_iri, parent_iri: 'u', fragment: :emails).to_s
+    iri_from_template(:settings_iri, parent_iri: 'u', fragment: :authentication).to_s
   end
 
   def resource_new_params

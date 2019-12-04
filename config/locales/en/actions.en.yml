@@ -75,6 +75,7 @@ en:
         submit: "Upvote"
     users:
       notifications:
+        label: "Notifications"
         description: "When would you like to receive an email for items you follow?</br>Moderators of an organisation can mark items as 'important'. For example a decison on a discussion you are following."
         submit: "Save"
       setup:
@@ -82,9 +83,12 @@ en:
         description: "Set how you will be visible to others on Argu. Most people use their real first and last name. You can change these later on, but your username is fixed and must be unique."
         submit: "Save"
       authentication:
+        label: "Authentication"
         submit: "Save"
       privacy:
         submit: "Save"
+      destroy:
+        label: "Remove account"
     setups:
       update:
         label: "Welcome!"

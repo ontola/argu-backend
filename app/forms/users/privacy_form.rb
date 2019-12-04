@@ -2,9 +2,13 @@
 
 module Users
   class PrivacyForm < ApplicationForm
-    fields %i[
-      has_analytics
+    fields [
+      :has_analytics,
+      {profile: {referred_shapes: [Profiles::PrivacyForm]}},
+      delete_button: {
+        type: :resource,
+        url: -> { delete_iri(user_context.user) }
+      }
     ]
-    field :profile, referred_shapes: [Profiles::PrivacyForm]
   end
 end

@@ -2,6 +2,7 @@ en:
   menus:
     copy_successful: "Copied '%{url}' to clipboard"
     default:
+      authentication: "Authentication"
       facebook: "Facebook"
       twitter: "Twitter"
       linked_in: "LinkedIn"
@@ -45,6 +46,7 @@ en:
       take_decision: "Take decision"
       contact: "Contact poster"
       overview: "Overview"
+      profile: "Profile"
       new_discussion: "New discussion"
       new_motion: "New motion"
       new_question: "New question"

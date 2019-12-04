@@ -93,12 +93,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def user_drafts_item
-    menu_item(
-      :drafts, label: I18n.t('users.drafts.title'), href: drafts_user_url(resource)
-    )
-  end
-
   def user_forum_management_item
     menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource))
   end
@@ -108,7 +102,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
 
     items = user_base_items
     items << user_settings_item
-    items << user_drafts_item
     items << user_pages_item if Apartment::Tenant.current == 'argu'
     items << user_forum_management_item if !user_context.vnext && resource.forum_management?
     items << language_menu_item if afe_request?

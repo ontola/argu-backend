@@ -75,6 +75,7 @@ nl:
         submit: "Upvote"
     users:
       notifications:
+        label: "Meldingen"
         description: "Wanneer wil je een email ontvangen over items die je volgt? Beheerders van een organisatie kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt."
         submit: "Opslaan"
       setup:
@@ -82,9 +83,12 @@ nl:
         description: "Stel in hoe je zichtbaar bent voor anderen op Argu. De meesten mensen gebruiken hun echte voor- en achternaam. Je kunt deze altijd nog wijzigen, maar je gebruikersnaam staat vast."
         submit: "Opslaan"
       authentication:
+        label: "Authenticatie"
         submit: "Opslaan"
       privacy:
         submit: "Opslaan"
+      destroy:
+        label: "Account verwijderen"
     setups:
       update:
         label: "Welkom!"
