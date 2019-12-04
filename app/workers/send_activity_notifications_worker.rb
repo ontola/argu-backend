@@ -98,7 +98,7 @@ class SendActivityNotificationsWorker
   def send_activity_notifications_mail
     logger.info "Sending #{@notifications.length} notification(s) to #{@user.email}"
     notifications = prepared_notifications
-    ActsAsTenant.with_tenant(Page.first) do
+    ActsAsTenant.with_tenant(Page.find_by(uuid: @notifications.uniq.pluck(:root_id).first)) do
       Argu::API
         .service_api
         .create_email(:activity_notifications, @user, follows: notifications)
