@@ -44,6 +44,10 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     end
   end
 
+  def resource_settings_iri
+    settings_iri('/u', tab: tab)
+  end
+
   def permit_params(password = false) # rubocop:disable Metrics/AbcSize
     attrs = policy(authenticated_resource || User).permitted_attribute_names(password)
     pp = params.require(:user).permit(*attrs).to_h
@@ -54,7 +58,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
   end
 
   def redirect_location
-    r_param || settings_iri('/u', tab: tab)
+    r_param || resource_settings_iri
   end
 
   def settings_success_html

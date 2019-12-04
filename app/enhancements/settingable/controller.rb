@@ -27,8 +27,14 @@ module Settingable
       form_view_locals_for(:settings)
     end
 
+    def resource_settings_iri
+      settings_iri(authenticated_resource, tab: tab)
+    end
+
     def settings_success
       return settings_success_html if %i[html js].include?(active_response_type)
+      return respond_with_redirect(location: resource_settings_iri) if tab_param
+
       respond_with_resource(
         resource: authenticated_resource!.menu(:settings, user_context),
         include: [menu_sequence: [members: [:image, menu_sequence: [members: [:image]]]]]
@@ -47,8 +53,12 @@ module Settingable
       }
     end
 
+    def tab_param
+      params[:tab] || params[model_name].try(:[], :tab)
+    end
+
     def tab
-      @tab ||= params[:tab] || params[model_name].try(:[], :tab) || policy(authenticated_resource).default_tab
+      @tab ||= tab_param || policy(authenticated_resource).default_tab
     end
 
     def tab!
