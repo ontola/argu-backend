@@ -15,4 +15,10 @@ class MenuItem < LinkedRails::Menus::Item
   def menu_sequence_iri
     RDF::DynamicURI(super)
   end
+
+  def menu_sequence
+    return LinkedRails::Sequence.new([], id: menu_sequence_iri) if parent.user_context.tree_root.nil?
+
+    super
+  end
 end

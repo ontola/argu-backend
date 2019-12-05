@@ -115,7 +115,7 @@ class VoteEvent < Edge # rubocop:disable Metrics/ClassLength
   end
 
   class << self
-    def preview_includes
+    def show_includes
       [
         :current_vote,
         vote_collection: inc_nested_collection + [default_filtered_collections: inc_shallow_collection]

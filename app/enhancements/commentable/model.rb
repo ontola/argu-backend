@@ -20,12 +20,8 @@ module Commentable
     end
 
     module ClassMethods
-      def preview_includes
-        super + [:top_comment]
-      end
-
       def show_includes
-        super + [comment_collection: inc_shallow_collection]
+        super + [:top_comment, comment_collection: inc_shallow_collection]
       end
     end
   end

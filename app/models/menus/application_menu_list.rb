@@ -16,6 +16,12 @@ class ApplicationMenuList < LinkedRails::Menus::List
 
   private
 
+  def default_label(tag, options)
+    self.class.translations(
+      -> { I18n.t("menus.#{resource&.class&.name&.tableize}.#{tag}", options[:label_params]) }
+    )
+  end
+
   def copy_share_link(url)
     menu_item(
       :copy,
@@ -51,7 +57,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
       follow_types = opts.delete(:follow_types)
       has_menu :follow, {
         description: I18n.t('notifications.receive.title'),
-        image: -> { follow_menu_icon(follow_type) },
+        image: 'fa-bell-o',
         menus: -> { follow_menu_items(follow_types) }
       }.merge(opts)
     end
@@ -62,6 +68,14 @@ class ApplicationMenuList < LinkedRails::Menus::List
         link_opts: -> { opts.merge(iri: resource.iri) },
         menus: -> { share_menu_items }
       }.merge(opts)
+    end
+
+    def translations(translation)
+      I18n.available_locales.map do |locale|
+        I18n.with_locale(locale) do
+          RDF::Literal.new(translation.call, language: locale)
+        end
+      end
     end
   end
 end

@@ -20,17 +20,18 @@ module DropdownHelper
     link_items = menu.menus.compact.map do |menu_item|
       item(
         menu_item.item_type || 'link',
-        menu_item.label,
+        translated_label(menu_item.label),
         menu_item.href,
         menu_item.dropdown_options(trigger_opts)
       )
     end
     return if link_items.empty?
+
     content_tag :li do
       content_tag :ul do
         react_component 'HyperDropdown',
                         dropdown_options(
-                          menu.label,
+                          translated_label(menu.label),
                           [{title: menu.description, items: link_items.compact}],
                           menu.dropdown_options(item_opts)
                         ),
@@ -56,5 +57,13 @@ module DropdownHelper
 
   def link_item(title, url, opts = {})
     item('link', title, url, opts)
+  end
+
+  def translated_label(labels)
+    if labels.is_a?(Array)
+      labels.detect { |label| label.try(:language)&.to_sym == I18n.locale } || labels.first
+    else
+      labels
+    end
   end
 end

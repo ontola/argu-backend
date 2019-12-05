@@ -32,7 +32,7 @@ module VoteEventable
         super.merge(default_vote_event: {creator: :profileable})
       end
 
-      def preview_includes
+      def show_includes
         super + [
           default_vote_event: [
             :current_vote,

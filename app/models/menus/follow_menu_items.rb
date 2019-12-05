@@ -12,17 +12,6 @@ module Menus
       @follow_type ||= follow&.follow_type || 'never'
     end
 
-    def follow_menu_icon(follow_type)
-      case follow_type
-      when 'never'
-        'fa-bell-slash-o'
-      when 'reactions'
-        'fa-bell'
-      else
-        'fa-bell-o'
-      end
-    end
-
     def follow_menu_items(follow_types)
       follow_types ||= %i[news reactions never]
       items = follow_types.map { |type| follow_menu_item(type, follow, follow_type) }
