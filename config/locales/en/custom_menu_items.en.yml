@@ -14,3 +14,4 @@ en:
         label: "Icon"
       order:
         label: "Position"
+      coupled_to: "This menu item is coupled to %{name}."

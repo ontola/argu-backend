@@ -10,7 +10,10 @@ class CustomMenuItemActionList < ApplicationActionList
         uri.path += '/edit'
         uri.to_s
       },
-      url: -> { resource.canonical_iri }
+      url: -> { resource.canonical_iri },
+      description: lambda {
+        resource.edge_id.present? ? I18n.t('custom_menu_items.form.coupled_to', name: resource.edge.display_name) : nil
+      }
     )
   )
   has_action(

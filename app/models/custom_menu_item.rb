@@ -38,7 +38,7 @@ class CustomMenuItem < ApplicationRecord
   alias canonical_iri_opts iri_opts
 
   def label
-    return edge.display_name if edge.present?
+    return edge.display_name if attribute_in_database(:label).blank? && edge.present?
 
     label_translation ? I18n.t(super) : super
   end

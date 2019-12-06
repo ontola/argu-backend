@@ -14,3 +14,4 @@ nl:
         label: "Icoon"
       order:
         label: "Positie"
+      coupled_to: "Dit menu item is gekoppeld aan %{name}."
