@@ -7,7 +7,7 @@ class UserContext
   attr_reader :actor, :doorkeeper_scopes, :vnext
 
   def initialize(doorkeeper_scopes:, profile: nil, user: nil, vnext: nil)
-    @user = user
+    @user = user || GuestUser.new
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes
     @vnext = vnext

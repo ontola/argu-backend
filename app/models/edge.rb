@@ -149,7 +149,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     RDF::URI(expand_uri_template(:edges_iri, id: uuid))
   end
 
-  def cache_nquads
+  def cache_resource?
     true
   end
 

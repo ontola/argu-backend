@@ -14,7 +14,7 @@ module OauthHelper
   def current_actor
     return @current_actor if @current_actor.present?
     refresh_guest_token if needs_new_guest_token?
-    user = current_resource_owner || GuestUser.new({})
+    user = current_resource_owner || GuestUser.new
     @current_actor =
       CurrentActor.new(user: user, actor: current_actor_profile(user))
     @current_actor

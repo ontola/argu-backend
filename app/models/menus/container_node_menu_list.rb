@@ -21,15 +21,6 @@ class ContainerNodeMenuList < ApplicationMenuList
     ]
   end
 
-  def navigation_menu_items
-    [
-      menu_item(:overview, image: 'fa-th-large', href: resource.iri),
-      activity_link,
-      statistics_link,
-      settings_link
-    ]
-  end
-
   def edit_link
     menu_item(
       :edit,
@@ -38,12 +29,5 @@ class ContainerNodeMenuList < ApplicationMenuList
       href: edit_iri(resource),
       policy: :update?
     )
-  end
-
-  class << self
-    def has_navigation_menu
-      has_menu :navigations,
-               menus: -> { navigation_menu_items }
-    end
   end
 end

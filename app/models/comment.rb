@@ -100,7 +100,7 @@ class Comment < Edge
 
   class << self
     def includes_for_serializer
-      super.merge(comments: {})
+      super.merge(comments: {}, vote: {})
     end
 
     def show_includes

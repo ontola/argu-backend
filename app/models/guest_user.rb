@@ -35,6 +35,7 @@ class GuestUser < User
   end
 
   def initialize(attributes = {})
+    attributes ||= {}
     attributes[:time_zone] ||= 'Amsterdam'
     super
   end

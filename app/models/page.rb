@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'argu/cache'
+
 class Page < Edge # rubocop:disable Metrics/ClassLength
   has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid, foreign_key: :root_id
 
@@ -132,6 +134,24 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   def language
     locale.split('-').first.to_sym
+  end
+
+  def manifest
+    @manifest ||= Manifest.new(page: self)
+  end
+
+  def rebuild_cache
+    ActsAsTenant.with_tenant(self) do
+      cache = Argu::Cache.new
+      cache.write(manifest, :attributes, :json, key_transform: :underscore)
+      cache.write(Vocabulary.new, :rdf, :nq)
+
+      Edge.descendants.each do |klass|
+        Edge.where(owner_type: klass.to_s).includes(klass.includes_for_serializer).find_each do |edge|
+          cache.write(edge, :rdf, :nq)
+        end
+      end
+    end
   end
 
   def reindex_tree(async: {wait: true})

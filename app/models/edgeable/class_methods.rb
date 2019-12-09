@@ -29,10 +29,11 @@ module Edgeable
       end
 
       def includes_for_serializer
-        {
+        super.merge(
           creator: :profileable,
-          parent: {}
-        }
+          parent: {},
+          root: {}
+        )
       end
 
       def order_child_count_sql(type, direction: :desc, as: 'edges')

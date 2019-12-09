@@ -8,15 +8,7 @@ class RebuildCacheWorker
     return unless create_version_directory
 
     Apartment::Tenant.each do
-      Page.find_each do |page|
-        ActsAsTenant.with_tenant(page) do
-          Edge.includes(:publisher, :creator, :parent, :root, :shortname).find_each do |edge|
-            worker = BroadcastWorker.new
-            worker.resource = edge
-            worker.write_nquads
-          end
-        end
-      end
+      Page.find_each(&:rebuild_cache)
     end
   end
 
