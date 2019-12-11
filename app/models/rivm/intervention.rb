@@ -86,6 +86,7 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   )
   # rubocop:enable Rails/Validation
   validate :validate_parent_type
+  before_save :sync_comments_allowed
 
   def effects
     %i[plans_and_procedure people_and_resources competence communication
@@ -98,9 +99,9 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
     super if employment.validated?
   end
 
-  def comments_allowed=(value)
-    super
+  private
 
+  def sync_comments_allowed
     current_reset = grant_resets.find_by(action: 'create', resource_type: 'Comment')
     if comments_are_allowed?
       self.grant_resets_attributes = [id: current_reset.id, _destroy: true] if current_reset
@@ -108,8 +109,6 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
       self.grant_resets_attributes = [action: 'create', resource_type: 'Comment'] unless current_reset
     end
   end
-
-  private
 
   def validate_parent_type
     errors.add(:parent_id, "Invalid parent (#{parent.class})") unless parent.is_a?(InterventionType)
