@@ -31,7 +31,9 @@ module Argu
                headers: argu_headers,
                params: {format: request_format, actor_iri: actor_iri, model_sym => attributes}
 
-          ActsAsTenant.with_tenant(Publication.last.publishable.root) { reset_publication(Publication.last) }
+          if Publication.count.positive?
+            ActsAsTenant.with_tenant(Publication.last.publishable.root) { reset_publication(Publication.last) }
+          end
         end
 
         assert_response results[:response]

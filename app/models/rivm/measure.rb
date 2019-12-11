@@ -7,6 +7,7 @@ class Measure < Edge
   enhance Feedable
   enhance Statable
   enhance GrantResettable
+  enhance ActivePublishable
 
   parentable :measure_type
   validates :description, length: {maximum: 5000}

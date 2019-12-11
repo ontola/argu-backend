@@ -57,9 +57,7 @@ class Activity < PublicActivity::Activity
   def new_content?
     case action
     when 'publish'
-      %w[blog_post motion question topic con_argument pro_argument comment].include?(object)
-    when 'create'
-      %w[intervention measure].include?(object)
+      %w[blog_post motion question topic con_argument pro_argument comment intervention measure].include?(object)
     when 'approved', 'rejected', 'forwarded'
       true
     else

@@ -8,6 +8,7 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   enhance Feedable
   enhance Statable
   enhance GrantResettable
+  enhance ActivePublishable
 
   parentable :intervention_type
 

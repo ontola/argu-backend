@@ -16,6 +16,14 @@ class MeasureForm < ApplicationForm
       }
     },
     :comments_allowed,
-    :attachments
+    :attachments,
+    :hidden
   ]
+
+  property_group(
+    :hidden,
+    iri: NS::ONTOLA[:hiddenGroup],
+    order: 98,
+    properties: %i[argu_publication]
+  )
 end

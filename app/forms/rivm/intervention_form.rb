@@ -8,6 +8,7 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
     effectivity_section
     final_section
     attachments
+    hidden
   ]
 
   property_group(
@@ -111,5 +112,12 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
       {business_section_employees: {input_field: NS::ONTOLA['element/input/radio']}},
       :comments_allowed
     ]
+  )
+
+  property_group(
+    :hidden,
+    iri: NS::ONTOLA[:hiddenGroup],
+    order: 98,
+    properties: %i[argu_publication]
   )
 end
