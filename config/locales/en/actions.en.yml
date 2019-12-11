@@ -97,3 +97,6 @@ en:
     pages:
       create:
         label: "New website"
+    employments:
+      confirm:
+        submit: "Confirm"

@@ -94,6 +94,10 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
     end.flatten
   end
 
+  def publish!
+    super if employment.validated?
+  end
+
   def comments_allowed=(value)
     super
 

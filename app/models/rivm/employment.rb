@@ -23,11 +23,16 @@ class Employment < Edge
     public_administration_and_government_services: 41, education: 42, healthcare: 43, nursing: 44, social_services: 45,
     sport_and_recreation: 46
   }
+  property :validated, :boolean, NS::ARGU[:validated], default: false
+
+  has_many :submitted_interventions, primary_key_property: :employment_id, class_name: 'Intervention', dependent: false
 
   parentable :page
   validates :organization_name, presence: true, length: {maximum: 110}
   validates :job_title, presence: true, length: {maximum: 110}
   validates :industry, presence: true
+
+  after_update :reschedule_publications
 
   def display_name
     return organization_name if show_organization_name
@@ -37,6 +42,12 @@ class Employment < Edge
 
   def parent_collections(user_context = nil)
     [Employment.root_collection(user_context: user_context)]
+  end
+
+  private
+
+  def reschedule_publications
+    submitted_interventions.each { |i| i.argu_publication.send(:reset) } if previous_changes.key?(:validated)
   end
 
   class << self

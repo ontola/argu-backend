@@ -76,8 +76,7 @@ module Edgeable
 
       def define_property_setter(name)
         define_method "#{name}=" do |value|
-          assign_property(name, value)
-          super(value)
+          super(assign_property(name, value))
         end
       end
 

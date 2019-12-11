@@ -18,6 +18,7 @@ nl:
     type: "Interventie"
     type_new: "Nieuwe interventie"
     plural: "Interventies"
+    publish_success: "De interventie is ingediend voor moderatie"
     plans_and_procedure:
       usability: "De begrijpbaarheid en bruikbaarheid van regels, richtlijnen en procedures"
       planning: "Het goed plannen van werkzaamheden"
@@ -207,6 +208,9 @@ nl:
     comments_allowed:
       comments_are_allowed: "Ja"
       comments_not_allowed: "Nee"
+  employment_moderations:
+    type: "Moderatie"
+    plural: "Moderatie"
   employments:
     type: "Bedrijf"
     type_new: "Bedrijf toevoegen"

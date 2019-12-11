@@ -97,3 +97,6 @@ nl:
     pages:
       create:
         label: "Nieuwe website"
+    employments:
+      confirm:
+        submit: "Bevestig"
