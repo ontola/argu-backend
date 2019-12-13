@@ -9,5 +9,7 @@ class AddRootIdToWidgets < ActiveRecord::Migration[5.2]
     add_column :custom_menu_items, :root_id, :uuid
     CustomMenuItem.connection.update('UPDATE custom_menu_items SET root_id = edges.root_id FROM edges WHERE edges.uuid = custom_menu_items.resource_id')
     change_column_null :custom_menu_items, :root_id, false
+
+    remove_column :widgets, :primary_resource_id
   end
 end

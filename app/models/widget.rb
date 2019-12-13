@@ -7,7 +7,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Creatable
 
   belongs_to :owner, polymorphic: true, primary_key: :uuid
-  belongs_to :primary_resource, class_name: 'Edge', primary_key: :uuid
   belongs_to :permitted_action
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
@@ -72,7 +71,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         .create(
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'blog_post_show'),
-          primary_resource: owner,
           resource_iri: [[blog_posts_iri, nil]],
           size: 3
         )
@@ -84,7 +82,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         .create(
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'motion_show'),
-          primary_resource: owner,
           resource_iri: [[discussions_iri, nil]],
           size: 3
         )
@@ -106,7 +103,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         .create(
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'motion_create'),
-          primary_resource: owner,
           resource_iri: [[creative_work.iri, nil], [new_iri(owner, :motions), nil]]
         )
     end
@@ -126,7 +122,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
       new_question
         .create(
           owner: owner,
-          primary_resource: owner,
           permitted_action: PermittedAction.find_by!(title: 'question_create'),
           resource_iri: [[creative_work.iri, nil], [new_iri(owner, :questions), nil]]
         )
@@ -147,7 +142,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
       new_topic
         .create(
           owner: owner,
-          primary_resource: owner,
           permitted_action: PermittedAction.find_by!(title: 'topic_create'),
           resource_iri: [[creative_work.iri, nil], [new_iri(owner, :topics), nil]]
         )

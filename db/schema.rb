@@ -524,7 +524,6 @@ ActiveRecord::Schema.define(version: 2019_12_13_101717) do
     t.integer "size", default: 1, null: false
     t.integer "position", null: false
     t.uuid "owner_id", null: false
-    t.uuid "primary_resource_id", null: false
     t.integer "permitted_action_id", null: false
     t.uuid "root_id", null: false
     t.index ["owner_id", "owner_type"], name: "index_widgets_on_owner_id_and_owner_type"
