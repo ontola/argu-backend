@@ -18,4 +18,16 @@ class PermittedAction < ApplicationRecord
   def to_param
     title
   end
+
+  class << self
+    def create_for_grant_sets(type, action, grant_sets)
+      permitted_action = PermittedAction.find_or_create_by!(
+        title: "#{type.underscore}_#{action}",
+        resource_type: type,
+        parent_type: '*',
+        action: action.split('_').first
+      )
+      grant_sets.each { |grant_set| grant_set.add(permitted_action) }
+    end
+  end
 end

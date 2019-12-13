@@ -1,94 +1,92 @@
 # frozen_string_literal: true
 
-@actions = HashWithIndifferentAccess.new
-%w[Page Forum Blog Dashboard OpenDataPortal Topic Question Motion LinkedRecord
-   ConArgument ProArgument Comment VoteEvent Vote BlogPost Decision CreativeWork].each do |type|
-  %w[create show update destroy trash]
-    .each do |action|
-    @actions["#{type.underscore}_#{action}"] =
-      PermittedAction.create!(
-        title: "#{type.underscore}_#{action}",
-        resource_type: type,
-        parent_type: '*',
-        action: action.split('_').first
-      )
-  end
-end
-@actions[:motion_with_question_create] =
-  PermittedAction.create!(
-    title: 'motion_with_question_create',
-    resource_type: 'Motion',
-    parent_type: 'Question',
-    action: 'create'
-  )
+GrantSet.new(title: 'spectator').save(validate: false)
+GrantSet.new(title: 'participator').save(validate: false)
+GrantSet.new(title: 'initiator').save(validate: false)
+GrantSet.new(title: 'moderator').save(validate: false)
+GrantSet.new(title: 'administrator').save(validate: false)
+GrantSet.new(title: 'staff').save(validate: false)
 
-show_actions =
-  %i[page_show forum_show blog_show dashboard_show open_data_portal_show question_show motion_show linked_record_show
-     pro_argument_show con_argument_show comment_show vote_event_show vote_show blog_post_show decision_show
-     topic_show creative_work_show].map { |a| @actions[a] }
+all_grant_sets = GrantSet.reserved
+PermittedAction.create_for_grant_sets('Page', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Forum', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Blog', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Dashboard', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('OpenDataPortal', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Question', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Motion', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Topic', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('LinkedRecord', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('ProArgument', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('ConArgument', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Comment', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('VoteEvent', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Vote', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('BlogPost', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Decision', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('CreativeWork', 'show', all_grant_sets)
 
-spectate = GrantSet.new(title: 'spectator')
-spectate.permitted_actions << show_actions
-spectate.save!(validate: false)
+participator_plus = GrantSet.reserved(except: %w[spectator])
+PermittedAction.create_for_grant_sets('ProArgument', 'create', participator_plus)
+PermittedAction.create_for_grant_sets('ConArgument', 'create', participator_plus)
+PermittedAction.create_for_grant_sets('Comment', 'create', participator_plus)
+PermittedAction.create_for_grant_sets('Vote', 'create', participator_plus)
 
-participate = GrantSet.new(title: 'participator')
-participate.permitted_actions << show_actions
-participate.permitted_actions <<
-  %i[motion_with_question_create pro_argument_create con_argument_create
-     comment_create vote_create].map { |a| @actions[a] }
-participate.save!(validate: false)
+motion_with_question_create = PermittedAction.create!(
+  title: 'motion_with_question_create',
+  resource_type: 'Motion',
+  parent_type: 'Question',
+  action: 'create'
+)
+GrantSet.find_by(title: 'participator').add(motion_with_question_create)
 
-initiate = GrantSet.new(title: 'initiator')
-initiate.permitted_actions << show_actions
-initiate.permitted_actions <<
-  %i[question_create motion_create topic_create pro_argument_create con_argument_create
-     comment_create vote_create].map { |a| @actions[a] }
-initiate.save!(validate: false)
+initiator_plus = GrantSet.reserved(except: %w[spectator participator])
+PermittedAction.create_for_grant_sets('Question', 'create', initiator_plus)
+PermittedAction.create_for_grant_sets('Motion', 'create', initiator_plus)
+PermittedAction.create_for_grant_sets('Topic', 'create', initiator_plus)
 
-moderate = GrantSet.new(title: 'moderator')
-moderate.permitted_actions << show_actions
-moderate.permitted_actions <<
-  %i[question_create motion_create topic_create pro_argument_create con_argument_create comment_create
-     vote_create blog_post_create decision_create].map { |a| @actions[a] }
-moderate.permitted_actions <<
-  %i[question_update motion_update topic_update pro_argument_update con_argument_update
-     blog_post_update decision_update].map { |a| @actions[a] }
-moderate.permitted_actions <<
-  %i[question_trash motion_trash topic_trash pro_argument_trash con_argument_trash
-     blog_post_trash comment_trash].map { |a| @actions[a] }
-moderate.save!(validate: false)
+moderator_plus = GrantSet.reserved(only: %w[moderator administrator staff])
+PermittedAction.create_for_grant_sets('BlogPost', 'create', moderator_plus)
+PermittedAction.create_for_grant_sets('Decision', 'create', moderator_plus)
+PermittedAction.create_for_grant_sets('Question', 'update', moderator_plus)
+PermittedAction.create_for_grant_sets('Motion', 'update', moderator_plus)
+PermittedAction.create_for_grant_sets('Topic', 'update', moderator_plus)
+PermittedAction.create_for_grant_sets('ProArgument', 'update', moderator_plus)
+PermittedAction.create_for_grant_sets('ConArgument', 'update', moderator_plus)
+PermittedAction.create_for_grant_sets('BlogPost', 'update', moderator_plus)
+PermittedAction.create_for_grant_sets('Decision', 'update', moderator_plus)
+PermittedAction.create_for_grant_sets('Question', 'trash', moderator_plus)
+PermittedAction.create_for_grant_sets('Motion', 'trash', moderator_plus)
+PermittedAction.create_for_grant_sets('Topic', 'trash', moderator_plus)
+PermittedAction.create_for_grant_sets('ProArgument', 'trash', moderator_plus)
+PermittedAction.create_for_grant_sets('ConArgument', 'trash', moderator_plus)
+PermittedAction.create_for_grant_sets('BlogPost', 'trash', moderator_plus)
+PermittedAction.create_for_grant_sets('Comment', 'trash', moderator_plus)
 
-administrate = GrantSet.new(title: 'administrator')
-administrate.permitted_actions << show_actions
-administrate.permitted_actions <<
-  %i[question_create motion_create topic_create pro_argument_create con_argument_create comment_create
-     vote_create blog_post_create decision_create creative_work_create].map { |a| @actions[a] }
-administrate.permitted_actions <<
-  %i[page_update forum_update blog_update dashboard_update question_update motion_update topic_update
-     pro_argument_update con_argument_update blog_post_update decision_update
-     creative_work_update].map { |a| @actions[a] }
-administrate.permitted_actions <<
-  %i[question_trash motion_trash topic_trash pro_argument_trash con_argument_trash blog_post_trash
-     comment_trash creative_work_trash].map { |a| @actions[a] }
-administrate.permitted_actions <<
-  %i[page_destroy forum_destroy blog_destroy dashboard_destroy creative_work_destroy].map { |a| @actions[a] }
-administrate.save!(validate: false)
+administrator_plus = GrantSet.reserved(only: %w[administrator staff])
+PermittedAction.create_for_grant_sets('CreativeWork', 'create', administrator_plus)
+PermittedAction.create_for_grant_sets('Page', 'update', administrator_plus)
+PermittedAction.create_for_grant_sets('Forum', 'update', administrator_plus)
+PermittedAction.create_for_grant_sets('Blog', 'update', administrator_plus)
+PermittedAction.create_for_grant_sets('Dashboard', 'update', administrator_plus)
+PermittedAction.create_for_grant_sets('CreativeWork', 'update', administrator_plus)
+PermittedAction.create_for_grant_sets('CreativeWork', 'trash', administrator_plus)
+PermittedAction.create_for_grant_sets('Page', 'destroy', administrator_plus)
+PermittedAction.create_for_grant_sets('Forum', 'destroy', administrator_plus)
+PermittedAction.create_for_grant_sets('Blog', 'destroy', administrator_plus)
+PermittedAction.create_for_grant_sets('Dashboard', 'destroy', administrator_plus)
+PermittedAction.create_for_grant_sets('CreativeWork', 'destroy', administrator_plus)
 
-staff = GrantSet.new(title: 'staff')
-staff.permitted_actions << show_actions
-staff.permitted_actions <<
-  %i[forum_create blog_create dashboard_create question_create motion_create topic_create pro_argument_create
-     con_argument_create comment_create vote_create blog_post_create decision_create
-     creative_work_create].map { |a| @actions[a] }
-staff.permitted_actions <<
-  %i[page_update forum_update blog_update dashboard_update open_data_portal_update question_update motion_update
-     topic_update pro_argument_update con_argument_update blog_post_update decision_update
-     creative_work_update].map { |a| @actions[a] }
-staff.permitted_actions <<
-  %i[question_trash motion_trash topic_trash pro_argument_trash con_argument_trash
-     blog_post_trash comment_trash creative_work_trash].map { |a| @actions[a] }
-staff.permitted_actions <<
-  %i[page_destroy forum_destroy blog_destroy dashboard_destroy open_data_portal_destroy question_destroy
-     motion_destroy topic_destroy pro_argument_destroy con_argument_destroy blog_post_destroy
-     comment_destroy creative_work_destroy].map { |a| @actions[a] }
-staff.save!(validate: false)
+staff = GrantSet.reserved(only: %w[staff])
+PermittedAction.create_for_grant_sets('Forum', 'create', staff)
+PermittedAction.create_for_grant_sets('Blog', 'create', staff)
+PermittedAction.create_for_grant_sets('Dashboard', 'create', staff)
+PermittedAction.create_for_grant_sets('OpenDataPortal', 'update', staff)
+PermittedAction.create_for_grant_sets('OpenDataPortal', 'destroy', staff)
+PermittedAction.create_for_grant_sets('Question', 'destroy', staff)
+PermittedAction.create_for_grant_sets('Motion', 'destroy', staff)
+PermittedAction.create_for_grant_sets('Topic', 'destroy', staff)
+PermittedAction.create_for_grant_sets('ProArgument', 'destroy', staff)
+PermittedAction.create_for_grant_sets('ConArgument', 'destroy', staff)
+PermittedAction.create_for_grant_sets('BlogPost', 'destroy', staff)
+PermittedAction.create_for_grant_sets('Comment', 'destroy', staff)

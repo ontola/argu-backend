@@ -19,6 +19,12 @@ class GrantSet < ApplicationRecord
     end
   end
 
+  def add(*new_permitted_actions)
+    new_permitted_actions.each do |permitted_action|
+      GrantSetsPermittedAction.create!(permitted_action: permitted_action, grant_set: self)
+    end
+  end
+
   def clone(new_title, page)
     cloned = GrantSet.create!(title: new_title, page: page)
     permitted_actions.each do |permitted_action|
@@ -32,11 +38,18 @@ class GrantSet < ApplicationRecord
     I18n.t("roles.types.#{title}", default: title).capitalize
   end
 
-  def self.for_one_action(resource_type, action)
-    title = "#{resource_type.underscore}_#{action}"
-    find_or_initialize_by(title: title) do |grant_set|
-      grant_set.permitted_actions << PermittedAction.find_by!(title: title)
-      grant_set.save!(validate: false)
+  class << self
+    def for_one_action(resource_type, action)
+      title = "#{resource_type.underscore}_#{action}"
+      find_or_initialize_by(title: title) do |grant_set|
+        grant_set.permitted_actions << PermittedAction.find_by!(title: title)
+        grant_set.save!(validate: false)
+      end
+    end
+
+    def reserved(except: [], only: nil)
+      titles = only.nil? ? RESERVED_TITLES - except : only
+      GrantSet.where(title: titles)
     end
   end
 end
