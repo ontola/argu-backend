@@ -15,7 +15,6 @@ class FollowsController < AuthorizedController
       .members
       .map(&method(:menu_item_image_triple))
       .compact
-      .append(menu_item_image_triple(authenticated_resource.followable.menu(:follow, user_context)))
   end
 
   def destroy_failure_html
