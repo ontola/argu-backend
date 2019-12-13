@@ -1,5 +1,23 @@
 
 nl:
+  custom_actions:
+    type: "Actie"
+    plural: "Acties"
+    form:
+      raw_label:
+        label: "Label"
+      label_translation:
+        label: "Gebruik vertaling"
+      raw_description:
+        label: "Beschrijving"
+      description_translation:
+        label: "Gebruik vertaling"
+      raw_submit_label:
+        label: "Knoptekst"
+      submit_label_translation:
+        label: "Gebruik vertaling"
+      href:
+        label: "URL"
   actions:
     status:
       CompletedActionStatus: "Deze actie is al uitgevoerd"

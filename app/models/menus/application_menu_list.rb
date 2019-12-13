@@ -17,7 +17,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
   private
 
   def default_label(tag, options)
-    self.class.translations(
+    LinkedRails.translations(
       -> { I18n.t("menus.#{resource&.class&.name&.tableize}.#{tag}", options[:label_params]) }
     )
   end
@@ -68,14 +68,6 @@ class ApplicationMenuList < LinkedRails::Menus::List
         link_opts: -> { opts.merge(iri: resource.iri) },
         menus: -> { share_menu_items }
       }.merge(opts)
-    end
-
-    def translations(translation)
-      I18n.available_locales.map do |locale|
-        I18n.with_locale(locale) do
-          RDF::Literal.new(translation.call, language: locale)
-        end
-      end
     end
   end
 end

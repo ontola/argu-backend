@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+module CustomActionable
+  module Serializer
+    extend ActiveSupport::Concern
+
+    included do
+      with_collection :custom_actions, predicate: NS::ARGU[:customActions]
+
+      has_many :custom_actions
+    end
+  end
+end

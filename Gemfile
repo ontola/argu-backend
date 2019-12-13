@@ -18,7 +18,7 @@ gem 'active_model_serializers', '~> 0.10.7'
 
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
-gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', ref: '2646be3fe80bf0ad095f5b3b912da45a45f27af0'
+gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', ref: '686488c96620b54843b2a29de59428fa93ec198b'
 gem 'logstasher', '~> 1.2.0'
 gem 'uri_template'
 gem 'health_check'

@@ -55,8 +55,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 2646be3fe80bf0ad095f5b3b912da45a45f27af0
-  ref: 2646be3fe80bf0ad095f5b3b912da45a45f27af0
+  revision: 686488c96620b54843b2a29de59428fa93ec198b
+  ref: 686488c96620b54843b2a29de59428fa93ec198b
   specs:
     linked_rails (0.0.0)
       active_response
@@ -562,7 +562,7 @@ GEM
     rainbow (3.0.0)
     rake (13.0.1)
     rakismet (1.5.4)
-    rdf (3.0.13)
+    rdf (3.1.0)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (2.2.1)
@@ -580,8 +580,8 @@ GEM
     rdf-turtle (3.0.6)
       ebnf (~> 1.1)
       rdf (~> 3.0)
-    rdf-vocab (3.0.14)
-      rdf (~> 3.0, >= 3.0.11)
+    rdf-vocab (3.1.0)
+      rdf (~> 3.1)
     rdf-xsd (3.0.1)
       rdf (~> 3.0)
     react-rails (2.2.1)

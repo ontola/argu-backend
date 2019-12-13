@@ -358,7 +358,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'staff should post create forum with latlon' do
     sign_in staff
 
-    assert_difference('Forum.count' => 1, 'Placement.count' => 2, 'Place.count' => 1) do
+    assert_difference('Forum.count' => 1, 'Placement.count' => 2, 'Place.count' => 1, 'CustomAction.count' => 3) do
       post collection_iri(argu, :forums), params: {
         forum: {
           name: 'New forum',
@@ -373,7 +373,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_equal '/new_forum/m/new', Forum.last.creative_works.new_motion.first.url_path
     assert_equal 1, Forum.last.placements.first.lat
     assert_equal 1, Forum.last.placements.first.lon
   end

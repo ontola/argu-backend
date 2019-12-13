@@ -14,7 +14,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_create :set_root
 
   enum widget_type: {
-    custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5, blog_posts: 6, new_topic: 7
+    custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, blog_posts: 6, new_topic: 7
   }
 
   acts_as_list scope: :owner
@@ -88,62 +88,68 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def create_new_motion(owner)
-      creative_work =
-        CreativeWork.create!(
-          parent: owner,
-          creator: Profile.service,
-          publisher: User.service,
-          creative_work_type: :new_motion,
-          display_name: I18n.t('motions.call_to_action.title'),
-          description: I18n.t('motions.call_to_action.body'),
-          url_path: new_iri_path(owner, :motions),
-          is_published: true
-        )
+      custom_action = CustomAction.create!(
+        is_published: true,
+        creator: Profile.service,
+        publisher: User.service,
+        parent: owner,
+        href: new_iri(owner, :motions),
+        label_translation: true,
+        label: 'motions.call_to_action.title',
+        description_translation: true,
+        description: 'motions.call_to_action.body',
+        submit_label_translation: true,
+        submit_label: 'motions.type_new'
+      )
       new_motion
         .create(
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'motion_create'),
-          resource_iri: [[creative_work.iri, nil], [new_iri(owner, :motions), nil]]
+          resource_iri: [[custom_action.iri, nil]]
         )
     end
 
     def create_new_question(owner)
-      creative_work =
-        CreativeWork.create!(
-          parent: owner,
-          creator: Profile.service,
-          publisher: User.service,
-          creative_work_type: :new_question,
-          display_name: I18n.t('questions.call_to_action.title'),
-          description: I18n.t('questions.call_to_action.body'),
-          url_path: new_iri_path(owner, :questions),
-          is_published: true
-        )
+      custom_action = CustomAction.create!(
+        is_published: true,
+        creator: Profile.service,
+        publisher: User.service,
+        parent: owner,
+        href: new_iri(owner, :questions),
+        label_translation: true,
+        label: 'questions.call_to_action.title',
+        description_translation: true,
+        description: 'questions.call_to_action.body',
+        submit_label_translation: true,
+        submit_label: 'questions.type_new'
+      )
       new_question
         .create(
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'question_create'),
-          resource_iri: [[creative_work.iri, nil], [new_iri(owner, :questions), nil]]
+          resource_iri: [[custom_action.iri, nil]]
         )
     end
 
     def create_new_topic(owner)
-      creative_work =
-        CreativeWork.create!(
-          parent: owner,
-          creator: Profile.service,
-          publisher: User.service,
-          creative_work_type: :new_topic,
-          display_name: I18n.t('topics.call_to_action.title'),
-          description: I18n.t('topics.call_to_action.body'),
-          url_path: new_iri_path(owner, :topics),
-          is_published: true
-        )
+      custom_action = CustomAction.create!(
+        is_published: true,
+        creator: Profile.service,
+        publisher: User.service,
+        parent: owner,
+        href: new_iri(owner, :topics),
+        label_translation: true,
+        label: 'topics.call_to_action.title',
+        description_translation: true,
+        description: 'topics.call_to_action.body',
+        submit_label_translation: true,
+        submit_label: 'topics.type_new'
+      )
       new_topic
         .create(
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'topic_create'),
-          resource_iri: [[creative_work.iri, nil], [new_iri(owner, :topics), nil]]
+          resource_iri: [[custom_action.iri, nil]]
         )
     end
 

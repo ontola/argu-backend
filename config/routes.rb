@@ -299,6 +299,9 @@ Rails.application.routes.draw do
   resources :creative_works, only: %i[show new create] do
     include_route_concerns
   end
+  resources :custom_actions, only: %i[show new create] do
+    include_route_concerns
+  end
   resources :custom_menu_items, only: %i[index show new create] do
     include_route_concerns
   end

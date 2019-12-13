@@ -5,7 +5,7 @@ class CustomMenuItemSerializer < MenuItemSerializer
   attribute :raw_label, predicate: NS::ARGU[:menuLabel], datatype: NS::XSD[:string]
   attribute :raw_image, predicate: NS::ARGU[:rawImage], datatype: NS::XSD[:string]
   attribute :raw_href, predicate: NS::ARGU[:rawHref], datatype: NS::XSD[:string]
-  attribute :label_translation, predicate: NS::ARGU[:menuLabelTranslation]
+  attribute :label_translation, predicate: NS::ARGU[:labelTranslation]
 
   def action; end
 

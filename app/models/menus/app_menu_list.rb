@@ -5,7 +5,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   include LanguageHelper
 
   has_menu :info,
-           label: translations(-> { I18n.t('about.info') }),
+           label: LinkedRails.translations(-> { I18n.t('about.info') }),
            image: 'fa-info',
            link_opts: -> { {triggerClass: 'navbar-item', defaultAction: RDF::URI(i_about_url)} },
            menus: -> { info_menu_items }
