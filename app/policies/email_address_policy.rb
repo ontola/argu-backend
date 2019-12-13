@@ -30,6 +30,10 @@ class EmailAddressPolicy < RestrictivePolicy
     !record.confirmed?
   end
 
+  def destroy?
+    !record.primary?
+  end
+
   def make_primary?
     !record.primary? && (record.confirmed? || !record.user.confirmed?)
   end
