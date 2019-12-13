@@ -18,7 +18,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance Settingable
   enhance Statable
   enhance Stylable
-  enhance Widgetable
   enhance CreativeWorkable
 
   has_many :discussions, through: :forums
