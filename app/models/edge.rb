@@ -16,6 +16,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Shortnameable
   include Uuidable
   include CacheableIri
+  include Cacheable
 
   enhance LinkedRails::Enhancements::Actionable
   enhance Grantable
@@ -147,10 +148,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def root_relative_canonical_iri(_opts = {})
     RDF::URI(expand_uri_template(:edges_iri, id: uuid))
-  end
-
-  def cache_resource?
-    true
   end
 
   def children(*args)

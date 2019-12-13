@@ -3,10 +3,7 @@
 class Vocabulary < LinkedRails::Vocabulary
   extend NamesHelper
   extend SerializationHelper
-
-  def cache_resource?
-    true
-  end
+  include Cacheable
 
   class << self
     def add_class_data(klass, iri)

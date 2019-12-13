@@ -142,12 +142,11 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   def rebuild_cache
     ActsAsTenant.with_tenant(self) do
       cache = Argu::Cache.new
-      cache.write(manifest, :attributes, :json, key_transform: :underscore)
-      cache.write(Vocabulary.new, :rdf, :nq)
+      Vocabulary.new.write_to_cache(cache)
 
       Edge.descendants.each do |klass|
         Edge.where(owner_type: klass.to_s).includes(klass.includes_for_serializer).find_each do |edge|
-          cache.write(edge, :rdf, :nq)
+          edge.write_to_cache(cache)
         end
       end
     end
@@ -159,6 +158,11 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   def root_object?
     true
+  end
+
+  def write_to_cache(cache = Argu::Cache.new)
+    cache.write(manifest, :attributes, :json, key_transform: :underscore)
+    super
   end
 
   private

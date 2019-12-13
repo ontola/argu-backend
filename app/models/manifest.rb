@@ -14,10 +14,6 @@ class Manifest < VirtualResource
     '#eef0f2'
   end
 
-  def cache_resource?
-    true
-  end
-
   def dir
     :rtl
   end
