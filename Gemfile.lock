@@ -55,8 +55,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 72d8f0045500177bb01a00374245f93f89ddeab5
-  ref: 72d8f0045500177bb01a00374245f93f89ddeab5
+  revision: 2646be3fe80bf0ad095f5b3b912da45a45f27af0
+  ref: 2646be3fe80bf0ad095f5b3b912da45a45f27af0
   specs:
     linked_rails (0.0.0)
       active_response
@@ -204,7 +204,7 @@ GEM
     brakeman (4.1.1)
     browser (2.5.2)
     bugsnag (5.3.3)
-    builder (3.2.3)
+    builder (3.2.4)
     bullet (5.7.1)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11.0)

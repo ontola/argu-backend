@@ -13,8 +13,11 @@ module Opinionable
         http_method: :put,
         form: OpinionForm,
         url: -> { opinion&.iri },
-        policy_resource: -> { opinion },
-        condition: -> { opinion.present? }
+        resource: -> { opinion },
+        condition: -> { opinion.present? },
+        root_relative_iri: lambda {
+          iri_template_expand_path(resource.send(:iri_template), '/actions/update_opinion').expand(resource.iri_opts)
+        }
       )
     end
 
