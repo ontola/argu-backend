@@ -3,7 +3,14 @@
 class CustomMenuItemPolicy < EdgeTreePolicy
   class Scope < Scope
     def resolve
-      @scope.select { |menu_item| menu_item.edge.nil? || Pundit.policy(context, menu_item.edge).show? }
+      @scope.select(&method(:allowed_menu_item))
+    end
+
+    private
+
+    def allowed_menu_item(menu_item)
+      resource = menu_item.edge || menu_item.resource
+      Pundit.policy(context, resource).send(menu_item.policy || :show?)
     end
   end
 
