@@ -18,8 +18,11 @@ class CustomMenuItem < ApplicationRecord
 
   belongs_to :resource, polymorphic: true, primary_key: :uuid
   belongs_to :edge, primary_key: :uuid, optional: true
+  belongs_to :root, primary_key: :uuid, class_name: 'Edge'
+  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
   before_create :set_order
+  before_create :set_root
 
   attr_writer :parent
   alias edgeable_record resource
@@ -79,6 +82,10 @@ class CustomMenuItem < ApplicationRecord
         .where('custom_menu_items.order < ?', 100)
         .maximum(:order) || 0
     ) + 1
+  end
+
+  def set_root
+    self.root_id ||= resource.root_id
   end
 
   class << self

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_10_134448) do
+ActiveRecord::Schema.define(version: 2019_12_13_101717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 2019_12_10_134448) do
     t.string "policy"
     t.uuid "resource_id", null: false
     t.uuid "edge_id"
+    t.uuid "root_id", null: false
   end
 
   create_table "documents", id: :serial, force: :cascade do |t|
@@ -525,6 +526,7 @@ ActiveRecord::Schema.define(version: 2019_12_10_134448) do
     t.uuid "owner_id", null: false
     t.uuid "primary_resource_id", null: false
     t.integer "permitted_action_id", null: false
+    t.uuid "root_id", null: false
     t.index ["owner_id", "owner_type"], name: "index_widgets_on_owner_id_and_owner_type"
   end
 

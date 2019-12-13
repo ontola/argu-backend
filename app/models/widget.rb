@@ -9,6 +9,10 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :owner, polymorphic: true, primary_key: :uuid
   belongs_to :primary_resource, class_name: 'Edge', primary_key: :uuid
   belongs_to :permitted_action
+  belongs_to :root, primary_key: :uuid, class_name: 'Edge'
+  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
+
+  before_create :set_root
 
   enum widget_type: {
     custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5, blog_posts: 6, new_topic: 7
@@ -55,6 +59,10 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         target_node: RDF::DynamicURI(iri),
         path: RDF::DynamicURI(predicate)
       )
+  end
+
+  def set_root
+    self.root_id ||= owner.root_id
   end
 
   class << self
