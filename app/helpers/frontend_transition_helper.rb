@@ -14,10 +14,6 @@ module FrontendTransitionHelper
     request.headers['Authorization'].present? && !request.format.html?
   end
 
-  def session
-    afe_request? ? doorkeeper_token : super
-  end
-
   def session_id
     @_session_id ||= afe_request? ? doorkeeper_token.resource_owner_id : session.id
   end

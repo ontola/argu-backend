@@ -92,7 +92,7 @@ module OauthHelper
   end
 
   def guest_session_id
-    return doorkeeper_token&.resource_owner_id || SecureRandom.hex if session.is_a?(Doorkeeper::AccessToken)
+    return doorkeeper_token&.resource_owner_id || SecureRandom.hex if afe_request?
 
     session[:load] = true unless session.loaded?
     session_id.to_s

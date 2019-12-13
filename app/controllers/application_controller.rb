@@ -202,7 +202,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   end
 
   def stored_location_for(resource)
-    return super unless session.is_a?(Doorkeeper::AccessToken)
+    return super unless afe_request?
   end
 
   def time_zone(&block)
