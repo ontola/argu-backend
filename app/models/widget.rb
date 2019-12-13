@@ -30,10 +30,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @property_shapes || {}
   end
 
-  def replace_path(old, new)
-    update(resource_iri: resource_iri.map { |iri, predicate| [iri.sub("#{old}/", "#{new}/"), predicate] })
-  end
-
   def resource_sequence
     @resource_sequence ||=
       LinkedRails::Sequence.new(

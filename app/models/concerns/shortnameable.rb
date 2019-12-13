@@ -30,11 +30,8 @@ module Shortnameable
               }
 
     validate :validate_no_duplicate_shortname
-  end
 
-  def reload(_opts = {})
-    @url = nil
-    super
+    attribute :url, :string
   end
 
   # Useful to test whether a model is shortnameable
@@ -51,12 +48,29 @@ module Shortnameable
 
   # @return [String, nil] The shortname of the model or nil
   def url
-    @url || !shortname&.destroyed? && shortname&.shortname
+    if super.nil? && shortname && !shortname.destroyed?
+      current_url = shortname.shortname
+      self[:url] = current_url
+      clear_attribute_changes(%i[url])
+    end
+
+    super
   end
 
   def url=(value)
     return if value == url
-    @url = value
+
+    super
+
+    new_shortname = shortname_for_url(value)
+    shortnames << new_shortname if new_shortname
+  end
+
+  private
+
+  def shortname_for_url(value)
+    return if value.blank?
+
     shortname_root_id = is_a?(Page) || !is_a?(Edge) ? nil : root_id
     existing = Shortname.find_by(shortname: value, root_id: shortname_root_id)
     if existing&.primary?
@@ -64,10 +78,8 @@ module Shortnameable
       return
     end
     existing.primary = true if existing
-    shortnames << (existing || Shortname.new(shortname: value, root_id: shortname_root_id))
+    (existing || Shortname.new(shortname: value, root_id: shortname_root_id))
   end
-
-  private
 
   def validate_no_duplicate_shortname
     errors.add(:url, :taken) if @duplicate_shortname

@@ -355,6 +355,19 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_equal CustomMenuItem.pluck(:edge_id).compact.sort, [amsterdam.uuid].sort
   end
 
+  test 'administrator should put update iri_prefix' do
+    freetown
+    sign_in argu.publisher
+
+    assert_includes CustomMenuItem.where(resource: argu).first.href, Rails.application.config.host_name
+    freetown.widgets.first.resource_iri.all? { |iri| iri.first.include?(Rails.application.config.host_name) }
+    put argu, params: {id: argu.url, page: {iri_prefix: 'example.com'}}
+    assert_includes CustomMenuItem.where(resource: argu).first.href, 'example.com'
+    freetown.widgets.first.reload.resource_iri.all? { |iri| iri.first.include?('example.com') }
+
+    assert_equal argu.tenant.reload.iri_prefix, 'example.com'
+  end
+
   test 'administrator should get new' do
     sign_in page.publisher
 

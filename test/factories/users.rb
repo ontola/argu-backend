@@ -31,7 +31,8 @@ FactoryBot.define do
     trait :no_shortname do
       after(:create) do |user|
         user.shortname.destroy
-        user.shortname = nil
+        user.url = nil
+        user.cache_iri_path!
       end
     end
 

@@ -99,6 +99,7 @@ class Shortname < ApplicationRecord
 
   def cache_iri_path!
     owner.cache_iri_path!
+    Page.update_iris(owner.url_change.first, owner.url_change.last, root_id: root_id) if owner.url_changed? && root_id
   end
 
   class << self

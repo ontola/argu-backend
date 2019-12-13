@@ -43,7 +43,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :last_accepted, :iri_prefix, presence: true
 
-  after_create :create_or_update_tenant
+  after_save :create_or_update_tenant
   after_create :create_default_groups
   after_create :create_staff_grant
   after_create :create_activity_menu_item
@@ -200,10 +200,9 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def create_or_update_tenant
-    Tenant.find_or_create_by!(root_id: uuid) do |t|
-      t.iri_prefix = iri_prefix
-      t.database_schema = Apartment::Tenant.current
-    end
+    return tenant.update!(iri_prefix: iri_prefix) if tenant.present?
+
+    create_tenant(root_id: uuid, iri_prefix: iri_prefix, database_schema: Apartment::Tenant.current)
   end
 
   def create_staff_grant
@@ -233,6 +232,19 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
     def preview_includes
       super + %i[default_profile_photo] - %w[navigations_menu settings_menu]
+    end
+
+    def update_iris(from, to, scope = nil)
+      escaped_from = ApplicationRecord.connection.quote_string(from)
+      escaped_to = ApplicationRecord.connection.quote_string(to)
+      # rubocop:disable Rails/SkipsModelValidations
+      Widget
+        .where(scope)
+        .update_all("resource_iri = replace(resource_iri::text, '#{escaped_from}', '#{escaped_to}')::text[]")
+      CustomMenuItem
+        .where(scope)
+        .update_all("href = replace(href, '#{escaped_from}', '#{escaped_to}')")
+      # rubocop:enable Rails/SkipsModelValidations
     end
   end
 end

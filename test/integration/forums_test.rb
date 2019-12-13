@@ -234,6 +234,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   test 'administrator should update shortname' do
     sign_in holland_administrator
+    assert_includes holland.widgets.discussions.first.resource_iri.first.first, holland.iri_path
     put holland,
         params: {
           forum: {
@@ -250,6 +251,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
         .resource_iri
         .all? { |iri, _predicate| iri.end_with?('/new_url/discussions?display=grid&type=infinite') }
     )
+    assert_includes updated_holland.widgets.discussions.first.resource_iri.first.first, updated_holland.iri_path
     assert_equal "#{updated_holland.parent.iri}/new_url", updated_holland.iri
   end
 
