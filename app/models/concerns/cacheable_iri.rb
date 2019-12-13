@@ -14,7 +14,7 @@ module CacheableIri
   def cache_iri_path!
     @iri = nil
     return unless persisted?
-    iri = root_relative_iri(cache: true)
+    iri = root_relative_iri(cache: false)
     update_column(:iri_cache, iri.to_s) # rubocop:disable Rails/SkipsModelValidations
     iri
   end
