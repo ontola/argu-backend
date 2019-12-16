@@ -1,0 +1,12 @@
+nl:
+  widgets:
+    type: "Widget"
+    type_new: "Nieuwe widget"
+    plural: "Widgets"
+    form:
+      size:
+        label: "Breedte"
+      position:
+        label: "Positie"
+      raw_resource_iri:
+        label: "Object"

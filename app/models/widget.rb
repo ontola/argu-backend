@@ -4,7 +4,11 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend UriTemplateHelper
   include Parentable
 
+  enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Updatable
+  enhance LinkedRails::Enhancements::Destroyable
+  enhance LinkedRails::Enhancements::Tableable
 
   belongs_to :owner, polymorphic: true, primary_key: :uuid
   belongs_to :permitted_action
@@ -16,6 +20,15 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enum widget_type: {
     custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, blog_posts: 6, new_topic: 7
   }
+  self.default_sortings = [{key: NS::ARGU[:order], direction: :asc}]
+
+  with_columns default: [
+    NS::ARGU[:rawResource],
+    NS::ONTOLA[:widgetSize],
+    NS::ARGU[:order],
+    NS::ONTOLA[:updateAction],
+    NS::ONTOLA[:destroyAction]
+  ]
 
   acts_as_list scope: :owner
 
@@ -27,6 +40,14 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def property_shapes
     @property_shapes || {}
+  end
+
+  def raw_resource_iri
+    resource_iri&.map { |iri| iri.compact.join(',') }&.join("\n")
+  end
+
+  def raw_resource_iri=(value)
+    self.resource_iri = value.split("\n").map { |line| line.split(',') }
   end
 
   def resource_sequence

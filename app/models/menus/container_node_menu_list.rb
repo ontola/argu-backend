@@ -15,6 +15,7 @@ class ContainerNodeMenuList < ApplicationMenuList
       statistics_link,
       export_link,
       move_link,
+      widgets_link,
       copy_share_link(resource.iri),
       destroy_link,
       edit_link
@@ -28,6 +29,16 @@ class ContainerNodeMenuList < ApplicationMenuList
       label: I18n.t('menus.default.settings'),
       href: edit_iri(resource),
       policy: :update?
+    )
+  end
+
+  def widgets_link
+    menu_item(
+      :widgets,
+      href: resource.widget_collection.iri(display: :table),
+      image: 'fa-th',
+      policy: :create_child?,
+      policy_arguments: [:widgets]
     )
   end
 end

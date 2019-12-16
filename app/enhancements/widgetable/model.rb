@@ -6,6 +6,7 @@ module Widgetable
 
     included do
       has_many :widgets, -> { includes(:owner).order(position: :asc) }, as: :owner, primary_key: :uuid
+      with_collection :widgets
 
       after_create :create_default_widgets
 

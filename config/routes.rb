@@ -372,6 +372,9 @@ Rails.application.routes.draw do
   resources :votes, only: %i[show], as: :vote do
     include_route_concerns
   end
+  resources :widgets, only: %i[show new create] do
+    include_route_concerns
+  end
 
   {risks: 'gevaren', intervention_types: 'interventie_types', measure_types: 'measure_types',
    categories: 'categories'}.each do |key, value|
