@@ -81,14 +81,4 @@ class Feed
   def profile_activities
     activity_base.where(owner_id: parent.id)
   end
-
-  class << self
-    def preview_includes
-      [
-        :trackable,
-        :recipient,
-        owner: [:default_profile_photo]
-      ]
-    end
-  end
 end
