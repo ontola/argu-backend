@@ -14,7 +14,9 @@ module Public
       skip_after_action :verify_authorized
 
       def show
-        render json: tenant_meta
+        Apartment::Tenant.switch(tenant!.database_schema) do
+          render json: tenant_meta
+        end
       end
 
       private
