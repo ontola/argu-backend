@@ -17,7 +17,7 @@ class CustomAction < Edge
   parentable :container_node
 
   def action_status
-    NS::SCHEMA.potentialAction
+    NS::SCHEMA.PotentialActionStatus
   end
 
   def description
