@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateComment < PublishedCreateService
+class CreateComment < CreateEdge
   def initialize(parent, attributes: {}, options: {})
     if attributes.delete(:is_opinion)&.to_s == 'true'
       attributes[:vote_id] = current_vote(options[:publisher], parent)&.uuid
@@ -15,10 +15,5 @@ class CreateComment < PublishedCreateService
       .profile
       .vote_cache
       .by_parent(parent.default_vote_event)
-  end
-
-  def object_attributes=(obj)
-    obj.creator ||= resource.creator
-    obj.publisher ||= resource.publisher
   end
 end

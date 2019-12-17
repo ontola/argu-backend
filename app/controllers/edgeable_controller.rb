@@ -67,9 +67,13 @@ class EdgeableController < ServiceController
     resource
   end
 
+  def resource_new_params
+    super.merge(owner_type: controller_name.classify)
+  end
+
   def service_klass
     "#{action_name.classify}#{controller_name.classify}".safe_constantize ||
-      "Edgeable#{action_name.classify}Service".constantize
+      "#{action_name.classify}Edge".constantize
   end
 
   # Prepares a memoized {TrashService} for the relevant model for use in controller#trash

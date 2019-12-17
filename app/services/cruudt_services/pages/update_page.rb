@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdatePage < EdgeableUpdateService
+class UpdatePage < UpdateEdge
   include UUIDHelper
 
   def initialize(resource, attributes: {}, options: {})

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateIntervention < EdgeableUpdateService
+class UpdateIntervention < UpdateEdge
   include UUIDHelper
 
   def initialize(resource, attributes: {}, options: {})
@@ -10,8 +10,4 @@ class UpdateIntervention < EdgeableUpdateService
 
     super
   end
-
-  private
-
-  def object_attributes=(obj); end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateArgument < PublishedCreateService
+class CreateArgument < CreateEdge
   private
 
   def after_save
@@ -18,10 +18,5 @@ class CreateArgument < PublishedCreateService
     became.argu_publication = resource.argu_publication
     became.instance_variable_set(:@mutations_from_database, resource.send(:mutations_from_database))
     @edge = became
-  end
-
-  def object_attributes=(obj)
-    obj.creator ||= resource.creator
-    obj.publisher ||= resource.publisher
   end
 end

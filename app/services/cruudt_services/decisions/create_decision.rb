@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateDecision < PublishedCreateService
+class CreateDecision < CreateEdge
   def initialize(parent, attributes: {}, options: {})
     attributes[:step] = parent.decisions.count
     if attributes['forwarded_user_id']
@@ -14,8 +14,6 @@ class CreateDecision < PublishedCreateService
   def after_save
     notify
   end
-
-  def object_attributes=(obj); end
 
   def prepare_argu_publication_attributes
     super

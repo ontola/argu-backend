@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateVote < PublishedCreateService
+class CreateVote < CreateEdge
   private
 
   def after_save
@@ -23,6 +23,4 @@ class CreateVote < PublishedCreateService
   def initialize_edge(parent, options, attributes)
     existing_edge(parent, options, attributes) || super
   end
-
-  def object_attributes=(_obj); end
 end

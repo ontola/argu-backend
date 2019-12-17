@@ -146,9 +146,10 @@ module Argu
             if klass < Edge || klass < NewsBoy
               options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
               options[:creator] = options[:publisher].profile if options[:creator].nil?
+              attributes[:owner_type] = klass.to_s
             end
 
-            service_class = "Create#{klass}".safe_constantize || CreateService
+            service_class = "Create#{klass}".safe_constantize || service_class_fallback(klass)
             service = service_class.new(parent_edge, attributes: attributes, options: options)
             service.commit
             raise service.resource.errors.full_messages.first unless service.resource.valid?
@@ -190,6 +191,10 @@ module Argu
           else
             publication.send(:reset)
           end
+        end
+
+        def service_class_fallback(klass)
+          klass <= Edge ? CreateEdge : CreateService
         end
 
         def stats_opt(category, action)

@@ -12,9 +12,9 @@ module Argu
 
       def populated_forum # rubocop:disable Metrics/AbcSize
         3.times do
-          service = CreateMotion
+          service = CreateEdge
                       .new(@resource,
-                           attributes: attributes_for(:motion),
+                           attributes: attributes_for(:motion).merge(owner_type: 'Motion'),
                            options: service_options)
           service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
@@ -28,35 +28,35 @@ module Argu
           reset_publication(service.resource.publications.last)
         end
         3.times do
-          service = CreateMotion
+          service = CreateEdge
                       .new(@resource,
-                           attributes: attributes_for(:motion),
+                           attributes: attributes_for(:motion).merge(owner_type: 'Motion'),
                            options: service_options)
           service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           TrashService.new(service.resource, options: service_options).commit
         end
         3.times do
-          service = CreateQuestion
+          service = CreateEdge
                       .new(@resource,
-                           attributes: attributes_for(:question),
+                           attributes: attributes_for(:question).merge(owner_type: 'Question'),
                            options: service_options)
           service.on(:create_question_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           reset_publication(service.resource.publications.last)
         end
         3.times do
-          service = CreateQuestion
+          service = CreateEdge
                       .new(@resource,
-                           attributes: attributes_for(:question),
+                           attributes: attributes_for(:question).merge(owner_type: 'Question'),
                            options: service_options)
           service.on(:create_question_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           TrashService.new(service.resource, options: service_options).commit
         end
-        service = CreateMotion
+        service = CreateEdge
                     .new(Question.last,
-                         attributes: attributes_for(:motion),
+                         attributes: attributes_for(:motion).merge(owner_type: 'Motion'),
                          options: service_options)
         service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
         service.commit
@@ -132,18 +132,18 @@ module Argu
       # Adds 2 published and 2 trashed motions to the resource
       def with_motions # rubocop:disable Metrics/AbcSize
         2.times do
-          service = CreateMotion
+          service = CreateEdge
                       .new(
                         @resource,
-                        attributes: attributes_for(:motion),
+                        attributes: attributes_for(:motion).merge(owner_type: 'Motion'),
                         options: service_options
                       )
           service.commit
           reset_publication(service.resource.publications.last)
-          service = CreateMotion
+          service = CreateEdge
                       .new(
                         @resource,
-                        attributes: attributes_for(:motion),
+                        attributes: attributes_for(:motion).merge(owner_type: 'Motion'),
                         options: service_options
                       )
           service.commit

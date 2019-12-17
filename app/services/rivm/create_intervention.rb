@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateIntervention < EdgeableCreateService
+class CreateIntervention < CreateEdge
   include UUIDHelper
 
   def initialize(resource, attributes: {}, options: {})
@@ -10,8 +10,4 @@ class CreateIntervention < EdgeableCreateService
 
     super
   end
-
-  private
-
-  def object_attributes=(obj); end
 end

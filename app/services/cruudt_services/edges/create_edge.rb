@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EdgeableCreateService < CreateService
+class CreateEdge < CreateService
   # @note Call super when overriding.
   # @param [Edge] parent The parent edge or its id
   def initialize(parent, attributes: {}, options: {})
@@ -15,11 +15,23 @@ class EdgeableCreateService < CreateService
   protected
 
   def after_save
-    unless resource.store_in_redis?
-      @edge.publish! unless resource_klass.is_publishable? || @attributes[:is_published] == false
-      notify
-    end
     super
+
+    return if resource.store_in_redis?
+
+    @edge.publish! if publish_edge?
+    notify
+
+    return if resource.is_a?(ContainerNode)
+
+    follow_edge
+    create_favorite
+  end
+
+  def create_favorite
+    forum = resource.ancestor(:forum)
+
+    resource.publisher.favorites.create(edge: forum) if forum && !resource.publisher.has_favorite?(forum)
   end
 
   # @param [Edge, Integer] parent The instance or id of the parent edge of the new child
@@ -35,9 +47,22 @@ class EdgeableCreateService < CreateService
     )
   end
 
+  def follow_edge
+    resource.publisher.follow(resource, :reactions, :news)
+  end
+
   def notify
     conn = ActiveRecord::Base.connection
     conn.execute("NOTIFY edge_created, '#{@edge.id}'")
+  end
+
+  def object_attributes=(obj)
+    obj.creator ||= resource.creator if obj.respond_to?(:creator)
+    obj.publisher ||= resource.publisher if obj.respond_to?(:publisher)
+  end
+
+  def publish_edge?
+    !(resource_klass.is_publishable? || @attributes[:is_published] == false)
   end
 
   def resource_klass(attributes = @attributes)

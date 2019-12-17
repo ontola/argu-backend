@@ -90,7 +90,7 @@ class CounterCacheTest < ActiveSupport::TestCase
 
   test 'update count when publishing' do
     assert_counts(motion, blog_posts: 1)
-    UpdateBlogPost.new(
+    UpdateEdge.new(
       unpublished_blog_post,
       attributes: {argu_publication_attributes: {draft: false}},
       options: service_options
@@ -103,7 +103,7 @@ class CounterCacheTest < ActiveSupport::TestCase
 
   test 'dont update count when publishing trashed item' do
     assert_counts(motion, blog_posts: 1)
-    UpdateBlogPost.new(
+    UpdateEdge.new(
       trashed_unpublished_blog_post,
       attributes: {argu_publication_attributes: {draft: false}},
       options: service_options
@@ -116,7 +116,7 @@ class CounterCacheTest < ActiveSupport::TestCase
 
   test 'dont update count when publishing and trashing item' do
     assert_counts(motion, blog_posts: 1)
-    UpdateBlogPost.new(
+    UpdateEdge.new(
       unpublished_blog_post,
       attributes: {
         trashed_at: Time.current, argu_publication_attributes: {draft: false}
@@ -131,7 +131,7 @@ class CounterCacheTest < ActiveSupport::TestCase
 
   test 'update count when publishing and untrashing trashed item' do
     assert_counts(motion, blog_posts: 1)
-    UpdateBlogPost.new(
+    UpdateEdge.new(
       trashed_unpublished_blog_post,
       attributes: {
         trashed_at: nil, argu_publication_attributes: {draft: false}

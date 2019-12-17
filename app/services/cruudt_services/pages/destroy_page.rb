@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DestroyPage < EdgeableDestroyService
+class DestroyPage < DestroyEdge
   def commit
     ActsAsTenant.with_tenant(resource) { super }
   end

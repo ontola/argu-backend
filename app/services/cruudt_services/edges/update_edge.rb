@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateRisk < EdgeableCreateService
+class UpdateEdge < UpdateService
   private
 
   def object_attributes=(obj); end
