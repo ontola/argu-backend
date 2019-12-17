@@ -100,6 +100,7 @@ gem 'image_optim', '~> 0.25.0'
 gem 'image_optim_pack', '~> 0.5.0'
 gem 'image_optim_rails', '~> 0.4.1'
 gem 'sidekiq', '~> 4.2.2'
+gem 'sidekiq-prometheus-exporter', '~> 0.1'
 gem 'sidetiq', '~> 0.7.2'
 gem 'sidekiq-logging-json',
     git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git',

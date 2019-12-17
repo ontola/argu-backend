@@ -4,6 +4,9 @@ require 'argu/destroy_constraint'
 require 'argu/staff_constraint'
 require 'argu/no_tenant_constraint'
 require 'argu/whitelist_constraint'
+require 'sidekiq/prometheus/exporter'
+require 'sidekiq/web'
+
 ####
 # Routes
 # a: arguments
@@ -58,8 +61,6 @@ Rails.application.routes.draw do
     controllers applications: 'oauth/applications',
                 tokens: 'oauth/tokens'
   end
-
-  require 'sidekiq/web'
 
   get '/', to: 'static_pages#developers', constraints: {subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
@@ -425,6 +426,7 @@ Rails.application.routes.draw do
   get '/ns/core/:model', to: 'static_pages#context'
 
   get '/d/modern', to: 'static_pages#modern'
+  mount Sidekiq::Prometheus::Exporter => '/d/sidekiq'
 
   # Mocks for calls to argu services during spec calls
   # @todo remove when front-end is detached
