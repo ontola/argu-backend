@@ -1,21 +1,15 @@
 # frozen_string_literal: true
 
-class Risk < Edge
+class Scenario < Edge
   include Edgeable::Content
   enhance Attachable
-  enhance Commentable
-  enhance Feedable
-  enhance Statable
-  enhance MeasureTypeable
-  enhance PublicGrantable
-  enhance Incidentable
 
-  parentable :page, :measure_type
+  parentable :incident
   validates :description, length: {maximum: 5000}
   validates :display_name, presence: true, length: {maximum: 110}
 
-  def default_public_grant
-    :participator
+  def parent_collections(user_context)
+    super + [parent.parent.scenario_collection(user_context: user_context)]
   end
 
   class << self

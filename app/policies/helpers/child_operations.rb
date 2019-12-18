@@ -21,6 +21,10 @@ module ChildOperations
 
   private
 
+  def authorize_child_operation(method, klass)
+    Pundit.policy(context, child_instance(record, klass)).send(method) || false
+  end
+
   # Initialises a child of the type {raw_klass} with the given {attrs} and checks
   #   its policy for `{method}?`
   # @return [Boolean] Whether the action is allowed. Returns a cached value when
@@ -31,7 +35,7 @@ module ChildOperations
     c = check_action(cache_key)
     return c unless c.nil?
 
-    r = valid_child?(klass) && Pundit.policy(context, child_instance(record, klass)).send(method) || false
+    r = (method == :show? || valid_child?(klass)) && authorize_child_operation(method, klass)
     cache_action(cache_key, r)
     r
   end

@@ -377,7 +377,7 @@ Rails.application.routes.draw do
   end
 
   {risks: 'gevaren', intervention_types: 'interventie_types', measure_types: 'measure_types',
-   categories: 'categories'}.each do |key, value|
+   categories: 'categories', incidents: 'incidents', scenarios: 'scenarios'}.each do |key, value|
     resources key, path: value, only: %i[index new create show] do
       include_route_concerns
       collection do

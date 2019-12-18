@@ -73,6 +73,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :blogs, dependent: :restrict_with_exception
   has_many_children :forums, dependent: :restrict_with_exception
   has_many_children :open_data_portals, dependent: :restrict_with_exception
+  has_many_children :incidents
   has_many_children :interventions
   has_many_children :intervention_types
   has_many_children :measures
@@ -80,6 +81,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :motions
   has_many_children :questions
   has_many_children :risks
+  has_many_children :scenarios
   has_many_children :topics
   has_many_children :vote_events
   has_many_children :votes

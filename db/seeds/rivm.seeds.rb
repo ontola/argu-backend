@@ -18,71 +18,56 @@ Apartment::Tenant.switch('rivm') do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  show_actions =
-    %i[category_show risk_show intervention_show measure_show intervention_type_show measure_type_show]
-      .map { |a| @actions[a] }
+  all_grant_sets = GrantSet.reserved
+  PermittedAction.create_for_grant_sets('Category', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Risk', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Intervention', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('InterventionType', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Measure', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('MeasureType', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Incident', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Scenario', 'show', all_grant_sets)
 
-  spectate = GrantSet.spectator
-  spectate.permitted_actions << show_actions
-  spectate.save!(validate: false)
+  participator_plus = GrantSet.reserved(except: %w[spectator])
 
-  participate = GrantSet.participator
-  participate.permitted_actions << show_actions
-  participate.permitted_actions << %i[intervention_create measure_create].map { |a| @actions[a] }
-  participate.save!(validate: false)
+  PermittedAction.create_for_grant_sets('Intervention', 'create', participator_plus)
+  PermittedAction.create_for_grant_sets('Measure', 'create', participator_plus)
 
-  initiate = GrantSet.initiator
-  initiate.permitted_actions << show_actions
-  initiate.permitted_actions <<
-    %i[intervention_create measure_create intervention_type_create measure_type_create].map { |a| @actions[a] }
-  initiate.save!(validate: false)
+  initiator_plus = GrantSet.reserved(except: %w[spectator participator])
+  PermittedAction.create_for_grant_sets('InterventionType', 'create', initiator_plus)
+  PermittedAction.create_for_grant_sets('MeasureType', 'create', initiator_plus)
 
-  moderate = GrantSet.moderator
-  moderate.permitted_actions << show_actions
-  moderate.permitted_actions <<
-    %i[category_create risk_create intervention_create measure_create intervention_type_create measure_type_create]
-      .map { |a| @actions[a] }
-  moderate.permitted_actions <<
-    %i[category_update risk_update intervention_update measure_update intervention_type_update measure_type_update]
-      .map { |a| @actions[a] }
-  moderate.permitted_actions <<
-    %i[category_trash risk_trash intervention_trash measure_trash intervention_type_trash measure_type_trash]
-      .map { |a| @actions[a] }
-  moderate.save!(validate: false)
+  moderator_plus = GrantSet.reserved(only: %w[moderator administrator staff])
+  PermittedAction.create_for_grant_sets('Category', 'create', moderator_plus)
+  PermittedAction.create_for_grant_sets('Category', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Risk', 'create', moderator_plus)
+  PermittedAction.create_for_grant_sets('Risk', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Intervention', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('InterventionType', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Measure', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('MeasureType', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Category', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Risk', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Intervention', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('InterventionType', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Measure', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('MeasureType', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Incident', 'create', moderator_plus)
+  PermittedAction.create_for_grant_sets('Incident', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Incident', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Incident', 'destroy', moderator_plus)
+  PermittedAction.create_for_grant_sets('Scenario', 'create', moderator_plus)
+  PermittedAction.create_for_grant_sets('Scenario', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Scenario', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Scenario', 'destroy', moderator_plus)
 
-  administrate = GrantSet.administrator
-  administrate.permitted_actions << show_actions
-  administrate.permitted_actions <<
-    %i[category_create risk_create intervention_create measure_create intervention_type_create measure_type_create]
-      .map { |a| @actions[a] }
-  administrate.permitted_actions <<
-    %i[category_update risk_update intervention_update measure_update intervention_type_update measure_type_update]
-      .map { |a| @actions[a] }
-  administrate.permitted_actions <<
-    %i[category_trash risk_trash intervention_trash measure_trash intervention_type_trash measure_type_trash]
-      .map { |a| @actions[a] }
-  administrate.permitted_actions <<
-    %i[category_destroy risk_destroy intervention_destroy measure_destroy
-       intervention_type_destroy measure_type_destroy]
-      .map { |a| @actions[a] }
-  administrate.save!(validate: false)
-
-  staff = GrantSet.staff
-  staff.permitted_actions << show_actions
-  staff.permitted_actions <<
-    %i[category_create risk_create intervention_create measure_create intervention_type_create measure_type_create]
-      .map { |a| @actions[a] }
-  staff.permitted_actions <<
-    %i[category_update risk_update intervention_update measure_update intervention_type_update measure_type_update]
-      .map { |a| @actions[a] }
-  staff.permitted_actions <<
-    %i[category_trash risk_trash intervention_trash measure_trash intervention_type_trash measure_type_trash]
-      .map { |a| @actions[a] }
-  staff.permitted_actions <<
-    %i[category_destroy risk_destroy intervention_destroy measure_destroy
-       intervention_type_destroy measure_type_destroy]
-      .map { |a| @actions[a] }
-  staff.save!(validate: false)
+  administrator_plus = GrantSet.reserved(only: %w[administrator staff])
+  PermittedAction.create_for_grant_sets('Category', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('Risk', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('Intervention', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('InterventionType', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('Measure', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('MeasureType', 'destroy', administrator_plus)
 
   ActsAsTenant.with_tenant(Page.first) do
     Page.first.update!(accent_background_color: '#007BC7', base_color: '#007BC7', navbar_background: '#007BC7')

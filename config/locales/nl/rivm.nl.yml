@@ -3,10 +3,18 @@ nl:
     type: "Categorie"
     type_new: "Nieuwe categorie"
     plural: "Categorieën"
+  incidents:
+    type: "Gebeurtenis"
+    type_new: "Nieuwe gebeurtenis"
+    plural: "Gebeurtenissen"
   risks:
     type: "Gevaar"
     type_new: "Nieuw gevaar"
     plural: "Gevaren"
+  scenarios:
+    type: "Scenario"
+    type_new: "Nieuw scenario"
+    plural: "Scenarios"
   intervention_types:
     type: "Interventie type"
     type_new: "Nieuw interventie type"
