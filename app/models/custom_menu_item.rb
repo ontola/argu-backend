@@ -70,7 +70,7 @@ class CustomMenuItem < ApplicationRecord
   end
 
   def raw_image=(value)
-    self.image = value
+    self.image = value.presence
   end
 
   private
