@@ -9,6 +9,7 @@ class Category < Edge
 
   parentable :page, :measure_type
   validates :display_name, presence: true, length: {maximum: 110}
+  validates :description, length: {maximum: 5000}
 
   has_many :measure_type_examples,
            primary_key_property: :category_id,
@@ -17,8 +18,7 @@ class Category < Edge
 
   with_collection :measure_types,
                   association: :measure_type_examples,
-                  default_display: :table,
-                  title: ->(r) { r.display_name }
+                  default_display: :table
 
   def default_public_grant
     :participator

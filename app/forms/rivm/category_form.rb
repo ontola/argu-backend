@@ -2,8 +2,9 @@
 
 class CategoryForm < ApplicationForm
   fields(
-    [
-      :display_name
+    %i[
+      display_name
+      description
     ]
   )
 end
