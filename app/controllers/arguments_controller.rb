@@ -6,6 +6,8 @@ class ArgumentsController < EdgeableController
   private
 
   def argument_type
+    raise ActiveRecord::RecordNotFound unless params[:argument].try(:[], :pro)
+
     params[:argument][:pro].to_s == 'true' ? :pro : :con
   end
 
