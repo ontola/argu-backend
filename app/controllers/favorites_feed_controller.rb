@@ -27,9 +27,5 @@ class FavoritesFeedController < FeedController
 
   def parent_resource; end
 
-  def set_tenant_header
-    super
-    ActsAsTenant.current_tenant = nil
-    @tree_root = nil
-  end
+  def set_tenant_header; end
 end

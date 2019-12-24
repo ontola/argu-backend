@@ -8,7 +8,7 @@ module Oauth
     include RedisResourcesHelper
     include FrontendTransitionHelper
     include OauthHelper
-    include JsonApiHelper
+    include JsonAPIHelper
     include ActionController::RequestForgeryProtection
     include ActionController::Cookies
     include ActionController::MimeResponds

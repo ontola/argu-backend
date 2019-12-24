@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   include ActiveResponseHelper
   include FrontendTransitionHelper
   include RedirectHelper
-  include JsonApiHelper
+  include JsonAPIHelper
   include NestedAttributesHelper
   include UsersHelper
   include NamesHelper
@@ -177,7 +177,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   def set_tenant_header
     ActsAsTenant.current_tenant ||=
       tree_root_fallback || raise(ActiveRecord::RecordNotFound.new("No tenant found for #{request.url}"))
-    response.headers['Manifest'] = "#{tree_root.iri}/manifest.json" if tree_root
   end
 
   def set_vary

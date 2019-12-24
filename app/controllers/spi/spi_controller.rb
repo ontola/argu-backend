@@ -8,7 +8,7 @@ module SPI
     include FrontendTransitionHelper
     include Argu::Controller::ErrorHandling
     include Argu::Controller::ErrorHandling::BadCredentials
-    include JsonApiHelper
+    include JsonAPIHelper
     include Argu::Controller::Authorization
     include OauthHelper
 

@@ -563,7 +563,7 @@ GEM
     rainbow (3.0.0)
     rake (13.0.1)
     rakismet (1.5.4)
-    rdf (3.1.0)
+    rdf (3.1.1)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (2.2.1)
@@ -740,7 +740,7 @@ GEM
       hitimes
     toml (0.2.0)
       parslet (~> 1.8.0)
-    tzinfo (1.2.5)
+    tzinfo (1.2.6)
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.3)
       tzinfo (>= 1.0.0)

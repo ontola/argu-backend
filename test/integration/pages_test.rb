@@ -362,7 +362,9 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_includes CustomMenuItem.where(resource: argu).first.href, Rails.application.config.host_name
     freetown.widgets.first.resource_iri.all? { |iri| iri.first.include?(Rails.application.config.host_name) }
     put argu, params: {id: argu.url, page: {iri_prefix: 'example.com'}}
-    assert_includes CustomMenuItem.where(resource: argu).first.href, 'example.com'
+    CustomMenuItem.where(resource: argu).where('href IS NOT NULL').each do |item|
+      assert_includes(item.href.to_s, 'example.com')
+    end
     freetown.widgets.first.reload.resource_iri.all? { |iri| iri.first.include?('example.com') }
 
     assert_equal argu.tenant.reload.iri_prefix, 'example.com'
