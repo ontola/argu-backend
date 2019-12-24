@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_18_103331) do
+ActiveRecord::Schema.define(version: 2019_12_19_121835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -404,6 +404,8 @@ ActiveRecord::Schema.define(version: 2019_12_18_103331) do
     t.bigint "integer"
     t.uuid "linked_edge_id"
     t.integer "order", default: 0, null: false
+    t.string "iri"
+    t.string "language"
     t.index ["edge_id"], name: "index_properties_on_edge_id"
   end
 

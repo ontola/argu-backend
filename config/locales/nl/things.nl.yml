@@ -1,0 +1,5 @@
+nl:
+  things:
+    type: "Ding"
+    type_new: "Nieuw ding"
+    plural: "Dingen"

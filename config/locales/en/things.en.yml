@@ -1,0 +1,5 @@
+en:
+  things:
+    type: "Thing"
+    type_new: "New thing"
+    plural: "Things"

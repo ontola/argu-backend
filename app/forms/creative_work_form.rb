@@ -3,10 +3,10 @@
 class CreativeWorkForm < ApplicationForm
   visibility_text
 
-  fields %i[
-    display_name
-    description
-    footer
+  fields [
+    :display_name,
+    {description: {datatype: NS::FHIR[:markdown]}},
+    :footer
   ]
 
   property_group :footer,

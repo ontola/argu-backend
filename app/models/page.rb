@@ -78,7 +78,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   belongs_to :primary_container_node,
              foreign_key_property: :primary_container_node_id,
-             class_name: 'ContainerNode',
+             class_name: 'Edge',
              dependent: false
   validates :about, length: {maximum: 3000}
 

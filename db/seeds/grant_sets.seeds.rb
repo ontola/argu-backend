@@ -26,6 +26,7 @@ PermittedAction.create_for_grant_sets('BlogPost', 'show', all_grant_sets)
 PermittedAction.create_for_grant_sets('Decision', 'show', all_grant_sets)
 PermittedAction.create_for_grant_sets('CreativeWork', 'show', all_grant_sets)
 PermittedAction.create_for_grant_sets('CustomAction', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Thing', 'show', all_grant_sets)
 
 participator_plus = GrantSet.reserved(except: %w[spectator])
 PermittedAction.create_for_grant_sets('ProArgument', 'create', participator_plus)
@@ -81,6 +82,10 @@ PermittedAction.create_for_grant_sets('CustomAction', 'create', administrator_pl
 PermittedAction.create_for_grant_sets('CustomAction', 'update', administrator_plus)
 PermittedAction.create_for_grant_sets('CustomAction', 'trash', administrator_plus)
 PermittedAction.create_for_grant_sets('CustomAction', 'destroy', administrator_plus)
+PermittedAction.create_for_grant_sets('Thing', 'create', administrator_plus)
+PermittedAction.create_for_grant_sets('Thing', 'update', administrator_plus)
+PermittedAction.create_for_grant_sets('Thing', 'trash', administrator_plus)
+PermittedAction.create_for_grant_sets('Thing', 'destroy', administrator_plus)
 
 staff = GrantSet.reserved(only: %w[staff])
 PermittedAction.create_for_grant_sets('Forum', 'create', staff)
