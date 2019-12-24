@@ -93,7 +93,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     notification.user = {
       confirmed: current_user.confirmed?,
       id: current_user.id,
-      ip: notification.user_id,
       responder_type: active_response_type,
       scopes: doorkeeper_scopes,
       shortname: current_user.url

@@ -24,7 +24,7 @@ class SendActivityNotificationsWorker
           end
         rescue ActiveRecord::StatementInvalid => e
           logger.error 'Queue collision occurred' if e.message.include? 'LockNotAvailable'
-          Bugsnag.auto_notify(e) if Rails.env.production?
+          Bugsnag.notify(e) if Rails.env.production?
         end
       end
     end

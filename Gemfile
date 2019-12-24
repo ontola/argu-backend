@@ -125,7 +125,7 @@ gem 'koala', '~> 2.5.0'
 gem 'omniauth-twitter', '~> 1.2.0'
 # gem 'omniauth-openid'
 gem 'pundit', '~> 1.0.0'
-gem 'bugsnag', '~> 5.3.3'
+gem 'bugsnag'
 
 ################## Front-end ########################
 gem 'react-rails', '~> 2.2.1'
