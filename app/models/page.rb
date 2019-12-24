@@ -68,7 +68,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {visible: 1, hidden: 3}
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
   property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
-  property :use_new_frontend, :boolean, NS::ARGU[:useNewFrontend], default: false
+  property :use_new_frontend, :boolean, NS::ARGU[:useNewFrontend], default: true
   property :primary_container_node_id, :linked_edge_id, NS::FOAF[:homepage]
   property :template, :string, NS::ONTOLA[:template], default: :default
   property :template_options, :text, NS::ONTOLA[:templateOpts], default: '{}'
