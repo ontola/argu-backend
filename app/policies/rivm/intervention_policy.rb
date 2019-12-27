@@ -4,7 +4,7 @@ class InterventionPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[
-      display_name description goal additional_introduction_information specific_tools_required one_off_costs
+      display_name description goal additional_introduction_information one_off_costs
       recurring_costs cost_explanation effectivity_research_method security_improved security_improvement_reason
       business_section business_section_employees comments_allowed
     ]

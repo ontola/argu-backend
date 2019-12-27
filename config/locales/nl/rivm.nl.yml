@@ -133,11 +133,11 @@ nl:
       effectivity_external_research: "Ja, door middel van een externe partij via een rapportage"
       effectivity_scientific_research: "Ja, door middel van een wetenschappelijke studie naar de effectiviteit"
     security_improved:
-      no_security_improvement: "Helemaal niet"
-      very_small_security_improvement: "In geringe mate"
-      small_security_improvement: "In enige mate"
-      big_security_improvement: "In sterke mate"
-      very_big_security_improvement: "In zeer sterke mate"
+      no_security_improvement: "De veiligheid is verslechterd"
+      very_small_security_improvement: "De veiligheid is hetzelfde gebleven"
+      small_security_improvement: "De veiligheid is in enige mate verbeterd"
+      big_security_improvement: "De veiligheid is in sterke mate verbeterd"
+      very_big_security_improvement: "De veiligheid is in zeer sterke mate verbeterd"
       unkown_security_improvement: "Weet niet"
     business_section:
       full_business: "Op het gehele bedrijf"
@@ -170,8 +170,6 @@ nl:
         label: "Aard van de interventie"
       independent:
         label: "Zelfstandig of ondersteund door een derde partij"
-      specific_tools_required:
-        label: "Specifieke materialen nodig"
       management_involvement:
         label: "Belang betrokken management"
       training_required:
@@ -294,17 +292,16 @@ nl:
         risk_reduction: "Op welke manier verlaagt de interventie volgens u de kans op ongevallen?"
         continuous: "Is de interventie doorlopend of heeft deze een vaste einddatum?"
         independent: "Kan de interventie zelfstandig worden uitgevoerd of is ondersteuning vanuit een externe partij met een onafhankelijke rol noodzakelijk?"
-        specific_tools_required: "Zijn er specifieke materialen nodig om de interventie in te voeren?"
         management_involvement: "Is het belangrijk dat het management van het bedrijf betrokken wordt bij deze interventie?"
         training_required: "Is het nodig om een training of opleiding te volgen om deze interventie in te kunnen voeren in een bedrijf?"
-        additional_introduction_information: "Kunt u nog extra informatie geven over de invoering van de interventie?"
+        additional_introduction_information: "Beschrijf hieronder hoe u de interventie heeft aangepakt."
         nature_of_costs: "Wat is de aard van de kosten die het bedrijf voor deze interventie heeft gemaakt? (Meerdere opties mogelijk)"
         one_off_costs: "Eenmalige kosten (bijvoorbeeld op maat maken, lanceren, uitleggen, etc.)"
         recurring_costs: "Doorlopende kosten (gericht op het blijvend gebruiken van de interventie)"
-        cost_explanation: "Geef desgewenst een toelichting bij deze kosten."
+        cost_explanation: "Geef een toelichting waar deze kosten uit bestaan."
         effectivity_research_method: "Is de effectiviteit van de interventie na de toepassing in het bedrijf in kaart gebracht?"
-        security_improved: "Denkt u dat de veiligheid is verbeterd door het uitvoeren van de interventie?"
-        security_improvement_reason: "Waarom denkt u dat de interventie wel of niet de veiligheid verbeterd heeft? Waaraan is de effectiviteit van de interventie merkbaar?"
+        security_improved: "Denkt u dat de veiligheid is veranderd door het uitvoeren van de interventie?"
+        security_improvement_reason: "Waarom denkt u dat de interventie de veiligheid wel of niet verbeterd heeft? Waaraan is dit merkbaar?"
         business_section: "Is de interventie gericht op het gehele bedrijf of op een deel van het bedrijf zoals een afdeling, regio, land of vestiging?"
         business_section_employees: "Hoeveel medewerkers zijn er ongeveer werkzaam in het land, de regio, vestiging of afdeling van het bedrijf?"
         comments_allowed: "Wilt u openbaar commentaar op uw interventie mogelijk maken?"
@@ -334,12 +331,13 @@ nl:
             • Wat probeert u met de interventie bij deze doelgroep te bereiken?
       additional_introduction_information:
         helper_text: |
-          Geef hierbij bijvoorbeeld aan:
-            • Welke externe ondersteuning mogelijk gewenst is?
-            • Welke trainingen en of opleidingen eventueel noodzakelijk zijn?
-            • Waar eventueel benodigde materialen te verkrijgen zijn?
-      specific_tools_required:
-        helper_text: "Denk bijvoorbeeld aan een handboek, protocol, flyers, video’s, vragenlijsten, software of presentaties."
+          Denk hierbij aan:
+            • De nodige overleggen of trainingen;
+            • De nodige inzet van (externe) adviseurs;
+            • Communicatie met de doelgroep;
+            • Noodzakelijke materialen zoals handboek, protocol, flyers, video’s, vragenlijsten, software of presentaties.
+      cost_explanation:
+        helper_text: "Denk hierbij bijvoorbeeld aan personeelskosten, aanschafkosten, etc."
       employment_id:
         helper_text: "Voeg jouw bedrijf toe als je dat nog niet hebt gedaan."
   actions:

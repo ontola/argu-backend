@@ -14,7 +14,6 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
 
   property :employment_id, :linked_edge_id, NS::RIVM[:employmentId]
   property :goal, :text, NS::RIVM[:interventionGoal]
-  property :specific_tools_required, :text, NS::RIVM[:specificToolsRequired]
   property :additional_introduction_information, :text, NS::RIVM[:additionalIntroductionInformation]
   property :plans_and_procedure, :integer, NS::RIVM[:plansAndProcedure], array: true, enum: plans_and_procedure_options
   property(
@@ -74,7 +73,6 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   validates :description, length: {maximum: 5000}
   validates :display_name, presence: true, length: {maximum: 110}
   validates :goal, length: {maximum: 5000}
-  validates :specific_tools_required, length: {maximum: 5000}
   validates :additional_introduction_information, length: {maximum: 5000}
   validates :cost_explanation, length: {maximum: 5000}
   validates :security_improvement_reason, length: {maximum: 5000}

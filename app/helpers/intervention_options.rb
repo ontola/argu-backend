@@ -113,8 +113,7 @@ module InterventionOptions
       very_small_security_improvement: 2,
       small_security_improvement: 3,
       big_security_improvement: 4,
-      very_big_security_improvement: 5,
-      unkown_security_improvement: 6
+      very_big_security_improvement: 5
     }
   end
 

@@ -94,7 +94,6 @@ class InterventionsTest < ActionDispatch::IntegrationTest
       display_name: 'Name',
       description: 'Description',
       goal: 'Goal',
-      specific_tools_required: 'Required tools',
       additional_introduction_information: 'Additional introduction information',
       plans_and_procedure: [:usability],
       risk_reduction: [:change_knowledge],

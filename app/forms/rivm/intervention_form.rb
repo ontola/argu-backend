@@ -44,7 +44,6 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
           description: -> { I18n.t('forms.goal_and_effect.description') }
         }
       },
-      :goal,
       {
         target_audience_text: {
           type: :resource,
@@ -67,7 +66,8 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
       {ergonomics: {max_count: 99}},
       {tools: {max_count: 99}},
       {target_audience: {max_count: 99}},
-      {risk_reduction: {max_count: 99}}
+      {risk_reduction: {max_count: 99}},
+      :goal
     ]
   )
 
@@ -76,7 +76,7 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
     label: -> { I18n.t('forms.intervention_introduction.label') },
     description: -> { I18n.t('forms.intervention_introduction.description') },
     properties: %i[
-      continuous independent specific_tools_required management_involvement training_required
+      continuous independent management_involvement training_required
       additional_introduction_information
     ]
   )

@@ -18,7 +18,6 @@ class InterventionSerializer < ContentEdgeSerializer
   attribute :independent, predicate: NS::RIVM[:independent]
   attribute :management_involvement, predicate: NS::RIVM[:managementInvolvement]
   attribute :training_required, predicate: NS::RIVM[:trainingRequired]
-  attribute :specific_tools_required, predicate: NS::RIVM[:specificToolsRequired]
   attribute :additional_introduction_information, predicate: NS::RIVM[:additionalIntroductionInformation]
   attribute :effects, predicate: NS::RIVM[:interventionEffects]
   attribute :nature_of_costs, predicate: NS::RIVM[:natureOfCosts]
