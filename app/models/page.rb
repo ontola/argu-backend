@@ -159,7 +159,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def write_to_cache(cache = Argu::Cache.new)
-    cache.write(manifest, :attributes, :json, key_transform: :underscore)
+    manifest.write_to_cache(cache)
     super
   end
 

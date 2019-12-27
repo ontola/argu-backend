@@ -7,8 +7,11 @@ class Manifest < VirtualResource
     mstile: %w[144x144 150x150 310x310 70x70]
   }.freeze
 
+  include Cacheable
+
   attr_accessor :page
   delegate :description, to: :page
+  alias_attribute :root, :page
 
   def background_color
     '#eef0f2'
@@ -63,6 +66,12 @@ class Manifest < VirtualResource
 
   def theme_color
     page.navbar_background
+  end
+
+  def write_to_cache(cache = Argu::Cache.new)
+    ActsAsTenant.with_tenant(try(:root) || ActsAsTenant.current_tenant) do
+      cache.write(self, :attributes, :json, key_transform: :underscore)
+    end
   end
 
   private
