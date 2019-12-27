@@ -25,8 +25,14 @@ class ContainerNodePolicy < EdgePolicy
   end
 
   def list?
-    raise(ActiveRecord::RecordNotFound) unless record.discoverable? || show?
+    show?
     true
+  end
+
+  def show?
+    verdict = super
+    raise(ActiveRecord::RecordNotFound) unless record.discoverable? || verdict
+    verdict
   end
 
   def move?

@@ -11,6 +11,8 @@ class CustomMenuItemPolicy < EdgeTreePolicy
     def allowed_menu_item(menu_item)
       resource = menu_item.edge || menu_item.resource
       Pundit.policy(context, resource).send(menu_item.policy || :show?)
+    rescue ActiveRecord::RecordNotFound
+      false
     end
   end
 

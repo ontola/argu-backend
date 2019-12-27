@@ -123,6 +123,8 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
       Pundit.policy(user_context, forum).show?
     end
     forum
+  rescue ActiveRecord::RecordNotFound
+    nil
   end
 
   def controller_class
