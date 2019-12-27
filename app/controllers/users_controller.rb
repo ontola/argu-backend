@@ -12,7 +12,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
   private
 
   def authorized_current_user
-    return current_resource_owner unless current_resource_owner.guest?
+    return current_resource_owner unless current_resource_owner&.guest?
 
     flash[:error] = t('devise.failure.unauthenticated')
     raise Argu::Errors::Unauthorized.new
