@@ -2,6 +2,8 @@
 
 module Cacheable
   def write_to_cache(cache = Argu::Cache.new)
-    cache.write(self, :rdf, :nq)
+    ActsAsTenant.with_tenant(try(:root) || ActsAsTenant.current_tenant) do
+      cache.write(self, :rdf, :nq)
+    end
   end
 end
