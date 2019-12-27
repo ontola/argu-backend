@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   after_action :set_profile_forum, if: :format_html?
   around_action :time_zone
   after_action :set_version_header
+  after_action :include_resources
   if Rails.env.development? || Rails.env.staging?
     before_action do
       Rack::MiniProfiler.authorize_request if current_user.is_staff?
@@ -133,17 +134,16 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   def current_forum; end
 
-  # @return [Profile] The {Profile} of the {User}
-  def current_profile
-    current_user.profile
-  end
-
   def deserialize_params_options
     {}
   end
 
   def format_html?
     request.format.html?
+  end
+
+  def include_resources
+    response.headers['Include-Resources'] = current_resource.try(:include_resources)&.join(',') if request.head?
   end
 
   def internal_request?

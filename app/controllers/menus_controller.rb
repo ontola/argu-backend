@@ -18,6 +18,6 @@ class MenusController < LinkedRails::MenusController
   def current_forum; end
 
   def resource_by_id
-    requested_resource
+    requested_resource if action_name == 'show'
   end
 end

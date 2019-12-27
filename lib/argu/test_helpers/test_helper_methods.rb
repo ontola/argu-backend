@@ -11,7 +11,7 @@ module Argu
         base.extend(ClassMethods)
       end
 
-      module InstanceMethods
+      module InstanceMethods # rubocop:disable Metrics/ModuleLength
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i[
           argument pro_argument con_argument blog_post comment forum group_membership motion export
@@ -105,9 +105,20 @@ module Argu
           user
         end
 
+        def create_spectator(record, user = nil)
+          user ||= create(:user)
+          page = record.is_a?(Page) ? record : record.root
+          group = create(:group, parent: page)
+          create(:group_membership,
+                 parent: group,
+                 shortname: user.url)
+          create(:grant, edge: record, group: group, grant_set: GrantSet.spectator)
+          user
+        end
+
         def create_participator(record, user = nil)
           user ||= create(:user)
-          page = record.is_a?(Page) ? record : record.page
+          page = record.is_a?(Page) ? record : record.root
           group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,

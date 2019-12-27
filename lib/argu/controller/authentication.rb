@@ -13,6 +13,11 @@ module Argu
         %i[user guest service]
       end
 
+      # @return [Profile] The {Profile} of the {User}
+      def current_profile
+        current_user.profile
+      end
+
       def skip_verify_policy_authorized(sure = false)
         @_pundit_policy_authorized = true if sure
       end

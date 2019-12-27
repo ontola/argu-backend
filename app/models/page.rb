@@ -116,6 +116,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     super || display_name
   end
 
+  def include_resources
+    [primary_container_node&.iri].compact
+  end
+
   def iri(_opts = {})
     @iri ||=
       if RequestStore.store[:old_frontend]

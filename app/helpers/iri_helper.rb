@@ -94,13 +94,13 @@ module IRIHelper
   # Converts an Argu URI into a resource
   # @return [ApplicationRecord, nil] The resource corresponding to the iri, or nil if the IRI is not found
   # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-  def resource_from_iri(iri)
+  def resource_from_iri(iri, root = nil)
     raise "A full url is expected. #{iri} is given." if iri.blank? || relative_path?(iri)
 
     edge_uuid = edge_uuid_from_iri(iri)
     return Edge.find_by(uuid: edge_uuid) if edge_uuid
 
-    root = TenantFinder.from_url(iri)
+    root ||= TenantFinder.from_url(iri)
     return if root.blank?
 
     slashed_iri = iri.ends_with?('/') ? iri.to_s : "#{iri}/"
