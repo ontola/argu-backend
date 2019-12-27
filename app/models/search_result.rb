@@ -8,10 +8,12 @@ class SearchResult
   include Rails.application.routes.url_helpers
   include Pundit
   include IRITemplateHelper
+  include Cacheable
 
   attr_accessor :page, :page_size, :parent, :q, :user_context
   delegate :user, :afe_request?, to: :user_context
   delegate :total_count, :took, to: :search_result
+  delegate :root, to: :parent
 
   def iri_opts
     opts = {}
@@ -67,6 +69,12 @@ class SearchResult
     @results ||= LinkedRails::Sequence.new(search_result)
   end
 
+  def write_to_cache(cache = Argu::Cache)
+    super
+  rescue Searchkick::Error
+    nil
+  end
+
   private
 
   def allowed_paths
@@ -80,7 +88,9 @@ class SearchResult
     Regexp.new("\\A#{exp}\\z")
   end
 
-  def granted_paths
+  def granted_paths # rubocop:disable Metrics/AbcSize
+    return [] if user_context.blank?
+
     @granted_paths ||=
       user_context
         .grant_tree
