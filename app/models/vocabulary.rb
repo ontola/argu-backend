@@ -5,6 +5,10 @@ class Vocabulary < LinkedRails::Vocabulary
   extend SerializationHelper
   include Cacheable
 
+  def root_relative_iri
+    RDF::URI('/ns/core')
+  end
+
   class << self
     def add_class_data(klass, iri)
       add_class_icon(iri, klass)
