@@ -27,6 +27,8 @@ nl:
     type_new: "Nieuwe interventie"
     plural: "Interventies"
     publish_success: "De interventie is ingediend voor moderatie"
+    attachments:
+      description: "Hier kunt u interventiemateriaal, zoals flyers, presentaties of effectiviteitsrapporten uploaden. Anderen kunnen dit materiaal dan downloaden"
     plans_and_procedure:
       usability: "De begrijpbaarheid en bruikbaarheid van regels, richtlijnen en procedures"
       planning: "Het goed plannen van werkzaamheden"

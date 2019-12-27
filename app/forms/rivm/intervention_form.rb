@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
-  fields %i[
-    intervention_description
-    intervention_introduction
-    costs_section
-    effectivity_section
-    final_section
-    attachments
-    hidden
+  fields [
+    :intervention_description,
+    :intervention_introduction,
+    :costs_section,
+    :effectivity_section,
+    :final_section,
+    {attachments: {description: I18n.t('interventions.attachments.description')}},
+    :hidden
   ]
 
   property_group(
