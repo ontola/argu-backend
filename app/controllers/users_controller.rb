@@ -23,7 +23,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
       case action_name
       when 'show'
         user = User.preload(:profile).find_via_shortname_or_id(params[:id])
-        show_anonymous_user?(user) ? AnonymousUser.new(id: params[:id]) : user
+        show_anonymous_user?(user) ? AnonymousUser.new(url: params[:id]) : user
       else
         authorized_current_user
       end
