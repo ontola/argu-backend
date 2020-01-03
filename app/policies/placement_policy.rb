@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 class PlacementPolicy < RestrictivePolicy
-  class Scope < Scope
+  class Scope < EdgeTreePolicy::Scope
     def resolve
       scope
+        .joins('INNER JOIN edges AS parents_edges ON parents_edges.id = edges.parent_id')
+        .where('edges.id IS NULL OR (edges.is_published = true AND edges.trashed_at IS NULL)')
+        .where(edges: {root_id: grant_tree.tree_root_id})
+        .with(granted_paths)
+        .where(granted_path_type_filter)
     end
   end
 

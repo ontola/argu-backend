@@ -4,6 +4,7 @@ class Question < Discussion
   enhance CoverPhotoable
   enhance Motionable
   enhance GrantResettable
+  enhance ChildrenPlaceable
 
   include Edgeable::Content
 

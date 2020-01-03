@@ -10,6 +10,7 @@ class ContainerNode < Edge
   enhance LinkedRails::Enhancements::Menuable
   enhance Moveable
   enhance Placeable
+  enhance ChildrenPlaceable
   enhance ProfilePhotoable
   enhance PublicGrantable
   enhance LinkedRails::Enhancements::Updatable

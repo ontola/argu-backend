@@ -61,7 +61,7 @@ class Comment < Edge
   end
 
   def resource_added_delta
-    [
+    super + [
       [parent.iri, NS::ARGU[:topComment], iri, NS::ONTOLA[:replace]]
     ]
   end

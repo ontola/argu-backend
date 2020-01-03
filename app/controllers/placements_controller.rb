@@ -15,7 +15,7 @@ class PlacementsController < ParentableController
         Placement
           .custom
           .joins('INNER JOIN edges ON placements.placeable_type = \'Edge\' AND placements.placeable_id = edges.uuid')
-          .where('edges.path <@ ?', parent_resource.path)
+          .where('? IN (edges.id, edges.parent_id)', parent_resource.id)
           .includes(:place)
       )
   end

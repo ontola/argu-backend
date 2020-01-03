@@ -354,7 +354,6 @@ Rails.application.routes.draw do
   resources :questions,
             path: 'q' do
     include_route_concerns
-    resources :placements, only: %i[index]
   end
   resources :shortnames, only: %i[new create index] do
     collection do

@@ -55,7 +55,7 @@ class CustomMenuItem < ApplicationRecord
   end
 
   def resource_added_delta
-    [
+    super + [
       [parent.iri, NS::SP[:Variable], NS::SP[:Variable], NS::ONTOLA[:invalidate]]
     ]
   end
