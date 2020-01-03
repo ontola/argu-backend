@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class GroupPolicyTest < PolicyTest
-  include DefaultPolicyTests
+class GroupPolicyTest < Argu::TestHelpers::PolicyTest
+  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) { create(:group, parent: page) }
   let(:undeletable_subject) { create(:group, parent: page, deletable: false) }
   let(:group_member) { create(:group_membership, parent: subject).member.profileable }

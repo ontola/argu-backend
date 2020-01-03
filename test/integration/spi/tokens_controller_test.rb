@@ -157,8 +157,8 @@ module SPI
     end
 
     def validate_error(error)
-      assert_response Argu::Errors::TYPES[error.to_s][:status]
-      assert_equal Argu::Errors::TYPES[error.to_s][:id], parsed_body['code']
+      assert_response Argu::Errors::ERROR_TYPES[error.to_s][:status]
+      assert_equal Argu::Errors::ERROR_TYPES[error.to_s][:id], parsed_body['code']
     end
 
     def validate_user_token(user) # rubocop:disable Metrics/AbcSize

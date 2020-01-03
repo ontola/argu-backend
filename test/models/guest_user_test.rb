@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/errors/no_persistence'
 
 class GuestUserTest < ActiveSupport::TestCase
   subject { GuestUser.new(attributes_for(:user).merge(session: OpenStruct.new(id: 'session_id'))) }

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Comments', type: :request do
   include Argu::TestHelpers::AutomatedRequests

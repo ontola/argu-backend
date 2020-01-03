@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu'
-require 'argu/controller/error_handling/bad_credentials'
-
 module Oauth
   class TokensController < Doorkeeper::TokensController
     include RedisResourcesHelper

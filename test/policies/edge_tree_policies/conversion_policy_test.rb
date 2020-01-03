@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class ConversionPolicyTest < PolicyTest
+class ConversionPolicyTest < Argu::TestHelpers::PolicyTest
   subject { Conversion.new(edge: motion, klass: Question) }
   let(:invalid_edge_subject) { Conversion.new(edge: pro_argument, klass: Motion) }
   let(:invalid_klass_subject) { Conversion.new(edge: motion, klass: Argument) }

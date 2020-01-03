@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class MediaObjectPolicyTest < PolicyTest
+class MediaObjectPolicyTest < Argu::TestHelpers::PolicyTest
   define_cairo
   let(:cover_photo) { create(:image_object, about: motion, used_as: :cover_photo) }
   let(:attachment) { create(:media_object, about: motion, used_as: :attachment) }

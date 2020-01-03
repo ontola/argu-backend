@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class DecisionPolicyTest < PolicyTest
-  include DefaultPolicyTests
+class DecisionPolicyTest < Argu::TestHelpers::PolicyTest
+  include Argu::TestHelpers::DefaultPolicyTests
   subject { decision }
   let(:trashed_subject) { trashed_decision }
   let(:expired_subject) { expired_decision }

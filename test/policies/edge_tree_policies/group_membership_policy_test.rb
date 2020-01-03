@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class GroupMembershipPolicyTest < PolicyTest
-  include DefaultPolicyTests
+class GroupMembershipPolicyTest < Argu::TestHelpers::PolicyTest
+  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) { create(:group_membership, parent: create(:group, parent: page), member: group_member.profile) }
   let(:group_member) { create(:user) }
   let(:admin_membership) { page.grants.administrator.first.group.group_memberships.first }

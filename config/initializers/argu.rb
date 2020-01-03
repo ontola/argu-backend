@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-Dir['/argu/*.rb'].each { |file| require file }
+Dir['lib/argu/*.rb'].each { |file| require file.sub('lib/', '') }

@@ -14,12 +14,12 @@ require 'sidekiq/testing'
 require 'minitest/pride'
 require 'minitest/reporters'
 require 'webmock/minitest'
-require 'argu/test_helpers'
 require 'minitest/reporters'
 require 'rspec/matchers'
 require 'rspec/expectations'
 
 require 'support/database_cleaner'
+require 'argu/test_helpers/searchkick_mock'
 
 Sidekiq::Testing.server_middleware do |chain|
   chain.add ActsAsTenant::Sidekiq::Server
@@ -38,6 +38,7 @@ WebMock.disable_net_connect!(
     'http://localhost:9200'
   ]
 )
+Thread.current[:mock_searchkick] = true
 
 module TestHelper
   include RSpec::Expectations
@@ -111,6 +112,14 @@ module ActionDispatch
       raise "not a redirect! #{status} #{status_message}" unless redirect?
       get(response.location)
       status
+    end
+
+    def head(path, *args, **opts)
+      super(
+        path.try(:iri)&.path || path,
+        *args,
+        merge_req_opts(opts)
+        )
     end
 
     def get(path, *args, **opts)

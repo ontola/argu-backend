@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class ExportPolicyTest < PolicyTest
-  include DefaultPolicyTests
+class ExportPolicyTest < Argu::TestHelpers::PolicyTest
+  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) { create(:export, parent: freetown, user: create(:user)) }
 
   generate_crud_tests

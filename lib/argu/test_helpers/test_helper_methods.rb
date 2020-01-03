@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu/test_helpers/test_resources'
-
 # Shared helper method across TestUnit and RSpec
 module Argu
   module TestHelpers

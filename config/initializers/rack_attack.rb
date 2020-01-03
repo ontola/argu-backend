@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu/errors/hacker'
-
 unless Rails.env.test?
   ActiveSupport::Notifications.subscribe('rack.attack') do |name, _start, _finish, _request_id, req|
     if (%w[spam fail2ban] & req.env['rack.attack.matched'].split(' ')).present?

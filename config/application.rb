@@ -16,6 +16,7 @@ Bundler.require(*Rails.groups)
 
 require_relative '../lib/ns'
 require_relative '../lib/acts_as_tenant/sidekiq_with_tenant'
+require_relative '../lib/react-rails/lib/server_rendering/webpack_manifest_container'
 
 module Argu
   class Application < Rails::Application
@@ -104,7 +105,7 @@ module Argu
 
     require 'argu/stateful_server_renderer'
     config.react.addons = false
-    config.react.server_renderer = StatefulServerRenderer
+    config.react.server_renderer = Argu::StatefulServerRenderer
     # Enable the asset pipeline
     config.assets.enabled = true
 

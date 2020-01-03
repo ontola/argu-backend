@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class DirectMessagePolicyTest < PolicyTest
+class DirectMessagePolicyTest < Argu::TestHelpers::PolicyTest
   subject { DirectMessage.new(resource: motion) }
 
   test 'create valid direct_message' do

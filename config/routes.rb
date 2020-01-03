@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu/destroy_constraint'
-require 'argu/staff_constraint'
-require 'argu/no_tenant_constraint'
-require 'argu/whitelist_constraint'
 require 'sidekiq/prometheus/exporter'
 require 'sidekiq/web'
 

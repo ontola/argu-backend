@@ -2,8 +2,6 @@
 
 require 'factory_bot'
 require 'factory_bot_rails'
-require 'argu/test_helpers/test_helper_methods'
-require 'argu/test_helpers/trait_listener'
 require 'sidekiq/testing'
 
 module FactoryBot

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu/api'
-
 class DirectMessage
   include ActiveModel::Model
   include LinkedRails::Model

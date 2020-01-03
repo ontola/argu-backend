@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class GrantPolicyTest < PolicyTest
-  include DefaultPolicyTests
+class GrantPolicyTest < Argu::TestHelpers::PolicyTest
+  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) do
     create(:grant, edge: freetown, group: create(:group, parent: page), grant_set: GrantSet.participator)
   end

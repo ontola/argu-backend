@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu/errors/account_locked'
-require 'argu/errors/unknown_email'
-require 'argu/errors/unknown_username'
-require 'argu/errors/wrong_password'
-
 module Doorkeeper
   class Application < ActiveRecord::Base
     ARGU_ID = 0

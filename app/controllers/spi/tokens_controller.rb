@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu'
-
 module SPI
   class TokensController < Doorkeeper::TokensController
     include RedisResourcesHelper

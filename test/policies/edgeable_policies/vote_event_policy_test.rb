@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class VoteEventPolicyTest < PolicyTest
-  include DefaultPolicyTests
+class VoteEventPolicyTest < Argu::TestHelpers::PolicyTest
+  include Argu::TestHelpers::DefaultPolicyTests
   subject { vote_event }
   let(:trashed_subject) { trashed_vote_event }
   let(:expired_subject) { expired_vote_event }

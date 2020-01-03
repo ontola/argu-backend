@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'argu/test_helpers/policy_test'
-
-class ShortnamePolicyTest < PolicyTest
-  include DefaultPolicyTests
+class ShortnamePolicyTest < Argu::TestHelpers::PolicyTest
+  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) { create(:discussion_shortname, owner: motion, root_id: motion.root_id, primary: false) }
   let(:primary_subject) { create(:discussion_shortname, owner: motion, root_id: motion.root_id) }
 

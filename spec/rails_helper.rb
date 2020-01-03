@@ -13,9 +13,6 @@ require 'database_cleaner'
 require 'fakeredis/rspec'
 require 'sidekiq/testing'
 require 'webmock/rspec'
-require 'argu/test_helpers'
-require 'argu/test_helpers/fixes'
-require 'argu/test_helpers/rspec_helpers'
 
 Sidekiq::Testing.server_middleware do |chain|
   chain.add ActsAsTenant::Sidekiq::Server

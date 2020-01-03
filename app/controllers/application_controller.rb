@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-require 'argu'
-require 'argu/api'
-
 class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
   include ActiveResponse::Controller
   include LinkedRails::Controller
-  include Argu::Announcements
+  include Argu::Controller::Announcements
   include Argu::Controller::Authentication
   include Argu::Controller::ErrorHandling
   include ActiveResponseHelper
