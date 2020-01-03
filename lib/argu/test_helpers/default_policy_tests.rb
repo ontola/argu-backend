@@ -13,6 +13,7 @@ module DefaultPolicyTests
     def generate_crud_tests
       %i[create show update destroy].each do |method|
         define_method "test_#{method}_#{model_name}" do
+          direct_child if method == :destroy
           test_policy(subject, method, send("#{method}_results"))
         end
       end
@@ -47,6 +48,7 @@ module DefaultPolicyTests
         test_policy(trashed_subject, :create, create_trashed_results) if trashed_subject
       end
       define_method "test_destroy_#{model_name}_with_children" do
+        direct_child&.update(publisher: create(:user))
         test_policy(subject, :destroy, destroy_with_children_results) if direct_child
       end
     end

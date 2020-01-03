@@ -9,7 +9,6 @@ class VotePolicyTest < PolicyTest
   let(:trashed_subject) { trashed_vote }
   let(:expired_subject) { expired_vote }
   let(:unpublished_subject) { unpublished_vote }
-  let(:direct_child) { nil }
   let(:hidden_vote) do
     create(:vote,
            parent: motion.default_vote_event,

@@ -180,7 +180,11 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def has_content_children?
-    record.children_counts.except('votes_con', 'votes_neutral', 'votes_pro').values.map(&:to_i).sum.positive?
+    record
+      .children
+      .where('owner_type NOT IN (?)', %w[Vote VoteEvent])
+      .where('publisher_id != ?', record.publisher_id)
+      .any?
   end
 
   def init_grant_tree

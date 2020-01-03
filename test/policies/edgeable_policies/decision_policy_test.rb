@@ -9,7 +9,6 @@ class DecisionPolicyTest < PolicyTest
   let(:trashed_subject) { trashed_decision }
   let(:expired_subject) { expired_decision }
   let(:unpublished_subject) { unpublished_decision }
-  let(:direct_child) { nil }
 
   let(:group) { create(:group, parent: argu) }
   let(:forwarded_user) { create(:group_membership, parent: group).member.profileable }

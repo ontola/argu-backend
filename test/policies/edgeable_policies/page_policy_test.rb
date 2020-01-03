@@ -9,7 +9,6 @@ class PagePolicyTest < PolicyTest
   let(:trashed_subject) { nil }
   let(:expired_subject) { nil }
   let(:unpublished_subject) { nil }
-  let(:direct_child) { nil }
   let(:creator) { page.publisher }
 
   generate_edgeable_tests

@@ -33,6 +33,7 @@ class PolicyTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
   let(:initiator) { create_initiator(page, create(:user)) }
   let(:participator) { create_participator(page, create(:user)) }
   let(:guest) { GuestUser.new(id: 'my_id') }
+  let(:direct_child) { nil }
 
   let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:linked_record_argument) { create(:argument, parent: linked_record, publisher: creator) }

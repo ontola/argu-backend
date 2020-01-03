@@ -24,6 +24,10 @@ class ContainerNodePolicy < EdgePolicy
     ContainerNode.descendants.detect { |klass| has_grant?(:create, klass.name) }
   end
 
+  def has_content_children?
+    false
+  end
+
   def list?
     show?
     true
