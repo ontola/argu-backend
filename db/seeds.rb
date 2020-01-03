@@ -11,7 +11,7 @@ current_tenant = Apartment::Tenant.current
 puts "Seeding #{current_tenant}" # rubocop:disable Rails/Output
 
 if current_tenant == 'public'
-  Apartment::Tenant.drop(:argu)
+  Apartment::Tenant.drop(:argu) if ApplicationRecord.connection.schema_exists?('argu')
 
   ActiveRecord::Base.transaction do
     Apartment::Tenant.switch('public') do
