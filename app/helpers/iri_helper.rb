@@ -104,10 +104,12 @@ module IRIHelper
     return if root.blank?
 
     slashed_iri = iri.ends_with?('/') ? iri.to_s : "#{iri}/"
+
+    return root if slashed_iri == "#{root.iri}/" || root.iri.path && slashed_iri.ends_with?("#{root.iri.path}/")
+
     path = root.iri.path.present? ? slashed_iri.split("#{root.iri.path}/").last : URI(slashed_iri).path
     opts = opts_from_iri(path, root)
-    return root if opts == {}
-    return if opts[:type].blank? || opts[:id].blank?
+    return if opts.blank? || opts[:type].blank? || opts[:id].blank?
 
     resource_from_opts(root, opts)
   end
