@@ -94,6 +94,10 @@ class GroupMembershipsController < ServiceController
   end
   alias destroy_success_location redirect_location
 
+  def requires_setup?
+    false
+  end
+
   def show_success_html
     flash.keep
     respond_with_redirect(location: redirect_location)
