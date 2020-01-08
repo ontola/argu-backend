@@ -4,6 +4,7 @@ class Follow < ApplicationRecord
   extend ActsAsFollower::FollowerLib
   extend ActsAsFollower::FollowScopes
 
+  enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
 
@@ -31,10 +32,6 @@ class Follow < ApplicationRecord
     iri = ActsAsTenant.with_tenant(followable&.root) { super }
     @iri = iri if opts.blank?
     iri
-  end
-
-  def unsubscribe_iri
-    iri_from_template(:follows_unsubscribe_iri, id: id)
   end
 
   private

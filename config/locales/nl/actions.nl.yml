@@ -78,6 +78,9 @@ nl:
     email_addresses:
       create:
         submit: "Voeg toe"
+    follows:
+      destroy:
+        submit: "Niet meer volgen"
     forums:
       create:
         description: "Een verzamelplaats voor verschillende soorten discussies."

@@ -23,17 +23,21 @@ RSpec.describe 'Follows', type: :request do
     expect(response.code).to eq('303')
     expect(response).to redirect_to(parent_path)
   end
-  let(:unsubscribe_path) do
-    iri_from_template(:follows_unsubscribe_iri, id: subject, root_id: argu.url)
-  end
+  let(:unsubscribe_path) { "#{subject.iri}/unsubscribe" }
   let(:non_existing_unsubscribe_path) do
-    iri_from_template(:follows_unsubscribe_iri, id: non_existing_id, root_id: argu.url)
+    "#{iri_from_template(:follows_iri, id: non_existing_id, root_id: argu.url)}/unsubscribe"
   end
   let(:unauthorized_user) do
     freetown.grants.destroy_all
     create_forum(public_grant: 'participator', parent: create(:page))
     create(:user)
   end
+  let(:expect_delete_destroy_unauthorized_json_api) { expect_delete_destroy_json_api }
+  let(:expect_delete_destroy_unauthorized_serializer) { expect_delete_destroy_serializer }
+  let(:expect_delete_destroy_unauthorized_html) { expect_delete_destroy_html }
+  let(:expect_delete_destroy_guest_json_api) { expect_delete_destroy_json_api }
+  let(:expect_delete_destroy_guest_serializer) { expect_delete_destroy_serializer }
+  let(:expect_delete_destroy_guest_html) { expect_delete_destroy_html }
 
   subject { create(:follow, follower: staff, followable: freetown) }
 

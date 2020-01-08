@@ -2,9 +2,8 @@
 
 class FollowsController < AuthorizedController
   PERMITTED_CLASSES = Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze
-  skip_before_action :check_if_registered, if: :unsubscribe?
-  skip_before_action :authorize_action, if: :unsubscribe?
-  skip_before_action :verify_authenticity_token, if: :unsubscribe?
+  skip_before_action :check_if_registered, only: :destroy
+  skip_before_action :verify_authenticity_token, only: :destroy
   prepend_before_action :set_tenant
 
   private
@@ -50,6 +49,7 @@ class FollowsController < AuthorizedController
 
   def destroy_execute
     return true if request.head?
+
     @unsubscribed = !authenticated_resource.never? && authenticated_resource.never!
   end
 
@@ -95,14 +95,10 @@ class FollowsController < AuthorizedController
   end
 
   def set_tenant
-    ActsAsTenant.current_tenant = authenticated_resource.followable.root
+    ActsAsTenant.current_tenant ||= authenticated_resource.followable.root
   end
 
   def redirect_location
     authenticated_resource.followable.iri
-  end
-
-  def unsubscribe?
-    action_name == 'destroy' && request.method != 'DELETE'
   end
 end

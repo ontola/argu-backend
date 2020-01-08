@@ -6,7 +6,7 @@ class FollowPolicy < RestrictivePolicy
   end
 
   def destroy?
-    record.follower == user
+    !record.never?
   end
 
   def show?

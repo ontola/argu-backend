@@ -210,11 +210,10 @@ Rails.application.routes.draw do
     include_route_concerns
   end
 
-  resources :follows, only: :create do
+  resources :follows, only: %i[create show] do
     include_route_concerns
-    delete :destroy, on: :member
     get :unsubscribe, action: :destroy, on: :member
-    post :unsubscribe, action: :destroy, on: :member
+    post '', action: :destroy, on: :member
   end
 
   resources :shortnames, only: [] do

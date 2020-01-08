@@ -136,7 +136,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
       follows: [
         {
           notifications: WebMock::Matchers::AnyArgMatcher.new(false),
-          follow_id: ActsAsTenant.with_tenant(argu) { user.follow_for(motion)&.unsubscribe_iri },
+          follow_id: ActsAsTenant.with_tenant(argu) { user.follow_for(motion)&.iri },
           followable: {display_name: motion.display_name, id: motion.iri, pro: nil, type: 'Motion'},
           organization: {display_name: motion.root.display_name}
         }

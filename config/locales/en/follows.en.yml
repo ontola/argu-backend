@@ -1,0 +1,9 @@
+en:
+  follows:
+    type: "Subscription"
+    plural: "Subscriptions"
+    status:
+      never: "You are not receiving notifications for '%{item}'."
+      decisions: "You are receiving notifications for decisions on '%{item}'."
+      news: "You are receiving notifications for important news about '%{item}'."
+      reactions: "You are receiving notifications for all replies to '%{item}'."

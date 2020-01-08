@@ -78,6 +78,9 @@ en:
     email_addresses:
       create:
         submit: "Add"
+    follows:
+      destroy:
+        submit: "Stop following"
     forums:
       create:
         description: "A place for different kind of discussions."

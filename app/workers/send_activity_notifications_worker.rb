@@ -37,7 +37,7 @@ class SendActivityNotificationsWorker
     return if followable.nil?
 
     result[followable.id] ||= Struct::Follow.new(
-      ActsAsTenant.with_tenant(followable.root) { @user.follow_for(followable)&.unsubscribe_iri },
+      ActsAsTenant.with_tenant(followable.root) { @user.follow_for(followable)&.iri },
       {display_name: followable.root.display_name},
       {
         id: followable.iri,
