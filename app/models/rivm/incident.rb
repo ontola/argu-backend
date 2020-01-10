@@ -6,7 +6,7 @@ class Incident < Edge
   enhance Scenariable
 
   parentable :risk
-  validates :description, length: {maximum: 5000}
+  validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
 
   class << self

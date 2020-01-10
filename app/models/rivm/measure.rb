@@ -10,7 +10,7 @@ class Measure < Edge
   enhance ActivePublishable
 
   parentable :measure_type
-  validates :description, length: {maximum: 5000}
+  validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
   validates :comments_allowed, presence: true
   validate :validate_parent_type

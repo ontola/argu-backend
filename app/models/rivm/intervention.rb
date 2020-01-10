@@ -70,12 +70,12 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
              class_name: 'Employment',
              dependent: false
 
-  validates :description, length: {maximum: 5000}
+  validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
-  validates :goal, length: {maximum: 5000}
-  validates :additional_introduction_information, length: {maximum: 5000}
-  validates :cost_explanation, length: {maximum: 5000}
-  validates :security_improvement_reason, length: {maximum: 5000}
+  validates :goal, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
+  validates :additional_introduction_information, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
+  validates :cost_explanation, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
+  validates :security_improvement_reason, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   # rubocop:disable Rails/Validation
   validates_presence_of(
     :goal, :risk_reduction, :continuous, :independent, :management_involvement, :training_required, :nature_of_costs,

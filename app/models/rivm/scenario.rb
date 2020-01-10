@@ -5,7 +5,7 @@ class Scenario < Edge
   enhance Attachable
 
   parentable :incident
-  validates :description, length: {maximum: 5000}
+  validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
 
   def parent_collections(user_context)
