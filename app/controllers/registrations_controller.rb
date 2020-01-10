@@ -40,8 +40,7 @@ class RegistrationsController < Devise::RegistrationsController # rubocop:disabl
 
     mail_sent = send_confirmation_mail(
       resource,
-      session.presence && RedisResource::Relation
-                            .where(publisher: guest_user, parent: {owner_type: 'VoteEvent'})
+      RedisResource::Relation.where(publisher: guest_user, parent: {owner_type: 'VoteEvent'})
     )
     resource.accept_terms!(mail_sent) if accept_terms_param
     schedule_redis_resource_worker(guest_user, resource, resource.r) if session_id.present?
