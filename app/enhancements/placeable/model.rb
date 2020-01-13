@@ -12,14 +12,14 @@ module Placeable
       accepts_nested_attributes_for :placements, allow_destroy: true
     end
 
-    def resource_added_delta
+    def added_delta
       return super unless parent.respond_to?(:children_placements_iri)
 
       super + [
         [parent.children_placements_iri, NS::SP[:Variable], NS::SP[:Variable], NS::ONTOLA[:invalidate]]
       ]
     end
-    alias resource_removed_delta resource_added_delta
+    alias removed_delta added_delta
 
     def requires_location?
       is_a?(Edge) && owner_type == 'Motion' && parent.owner_type == 'Question' && parent.require_location

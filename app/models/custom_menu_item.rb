@@ -54,12 +54,12 @@ class CustomMenuItem < ApplicationRecord
     [resource.custom_menu_item_collection(user_context: user_context)]
   end
 
-  def resource_added_delta
+  def added_delta
     super + [
       [parent.iri, NS::SP[:Variable], NS::SP[:Variable], NS::ONTOLA[:invalidate]]
     ]
   end
-  alias resource_removed_delta resource_added_delta
+  alias removed_delta added_delta
 
   def raw_label=(value)
     self.label = value

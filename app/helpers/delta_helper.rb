@@ -44,13 +44,13 @@ module DeltaHelper
   def resource_added_delta(resource)
     delta = super + counter_cache_delta(resource)
     delta << invalidate_resource_delta(resource.action(:publish)) if resource.try(:is_publishable?)
-    delta.concat(resource.resource_added_delta) if resource.respond_to?(:resource_added_delta)
+    delta.concat(resource.added_delta) if resource.respond_to?(:added_delta)
     delta
   end
 
   def resource_removed_delta(resource)
     delta = super + counter_cache_delta(resource)
-    delta.concat(resource.resource_removed_delta) if resource.respond_to?(:resource_removed_delta)
+    delta.concat(resource.removed_delta) if resource.respond_to?(:removed_delta)
     delta
   end
 end
