@@ -30,9 +30,11 @@ class InterventionSerializer < ContentEdgeSerializer
   attribute :business_section, predicate: NS::RIVM[:businessSection]
   attribute :business_section_employees, predicate: NS::RIVM[:businessSectionEmployees]
   attribute :comments_allowed, predicate: NS::RIVM[:commentsAllowed]
+  attribute :contact_allowed, predicate: NS::RIVM[:contactAllowed]
   attribute :one_off_costs_score, predicate: NS::RIVM[:oneOffCostsScore]
   attribute :recurring_costs_score, predicate: NS::RIVM[:recurringCostsScore]
   attribute :security_improved_score, predicate: NS::RIVM[:securityImprovedScore]
+  attribute :communicate_action, predicate: NS::ARGU[:communicateAction]
 
   enum :plans_and_procedure
   enum :people_and_resources
@@ -56,6 +58,11 @@ class InterventionSerializer < ContentEdgeSerializer
   enum :business_section
   enum :business_section_employees
   enum :comments_allowed
+  enum :contact_allowed
+
+  def communicate_action
+    new_iri(object, :direct_messages) if object.contact_allowed?
+  end
 
   def one_off_costs_score
     Intervention.one_off_costs[object.one_off_costs]

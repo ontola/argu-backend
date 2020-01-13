@@ -5,6 +5,7 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   extend InterventionOptions
   enhance Attachable
   enhance Commentable
+  enhance Contactable
   enhance Feedable
   enhance Statable
   enhance GrantResettable
@@ -62,6 +63,7 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   property :business_section, :integer, NS::RIVM[:businessSection], enum: business_section_options
   property :business_section_employees, :integer, NS::RIVM[:businessSectionEmployees], enum: section_employees_options
   property :comments_allowed, :integer, NS::RIVM[:commentsAllowed], enum: comments_allowed_options
+  property :contact_allowed, :integer, NS::RIVM[:contactAllowed], enum: contact_allowed_options
 
   counter_cache true
 
@@ -80,7 +82,7 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   validates_presence_of(
     :goal, :risk_reduction, :continuous, :independent, :management_involvement, :training_required, :nature_of_costs,
     :one_off_costs, :recurring_costs, :effectivity_research_method, :security_improved, :business_section,
-    :business_section_employees, :comments_allowed, :employment_id
+    :business_section_employees, :comments_allowed, :contact_allowed, :employment_id
   )
   # rubocop:enable Rails/Validation
   validate :validate_parent_type

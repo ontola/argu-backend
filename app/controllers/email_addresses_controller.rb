@@ -5,6 +5,12 @@ class EmailAddressesController < ParentableController
 
   private
 
+  def active_response_success_message
+    return super unless action_name == 'create'
+
+    I18n.t('email_addresses.create.success')
+  end
+
   def create_execute
     update_execute
   end

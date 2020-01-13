@@ -45,7 +45,7 @@ nl:
       training: "Training en opleidingssystemen"
       knowledge: "Kennis van veiligheid, risico’s en regels"
       unexpected_situation: "Hoe om te gaan met onverwachte situaties"
-      other_competence: "Een ander aspect van competentie/deskundigheid,"
+      other_competence: "Een ander aspect van competentie/deskundigheid"
     communication:
       open_communication: "Open communicatie"
       communication_processed: "Communicatieprocessen en afspraken"
@@ -151,6 +151,9 @@ nl:
       business_section_1000_2999: "1000 – 2.999 medewerkers"
       business_section_3000_plus: "3000 of meer medewerkers"
     comments_allowed:
+      comments_are_allowed: "Ja"
+      comments_not_allowed: "Nee"
+    contact_allowed:
       comments_are_allowed: "Ja"
       comments_not_allowed: "Nee"
     properties:
@@ -305,6 +308,7 @@ nl:
         business_section: "Is de interventie gericht op het gehele bedrijf of op een deel van het bedrijf zoals een afdeling, regio, land of vestiging?"
         business_section_employees: "Hoeveel medewerkers zijn er ongeveer werkzaam in het land, de regio, vestiging of afdeling van het bedrijf?"
         comments_allowed: "Wilt u openbaar commentaar op uw interventie mogelijk maken?"
+        contact_allowed: "Mogen mensen contact met u opnemen over de interventie?"
       measure:
         comments_allowed: "Wilt u openbaar commentaar op uw interventie mogelijk maken?"
         parent_id: "Onder welke op deze website beschreven maatregelen is dit voorbeeld in te delen?"

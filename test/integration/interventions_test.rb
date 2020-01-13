@@ -110,7 +110,8 @@ class InterventionsTest < ActionDispatch::IntegrationTest
       security_improvement_reason: 'Security improvement reason',
       business_section: :full_business,
       business_section_employees: :business_section_100_249,
-      comments_allowed: :comments_are_allowed
+      comments_allowed: :comments_are_allowed,
+      contact_allowed: :contact_is_allowed
     }.merge(opts)
   end
 

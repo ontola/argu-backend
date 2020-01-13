@@ -21,7 +21,7 @@ class ApplicationForm < LinkedRails::Form
       {
         custom: true,
         datatype: NS::XSD[:string],
-        default_value: -> { user_context.user.iri },
+        default_value: -> { user_context.user.guest? ? nil : user_context.user.iri },
         max_count: 1,
         sh_in: -> { actors_iri(target.root) }
       }

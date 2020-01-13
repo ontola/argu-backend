@@ -6,3 +6,5 @@ en:
     form:
       user:
         label: "User"
+    create:
+      success: "Email address added to your account. Please confirm the new address by clicking the link we've sent."

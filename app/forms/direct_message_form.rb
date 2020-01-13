@@ -2,7 +2,14 @@
 
 class DirectMessageForm < ApplicationForm
   fields [
-    {email_address_id: {sh_in: -> { user_context.user.email_addresses }}},
+    {
+      email_address_id: {
+        default_value: lambda {
+          has_confirmed_email_addresses? ? user_context.user.primary_email_record.iri : nil
+        },
+        sh_in: -> { collection_iri(user_context.user, :email_addresses, filter: {confirmed: 'yes'}) }
+      }
+    },
     :subject,
     {body: {max_length: 5000}},
     :footer
@@ -14,4 +21,14 @@ class DirectMessageForm < ApplicationForm
                  properties: [
                    actor: actor_selector
                  ]
+
+  private
+
+  def confirmed_email_addresses
+    user_context.user.email_addresses.confirmed
+  end
+
+  def has_confirmed_email_addresses?
+    confirmed_email_addresses.any?
+  end
 end

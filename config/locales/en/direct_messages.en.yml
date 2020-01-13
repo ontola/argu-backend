@@ -5,13 +5,16 @@ en:
     notice:
       success: "The mail will be sent"
     header: "Send message"
-    description: "Send an e-mail to %{creator}, the poster of this item. If he replies to the e-mail, the reply will be send to your mailbox directly so you can continue the conversation outside of Argu."
+    description: "Send an e-mail to %{creator}, the poster of this item. If he replies to the e-mail, the reply will be send to your mailbox directly so you can continue the conversation outside of this platform."
   formtastic:
     labels:
       direct_message:
-        email: "Sender"
+        email_address_id: "Sender"
         subject: "Subject"
         body: "Message"
+    hints:
+      direct_message:
+        email_address_id: "Je kan email versturen vanaf een van de aan jouw account gekoppelde bevestigde email adressen."
     actions:
       direct_message:
         create: "Send"

@@ -6,3 +6,5 @@ nl:
     form:
       user:
         label: "Gebruiker"
+    create:
+      success: "Email succesvol toegevoegd. Bevestig het adres door op de link te klikken die we hebben gestuurd."

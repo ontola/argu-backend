@@ -110,6 +110,7 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
     properties: [
       :business_section,
       {business_section_employees: {input_field: NS::ONTOLA['element/input/radio']}},
+      :contact_allowed,
       :comments_allowed
     ]
   )

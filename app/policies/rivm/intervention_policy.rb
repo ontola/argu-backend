@@ -6,7 +6,7 @@ class InterventionPolicy < EdgePolicy
     attributes.concat %i[
       display_name description goal additional_introduction_information one_off_costs
       recurring_costs cost_explanation effectivity_research_method security_improved security_improvement_reason
-      business_section business_section_employees comments_allowed
+      business_section business_section_employees comments_allowed contact_allowed
     ]
     attributes.concat %i[employment_id] unless user.guest? || (record.publisher && user != record.publisher)
     add_array_attributes(
@@ -23,6 +23,12 @@ class InterventionPolicy < EdgePolicy
     return true if record.parent.is_a?(Page) || record.parent.nil?
 
     super
+  end
+
+  def contact?
+    return false if user.guest?
+
+    record.contact_is_allowed? || super
   end
 
   def show?

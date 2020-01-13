@@ -206,7 +206,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :email_addresses, only: [] do
+  resources :email_addresses, only: %i[show] do
     include_route_concerns
   end
 

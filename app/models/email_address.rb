@@ -10,6 +10,7 @@ class EmailAddress < ApplicationRecord
   include Broadcastable
   include Parentable
   include RedisResourcesHelper
+  include DeltaHelper
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   belongs_to :user, inverse_of: :email_addresses
@@ -26,6 +27,7 @@ class EmailAddress < ApplicationRecord
     NS::ONTOLA[:sendConfirmationAction],
     NS::ONTOLA[:destroyAction]
   ]
+  filterable confirmed: {key: :confirmed_at, values: {yes: 'NOT NULL', no: 'NULL'}}
 
   parentable :user
   self.default_sortings = [{key: NS::SCHEMA[:email], direction: :asc}]
@@ -39,6 +41,7 @@ class EmailAddress < ApplicationRecord
 
   def after_confirmation
     user.edges.update_all(confirmed: true) # rubocop:disable Rails/SkipsModelValidations
+    UserChannel.broadcast_to(user, n3_delta([invalidate_collection_delta(user.email_address_collection)]))
     Vote.fix_counts
   end
 
