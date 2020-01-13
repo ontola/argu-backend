@@ -62,6 +62,37 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     expect_response(200)
   end
 
+  test 'guest should head freetown motion edit page' do
+    sign_in guest_user, Doorkeeper::Application.argu_front_end
+
+    head edit_iri(freetown_motion), headers: argu_headers(accept: :nq)
+
+    expect_response(200)
+  end
+
+  test 'guest should head freetown motion with query params' do
+    sign_in guest_user, Doorkeeper::Application.argu_front_end
+
+    head "#{freetown_motion.iri}?query=true", headers: argu_headers(accept: :nq)
+
+    assert_redirected_to freetown_motion.iri
+  end
+
+  test 'guest should head non existing website' do
+    sign_in guest_user, Doorkeeper::Application.argu_front_end
+
+    head 'https://example.com', headers: argu_headers(accept: :nq)
+
+    expect_response(404, manifest: false)
+  end
+
+  test 'guest should head non existing path' do
+    sign_in guest_user, Doorkeeper::Application.argu_front_end
+
+    head "https://#{argu.iri_prefix}/wrong", headers: argu_headers(accept: :nq)
+
+    expect_response(404)
+  end
   ####################################
   # As User
   ####################################
@@ -119,6 +150,22 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     head freetown_motion, headers: argu_headers(accept: :nq)
 
     expect_response(200)
+  end
+
+  test 'user should head freetown motion edit page' do
+    sign_in user, Doorkeeper::Application.argu_front_end
+
+    head edit_iri(freetown_motion), headers: argu_headers(accept: :nq)
+
+    expect_response(200)
+  end
+
+  test 'user should head freetown motion with query params' do
+    sign_in user, Doorkeeper::Application.argu_front_end
+
+    head "#{freetown_motion.iri}?query=true", headers: argu_headers(accept: :nq)
+
+    assert_redirected_to freetown_motion.iri
   end
 
   test 'user should head non existing website' do

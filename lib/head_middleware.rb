@@ -42,7 +42,7 @@ class HeadMiddleware
   def language_from_r; end
 
   def resource_from_request
-    return unless ActsAsTenant.current_tenant
+    return unless ActsAsTenant.current_tenant && afe_request?
 
     resource_from_iri(request.original_url, ActsAsTenant.current_tenant)
   end
@@ -54,7 +54,7 @@ class HeadMiddleware
 
   def status_code_for_request(resource)
     actual_iri = resource.try(:iri_path)
-    if actual_iri.present? && actual_iri != request.path
+    if actual_iri.present? && actual_iri != request.fullpath
       headers['Location'] = resource.iri.to_s
       return 302
     end

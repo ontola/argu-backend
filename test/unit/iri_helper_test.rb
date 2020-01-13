@@ -20,12 +20,8 @@ class IriHelperTest < ActiveSupport::TestCase
     freetown_from_path('/freetown')
   end
 
-  test 'should find forum by a subview iri' do
-    freetown_from_path('/freetown/edit')
-  end
-
-  test 'should find forum by a subview iri with upcase shortname' do
-    freetown_from_path('/Freetown/edit')
+  test 'should find forum by its iri with upcase shortname' do
+    freetown_from_path('/Freetown')
   end
 
   test 'should find forum by its cannonical iri' do
@@ -53,11 +49,6 @@ class IriHelperTest < ActiveSupport::TestCase
   test 'should find forum of example.com' do
     resource_from_path(example, '/example', old_fe: false)
     assert_equal example, resource_from_iri!('https://example.com/example')
-  end
-
-  test 'should find forum of example.com by a subview iri' do
-    resource_from_path(example, '/example/edit', old_fe: false)
-    assert_equal example, resource_from_iri!('https://example.com/example/edit')
   end
 
   private

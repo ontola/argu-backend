@@ -58,7 +58,7 @@ module IRIHelper
     opts = ActsAsTenant.with_tenant(root) do
       Rails.application.routes.recognize_path(iri)
     end
-    return {} unless opts[:id].present? && opts[:controller].present?
+    return {} if opts[:controller].blank?
     opts[:type] = opts[:controller].singularize
     opts
   rescue ActionController::RoutingError
@@ -111,7 +111,7 @@ module IRIHelper
     opts = opts_from_iri(path, root)
     return if opts.blank? || opts[:type].blank? || opts[:id].blank?
 
-    resource_from_opts(root, opts)
+    resource_from_opts(root, opts) if opts[:action] == 'show'
   end
 
   def resource_from_opts(root, opts)
