@@ -23,6 +23,12 @@ class Users::PasswordsController < Devise::PasswordsController
     end
   end
 
+  def update
+    super do |resource|
+      resource.primary_email_record.confirm if resource.errors.blank?
+    end
+  end
+
   private
 
   def ld_action(opts = {})

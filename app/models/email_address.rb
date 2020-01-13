@@ -16,6 +16,7 @@ class EmailAddress < ApplicationRecord
   scope :confirmed, -> { where('confirmed_at IS NOT NULL') }
 
   before_save :remove_other_primaries
+  before_save :clear_reset_password_token, if: :primary_changed?
   before_save { |user| user.email = email.downcase if email.present? }
   before_update :send_confirmation_instructions, if: :email_changed?
 
@@ -93,6 +94,12 @@ class EmailAddress < ApplicationRecord
       next if email == self
       email.update(primary: false)
     end
+  end
+
+  def clear_reset_password_token
+    # rubocop:disable Rails/SkipsModelValidations
+    user.update_columns(reset_password_token: nil, reset_password_sent_at: nil)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   class << self

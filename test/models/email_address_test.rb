@@ -40,8 +40,11 @@ class EmailAddressTest < ActiveSupport::TestCase
     new_email = ActsAsTenant.with_tenant(argu) { user.email_addresses.create(email: 'test@example.com') }
     assert_email_sent
 
+    user.send(:set_reset_password_token)
+    assert_not_nil user.reload.reset_password_token
     new_email.update(primary: true)
     assert new_email.reload.primary?
     assert_not original_email.reload.primary?
+    assert_nil user.reload.reset_password_token
   end
 end

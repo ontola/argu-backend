@@ -69,6 +69,7 @@ module Users
     end
 
     test 'guest should put update password with shortname' do
+      assert_not user.confirmed?
       put user_password_path,
           params: {
             user: {
@@ -79,6 +80,7 @@ module Users
           }
       assert_redirected_to new_user_session_path
       assert_not_equal user.encrypted_password, user.reload.encrypted_password
+      assert user.confirmed?
     end
 
     test 'guest should put update password without shortname' do
