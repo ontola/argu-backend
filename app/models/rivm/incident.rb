@@ -4,6 +4,13 @@ class Incident < Edge
   include Edgeable::Content
   enhance Attachable
   enhance Scenariable
+  enhance LinkedRails::Enhancements::Tableable
+
+  with_columns default: [
+    NS::SCHEMA[:name],
+    NS::ARGU[:scenariosCount],
+    NS::SCHEMA[:datePublished]
+  ]
 
   parentable :risk
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}

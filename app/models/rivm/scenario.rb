@@ -3,8 +3,14 @@
 class Scenario < Edge
   include Edgeable::Content
   enhance Attachable
+  enhance LinkedRails::Enhancements::Tableable
+  with_columns default: [
+    NS::SCHEMA[:name],
+    NS::SCHEMA[:datePublished]
+  ]
 
   parentable :incident
+  counter_cache true
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
 
