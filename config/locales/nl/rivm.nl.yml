@@ -7,6 +7,9 @@ nl:
     type: "Gebeurtenis"
     type_new: "Nieuwe gebeurtenis"
     plural: "Gebeurtenissen"
+    properties:
+      scenarios_count:
+        label: "Scenario's"
   risks:
     type: "Gevaar"
     type_new: "Nieuw gevaar"
@@ -36,42 +39,50 @@ nl:
       responsibilities: "Afspraken rondom taken, verantwoordelijkheden en bevoegdheden"
       preparation: "Voorbereiding voor noodsituaties"
       other_plans: "Een ander aspect van plannen en procedures"
+      no_plans_and_procedure: "Geen effect op plannen en procedures"
     people_and_resources:
       labor_force: "Voldoende bezetting en genoeg collega’s"
       resources: "Beschikbaarheid van voldoende middelen"
       other_people_resource: "Een ander aspect van mensen en middelen"
+      no_people_and_resources: "Geen effect op beschikbaarheid van mensen en middelen"
     competence:
       craftsmanship: "Vakmanschap in de uitvoering van het werk"
       training: "Training en opleidingssystemen"
       knowledge: "Kennis van veiligheid, risico’s en regels"
       unexpected_situation: "Hoe om te gaan met onverwachte situaties"
       other_competence: "Een ander aspect van competentie/deskundigheid"
+      no_competence: "Geen effect op competentie / deskundigheid"
     communication:
       open_communication: "Open communicatie"
       communication_processed: "Communicatieprocessen en afspraken"
       communication_resources: "Communicatiemiddelen (bijv. telefoons, porto’s enz.)"
       other_communication: "Een ander aspect van communicatie"
+      no_communication: "Geen effect op communicatie"
     motivation_and_commitment:
       rules_and_behavior: "Regelovertreding en gedrag"
       leading_by_example: "Voorbeeldgedrag van leidinggevenden"
       participation: "Participatie van medewerkers en betrokkenheid bij veiligheid"
       other_motivation: "Een ander aspect van motivatie en commitment"
+      no_motivation_and_commitment: "Geen effect op motivatie en commitment"
     conflict_and_prioritization:
       leadership_priorities: "De prioriteit voor veiligheid bij leidinggevenden"
       consitent_leadership: "Consistent leiderschap"
       dilemmas: "Omgaan met dilemma’s / afwegingen"
       other_conflict: "Een ander aspect van conflictoplossing en prioriteiten"
+      no_conflict_and_prioritization: "Geen effect op conflictoplossing en prioriteiten"
     ergonomics:
       buttons_and_devices: "Ergonomie van knoppen, afsluiters en apparaten"
       software: "Ergonomie van controlesystemen, schermen en software"
       housekeeping: "Opgeruimdheid / housekeeping"
       other_ergonomics: "Een ander aspect van ergonomie"
+      no_ergonomics: "Geen effect op ergonomie"
     tools:
       tool_availability: "Beschikbaarheid (reserve) onderdelen"
       design_process: "Ontwerp processen"
       technical_state: "Technische staat en onderhoud"
       personal_protection: "Persoonlijke beschermingsmiddelen"
       other_tools: "Een ander aspect van gereedschap, materiaal en (reserve) onderdelen"
+      no_tools: "Geen effect op gereedschap, materiaal en (reserve) onderdelen"
     target_audience:
       operational_employess: "Operationele medewerkers"
       contractors: "(Onder)aannemers"

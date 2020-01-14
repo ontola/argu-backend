@@ -2,35 +2,39 @@
 
 module InterventionOptions
   def plans_and_procedure_options
-    {usability: 1, planning: 2, procedures: 3, responsibilities: 4, preparation: 5, other_plans: 6}
+    {usability: 1, planning: 2, procedures: 3, responsibilities: 4, preparation: 5, other_plans: 6,
+     no_plans_and_procedure: -1}
   end
 
   def people_and_resources_options
-    {labor_force: 1, resources: 2, other_people_resource: 3}
+    {labor_force: 1, resources: 2, other_people_resource: 3, no_people_and_resources: -1}
   end
 
   def competence_options
-    {craftsmanship: 1, training: 2, knowledge: 3, unexpected_situation: 4, other_competence: 5}
+    {craftsmanship: 1, training: 2, knowledge: 3, unexpected_situation: 4, other_competence: 5, no_competence: -1}
   end
 
   def communication_options
-    {open_communication: 1, communication_processed: 2, communication_resources: 3, other_communication: 4}
+    {open_communication: 1, communication_processed: 2, communication_resources: 3, other_communication: 4,
+     no_communication: -1}
   end
 
   def motivation_and_commitment_options
-    {rules_and_behavior: 1, leading_by_example: 2, participation: 3, other_motivation: 4}
+    {rules_and_behavior: 1, leading_by_example: 2, participation: 3, other_motivation: 4,
+     no_motivation_and_commitment: -1}
   end
 
   def conflict_and_prioritization_options
-    {leadership_priorities: 1, consitent_leadership: 2, dilemmas: 3, other_conflict: 4}
+    {leadership_priorities: 1, consitent_leadership: 2, dilemmas: 3, other_conflict: 4,
+     no_conflict_and_prioritization: -1}
   end
 
   def ergonomics_options
-    {buttons_and_devices: 1, software: 2, housekeeping: 3, other_ergonomics: 4}
+    {buttons_and_devices: 1, software: 2, housekeeping: 3, other_ergonomics: 4, no_ergonomics: -1}
   end
 
   def tools_options
-    {tool_availability: 1, design_process: 2, technical_state: 3, personal_protection: 4, other_tools: 5}
+    {tool_availability: 1, design_process: 2, technical_state: 3, personal_protection: 4, other_tools: 5, no_tools: -1}
   end
 
   def target_audience_options
