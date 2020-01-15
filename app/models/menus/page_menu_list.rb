@@ -22,9 +22,10 @@ class PageMenuList < ApplicationMenuList
   def new_container_node_item
     menu_item(
       :new_component,
+      image: 'fa-plus',
       policy: :create_child?,
       policy_arguments: %i[forums],
-      href: RDF::DynamicURI(path_with_hostname(expand_uri_template(:new_container_node_iri, display: :grid)))
+      href: RDF::DynamicURI(path_with_hostname(expand_uri_template(:new_container_node_iri)))
     )
   end
 

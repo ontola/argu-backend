@@ -9,6 +9,7 @@ GrantSet.new(title: 'staff').save(validate: false)
 
 all_grant_sets = GrantSet.reserved
 PermittedAction.create_for_grant_sets('Page', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('ContainerNode', 'show', all_grant_sets)
 PermittedAction.create_for_grant_sets('Forum', 'show', all_grant_sets)
 PermittedAction.create_for_grant_sets('Blog', 'show', all_grant_sets)
 PermittedAction.create_for_grant_sets('Dashboard', 'show', all_grant_sets)

@@ -33,6 +33,7 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
       collection_options.merge(
         association_base: actions_array,
         association_class: ::Actions::Item,
+        default_display: :grid,
         default_type: :paginated,
         parent_uri_template: :new_container_node_iri,
         title: I18n.t('container_nodes.type_new')
