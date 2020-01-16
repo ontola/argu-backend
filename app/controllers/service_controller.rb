@@ -72,6 +72,13 @@ class ServiceController < ParentableController
     action_service.commit
   end
 
+  def resource_new_params
+    HashWithIndifferentAccess.new(
+      creator: service_creator,
+      publisher: service_publisher
+    )
+  end
+
   def service_creator
     current_actor.actor
   end

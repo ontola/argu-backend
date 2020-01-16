@@ -29,8 +29,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :parent,
              class_name: 'Edge',
              inverse_of: :children
-  belongs_to :publisher, class_name: 'User', required: true, foreign_key: :publisher_id
-  belongs_to :creator, class_name: 'Profile', required: true, foreign_key: :creator_id
+  belongs_to :publisher, class_name: 'User', required: true, foreign_key: :publisher_id, autosave: false
+  belongs_to :creator, class_name: 'Profile', required: true, foreign_key: :creator_id, autosave: false
   has_many :activities,
            -> { order(:created_at) },
            foreign_key: :trackable_edge_id,
@@ -80,6 +80,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :measure_types
   has_many_children :motions
   has_many_children :questions
+  has_many_children :surveys
+  has_many_children :submissions
   has_many_children :risks
   has_many_children :scenarios
   has_many_children :topics

@@ -350,6 +350,12 @@ Rails.application.routes.draw do
             path: 'q' do
     include_route_concerns
   end
+  resources :surveys, only: %i[show] do
+    include_route_concerns
+    resource :submission, only: %i[create] do
+      include_route_concerns
+    end
+  end
   resources :shortnames, only: %i[new create index] do
     collection do
       concerns :nested_actionable

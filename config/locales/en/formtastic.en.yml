@@ -109,6 +109,9 @@ en:
       dashboard:
         bio: "Dashboard goal"
         bio_long: "More information"
+      survey:
+        bio: "Survey goal"
+        external_iri: "Typeform url"
       group:
         name: "Name"
         name_singular: "Name singular"

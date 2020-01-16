@@ -1,0 +1,13 @@
+en:
+  surveys:
+    type: "Survey"
+    type_new: "New survey"
+    plural: "Surveys"
+  properties:
+    surveys:
+      external_iri:
+        helper_text: "See [our helpdesk](https://app.argu.co/argu/t/10509) for more information about creating surveys"
+  formtastic:
+    placeholders:
+      survey:
+        external_iri: "https://[userName].typeform.com/to/[surveyId]"

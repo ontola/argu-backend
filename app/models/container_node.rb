@@ -19,6 +19,7 @@ class ContainerNode < Edge
   enhance LinkedRails::Enhancements::Tableable
   enhance CreativeWorkable
   enhance CustomActionable
+  enhance Surveyable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]

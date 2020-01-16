@@ -1,0 +1,34 @@
+# frozen_string_literal: true
+
+class SurveyMenuList < ApplicationMenuList
+  include Menus::FollowMenuItems
+  include Menus::ShareMenuItems
+  include Menus::ActionMenuItems
+
+  has_action_menu
+  has_follow_menu
+  has_share_menu
+
+  private
+
+  def action_menu_items
+    [
+      edit_link,
+      external_link,
+      move_link,
+      new_update_link,
+      copy_share_link(resource.iri),
+      *trash_and_destroy_links
+    ]
+  end
+
+  def external_link
+    menu_item(
+      :external,
+      image: 'fa-external-link',
+      label: I18n.t('menus.default.typeform'),
+      href: resource.manage_iri,
+      policy: :update?
+    )
+  end
+end
