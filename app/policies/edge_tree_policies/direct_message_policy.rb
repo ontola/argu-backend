@@ -9,5 +9,5 @@ class DirectMessagePolicy < EdgeTreePolicy
     edgeable_policy.contact?
   end
 
-  delegate :show, to: :edgeable_policy
+  delegate :show?, to: :edgeable_policy
 end
