@@ -203,7 +203,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def create_meta # rubocop:disable Metrics/AbcSize
-    data = []
+    data = counter_cache_delta(authenticated_resource)
     if authenticated_resource.parent.is_a?(VoteEvent)
       if default_vote_event_id?
         replace_vote_event_meta(data)
@@ -219,11 +219,10 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       action_delta(data, :add, voteable.comment_collection, :create_opinion, include_parent: true)
       opinion_delta(data, voteable)
     else
-      data = counter_cache_delta(authenticated_resource)
+      action_delta(data, :remove, authenticated_resource.parent, :create_vote, include_favorite: true)
+      action_delta(data, :add, authenticated_resource.parent, :destroy_vote, include_favorite: true)
     end
     data << same_as_statement
-    action_delta(data, :remove, authenticated_resource.parent, :create_vote, include_favorite: true)
-    action_delta(data, :add, authenticated_resource.parent, :destroy_vote, include_favorite: true)
     data
   end
 

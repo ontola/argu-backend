@@ -10,7 +10,9 @@ module VoteEventable
 
     def route_concerns(mapper)
       mapper.concern :vote_eventable do
-        mapper.resources :vote_events, only: %i[index show], concerns: %i[votable]
+        mapper.resources :vote_events, only: %i[index show], concerns: %i[votable] do
+          mapper.include_route_concerns
+        end
       end
     end
   end

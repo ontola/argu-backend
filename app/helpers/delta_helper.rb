@@ -19,8 +19,10 @@ module DeltaHelper
   def counter_cache_delta(resource)
     return [] if resource.try(:counter_cache_options).blank?
 
-    if resource.is_a?(Vote) && resource.parent.is_a?(Argument)
-      [counter_column_delta(resource, :votes_pro)]
+    if resource.is_a?(Vote)
+      %i[votes votes_pro votes_neutral votes_con].map do |class_name|
+        counter_column_delta(resource, class_name)
+      end
     else
       [counter_column_delta(resource, resource.class_name)]
     end

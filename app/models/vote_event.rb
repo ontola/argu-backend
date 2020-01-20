@@ -2,6 +2,7 @@
 
 class VoteEvent < Edge # rubocop:disable Metrics/ClassLength
   DEFAULT_ID = 'default'
+  enhance LinkedRails::Enhancements::Actionable
 
   with_collection :votes, default_filters: [{'option' => 'no'}, {'option' => 'other'}, 'option' => 'yes']
 

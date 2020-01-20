@@ -10,6 +10,10 @@ class VoteEventSerializer < EdgeSerializer
   attribute :current_vote, predicate: NS::ARGU[:currentVote]
   link(:self) { object.iri if object.persisted? }
 
+  count_attribute :votes_pro
+  count_attribute :votes_con
+  count_attribute :votes_neutral
+
   with_collection :votes, predicate: NS::ARGU[:votes]
 
   def current_vote
