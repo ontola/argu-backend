@@ -8,11 +8,11 @@ RSpec.feature 'Pagination', type: :feature do
   let(:overpopulated_motion) do
     m = create(:motion, parent: freetown)
     create_list(:argument,
-                11,
+                6,
                 pro: true,
                 parent: m)
     create_list(:argument,
-                11,
+                6,
                 pro: false,
                 parent: m)
     m
@@ -30,7 +30,7 @@ RSpec.feature 'Pagination', type: :feature do
     last_pro = p_args.to_a.last.display_name
     first_con = c_args.to_a.first.display_name
     last_con = c_args.last.display_name
-    expect(m.arguments.where(owner_type: 'ProArgument').length).to(be > 10)
+    expect(m.arguments.where(owner_type: 'ProArgument').length).to(be > 5)
 
     visit m
     expect(page).to have_content(m.display_name)

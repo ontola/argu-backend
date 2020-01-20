@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProArgument < Argument
+  paginates_per 5
+
   # To facilitate the group_by command
   def key
     :pro

@@ -14,7 +14,7 @@ class Forum < ContainerNode
 
   self.default_widgets = %i[new_motion new_question new_topic discussions]
 
-  paginates_per 30
+  paginates_per 15
 
   before_create :set_default_decision_group
 

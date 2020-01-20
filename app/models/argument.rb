@@ -21,7 +21,7 @@ class Argument < Edge
 
   convertible comments: %i[activities]
   counter_cache true
-  paginates_per 10
+  paginates_per 5
   parentable :motion, :linked_record
   with_collection :votes
 

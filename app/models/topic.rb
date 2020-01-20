@@ -3,7 +3,7 @@
 class Topic < Discussion
   include Edgeable::Content
 
-  paginates_per 30
+  paginates_per 15
   parentable :container_node
   placeable :custom
 
