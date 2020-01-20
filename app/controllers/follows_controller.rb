@@ -98,6 +98,10 @@ class FollowsController < AuthorizedController
     ActsAsTenant.current_tenant ||= authenticated_resource.followable.root
   end
 
+  def show_success_html
+    redirect_to "#{authenticated_resource.iri}/unsubscribe"
+  end
+
   def redirect_location
     authenticated_resource.followable.iri
   end
