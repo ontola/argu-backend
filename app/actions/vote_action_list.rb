@@ -20,25 +20,23 @@ class VoteActionList < EdgeActionList
         label: -> { create_label(option) },
         submit_label: -> { create_label(option) },
         favorite: -> { resource.parent.is_a?(VoteEvent) },
-        root_relative_iri: -> { resource.new_child(filter: {option: option}).action(:create).iri_path }
+        root_relative_iri: -> { resource.new_child(filter: {option: option}).action(:create).iri_path },
+        url: -> { resource.new_child(filter: {option: option}).iri }
       )
     )
   end
 
   private
 
-  def filtered_resource?
-    resource.is_a?(Collection) && resource.filtered?
-  end
-
   def create_image(option)
-    return 'fa-plus' unless filtered_resource?
+    return 'fa-plus' unless option
 
     "fa-#{icon_for_side(option)}"
   end
 
   def create_label(option)
-    return I18n.t("#{association}.type_new") unless filtered_resource?
+    return I18n.t("#{association}.type_new") unless option
+
     I18n.t("#{association}.instance_type.#{option}")
   end
 end

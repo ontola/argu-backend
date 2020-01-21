@@ -50,7 +50,7 @@ module VotesHelper
   end
 
   def icon_for_side(side)
-    case side
+    case side.to_s
     when 'pro', 'yes'
       'thumbs-up'
     when 'neutral', 'other'
