@@ -20,9 +20,15 @@ class Discussion < Edge
 
   include HasLinks
 
-  counter_cache true
   parentable :container_node, :page
   filterable pinned: {key: :pinned_at, values: {yes: 'NOT NULL', no: 'NULL'}}
   paginates_per 12
   placeable :custom
+
+  class << self
+    def inherited(klass)
+      klass.send(:counter_cache, true)
+      super
+    end
+  end
 end
