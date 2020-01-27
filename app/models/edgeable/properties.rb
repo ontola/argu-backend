@@ -157,15 +157,27 @@ module ActiveRecord
 
     def order(*args)
       return super unless klass <= Edge
-      args.map! { |attr| attr.is_a?(Hash) ? attr.map { |k, v| {k => v} } : attr }.flatten!
+      sanitize_order_args(args)
       return super if args.detect { |arg| order_property?(arg) }.nil?
 
+      apply_order_with_properties(spawn, args)
+    end
+
+    def reorder(*args)
+      return super unless klass <= Edge
+      sanitize_order_args(args)
+      return super if args.detect { |arg| order_property?(arg) }.nil?
+
+      apply_order_with_properties(spawn.reorder!, args)
+    end
+
+    private
+
+    def apply_order_with_properties(spawn, args)
       args.reduce(spawn) do |q, statement|
         order_property?(statement) ? order_by_property(q, statement) : q.order(statement)
       end
     end
-
-    private
 
     def order_by_property(q, statement)
       if statement.is_a?(Hash)
@@ -202,6 +214,10 @@ module ActiveRecord
       property = property_options(name: key)
       return value if property[:enum].blank? || value.is_a?(Integer)
       property[:enum][value&.to_sym]
+    end
+
+    def sanitize_order_args(args)
+      args.map! { |attr| attr.is_a?(Hash) ? attr.map { |k, v| {k => v} } : attr }.flatten!
     end
 
     def target_class
