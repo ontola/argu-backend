@@ -20,19 +20,21 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enum widget_type: {
     custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, blog_posts: 6, new_topic: 7
   }
+  enum view: {full_view: 0, compact_view: 1, preview_view: 2}
   self.default_sortings = [{key: NS::ARGU[:order], direction: :asc}]
 
   with_columns default: [
     NS::ARGU[:rawResource],
     NS::ONTOLA[:widgetSize],
     NS::ARGU[:order],
+    NS::ARGU[:view],
     NS::ONTOLA[:updateAction],
     NS::ONTOLA[:destroyAction]
   ]
 
   acts_as_list scope: :owner
 
-  parentable :page, :container_node
+  parentable :page, :container_node, :phase
 
   def edgeable_record
     @edgeable_record ||= owner
@@ -64,6 +66,13 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def permitted_action_title=(title)
     self.permitted_action = PermittedAction.find_by(title: title)
+  end
+
+  def topology
+    return NS::ARGU[:grid] if preview_view?
+    return NS::ARGU[:container] if compact_view?
+
+    NS::ARGU[:fullResource]
   end
 
   private
@@ -123,6 +132,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         submit_label: 'motions.type_new'
       )
       new_motion
+        .preview_view
         .create(
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'motion_create'),
@@ -145,6 +155,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         submit_label: 'questions.type_new'
       )
       new_question
+        .preview_view
         .create(
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'question_create'),
@@ -167,6 +178,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         submit_label: 'topics.type_new'
       )
       new_topic
+        .preview_view
         .create(
           owner: owner,
           permitted_action: PermittedAction.find_by!(title: 'topic_create'),

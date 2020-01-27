@@ -20,6 +20,7 @@ class ContainerNode < Edge
   enhance CreativeWorkable
   enhance CustomActionable
   enhance Surveyable
+  enhance Projectable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]

@@ -38,6 +38,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
       after_save if @actions[service_action]
       publish_success_signals
     end
+    resource
   rescue ActiveRecord::ActiveRecordError => e
     raise(e) if e.is_a?(ActiveRecord::StatementInvalid)
     Bugsnag.notify(e) unless e.is_a?(ActiveRecord::RecordInvalid)

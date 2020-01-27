@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SurveyMenuList < ApplicationMenuList
+class ProjectMenuList < ApplicationMenuList
   include Menus::FollowMenuItems
   include Menus::ShareMenuItems
   include Menus::ActionMenuItems
@@ -14,23 +14,10 @@ class SurveyMenuList < ApplicationMenuList
   def action_menu_items
     [
       edit_link,
-      external_link,
       move_link,
       new_update_link,
       copy_share_link(resource.iri),
       *trash_and_destroy_links
     ]
-  end
-
-  def external_link
-    return unless resource.manage_iri
-
-    menu_item(
-      :external,
-      image: 'fa-external-link',
-      label: I18n.t('menus.default.typeform'),
-      href: resource.manage_iri,
-      policy: :update?
-    )
   end
 end

@@ -79,6 +79,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :measures
   has_many_children :measure_types
   has_many_children :motions
+  has_many_children :phases
+  has_many_children :projects
   has_many_children :questions
   has_many_children :surveys
   has_many_children :submissions

@@ -1,0 +1,10 @@
+nl:
+  phases:
+    type: "Fase"
+    type_new: "Nieuwe fase"
+    plural: "Fases"
+    form:
+      order:
+        label: "Positie"
+      time:
+        label: "Tijdsaanduiding"

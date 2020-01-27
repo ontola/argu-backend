@@ -8,5 +8,11 @@ nl:
         label: "Breedte"
       position:
         label: "Positie"
+      view:
+        label: "Weergave"
       raw_resource_iri:
         label: "Object"
+    view:
+      full_view: "Volledig"
+      compact_view: "Compact"
+      preview_view: "Preview"

@@ -45,6 +45,16 @@ class ApplicationMenuList < LinkedRails::Menus::List
     )
   end
 
+  def widgets_link
+    menu_item(
+      :widgets,
+      href: resource.widget_collection.iri(display: :table),
+      image: 'fa-th',
+      policy: :create_child?,
+      policy_arguments: [:widgets]
+    )
+  end
+
   class << self
     def has_action_menu(opts = {})
       has_menu :actions, {

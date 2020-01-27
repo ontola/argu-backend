@@ -31,14 +31,4 @@ class ContainerNodeMenuList < ApplicationMenuList
       policy: :update?
     )
   end
-
-  def widgets_link
-    menu_item(
-      :widgets,
-      href: resource.widget_collection.iri(display: :table),
-      image: 'fa-th',
-      policy: :create_child?,
-      policy_arguments: [:widgets]
-    )
-  end
 end

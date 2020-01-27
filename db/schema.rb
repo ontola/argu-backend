@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_15_134953) do
+ActiveRecord::Schema.define(version: 2020_01_23_112514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -528,6 +528,7 @@ ActiveRecord::Schema.define(version: 2020_01_15_134953) do
     t.uuid "owner_id", null: false
     t.integer "permitted_action_id", null: false
     t.uuid "root_id", null: false
+    t.integer "view", default: 0, null: false
     t.index ["owner_id", "owner_type"], name: "index_widgets_on_owner_id_and_owner_type"
   end
 

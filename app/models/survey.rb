@@ -6,15 +6,15 @@ class Survey < Discussion
   include Edgeable::Content
 
   property :external_iri, :string, NS::ARGU[:externalIRI]
-
+  parentable :container_node, :page, :phase
   with_collection :submissions
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
-  validates :external_iri, format: {with: TYPEFORM_TEMPLATE}
+  validates :external_iri, format: {allow_nil: true, with: TYPEFORM_TEMPLATE}
 
   def manage_iri
-    TYPEFORM_MANAGE_TEMPLATE.expand(typeform_id: typeform_id)
+    TYPEFORM_MANAGE_TEMPLATE.expand(typeform_id: typeform_id) if external_iri
   end
 
   def submission_for(user)
@@ -26,10 +26,10 @@ class Survey < Discussion
   end
 
   def typeform_account
-    external_iri.match(Survey::TYPEFORM_TEMPLATE)[1]
+    external_iri&.match(Survey::TYPEFORM_TEMPLATE).try(:[], 1)
   end
 
   def typeform_id
-    external_iri.match(Survey::TYPEFORM_TEMPLATE)[2]
+    external_iri&.match(Survey::TYPEFORM_TEMPLATE).try(:[], 2)
   end
 end

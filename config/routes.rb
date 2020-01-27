@@ -356,6 +356,12 @@ Rails.application.routes.draw do
       include_route_concerns
     end
   end
+  resources :projects, only: %i[show] do
+    include_route_concerns
+  end
+  resources :phases, only: %i[show] do
+    include_route_concerns
+  end
   resources :shortnames, only: %i[new create index] do
     collection do
       concerns :nested_actionable

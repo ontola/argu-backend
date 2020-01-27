@@ -9,7 +9,7 @@ class Question < Discussion
   include Edgeable::Content
 
   convertible motions: %i[activities media_objects]
-  parentable :container_node
+  parentable :container_node, :phase
 
   validates :description, presence: true, length: {minimum: 5, maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 110}

@@ -21,7 +21,7 @@ class WidgetPolicy < EdgeTreePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[resource_iri raw_resource_iri size position widget_type permitted_action_title]
+    attributes.concat %i[resource_iri raw_resource_iri size position widget_type permitted_action_title view]
     attributes
   end
 
