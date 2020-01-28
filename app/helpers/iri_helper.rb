@@ -54,7 +54,9 @@ module IRIHelper
   # @example Nil IRI
   #   iri = nil
   #   opts_from_iri # => {}
-  def opts_from_iri(iri, root = tree_root)
+  def opts_from_iri(original_iri, root = tree_root)
+    iri = URI(original_iri)
+    iri.path = iri.path[0...-1] if iri.path.ends_with?('/')
     opts = ActsAsTenant.with_tenant(root) do
       Rails.application.routes.recognize_path(iri)
     end
@@ -94,7 +96,8 @@ module IRIHelper
   # Converts an Argu URI into a resource
   # @return [ApplicationRecord, nil] The resource corresponding to the iri, or nil if the IRI is not found
   # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-  def resource_from_iri(iri, root = nil)
+  def resource_from_iri(original_iri, root = nil)
+    iri = URI(original_iri)
     raise "A full url is expected. #{iri} is given." if iri.blank? || relative_path?(iri)
 
     edge_uuid = edge_uuid_from_iri(iri)
@@ -103,12 +106,12 @@ module IRIHelper
     root ||= TenantFinder.from_url(iri)
     return if root.blank?
 
-    slashed_iri = iri.ends_with?('/') ? iri.to_s : "#{iri}/"
+    iri.path = "#{iri.path}/" unless iri.path.ends_with?('/')
 
-    return root if slashed_iri == "#{root.iri}/" || root.iri.path && slashed_iri.ends_with?("#{root.iri.path}/")
-
-    path = root.iri.path.present? ? slashed_iri.split("#{root.iri.path}/").last : URI(slashed_iri).path
+    path = root.iri.path.present? ? iri.to_s.split("#{root.iri.path}/").last : URI(iri).path
     opts = opts_from_iri(path, root)
+    return root if opts[:type] == 'page' && opts[:id].blank?
+
     return if opts.blank? || opts[:type].blank? || opts[:id].blank?
 
     resource_from_opts(root, opts) if opts[:action] == 'show'

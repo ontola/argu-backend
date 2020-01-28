@@ -52,9 +52,9 @@ class HeadMiddleware
     @headers = default_headers
   end
 
-  def status_code_for_request(resource)
+  def status_code_for_request(resource) # rubocop:disable Metrics/AbcSize
     actual_iri = resource.try(:iri_path)
-    if actual_iri.present? && actual_iri != request.fullpath
+    if !actual_iri.nil? && actual_iri != request.fullpath && !(actual_iri == '' && request.fullpath == '/')
       headers['Location'] = resource.iri.to_s
       return 302
     end

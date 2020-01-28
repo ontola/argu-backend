@@ -38,6 +38,22 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     expect_response(403, page: cairo.root)
   end
 
+  test 'guest should head argu' do
+    sign_in guest_user, Doorkeeper::Application.argu_front_end
+
+    head argu, headers: argu_headers(accept: :nq)
+
+    expect_response(200)
+  end
+
+  test 'guest should head argu with query param' do
+    sign_in guest_user, Doorkeeper::Application.argu_front_end
+
+    head "#{argu.iri}?query=true", headers: argu_headers(accept: :nq)
+
+    assert_redirected_to argu.iri
+  end
+
   test 'guest should head freetown' do
     sign_in guest_user, Doorkeeper::Application.argu_front_end
 
