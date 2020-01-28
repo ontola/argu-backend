@@ -3,14 +3,14 @@
 class BlogPostForm < ApplicationForm
   visibility_text
 
-  fields %i[
-    display_name
-    description
-    default_cover_photo
-    attachments
-    advanced
-    hidden
-    footer
+  fields [
+    :display_name,
+    {description: {datatype: NS::FHIR[:markdown]}},
+    :default_cover_photo,
+    :attachments,
+    :advanced,
+    :hidden,
+    :footer
   ]
 
   property_group :advanced,

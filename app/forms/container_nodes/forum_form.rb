@@ -3,7 +3,7 @@
 class ForumForm < ContainerNodeForm
   fields [
     :display_name,
-    :bio,
+    {bio: {datatype: NS::FHIR[:markdown]}},
     :locale,
     {url: url_options},
     :default_cover_photo,

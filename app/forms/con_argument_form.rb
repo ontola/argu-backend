@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class ConArgumentForm < ApplicationForm
-  fields %i[
-    display_name
-    description
-    footer
+  fields [
+    :display_name,
+    {description: {datatype: NS::FHIR[:markdown]}},
+    :footer
   ]
 
   property_group :footer,

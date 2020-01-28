@@ -7,7 +7,7 @@ class DecisionForm < ApplicationForm
         sh_in: form_options('state', DecisionSerializer.default_enum_opts('state', %w[approved rejected]))
       }
     },
-    :description,
+    {description: {datatype: NS::FHIR[:markdown]}},
     :footer
   ]
 
