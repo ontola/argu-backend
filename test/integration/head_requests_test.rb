@@ -54,6 +54,14 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     assert_redirected_to argu.iri
   end
 
+  test 'guest should head argu settings' do
+    sign_in guest_user, Doorkeeper::Application.argu_front_end
+
+    head "#{argu.iri}/settings#container_nodes", headers: argu_headers(accept: :nq)
+
+    expect_response(200)
+  end
+
   test 'guest should head freetown' do
     sign_in guest_user, Doorkeeper::Application.argu_front_end
 

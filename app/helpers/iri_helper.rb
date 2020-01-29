@@ -110,7 +110,7 @@ module IRIHelper
 
     path = root.iri.path.present? ? iri.to_s.split("#{root.iri.path}/").last : URI(iri).path
     opts = opts_from_iri(path, root)
-    return root if opts[:type] == 'page' && opts[:id].blank?
+    return root if opts[:type] == 'page' && opts[:action] == 'show' && opts[:id].blank?
 
     return if opts.blank? || opts[:type].blank? || opts[:id].blank?
 
