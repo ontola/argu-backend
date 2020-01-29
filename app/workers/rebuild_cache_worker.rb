@@ -37,6 +37,6 @@ class RebuildCacheWorker
   end
 
   def version_directory
-    Rails.root.join(cache_dir, VERSION)
+    Rails.root.join(cache_dir, VERSION.split('.')[0..1].join('.'))
   end
 end
