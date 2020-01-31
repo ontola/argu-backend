@@ -47,6 +47,10 @@ class MediaObjectSerializer < RecordSerializer
     url_for_version('content')
   end
 
+  def position_y
+    object.position_y || 50
+  end
+
   def thumbnail
     url_for_version('thumbnail')
   end
