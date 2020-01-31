@@ -6,6 +6,10 @@ class Thing < Edge
   include SerializationHelper
   has_many :linked_edges, through: :properties
 
+  def action_triples(_user_context)
+    []
+  end
+
   def display_name
     properties.find_by(predicate: [NS::SCHEMA.name.to_s, NS::FOAF.name.to_s, NS::RDFS.label.to_s])&.value
   end
