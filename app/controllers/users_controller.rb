@@ -18,6 +18,12 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     raise Argu::Errors::Unauthorized.new
   end
 
+  def changes_triples
+    super + [
+      change_triple(NS::SCHEMA[:name], current_resource.display_name)
+    ]
+  end
+
   def resource_by_id
     @resource_by_id ||=
       case action_name

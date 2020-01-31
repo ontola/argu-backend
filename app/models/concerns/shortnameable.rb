@@ -22,6 +22,7 @@ module Shortnameable
     validates :url,
               allow_nil: true,
               format: {
+                allow_nil: true,
                 with: Shortname
                         .validators
                         .detect { |validator| validator.is_a?(ActiveModel::Validations::FormatValidator) }
