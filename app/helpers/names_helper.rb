@@ -148,6 +148,8 @@ module NamesHelper
       'pause'
     elsif [item.class, item].include?(MediaObject)
       'file'
+    elsif [item.class, item].include?(Phase)
+      'calendar-o'
     end
   end
 
