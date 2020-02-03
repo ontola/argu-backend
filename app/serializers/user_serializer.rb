@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserSerializer < RecordSerializer
+class UserSerializer < RecordSerializer # rubocop:disable Metrics/ClassLength
   include ProfilePhotoable::Serializer
   include CoverPhotoable::Serializer
   include UriTemplateHelper
@@ -22,6 +22,7 @@ class UserSerializer < RecordSerializer
   attribute :hide_last_name, predicate: NS::ARGU[:hideLastName], if: :service_or_self?
   attribute :are_votes_public, predicate: NS::ARGU[:votesPublic]
   attribute :is_public, predicate: NS::ARGU[:public]
+  attribute :group_ids, predicate: NS::ORG[:organization]
 
   has_many :email_addresses, predicate: NS::ARGU[:emails], if: :service_or_self?
   attribute :language, predicate: NS::SCHEMA[:language], if: :service_or_self?
@@ -96,6 +97,19 @@ class UserSerializer < RecordSerializer
 
   def default_profile_photo
     object.profile.default_profile_photo
+  end
+
+  def group_ids
+    return unless ActsAsTenant.current_tenant
+
+    Group
+      .joins(group_memberships: :member)
+      .where('groups.root_id = ? OR groups.id = ?', ActsAsTenant.current_tenant.uuid, Group::STAFF_ID)
+      .where(profiles: {id: object.profile.id})
+      .pluck(:id)
+      .map do |group_id|
+      iri_from_template(:groups_iri, id: group_id)
+    end
   end
 
   def is_public
