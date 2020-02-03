@@ -6,5 +6,6 @@ class SurveyForm < ContainerNodeForm
     description
     external_iri
     default_cover_photo
+    custom_placement
   ]
 end

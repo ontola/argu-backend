@@ -7,6 +7,7 @@ class ForumForm < ContainerNodeForm
     :locale,
     {url: url_options},
     :default_cover_photo,
+    :custom_placement,
     grants: grant_options
   ]
 end

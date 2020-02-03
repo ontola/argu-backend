@@ -6,6 +6,7 @@ class ProjectForm < ContainerNodeForm
     {description: {datatype: NS::FHIR[:markdown]}},
     :default_cover_photo,
     :attachments,
+    :custom_placement,
     :footer,
     :hidden
   ]
