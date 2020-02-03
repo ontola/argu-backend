@@ -4,3 +4,14 @@ nl:
     plural: "Bijlages"
     tooltips:
       info: 'Een bijlage is een bestand dat bij een document gevoegd is om meer informatie te verschaffen.'
+    form:
+      content:
+        label: "Selecteer een bestand"
+      remote_content_url:
+        label: "Of voer een link in naar een bestand of filmpje:"
+  image_objects:
+    form:
+      content:
+        label: "Selecteer een bestand"
+      remote_content_url:
+        label: "Of voer een link in naar een bestand of filmpje:"

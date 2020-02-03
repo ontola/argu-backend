@@ -4,3 +4,14 @@ en:
     plural: "Attachments"
     tooltips:
       info: 'An attachment is a file which has been appended to a document to provide more information.'
+    form:
+      content:
+        label: "Select a file"
+      remote_content_url:
+        label: "Or enter a link to a file or movie:"
+  image_objects:
+    form:
+      content:
+        label: "Select a file"
+      remote_content_url:
+        label: "Or enter a link to a file or movie:"

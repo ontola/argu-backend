@@ -11,6 +11,7 @@ class MediaObjectSerializer < RecordSerializer
   attribute :description, predicate: NS::SCHEMA[:caption]
   attribute :embed_url, predicate: NS::SCHEMA[:embedUrl]
   attribute :filename, predicate: NS::DBO[:filename]
+  attribute :remote_content_url, predicate: NS::ARGU[:remoteContentUrl], datatype: NS::XSD[:string]
   attribute :thumbnail, predicate: NS::SCHEMA[:thumbnail]
   attribute :position_y,
             predicate: NS::ONTOLA[:imagePositionY],
@@ -49,6 +50,10 @@ class MediaObjectSerializer < RecordSerializer
 
   def position_y
     object.position_y || 50
+  end
+
+  def remote_content_url
+    object.remote_url
   end
 
   def thumbnail
