@@ -247,11 +247,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @persisted_edge = edge
   end
 
-  # Only returns a value when the model has been saved
-  def polymorphic_tuple
-    [owner_type, owner_id]
-  end
-
   # Calculated the number of unique followers for at least {level}
   # @param [Symbol] level The lowest type of follower to include
   # @return [Integer] The number of followers

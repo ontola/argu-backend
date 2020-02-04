@@ -32,25 +32,8 @@ class Comment < Edge
 
   attr_accessor :is_processed, :vote_id
 
-  def abandoned?
-    is_trashed? && !has_children?
-  end
-
-  def joined_body
-    [title, body].map(&:presence).compact.join("\n\n")
-  end
-
   def deleted?
     body.blank? || body == '[DELETED]'
-  end
-
-  def subscribable
-    parent_comment || parent
-  end
-
-  # helper method to check if a comment has children
-  def has_children?
-    comments.any?
   end
 
   def parent_collections(user_context)

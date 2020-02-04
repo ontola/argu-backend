@@ -120,14 +120,5 @@ class Vote < Edge
     def includes_for_serializer
       super.merge(publisher: {}, comment: :properties)
     end
-
-    def ordered(votes)
-      grouped = votes.to_a.group_by(&:for)
-      HashWithIndifferentAccess.new(
-        pro: {collection: grouped['pro'] || []},
-        neutral: {collection: grouped['neutral'] || []},
-        con: {collection: grouped['con'] || []}
-      )
-    end
   end
 end

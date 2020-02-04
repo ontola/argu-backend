@@ -31,16 +31,6 @@ class Argument < Edge
     self
   end
 
-  # @return [Argument, nil] The id of the next item or nil.
-  def next(show_trashed = false)
-    adjacent(false, show_trashed)
-  end
-
-  # @return [Argument, nil] The id of the previous item or nil.
-  def previous(show_trashed = false)
-    adjacent(true, show_trashed)
-  end
-
   def pro=(value)
     value = false if %w[con false].include?(value)
     @pro = value.to_s == 'pro' || value
@@ -68,39 +58,9 @@ class Argument < Edge
     self
   end
 
-  private
-
-  def adjacent(direction, _show_trashed = nil) # rubocop:disable Metrics/AbcSize
-    return if is_trashed?
-    ids = parent
-            .arguments
-            .untrashed
-            .order(Edge.order_child_count_sql(:votes_pro))
-            .pluck(:uuid)
-    index = ids.index(self[:uuid])
-    return nil if ids.length < 2
-    p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]
-    parent.arguments.find_by(uuid: p_id)
-  end
-
   class << self
     def includes_for_serializer
       super.merge(votes: {})
-    end
-
-    def ordered(pro_coll, con_coll, page = {})
-      HashWithIndifferentAccess.new(
-        pro: {
-          collection:
-            pro_coll.reorder(order_child_count_sql(:votes_pro)).order(:last_activity_at).page(page[:pro] || 1) || [],
-          page_param: :page_arg_pro
-        },
-        con: {
-          collection:
-            con_coll.reorder(order_child_count_sql(:votes_pro)).order(:last_activity_at).page(page[:con] || 1) || [],
-          page_param: :page_arg_con
-        }
-      )
     end
   end
 end

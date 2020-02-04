@@ -28,25 +28,4 @@ class Question < Discussion
   def expired?
     expires_at.present? && expires_at < Time.current
   end
-
-  def next(show_trashed = false)
-    sister_node(show_trashed)
-      .where('edges.updated_at < :date', date: updated_at)
-      .last
-  end
-
-  def previous(show_trashed = false)
-    sister_node(show_trashed)
-      .find_by('edges.updated_at > :date', date: updated_at)
-  end
-
-  private
-
-  def sister_node(show_trashed)
-    parent
-      .questions
-      .published
-      .show_trashed(show_trashed)
-      .order('edges.updated_at')
-  end
 end

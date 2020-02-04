@@ -22,10 +22,6 @@ class Notification < ApplicationRecord
   enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4, finish_intro: 5}
   virtual_attribute :unread, :boolean, default: false, dependent_on: :read_at, value: ->(r) { r.read_at.blank? }
 
-  def creator_url
-    dual_profile_url activity.owner, only_path: false, canonical: true
-  end
-
   def sync_notification_count
     user.try :sync_notification_count
   end
