@@ -13,22 +13,12 @@ module Argu
         base.define_spec_objects
       end
 
-      def doorkeeper_application(format)
-        @request_format = format
-        if %i[html json].include?(format)
-          host! 'argu.localtest'
-          Doorkeeper::Application.argu
-        else
-          host! 'app.argu.localtest'
-          Doorkeeper::Application.argu_front_end
-        end
-      end
-
       def request_headers(format)
-        argu_headers(accept: format, bearer: Doorkeeper::OAuth::Token.cookie_token_extractor(nil))
+        host! 'app.argu.localtest'
+        argu_headers(accept: format, bearer: @bearer_token)
       end
 
-      module ClassMethods # rubocop:disable Metrics/ModuleLength
+      module ClassMethods
         def expectations_for(action)
           %i[json_api].concat(RDF_CONTENT_TYPES) .each do |format|
             let("expect_#{action}_#{format}") { send("expect_#{action}_serializer") }
@@ -60,93 +50,55 @@ module Argu
 
           # Show
           expectations_for(:get_show)
-          let(:expect_get_show_guest_html) { expect_get_show_html }
           let(:expect_get_show_guest_serializer) { expect_get_show_serializer }
-          let(:expect_get_show_unauthorized_html) { expect_unauthorized }
           let(:expect_get_show_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_get_show_html) { expect_success }
           let(:expect_get_show_serializer) { expect_success }
 
           # Index
           expectations_for(:get_index)
-          let(:expect_get_index_guest_html) { expect_get_index_html }
           let(:expect_get_index_guest_serializer) { expect_get_index_serializer }
-          let(:expect_get_index_unauthorized_html) { expect_unauthorized }
           let(:expect_get_index_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_get_index_html) { expect_success }
           let(:expect_get_index_serializer) { expect_success }
 
           # Destroy
           expectations_for(:delete_destroy)
-          let(:expect_delete_destroy_guest_html) { expect_redirect_to_login }
           let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('401') }
-          let(:expect_delete_destroy_unauthorized_html) { expect_unauthorized }
           let(:expect_delete_destroy_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_delete_destroy_html) do
-            expect(response.code).to eq('303')
-            expect(response).to redirect_to(parent_path)
-          end
           let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }
           let(:expect_delete_destroy_serializer) { expect(response.code).to eq('200') }
 
           # Trash
           expectations_for(:delete_trash)
-          let(:expect_delete_trash_guest_html) { expect_redirect_to_login }
           let(:expect_delete_trash_guest_serializer) { expect(response.code).to eq('401') }
-          let(:expect_delete_trash_unauthorized_html) { expect_unauthorized }
           let(:expect_delete_trash_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_delete_trash_html) { expect(response).to redirect_to(show_path) }
           let(:expect_delete_trash_json_api) { expect(response.code).to eq('204') }
           let(:expect_delete_trash_serializer) { expect(response.code).to eq('200') }
 
           # Create
           expectations_for(:post_create)
-          let(:expect_post_create_guest_html) { expect_redirect_to_login }
           let(:expect_post_create_guest_serializer) { expect(response.code).to eq('401') }
-          let(:expect_post_create_unauthorized_html) { expect_unauthorized }
           let(:expect_post_create_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_post_create_html) { expect(response).to redirect_to(created_resource_path) }
           let(:expect_post_create_serializer) { expect_created }
-          let(:expect_post_create_failed_html) do
-            expect_success
-            invalid_create_params[class_sym].each_value { |v| expect(response.body).to(include(v)) }
-          end
           let(:expect_post_create_failed_serializer) { expect(response.code).to eq('422') }
 
           # Untrash
           expectations_for(:put_untrash)
-          let(:expect_put_untrash_guest_html) { expect_redirect_to_login }
           let(:expect_put_untrash_guest_serializer) { expect(response.code).to eq('401') }
-          let(:expect_put_untrash_unauthorized_html) { expect_unauthorized }
           let(:expect_put_untrash_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_put_untrash_html) { expect(response).to redirect_to(subject.iri.path) }
           let(:expect_put_untrash_json_api) { expect(response.code).to eq('204') }
           let(:expect_put_untrash_serializer) { expect(response.code).to eq('200') }
 
           # Update
           expectations_for(:put_update)
-          let(:expect_put_update_guest_html) { expect_redirect_to_login }
           let(:expect_put_update_guest_serializer) { expect(response.code).to eq('401') }
-          let(:expect_put_update_unauthorized_html) { expect_unauthorized }
           let(:expect_put_update_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_put_update_html) do
-            expect(response).to redirect_to(updated_resource_path)
-            subject.reload
-            update_params[class_sym].each { |k, v| expect(subject.send(k)).to eq(v) }
-          end
           let(:expect_put_update_serializer) { expect(response.code).to eq('200') }
           let(:expect_put_update_json_api) { expect(response.code).to eq('204') }
-          let(:expect_put_update_failed_html) do
-            expect_success
-            invalid_update_params[class_sym].each_value { |v| expect(response.body).to(include(v)) }
-          end
           let(:expect_put_update_failed_serializer) { expect(response.code).to eq('422') }
 
           # Move
           expectations_for(:post_move)
-          let(:expect_post_move_guest_html) { expect_redirect_to_login }
           let(:expect_post_move_guest_serializer) { expect(response.code).to eq('401') }
-          let(:expect_post_move_unauthorized_html) { expect_unauthorized }
           let(:expect_post_move_unauthorized_serializer) { expect_unauthorized }
           let(:expect_post_move) do
             subject.reload
@@ -168,22 +120,16 @@ module Argu
 
           # Forms
           expectations_for(:get_form)
-          let(:expect_get_form_guest_html) { expect_redirect_to_login }
           let(:expect_get_form_guest_serializer) { expect_get_form_serializer }
           let(:expect_get_form_guest_json_api) { expect(response.code).to eq('401') }
-          let(:expect_get_form_unauthorized_html) { expect_unauthorized }
           let(:expect_get_form_unauthorized_serializer) { expect_get_form_serializer }
-          let(:expect_get_form_html) { expect_success }
           let(:expect_get_form_serializer) { expect_success }
 
           # New Forms
           expectations_for(:get_new)
-          let(:expect_get_new_guest_html) { expect_get_form_guest_html }
           let(:expect_get_new_guest_json_api) { expect_get_form_guest_json_api }
           let(:expect_get_new_guest_serializer) { expect_get_form_guest_serializer }
-          let(:expect_get_new_unauthorized_html) { expect_get_form_unauthorized_html }
           let(:expect_get_new_unauthorized_serializer) { expect_get_form_unauthorized_serializer }
-          let(:expect_get_new_html) { expect_get_form_html }
           let(:expect_get_new_serializer) { expect_get_form_serializer }
 
           # Users
@@ -193,6 +139,7 @@ module Argu
           let(:authorized_user_destroy) { staff }
           let(:authorized_user_trash) { authorized_user_update }
           let(:unauthorized_user) { create(:user) }
+          let(:guest_user) { create_guest_user }
 
           let(:subject_parent) { subject.parent }
           # Symbols
@@ -265,7 +212,7 @@ module Argu
         end
 
         def default_formats
-          %i[html json_api].concat((RDF_CONTENT_TYPES - [:ttl]).shuffle[1..2])
+          %i[json_api].concat((RDF_CONTENT_TYPES - [:ttl]).shuffle[1..2])
         end
 
         def show_formats

@@ -4,9 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Motions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  def self.index_formats
-    super - %i[html]
-  end
 
   let(:created_resource_path) { "#{subject.class.last.iri.path}?start_motion_tour=true" }
 

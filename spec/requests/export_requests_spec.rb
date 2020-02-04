@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Exports', type: :request do
   def self.new_formats
-    default_formats - %i[json_api html]
+    default_formats - %i[json_api]
   end
 
   include Argu::TestHelpers::AutomatedRequests
@@ -14,7 +14,6 @@ RSpec.describe 'Exports', type: :request do
   let(:destroy_failed_path) { parent_path }
   let(:create_differences) { {'Export.count' => 1} }
   let(:destroy_differences) { {'Export.count' => -1} }
-  let(:expect_get_index_guest_html) { expect(response.code).to eq('302') }
   let(:expect_get_index_guest_serializer) { expect_not_a_user }
   let(:non_existing_id) { SecureRandom.uuid }
 

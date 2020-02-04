@@ -4,9 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Pages', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  def self.index_formats
-    super - %i[html]
-  end
 
   let(:authorized_user) { create_administrator(subject, create(:user)) }
   let(:edit_path) do
@@ -41,21 +38,7 @@ RSpec.describe 'Pages', type: :request do
   end
   let(:destroy_params) { {page: {confirmation_string: 'remove'}} }
   let(:expect_get_show_unauthorized_serializer) { expect_success }
-  let(:expect_get_show_unauthorized_html) { expect_success }
-  let(:expect_put_update_html) do
-    expect(response).to redirect_to(updated_resource_path)
-    expect(subject.reload.display_name).to eq('new_name')
-  end
-  let(:expect_put_update_failed_html) { expect_success }
   let(:expect_put_update_json_api) { expect(response.code).to eq('204') }
-  let(:expect_post_create_failed_html) do
-    expect_success
-    expect(response.body).to(include('new_name'))
-  end
-  let(:expect_delete_destroy_html) do
-    expect(response.code).to eq('303')
-    expect(response).to redirect_to(root_path)
-  end
   let(:expect_post_create_json_api) { expect_created }
   let(:expect_post_create_serializer) { expect_success }
   let(:expect_get_form_guest_serializer) { expect_get_form_serializer }
@@ -71,7 +54,6 @@ RSpec.describe 'Pages', type: :request do
     context 'user pages' do
       let(:index_path) { "/#{argu.url}#{pages_user_path(authorized_user)}" }
       let(:non_existing_index_path) { "/#{argu.url}#{pages_user_path(non_existing_id)}" }
-      let(:expect_get_index_guest_html) { expect(response.code).to eq('302') }
       let(:expect_get_index_guest_serializer) { expect(response.code).to eq('401') }
       it_behaves_like 'get index'
     end

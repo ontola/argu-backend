@@ -38,6 +38,27 @@ module Argu
           ).first
         end
 
+        def doorkeeper_token_for(resource)
+          id, role =
+            case resource
+            when :service
+              [User::SERVICE_ID, 'service']
+            when :guest_user
+              [SecureRandom.hex, 'guest']
+            when GuestUser
+              [resource.id, 'guest']
+            else
+              [resource.id, 'user']
+            end
+          t = Doorkeeper::AccessToken.new(resource_owner_id: id, scopes: role, expires_in: 10.minutes)
+          if resource.is_a?(GuestUser) || resource == :guest_user
+            t.send(:generate_token)
+          else
+            t.save!
+          end
+          t
+        end
+
         def create(model_type, *args)
           attributes = HashWithIndifferentAccess.new
           attributes.merge!(args.pop) if args.last.is_a?(Hash)
@@ -210,25 +231,8 @@ module Argu
           {category: category, action: action}
         end
 
-        def sign_in(resource = create(:user), requested_app = Doorkeeper::Application.argu)
-          additional_scope = requested_app.id == Doorkeeper::Application::AFE_ID && 'afe'
-          id, role, app =
-            case resource
-            when :service
-              [0, 'service', Doorkeeper::Application.argu_service]
-            when GuestUser
-              [resource.id, ['guest', additional_scope].join(' '), requested_app]
-            else
-              [resource.id, ['user', additional_scope].join(' '), requested_app]
-            end
-          t = Doorkeeper::AccessToken.find_or_create_for(
-            app,
-            id,
-            role,
-            10.minutes,
-            false
-          )
-          @request.headers['Authorization'] = "Bearer #{t.token}"
+        def sign_in(resource = create(:user))
+          @request.headers['Authorization'] = "Bearer #{doorkeeper_token_for(resource).token}"
         end
 
         def tenant_from(resource)

@@ -4,13 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Grants', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  def self.show_formats
-    super - %i[html]
-  end
-
-  def self.new_formats
-    %i[html]
-  end
 
   let(:create_differences) { {"#{subject.class}.count" => 1} }
   let(:update_differences) { {"#{subject.class}.count" => 0} }
@@ -23,20 +16,16 @@ RSpec.describe 'Grants', type: :request do
   let(:create_failed_path) { "#{settings_iri(argu).path}?tab=groups" }
   let(:update_failed_path) { "#{settings_iri(argu).path}?tab=groups" }
   let(:expect_get_show_guest_serializer) { expect_unauthorized }
-  let(:expect_delete_destroy_html) do
-    expect(response.code).to eq('303')
-    expect(response).to redirect_to("#{settings_iri(argu).path}?tab=groups")
-  end
 
   context 'with page parent' do
     let(:subject) { create(:grant, edge: argu, group: group) }
     let(:non_existing_index_path) { '/non_existing/grants' }
     let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }
-    it_behaves_like 'requests', skip: %i[trash untrash edit update show_html delete index]
+    it_behaves_like 'requests', skip: %i[trash untrash new edit update delete index]
   end
 
   context 'with forum parent' do
     let(:subject) { create(:grant, edge: freetown, group: group) }
-    it_behaves_like 'requests', skip: %i[trash untrash edit update show_html delete index]
+    it_behaves_like 'requests', skip: %i[trash untrash new edit update delete index]
   end
 end

@@ -19,5 +19,5 @@ RSpec.describe 'GroupMemberships', type: :request do
 
   subject { group_membership }
 
-  it_behaves_like 'requests', skip: %i[html trash untrash create_invalid new edit update]
+  it_behaves_like 'requests', skip: %i[trash untrash create_invalid new edit update]
 end

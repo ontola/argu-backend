@@ -7,13 +7,13 @@ RSpec.shared_examples_for 'get unsubscribe' do
   unsubscribe_formats.each do |format|
     context "as #{format}" do
       it 'as guest' do
-        sign_in(:guest, doorkeeper_application(format))
+        sign_in(guest_user)
         get unsubscribe_path, headers: request_headers(format)
         expect(response.code).to eq(format == :json_api ? '204' : '200')
       end
 
       it 'as unauthorized' do
-        sign_in(unauthorized_user, doorkeeper_application(format))
+        sign_in(unauthorized_user)
         assert_difference(no_differences) do
           get unsubscribe_path, headers: request_headers(format)
         end
@@ -22,7 +22,7 @@ RSpec.shared_examples_for 'get unsubscribe' do
 
       it 'as authorized' do
         parent_path # touch path because subject be deleted
-        sign_in(authorized_user, doorkeeper_application(format))
+        sign_in(authorized_user)
         assert_difference(destroy_differences) do
           get unsubscribe_path, headers: request_headers(format)
         end
@@ -30,7 +30,7 @@ RSpec.shared_examples_for 'get unsubscribe' do
       end
 
       it 'non existing' do
-        sign_in(authorized_user, doorkeeper_application(format))
+        sign_in(authorized_user)
         get non_existing_unsubscribe_path, headers: request_headers(format)
         expect_not_found
       end

@@ -4,9 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Topic', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  def self.default_formats
-    super - %i[html]
-  end
 
   context 'with forum parent' do
     subject { forum_topic }

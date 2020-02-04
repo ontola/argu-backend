@@ -12,17 +12,12 @@ RSpec.describe 'Follows', type: :request do
   let(:create_path) { "#{collection_iri(argu, :follows)}?gid=#{freetown.uuid}" }
   let(:non_existing_create_path) { "#{collection_iri(argu, :follows, root: argu)}?gid=#{non_existing_id}" }
   let(:create_params) { {follow_type: 'reactions'} }
-  let(:expect_post_create_failed_html) { expect(response).to redirect_to(root_path) }
   let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }
   let(:parent_path) { subject.followable.iri.path }
   let(:create_differences) { {'Follow.reactions.count' => 1} }
   let(:created_resource_path) { parent_path }
   let(:destroy_differences) { {'Follow.reactions.count' => -1, 'Follow.never.count' => 1} }
   let(:update_failed_path) { parent_path }
-  let(:expect_delete_destroy_html) do
-    expect(response.code).to eq('303')
-    expect(response).to redirect_to(parent_path)
-  end
   let(:unsubscribe_path) { "#{subject.iri}/unsubscribe" }
   let(:non_existing_unsubscribe_path) do
     "#{iri_from_template(:follows_iri, id: non_existing_id, root_id: argu.url)}/unsubscribe"
@@ -34,10 +29,8 @@ RSpec.describe 'Follows', type: :request do
   end
   let(:expect_delete_destroy_unauthorized_json_api) { expect_delete_destroy_json_api }
   let(:expect_delete_destroy_unauthorized_serializer) { expect_delete_destroy_serializer }
-  let(:expect_delete_destroy_unauthorized_html) { expect_delete_destroy_html }
   let(:expect_delete_destroy_guest_json_api) { expect_delete_destroy_json_api }
   let(:expect_delete_destroy_guest_serializer) { expect_delete_destroy_serializer }
-  let(:expect_delete_destroy_guest_html) { expect_delete_destroy_html }
 
   subject { create(:follow, follower: staff, followable: freetown) }
 

@@ -4,9 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'BlogPosts', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  def self.index_formats
-    super - %i[html]
-  end
 
   context 'with motion parent' do
     subject { motion_blog_post }

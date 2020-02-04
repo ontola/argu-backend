@@ -4,9 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Votes', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  def self.index_formats
-    super - %i[html]
-  end
 
   before do
     freetown.update(public_grant: :participator)
@@ -25,8 +22,6 @@ RSpec.describe 'Votes', type: :request do
   end
   let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('403') }
   let(:expect_post_create_guest_serializer) { expect_created }
-  let(:expect_get_show_guest_html) { expect_get_show_html }
-  let(:guest_user) { GuestUser.new(id: session.id) }
   let(:authorized_user_update) { subject.publisher }
   let(:authorized_user_destroy) { subject.publisher }
 
@@ -35,9 +30,7 @@ RSpec.describe 'Votes', type: :request do
     let(:expect_delete_destroy_guest_json_api) { expect(response.code).to eq('204') }
     let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('200') }
     let(:expect_delete_destroy_unauthorized_serializer) { expect_not_found }
-    let(:expect_delete_destroy_unauthorized_html) { expect_not_found }
     let(:expect_get_show_unauthorized_serializer) { expect_success }
-    let(:expect_get_show_unauthorized_html) { expect_redirect_to_login }
     it_behaves_like 'get show', opts
     it_behaves_like 'delete destroy', opts
   end
@@ -45,10 +38,8 @@ RSpec.describe 'Votes', type: :request do
   context 'for argument' do
     let!(:subject) { argument_vote }
     let!(:guest_subject) do
-      get root_path
       create(:vote, parent: subject_parent, creator: guest_user.profile, publisher: guest_user)
     end
-    let(:expect_get_show_html) { expect(response).to redirect_to(subject_parent.iri.path) }
     let(:expect_redirect_to_login) { new_iri(subject_parent, :votes, confirm: true) }
     let(:created_resource_path) { subject_parent.iri.path }
     it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid]
@@ -58,18 +49,12 @@ RSpec.describe 'Votes', type: :request do
   context 'with vote_event' do
     let(:parent_path) { subject_parent.iri.path }
     let(:update_path) { create_path }
-    let(:expect_delete_destroy_html) do
-      expect(response.code).to eq('303')
-      expect(response).to redirect_to(subject.voteable.iri.path)
-    end
 
     context 'for motion' do
       let!(:subject) { vote }
       let!(:guest_subject) do
-        get root_path
         create(:vote, parent: motion.default_vote_event, creator: guest_user.profile, publisher: guest_user)
       end
-      let(:expect_get_show_html) { expect(response).to redirect_to(motion.iri.path) }
       let(:expect_redirect_to_login) { new_iri(motion.default_vote_event, :votes, confirm: true) }
       let(:created_resource_path) { motion.iri.path }
       it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid]
@@ -80,10 +65,8 @@ RSpec.describe 'Votes', type: :request do
       let!(:subject) { linked_record_vote }
       let(:parent_path) {}
       let!(:guest_subject) do
-        get root_path
         create(:vote, parent: linked_record.default_vote_event, creator: guest_user.profile, publisher: guest_user)
       end
-      let(:expect_get_show_html) { expect(response).to linked_record.iri.path }
       let(:expect_redirect_to_login) do
         new_iri(linked_record.default_vote_event.iri(id: 'default').path, confirm: true)
       end
@@ -97,8 +80,8 @@ RSpec.describe 'Votes', type: :request do
         collection_iri(subject_parent.iri(id: non_existing_id).path, :votes, root: argu).path
       end
       let(:created_resource_path) { linked_record.iri.path }
-      it_behaves_like 'requests', skip: %i[trash untrash edit delete update new create_invalid html]
-      it_behaves_like 'by parent', skip: %i[html]
+      it_behaves_like 'requests', skip: %i[trash untrash edit delete update new create_invalid]
+      it_behaves_like 'by parent'
     end
 
     context 'with non-persisted linked_record parent' do
@@ -135,8 +118,8 @@ RSpec.describe 'Votes', type: :request do
           root: argu
         ).path
       end
-      it_behaves_like 'post create', skip: %i[html]
-      it_behaves_like 'get index', skip: %i[html]
+      it_behaves_like 'post create'
+      it_behaves_like 'get index'
     end
   end
 end
