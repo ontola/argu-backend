@@ -10,4 +10,8 @@ class InvitePolicy < EdgeTreePolicy
   def create?
     edgeable_policy.invite?
   end
+
+  def show?
+    edgeable_policy.invite?
+  end
 end
