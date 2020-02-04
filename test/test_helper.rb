@@ -6,7 +6,6 @@ require 'rails/test_help'
 require 'minitest/rails'
 require 'mocha/mini_test'
 require 'model_test_base'
-require 'capybara/rails'
 require 'wisper/minitest/assertions'
 require 'simplecov'
 require 'fakeredis'
@@ -26,10 +25,6 @@ Sidekiq::Testing.server_middleware do |chain|
 end
 
 Minitest::Reporters.use!
-
-# To add Capybara feature tests add `gem "minitest-rails-capybara"`
-# to the test group in the Gemfile and uncomment the following:
-# require "minitest/rails/capybara"
 
 DatabaseCleaner.strategy = :transaction
 WebMock.disable_net_connect!(
@@ -92,8 +87,6 @@ end
 
 module ActionDispatch
   class IntegrationTest
-    # Make the Capybara DSL available in all integration tests
-    include Capybara::DSL
     include Argu::TestHelpers::IriHelpers
     include Argu::TestHelpers::TestHelperMethods
     include Argu::TestHelpers::TestMocks

@@ -101,7 +101,7 @@ RSpec.describe SearchResult, type: :model do
   end
 
   def wait_for_count(q, count)
-    Timeout.timeout(Capybara.default_max_wait_time, Timeout::Error, "Expecting #{count} results for #{q}") do
+    Timeout.timeout(5, Timeout::Error, "Expecting #{count} results for #{q}") do
       sleep(0.1) until search_result(q: q).total_count == count
     end
   end
