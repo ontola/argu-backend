@@ -49,7 +49,6 @@ gem 'rails-i18n', '~> 5.0.4'
 gem 'tzinfo-data'
 
 gem 'rack-cors', require: 'rack/cors'
-gem 'formtastic', '~> 3.1.4'
 gem 'redis', '~> 3.3.5'
 gem 'rest-client'
 gem 'squirm_rails', require: 'squirm/rails'
