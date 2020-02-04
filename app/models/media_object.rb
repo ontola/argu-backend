@@ -60,6 +60,8 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     nil
   end
 
+  def content_type=(val); end
+
   delegate :embed_url, to: :video_info, allow_nil: true
 
   def parent
