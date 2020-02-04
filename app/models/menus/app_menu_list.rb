@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
+class AppMenuList < ApplicationMenuList
   include SettingsHelper
   include LanguageHelper
 
@@ -26,28 +26,14 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   private
 
   def info_menu_items
-    return old_info_menu_items if RequestStore.store[:old_frontend]
     [
       *custom_menu_items(:info, ActsAsTenant.current_tenant),
       menu_item(:powered_by, label: I18n.t('about.powered_by'), href: RDF::URI('https://ontola.io/nl/webdevelopment'))
     ]
   end
 
-  def old_info_menu_items # rubocop:disable Metrics/AbcSize
-    [
-      menu_item(:about, label: I18n.t('about.about'), href: RDF::URI(i_about_url)),
-      menu_item(:team, label: I18n.t('about.team'), href: RDF::URI(info_url(:team))),
-      menu_item(:blog, label: I18n.t('about.blog'), href: RDF::URI('https://argu.co/argu/blog/posts')),
-      menu_item(:governments, label: I18n.t('about.governments'), href: RDF::URI(info_url(:governments))),
-      menu_item(:press_media, label: I18n.t('press_media'), href: RDF::URI('https://argu.pr.co')),
-      menu_item(:support, label: I18n.t('help_support'), href: RDF::URI('https://argu.freshdesk.com/support/home')),
-      afe_request? ? menu_item(:discover, label: I18n.t('pages.discover'), href: collection_iri(nil, :pages)) : nil,
-      menu_item(:contact, label: I18n.t('about.contact'), href: RDF::URI(info_url(:contact)))
-    ]
-  end
-
   def edit_profile_link
-    afe_request? ? "#{settings_user_users_url}#profile" : settings_user_users_url(tab: :profile)
+    "#{settings_user_users_url}#profile"
   end
 
   def language_menu_item
@@ -97,14 +83,13 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource))
   end
 
-  def user_menu_items # rubocop:disable Metrics/AbcSize
+  def user_menu_items
     return [language_menu_item] if resource.guest?
 
     items = user_base_items
     items << user_settings_item
     items << user_pages_item if Apartment::Tenant.current == 'argu'
-    items << user_forum_management_item if !user_context.vnext && resource.forum_management?
-    items << language_menu_item if afe_request?
+    items << language_menu_item
     items << sign_out_menu_item
     items
   end

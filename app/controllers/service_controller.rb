@@ -15,15 +15,11 @@ class ServiceController < ParentableController
       end
   end
 
-  def activity_comment # rubocop:disable Metrics/AbcSize
-    if vnext_request?
-      activity_key = "#{action_name}_activity_attributes"
-      if params.dig(model_name, activity_key, :comment).present?
-        params.require(model_name).require(activity_key).require(:comment)
-      end
-    else
-      params[:activity]&.permit(:comment).try(:[], :comment)
-    end
+  def activity_comment
+    activity_key = "#{action_name}_activity_attributes"
+    return if params.dig(model_name, activity_key, :comment).blank?
+
+    params.require(model_name).require(activity_key).require(:comment)
   end
 
   def authenticated_resource!

@@ -36,8 +36,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
   end
 
   def show_anonymous_user?(user)
-    afe_request? &&
-      (current_resource_owner.nil? || current_resource_owner.guest?) &&
+    (current_resource_owner.nil? || current_resource_owner.guest?) &&
       user.present? && !user.profile.is_public?
   end
 

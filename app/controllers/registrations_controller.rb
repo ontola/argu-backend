@@ -12,12 +12,11 @@ class RegistrationsController < Devise::RegistrationsController # rubocop:disabl
   alias new_resource build_resource
 
   skip_before_action :authenticate_scope!, only: :destroy
-  skip_before_action :verify_authenticity_token, if: :api_request?
   before_action :handle_spammer, if: :is_spam?, only: :create
 
   def create
     super
-    session[:omniauth] = nil unless @user.new_record? || afe_request?
+    session[:omniauth] = nil
   end
 
   protected

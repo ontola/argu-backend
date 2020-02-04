@@ -15,7 +15,6 @@ class MotionMenuList < ApplicationMenuList
   def action_menu_items
     [
       decisions_link,
-      comments_link,
       activity_link,
       search_link,
       new_update_link,
@@ -34,7 +33,7 @@ class MotionMenuList < ApplicationMenuList
     menu_item(
       :take_decision,
       image: 'fa-gavel',
-      href: afe_request? ? new_iri(resource, :decisions) : collection_iri(resource, :decisions),
+      href: new_iri(resource, :decisions),
       policy: :decide?
     )
   end

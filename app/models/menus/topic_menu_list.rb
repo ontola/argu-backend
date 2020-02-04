@@ -14,7 +14,6 @@ class TopicMenuList < ApplicationMenuList
 
   def action_menu_items
     [
-      comments_link,
       activity_link,
       search_link,
       new_update_link,

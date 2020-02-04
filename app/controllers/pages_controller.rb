@@ -123,7 +123,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def show_success_html # rubocop:disable Metrics/AbcSize
     if resource_by_id != ActsAsTenant.current_tenant
-      redirect_to "#{request.protocol}#{DynamicUriHelper.tenant_prefix(resource_by_id, true)}"
+      redirect_to "#{request.protocol}#{DynamicUriHelper.tenant_prefix(resource_by_id)}"
       return
     end
 

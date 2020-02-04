@@ -2,18 +2,6 @@
 
 module Menus
   module ActionMenuItems
-    def comments_link
-      return if afe_request?
-      menu_item(
-        :comments,
-        label_params: {count: resource.children_count(:comments)},
-        image: 'fa-comments-o',
-        href: collection_iri(resource, :comments),
-        policy: :index_children?,
-        policy_arguments: %i[comments]
-      )
-    end
-
     def contact_link
       menu_item(
         :contact,
@@ -34,8 +22,6 @@ module Menus
     end
 
     def search_link
-      return unless afe_request?
-
       menu_item(
         :search,
         image: 'fa-search',

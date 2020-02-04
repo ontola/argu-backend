@@ -42,7 +42,7 @@ class HeadMiddleware
   def language_from_r; end
 
   def resource_from_request
-    return unless ActsAsTenant.current_tenant && afe_request?
+    return unless ActsAsTenant.current_tenant
 
     resource_from_iri(request.original_url, ActsAsTenant.current_tenant)
   end

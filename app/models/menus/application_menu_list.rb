@@ -6,7 +6,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
   include UriTemplateHelper
   include LinkedRails::Helpers::OntolaActionsHelper
 
-  delegate :afe_request?, :user, to: :user_context
+  delegate :user, to: :user_context
 
   def available_menus
     return {} if user_context&.system_scope?

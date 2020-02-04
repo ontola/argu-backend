@@ -10,8 +10,7 @@ class CurrentActorSerializer < BaseSerializer
   attribute :shortname
   attribute :url
   attribute :primary_email,
-            predicate: NS::ARGU[:primaryEmail],
-            if: :afe_request?
+            predicate: NS::ARGU[:primaryEmail]
 
   has_one :user, predicate: NS::ARGU[:user]
   has_one :actor, predicate: NS::ONTOLA[:actor] do

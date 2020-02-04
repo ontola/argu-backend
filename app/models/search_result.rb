@@ -11,7 +11,7 @@ class SearchResult
   include Cacheable
 
   attr_accessor :page, :page_size, :parent, :q, :user_context
-  delegate :user, :afe_request?, to: :user_context
+  delegate :user, to: :user_context
   delegate :total_count, :took, to: :search_result
   delegate :root, to: :parent
 

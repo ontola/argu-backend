@@ -4,19 +4,14 @@
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
   attr_accessor :user
-  attr_reader :actor, :doorkeeper_scopes, :vnext
+  attr_reader :actor, :doorkeeper_scopes
 
-  def initialize(doorkeeper_scopes:, profile: nil, user: nil, vnext: nil)
+  def initialize(doorkeeper_scopes:, profile: nil, user: nil)
     @user = user || GuestUser.new
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes
-    @vnext = vnext
     @lookup_map = {}
     @grant_trees = {}
-  end
-
-  def afe_request?
-    doorkeeper_scopes.include?('afe')
   end
 
   def cache_key(ident, key, val)

@@ -6,7 +6,7 @@ class MoveController < ServiceController
   private
 
   def authorize_action
-    return authorize parent_resource!, :show? if afe_request? && form_action?
+    return authorize parent_resource!, :show? if form_action?
 
     authorize parent_resource!, :move?
     user_context.with_root(parent_resource!.root) do
@@ -15,7 +15,7 @@ class MoveController < ServiceController
   end
 
   def check_if_registered?
-    action_name != 'show' && !(afe_request? && form_action?)
+    action_name != 'show' && !form_action?
   end
 
   def create_success

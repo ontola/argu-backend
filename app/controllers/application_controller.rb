@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   include Argu::Controller::Authentication
   include Argu::Controller::ErrorHandling
   include ActiveResponseHelper
-  include FrontendTransitionHelper
   include RedirectHelper
   include JsonAPIHelper
   include NestedAttributesHelper
@@ -27,7 +26,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   before_action :verify_internal_ip, if: :service_token?
   force_ssl unless: :internal_request?, host: Rails.application.config.frontend_url
-  protect_from_forgery with: :exception, prepend: true, unless: :vnext_request?
   before_bugsnag_notify :add_user_info_to_bugsnag
 
   prepend_before_action :set_tenant_header
@@ -148,7 +146,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   end
 
   def parse_graph_params?
-    vnext_request? && !request.format.json_api?
+    !request.format.json_api?
   end
 
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses
@@ -198,9 +196,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     end
   end
 
-  def stored_location_for(resource)
-    return super unless afe_request?
-  end
+  def stored_location_for(_resource); end
 
   def time_zone(&block)
     time_zone = current_user.time_zone

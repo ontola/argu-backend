@@ -3,7 +3,6 @@
 module OauthHelper
   include LanguageHelper
   include JWTHelper
-  include FrontendTransitionHelper
   include Doorkeeper::Rails::Helpers
   include Doorkeeper::Helpers::Controller
 
@@ -48,16 +47,8 @@ module OauthHelper
     Doorkeeper::OAuth::Token.from_bearer_authorization(request)
   end
 
-  def set_argu_client_token_cookie(token, expires = nil)
-    return unless respond_to?(:cookies, true)
-
-    cookies.encrypted['argu_client_token'] = {
-      expires: expires,
-      value: token,
-      secure: request.ssl? && (Rails.env.staging? || Rails.env.production?),
-      httponly: true,
-      domain: Rails.env.staging? ? nil : :all
-    }
+  def session_id
+    @_session_id ||= doorkeeper_token.resource_owner_id
   end
 
   private
@@ -78,7 +69,7 @@ module OauthHelper
   end
 
   def generate_guest_token(guest_id, application: nil, locale: nil)
-    application ||= vnext_request? ? Doorkeeper::Application.argu_front_end : Doorkeeper::Application.argu
+    application ||= Doorkeeper::Application.argu_front_end
     I18n.locale = locale || language_for_guest
 
     token = Doorkeeper::AccessToken.new(
@@ -92,10 +83,7 @@ module OauthHelper
   end
 
   def guest_session_id
-    return doorkeeper_token&.resource_owner_id || SecureRandom.hex if afe_request?
-
-    session[:load] = true unless session.loaded?
-    session_id.to_s
+    doorkeeper_token&.resource_owner_id || SecureRandom.hex
   end
 
   def new_token_scopes(requested_scope, application_id)
@@ -119,6 +107,6 @@ module OauthHelper
   end
 
   def update_oauth_token(token)
-    vnext_request? ? response.headers['New-Authorization'] = token : set_argu_client_token_cookie(token)
+    response.headers['New-Authorization'] = token
   end
 end

@@ -36,10 +36,6 @@ class RestrictivePolicy # rubocop:disable Metrics/ClassLength
     @service ||= context.doorkeeper_scopes&.include? 'service'
   end
 
-  def vnext?
-    user_context.vnext
-  end
-
   delegate :user, to: :context
   delegate :actor, to: :context
   attr_reader :context, :record, :message

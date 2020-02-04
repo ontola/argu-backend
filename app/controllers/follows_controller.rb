@@ -3,7 +3,6 @@
 class FollowsController < AuthorizedController
   PERMITTED_CLASSES = Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze
   skip_before_action :check_if_registered, only: :destroy
-  skip_before_action :verify_authenticity_token, only: :destroy
   prepend_before_action :set_tenant
 
   private

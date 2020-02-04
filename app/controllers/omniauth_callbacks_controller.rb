@@ -139,6 +139,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
   def dynamic_iri(url)
     uri = URI.parse(url)
     relative = uri.nil? || uri.hostname.nil?
-    RDF::DynamicURI(DynamicUriHelper.revert(relative ? path_with_hostname(url) : url))
+    RDF::DynamicURI(relative ? path_with_hostname(url) : url)
   end
 end

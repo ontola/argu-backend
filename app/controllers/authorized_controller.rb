@@ -25,7 +25,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   end
 
   def authorize_action
-    return authorize authenticated_resource, :show? if afe_request? && form_action?
+    return authorize authenticated_resource, :show? if form_action?
 
     authorize authenticated_resource, "#{params[:action].chomp('!')}?" unless action_name == 'index'
   end
@@ -63,7 +63,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   end
 
   def check_if_registered?
-    !(action_name == 'show' || (afe_request? && form_action?))
+    action_name != 'show' && !form_action?
   end
 
   def collection_include_map
@@ -141,7 +141,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   end
 
   def requires_setup?
-    !(current_user.guest? || RequestStore.store[:old_frontend] || !tree_root.requires_intro? || has_shortname?)
+    !(current_user.guest? || !tree_root.requires_intro? || has_shortname?)
   end
 
   def verify_setup

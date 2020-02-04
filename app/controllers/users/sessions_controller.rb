@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  skip_before_action :verify_authenticity_token, only: :destroy
-
   def new # rubocop:disable Metrics/AbcSize
     request.flash[:notice] = I18n.t('devise.failure.invalid') if params[:show_error]
     request.flash[:notice] = params[:notice] if params[:notice]

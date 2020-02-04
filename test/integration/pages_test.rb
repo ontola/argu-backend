@@ -121,7 +121,6 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri(Page.last, tab: :profile).to_s
   end
 
@@ -143,7 +142,6 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri(Page.last, tab: :profile).to_s
     assert_equal Page.last.profile.name, 'Utrecht Two'
     assert_equal Page.last.profile.about, 'Utrecht Two bio'
@@ -281,7 +279,6 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     %i[profile groups forums general shortnames].each do |tab|
-      RequestStore.store[:old_frontend] = true
       get settings_iri(page, tab: tab)
       assert_response 200
     end
@@ -306,7 +303,6 @@ class PagesTest < ActionDispatch::IntegrationTest
           }
         }
 
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri(page, tab: :profile)
     page.reload
     assert_equal 1, page.profile.media_objects.count
@@ -332,7 +328,6 @@ class PagesTest < ActionDispatch::IntegrationTest
           }
     end
 
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri(page, tab: :profile)
     page.reload
     assert_equal 2, page.custom_placement.lat

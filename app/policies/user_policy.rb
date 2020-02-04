@@ -31,9 +31,9 @@ class UserPolicy < RestrictivePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i[general profile authentication]
-    tabs.append :emails if vnext?
+    tabs.append :emails
     tabs.concat %i[notifications privacy advanced]
-    tabs.append :delete if vnext?
+    tabs.append :delete
     tabs
   end
 

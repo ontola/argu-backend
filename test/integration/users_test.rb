@@ -224,7 +224,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal user.email_addresses.last.email, 'secondary@argu.co'
     assert_not_equal user.primary_email_record.email, 'secondary@argu.co'
 
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
     assert_email_sent
   end
@@ -254,7 +253,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_not_equal user.email_addresses.last.email, second_email.email
     assert_equal user.primary_email_record.email, second_email.email
 
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
@@ -276,7 +274,6 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
 
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
@@ -332,7 +329,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     unconfirmed_email.reload
     assert_equal unconfirmed_email.email, 'changed@argu.co'
 
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
     assert_email_sent
   end
@@ -487,7 +483,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_user_settings_shown
 
     %i[general profile authentication notifications privacy advanced].each do |tab|
-      RequestStore.store[:old_frontend] = true
       get settings_iri('/u', tab: tab)
       assert_user_settings_shown tab
     end
@@ -531,7 +526,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal('profile_photo.png', user.profile.default_profile_photo.content_identifier)
     assert_equal('cover_photo.jpg', user.profile.default_cover_photo.content_identifier)
 
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
 
     put user_path(user),
@@ -570,7 +564,6 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
@@ -591,7 +584,6 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
@@ -651,7 +643,6 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
@@ -675,7 +666,6 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 

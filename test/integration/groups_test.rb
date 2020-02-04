@@ -106,7 +106,6 @@ class GroupsTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri(argu, tab: :groups)
   end
 
@@ -128,7 +127,6 @@ class GroupsTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri(argu, tab: :groups)
   end
 
@@ -147,7 +145,6 @@ class GroupsTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     %i[general members invite grants].each do |tab|
-      RequestStore.store[:old_frontend] = true
       get settings_iri(granted_group, tab: tab)
       assert_group_settings_shown group, tab
     end
@@ -185,7 +182,6 @@ class GroupsTest < ActionDispatch::IntegrationTest
 
     assert_equal group.reload.name, 'new_name'
     assert_equal group.reload.name_singular, 'new_singular'
-    RequestStore.store[:old_frontend] = true
     assert_redirected_to settings_iri(group.page, tab: :groups)
   end
 

@@ -36,7 +36,7 @@ class Users::PasswordsController < Devise::PasswordsController
   end
 
   def after_sending_reset_password_instructions_path_for(_resource_name)
-    afe_request? ? RDF::DynamicURI(path_with_hostname('/u/sign_in')).path : new_user_session_path
+    RDF::DynamicURI(path_with_hostname('/u/sign_in')).path
   end
 
   def after_resetting_password_path_for(resource)

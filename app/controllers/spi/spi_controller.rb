@@ -2,7 +2,6 @@
 
 module SPI
   class SPIController < ActionController::API
-    include FrontendTransitionHelper
     include Argu::Controller::ErrorHandling
     include Argu::Controller::ErrorHandling::BadCredentials
     include JsonAPIHelper

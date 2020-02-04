@@ -26,17 +26,12 @@ module Argu
         @_pundit_policy_scoped = true if sure
       end
 
-      def verify_authenticity_token?
-        vnext_request? || doorkeeper_token.nil? || doorkeeper_guest_token? || !doorkeeper_oauth_header?
-      end
-
       def user_context
         @user_context ||=
           UserContext.new(
             doorkeeper_scopes: doorkeeper_scopes,
             profile: current_profile,
-            user: current_user,
-            vnext: vnext_request?
+            user: current_user
           )
       end
     end

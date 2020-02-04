@@ -52,12 +52,6 @@ class Publication < ApplicationRecord
 
   private
 
-  def async?
-    return true unless publish_time_lapsed? && RequestStore.store[:old_frontend]
-
-    !publishable.is_a?(Argument) && !publishable.is_a?(Comment)
-  end
-
   # Cancel the scheduled PublishJob
   def cancel
     PublicationsWorker.cancel!(job_id) if job_id.present?
@@ -72,7 +66,7 @@ class Publication < ApplicationRecord
     return if destroyed? || publishable.is_published?
 
     cancel if job_id.present?
-    async? ? schedule : publish_now
+    schedule
   end
 
   # Create a PublicationsWorker and save it's job id

@@ -58,7 +58,7 @@ module IRIHelper
     iri = URI(original_iri)
     iri.path = iri.path[0...-1] if iri.path.ends_with?('/')
     opts = ActsAsTenant.with_tenant(root) do
-      Rails.application.routes.recognize_path(iri)
+      Rails.application.routes.recognize_path(iri.to_s)
     end
     return {} if opts[:controller].blank?
     opts[:type] = opts[:controller].singularize

@@ -6,14 +6,6 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
 
   private
 
-  def comment_body
-    if params[:comment].is_a?(String)
-      Bugsnag.notify('comment_body should always be a hash')
-      raise StandardError('should always be a hash')
-    end
-    params[:comment].try(:[], :body)
-  end
-
   def create_failure_html
     c = authenticated_resource
     url = "#{c.parent.iri}?#{{comment: {body: c.body, parent_id: c.in_reply_to_id}}.to_param}"
@@ -95,21 +87,7 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
   def resource_new_params
     params = super
     params[:in_reply_to_id] = parent_resource.uuid if parent_resource.is_a?(Comment)
-    return params if afe_request?
-    params.merge(body: comment_body)
-  end
-
-  def query_payload(opts = {})
-    query = opts.merge(comment: {body: comment_body})
-    query[:comment] << {parent_id: params[:parent_id]} if params[:parent_id].present?
-    query.to_query
-  end
-
-  def after_login_location
-    return super unless params[:action] == 'create'
-    redirect_url = URI.parse(new_iri(parent_resource!, :comments))
-    redirect_url.query = query_payload(confirm: true)
-    redirect_url
+    params
   end
 
   def default_form_view_locals(_action)

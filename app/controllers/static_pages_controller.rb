@@ -2,7 +2,6 @@
 
 class StaticPagesController < AuthorizedController
   skip_before_action :authorize_action, only: :not_found
-  skip_before_action :verify_authenticity_token, only: :not_found
   skip_before_action :check_if_registered
   skip_after_action :verify_authorized, only: :not_found
 

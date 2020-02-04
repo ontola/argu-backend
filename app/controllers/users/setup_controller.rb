@@ -14,12 +14,6 @@ module Users
       true
     end
 
-    def model_name
-      return super unless RequestStore.store[:old_frontend]
-
-      :user
-    end
-
     def redirect_to_root
       redirect_to root_path
     end
@@ -34,8 +28,6 @@ module Users
     end
 
     def update_success
-      return super if RequestStore.store[:old_frontend]
-
       respond_with_resource(resource: current_actor)
     end
 
