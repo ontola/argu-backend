@@ -6,16 +6,7 @@ class Users::SessionsController < Devise::SessionsController
     request.flash[:notice] = params[:notice] if params[:notice]
     self.resource = resource_class.new({remember_me: true, r: r_from_url_or_header}.merge(sign_in_params))
     clean_up_passwords(resource)
-    active_response_block do
-      case active_response_type
-      when :html, :js
-        render 'devise/sessions/new',
-               layout: 'guest',
-               locals: {resource: resource, resource_name: :user, devise_mapping: Devise.mappings[:user]}
-      else
-        respond_with_redirect location: RDF::DynamicURI(path_with_hostname('/u/sign_in')).path
-      end
-    end
+    respond_with_redirect location: RDF::DynamicURI(path_with_hostname('/u/sign_in')).path
   end
 
   def create

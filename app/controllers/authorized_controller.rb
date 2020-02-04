@@ -154,27 +154,14 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     end
   end
 
-  def verify_terms_accepted # rubocop:disable Metrics/AbcSize
+  def verify_terms_accepted
     return if current_user.guest? || current_user.accepted_terms?
     if accept_terms_param
       current_user.accept_terms!
     else
-      active_response_block do
-        case active_response_type
-        when :html, :js
-          render 'accept_terms'
-        when :json
-          render status: 403,
-                 json: {
-                   body: render_to_string('accept_terms.html', layout: false),
-                   code: 'TERMS_NOT_ACCEPTED'
-                 }
-        else
-          action = new_iri(expand_uri_template(:terms_iri), nil)
-          add_exec_action_header(response.headers, ontola_dialog_action(action))
-          head 449
-        end
-      end
+      action = new_iri(expand_uri_template(:terms_iri), nil)
+      add_exec_action_header(response.headers, ontola_dialog_action(action))
+      head 449
     end
   end
 end

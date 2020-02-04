@@ -51,7 +51,7 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
   def authorize_action
     authorize authenticated_resource, :list?
 
-    super unless action_name == 'show' && format_html?
+    super
   end
 
   def collect_children(resource)
@@ -78,13 +78,6 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
     return action if lookup_context.exists?("container_nodes/#{action}")
 
     super
-  end
-
-  def form_view_locals
-    {
-      resource: resource,
-      controller_name.singularize.to_sym => resource
-    }
   end
 
   def forum_grants
@@ -118,17 +111,6 @@ class ContainerNodesController < EdgeableController # rubocop:disable Metrics/Cl
 
   def show_params
     params.permit(:page)
-  end
-
-  def show_success_html # rubocop:disable Metrics/AbcSize
-    if resource.is_a?(Blog)
-      redirect_to collection_iri(resource, :blog_posts)
-    elsif (/[a-zA-Z]/i =~ params[:id]).nil?
-      redirect_to resource.iri, status: 307
-    else
-      @children = collect_children(authenticated_resource)
-      respond_with_resource(show_success_options)
-    end
   end
 
   def signals_failure

@@ -19,35 +19,7 @@ class ProfilesController < AuthorizedController
     active_response_block do
       @resource = user_or_redirect
       @profile = @resource.profile
-      if active_response_type == :html
-        @resource.build_home_placement if @resource.home_placement.nil?
-
-        respond_with_form(
-          locals: {profile: @profile, resource: @resource},
-          view: 'users/profiles/setup'
-        )
-      else
-        respond_with_redirect location: redirect_url || dual_profile_url(@profile)
-      end
-    end
-  end
-
-  # PUT /profiles/setup
-  def setup!
-    @resource = user_or_redirect
-    @profile = @resource.profile
-
-    respond_to do |format|
-      if @resource.update(setup_permit_params)
-        format.html do
-          redirect_to redirect_url || dual_profile_url(@profile), notice: 'Profile was successfully updated.'
-        end
-      else
-        format.html do
-          render 'users/profiles/setup',
-                 locals: {profile: @profile, resource: @resource}
-        end
-      end
+      respond_with_redirect location: redirect_url || dual_profile_url(@profile)
     end
   end
 
@@ -58,14 +30,6 @@ class ProfilesController < AuthorizedController
       Shortname.find_resource(params[:id])&.profile || Profile.find_by(id: params[:id]) || current_user.profile
   end
   alias authenticated_resource current_resource
-
-  def edit_success_html
-    if current_resource.profileable.is_a? User
-      redirect_to settings_iri('/u', tab: :profile)
-    else
-      redirect_to settings_iri(current_resource.profileable, tab: :profile)
-    end
-  end
 
   def permit_params
     pm = params.require(:profile).permit(*policy(@profile || current_resource).permitted_attributes).to_h
@@ -104,10 +68,6 @@ class ProfilesController < AuthorizedController
     merge_photo_params(pp)
     merge_placement_params(pp, User)
     pp
-  end
-
-  def show_success_html
-    redirect_to current_resource.profileable
   end
 
   def user_or_redirect(redirect = nil)

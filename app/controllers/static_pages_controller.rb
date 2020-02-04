@@ -38,36 +38,13 @@ class StaticPagesController < AuthorizedController
     }
   end
 
-  def home # rubocop:disable Metrics/AbcSize
+  def home
     active_response_block do
-      if active_response_type == :html
-        if current_user.is_staff?
-          render # stream: true
-        else
-          current_user.guest? ? about : redirect_to(preferred_forum.iri)
-        end
-      else
-        respond_with_redirect location: current_user.is_staff? ? feeds_iri(nil) : preferred_forum.iri
-      end
+      respond_with_redirect location: current_user.is_staff? ? feeds_iri(nil) : preferred_forum.iri
     end
   end
 
   def developers; end
-
-  def dismiss_announcement
-    announcement = Announcement.find(params[:announcement_id])
-    BannerDismissal.new(banner_class: Announcement,
-                        banner: announcement)
-    stubborn_hmset 'announcements', announcement.identifier => :hidden
-
-    respond_to do |format|
-      format.html { redirect_back(fallback_location: root_path) }
-      format.js do
-        render 'announcements/dismissals/create',
-               locals: {announcement: announcement}
-      end
-    end
-  end
 
   def how_argu_works; end
 

@@ -21,26 +21,10 @@ class ShortnamesController < ParentableController
     'pages/settings'
   end
 
-  def default_form_view_locals(_action)
-    {
-      tab: "shortnames/#{tab}",
-      active: 'shortnames',
-      shortname: authenticated_resource,
-      resource: authenticated_resource.root
-    }
-  end
-
   def destination_param
     return @destination_param if instance_variable_defined?(:@destination_param)
     return if params[:shortname].try(:[], :destination).blank?
     @destination_param = "#{tree_root.iri}/#{params[:shortname][:destination]}"
-  end
-
-  def handle_record_not_unique_html
-    authenticated_resource
-      .errors
-      .add(:owner, t('activerecord.errors.record_not_unique'))
-    respond_with_form(default_form_options(nil))
   end
 
   def parent_resource

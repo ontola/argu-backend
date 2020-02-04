@@ -124,20 +124,12 @@ Rails.application.routes.draw do
 
   scope :profiles do
     get :setup, to: 'profiles#setup'
-    put :setup, to: 'profiles#setup!'
   end
 
   get :feed, controller: :feed, action: :index
   get 'staff/feed', controller: :favorites_feed, action: :index
 
   resources :terms, only: %i[new create]
-
-  resources :announcements, only: %i[show] do
-    post '/dismissals',
-         to: 'static_pages#dismiss_announcement'
-    get '/dismissals',
-        to: 'static_pages#dismiss_announcement'
-  end
 
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'

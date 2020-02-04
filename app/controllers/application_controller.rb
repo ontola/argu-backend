@@ -33,7 +33,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :set_vary
-  after_action :set_profile_forum, if: :format_html?
   around_action :time_zone
   after_action :set_version_header
   after_action :include_resources
@@ -133,10 +132,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     {}
   end
 
-  def format_html?
-    request.format.html?
-  end
-
   def include_resources
     response.headers['Include-Resources'] = current_resource.try(:include_resources)&.join(',') if request.head?
   end
@@ -185,15 +180,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # @private
   def set_version_header
     response.headers['Argu-Version'] = ::VERSION
-  end
-
-  def set_profile_forum # rubocop:disable Metrics/AbcSize
-    return if current_forum.blank?
-    if current_user.guest?
-      Argu::Redis.setex("session:#{session_id}:last_forum", 1.day.seconds.to_i, current_forum.uuid)
-    else
-      Argu::Redis.set("profile:#{current_profile.id}:last_forum", current_forum.uuid)
-    end
   end
 
   def stored_location_for(_resource); end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VoteEvent < Edge # rubocop:disable Metrics/ClassLength
+class VoteEvent < Edge
   DEFAULT_ID = 'default'
   enhance LinkedRails::Enhancements::Actionable
 
@@ -29,38 +29,6 @@ class VoteEvent < Edge # rubocop:disable Metrics/ClassLength
 
   def pro_count
     children_count(:votes_pro)
-  end
-
-  def stats # rubocop:disable Metrics/AbcSize
-    return @stats if @stats.present?
-    totals = Vote
-               .where(parent_id: id)
-               .select('votes.for, count(*) as count')
-               .group(:for)
-               .to_a
-    totals_confirmed = Vote
-                         .joins(publisher: :email_addresses)
-                         .where('email_addresses.confirmed_at IS NOT NULL')
-                         .where(parent_id: id)
-                         .select('votes.for, count(DISTINCT votes.id) as count')
-                         .group(:for)
-                         .to_a
-    totals_facebook = Vote
-                        .joins(publisher: :identities)
-                        .where(identities: {provider: 'facebook'})
-                        .where(parent_id: id)
-                        .select('votes.for, count(DISTINCT votes.id) as count')
-                        .group(:for)
-                        .to_a
-    @stats = %w[pro neutral con].map do |side|
-      total = totals.find { |s| s.for == side }&.count || 0
-      {
-        confirmed: total.positive? ? (totals_confirmed.find { |s| s.for == side }&.count&.to_f || 0) / total : nil,
-        facebook: total.positive? ? (totals_facebook.find { |s| s.for == side }&.count&.to_f || 0) / total : nil,
-        side: side,
-        total: total
-      }
-    end
   end
 
   def to_param

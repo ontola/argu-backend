@@ -40,19 +40,13 @@ class Users::PasswordsController < Devise::PasswordsController
   end
 
   def after_resetting_password_path_for(resource)
-    return super if resource.url.present?
+    return iri_from_template(:user_sign_in).path if resource.url.present?
 
     iri_from_template(:setup_iri)
   end
 
   def current_resource
     @current_resource ||= Users::Password.new(user: current_user, reset_password_token: params[:reset_password_token])
-  end
-
-  def default_form_view_locals(_action)
-    {
-      resource: resource
-    }
   end
 
   def default_form_view(action)

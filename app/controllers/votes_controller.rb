@@ -30,60 +30,17 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     authorize authenticated_resource, method
   end
 
-  def create_success_json
-    render locals: {model: authenticated_resource.parent, vote: authenticated_resource},
-           status: :created,
-           location: authenticated_resource.iri
-  end
-
-  def create_failure_html
-    redirect_to authenticated_resource.parent.voteable.iri,
-                notice: t('votes.alerts.failed')
-  end
-
-  def create_success_html
-    if params[:vote].try(:[], :r).present?
-      redirect_to redirect_param
-    else
-      redirect_to authenticated_resource.parent.voteable.iri,
-                  notice: t('votes.alerts.success')
-    end
-  end
-
-  def create_success_js
-    unless authenticated_resource.parent.is_a?(Argument)
-      return respond_with_redirect(location: authenticated_resource.parent.voteable.iri)
-    end
-    render locals: {model: authenticated_resource.parent, vote: authenticated_resource}
-  end
-
-  def destroy_success_js
-    render locals: {
-      vote: authenticated_resource
-    }
-  end
-
-  def execute_action # rubocop:disable Metrics/AbcSize
+  def execute_action
     return super unless action_name == 'create'
     return super unless unmodified?
     respond_to do |format|
-      format.html do
-        if params[:vote].try(:[], :r).present?
-          redirect_to redirect_param
-        else
-          redirect_to create_service.resource.parent.voteable.iri,
-                      notice: t('votes.alerts.not_modified')
-        end
-      end
       format.json do
-        render status: 304,
-               locals: {model: create_service.resource.parent.voteable, vote: create_service.resource}
+        head 304
       end
       format.json_api { head 304 }
       RDF_CONTENT_TYPES.each do |type|
         format.send(type) { head 304 }
       end
-      format.js { render locals: {model: create_service.resource.parent, vote: create_service.resource} }
     end
   end
 
@@ -95,20 +52,8 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     params[:vote_event_id] == VoteEvent::DEFAULT_ID
   end
 
-  def index_success_html
-    skip_verify_policy_scoped(true)
-    redirect_to parent_resource!.iri
-  end
-
   def iri_without_id
     current_vote_iri(parent_resource)
-  end
-
-  def new_form_locals
-    {
-      resource: resource.parent,
-      vote: resource
-    }
   end
 
   def resource_by_id
@@ -126,10 +71,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       NS::OWL.sameAs,
       current_resource.iri
     ]
-  end
-
-  def show_success_html
-    redirect_to authenticated_resource.voteable.iri
   end
 
   def show_meta

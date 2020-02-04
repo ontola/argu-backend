@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLength
+class UsersController < AuthorizedController
   include VotesHelper
   include UrlHelper
   helper_method :authenticated_resource
@@ -66,46 +66,10 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     r_param || resource_settings_iri
   end
 
-  def settings_success_html
-    authenticated_resource.build_home_placement if authenticated_resource.home_placement.nil?
-    authenticated_resource.build_shortname if authenticated_resource.shortname.nil?
-    super
-  end
-
-  def settings_view_locals
-    super.merge(profile: authenticated_resource.profile)
-  end
-
-  def show_success_html # rubocop:disable Metrics/AbcSize
-    if (/[a-zA-Z]/i =~ params[:id]).nil? && authenticated_resource.url.present?
-      redirect_to authenticated_resource.iri, status: 307
-    else
-      available_pages = authenticated_resource.profile.active_pages(current_profile.granted_root_ids(nil))
-      render 'show', locals: {
-        available_pages: available_pages,
-        organization_feed: "#{feeds_iri(authenticated_resource)}.js"
-      }
-    end
-  end
-
   def tree_root_fallback
     return super if params[:id].blank? || resource_by_id == current_resource_owner
 
     user_root_fallback || super
-  end
-
-  def update_failure_html # rubocop:disable Metrics/AbcSize
-    if params[:user][:form] == 'wrong_email'
-      email = params[:user][:email_addresses_attributes]['99999'][:email]
-      if current_user.email_addresses.any? { |e| e.email == email }
-        redirect_to r_param
-      else
-        render 'wrong_email', locals: {email: email, r: r_param}
-      end
-    else
-      render 'settings',
-             locals: {tab: tab!, active: tab!, profile: authenticated_resource.profile}
-    end
   end
 
   def active_response_success_message

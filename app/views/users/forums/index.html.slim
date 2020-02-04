@@ -1,6 +1,0 @@
-=render partial: 'profiles/profile_bar', locals: {resource: @profile, active: :forum_management}
-.col-1
-  header
-    h1= t('forums.management.title')
-  - @forums.each do |forum|
-    =render partial: 'container_nodes/forum', locals: {forum: forum}

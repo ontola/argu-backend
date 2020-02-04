@@ -6,28 +6,6 @@ module Users
 
     private
 
-    def index_locals
-      {
-        pages: index_association,
-        current: current_user.page_count,
-        max: policy(current_user).max_allowed_pages
-      }
-    end
-
-    def index_association
-      ActsAsTenant.without_tenant do
-        @pages =
-          policy_scope(Page)
-            .includes(:shortname, profile: %i[default_profile_photo default_cover_photo])
-            .where(
-              uuid: user
-                    .profile
-                    .granted_root_ids(%w[moderator administrator])
-                    .concat(user.page_ids)
-            ).distinct
-      end
-    end
-
     def index_collection
       current_user.page_collection(collection_options)
     end

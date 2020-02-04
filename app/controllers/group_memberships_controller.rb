@@ -39,10 +39,6 @@ class GroupMembershipsController < ServiceController
     end
   end
 
-  def create_failure_html
-    redirect_to redirect_location, notice: t('errors.general')
-  end
-
   def create_success_options_json
     opts = create_success_options
     opts[:include] = :group
@@ -62,10 +58,6 @@ class GroupMembershipsController < ServiceController
                          .map { |key, errors| [key, errors.find { |error| error[:error] == :taken }[:value]] }
     @existing_record = controller_class
                          .find_by(Hash[duplicate_values].merge(member_id: authenticated_resource.member_id))
-  end
-
-  def new_success_html
-    respond_with_redirect location: settings_iri(authenticated_resource.group, tab: :invite)
   end
 
   def parent_resource_key(opts)
@@ -96,10 +88,5 @@ class GroupMembershipsController < ServiceController
 
   def requires_setup?
     false
-  end
-
-  def show_success_html
-    flash.keep
-    respond_with_redirect(location: redirect_location)
   end
 end

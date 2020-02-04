@@ -28,19 +28,10 @@ class FeedTest < ActionDispatch::IntegrationTest
     visit_motion_feed(accept: :nq)
   end
 
-  test 'guest should get motion/feed html' do
-    visit_motion_feed
-  end
-
   ####################################
   # As User
   ####################################
   let(:user) { create(:user) }
-
-  test 'user should get forum/feed html' do
-    sign_in user
-    visit_freetown_feed
-  end
 
   test 'user should get forum/feed nq' do
     sign_in user, Doorkeeper::Application.argu_front_end
@@ -53,42 +44,16 @@ class FeedTest < ActionDispatch::IntegrationTest
     visit_motion_feed(accept: :nq)
   end
 
-  test 'user should get motion/feed html' do
-    sign_in user
-
-    visit_motion_feed
-  end
-
   test 'user should get complete motion/feed nq' do
     sign_in user, Doorkeeper::Application.argu_front_end
 
     visit_motion_feed(accept: :nq, complete: true)
   end
 
-  test 'user should get complete motion/feed html' do
-    sign_in user
-
-    visit_motion_feed(complete: true)
-  end
-
-  test 'user should get additional activities for user/feed js' do
-    sign_in user
-    subject
-
-    get feeds_iri(publisher), params: {format: :js, from_time: 1.hour.from_now, complete: false}
-
-    assert_response 200
-  end
-
   ####################################
   # As Staff
   ####################################
   let(:staff) { create(:user, :staff) }
-
-  test 'staff should get forum/feed html' do
-    sign_in staff
-    visit_freetown_feed(count: 9)
-  end
 
   test 'staff should get forum/feed nq' do
     sign_in staff, Doorkeeper::Application.argu_front_end
@@ -101,64 +66,17 @@ class FeedTest < ActionDispatch::IntegrationTest
     visit_motion_feed(accept: :nq)
   end
 
-  test 'staff should get motion/feed html' do
-    sign_in staff
-
-    visit_motion_feed
-  end
-
   test 'staff should get complete motion/feed nq' do
     sign_in staff, Doorkeeper::Application.argu_front_end
 
     visit_motion_feed(accept: :nq, complete: true)
   end
 
-  test 'staff should get complete motion/feed html' do
-    sign_in staff
-
-    visit_motion_feed(complete: true)
-  end
-
-  test 'staff should get additional activities for motion/feed js' do
-    sign_in staff
-
-    get feeds_iri(subject),
-        params: {from_time: 1.hour.from_now, complete: false},
-        headers: argu_headers(accept: :js)
-
-    assert_response 200
-  end
-
-  test 'staff should get additional activities for user/feed js' do
-    sign_in staff
-    subject
-
-    get feeds_iri(publisher),
-        params: {from_time: 1.hour.from_now, complete: false},
-        headers: argu_headers(accept: :js)
-
-    assert_response 200
-  end
-
-  test 'staff should get additional activities for favorites/feed js' do
-    sign_in staff
-    create(:favorite, edge: freetown, user: staff)
-    subject
-
-    get feed_path,
-        params: {from_time: 1.hour.from_now, complete: false},
-        headers: argu_headers(accept: :js)
-
-    assert_response 200
-  end
-
   private
 
   # Render activity of Motion#create, Motion#publish, 6 comments, 6 public votes and 3 private votes
-  def assert_activity_count(accept: :html, complete: false, count: nil, parent: subject)
+  def assert_activity_count(accept: :nq, complete: false, count: nil, parent: subject)
     case accept
-    when :html
-      assert_select '.activity-feed .activity', count
     when :nq
       collection = RDF::URI("#{resource_iri(feed(parent))}/feed#{complete ? '?complete=true' : ''}")
       puts "looking for #{collection}"
@@ -177,7 +95,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     Feed.new(parent: parent, root_id: parent.try(:root_id))
   end
 
-  def visit_freetown_feed(accept: :html, count: 8)
+  def visit_freetown_feed(accept: :nq, count: 8)
     init_content([subject, unpublished_motion, unpublished_motion_argument, trashed_motion])
 
     get feeds_iri(freetown),
@@ -188,7 +106,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     assert_activity_count(accept: accept, count: count, parent: freetown)
   end
 
-  def visit_motion_feed(accept: :html, complete: false)
+  def visit_motion_feed(accept: :nq, complete: false)
     init_content
 
     count = complete ? 10 : 7

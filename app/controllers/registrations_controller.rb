@@ -2,7 +2,7 @@
 
 require 'spam_checker'
 
-class RegistrationsController < Devise::RegistrationsController # rubocop:disable Metrics/ClassLength
+class RegistrationsController < Devise::RegistrationsController
   include Argu::Controller::Authorization
   include LinkedRails::Enhancements::Destroyable::Controller
   include RedisResourcesHelper

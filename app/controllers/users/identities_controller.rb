@@ -25,15 +25,6 @@ class Users::IdentitiesController < AuthorizedController
     respond_with_invalid_resource(update_failure_options)
   end
 
-  def attach_failure_html
-    render 'users/identities/connect',
-           locals: {
-             identity: authenticated_resource,
-             user: connecting_user,
-             token: params[:token]
-           }
-  end
-
   def attach_success
     flash[:success] = 'Account connected'
     sign_in connecting_user
@@ -44,16 +35,9 @@ class Users::IdentitiesController < AuthorizedController
     edit_success
   end
 
-  def connect_success_options
-    default_form_options(:connect)
-      .merge(
-        locals: {
-          identity: authenticated_resource,
-          user: connecting_user,
-          token: params[:token]
-        }
-      )
-  end
+    def connect_success_options
+      default_form_options(:connect)
+    end
 
   def connection_valid?(user)
     user.email_addresses.where(email: authenticated_resource.email).exists? &&

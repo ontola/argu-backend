@@ -32,10 +32,6 @@ class ExportsController < ServiceController
     parent_resource!.export_collection(collection_options)
   end
 
-  def index_locals
-    {parent_edge: parent_resource}
-  end
-
   def permit_params
     {}
   end

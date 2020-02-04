@@ -9,8 +9,4 @@ class VoteEventsController < EdgeableController
     return super unless resource_id == VoteEvent::DEFAULT_ID
     parent_resource.default_vote_event
   end
-
-  def show_success_html
-    redirect_to resource.parent
-  end
 end

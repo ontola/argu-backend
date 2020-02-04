@@ -36,10 +36,4 @@ class FavoritesController < ParentableController
       t('type_create_success', type: type_for(authenticated_resource)).capitalize
     end
   end
-
-  def create_failure_html(_resource)
-    flash[:error] = t('errors.general')
-    redirect_back(fallback_location: root_path)
-  end
-  alias destroy_failure_html create_failure_html
 end

@@ -53,9 +53,8 @@ RSpec.describe 'Pages', type: :request do
     ]
     context 'user pages' do
       let(:index_path) { "/#{argu.url}#{pages_user_path(authorized_user)}" }
-      let(:non_existing_index_path) { "/#{argu.url}#{pages_user_path(non_existing_id)}" }
       let(:expect_get_index_guest_serializer) { expect(response.code).to eq('401') }
-      it_behaves_like 'get index'
+      it_behaves_like 'get index', skip: %i[unauthorized non_existing]
     end
   end
 end

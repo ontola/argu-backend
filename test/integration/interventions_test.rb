@@ -114,8 +114,4 @@ class InterventionsTest < ActionDispatch::IntegrationTest
       contact_allowed: :contact_is_allowed
     }.merge(opts)
   end
-
-  def request_format
-    :nq
-  end
 end

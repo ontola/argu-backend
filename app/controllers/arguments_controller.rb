@@ -24,19 +24,6 @@ class ArgumentsController < EdgeableController
     "#{argument_type}_argument_collection"
   end
 
-  def new_success_html
-    authenticated_resource.pro = %w[pro yes].include?(params[:pro] || params[:filter].try(:[], :option))
-    new_success
-  end
-
-  def prepare_view
-    @comment_edges = authenticated_resource.filtered_threads(show_trashed?, params[:comments_page])
-    @vote = Vote.find_by(
-      parent_id: authenticated_resource.id,
-      creator: current_profile
-    )
-  end
-
   def signals_failure
     [:"#{action_name}_pro_argument_failed", :"#{action_name}_con_argument_failed"]
   end
@@ -54,21 +41,5 @@ class ArgumentsController < EdgeableController
     super(opts.merge(auto_vote:
                        params.dig(model_name, :auto_vote) == 'true' &&
                          current_actor.actor == current_user.profile))
-  end
-
-  def show_success_html
-    prepare_view
-    render locals: {
-      argument: authenticated_resource,
-      comment: Comment.new(parent: authenticated_resource)
-    }
-  end
-
-  def show_success_js
-    prepare_view
-    render locals: {
-      argument: authenticated_resource,
-      comment: Comment.new(parent: authenticated_resource)
-    }
   end
 end

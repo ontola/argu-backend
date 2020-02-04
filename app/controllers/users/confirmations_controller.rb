@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop:disable Metrics/ClassLength
+class Users::ConfirmationsController < Devise::ConfirmationsController
   include OauthHelper
   before_action :head_200, only: :show
   active_response :new
@@ -25,33 +25,16 @@ class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop
     sign_in resource unless current_user == resource
     set_flash_message :notice, :confirmed
     active_response_block do
-      if active_response_type == :html
-        render 'show'
-      else
-        token = resource.send(:set_reset_password_token)
-        respond_with_redirect(
-          location: iri_from_template(:user_set_password, reset_password_token: token),
-          notice: flash[:notice]
-        )
-      end
+      token = resource.send(:set_reset_password_token)
+      respond_with_redirect(
+        location: iri_from_template(:user_set_password, reset_password_token: token),
+        notice: flash[:notice]
+      )
     end
   end
 
-  def confirm # rubocop:disable Metrics/AbcSize
+  def confirm
     respond_to do |format|
-      format.html do
-        @original_token = params[resource_name].try(:[], :confirmation_token)
-        self.resource = email_by_token!.user
-        raise Argu::Errors::Forbidden.new(query: :confirm?) if resource.encrypted_password.present?
-
-        resource.assign_attributes(devise_parameter_sanitizer.sanitize(:sign_up))
-
-        if resource.save
-          redirect_to after_sign_in_path_for(resource)
-        else
-          render 'show'
-        end
-      end
       format.json do
         raise Argu::Errors::Forbidden.new(query: :confirm?) unless doorkeeper_scopes.include?('service')
         EmailAddress.find_by!(email: params[:email]).confirm
@@ -86,12 +69,6 @@ class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop
 
   def current_resource
     @current_resource ||= Users::Confirmation.new(user: current_user)
-  end
-
-  def default_form_view_locals(_action)
-    {
-      resource: resource
-    }
   end
 
   def default_form_view(action)

@@ -1,7 +1,0 @@
-li
-  =semantic_form_for(Vote.new(for: Vote.fors[stance]), url: collection_iri(resource, :votes).to_s) do |f|
-    =f.hidden_field :for
-    =f.hidden_field :r, value: params[:r]
-    =button_tag :submit, id: "btn-#{stance}", class: "btn-#{stance}"
-      span[class="fa fa-#{icon}"]
-      span.icon-left= t("motions.votes.#{stance}")

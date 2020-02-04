@@ -11,20 +11,11 @@ module Settingable
     private
 
     def edit_success
-      if %i[html js].include?(active_response_type)
-        return respond_with_redirect location: settings_iri(authenticated_resource).to_s
-      end
       respond_with_form(default_form_options(:edit))
     end
 
     def edit_view
-      return default_form_view(:edit) unless %i[html js].include?(active_response_type)
-      form_view_for(:settings)
-    end
-
-    def edit_view_locals
-      return default_form_view_locals(:edit) unless %i[html js].include?(active_response_type)
-      form_view_locals_for(:settings)
+      default_form_view(:edit)
     end
 
     def resource_settings_iri
@@ -32,25 +23,12 @@ module Settingable
     end
 
     def settings_success
-      return settings_success_html if %i[html js].include?(active_response_type)
       return respond_with_redirect(location: resource_settings_iri) if tab_param
 
       respond_with_resource(
         resource: authenticated_resource!.menu(:settings, user_context),
         include: [menu_sequence: [members: [:image, menu_sequence: [members: [:image]]]]]
       )
-    end
-
-    def settings_success_html
-      respond_with_form(default_form_options(:settings))
-    end
-
-    def settings_view_locals
-      {
-        tab: tab!,
-        active: tab!,
-        resource: authenticated_resource
-      }
     end
 
     def tab_param

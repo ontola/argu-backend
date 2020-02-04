@@ -70,7 +70,6 @@ class ConversionsController < ServiceController
   def verify_convertible_edge
     return if parent_resource!.is_convertible?
     respond_to do |format|
-      format.html { render 'status/422', status: 422 }
       format.json do
         render status: 422,
                json: {

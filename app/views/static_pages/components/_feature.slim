@@ -1,8 +1,0 @@
-.landing__circle
-  .landing__circle__image.b-lazy[data-src=asset_path("features/#{type}.jpg")]
-    - if defined?(soon) && soon
-      .landing__circle__soon
-        ="* "
-        =t("landing.features.soon")
-  h3.landing__circle__title= t("landing.features.#{type}.title")
-  p.landing__circle__body= t("landing.features.#{type}.body")

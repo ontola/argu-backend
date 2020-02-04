@@ -1,7 +1,0 @@
-.col-1
-  header
-    h1= t('comments.edit')
-  div[data-intro= t('intro.argument.back')]
-    =to_parent
-  .box
-    =render partial: 'comments/form', locals: {commentable: commentable, parent_id: comment.parent_comment&.uuid, visible: true, comment: comment, remote: false }

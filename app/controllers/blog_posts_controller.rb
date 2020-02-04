@@ -10,17 +10,4 @@ class BlogPostsController < EdgeableController
     return super if parent_resource!.is_a?(Page)
     'news'
   end
-
-  def index_locals
-    {blog_posts: parent_resource!.blog_posts.active.page(params[:page]).reorder(created_at: :desc)}
-  end
-
-  def show_success_html
-    @comment_edges = authenticated_resource.filtered_threads(show_trashed?, params[:comments_page])
-    respond_with_resource(show_success_options)
-  end
-
-  def show_view_locals
-    {blog_post: authenticated_resource, comment: Comment.new}
-  end
 end

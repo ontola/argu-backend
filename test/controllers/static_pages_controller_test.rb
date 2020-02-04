@@ -4,7 +4,7 @@ require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
   EXCLUDED_METHODS = %i[about modern how_argu_works persist_cookie new_discussion not_found
-                        dismiss_announcement context user_context developers home token].freeze
+                        context user_context developers home token].freeze
 
   let(:user) { create(:user) }
   define_freetown

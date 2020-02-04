@@ -11,27 +11,6 @@ class GrantsController < ServiceController
     nil
   end
 
-  def create_failure_html
-    owner_path = authenticated_resource.edge.owner_type.pluralize.underscore
-    render "#{owner_path}/settings",
-           locals: {
-             tab: 'grants/new',
-             active: 'grants',
-             page: authenticated_resource.group&.page,
-             resource: authenticated_resource.edge
-           }
-  end
-
-  def new_success_html
-    render 'pages/settings',
-           locals: {
-             tab: 'grants/new',
-             active: 'groups',
-             resource: authenticated_resource.page,
-             grant: authenticated_resource
-           }
-  end
-
   def redirect_location
     settings_iri(authenticated_resource.root, tab: :groups)
   end
@@ -46,15 +25,6 @@ class GrantsController < ServiceController
 
   def default_form_view(_action)
     'pages/settings'
-  end
-
-  def default_form_view_locals(_action)
-    {
-      tab: 'grants/new',
-      active: 'groups',
-      grant: authenticated_resource,
-      resource: authenticated_resource.root
-    }
   end
 
   def service_options

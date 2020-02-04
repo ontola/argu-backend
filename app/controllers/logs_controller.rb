@@ -11,10 +11,6 @@ class LogsController < ParentableController
     parent_resource
   end
 
-  def show_success_html
-    render 'log', locals: {resource: authenticated_resource}
-  end
-
   def show_success_json
     respond_with_collection(collection: authenticated_resource.activities)
   end

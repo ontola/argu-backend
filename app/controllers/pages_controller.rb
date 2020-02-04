@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
+class PagesController < EdgeableController
   before_action :redirect_generic_shortnames, only: :show
   skip_before_action :authorize_action, only: %i[index]
   skip_before_action :check_if_registered, only: :index
@@ -22,30 +22,6 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     respond_with_redirect(location: authenticated_resource.iri, reload: true)
   end
 
-  def destroy_success_html
-    redirect_to root_path, status: 303, notice: t('type_destroy_success', type: t('pages.type'))
-  end
-
-  def destroy_failure_html
-    flash[:error] = t('errors.general')
-    redirect_to(delete_iri(authenticated_resource))
-  end
-
-  def handle_forbidden_html(_exception) # rubocop:disable Metrics/AbcSize
-    us_po = policy(current_user) unless current_user.guest?
-    return super unless us_po&.max_pages_reached? && request.format.html?
-    errors = {}
-    errors[:max_allowed_pages] = {
-      max: us_po.max_allowed_pages,
-      current: current_user.page_count,
-      pages_url: pages_user_url(current_user)
-    }
-    render 'new', locals: {
-      page: new_resource_from_params,
-      errors: errors
-    }
-  end
-
   def index_collection
     @collection ||= ::Collection.new(
       collection_options.merge(
@@ -56,11 +32,6 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def index_success_html
-    skip_verify_policy_scoped(true)
-    redirect_to discover_forums_path
-  end
-
   def discoverable_pages
     ActsAsTenant.without_tenant { Kaminari.paginate_array(Page.discover.to_a) }
   end
@@ -68,13 +39,6 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def new_execute
     authenticated_resource.build_shortname
     authenticated_resource.build_profile
-  end
-
-  def new_view_locals
-    {
-      page: authenticated_resource,
-      errors: {}
-    }
   end
 
   def new_resource_from_params
@@ -119,23 +83,5 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     return if %w[new create].include?(action_name)
 
     @resource_by_id ||= ActsAsTenant.without_tenant { super } || ActsAsTenant.current_tenant
-  end
-
-  def show_success_html # rubocop:disable Metrics/AbcSize
-    if resource_by_id != ActsAsTenant.current_tenant
-      redirect_to "#{request.protocol}#{DynamicUriHelper.tenant_prefix(resource_by_id)}"
-      return
-    end
-
-    @forums = policy_scope(authenticated_resource.forums)
-                .includes(:default_cover_photo, :default_profile_photo, :shortname)
-                .order('edges.follows_count DESC')
-    @profile = authenticated_resource.profile
-
-    if @forums.count == 1 && !policy(authenticated_resource).update?
-      redirect_to @forums.first.iri
-    else
-      render 'show'
-    end
   end
 end

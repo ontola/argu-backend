@@ -91,11 +91,6 @@ module ApplicationHelper
     @resource
   end
 
-  def set_title(model = '', **options)
-    title_string = seolized_title(model, **options)
-    provide :title, title_string
-  end
-
   def sort_items_param(record)
     link_items = [
       sort_item(record, :popular, 'check-square-o'),

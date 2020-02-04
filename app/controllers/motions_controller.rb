@@ -10,11 +10,6 @@ class MotionsController < DiscussionsController
     super
   end
 
-  def index_success_html
-    skip_verify_policy_scoped(true)
-    redirect_to parent_resource.iri
-  end
-
   def show_execute
     @vote = Edge
               .where_owner('Vote', creator: current_profile, primary: true, root_id: tree_root_id)
@@ -25,27 +20,6 @@ class MotionsController < DiscussionsController
       parent: authenticated_resource.default_vote_event
     )
     authenticated_resource.current_vote = @vote
-  end
-
-  def show_success_html # rubocop:disable Metrics/AbcSize
-    @arguments = Argument.ordered(
-      policy_scope(
-        authenticated_resource
-          .pro_arguments
-          .show_trashed(show_trashed?)
-          .includes(:top_comment, :votes)
-      ),
-      policy_scope(
-        authenticated_resource
-          .con_arguments
-          .show_trashed(show_trashed?)
-          .includes(:top_comment, :votes)
-      ),
-      pro: show_params[:page_arg_pro],
-      con: show_params[:page_arg_con]
-    )
-    @comment_edges = authenticated_resource.filtered_threads(false, params[:comments_page])
-    respond_with_resource(show_success_options)
   end
 
   def show_params

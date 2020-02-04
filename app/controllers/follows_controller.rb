@@ -15,21 +15,11 @@ class FollowsController < AuthorizedController
       .compact
   end
 
-  def destroy_failure_html
-    return destroy_failure if request.method == 'DELETE'
-    render 'destroy', locals: {unsubscribed: false}
-  end
-
   def destroy_failure_rdf
     respond_with_redirect(
       location: authenticated_resource.followable.iri,
       notice: t('notifications.unsubscribe.failed', item: authenticated_resource.followable.display_name)
     )
-  end
-
-  def destroy_success_html
-    return destroy_success if request.method == 'DELETE'
-    render 'destroy', locals: {unsubscribed: true}
   end
 
   def destroy_success_rdf
@@ -95,10 +85,6 @@ class FollowsController < AuthorizedController
 
   def set_tenant
     ActsAsTenant.current_tenant ||= authenticated_resource.followable.root
-  end
-
-  def show_success_html
-    redirect_to "#{authenticated_resource.iri}/unsubscribe"
   end
 
   def redirect_location

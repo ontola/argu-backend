@@ -62,10 +62,6 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
       .page params[:page]
   end
 
-  def index_success_html
-    head 204
-  end
-
   def index_success_json
     if current_user.guest?
       head 204
@@ -141,12 +137,6 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
 
   def update_success_rdf
     respond_with_resource(resource: authenticated_resource, include: show_includes, meta: index_meta)
-  end
-
-  def update_respond_success_html(_resource)
-    @notifications = get_notifications
-    @unread = unread_notification_count
-    render 'index'
   end
 
   def update_failure

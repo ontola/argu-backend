@@ -1,9 +1,0 @@
-var _parent = $('<%= @comment.parent_comment.present? ? "##{@comment.parent_comment.identifier}" : '.comments-container' %>');
-<% if @comment.parent_comment.present? %>
-_parent.find('.comment_form').hide().find('textarea').val('');
-_parent.append('<%= escape_javascript render partial: 'comments/comment', locals: { commentable: @comment.parent, c: @comment } %>');
-<% else %>
-_parent.find('textarea').first().val('');
-_parent.find('.comments').prepend('<%= escape_javascript render partial: 'comments/comment', locals: { commentable: @comment.parent, c: @comment } %>');
-<% end %>
-$('.comments [itemprop="commentCount"]').text(<%= @comment.parent.children_count(:comments) %>);

@@ -162,7 +162,7 @@ module Argu
       end
 
       def request_format
-        :html
+        :nq
       end
     end
   end

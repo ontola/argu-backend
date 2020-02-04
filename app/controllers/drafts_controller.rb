@@ -22,20 +22,6 @@ class DraftsController < AuthorizedController
 
   def collection_from_parent_name; end
 
-  def index_success_html # rubocop:disable Metrics/AbcSize
-    skip_verify_policy_scoped(true)
-
-    blog_posts = BlogPost.where(creator_id: user_by_id.managed_profile_ids).unpublished.untrashed
-    motions = Motion.where(creator_id: user_by_id.managed_profile_ids).unpublished.untrashed
-    questions = Question.where(creator_id: user_by_id.managed_profile_ids).unpublished.untrashed
-    @items = Kaminari
-               .paginate_array((blog_posts + motions + questions)
-                                 .sort_by(&:updated_at)
-                                 .reverse)
-               .page(show_params[:page])
-               .per(30)
-  end
-
   def user_by_id
     @user_by_id = User.find_via_shortname_or_id! params[:id]
   end

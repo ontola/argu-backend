@@ -42,19 +42,6 @@ class FeedController < AuthorizedController
     resource_by_id.activity_collection(collection_options)
   end
 
-  def index_success_html
-    preload_user_votes(vote_event_ids_from_activities(activities))
-  end
-
-  def index_success_js
-    if activities.present?
-      preload_user_votes(vote_event_ids_from_activities(activities))
-      render
-    else
-      head 204
-    end
-  end
-
   def index_success_serializer
     return respond_with_collection(active_response_options) if index_collection_or_view.present?
     head 204

@@ -75,13 +75,10 @@ module ActiveResponseHelper
   end
 
   def respond_with(*resources, &_block)
-    return super if format_html?
     opts = resources.size == 1 ? {} : resources.extract_options!
     resource = resources.first
     active_response_block do
-      if active_response_type == :html
-        super
-      elsif respond_with_422?(resources)
+      if respond_with_422?(resources)
         respond_with_block_failure(resource, opts)
       else
         respond_with_block_success(resource, opts)

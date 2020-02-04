@@ -1,6 +1,0 @@
-.section__divider
-section.section--bottom
-  =render partial: 'profiles/detail_profile', locals: {resource: resource}
-  div[id=resource.id itemprop="text" class="markdown markdown--smaller #{resource.is_a?(Vote) ? 'has-opinion-icon' : ''}"]
-    =resource.is_trashed? ? I18n.t('trashed') : markdown_to_html(safe_truncated_text(resource.body)) || I18n.t('deleted')
-  =link_to I18n.t('comments.show_all', count: parent.children_count(:comments)), collection_iri(parent, :comments), remote: true, class: "sticky--bottom-right btn-subtle btn--mini sticky--on-top"

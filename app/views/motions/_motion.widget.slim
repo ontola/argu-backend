@@ -1,5 +1,0 @@
-.box.motion
-  = link_to motion.display_name, motion_url(motion, host: Rails.application.config.host_name), target: '_blank', class: 'title'
-  p= motion.supped_content.html_safe
-  .infobar
-    p.info= link_to t('motions.preview.pro', count: motion.children_count(:pro_arguments)) + ', ' + t('motions.preview.con', count: motion.children_count(:con_arguments)), motion_url(motion, host: Rails.application.config.host_name, anchor: :votes), target: '_blank'

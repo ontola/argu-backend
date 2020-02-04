@@ -49,7 +49,7 @@ class UserActionList < ApplicationActionList
     image: 'fa-update',
     url: -> { iri_from_template(:setup_iri) },
     http_method: :put,
-    form: ::Users::SetupForm,
+    form: SetupForm,
     root_relative_iri: -> { expand_uri_template(:setup_iri) }
   )
 

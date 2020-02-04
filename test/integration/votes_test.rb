@@ -447,7 +447,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert assigns(:create_service).resource.valid?
   end
 
-  test 'creator should not create new vote html' do
+  test 'creator should not create new vote nq' do
     sign_in creator
 
     assert_difference('Vote.count' => 0,
@@ -458,10 +458,11 @@ class VotesTest < ActionDispatch::IntegrationTest
              vote: {
                for: 'pro'
              }
-           }
+           },
+           headers: argu_headers(accept: :nq)
     end
 
-    assert_redirected_to argu_url(motion.iri.path)
+    assert_response 304
     assert assigns(:create_service).resource.valid?
   end
 

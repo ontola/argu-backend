@@ -23,11 +23,6 @@ class SearchController < EdgeableController
     )
   end
 
-  def index_success_html
-    skip_verify_policy_scoped(true)
-    redirect_to parent_resource!
-  end
-
   def index_includes
     [results: :members]
   end

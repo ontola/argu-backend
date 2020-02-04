@@ -3,40 +3,10 @@
 class StatisticsController < ParentableController
   before_action { fresh_when(last_modified: parent_resource.self_and_descendants.maximum(:updated_at)) }
 
-  helper_method :contribution_keys
-  helper_method :additional_stats
-
   private
-
-  def additional_stats
-    case parent_resource
-    when Forum
-      return [] unless current_user.is_staff?
-      [
-        {
-          title: t('forums.statistics.cities.title'),
-          description: t('forums.statistics.cities.info'),
-          stats: city_count(parent_resource)
-        }
-      ]
-    else
-      []
-    end
-  end
 
   def authorize_action
     authorize parent_resource!, :statistics?
-  end
-
-  def city_count(forum) # rubocop:disable Metrics/AbcSize
-    cities = Hash.new(0)
-    User
-      .joins(:follows)
-      .where(follows: {followable: forum})
-      .includes(home_placement: :place)
-      .map { |u| u.home_placement&.place&.address.try(:[], 'city') || t('forums.statistics.cities.unknown') }
-      .each { |v| cities.store(v, cities[v] + 1) }
-    cities.sort { |x, y| y[1] <=> x[1] }
   end
 
   def contribution_keys
@@ -87,9 +57,5 @@ class StatisticsController < ParentableController
 
   def show_includes
     [:observations, data_structure: %i[measures dimensions]]
-  end
-
-  def show_success_html
-    render 'show', locals: {resource: authenticated_resource}
   end
 end

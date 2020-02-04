@@ -1,6 +1,0 @@
-=render layout: 'motions/show', locals: {model: model}
-  - if policy(model).destroy?
-    .outside-the-box
-      =link_to Move.new(edge: model).iri(:"move%5Bnew_parent_id%5D" => model.ancestor(:forum).uuid),
-               data: {remote: false, method: :post, confirm: t('question_answers.destroy.confirmation')}
-        span[class="fa fa-unlink"]

@@ -15,11 +15,6 @@ class DecisionsController < EdgeableController
     end
   end
 
-  def create_failure_html
-    render action: 'index',
-           locals: {decision: authenticated_resource, decisionable: authenticated_resource.parent}
-  end
-
   def create_meta
     data = super
     data << [
@@ -29,26 +24,6 @@ class DecisionsController < EdgeableController
       delta_iri(:replace)
     ]
     data
-  end
-
-  def edit_success_html
-    authenticated_resource.argu_publication.draft! if authenticated_resource.argu_publication.blank?
-
-    render action: 'index',
-           locals: {
-             decisionable: parent_resource!,
-             edit_decision: authenticated_resource
-           }
-  end
-
-  def index_success_html
-    skip_verify_policy_scoped(true)
-    render locals: {decisionable: parent_resource!}
-  end
-
-  def index_success_js
-    skip_verify_policy_scoped(true)
-    render 'show', locals: {decision: parent_resource!.last_decision}
   end
 
   def index_success_json
@@ -70,14 +45,6 @@ class DecisionsController < EdgeableController
     decision
   end
 
-  def new_success_html
-    render action: 'index',
-           locals: {
-             decisionable: parent_resource!,
-             new_decision: authenticated_resource
-           }
-  end
-
   def redirect_location
     authenticated_resource.parent.iri
   end
@@ -93,21 +60,5 @@ class DecisionsController < EdgeableController
     super.merge(
       state: params[:state]
     )
-  end
-
-  def show_success_html
-    render action: 'index', locals: {decisionable: authenticated_resource.parent}
-  end
-
-  def show_success_js
-    render 'show', locals: {decision: authenticated_resource}
-  end
-
-  def update_failure_html
-    render action: 'index',
-           locals: {
-             decisionable: resource.parent,
-             decision: authenticated_resource
-           }
   end
 end
