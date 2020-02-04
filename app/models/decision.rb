@@ -7,8 +7,6 @@ class Decision < Edge
   enhance LinkedRails::Enhancements::Menuable
   enhance LinkedRails::Enhancements::Updatable
 
-  include HasLinks
-
   attribute :display_name
   property :description, :text, NS::SCHEMA[:text]
   property :forwarded_group_id, :integer, NS::ARGU[:forwardedGroup]

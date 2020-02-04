@@ -12,7 +12,6 @@ class Argument < Edge
   enhance Statable
 
   include Edgeable::Content
-  include HasLinks
   include VotesHelper
 
   validates :description, presence: false, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}

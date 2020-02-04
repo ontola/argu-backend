@@ -18,8 +18,6 @@ class Discussion < Edge
   enhance Statable
   enhance Timelineable
 
-  include HasLinks
-
   parentable :container_node, :page
   filterable pinned: {key: :pinned_at, values: {yes: 'NOT NULL', no: 'NULL'}}
   paginates_per 12

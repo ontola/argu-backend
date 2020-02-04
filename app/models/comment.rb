@@ -5,7 +5,6 @@ class Comment < Edge
   enhance Convertible
 
   include Edgeable::Content
-  include TruncateHelper
 
   property :in_reply_to_id, :linked_edge_id, NS::ARGU[:inReplyTo], default: nil
 

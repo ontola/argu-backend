@@ -331,8 +331,6 @@ GEM
     health_check (2.7.0)
       rails (>= 4.0)
     hitimes (1.2.6)
-    html_truncator (0.4.2)
-      nokogiri (~> 1.5)
     htmlentities (4.3.4)
     http-2 (0.10.1)
     http-cookie (1.0.3)
@@ -574,7 +572,6 @@ GEM
       execjs
       railties (>= 3.2)
       tilt
-    redcarpet (3.3.4)
     redis (3.3.5)
     ref (2.0.0)
     render_anywhere (0.0.12)
@@ -805,7 +802,6 @@ DEPENDENCIES
   font-awesome-rails (~> 4.7.0.2)
   formtastic (~> 3.1.4)
   health_check
-  html_truncator (~> 0.2)
   http_accept_language
   httparty (~> 0.13.7)
   i18n-js (~> 3.0.1)
@@ -860,7 +856,6 @@ DEPENDENCIES
   rdf-turtle
   rdf-vocab
   react-rails (~> 2.2.1)
-  redcarpet (~> 3.3.4)
   redis (~> 3.3.5)
   render_anywhere
   rest-client

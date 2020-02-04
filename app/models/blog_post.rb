@@ -8,7 +8,6 @@ class BlogPost < Edge
   enhance Statable
 
   include Edgeable::Content
-  include HasLinks
 
   counter_cache true
   parentable :motion, :question, :container_node, :page, :topic, :survey, :phase

@@ -6,7 +6,6 @@ require 'stubborn_cookie'
 
 module ApplicationHelper
   include JWTHelper
-  include TruncateHelper
   include Devise::OmniAuth::UrlHelpers
   include StubbornCookie
   include UsersHelper

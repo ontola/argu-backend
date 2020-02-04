@@ -2,7 +2,6 @@
 
 class ActivitySerializer < RecordSerializer
   include ActivityHelper
-  include MarkdownHelper
   ACTION_TYPE = {
     create: NS::AS[:Create],
     publish: NS::ARGU[:Publish],
@@ -18,7 +17,6 @@ class ActivitySerializer < RecordSerializer
 
   attribute :published, predicate: NS::AS[:published]
   attribute :updated, predicate: NS::AS[:updated]
-  attribute :summary, predicate: NS::AS[:summary]
   attribute :action_status
   attribute :comment, predicate: NS::SCHEMA[:text]
 
@@ -37,10 +35,6 @@ class ActivitySerializer < RecordSerializer
 
   def published
     object.trackable.try(:published_at)
-  end
-
-  def summary
-    markdown_to_html(activity_string_for(object, scope.user, render: :embedded_link), no_paragraph: true)
   end
 
   def type
