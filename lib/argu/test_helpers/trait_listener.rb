@@ -10,7 +10,7 @@ module Argu
         @resource = resource
       end
 
-      def populated_forum # rubocop:disable Metrics/AbcSize
+      def populated_forum # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         3.times do
           service = CreateEdge
                       .new(@resource,

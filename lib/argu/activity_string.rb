@@ -25,6 +25,7 @@ module Argu
                        type: type_string,
                        subject: subject_string,
                        parent: parent_string)
+      # rubocop:disable Rails/OutputSafety
       I18n.t(translation_key("activities.#{@activity.trackable_type.tableize}"),
              owner: owner_string,
              type: type_string,
@@ -33,6 +34,7 @@ module Argu
              side: side_string,
              group_singular: group_singular_string,
              default: default).html_safe
+      # rubocop:enable Rails/OutputSafety
     end
 
     private

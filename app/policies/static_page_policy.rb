@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StaticPagePolicy < Struct.new(:user, :static_pages)
+class StaticPagePolicy < Struct.new(:user, :static_pages) # rubocop:disable Style/StructInheritance
   attr_reader :context, :record
 
   def initialize(context, record)

@@ -192,7 +192,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Creates a new {Follow} or updates an existing one, except when a higher follow or a never follow is present.
   # Follows the ancestors if #ancestor_type is given.
-  def follow(followable, type = :reactions, ancestor_type = nil) # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def follow(followable, type = :reactions, ancestor_type = nil)
     return if self == followable || !accepted_terms?
     if type.present?
       follow = follows.find_or_initialize_by(followable_id: followable.uuid,
@@ -208,6 +209,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     true
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
   # The Follow for the followable by this User
   # @param [Edge] followable The Edge to find the Follow for

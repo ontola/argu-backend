@@ -197,7 +197,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     record.publisher_id == user.id || user.managed_profile_ids.include?(record.creator_id)
   end
 
-  def mark_as_important? # rubocop:disable Metrics/AbcSize
+  def mark_as_important? # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     (moderator? || administrator? || staff?) &&
       record.is_publishable? &&
       !record.is_a?(Decision) &&

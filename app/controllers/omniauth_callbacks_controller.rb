@@ -77,7 +77,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
     end
   end
 
-  def process_existing_identity # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def process_existing_identity
     return if (user = User.find_for_oauth(request.env['omniauth.auth'])).blank?
     if current_user.guest?
       user.update r: r_param(request.env) if r_param(request.env).present?
@@ -90,6 +91,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
       redirect_to root_path
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def process_new_identity(email) # rubocop:disable Metrics/AbcSize
     if email.blank?

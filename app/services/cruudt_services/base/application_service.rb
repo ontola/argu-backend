@@ -54,7 +54,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     # Stub
   end
 
-  def argu_publication_attributes # rubocop:disable Metrics/AbcSize
+  def argu_publication_attributes # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     pub_attrs = @attributes[:argu_publication_attributes] || {}
     pub_attrs[:id] = resource.argu_publication.id if resource.argu_publication.present?
     unless resource.is_published?

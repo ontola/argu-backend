@@ -33,7 +33,8 @@ class GrantTree
         (edge.owner_type == 'VoteEvent' && edge.starts_at > Time.current)
     end
 
-    def granted_group_ids(action: nil, resource_type: nil, parent_type: nil) # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    def granted_group_ids(action: nil, resource_type: nil, parent_type: nil)
       if action.nil? && resource_type.nil? && parent_type.nil?
         return permitted_actions.values.map(&:values).flatten.map(&:values).flatten.uniq
       end
@@ -42,6 +43,7 @@ class GrantTree
       return ids if parent_type == '*'
       (ids + (permitted_actions.dig(resource_type.to_s, action.to_s, '*') || [])).uniq
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
     def permission_groups
       @granted_groups ||= granted_group_ids.map { |id| PermissionGroup.new(id, self) }

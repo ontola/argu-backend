@@ -77,7 +77,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     url_for_environment(:icon)
   end
 
-  def thumbnail_or_icon
+  def thumbnail_or_icon # rubocop:disable Metrics/CyclomaticComplexity
     return thumbnail if file.nil?
     case content_type
     when *(MediaObjectUploader::IMAGE_TYPES + MediaObjectUploader::VIDEO_TYPES)
@@ -115,7 +115,8 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def set_publisher_and_creator # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def set_publisher_and_creator
     if creator.nil? && creator_id.nil? && about.present?
       self.creator = about.is_a?(Edge) ? about.creator : about
     end
@@ -123,7 +124,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.publisher = about.is_a?(Edge) ? about.publisher : creator.profileable
   end
 
-  def url_for_environment(type) # rubocop:disable Metrics/AbcSize
+  def url_for_environment(type)
     url = content.url(type)
     return url && RDF::DynamicURI(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
     return if content.file.blank?
@@ -134,6 +135,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       RDF::DynamicURI("https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com#{path}")
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
   def video_info
     return unless remote_url.present? && VideoInfo.usable?(remote_url)

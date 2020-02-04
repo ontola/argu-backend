@@ -1,4 +1,4 @@
-inherit_from: .rubocop_todo.yml
+inherit_from: service_module/.rubocop_todo.yml
 AllCops:
   TargetRubyVersion: 2.4
   Exclude:
@@ -32,10 +32,24 @@ Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
+Lint/UselessAssignment:
+  Exclude:
+    - 'Gemfile'
 Metrics/LineLength:
   Max: 120
+Metrics/MethodLength:
+  Max: 30
 Metrics/ModuleLength:
   Max: 225
+Metrics/ClassLength:
+  Exclude:
+    - 'test/controllers/*.rb'
+    - 'test/integration/**/*.rb'
+    - 'test/unit/*.rb'
+Naming/PredicateName:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
 Metrics/BlockLength:
   Exclude:
     - '**/*.jbuilder'

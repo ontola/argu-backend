@@ -5,7 +5,8 @@ class SendActivityNotificationsWorker
 
   COOLDOWN_PERIOD = 4.minutes
 
-  def perform(user_id, delivery_type) # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def perform(user_id, delivery_type)
     ActsAsTenant.without_tenant do
       @user = User.find(user_id)
 
@@ -27,6 +28,7 @@ class SendActivityNotificationsWorker
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   private
 

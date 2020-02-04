@@ -32,7 +32,7 @@ class GrantSetsTest < ActionDispatch::IntegrationTest
 
   private
 
-  def should_show_grant_set(title, opts = {})
+  def should_show_grant_set(title, opts = {}) # rubocop:disable Metrics/CyclomaticComplexity
     get grant_set_path(title)
     assert_response 200
     assert_select '.fa-check.permitted-icon', {count: opts[:should] || 0},

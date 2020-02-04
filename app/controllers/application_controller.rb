@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
   # @example Resource params from LD request
   # @return [Hash] The params
-  def params # rubocop:disable Metrics/AbcSize
+  def params # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     return @__params if instance_variable_defined?(:@__params)
 
     if UNSAFE_METHODS.include?(request.method)

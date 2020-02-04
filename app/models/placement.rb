@@ -62,7 +62,7 @@ class Placement < ApplicationRecord
   # Validate whether the postal_code and country_code values are allowed and whether they match a {Place}
   # Will fail when a postal_code is provided, while the country_code is blank
   # or when {#Place.find_or_fetch_by} returns nil
-  def validate_place # rubocop:disable Metrics/AbcSize
+  def validate_place # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     if country_code.blank? && postal_code.present?
       errors.add(:country_code, I18n.t('placements.blank_country'))
     else

@@ -119,7 +119,8 @@ module NamesHelper
   private
 
   # @private
-  def icon_for(item) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+  def icon_for(item)
     if [item.class, item].include?(BlogPost)
       blog_post_icon
     elsif item.class == Decision
@@ -156,6 +157,7 @@ module NamesHelper
       'list-ul'
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
   # @private
   def type_for(item)

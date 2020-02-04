@@ -29,7 +29,7 @@ module Argu
           )
       end
 
-      def facebook_auth_hash(opts = {})
+      def facebook_auth_hash(opts = {}) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
         uid = opts[:uid] || '102555400181774'
         facebook_picture(opts)
         OmniAuth::AuthHash.new(
@@ -87,7 +87,7 @@ module Argu
         ).to_return(status: 200, body: {token: 'token'}.to_json)
       end
 
-      def nominatim_netherlands
+      def nominatim_netherlands # rubocop:disable Metrics/MethodLength
         stub_request(:get,
                      'http://open.mapquestapi.com/nominatim/v1/search?addressdetails=1&country=nl&'\
                      'extratags=1&format=json&limit=1&namedetails=1&polygon=0&postalcode=&state=&street=&town=&city=')

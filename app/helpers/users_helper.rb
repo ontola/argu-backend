@@ -7,7 +7,7 @@ module UsersHelper
     params[:accept_terms].to_s == 'true'
   end
 
-  def forum_from_r_action(user)
+  def forum_from_r_action(user) # rubocop:disable Metrics/CyclomaticComplexity
     return if user.r.nil?
     resource = resource_from_iri(path_to_url(user.r)) if user.r.present?
     return if resource.nil? || resource.is_a?(Page) || !resource.is_fertile?
@@ -28,7 +28,7 @@ module UsersHelper
   #   either an 'r' action
   #   or preferred_forum
   #   if the user hasn't got any favorites yet
-  def setup_favorites(user) # rubocop:disable Metrics/AbcSize
+  def setup_favorites(user) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     # changed? so we can safely write back to the DB
     return unless user.valid? && user.persisted?
     return if user.favorites.present?

@@ -28,7 +28,7 @@ module Argu
           end
         end
 
-        def define_spec_variables # rubocop:disable Metrics/AbcSize
+        def define_spec_variables # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           # Differences
           let(:create_differences) { {"#{subject.class}.count" => 1, 'Activity.count' => 1} }
           let(:create_guest_differences) { {} }

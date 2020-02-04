@@ -16,7 +16,7 @@ class VotePolicy < EdgePolicy
     attributes.append(:option)
   end
 
-  def show?
+  def show? # rubocop:disable Metrics/CyclomaticComplexity
     return if has_unpublished_ancestors? && !show_unpublished?
     (record.creator.are_votes_public && has_grant?(:show)) || is_creator? || staff? || service?
   end

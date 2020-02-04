@@ -170,7 +170,8 @@ module Argu
           user
         end
 
-        def create_resource(klass, attributes = {}, options = {}) # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+        def create_resource(klass, attributes = {}, options = {})
           parent_edge = attributes.delete(:parent)
           ActsAsTenant.with_tenant(parent_edge&.root || ActsAsTenant.current_tenant) do
             if klass < Edge || klass < NewsBoy
@@ -186,6 +187,7 @@ module Argu
             service.resource.store_in_redis? ? service.resource : service.resource.reload
           end
         end
+        # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
         def destroy_resource(resource, user = nil, profile = nil)
           ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
@@ -287,7 +289,8 @@ module Argu
                                 :manager, :owner, :staff, :page)
         end
 
-        def define_common_objects(*let) # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+        def define_common_objects(*let)
           define_freetown
           let(:spectator) { user } if mdig?(:spectator, let)
           let(:user) { create(:user) } if mdig?(:user, let)
@@ -299,6 +302,7 @@ module Argu
           let(:staff) { create(:user, :staff) } if mdig?(:staff, let)
           let(:page) { argu } if mdig?(:page, let)
         end
+        # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
         def define_spec_objects
           let(:argu) { Page.argu }

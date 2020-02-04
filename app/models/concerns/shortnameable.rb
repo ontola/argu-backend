@@ -69,7 +69,7 @@ module Shortnameable
 
   private
 
-  def shortname_for_url(value)
+  def shortname_for_url(value) # rubocop:disable Metrics/CyclomaticComplexity
     return if value.blank?
 
     shortname_root_id = is_a?(Page) || !is_a?(Edge) ? nil : root_id
