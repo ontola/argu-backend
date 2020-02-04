@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'bcrypt'
+
 class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance ConfirmedDestroyable
   enhance Placeable

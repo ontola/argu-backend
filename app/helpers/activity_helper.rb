@@ -11,9 +11,4 @@ module ActivityHelper
   def activity_string_for(activity, user, render: :display_name)
     Argu::ActivityString.new(activity, user, render: render).to_s
   end
-
-  # Decide whether to include the body when rendering this Activity on the feed
-  def render_body_on_feed?(activity)
-    activity.new_content?
-  end
 end

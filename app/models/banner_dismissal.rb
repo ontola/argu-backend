@@ -4,7 +4,6 @@ class BannerDismissal
   include ActiveModel::Validations
   include ActiveModel::Model
   include ActiveModel::Dirty
-  include StubbornCookie
 
   include ApplicationModel
   include LinkedRails::Model::Enhancements

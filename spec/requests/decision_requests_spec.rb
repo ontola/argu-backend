@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Decisions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  include DecisionsHelper
 
   let(:created_resource_path) { parent_path }
   let(:updated_resource_path) { parent_path }

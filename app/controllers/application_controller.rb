@@ -13,13 +13,8 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   include UsersHelper
   include NamesHelper
   include PublicActivity::StoreController
-  include ApplicationHelper
-  include AnalyticsHelper
-  include ActorsHelper
   include DeltaHelper
   include NestedResourceHelper
-
-  helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context, :tree_root
 
   SAFE_METHODS = %w[GET HEAD OPTIONS CONNECT TRACE].freeze
   UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze
@@ -42,7 +37,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     end
   end
 
-  layout :set_layout
   serialization_scope :user_context
 
   def self.controller_class
@@ -241,15 +235,5 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     return true if internal_request?
 
     raise "IP #{request.remote_ip} is not allowed to make requests with a service token"
-  end
-
-  # @private
-  # Determines what layout the {User} should see.
-  def set_layout
-    if current_user.guest?
-      'guest'
-    else
-      'application'
-    end
   end
 end

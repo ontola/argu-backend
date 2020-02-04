@@ -3,8 +3,6 @@
 require 'test_helper'
 
 class ForumsTest < ActionDispatch::IntegrationTest
-  include ApplicationHelper
-
   define_freetown
   define_holland
   define_cairo(

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class RestrictivePolicy # rubocop:disable Metrics/ClassLength
-  include TuplesHelper
   include LinkedRails::Policy
 
   class Scope

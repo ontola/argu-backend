@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'bcrypt'
+
 module AnalyticsHelper
   def a_uuid(user = nil)
     user ||= current_user

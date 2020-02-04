@@ -29,13 +29,6 @@ module ActiveResponseHelper
     end
   end
 
-  def default_form_view_locals(_action)
-    {
-      model_name => current_resource,
-      resource: current_resource
-    }
-  end
-
   def destroy_meta
     resource_removed_delta(current_resource)
   end
@@ -112,13 +105,6 @@ module ActiveResponseHelper
     active_response_options
       .merge(opts)
       .merge(resource: resource.presence, notice: flash[:notice] || flash[:success])
-  end
-
-  def show_view_locals
-    {
-      model_name => current_resource,
-      resource: current_resource
-    }
   end
 
   def update_success_location

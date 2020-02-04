@@ -9,29 +9,6 @@ module LanguageHelper
     ]
   end
 
-  def language_dropdown_items
-    {
-      title: I18n.locale.upcase,
-      image: {
-        url: path_to_image("flags/#{I18n.locale}.svg"),
-        title: I18n.t(:language, locale: I18n.locale)
-      },
-      sections: [
-        {
-          items: I18n.available_locales.collect do |language_code|
-            link_item(
-              I18n.t(:language, locale: language_code),
-              language_users_path(language_code),
-              image: path_to_image("flags/#{language_code}.svg"),
-              data: {method: :put}
-            )
-          end
-        }
-      ],
-      triggerClass: ''
-    }
-  end
-
   def language_for_guest
     language_from_edge_tree || language_from_r || language_from_root || language_from_header || I18n.locale.to_s
   end
@@ -53,20 +30,5 @@ module LanguageHelper
 
   def language_from_root
     ActsAsTenant.current_tenant&.language
-  end
-
-  def language_select_items
-    I18n.available_locales.collect do |language_code|
-      [I18n.t(:language, locale: language_code), language_code]
-    end
-  end
-
-  def locale_select_items
-    ISO3166::Country.codes
-      .flat_map do |code|
-        ISO3166::Country.new(code).languages_official.map do |language|
-          ["#{ISO3166::Country.translations(I18n.locale)[code]} (#{language.upcase})", "#{language}-#{code}"]
-        end
-      end
   end
 end

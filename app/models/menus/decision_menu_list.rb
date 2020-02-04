@@ -2,7 +2,6 @@
 
 class DecisionMenuList < ApplicationMenuList
   include SettingsHelper
-  include DecisionsHelper
   include Menus::ActionMenuItems
 
   has_action_menu

@@ -19,30 +19,6 @@ module UsersHelper
     sign_payload(identity: identity.id)
   end
 
-  def login_providers_left(user)
-    User.omniauth_providers.dup.delete_if { |p| user.identities.pluck(:provider).include?(p.to_s) }
-  end
-
-  def options_for_reactions_email
-    User.reactions_emails.keys.map { |n| [I18n.t("users.reactions_email.#{n}"), n] }
-  end
-
-  def options_for_news_email
-    User.news_emails.keys.map { |n| [I18n.t("users.news_email.#{n}"), n] }
-  end
-
-  def options_for_decisions_email
-    User.decisions_emails.keys.map { |n| [I18n.t("users.decisions_email.#{n}"), n] }
-  end
-
-  def options_for_memberships_email
-    User.memberships_emails.keys.map { |n| [I18n.t("users.memberships_email.#{n}"), n] }
-  end
-
-  def options_for_created_email
-    User.created_emails.keys.map { |n| [I18n.t("users.created_email.#{n}"), n] }
-  end
-
   def r_param
     r = (params[:user]&.permit(:r) || params.permit(:r)).try(:[], :r)
     r if argu_iri_or_relative?(r)

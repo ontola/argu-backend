@@ -3,7 +3,8 @@
 require 'test_helper'
 
 class OmniauthTest < ActionDispatch::IntegrationTest
-  include ApplicationHelper
+  include UsersHelper
+  include JWTHelper
 
   define_freetown
   let(:guest_user) { GuestUser.new(id: session.id) }

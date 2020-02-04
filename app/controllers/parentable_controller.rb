@@ -7,7 +7,6 @@
 class ParentableController < AuthorizedController
   include UriTemplateHelper
   prepend_before_action :redirect_edge_parent_requests, only: :index
-  helper_method :parent_resource
 
   private
 

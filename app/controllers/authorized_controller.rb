@@ -8,9 +8,10 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   before_action :verify_setup, only: %i[update create]
   before_action :authorize_current_actor
   before_bugsnag_notify :add_errors_tab
-  helper_method :authenticated_resource, :policy, :user_context
 
   active_response :index, :show
+
+  attr_reader :resource
 
   private
 
