@@ -17,7 +17,6 @@ gem 'rails', '~>5.2.2.1'
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'oj'
 
-gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
 gem 'linked_rails', git: 'https://github.com/ontola/linked_rails'
 gem 'logstasher', '~> 1.2.0'
@@ -60,7 +59,6 @@ gem 'squirm_rails', require: 'squirm/rails'
 gem 'ltree_hierarchy'
 
 ################## Features ########################
-gem 'whodunnit', '0.0.5'
 gem 'public_activity', '~> 1.5'
 gem 'acts_as_follower',
     git: 'https://github.com/tcocca/acts_as_follower.git',

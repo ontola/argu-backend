@@ -652,12 +652,6 @@ GEM
       celluloid (>= 0.17.3)
       ice_cube (~> 0.14.0)
       sidekiq (>= 4.1.0)
-    simple_text (0.0.23)
-      kaminari (>= 0.16.0)
-      rails (>= 4.0.0)
-      redcarpet (>= 3.3.4)
-      slim (>= 2.0.0)
-      whodunnit (~> 0.0.5)
     simplecov (0.15.1)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -755,8 +749,6 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
-    whodunnit (0.0.5)
-      rails (>= 4.0.0)
     wisper (1.6.1)
     wisper-minitest (0.0.3)
     wisper-rspec (1.0.0)
@@ -888,7 +880,6 @@ DEPENDENCIES
   sidekiq-logging-json!
   sidekiq-prometheus-exporter (~> 0.1)
   sidetiq (~> 0.7.2)
-  simple_text (~> 0.0.23)
   simplecov
   slim (~> 3.0.6)
   spreadsheet
@@ -908,7 +899,6 @@ DEPENDENCIES
   web-console (~> 3.5.1)
   webmock
   webpacker (~> 2.0)
-  whodunnit (= 0.0.5)
   wisper (~> 1.6.1)
   wisper-minitest (~> 0.0.3)
   wisper-rspec

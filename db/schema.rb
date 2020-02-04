@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_23_112514) do
+ActiveRecord::Schema.define(version: 2020_02_04_085239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -124,20 +124,6 @@ ActiveRecord::Schema.define(version: 2020_01_23_112514) do
     t.index ["root_id", "path"], name: "index_edges_on_root_id_and_path"
     t.index ["root_id"], name: "index_edges_on_root_id"
     t.index ["uuid"], name: "index_edges_on_uuid", unique: true
-  end
-
-  create_table "edits", id: :serial, force: :cascade do |t|
-    t.integer "by_id"
-    t.string "by_type"
-    t.integer "item_id"
-    t.string "item_type"
-    t.integer "action"
-    t.text "custom"
-    t.string "ip_address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["by_type", "by_id"], name: "index_edits_on_by_type_and_by_id"
-    t.index ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id"
   end
 
   create_table "email_addresses", id: :serial, force: :cascade do |t|
