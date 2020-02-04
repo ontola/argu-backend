@@ -118,6 +118,7 @@ gem 'video_info'
 ################## User management ########################
 gem 'devise'
 gem 'devise-multi_email', '~> 2.0.1', git: 'https://github.com/allenwq/devise-multi_email', ref: 'c3823'
+gem 'oauth2', '~> 1.2.0'
 gem 'omniauth', '~> 1.6.1'
 gem 'omniauth-oauth2', '~> 1.4.0'
 gem 'omniauth-facebook', '~> 5.0.0'
@@ -146,7 +147,6 @@ group :test do
   gem 'mocha'
   gem 'factory_bot'
   gem 'factory_bot_rails'
-  gem 'license_finder'
   gem 'database_cleaner'
   gem 'bundler-audit', '~> 0.6.1'
   gem 'wisper-minitest', '~> 0.0.3', require: false
@@ -159,13 +159,13 @@ group :test do
 end
 
 group :development, :test do
+  gem 'brakeman', '~> 4.1.1'
+  gem 'license_finder'
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'spring', '~> 2.0.2'
   gem 'spring-commands-rspec'
   gem 'spring-commands-testunit'
-  gem 'brakeman', '~> 4.1.1'
-  gem 'oauth2', '~> 1.2.0'
 end
 
 group :development do
