@@ -226,13 +226,6 @@ Rails.application.routes.draw do
     resources :documents, only: %i[edit update index new create]
     resources :notifications, only: :create, path: 'n'
     namespace :portal do
-      get '/', to: 'portal#home'
-      get :settings, to: 'portal#home'
-      post 'setting', to: 'portal#setting!', as: :update_setting
-      resources :announcements, only: %i[show new create] do
-        include_route_concerns
-      end
-      resources :users, only: [], concerns: %i[destroyable]
       mount Sidekiq::Web => '/sidekiq'
     end
   end

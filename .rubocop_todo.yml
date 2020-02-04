@@ -83,14 +83,10 @@ Rails/OutputSafety:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'app/controllers/oauth/applications_controller.rb'
-    - 'app/controllers/portal/forums_controller.rb'
-    - 'app/controllers/portal/portal_base_controller.rb'
-    - 'app/controllers/portal/portal_controller.rb'
     - 'app/controllers/users/confirmations_controller.rb'
     - 'app/controllers/users/identities_controller.rb'
     - 'app/controllers/users/passwords_controller.rb'
     - 'app/controllers/users/sessions_controller.rb'
-    - 'test/controllers/portal/portal_controller_test.rb'
     - 'test/support/identity.rb'
 
 # Offense count: 1
