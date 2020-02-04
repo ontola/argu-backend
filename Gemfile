@@ -63,7 +63,6 @@ gem 'public_activity', '~> 1.5'
 gem 'acts_as_follower',
     git: 'https://github.com/tcocca/acts_as_follower.git',
     ref: 'ff4a7d1f8206be13b9b68526a5062611f36509aa'
-gem 'rollout'
 gem 'html_truncator', '~>0.2'
 gem 'jwt'
 gem 'doorkeeper', '~> 5.0.2'

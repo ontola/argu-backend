@@ -15,16 +15,6 @@ module ApplicationHelper
   include UUIDHelper
   include VisibilityHelper
 
-  # Uses Rollout to determine whether a feature is active for a given User
-  def active_for_user?(feature, user)
-    return true if Rails.env.test? || Rails.env.development?
-
-    $rollout.active?(feature, user)
-  rescue Redis::CannotConnectError => e
-    Bugsnag.notify(e)
-    nil
-  end
-
   def allowed_publish_types(resource)
     resource_policy = policy(resource)
     types =

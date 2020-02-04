@@ -590,7 +590,6 @@ GEM
       netrc (~> 0.8)
     rfc-822 (0.4.1)
     rmagick (2.16.0)
-    rollout (2.4.3)
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -866,7 +865,6 @@ DEPENDENCIES
   render_anywhere
   rest-client
   rfc-822 (~> 0.4.1)
-  rollout
   rspec-rails (~> 3.7.2)
   rspec-retry (~> 0.5.6)
   rubocop
