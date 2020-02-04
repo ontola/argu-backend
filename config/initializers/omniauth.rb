@@ -23,17 +23,3 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            Rails.application.secrets.twitter_secret,
            x_auth_access_type: 'write'
 end
-
-# @todo remove after new FE.
-# The RailsCsrfProtection gem is no longer needed then, since protection is done in the FE.
-module OmniAuth
-  module RailsCsrfProtection
-    class TokenVerifier
-      def verified_request?
-        return true if request.headers['X-ARGU-Back'] == 'true'
-
-        super
-      end
-    end
-  end
-end

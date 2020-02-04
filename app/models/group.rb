@@ -62,6 +62,10 @@ class Group < ApplicationRecord
       .where(edges: {id: edge.self_and_ancestor_ids})
   end
 
+  def iri(opts = {})
+    ActsAsTenant.with_tenant(page || ActsAsTenant.current_tenant) { super }
+  end
+
   def name_singular
     id == Group::PUBLIC_ID ? I18n.t('groups.public.name_singular') : super
   end

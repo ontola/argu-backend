@@ -421,13 +421,5 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Prometheus::Exporter => '/d/sidekiq'
 
-  # Mocks for calls to argu services during spec calls
-  # @todo remove when front-end is detached
-  if Rails.env.test?
-    get 'tokens/bearer/g/:group_id', to: 'test/bearer_tokens#index'
-    get 'tokens/email/g/:group_id', to: 'test/bearer_tokens#index'
-    post 'tokens', to: 'test/bearer_tokens#create'
-  end
-
   match '*path', to: 'static_pages#not_found', via: :all
 end
