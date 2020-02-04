@@ -11,8 +11,6 @@ gem 'rakismet'
 gem 'bootsnap', require: false
 gem 'bunny', '~> 2.6.1'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem 'sass-rails', '~> 5.0.6'
-gem 'sass', '= 3.4.18'
 gem 'rails', '~>5.2.2.1'
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'oj'
@@ -48,7 +46,6 @@ gem 'bcrypt-ruby', '>= 3.1.5'
 gem 'rfc-822', '~> 0.4.1'
 gem 'counter_culture', '~> 1.8.2'
 gem 'rails-i18n', '~> 5.0.4'
-gem 'i18n-js', '~> 3.0.1'
 gem 'tzinfo-data'
 
 gem 'rack-cors', require: 'rack/cors'
@@ -84,9 +81,6 @@ gem 'rubyzip'
 gem 'searchkick'
 
 ################## Asset-y ########################
-gem 'slim', '~> 3.0.6'
-# gem 'slim-rails'
-gem 'jquery-rails', '~> 4.3.1'
 gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
 gem 'carrierwave-vips', '~> 1.0.5'
@@ -103,11 +97,6 @@ gem 'sidekiq-logging-json',
     git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git',
     ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
 gem 'render_anywhere', require: false
-gem 'uglifier', '>= 3.1.3'
-gem 'sprockets', '~>3.7.1'
-gem 'sprockets-es6', require: 'sprockets/rails'
-gem 'font-awesome-rails', '~> 4.7.0.2'
-gem 'babel-transpiler'
 gem 'video_info'
 
 ################## User management ########################
@@ -123,10 +112,6 @@ gem 'omniauth-twitter', '~> 1.2.0'
 # gem 'omniauth-openid'
 gem 'pundit', '~> 1.0.0'
 gem 'bugsnag'
-
-################## Front-end ########################
-gem 'react-rails', '~> 2.2.1'
-gem 'webpacker', '~> 2.0'
 
 group :test do
   gem 'minitest', '5.10.3'
@@ -177,7 +162,6 @@ end
 
 group :production, :staging do
   gem 'libv8', '~> 3.16.14.13'
-  gem 'therubyracer', '~> 0.12.3'
 end
 
 group :staging, :development do

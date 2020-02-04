@@ -1,6 +1,0 @@
-/app/assets/javascripts/dist/*
-translations_*.js
-/app/assets/javascripts/lib/*
-/app/assets/javascripts/application/*
-/app/assets/javascripts/i18n/*
-globbed_components.js

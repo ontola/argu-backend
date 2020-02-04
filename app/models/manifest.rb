@@ -81,7 +81,12 @@ class Manifest < VirtualResource
 
   def icon(name, size)
     {
-      src: URI(ActionController::Base.helpers.asset_path("favicons/#{page.template}/#{name}-#{size}.png")).path,
+      src: URI(
+        ActionController::Base.helpers.asset_path(
+          "assets/favicons/#{page.template}/#{name}-#{size}.png",
+          skip_pipeline: true
+        )
+      ).path,
       sizes: size,
       type: 'image/png'
     }
