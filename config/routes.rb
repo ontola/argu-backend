@@ -437,7 +437,6 @@ Rails.application.routes.draw do
 
   get '/ns/core/:model', to: 'static_pages#context'
 
-  get '/d/modern', to: 'static_pages#modern'
   mount Sidekiq::Prometheus::Exporter => '/d/sidekiq'
 
   # Mocks for calls to argu services during spec calls

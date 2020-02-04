@@ -72,12 +72,6 @@ class StaticPagesController < AuthorizedController
 
   def how_argu_works; end
 
-  def modern
-    render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, "\
-                 "safari: #{browser.safari?}, mobile: #{browser.device.mobile?}, "\
-                 "tablet: #{browser.device.tablet?}, ua: #{browser.ua}"
-  end
-
   def not_found
     handle_error(ActionController::RoutingError.new('Route not found'))
   end

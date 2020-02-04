@@ -14,13 +14,10 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'rails', '~>5.2.2.1'
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'oj'
-
-gem 'indefinite_article'
 gem 'linked_rails', git: 'https://github.com/ontola/linked_rails'
 gem 'logstasher', '~> 1.2.0'
 gem 'uri_template'
 gem 'health_check'
-gem 'nokogiri', '~> 1.10.3'
 gem 'rdf'
 gem 'rdf-n3'
 gem 'rdf-serializers', git: 'https://github.com/ontola/rdf-serializers'
@@ -34,27 +31,19 @@ gem 'erubis'
 gem 'puma', platform: :ruby
 gem 'sequenced'
 gem 'spreadsheet'
-
-################## DB ########################
 gem 'pg'
-
 gem 'active_record-postgres-constraints',
     git: 'https://github.com/ArthurWD/active_record-postgres-constraints',
     ref: '1daecf7'
-gem 'jbuilder', '~> 2.6.0'
 gem 'bcrypt-ruby', '>= 3.1.5'
 gem 'rfc-822', '~> 0.4.1'
 gem 'counter_culture', '~> 1.8.2'
 gem 'rails-i18n', '~> 5.0.4'
 gem 'tzinfo-data'
-
 gem 'rack-cors', require: 'rack/cors'
 gem 'redis', '~> 3.3.5'
 gem 'rest-client'
-gem 'squirm_rails', require: 'squirm/rails'
 gem 'ltree_hierarchy'
-
-################## Features ########################
 gem 'public_activity', '~> 1.5'
 gem 'acts_as_follower',
     git: 'https://github.com/tcocca/acts_as_follower.git',
@@ -65,26 +54,17 @@ gem 'doorkeeper-jwt', '~> 0.1.6'
 gem 'rack-attack', '~> 4.3.1'
 gem 'country_select'
 gem 'http_accept_language'
-gem 'browser'
-gem 'addressable', '~> 2.3.8'
 gem 'auto_strip_attributes', '~> 2.0.6'
 gem 'wisper', '~> 1.6.1'
-# gem 'wisper-activerecord', '~> 0.3.0'
 gem 'cocoon', '~> 1.2.6'
 gem 'httparty', '~> 0.13.7'
 gem 'acts_as_list'
-# Pagination
 gem 'kaminari', '~>0.17.0'
-gem 'staccato', '~> 0.4.7'
 gem 'rubyzip'
 gem 'searchkick'
-
-################## Asset-y ########################
 gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
 gem 'carrierwave-vips', '~> 1.0.5'
-# Cloud storage connector for CW
-# gem 'fog', '~> 1.26.0'
 gem 'carrierwave-aws', '~> 1.3.0'
 gem 'image_optim', '~> 0.25.0'
 gem 'image_optim_pack', '~> 0.5.0'
@@ -95,10 +75,7 @@ gem 'sidetiq', '~> 0.7.2'
 gem 'sidekiq-logging-json',
     git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git',
     ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
-gem 'render_anywhere', require: false
 gem 'video_info'
-
-################## User management ########################
 gem 'devise'
 gem 'devise-multi_email', '~> 2.0.1', git: 'https://github.com/allenwq/devise-multi_email', ref: 'c3823'
 gem 'oauth2', '~> 1.2.0'
@@ -106,13 +83,13 @@ gem 'omniauth', '~> 1.6.1'
 gem 'omniauth-oauth2', '~> 1.4.0'
 gem 'omniauth-facebook', '~> 5.0.0'
 gem 'omniauth-rails_csrf_protection'
-gem 'koala', '~> 2.5.0'
 gem 'omniauth-twitter', '~> 1.2.0'
-# gem 'omniauth-openid'
+gem 'koala', '~> 2.5.0'
 gem 'pundit', '~> 1.0.0'
 gem 'bugsnag'
 
 group :test do
+  gem 'addressable', '~> 2.3.8'
   gem 'minitest', '5.10.3'
   gem 'minitest-rails', '~> 3.0.0'
   gem 'minitest-reporters', '~> 1.3.0'
@@ -146,12 +123,9 @@ end
 
 group :development do
   gem 'pry'
-  # gem 'byebug'
-  # gem 'pry-byebug'
   gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1' # ##!
-  gem 'coffee-rails', '~> 4.2.2'
   gem 'yard'
   gem 'yard-activesupport-concern'
   gem 'web-console', '~> 3.5.1'
@@ -159,15 +133,8 @@ group :development do
   gem 'bullet'
 end
 
-group :production, :staging do
-  gem 'libv8', '~> 3.16.14.13'
-end
-
 group :staging, :development do
   gem 'rack-mini-profiler', require: false
   gem 'stackprof'
   gem 'flamegraph'
 end
-
-#  gem 'briarcliff', '~> 0.0.9'
-#  gem 'pica_pica', '~> 0.0.1'

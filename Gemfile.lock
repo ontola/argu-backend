@@ -195,7 +195,6 @@ GEM
     bootsnap (1.3.0)
       msgpack (~> 1.0)
     brakeman (4.1.1)
-    browser (2.5.2)
     bugsnag (6.12.2)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
@@ -244,13 +243,6 @@ GEM
       timers (>= 4.1.1)
     cocoon (1.2.11)
     coderay (1.1.2)
-    coffee-rails (4.2.2)
-      coffee-script (>= 2.2.0)
-      railties (>= 4.0.0)
-    coffee-script (2.4.1)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
     counter_culture (1.8.2)
@@ -297,7 +289,6 @@ GEM
       multi_json
     erubi (1.9.0)
     erubis (2.7.0)
-    execjs (2.7.0)
     exifr (1.3.3)
     factory_bot (4.10.0)
       activesupport (>= 3.0.0)
@@ -349,12 +340,7 @@ GEM
       sprockets
     image_size (1.5.0)
     in_threads (1.5.0)
-    indefinite_article (0.2.4)
-      activesupport
     iso8601 (0.9.1)
-    jbuilder (2.6.4)
-      activesupport (>= 3.0.0)
-      multi_json (>= 1.2)
     jmespath (1.4.0)
     json (1.8.6)
     json-ld (3.0.2)
@@ -368,7 +354,6 @@ GEM
     koala (2.5.0)
       addressable
       faraday
-    libv8 (3.16.14.19)
     license_finder (6.0.0)
       bundler
       rubyzip (>= 1, < 3)
@@ -550,8 +535,6 @@ GEM
     rdf-xsd (3.0.1)
       rdf (~> 3.0)
     redis (3.3.5)
-    render_anywhere (0.0.12)
-      rails (>= 3.0.7)
     request_store (1.4.1)
       rack (>= 1.4)
     responders (3.0.0)
@@ -651,13 +634,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    squirm (0.0.6)
-      pg (>= 0.11.0)
-    squirm_rails (0.0.2)
-      activerecord (>= 3.0.0)
-      railties
-      squirm (>= 0.0.6)
-    staccato (0.4.7)
     stackprof (0.2.11)
     sxp (1.0.2)
       rdf (~> 3.0)
@@ -726,7 +702,6 @@ DEPENDENCIES
   binding_of_caller (>= 0.7.3.pre1)
   bootsnap
   brakeman (~> 4.1.1)
-  browser
   bugsnag
   bullet
   bundler-audit (~> 0.6.1)
@@ -736,7 +711,6 @@ DEPENDENCIES
   carrierwave-vips (~> 1.0.5)
   carrierwave_backgrounder (~> 0.4.1)
   cocoon (~> 1.2.6)
-  coffee-rails (~> 4.2.2)
   counter_culture (~> 1.8.2)
   country_select
   database_cleaner
@@ -757,13 +731,10 @@ DEPENDENCIES
   image_optim (~> 0.25.0)
   image_optim_pack (~> 0.5.0)
   image_optim_rails (~> 0.4.1)
-  indefinite_article
-  jbuilder (~> 2.6.0)
   json-ld
   jwt
   kaminari (~> 0.17.0)
   koala (~> 2.5.0)
-  libv8 (~> 3.16.14.13)
   license_finder
   linked_rails!
   logstasher (~> 1.2.0)
@@ -775,7 +746,6 @@ DEPENDENCIES
   minitest-rails (~> 3.0.0)
   minitest-reporters (~> 1.3.0)
   mocha
-  nokogiri (~> 1.10.3)
   oauth2 (~> 1.2.0)
   oj
   omniauth (~> 1.6.1)
@@ -804,7 +774,6 @@ DEPENDENCIES
   rdf-turtle
   rdf-vocab
   redis (~> 3.3.5)
-  render_anywhere
   rest-client
   rfc-822 (~> 0.4.1)
   rspec-rails (~> 3.7.2)
@@ -823,8 +792,6 @@ DEPENDENCIES
   spring (~> 2.0.2)
   spring-commands-rspec
   spring-commands-testunit
-  squirm_rails
-  staccato (~> 0.4.7)
   stackprof
   tzinfo-data
   uri_template

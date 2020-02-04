@@ -73,10 +73,6 @@ module ApplicationHelper
     "organization-#{tree_root.url}"
   end
 
-  def remote_if_modern
-    {remote: browser.modern?, turbolinks: false}
-  end
-
   # Used in forms for the 'r' system
   def remote_if_user(override = nil)
     if !override.nil?
