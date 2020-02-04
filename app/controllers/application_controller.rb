@@ -3,7 +3,6 @@
 class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
   include ActiveResponse::Controller
   include LinkedRails::Controller
-  include Argu::Controller::Announcements
   include Argu::Controller::Authentication
   include Argu::Controller::ErrorHandling
   include ActiveResponseHelper

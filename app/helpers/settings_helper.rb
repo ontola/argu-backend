@@ -16,7 +16,6 @@ module SettingsHelper
       shortnames: 'external-link',
       setting: 'sliders',
       sources: 'database',
-      announcements: 'bullhorn',
       profile: 'user',
       notifications: 'bell',
       authentication: 'shield',

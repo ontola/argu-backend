@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_04_085239) do
+ActiveRecord::Schema.define(version: 2020_02_04_153838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -44,21 +44,6 @@ ActiveRecord::Schema.define(version: 2020_02_04_085239) do
     t.index ["root_id"], name: "index_activities_on_root_id"
     t.index ["trackable_edge_id"], name: "index_activities_on_trackable_edge_id"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
-  end
-
-  create_table "announcements", id: :serial, force: :cascade do |t|
-    t.integer "publisher_id"
-    t.string "title"
-    t.text "content"
-    t.integer "audience", default: 0, null: false
-    t.integer "sample_size", default: 100, null: false
-    t.boolean "dismissable", default: true, null: false
-    t.datetime "published_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "trashed_at"
-    t.datetime "ends_at"
-    t.index ["published_at"], name: "index_announcements_on_published_at"
   end
 
   create_table "authentications", id: :serial, force: :cascade do |t|

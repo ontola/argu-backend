@@ -174,7 +174,7 @@ module Argu
         def create_resource(klass, attributes = {}, options = {})
           parent_edge = attributes.delete(:parent)
           ActsAsTenant.with_tenant(parent_edge&.root || ActsAsTenant.current_tenant) do
-            if klass < Edge || klass < NewsBoy
+            if klass < Edge
               options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
               options[:creator] = options[:publisher].profile if options[:creator].nil?
               attributes[:owner_type] = klass.to_s
