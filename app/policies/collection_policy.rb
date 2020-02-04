@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 class CollectionPolicy < LinkedRails::CollectionPolicy
+  def create_child?
+    if parent_policy
+      verdict = parent_policy.create_child?(record.association_class.name)
+      @message = parent_policy.message
+    else
+      verdict = class_policy.create?
+      @message = class_policy.message
+    end
+    verdict
+  end
+
   def create_opinion?
     return false unless record.parent.try(:enhanced_with?, Opinionable)
     vote = record.parent.vote_for(user_context.user)
@@ -24,6 +35,10 @@ class CollectionPolicy < LinkedRails::CollectionPolicy
   end
 
   private
+
+  def class_policy
+    @class_policy ||= Pundit.policy(user_context, record.association_class.new)
+  end
 
   def parent_policy # rubocop:disable Metrics/AbcSize
     return if record.parent.blank?

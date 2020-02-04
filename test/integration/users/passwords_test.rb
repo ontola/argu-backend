@@ -12,36 +12,39 @@ module Users
     # As guest
     ####################################
     test 'guest should get new password' do
+      sign_in :guest_user
       get new_user_password_path
       assert_response 200
     end
 
     test 'guest should not post create password for non-existing email' do
+      sign_in :guest_user
       post user_password_path, params: {user: {email: 'wrong@email.com'}}
-      assert_response 200
-      assert_select 'p.inline-errors', 'not found'
+      assert_response :unprocessable_entity
+      expect_ontola_action(snackbar: 'Email not found')
     end
 
     test 'guest should post create password for existing email' do
+      sign_in :guest_user
       post user_password_path, params: {user: {email: user.email}}
-      assert_equal flash[:notice], 'You will receive an email shortly with instructions to reset your password.'
-      assert_redirected_to new_user_session_path
+      expect_ontola_action(snackbar: 'You will receive an email shortly with instructions to reset your password.')
+      assert_response :created
     end
 
     test 'guest should not get edit password without token' do
+      sign_in :guest_user
       get edit_user_password_path
-      assert_equal flash[:alert],
-                   'You cannot access this page without being redirected by a password reset mail. '\
-                   'Please check the entered address.'
-      assert_redirected_to new_user_session_path
+      assert_not_a_user
     end
 
     test 'guest should get edit password with token' do
+      sign_in :guest_user
       get edit_user_password_path(reset_password_token: '123')
       assert_response 200
     end
 
     test 'guest should not put update password with wrong token' do
+      sign_in :guest_user
       put user_password_path,
           params: {
             user: {
@@ -50,11 +53,12 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_response 200
+      assert_response :unprocessable_entity
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end
 
     test 'guest should not put update password with non-matching passwords' do
+      sign_in :guest_user
       put user_password_path,
           params: {
             user: {
@@ -63,12 +67,13 @@ module Users
               password_confirmation: 'other_password'
             }
           }
-      assert_response 200
-      assert_select 'p.inline-errors', 'doesn\'t match Password'
+      assert_response :unprocessable_entity
+      expect_ontola_action(snackbar: 'Password confirmation doesn\'t match Password')
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end
 
     test 'guest should put update password with shortname' do
+      sign_in :guest_user
       assert_not user.confirmed?
       put user_password_path,
           params: {
@@ -78,12 +83,13 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_redirected_to new_user_session_path
+      assert_response :success
       assert_not_equal user.encrypted_password, user.reload.encrypted_password
       assert user.confirmed?
     end
 
     test 'guest should put update password without shortname' do
+      sign_in :guest_user
       put user_password_path,
           params: {
             user: {
@@ -92,7 +98,7 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_redirected_to "/#{argu.url}#{setup_users_path}"
+      assert_response :success
       assert_not_equal user_no_shortname.encrypted_password, user_no_shortname.reload.encrypted_password
     end
 
@@ -102,13 +108,14 @@ module Users
     test 'user should get new password' do
       sign_in user
       get new_user_password_path
-      assert_response 200
+      assert_response :success
     end
 
     test 'user should not post create password for non-existing email' do
       sign_in user
       post user_password_path, params: {user: {email: 'wrong@email.com'}}
-      assert_redirected_to settings_iri("#{argu.url}/u").to_s
+      assert_response :created
+      assert_equal(response.headers['Location'], settings_iri(:u, root: argu).to_s)
     end
 
     test 'user should post create password for existing email' do
@@ -116,8 +123,9 @@ module Users
 
       sign_in user
       post user_password_path, params: {user: {email: user.email}}
-      assert_equal flash[:notice], 'You will receive an email shortly with instructions to reset your password.'
-      assert_redirected_to settings_iri("#{argu.url}/u").to_s
+      assert_response :created
+      assert_equal(response.headers['Location'], settings_iri(:u, root: argu).to_s)
+      expect_ontola_action(snackbar: 'You will receive an email shortly with instructions to reset your password.')
 
       assert_email_sent
     end
@@ -125,10 +133,7 @@ module Users
     test 'user should not get edit password without token' do
       sign_in user
       get edit_user_password_path
-      assert_equal flash[:alert],
-                   'You cannot access this page without being redirected by a password reset mail. '\
-                   'Please check the entered address.'
-      assert_redirected_to new_user_session_path
+      assert_not_a_user
     end
 
     test 'user should get edit password with token' do
@@ -147,7 +152,7 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_response 200
+      assert_response :unprocessable_entity
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end
 
@@ -161,8 +166,8 @@ module Users
               password_confirmation: 'other_password'
             }
           }
-      assert_response 200
-      assert_select 'p.inline-errors', 'doesn\'t match Password'
+      assert_response :unprocessable_entity
+      expect_ontola_action(snackbar: 'Password confirmation doesn\'t match Password')
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end
 
@@ -176,7 +181,7 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_redirected_to new_user_session_path
+      assert_response :success
       assert_not_equal user.encrypted_password, user.reload.encrypted_password
     end
 
@@ -190,8 +195,22 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_redirected_to "/#{argu.url}#{setup_users_path}"
+      assert_response :success
       assert_not_equal user_no_shortname.encrypted_password, user_no_shortname.reload.encrypted_password
+    end
+
+    private
+
+    def edit_user_password_path(*args)
+      "#{argu.iri}#{super}"
+    end
+
+    def new_user_password_path
+      "#{argu.iri}#{super}"
+    end
+
+    def user_password_path
+      "#{argu.iri}#{super}"
     end
   end
 end

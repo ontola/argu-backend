@@ -65,6 +65,6 @@ class ActorIRITest < ActionDispatch::IntegrationTest
              motion: attributes_for(:motion)
            }
     end
-    should ? assert_response(302) : assert_not_authorized
+    should ? assert_response(:created) : assert_not_authorized
   end
 end

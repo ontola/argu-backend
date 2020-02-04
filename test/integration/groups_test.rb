@@ -106,7 +106,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_iri(argu, tab: :groups)
+    assert_response :created
   end
 
   test 'administrator should post create group with grant' do
@@ -127,7 +127,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_iri(argu, tab: :groups)
+    assert_response :created
   end
 
   test 'administrator should get new' do
@@ -142,11 +142,11 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     get settings_iri(granted_group)
-    assert_response 200
+    assert_group_settings_shown granted_group, :general
 
-    %i[general members invite grants].each do |tab|
+    %i[members email_invite bearer_invite grants delete].each do |tab|
       get settings_iri(granted_group, tab: tab)
-      assert_group_settings_shown group, tab
+      assert_group_settings_shown granted_group, tab
     end
   end
 
@@ -157,7 +157,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
       delete group, params: {group: {confirmation_string: 'remove'}}
     end
 
-    assert_response 303
+    assert_response :success
   end
 
   test 'administrator should not delete destroy without confirmation' do
@@ -182,7 +182,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
 
     assert_equal group.reload.name, 'new_name'
     assert_equal group.reload.name_singular, 'new_singular'
-    assert_redirected_to settings_iri(group.page, tab: :groups)
+    assert_response :success
   end
 
   private
@@ -192,14 +192,6 @@ class GroupsTest < ActionDispatch::IntegrationTest
   # @param [Symbol] tab The tab to be shown (defaults to :general)
   def assert_group_settings_shown(group, tab = :general)
     assert_response 200
-    assert_have_tag response.body,
-                    '.tabs-container li:first-child span.icon-left',
-                    group.page.display_name
-    assert_have_tag response.body,
-                    '.tabs-container li:nth-child(2) span.icon-left',
-                    I18n.t('pages.settings.title')
-    assert_have_tag response.body,
-                    '.settings-tabs .tab--current .icon-left',
-                    I18n.t("groups.settings.menu.#{tab}")
+    expect_resource_type(NS::ONTOLA[:MenuItem], iri: settings_iri(group, tab: tab))
   end
 end

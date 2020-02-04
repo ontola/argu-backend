@@ -19,6 +19,8 @@ class StaticPagesControllerTest < ActionController::TestCase
   # As Guest
   ####################################
   test 'guest should get home' do
+    sign_in :guest_user
+
     get :home
     assert_response 200
     assert_select '.activity-feed', 0
@@ -26,11 +28,15 @@ class StaticPagesControllerTest < ActionController::TestCase
   end
 
   test 'guest should get token' do
+    sign_in :guest_user
+
     get :token
     assert_response 200
   end
 
   test 'guest n3 should redirect on home' do
+    sign_in :guest_user
+
     get :home, format: :n3
     expect_ontola_action(redirect: freetown.iri)
   end

@@ -23,21 +23,23 @@ class MenusTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'Guest should get show application menu' do
+    sign_in :guest_user
+
     get menus_path, headers: argu_headers(accept: :nq)
 
     assert_response 200
-    expect_triple(menu_url(:info), RDF[:type], NS::ONTOLA[:MenuItem])
+    expect_resource_type(NS::ONTOLA[:MenuItem], iri: menu_url(:info))
   end
 
   test 'Guest should get show page menu with custom item' do
-    sign_in create_guest_user, Doorkeeper::Application.argu_front_end
+    sign_in create_guest_user
 
     get "/#{argu.url}/menus", headers: argu_headers(accept: :nq)
 
     assert_response 200
 
     navigations_iri = resource_iri(argu.menu(:navigations, user_context), root: argu)
-    expect_triple(navigations_iri, RDF[:type], NS::ONTOLA[:MenuItem])
+    expect_resource_type(NS::ONTOLA[:MenuItem], iri: navigations_iri)
     sequence = expect_sequence(navigations_iri, NS::ONTOLA[:menuItems])
     home_menu_iri = RDF::URI("#{navigations_iri}#home")
     freetown_menu_iri = RDF::URI("#{navigations_iri}#menu_item_#{CustomMenuItem.find_by(edge: freetown).id}")
@@ -58,13 +60,17 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path, headers: argu_headers(accept: :nq)
 
     assert_response 200
-    expect_triple(menu_url(:user), RDF[:type], NS::ONTOLA[:MenuItem])
-    expect_triple(menu_url(:info), RDF[:type], NS::ONTOLA[:MenuItem])
+    expect_resource_type(NS::ONTOLA[:MenuItem], iri: menu_url(:user))
+    expect_resource_type(NS::ONTOLA[:MenuItem], iri: menu_url(:info))
   end
 
   private
 
   def menu_url(tag, fragment = nil)
-    RDF::URI(argu_url("/#{argu.url}/apex/menus/#{tag}", fragment: fragment), frontend: true)
+    RDF::URI(["#{argu.iri}/apex/menus/#{tag}", fragment].compact.join('#'))
+  end
+
+  def menus_path
+    "#{argu.iri}#{super}"
   end
 end

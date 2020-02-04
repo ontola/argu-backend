@@ -28,6 +28,8 @@ class TokensTest < ActionDispatch::IntegrationTest
   # GENERATE GUEST TOKEN
   # ##################################
   test 'Guest should get guest token if none is present and reuse it' do
+    sign_in :guest_user
+
     assert_difference("Doorkeeper::AccessToken.where(scopes: 'guest').count", 0) do
       get motion.iri.path, headers: argu_headers(accept: :json)
     end
@@ -41,6 +43,8 @@ class TokensTest < ActionDispatch::IntegrationTest
   # WITHOUT CREDENTIALS
   ####################################
   test 'Guest should not post create token without params' do
+    sign_in :guest_user
+
     post oauth_token_path, headers: argu_headers(accept: :json)
 
     expect_error_type('invalid_request')

@@ -13,21 +13,27 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'Guest should get show MediaObject' do
-    get media_object_path(media_object), headers: argu_headers(accept: :json_api)
+    sign_in :guest_user
+
+    get resource_iri(media_object), headers: argu_headers(accept: :json_api)
 
     assert_response 200
     assert_equal NS::SCHEMA[:MediaObject].to_s, primary_resource['attributes']['type']
   end
 
   test 'Guest should get show ImageObject' do
-    get media_object_path(image_object), headers: argu_headers(accept: :json_api)
+    sign_in :guest_user
+
+    get resource_iri(image_object), headers: argu_headers(accept: :json_api)
 
     assert_response 200
     assert_equal NS::SCHEMA[:ImageObject].to_s, primary_resource['attributes']['type']
   end
 
   test 'Guest should get show user profile photo' do
-    get media_object_path(user.profile.default_profile_photo), headers: argu_headers(accept: :json_api)
+    sign_in :guest_user
+
+    get resource_iri(user.profile.default_profile_photo, root: argu), headers: argu_headers(accept: :json_api)
 
     assert_response 200
     assert_equal NS::SCHEMA[:ImageObject].to_s, primary_resource['attributes']['type']

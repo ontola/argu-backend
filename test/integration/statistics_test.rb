@@ -10,11 +10,15 @@ class StatisticsTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'guest should not get statistics of forum' do
+    sign_in :guest_user
+
     get statistics_iri(freetown)
     assert_not_authorized
   end
 
   test 'guest should not get statistics of motion' do
+    sign_in :guest_user
+
     get statistics_iri(motion)
     assert_not_authorized
   end

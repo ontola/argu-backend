@@ -81,19 +81,19 @@ class VotesTest < ActionDispatch::IntegrationTest
   # as Guest
   ####################################
   test 'guest should get show vote by parent' do
-    get root_path
+    sign_in guest_user
     guest_vote
-    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
+    get iri_from_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri_path), root: argu),
         headers: argu_headers(accept: :json_api)
     assert_response 200
 
     expect_relationship('partOf')
     creator = expect_relationship('creator')
-    assert_equal creator.dig('data', 'id'), "#{Rails.application.config.origin}/#{argu.url}/sessions/#{session.id}"
+    assert_equal creator.dig('data', 'id'), "#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}"
   end
 
   test 'guest should not get show non-existent vote' do
-    get root_path
+    sign_in guest_user
     guest_vote2
     other_guest_vote
     current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(vote_event) }
@@ -102,7 +102,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should post create for motion json' do
-    get root_path
+    sign_in guest_user
     assert_difference('Vote.count' => 0,
                       'Edge.count' => 0,
                       'Argu::Redis.keys.count' => 1,
@@ -120,8 +120,8 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
-  test 'guest should post create for motion with new fe' do
-    sign_in guest_user, Doorkeeper::Application.argu_front_end
+  test 'guest should post create for motion nq' do
+    sign_in guest_user
 
     expect(vote_event.votes.length).to be 1
     assert_difference('Vote.count' => 0,
@@ -162,7 +162,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should post not create vote for closed motion' do
-    get root_path
+    sign_in guest_user
     post collection_iri(closed_question_motion.default_vote_event, :votes, canonical: true),
          params: {
            vote: {for: :con}
@@ -175,9 +175,9 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should post update vote' do
-    get root_path
+    sign_in guest_user
     guest_vote
-    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
+    get iri_from_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri_path), root: argu),
         headers: argu_headers(accept: :json_api)
     assert_response 200
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:yes]
@@ -188,18 +188,18 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
     assert_response 201
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
-    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
+    get iri_from_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri_path), root: argu),
         headers: argu_headers(accept: :json_api)
     assert_response 200
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'guest should delete destroy argument vote' do
-    get root_path
+    sign_in guest_user
     argument_guest_vote
     assert_difference('Argu::Redis.keys("temporary.*").count', -1) do
-      delete expand_uri_template(:vote_iri, parent_iri: split_iri_segments(argument.iri.path), for: :pro)
-      assert_response 303
+      delete iri_from_template(:vote_iri, parent_iri: split_iri_segments(argument.iri_path), for: :pro, root: argu)
+      assert_response :success
     end
   end
 
@@ -210,20 +210,18 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'unconfirmed should get show vote' do
     sign_in unconfirmed
-    get root_path
     unconfirmed_vote
-    get expand_uri_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri.path)),
+    get iri_from_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri_path), root: argu),
         headers: argu_headers(accept: :json_api)
     assert_response 200
 
     expect_relationship('partOf')
     creator = expect_relationship('creator')
-    assert_equal creator.dig('data', 'id'), "#{Rails.application.config.origin}/#{argu.url}/u/#{unconfirmed.url}"
+    assert_equal creator.dig('data', 'id'), "#{argu.iri}/u/#{unconfirmed.url}"
   end
 
   test 'unconfirmed should not get show non-existent vote' do
     sign_in unconfirmed
-    get root_path
     other_guest_vote
     unconfirmed_vote2
     current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(vote_event) }
@@ -233,7 +231,6 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'unconfirmed should post create for motion with json' do
     sign_in unconfirmed
-    get root_path
 
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
@@ -568,7 +565,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
 
   test 'creator should delete destroy vote for argument new fe' do
-    sign_in creator, Doorkeeper::Application.argu_front_end
+    sign_in creator
     vote_iri = ActsAsTenant.with_tenant(argu) { current_vote_iri(argument) }
 
     assert_difference('Vote.count' => -1,
@@ -593,8 +590,8 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  test 'user should post create for motion with new fe' do
-    sign_in user, Doorkeeper::Application.argu_front_end
+  test 'user should post create con for motion nq' do
+    sign_in user
 
     expect(vote_event.votes.length).to be 1
     assert_difference('Vote.count' => 1,
@@ -634,7 +631,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
-  test 'user should post create for motion n3' do
+  test 'user should post create pro for motion nq' do
     sign_in user
 
     assert_difference('Vote.count' => 1,

@@ -86,7 +86,7 @@ class InfoControllerTest < ActionController::TestCase
   # Not logged in
   ####################################
   test 'should get show when not logged in' do
-    get :show, params: {id: team.key}
+    get :show, params: {id: team.key}, format: :nq
 
     assert_response 200
     assert assigns(:document)
@@ -94,21 +94,21 @@ class InfoControllerTest < ActionController::TestCase
   end
 
   test 'should 404 for get nonexistent when not logged in' do
-    get :show, params: {id: 'does_not_exist'}
+    get :show, params: {id: 'does_not_exist'}, format: :nq
 
     assert_response 404
     assert_not assigns(:document)
   end
 
   test 'should 404 for non-json setting when not logged in' do
-    get :show, params: {id: quotes.key}
+    get :show, params: {id: quotes.key}, format: :nq
 
     assert_response 404
     assert_not assigns(:document)
   end
 
   test 'should 404 for non-info setting when not logged in' do
-    get :show, params: {id: 'user_cap'}
+    get :show, params: {id: 'user_cap'}, format: :nq
 
     assert_response 404
   end
@@ -121,7 +121,7 @@ class InfoControllerTest < ActionController::TestCase
   test 'should get show' do
     sign_in user
 
-    get :show, params: {id: team.key}
+    get :show, params: {id: team.key}, format: :nq
 
     assert_response 200
     assert assigns(:document)
@@ -131,7 +131,7 @@ class InfoControllerTest < ActionController::TestCase
   test 'should 404 for get nonexistent' do
     sign_in user
 
-    get :show, params: {id: 'does_not_exist'}
+    get :show, params: {id: 'does_not_exist'}, format: :nq
 
     assert_response 404
     assert_not assigns(:document)
@@ -140,7 +140,7 @@ class InfoControllerTest < ActionController::TestCase
   test 'should 404 for non-json setting' do
     sign_in user
 
-    get :show, params: {id: quotes.key}
+    get :show, params: {id: quotes.key}, format: :nq
 
     assert_response 404
     assert_not assigns(:document)
@@ -149,7 +149,7 @@ class InfoControllerTest < ActionController::TestCase
   test 'should 404 for non-info setting' do
     sign_in user
 
-    get :show, params: {id: 'user_cap'}
+    get :show, params: {id: 'user_cap'}, format: :nq
 
     assert_response 404
   end

@@ -21,7 +21,7 @@ module Users
     ####################################
     test 'guest should not delete destroy follows' do
       assert_difference(no_differences) do
-        delete user_follows_path(user)
+        delete collection_iri(user, :follows, root: argu)
       end
       assert_not_a_user
     end
@@ -32,7 +32,7 @@ module Users
     test 'other_user should not delete destroy follows' do
       sign_in other_user
       assert_difference(no_differences) do
-        delete user_follows_path(user)
+        delete collection_iri(user, :follows, root: argu)
       end
       assert_not_authorized
     end
@@ -40,9 +40,10 @@ module Users
     test 'user should delete destroy follows' do
       sign_in user
       assert_difference(unsubscribe_differences) do
-        delete user_follows_path(user)
+        delete collection_iri(user, :follows, root: argu)
       end
-      assert_redirected_to resource_iri(user, root: argu).path
+      assert_response :success
+      expect_ontola_action(snackbar: 'Notifications deleted successfully')
     end
 
     private

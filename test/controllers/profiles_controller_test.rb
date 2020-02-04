@@ -16,44 +16,71 @@ class ProfilesControllerTest < ActionController::TestCase
   test 'user should put setup' do
     sign_in user
 
-    put :setup!,
+    put :update,
+        format: :json,
         params: {
-          id: user.url,
-          user: attributes_for(:user).merge(
-            profile_attributes: {
-              id: user.profile.id,
-              default_profile_photo_attributes: {
-                id: user.profile.default_profile_photo.id,
-                content: fixture_file_upload('profile_photo.png', 'image/png'),
-                used_as: 'profile_photo'
-              },
-              default_cover_photo_attributes: {
-                content: fixture_file_upload('cover_photo.jpg', 'image/jpg'),
-                used_as: 'cover_photo'
-              }
+          id: user.profile.id,
+          profile: {
+            default_profile_photo_attributes: {
+              id: user.profile.default_profile_photo.id,
+              content: fixture_file_upload('profile_photo.png', 'image/png'),
+              used_as: 'profile_photo'
+            },
+            default_cover_photo_attributes: {
+              content: fixture_file_upload('cover_photo.jpg', 'image/jpg'),
+              used_as: 'cover_photo'
             }
-          )
+          }
         }
     user.profile.reload
     assert_equal 'profile_photo.png', user.profile.default_profile_photo.content_identifier
     assert_equal 'cover_photo.jpg', user.profile.default_cover_photo.content_identifier
-    assert_redirected_to resource_iri(user, root: argu).path
+    assert_response :success
   end
 
   test 'user should get edit profile with own profile' do
     sign_in user
 
-    get :edit, params: {id: user.url}
+    get :edit, params: {id: user.url}, format: :nq
 
-    assert_redirected_to settings_iri('/u', tab: :profile)
+    assert_response :success
   end
 
   test 'user should not get edit profile with other profile' do
     sign_in user
 
-    get :edit, params: {id: user2.url}
+    get :edit, params: {id: user2.profile.id}, format: :nq
 
-    assert_not_authorized
+    assert_disabled_form(iri: RDF::DynamicURI(requested_iri))
+  end
+
+  test 'user should not get edit profile of page' do
+    sign_in user
+
+    get :edit, params: {id: argu.profile.id}, format: :nq
+
+    assert_disabled_form(iri: RDF::DynamicURI(requested_iri))
+  end
+
+  ####################################
+  # As Administrator
+  ####################################
+  let(:administrator) { create_administrator(argu) }
+
+  test 'administrator should not get edit profile with other profile' do
+    sign_in administrator
+
+    get :edit, params: {id: user.profile.id}, format: :nq
+
+    assert_disabled_form(iri: RDF::DynamicURI(requested_iri))
+  end
+
+  test 'administrator should get edit profile of page' do
+    sign_in administrator
+
+    get :edit, params: {id: argu.profile.id}, format: :nq
+
+    assert_enabled_form(iri: RDF::DynamicURI(requested_iri))
   end
 
   ####################################

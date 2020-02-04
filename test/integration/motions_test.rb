@@ -57,9 +57,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should get guest_vote included' do
-    get root_path
-
-    sign_in guest_user, Doorkeeper::Application.argu_front_end
+    sign_in guest_user
     guest_vote
     get subject, headers: argu_headers(accept: :nq)
     parent_segments = split_iri_segments(subject.default_vote_event.iri_path)
@@ -70,9 +68,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should not get other guest_vote included' do
-    get root_path
-
-    sign_in other_guest_user, Doorkeeper::Application.argu_front_end
+    sign_in other_guest_user
     guest_vote
     get subject, headers: argu_headers(accept: :nq)
     parent_segments = split_iri_segments(subject.default_vote_event.iri.path)
@@ -88,18 +84,21 @@ class MotionsTest < ActionDispatch::IntegrationTest
       parent: :freetown,
       results: {
         should: true,
-        response: 302
+        response: :created
       }
     )
     assert_not_nil assigns(:create_service).resource
-    assert_redirected_to argu_url(assigns(:create_service).resource.iri.path, start_motion_tour: true)
+    assert_equal(
+      response.headers['Location'],
+      argu_url(assigns(:create_service).resource.iri.path, start_motion_tour: true)
+    )
     WebMock.reset!
 
     general_create(
       parent: :freetown,
       results: {
         should: true,
-        response: 302
+        response: :created
       }
     )
     assert_not_nil assigns(:create_service).resource
@@ -113,7 +112,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     Thread.current[:mock_searchkick] = false
 
     general_create(
-      results: {should: true, response: 302},
+      results: {should: true, response: :created},
       parent: :freetown,
       attributes: {
         custom_placement_attributes: {
@@ -137,7 +136,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      results: {should: false, response: 200},
+      results: {should: false, response: :unprocessable_entity},
       parent: :question_requires_location,
       differences: [['Motion', 0], ['Activity', 0]]
     )
@@ -156,7 +155,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
           zoom_level: '1'
         }
       },
-      results: {should: false, response: 200},
+      results: {should: false, response: :unprocessable_entity},
       parent: :question_requires_location,
       differences: [['Motion', 0], ['Activity', 0]]
     )
@@ -175,7 +174,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
           zoom_level: '1'
         }
       },
-      results: {should: true, response: 302},
+      results: {should: true, response: :created},
       parent: :question_requires_location,
       differences: [['Motion', 1], ['Activity', 2]]
     )
@@ -185,7 +184,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     general_update(
-      results: {should: true, response: 302},
+      results: {should: true, response: :success},
       record: :motion_with_placement,
       attributes: {
         custom_placement_attributes: {
@@ -206,7 +205,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     general_update(
-      results: {should: true, response: 302},
+      results: {should: true, response: :success},
       record: :motion_with_placement,
       attributes: {
         custom_placement_attributes: {

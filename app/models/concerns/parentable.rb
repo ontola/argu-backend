@@ -21,7 +21,7 @@ module Parentable
       self.class.parent_classes.detect { |t| break send(t) if send(t) }
     end
 
-    delegate :ancestor, to: :parent
+    delegate :ancestor, to: :parent, allow_nil: true
 
     def root
       parent.try(:root) || ancestor(:page)

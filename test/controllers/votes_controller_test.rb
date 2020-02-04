@@ -23,15 +23,6 @@ class VotesControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # Create
-  ####################################
-  test 'should post create vote for argument as JS' do
-    sign_in user
-    post :create, params: {format: :js, root_id: argu.url, pro_argument_id: argument.fragment, for: 'pro'}
-    assert_response 200
-  end
-
-  ####################################
   # Index for VoteEvent
   ####################################
   test 'should get index votes of vote_event' do

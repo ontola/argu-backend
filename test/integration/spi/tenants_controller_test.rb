@@ -12,7 +12,7 @@ module SPI
     end
 
     test 'service should get index' do
-      sign_in :service, Doorkeeper::Application.argu_front_end
+      sign_in :service
 
       get _public_spi_tenants_path
 
@@ -21,7 +21,7 @@ module SPI
     end
 
     test 'service should get tenant of iri' do
-      sign_in :service, Doorkeeper::Application.argu_front_end
+      sign_in :service
 
       get _public_spi_find_tenant_path(iri: argu.iri)
 

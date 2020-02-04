@@ -17,6 +17,9 @@ class UsersTest < ActionDispatch::IntegrationTest
   let(:user_no_shortname) do
     u = create(:user, profile: create(:profile))
     u.shortname.destroy
+    u.shortname = nil
+    u.url = nil
+    u.iri_cache = nil
     u
   end
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
@@ -26,34 +29,47 @@ class UsersTest < ActionDispatch::IntegrationTest
   # Show as Guest
   ####################################
   test 'guest should get show by id' do
-    get user_path(user_public.id)
+    sign_in :guest_user
 
-    ActsAsTenant.current_tenant = argu
-    assert_redirected_to user_public.reload.iri.path
+    get resource_iri(user_public, root: argu)
+
+    assert_response :success
   end
 
   test 'guest should get show by id user without shortname' do
-    get user_path(user_no_shortname.id)
+    sign_in :guest_user
+
+    get resource_iri(user_no_shortname, root: argu)
 
     assert_response 200
   end
 
   test 'guest should not get show non public' do
-    get user_path(user_non_public)
+    sign_in :guest_user
 
-    assert_response 403
-  end
-
-  test 'guest should get show without feed' do
-    get user_path(user_hidden_votes)
+    get resource_iri(user_non_public, root: argu)
 
     assert_response 200
 
-    assert_select '.activity-feed', 0
+    expect_resource_type(NS::ONTOLA[:AnonymousUser])
+    expect_triple(requested_iri, NS::SCHEMA[:name], I18n.t('users.anonymous'))
+    refute_includes(response.body, user_hidden_votes.first_name)
+    refute_includes(response.body, user_hidden_votes.last_name)
+    refute_includes(response.body, user_hidden_votes.email)
+  end
+
+  test 'guest should get show without feed' do
+    sign_in :guest_user
+
+    get resource_iri(user_hidden_votes, root: argu)
+
+    assert_response 200
   end
 
   test 'guest should get show public' do
-    get user_path(user_public)
+    sign_in :guest_user
+
+    get resource_iri(user_public, root: argu)
 
     assert_response 200
   end
@@ -64,42 +80,33 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should get show by id' do
     sign_in user
 
-    get user_path(user_public.id)
+    get resource_iri(user_public, root: argu)
 
-    ActsAsTenant.current_tenant = argu
-    assert_redirected_to user_public.reload.iri.path
+    assert_response :success
   end
 
   test 'user should get show by id user without shortname' do
     sign_in user
 
-    get user_path(user_no_shortname.id)
-
-    assert_response 200
-  end
-
-  test 'user should get show by id user without shortname nq' do
-    sign_in user
-
-    get user_path(user_no_shortname.id), headers: argu_headers(accept: :nq)
+    get resource_iri(user_no_shortname, root: argu)
 
     assert_response 200
     assert_not_includes(response.body, user_no_shortname.email)
   end
 
-  test 'user should get show user with hidden last name nq' do
+  test 'user should get show user with hidden last name' do
     sign_in user
 
-    get user_path(user_hidden_last_name.id), headers: argu_headers(accept: :nq)
+    get resource_iri(user_hidden_last_name, root: argu)
 
     assert_response 200
-    expect_no_triple user_hidden_last_name.iri, NS::SCHEMA[:familyName], user_hidden_last_name.last_name
+    refute_triple user_hidden_last_name.iri, NS::SCHEMA[:familyName], user_hidden_last_name.last_name
   end
 
-  test 'user should get show self with hidden last name nq' do
-    sign_in user_hidden_last_name, Doorkeeper::Application.argu_front_end
+  test 'user should get show self with hidden last name' do
+    sign_in user_hidden_last_name
 
-    get "/#{argu.url}#{user_path(user_hidden_last_name.id)}", headers: argu_headers(accept: :nq)
+    get resource_iri(user_hidden_last_name, root: argu)
 
     assert_response 200
     user_iri = resource_iri(user_hidden_last_name, root: argu)
@@ -109,15 +116,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should get show non public' do
     sign_in user
 
-    get user_path(user_non_public)
-
-    assert_response 200
-  end
-
-  test 'user should get show non public nq' do
-    sign_in user, Doorkeeper::Application.argu_front_end
-
-    get "/#{argu.url}#{user_path(user_non_public)}", headers: argu_headers(accept: :nq)
+    get resource_iri(user_non_public, root: argu)
 
     assert_response 200
     assert_not_includes(response.body, user_non_public.email)
@@ -126,27 +125,17 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should get show without feed' do
     sign_in user
 
-    get user_path(user_hidden_votes)
+    get resource_iri(user_hidden_votes, root: argu)
 
     assert_response 200
 
     assert_select '.activity-feed', 0
   end
 
-  test 'user should get show public' do
+  test 'user should show public' do
     sign_in user
 
-    get user_path(user_public)
-
-    assert_response 200
-
-    assert_select '.activity-feed'
-  end
-
-  test 'user should show public nq' do
-    sign_in user
-
-    get user_path(user_public), headers: argu_headers(accept: :nq)
+    get resource_iri(user_public, root: argu)
 
     assert_response 200
     assert_not_includes(response.body, user_public.email)
@@ -155,42 +144,10 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should show votes own profile' do
     sign_in user_hidden_votes
 
-    get user_path(user_hidden_votes)
-
-    assert_response 200
-  end
-
-  test 'user should show votes own profile nq' do
-    sign_in user_hidden_votes
-
-    get user_path(user_hidden_votes), headers: argu_headers(accept: :nq)
+    get resource_iri(user_hidden_votes, root: argu)
 
     assert_response 200
     assert_includes(response.body, user_hidden_votes.email)
-  end
-
-  ####################################
-  # Sign out
-  ####################################
-  test 'user should sign out' do
-    sign_in user
-
-    get destroy_user_session_path
-    assert_redirected_to '/'
-  end
-
-  test 'user should sign out with r' do
-    sign_in user
-
-    get destroy_user_session_path(r: freetown.iri.path)
-    assert_redirected_to freetown.iri.path
-  end
-
-  test 'user should sign out with invalid r' do
-    sign_in user
-
-    get destroy_user_session_path(r: 'https://evil_website.com')
-    assert_redirected_to '/'
   end
 
   ####################################
@@ -207,7 +164,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference('EmailAddress.count' => 1,
                       worker_count_string('SendEmailWorker') => 1) do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               email_addresses_attributes: {
@@ -223,7 +180,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal user.email_addresses.last.email, 'secondary@argu.co'
     assert_not_equal user.primary_email_record.email, 'secondary@argu.co'
 
-    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
+    assert_response :success
+    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
     assert_email_sent
   end
 
@@ -235,7 +193,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference('EmailAddress.count' => 0,
                       worker_count_string('SendEmailWorker') => 0) do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               email_addresses_attributes: {
@@ -252,7 +210,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_not_equal user.email_addresses.last.email, second_email.email
     assert_equal user.primary_email_record.email, second_email.email
 
-    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
+    assert_response :success
+    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
   end
 
   test 'user should delete secondary email' do
@@ -261,7 +220,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference('EmailAddress.count' => -1,
                       worker_count_string('SendEmailWorker') => 0) do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               email_addresses_attributes: {
@@ -273,7 +232,8 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
+    assert_response :success
+    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
   end
 
   test 'user should not delete primary email' do
@@ -282,7 +242,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference('EmailAddress.count' => 0,
                       worker_count_string('SendEmailWorker') => 0) do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               email_addresses_attributes: {
@@ -314,7 +274,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     )
     assert_difference('EmailAddress.count' => 0,
                       worker_count_string('SendEmailWorker') => 1) do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               email_addresses_attributes: {
@@ -328,7 +288,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     unconfirmed_email.reload
     assert_equal unconfirmed_email.email, 'changed@argu.co'
 
-    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
+    assert_response :success
+    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
     assert_email_sent
   end
 
@@ -337,7 +298,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     second_email
     assert_difference('EmailAddress.count' => 0,
                       worker_count_string('SendEmailWorker') => 0) do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               email_addresses_attributes: {
@@ -356,6 +317,8 @@ class UsersTest < ActionDispatch::IntegrationTest
   # Wrong email after following email token
   ##########################################
   test 'guest should not get wrong_email' do
+    sign_in :guest_user
+
     get users_wrong_email_path(email: 'wrong@email.com')
   end
 
@@ -368,7 +331,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_no_difference('EmailAddress.count') do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               email_addresses_attributes: {
@@ -380,7 +343,8 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_redirected_to argu_url('/tokens/email/xxx')
+    assert_response :unprocessable_entity
+    expect_ontola_action(snackbar: 'Email has already been taken')
   end
 
   test 'user with other email should redirect to r on wrong_email' do
@@ -388,7 +352,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     create_email_mock('confirm_secondary', /.+/, email: 'new@email.com', token_url: /.+/)
 
     assert_difference('EmailAddress.count') do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               email_addresses_attributes: {
@@ -400,8 +364,9 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_redirected_to argu_url('/tokens/email/xxx')
+    assert_response :success
     assert_email_sent
+    expect_ontola_action(snackbar: I18n.t('users.registrations.confirm_mail_change_notice'))
   end
 
   test 'user should not add email of other account on wrong_email' do
@@ -409,7 +374,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     user
 
     assert_no_difference('EmailAddress.count') do
-      put user_path(user_public),
+      put resource_iri(user_public, root: argu),
           params: {
             user: {
               email_addresses_attributes: {
@@ -421,8 +386,8 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_select '.account-exists', "An account for #{user.email} already exists. "\
-                                     'Log out and log in with this other account to accept the invitation.'
+    assert_response 422
+    expect_ontola_action(snackbar: 'Email has already been taken')
   end
 
   ####################################
@@ -431,11 +396,11 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should show settings and all tabs' do
     sign_in user
 
-    get settings_iri('/u')
+    get settings_iri('/u', root: argu)
     assert_user_settings_shown
 
-    %i[general profile authentication notifications privacy advanced].each do |tab|
-      get settings_iri('/u', tab: tab)
+    %i[general profile authentication notifications privacy].each do |tab|
+      get settings_iri('/u', root: argu, tab: tab)
       assert_user_settings_shown tab
     end
   end
@@ -443,7 +408,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should put settings' do
     sign_in user
     profile_id = user.profile.id
-    put user_path(user), params: {
+    put user, params: {
       user: {
         profile_attributes: {
           name: 'new name'
@@ -457,7 +422,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     nominatim_postal_code_valid
     sign_in user
 
-    put user_path(user),
+    put resource_iri(user, root: argu),
         params: {
           user: {
             first_name: 'name',
@@ -473,14 +438,15 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
         }
+    assert_response :success
     assert_equal 'name', user.reload.first_name
     assert_equal 2, user.profile.media_objects.reload.count
     assert_equal('profile_photo.png', user.profile.default_profile_photo.content_identifier)
     assert_equal('cover_photo.jpg', user.profile.default_cover_photo.content_identifier)
 
-    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
+    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
 
-    put user_path(user),
+    put resource_iri(user, root: argu),
         params: {
           user: {
             profile_attributes: {
@@ -505,7 +471,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Place.count' => 1,
                       'Placement.count' => 1 do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               first_name: 'name',
@@ -516,7 +482,8 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
+    assert_response :success
+    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
   end
 
   test 'user should create place and placement on update with only country code' do
@@ -525,7 +492,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Place.count' => 1,
                       'Placement.count' => 1 do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               first_name: 'name',
@@ -536,7 +503,8 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
+    assert_response :success
+    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
   end
 
   test 'user should not create place and placement on update with only postal code' do
@@ -544,7 +512,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Place.count' => 0,
                       'Placement.count' => 0 do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               first_name: 'name',
@@ -555,7 +523,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_response 200
+    assert_response :unprocessable_entity
   end
 
   test 'user should not create place and placement on update with wrong postal code' do
@@ -564,7 +532,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Place.count' => 0,
                       'Placement.count' => 0 do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               first_name: 'name',
@@ -575,7 +543,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_response 200
+    assert_response :unprocessable_entity
   end
 
   test 'user should not create place but should create placement on update with cached postal code and country code' do
@@ -584,7 +552,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Place.count' => 0,
                       'Placement.count' => 1 do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               first_name: 'name',
@@ -595,7 +563,8 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
+    assert_response :success
+    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
   end
 
   test 'user should destroy placement on update with blank postal code and country code' do
@@ -606,7 +575,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Place.count' => 0,
                       'Placement.count' => -1 do
-      put user_path(user),
+      put resource_iri(user, root: argu),
           params: {
             user: {
               first_name: 'name',
@@ -618,7 +587,8 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
+    assert_response :success
+    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
   end
 
   private
@@ -627,8 +597,6 @@ class UsersTest < ActionDispatch::IntegrationTest
   # @param [Symbol] tab The tab to be shown (defaults to :general)
   def assert_user_settings_shown(tab = :general)
     assert_response 200
-    assert_have_tag response.body,
-                    '.settings-tabs .tab--current .icon-left',
-                    tab.to_s.capitalize
+    expect_resource_type(NS::ONTOLA[:MenuItem], iri: settings_iri('/u', root: argu, tab: tab))
   end
 end

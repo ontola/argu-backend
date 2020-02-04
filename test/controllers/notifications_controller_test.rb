@@ -14,6 +14,8 @@ class NotificationsControllerTest < ActionController::TestCase
   ####################################
 
   test 'guest should not get index' do
+    sign_in :guest_user
+
     get :index
 
     assert_redirected_to new_user_session_path(r: ActsAsTenant.without_tenant { collection_iri(nil, :notifications) })

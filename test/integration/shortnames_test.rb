@@ -19,12 +19,16 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'guest should get forum' do
+    sign_in :guest_user
+
     get "/#{argu.url}/#{freetown.url}"
 
     assert_response 200
   end
 
   test 'guest should get resources' do
+    sign_in :guest_user
+
     parent = freetown
     %i[question motion argument].each do |klass|
       resource = create(klass, parent: parent)
@@ -37,6 +41,8 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should get comment' do
+    sign_in :guest_user
+
     general_show(302, comment, comment_shortname) do
       assert_redirected_to "#{comment.parent.iri.path}##{comment.identifier}"
     end
@@ -130,7 +136,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     yield if block_given?
   end
 
-  def general_create(response: 302, differences: {'Shortname.count' => 1}, attrs: nil)
+  def general_create(response: :created, differences: {'Shortname.count' => 1}, attrs: nil)
     attrs ||= shortname_attributes
     assert_difference(differences) do
       post collection_iri(argu, :shortnames), params: attrs

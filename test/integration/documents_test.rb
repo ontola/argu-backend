@@ -39,12 +39,6 @@ class DocumentsTest < ActionDispatch::IntegrationTest
       TEXT
     )
   end
-  let!(:cookies) do
-    create(:document,
-           name: 'cookies',
-           title: 'Cookiebeleid',
-           contents: 'lorem ipsum et dolorum est')
-  end
   let!(:values) do
     create(:document,
            name: 'values',
@@ -53,22 +47,17 @@ class DocumentsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get policy' do
-    get '/policy'
+    get '/argu/policy', headers: argu_headers
     assert_response :success
   end
 
   test 'should get privacy' do
-    get '/privacy'
-    assert_response :success
-  end
-
-  test 'should get cookies' do
-    get '/cookies'
+    get '/argu/privacy', headers: argu_headers
     assert_response :success
   end
 
   test 'should get values' do
-    get '/values'
+    get '/argu/values', headers: argu_headers
     assert_response :success
   end
 end

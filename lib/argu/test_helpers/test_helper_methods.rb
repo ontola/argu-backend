@@ -17,11 +17,9 @@ module Argu
           measure measure_type employment
         ].freeze
 
-        def argu_headers(accept: nil, bearer: nil, host: nil)
+        def argu_headers(accept: :nq, bearer: nil, host: nil)
           headers = {}
-          if accept
-            headers['Accept'] = accept.is_a?(Symbol) ? Mime::Type.lookup_by_extension(accept).to_s : accept
-          end
+          headers['Accept'] = accept.is_a?(Symbol) ? Mime::Type.lookup_by_extension(accept).to_s : accept
           headers['Authorization'] = "Bearer #{bearer}" if bearer
           headers['HTTP_HOST'] = host if host
           headers

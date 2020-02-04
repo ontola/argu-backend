@@ -3,12 +3,27 @@
 module Argu
   module TestHelpers
     module TestAssertions
+      def requested_iri
+        RDF::URI(request.original_url.sub(".#{request.format.symbol}", ''))
+      end
+
+      def assert_disabled_form(iri: requested_iri, error: 'This action is currently not available')
+        assert_response 200
+        expect_triple(iri, NS::SCHEMA.actionStatus, NS::ONTOLA[:DisabledActionStatus])
+        expect_triple(iri, NS::SCHEMA.error, error)
+      end
+
+      def assert_enabled_form(iri: requested_iri)
+        assert_response 200
+        expect_triple(iri, NS::SCHEMA.actionStatus, NS::SCHEMA[:PotentialActionStatus])
+      end
+
       def assert_not_a_user
-        assert_equal true, assigns(:_not_a_user_caught)
+        assert_response 401
       end
 
       def assert_not_authorized
-        assert_equal true, assigns(:_not_authorized_caught)
+        assert_response 403
       end
 
       def assert_email_sent(count: 1, skip_sidekiq: false, root: :argu) # rubocop:disable Metrics/AbcSize
@@ -28,9 +43,14 @@ module Argu
         last_match
       end
 
-      def expect_ontola_action(redirect:)
+      def expect_ontola_action(redirect: nil, snackbar: nil)
         action = "actions/redirect?#{{location: redirect}.to_param}" if redirect
+        action = "actions/snackbar?#{{text: snackbar}.to_param}" if snackbar
         expect(response.headers['Exec-Action']).to(include(action))
+      end
+
+      def expect_resource_type(type, iri: requested_iri)
+        expect_triple(iri, RDF[:type], type)
       end
 
       def expect_triple(subject, predicate, object, graph = NS::LL[:supplant])
@@ -40,7 +60,7 @@ module Argu
         match
       end
 
-      def expect_no_triple(subject, predicate, object, graph = nil)
+      def refute_triple(subject, predicate, object, graph = nil)
         statement = RDF::Statement(subject, predicate, object, graph_name: graph)
         assert_not rdf_body.query([subject, predicate, object, graph]).present?,
                    "Expected not to find #{statement} in\n#{response.body}"

@@ -7,13 +7,15 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
 
   test 'guest should get show current actor' do
+    sign_in :guest_user
+
     get "/#{argu.url}#{current_actor_path}", headers: argu_headers(accept: :json_api)
 
+    id = assigns[:doorkeeper_token].resource_owner_id
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data'],
-                 'id' => "#{Rails.application.config.origin}/#{argu.url}/sessions/#{session.id}", 'type' => 'guestUsers'
-    assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data'],
-                 'id' => "#{Rails.application.config.origin}/#{argu.url}/sessions/#{session.id}", 'type' => 'guestUsers'
+                 'id' => "#{Rails.application.config.frontend_url.sub('https', 'http')}/#{argu.url}/sessions/#{id}",
+                 'type' => 'guestUsers'
   end
 
   test 'user should get show current actor' do
@@ -23,8 +25,6 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],
-                 "http://#{Rails.application.config.host_name}/#{argu.url}/u/#{user.url}"
-    assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data']['id'],
-                 "http://#{Rails.application.config.host_name}/#{argu.url}/u/#{user.url}"
+                 "#{Rails.application.config.frontend_url.sub('https', 'http')}/#{argu.url}/u/#{user.url}"
   end
 end

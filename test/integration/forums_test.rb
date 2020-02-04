@@ -17,7 +17,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
       }
     }
   )
-  define_cologne
   define_helsinki
 
   let(:draft_motion) do
@@ -43,12 +42,18 @@ class ForumsTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'guest should get show by upcased shortname' do
-    get freetown.iri_path.gsub('freetown', 'Freetown')
-    assert_redirected_to freetown.iri.path
+    sign_in :guest_user
+
+    get freetown.iri.to_s.gsub('freetown', 'Freetown'), headers: argu_headers
+
+    assert_response :success
+    expect_resource_type(NS::ARGU[:Forum], iri: freetown.iri)
   end
 
   test 'guest should get show by upcased page shortname' do
-    get freetown.iri.to_s.gsub("/#{argu.url}", "/#{argu.url.upcase}")
+    sign_in :guest_user
+
+    get freetown.iri.to_s.gsub("/#{argu.url}", "/#{argu.url.upcase}"), headers: argu_headers
     assert_response 200
   end
 
@@ -60,25 +65,15 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'should not show statistics' do
     sign_in
 
-    get statistics_iri(freetown)
+    get statistics_iri(freetown), headers: argu_headers
     assert_response 403
     assert_not_authorized
-  end
-
-  test 'user should not leak closed children to non-members' do
-    sign_in
-
-    get cologne
-    assert_response 200
-
-    assert cologne.motions.count.positive?
-    assert_nil assigns(:children), 'Closed forums are leaking content'
   end
 
   test 'user should not show hidden to non-members' do
     sign_in
 
-    get helsinki
+    get helsinki, headers: argu_headers
     assert_response 404, 'Hidden forums are visible'
   end
 
@@ -86,24 +81,13 @@ class ForumsTest < ActionDispatch::IntegrationTest
   # As Initiator
   ####################################
   let(:holland_initiator) { create_initiator(holland) }
-  let(:cologne_initiator) { create_initiator(cologne) }
   let(:helsinki_initiator) { create_initiator(helsinki) }
-
-  test 'initiator should show closed children to members' do
-    sign_in cologne_initiator
-
-    get cologne
-    assert_forum_shown(cologne)
-
-    assert cologne.motions.count.positive?
-    assert assigns(:children), 'Closed forum content is not present'
-  end
 
   test 'initiator should show hidden to members' do
     sign_in helsinki_initiator
 
-    get helsinki
-    assert_forum_shown(helsinki)
+    get helsinki, headers: argu_headers
+    assert_response :success
   end
 
   ####################################
@@ -129,7 +113,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
               used_as: 'cover_photo'
             }
           }
-        }
+        },
+        headers: argu_headers
 
     assert_response :success
     assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
@@ -149,8 +134,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
           forum: {
             url: 'new_url'
           }
-        }
-    assert_redirected_to holland.reload.iri.path
+        },
+        headers: argu_headers
+    assert_response :success
     updated_holland = Forum.find_by(uuid: holland.uuid)
     assert_equal 'new_url', updated_holland.url
     assert(
@@ -174,7 +160,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
             forum: {
               locale: 'nl-NL'
             }
-          }
+          },
+          headers: argu_headers
     end
     assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
     assert_equal holland.reload.locale, 'nl-NL'
@@ -184,7 +171,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'administrator should show statistics' do
     sign_in holland_administrator
 
-    get statistics_iri(holland)
+    get statistics_iri(holland), headers: argu_headers
     assert_response 200
   end
 
@@ -211,19 +198,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     inhabitants # Trigger
-    get statistics_iri(inhabited)
-    assert_response 200
-
-    counts = [['Den Haag', '2'], %w[Utrecht 1], %w[Unknown 1]]
-    assert_select '.additional-stats' do |element|
-      assert_select element, 'tr' do |rows|
-        assert_equal 3, rows.count
-        element.each_with_index do |row, i|
-          assert_select row, 'td:first', text: counts[i][0]
-          assert_select row, 'td:last', text: counts[i][1]
-        end
-      end
-    end
+    get statistics_iri(inhabited), headers: argu_headers
+    assert_response :success
   end
 
   test 'staff should transfer' do
@@ -233,7 +209,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
            edge: holland,
            grant_set: GrantSet.participator)
     assert_difference('transfer_to.forums.reload.count' => 1, 'holland.reload.grants.size' => -1) do
-      post resource_iri(Move.new(edge: holland)), params: {move: {new_parent_id: transfer_to.uuid}}
+      post resource_iri(Move.new(edge: holland)),
+           params: {move: {new_parent_id: transfer_to.uuid}},
+           headers: argu_headers
     end
     assert_equal holland.parent, transfer_to
     holland.instance_variable_set('@root', nil)
@@ -248,7 +226,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
            edge: holland,
            grant_set: GrantSet.participator)
     assert_difference('transfer_to.forums.reload.count' => 1, 'holland.reload.grants.size' => -1) do
-      post resource_iri(Move.new(edge: holland)), params: {move: {new_parent_id: transfer_to.iri}}
+      post resource_iri(Move.new(edge: holland)),
+           params: {move: {new_parent_id: transfer_to.iri}},
+           headers: argu_headers
     end
     assert_equal holland.parent, transfer_to
     holland.instance_variable_set('@root', nil)
@@ -260,18 +240,20 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Forum.count' => 1, 'Placement.count' => 2, 'Place.count' => 1, 'CustomAction.count' => 3) do
-      post collection_iri(argu, :forums), params: {
-        forum: {
-          name: 'New forum',
-          locale: 'en-GB',
-          url: 'new_forum',
-          custom_placement_attributes: {
-            lat: 1.0,
-            lon: 1.0,
-            placement_type: 'custom'
-          }
-        }
-      }
+      post collection_iri(argu, :forums),
+           params: {
+             forum: {
+               name: 'New forum',
+               locale: 'en-GB',
+               url: 'new_forum',
+               custom_placement_attributes: {
+                 lat: 1.0,
+                 lon: 1.0,
+                 placement_type: 'custom'
+               }
+             }
+           },
+           headers: argu_headers
     end
 
     assert_equal 1, Forum.last.placements.first.lat
@@ -308,7 +290,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
                 lon: 2.0
               }
             }
-          }
+          },
+          headers: argu_headers
     end
 
     forum_with_placement.reload
@@ -329,7 +312,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
                 _destroy: 'true'
               }
             }
-          }
+          },
+          headers: argu_headers
     end
   end
 
@@ -338,7 +322,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
     assert_difference('Forum.count', -1) do
       delete freetown.iri.path,
-             params: {forum: {confirmation_string: 'remove'}}
+             params: {forum: {confirmation_string: 'remove'}},
+             headers: argu_headers
     end
   end
 
@@ -349,7 +334,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
       delete freetown.iri.path,
              params: {
                forum: {}
-             }
+             },
+             headers: argu_headers
     end
   end
 
@@ -392,25 +378,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assigns(:children).map(&:identifier).include?(item.identifier)
   end
 
-  def assert_forum_shown(forum)
-    assert_response 200
-    assert_have_tag response.body,
-                    '.cover-switcher .dropdown-trigger span:first-child',
-                    forum.display_name
-  end
-
-  # @param [Symbol] response The expected visibility in `%w(show list)`
-  def general_show(record = freetown)
-    get record
-    assert_forum_shown(record)
-    assert_not_nil assigns(:children)
-
-    assert_not assigns(:children).any?(&:is_trashed?), 'Trashed items are visible'
-
-    assert_content_visible
-    assert_unpublished_content_invisible
-  end
-
   def assert_content_visible
     assert included_in_items?(motion),
            'Motions are not visible'
@@ -433,7 +400,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   def secondary_forums
     holland
-    cologne
     helsinki
   end
 end

@@ -33,7 +33,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      results: {should: true, response: 201},
+      results: {should: true, response: :created},
       parent: :argu,
       attributes: intervention_attributes(argu_publication_attributes: {draft: true}),
       differences: [['Intervention', 1], ['Intervention.published', 0], ['Activity', 1]]
@@ -50,7 +50,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      results: {should: true, response: 201},
+      results: {should: true, response: :created},
       parent: :argu,
       attributes: intervention_attributes,
       differences: [['Intervention', 1], ['Intervention.published', 0], ['Activity', 1], ['GrantReset', 0]]
@@ -67,7 +67,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      results: {should: true, response: 201},
+      results: {should: true, response: :created},
       parent: :argu,
       attributes: intervention_attributes(comments_allowed: :comments_not_allowed),
       differences: [['Intervention', 1], ['Intervention.published', 0], ['Activity', 1], ['GrantReset', 1]]
@@ -78,7 +78,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      results: {should: true, response: 201},
+      results: {should: true, response: :created},
       parent: :argu,
       attributes: intervention_attributes(employment_id: validated_employment.fragment),
       differences: [['Intervention', 1], ['Intervention.published', 1], ['Activity', 2]]

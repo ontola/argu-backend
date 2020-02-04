@@ -46,12 +46,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   ####################################
   # As Guest
   ####################################
-  test 'should get new' do
-    get new_user_registration_path
-    assert_response 200
-  end
-
-  test 'should not post create existing' do
+  test 'should not post create existing json' do
+    sign_in guest_user
     user
     assert_difference('User.count' => 0,
                       'Favorite.count' => 0,
@@ -66,13 +62,13 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_response 422
   end
 
-  test 'should not post create existing new fe' do
+  test 'should not post create existing nq' do
     sign_in :service
     user
     assert_difference('User.count' => 0,
                       'Favorite.count' => 0,
                       'Notification.confirmation_reminder.count' => 0) do
-      post "/#{argu.url}#{user_registration_path}",
+      post user_registration_path,
            params: {
              user: {
                email: user.email
@@ -83,6 +79,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should block spammer' do
+    sign_in guest_user
     r = '/freetown/con/846/c/new?comment%5Bbody%5D=online+casino&confirm=true'
     attrs = attributes_for(:user)
     attrs[:r] = r
@@ -102,6 +99,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not block valid content' do
+    sign_in guest_user
     r = '/freetown/con/846/c/new?comment%5Bbody%5D=valid+comment&confirm=true'
     attrs = attributes_for(:user)
     attrs[:r] = r
@@ -112,14 +110,15 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                       worker_count_string('SendEmailWorker') => 1) do
       post user_registration_path,
            params: {user: attrs, accept_terms: true, r: r}
-      assert_response 302
+      assert_response :created
     end
   end
 
   test 'should post create en' do
     sign_in guest_user
     locale = :en
-    put language_users_path(locale: locale)
+    put iri_from_template(:languages_iri, language: locale, root: argu)
+
     create_email_mock('confirmation', 'test@example.com', token_url: /.+/)
 
     Sidekiq::Testing.inline! do
@@ -135,7 +134,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                },
                accept_terms: true
              }
-        assert_redirected_to setup_users_path
+        assert_response :success
+        assert_equal response.header['Location'], setup_users_path
       end
     end
     assert_equal locale, User.last.language.to_sym
@@ -150,13 +150,15 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_difference('EmailAddress.where(confirmed_at: nil).count' => -1) do
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
-    assert_redirected_to new_user_session_path
+    assert_response :success
     assert_email_sent(skip_sidekiq: true)
   end
 
   test 'should post create nl' do
+    sign_in guest_user
     locale = :nl
-    put language_users_path(locale: locale)
+    put iri_from_template(:languages_iri, language: locale, root: argu)
+
     attrs = attributes_for(:user)
     create_email_mock('confirmation', attrs[:email], token_url: /.+/)
 
@@ -166,15 +168,19 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                       worker_count_string('SendEmailWorker') => 1) do
       post user_registration_path,
            params: {user: attrs}
-      assert_redirected_to setup_users_path
+      assert_response :success
+      assert_equal response.header['Location'], setup_users_path
     end
     assert_equal locale, User.last.language.to_sym
   end
 
   test 'should post create after visiting freetown' do
+    sign_in guest_user
     locale = :nl
-    put language_users_path(locale: locale)
+    put iri_from_template(:languages_iri, language: locale, root: argu)
+
     attrs = attributes_for(:user)
+    attrs[:r] = freetown.iri
     create_email_mock('confirmation', attrs[:email], token_url: /.+/)
     get freetown.iri.path
 
@@ -184,13 +190,15 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                       worker_count_string('SendEmailWorker') => 1) do
       post user_registration_path,
            params: {user: attrs}
-      assert_redirected_to setup_users_path
+      assert_response :success
+      assert_equal response.header['Location'], setup_users_path
     end
     assert_equal locale, User.last.language.to_sym
     assert_email_sent
   end
 
   test 'should post create without password' do
+    sign_in guest_user
     assert_difference('User.count' => 1,
                       'EmailAddress.where(confirmed_at: nil).count' => 1) do
       post user_registration_path,
@@ -208,8 +216,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should post create without password and transfer and persist guest votes' do
+    sign_in guest_user
     other_guest_vote
-    get root_path
     guest_vote
     guest_vote2
     other_guest_vote3
@@ -219,8 +227,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       'test@example.com',
       token_url: /.+/,
       motions: [
-        {display_name: motion.display_name, option: 'pro', url: argu_url(motion.iri.path)},
-        {display_name: motion2.display_name, option: 'pro', url: argu_url(motion2.iri.path)}
+        {display_name: motion.display_name, option: 'pro', url: motion.iri},
+        {display_name: motion2.display_name, option: 'pro', url: motion2.iri}
       ]
     )
 
@@ -245,26 +253,23 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_difference('EmailAddress.where(confirmed_at: nil).count' => -1,
                       'Edge.where(confirmed: true).count' => 3) do
-      get user_confirmation_path(confirmation_token: User.last.confirmation_token)
-    end
-    assert_response 200
-    assert User.last.encrypted_password == ''
-
-    put users_confirm_path,
-        params: {
-          user: {
-            confirmation_token: User.last.confirmation_token,
-            password: 'password',
-            password_confirmation: 'password'
+      put user_password_path,
+          params: {
+            user: {
+              reset_password_token: User.last.send(:set_reset_password_token),
+              password: 'password',
+              password_confirmation: 'password'
+            }
           }
-        }
-    assert_redirected_to "/#{argu.url}#{setup_users_path}"
+    end
+    assert_response :success
+    assert_equal response.header['Location'], iri_from_template(:setup_iri, root: argu)
     assert_not User.last.encrypted_password == ''
     assert_email_sent(skip_sidekiq: true)
   end
 
   test 'should post create transfer guest votes' do
-    get root_path
+    sign_in guest_user
     guest_vote
     guest_vote2
     other_guest_vote
@@ -276,8 +281,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       attrs[:email],
       token_url: /.+/,
       motions: [
-        {display_name: motion.display_name, option: 'pro', url: argu_url(motion.iri.path)},
-        {display_name: motion2.display_name, option: 'pro', url: argu_url(motion2.iri.path)}
+        {display_name: motion.display_name, option: 'pro', url: motion.iri},
+        {display_name: motion2.display_name, option: 'pro', url: motion2.iri}
       ]
     )
 
@@ -287,11 +292,12 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                         'Argu::Redis.keys("temporary*").count' => -3,
                         'Favorite.count' => 1,
                         'Notification.confirmation_reminder.count' => 1) do
-        post "/#{argu.url}#{user_registration_path}",
+        post user_registration_path,
              params: {user: attrs}
       end
     end
-    assert_redirected_to setup_users_path
+    assert_response :success
+    assert_equal response.header['Location'], setup_users_path
     assert_email_sent(skip_sidekiq: true)
 
     create_email_mock('confirmation_reminder', attrs[:email], token_url: /.+/)
@@ -311,6 +317,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test "guest should not post create when passwords don't match" do
+    sign_in guest_user
     user_params = attributes_for(:user)
 
     assert_difference('User.count' => 0,
@@ -326,7 +333,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response :unprocessable_entity
   end
 
   ####################################
@@ -344,7 +351,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
     end
 
-    assert_redirected_to root_path
+    assert_response :success
   end
 
   test 'user should not delete destroy without confirmation' do
@@ -374,7 +381,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_not Profile.community.is_group_member?(group.id)
 
-    assert_redirected_to root_path
+    assert_response :success
   end
 
   test 'user without name and shortname should delete destroy' do
@@ -389,7 +396,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
     end
 
-    assert_redirected_to root_path
+    assert_response :success
   end
 
   test 'user should delete destroy with placement, uploaded_photo and expired group_membership' do
@@ -421,7 +428,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
     end
 
-    assert_redirected_to root_path
+    assert_response :success
   end
 
   test 'user should delete destroy with content' do
@@ -441,7 +448,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
     end
 
-    assert_redirected_to root_path
+    assert_response :success
   end
 
   test 'user should delete destroy with content published by page' do
@@ -460,7 +467,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
     end
 
-    assert_redirected_to root_path
+    assert_response :success
   end
 
   ####################################
@@ -480,5 +487,27 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
     end
     assert_not_authorized
+  end
+
+  private
+
+  def destroy_user_session_path
+    "#{argu.iri}#{super}"
+  end
+
+  def users_confirm_path(*args)
+    "#{argu.iri}#{super}"
+  end
+
+  def user_confirmation_path(*args)
+    "#{argu.iri}#{super}"
+  end
+
+  def user_password_path
+    "#{argu.iri}#{super}"
+  end
+
+  def user_registration_path
+    "#{argu.iri}#{super}"
   end
 end

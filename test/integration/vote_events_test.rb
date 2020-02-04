@@ -10,6 +10,8 @@ class VoteEventsTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'guest should get show' do
+    sign_in :guest_user
+
     get motion.default_vote_event, headers: argu_headers(accept: :json_api)
     assert_response 200
   end

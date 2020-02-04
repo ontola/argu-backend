@@ -24,15 +24,17 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   ####################################
   test 'guest should get index' do
     argument
+    sign_in :guest_user
     get collection_iri(argu, :notifications), headers: argu_headers(accept: :json)
     assert_response 401
   end
 
   test 'guest should not mark as read' do
     argument
+    sign_in :guest_user
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => 0) do
       patch "#{collection_iri(argu, :notifications)}/read"
-      assert_response 302
+      assert_response 401
     end
   end
 
@@ -41,7 +43,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   ####################################
   let(:follower) { motion.publisher }
 
-  test 'follower should get index' do
+  test 'follower should get index json' do
     argument
     sign_in follower
     get collection_iri(argu, :notifications), headers: argu_headers(accept: :json)
@@ -49,7 +51,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body['notifications']['unread'], 1
   end
 
-  test 'follower should get index as nt' do
+  test 'follower should get index as nq' do
     argument
     sign_in follower, Doorkeeper::Application.argu_front_end
     get collection_iri(argu, :notifications), headers: argu_headers(accept: :nq)
@@ -57,7 +59,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     expect_triple(RDF::URI("#{argu.iri}/n"), NS::ARGU[:unreadCount], 1)
   end
 
-  test 'follower should put update as nt' do
+  test 'follower should put update as nq' do
     argument
     sign_in follower, Doorkeeper::Application.argu_front_end
     notification = follower.notifications.where(read_at: nil).first

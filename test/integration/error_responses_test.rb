@@ -9,7 +9,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
 
   test 'guest should get 401' do
-    sign_in create_guest_user, Doorkeeper::Application.argu_front_end
+    sign_in create_guest_user
     post collection_iri(motion, :pro_arguments),
          params: {
            data: {
@@ -32,7 +32,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get 404 when not allowed' do
-    sign_in user, Doorkeeper::Application.argu_front_end
+    sign_in user
     tenant_from(cairo)
     post collection_iri(cairo, :motions),
          params: {
@@ -56,7 +56,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get 422 with empty body' do
-    sign_in user, Doorkeeper::Application.argu_front_end
+    sign_in user
     post collection_iri(motion, :pro_arguments),
          headers: argu_headers(accept: :json_api)
 
@@ -70,7 +70,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get 422 with empty data' do
-    sign_in user, Doorkeeper::Application.argu_front_end
+    sign_in user
     post collection_iri(motion, :pro_arguments),
          params: {
            data: {}
@@ -87,7 +87,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get 400 with missing type' do
-    sign_in user, Doorkeeper::Application.argu_front_end
+    sign_in user
     post collection_iri(motion, :pro_arguments),
          params: {
            data: {
@@ -109,7 +109,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get 400 with wrong type' do
-    sign_in user, Doorkeeper::Application.argu_front_end
+    sign_in user
     post collection_iri(motion, :pro_arguments),
          params: {
            data: {
@@ -132,7 +132,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get 400 with missing attributes' do
-    sign_in user, Doorkeeper::Application.argu_front_end
+    sign_in user
     post collection_iri(motion, :pro_arguments),
          params: {
            data: {
@@ -151,7 +151,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get 422 with multiple wrong fields' do
-    sign_in user, Doorkeeper::Application.argu_front_end
+    sign_in user
     post collection_iri(freetown, :questions),
          params: {
            data: {
@@ -194,7 +194,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get 404' do
-    sign_in user, Doorkeeper::Application.argu_front_end
+    sign_in user
     test_error(
       :get,
       '/argu/non_existing',
@@ -231,7 +231,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     ActsAsTenant.current_tenant = argu
     subject = RDF::DynamicURI("#{Rails.application.config.origin}#{path}")
 
-    expect_triple(subject, RDF[:type], NS::ONTOLA["errors/#{opts[:error]}Error"])
+    expect_resource_type(NS::ONTOLA["errors/#{opts[:error]}Error"], iri: subject)
     expect_triple(subject, NS::SCHEMA[:name], I18n.t('status')[status])
     expect_triple(subject, NS::SCHEMA[:text], opts[:message])
   end

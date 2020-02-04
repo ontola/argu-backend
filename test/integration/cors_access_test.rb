@@ -22,6 +22,8 @@ class CorsAccessTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'Guest should OPTIONS assets cross-origin' do
+    sign_in :guest_user
+
     options ActionController::Base.helpers.asset_path('application.css'),
             headers: {
               Host: 'https://argu.co',
@@ -37,6 +39,8 @@ class CorsAccessTest < ActionDispatch::IntegrationTest
   end
 
   test 'Guest should GET assets cross-origin' do
+    sign_in :guest_user
+
     get ActionController::Base.helpers.asset_path('application.css'),
         headers: {
           Host: 'https://argu.co',
@@ -50,6 +54,8 @@ class CorsAccessTest < ActionDispatch::IntegrationTest
   end
 
   test 'Guest should not OPTIONS non-assets cross-origin' do
+    sign_in :guest_user
+
     options expand_uri_template(:motions_iri, id: 5),
             headers: {
               Host: 'https://argu.co',

@@ -15,7 +15,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      results: {should: true, response: 302},
+      results: {should: true, response: :created},
       parent: :freetown,
       attributes: {
         custom_placement_attributes: {
@@ -33,7 +33,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       parent: freetown,
-      results: {should: true, response: 302},
+      results: {should: true, response: :created},
       attributes: {
         reset_create_motion: true,
         create_motion_group_ids: ['']
@@ -47,7 +47,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       parent: freetown,
-      results: {should: true, response: 302},
+      results: {should: true, response: :created},
       attributes: {
         reset_create_motion: true,
         create_motion_group_ids: [group.id]
@@ -60,7 +60,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     general_update(
-      results: {should: true, response: 302},
+      results: {should: true, response: :success},
       attributes: {
         reset_create_motion: true
       },
@@ -71,7 +71,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
   test 'administrator should set grant reset with group_ids' do
     sign_in administrator
     general_update(
-      results: {should: true, response: 302},
+      results: {should: true, response: :success},
       attributes: {
         reset_create_motion: true,
         create_motion_group_ids: [group.id]
@@ -85,7 +85,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     reset_motion_grants
     create_motion_grant
     general_update(
-      results: {should: true, response: 302},
+      results: {should: true, response: :success},
       attributes: {
         reset_create_motion: true,
         create_motion_group_ids: [group.id]
@@ -100,7 +100,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     create_motion_grant
     assert_equal 1, subject.grants.count
     general_update(
-      results: {should: true, response: 302},
+      results: {should: true, response: :success},
       attributes: {
         reset_create_motion: true,
         create_motion_group_ids: ['']
@@ -114,7 +114,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     reset_motion_grants
     create_motion_grant
     general_update(
-      results: {should: true, response: 302},
+      results: {should: true, response: :success},
       attributes: {},
       differences: [['GrantReset', 0], ['Grant', 0]]
     )
@@ -126,7 +126,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     create_motion_grant
 
     general_update(
-      results: {should: true, response: 302},
+      results: {should: true, response: :success},
       attributes: {
         reset_create_motion: false
       },

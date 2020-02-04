@@ -32,6 +32,10 @@ module Users
 
     private
 
+    def assert_reset_token_passed
+      raise Argu::Errors::Unauthorized.new if params[:reset_password_token].blank?
+    end
+
     def ld_action(opts = {})
       opts[:resource].action(ACTION_MAP[action_name.to_sym] || action_name, user_context)
     end

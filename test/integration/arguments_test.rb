@@ -102,7 +102,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_response 302
+    assert_response :success
   end
 
   test 'creator should put update pro to con' do
@@ -117,7 +117,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_response 302
+    assert_response :success
   end
 
   private

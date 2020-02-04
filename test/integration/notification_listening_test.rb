@@ -89,10 +89,12 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Motion
     assert_difference('Argument.count' => 1, 'Notification.count' => 2) do
-      post collection_iri(motion, :pro_arguments),
-           params: {
-             pro_argument: attributes_for(:argument)
-           }
+      Sidekiq::Testing.inline! do
+        post collection_iri(motion, :pro_arguments),
+             params: {
+               pro_argument: attributes_for(:argument)
+             }
+      end
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
@@ -117,8 +119,10 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Argument
     assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
-      post collection_iri(argument, :comments),
-           params: {comment: attributes_for(:comment)}
+      Sidekiq::Testing.inline! do
+        post collection_iri(argument, :comments),
+             params: {comment: attributes_for(:comment)}
+      end
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
@@ -133,8 +137,10 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of BlogPost
     assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
-      post collection_iri(blog_post, :comments),
-           params: {comment: attributes_for(:comment)}
+      Sidekiq::Testing.inline! do
+        post collection_iri(blog_post, :comments),
+             params: {comment: attributes_for(:comment)}
+      end
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
@@ -149,8 +155,10 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Motion
     assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
-      post collection_iri(motion, :comments),
-           params: {comment: attributes_for(:comment)}
+      Sidekiq::Testing.inline! do
+        post collection_iri(motion, :comments),
+             params: {comment: attributes_for(:comment)}
+      end
     end
     assert_equal Notification.last.notification_type, 'reaction'
     assert_equal(
@@ -169,8 +177,10 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Argument and of parent comment
     assert_difference('Comment.count' => 1, 'Notification.count' => 3) do
-      post collection_iri(argument, :comments),
-           params: {comment: attributes_for(:comment).merge(in_reply_to_id: comment.uuid)}
+      Sidekiq::Testing.inline! do
+        post collection_iri(argument, :comments),
+             params: {comment: attributes_for(:comment).merge(in_reply_to_id: comment.uuid)}
+      end
     end
     assert_equal Notification.last.notification_type, 'reaction'
     assert_equal(

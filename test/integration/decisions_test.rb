@@ -40,12 +40,12 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   let(:actor) { create_initiator(freetown) }
   test 'actor should post approve' do
     sign_in actor
-    general_decide 302, true
+    general_decide 201, true
   end
 
   test 'actor should post reject' do
     sign_in actor
-    general_decide 302, true, 'rejected'
+    general_decide 201, true, 'rejected'
   end
 
   test 'actor should not post approve when draft is present' do
@@ -65,17 +65,17 @@ class DecisionsTest < ActionDispatch::IntegrationTest
 
   test 'actor should not post forward to nil' do
     sign_in actor
-    general_forward 200, false
+    general_forward 422, false
   end
 
   test 'actor should not post forward to user/group without membership' do
     sign_in actor
-    general_forward 200, false, create(:group, parent: argu).id, create(:user).id
+    general_forward 422, false, create(:group, parent: argu).id, create(:user).id
   end
 
   test 'actor should post forward' do
     sign_in actor
-    general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
+    general_forward 201, true, group_membership.group.id, group_membership.member.profileable_id
   end
 
   test 'actor should not patch update approved' do
@@ -98,7 +98,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
            forwarded_user: nil,
            forwarded_group: Group.last,
            state: Decision.states[:forwarded])
-    general_decide 302, true
+    general_decide 201, true
   end
 
   ####################################
@@ -123,12 +123,12 @@ class DecisionsTest < ActionDispatch::IntegrationTest
 
   test 'moderator should post forward' do
     sign_in moderator
-    general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
+    general_forward 201, true, group_membership.group.id, group_membership.member.profileable_id
   end
 
   test 'moderator should patch update approved' do
     sign_in moderator
-    general_update_approved 302, true
+    general_update_approved 200, true
   end
 
   ####################################
@@ -153,12 +153,12 @@ class DecisionsTest < ActionDispatch::IntegrationTest
 
   test 'staff should post forward' do
     sign_in staff
-    general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
+    general_forward 201, true, group_membership.group.id, group_membership.member.profileable_id
   end
 
   test 'staff should patch update approved' do
     sign_in staff
-    general_update_approved 302, true
+    general_update_approved 200, true
   end
 
   private
@@ -174,7 +174,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     assert_response response
   end
 
-  def general_decide(response = 302, changed = false, state = 'approved') # rubocop:disable Metrics/AbcSize
+  def general_decide(response = 201, changed = false, state = 'approved') # rubocop:disable Metrics/AbcSize
     assert_difference('Activity.count' => changed ? 1 : 0) do
       post  collection_iri(motion, :decisions),
             params: {
@@ -196,7 +196,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     assert_response response
   end
 
-  def general_forward(response = 302, changed = false, group_id = nil, user_id = nil) # rubocop:disable Metrics/AbcSize
+  def general_forward(response = 201, changed = false, group_id = nil, user_id = nil) # rubocop:disable Metrics/AbcSize
     assert_difference('Activity.count' => changed ? 1 : 0,
                       'Decision.count' => changed ? 1 : 0) do
       post collection_iri(motion, :decisions),

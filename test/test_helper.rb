@@ -105,55 +105,74 @@ module ActionDispatch
     def follow_redirect!
       raise "not a redirect! #{status} #{status_message}" unless redirect?
       get(response.location)
+      process_new_authorization
       status
     end
 
     def head(path, *args, **opts)
-      super(
-        path.try(:iri)&.path || path,
-        *args,
-        merge_req_opts(opts)
-        )
+      process_new_authorization(
+        super(
+          path.try(:iri)&.path || path,
+          *args,
+          merge_req_opts(opts)
+          )
+      )
     end
 
     def get(path, *args, **opts)
-      super(
-        path.try(:iri)&.path || path,
-        *args,
-        merge_req_opts(opts)
-        )
+      process_new_authorization(
+        super(
+          path.try(:iri)&.path || path,
+          *args,
+          merge_req_opts(opts)
+          )
+      )
     end
 
     def post(path, *args, **opts)
-      super(
-        path.try(:iri)&.path || path,
-        *args,
-        merge_req_opts(opts)
-        )
+      process_new_authorization(
+        super(
+          path.try(:iri)&.path || path,
+          *args,
+          merge_req_opts(opts)
+          )
+      )
     end
 
     def delete(path, *args, **opts)
-      super(
-        path.try(:iri)&.path || path,
-        *args,
-        merge_req_opts(opts)
-        )
+      process_new_authorization(
+        super(
+          path.try(:iri)&.path || path,
+          *args,
+          merge_req_opts(opts)
+          )
+      )
+    end
+
+    def process_new_authorization(result = nil)
+      new_token = client_token_from_response
+      @_argu_headers = (@_argu_headers || {}).merge(argu_headers(bearer: new_token)) if new_token
+      result
     end
 
     def patch(path, *args, **opts)
-      super(
-        path.try(:iri)&.path || path,
-        *args,
-        merge_req_opts(opts)
-        )
+      process_new_authorization(
+        super(
+          path.try(:iri)&.path || path,
+          *args,
+          merge_req_opts(opts)
+          )
+      )
     end
 
     def put(path, *args, **opts)
-      super(
-        path.try(:iri)&.path || path,
-        *args,
-        merge_req_opts(opts)
-        )
+      process_new_authorization(
+        super(
+          path.try(:iri)&.path || path,
+          *args,
+          merge_req_opts(opts)
+          )
+      )
     end
 
     def sign_in(resource = create(:user))

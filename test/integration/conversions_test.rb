@@ -83,7 +83,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     argument_comment.reload
     argument_nested_comment.reload
 
-    assert_redirected_to argu_url(record.iri.path)
+    assert_response :created
+    assert_equal response.headers['Location'], record.iri
 
     assert Motion.where(id: record.id).empty?
     assert_equal Question, record.class
@@ -119,7 +120,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     end
 
     record = Edge.find_by!(uuid: record.uuid)
-    assert_redirected_to argu_url(record.iri.path)
+    assert_response :created
+    assert_equal response.headers['Location'], record.iri
 
     assert Motion.where(id: question_motion.id).empty?
     assert_equal Question, record.class
@@ -144,7 +146,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     record = Edge.find_by!(uuid: record.uuid)
 
-    assert_redirected_to argu_url(record.iri.path)
+    assert_response :created
+    assert_equal response.headers['Location'], record.iri
 
     assert Question.where(id: record.id).empty?
     assert_equal Motion, record.class

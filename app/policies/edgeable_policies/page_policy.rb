@@ -74,7 +74,11 @@ class PagePolicy < EdgePolicy
 
   def pages_left?
     return if user.guest?
-    user.page_count < UserPolicy.new(context, user).max_allowed_pages
+
+    max = UserPolicy.new(context, user).max_allowed_pages
+    return true if user.page_count < max
+
+    forbid_with_message(I18n.t('pages.limit_reached_amount', amount: max))
   end
 
   def valid_child?(klass)

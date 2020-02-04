@@ -4,12 +4,15 @@ require 'test_helper'
 
 class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create_page }
+  let!(:other_page) { create_page }
   let(:hidden_page) { create_page(visibility: Page.visibilities[:hidden]) }
   let(:freetown) { create_forum(name: 'freetown', parent: page) }
   let(:second_freetown) { create_forum(name: 'second_freetown', parent: page) }
   let(:helsinki) { create_forum(name: 'second_freetown', parent: page, discoverable: false) }
   let(:cairo) { create_forum(name: 'cairo', parent: hidden_page) }
   let(:second_cairo) { create_forum(name: 'second_cairo', parent: hidden_page) }
+  define_freetown('amsterdam')
+  define_freetown('utrecht')
 
   let(:motion) do
     create(:motion,
@@ -38,15 +41,27 @@ class PagesTest < ActionDispatch::IntegrationTest
   ####################################
   # As Guest
   ####################################
-  test 'guest should not get new' do
-    get new_page_path
+  test 'guest should get index' do
+    sign_in :guest_user
 
-    assert_not_a_user
+    get collection_iri(nil, :pages, root: other_page)
+    assert_response :success
+    expect_triple(requested_iri, NS::AS[:totalItems], 1)
+  end
+
+  test 'guest should not get new' do
+    sign_in :guest_user
+
+    get new_iri(nil, :pages, root: argu)
+
+    assert_disabled_form
   end
 
   test 'guest should not post create' do
+    sign_in :guest_user
+
     assert_no_difference('Page.count') do
-      post pages_path,
+      post collection_iri(argu, :pages),
            params: {
              page: {
                profile_attributes: {
@@ -61,29 +76,20 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_not_a_user
   end
 
-  test 'guest should get show when publi with multiple visible forums' do
-    helsinki
-    freetown
-    second_freetown
+  test 'guest should get show public' do
+    sign_in :guest_user
 
     get page
 
-    assert_response 200
-  end
-
-  test 'guest should redirect when only one visible forum' do
-    helsinki
-    freetown
-
-    get page
-
-    assert_redirected_to freetown.iri.path
+    assert_response :success
   end
 
   test 'guest should not get show when not public' do
+    sign_in :guest_user
+
     get hidden_page
 
-    assert_response 404
+    assert_response :not_found
   end
 
   ####################################
@@ -91,14 +97,20 @@ class PagesTest < ActionDispatch::IntegrationTest
   ####################################
   let(:user) { create(:user) }
 
+  test 'user should get index' do
+    sign_in user
+
+    get collection_iri(nil, :pages, root: other_page)
+    assert_response :success
+    expect_triple(requested_iri, NS::AS[:totalItems], 1)
+  end
+
   test 'user should get new' do
     sign_in user
 
-    get new_page_path
+    get new_iri(nil, :pages, root: argu)
 
-    assert_response 200
-
-    refute_have_tag response.body, 'section.page-limit-reached'
+    assert_enabled_form
   end
 
   test 'user should post create' do
@@ -109,7 +121,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       'Page.count' => 1,
       "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
     ) do
-      post pages_path,
+      post collection_iri(argu, :pages),
            params: {
              page: {
                profile_attributes: {
@@ -121,7 +133,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_iri(Page.last, tab: :profile).to_s
+    assert_response :success
   end
 
   test 'user should post create with unnested params' do
@@ -132,7 +144,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       'Page.count' => 1,
       "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
     ) do
-      post pages_path,
+      post collection_iri(argu, :pages),
            params: {
              page: {
                name: 'Utrecht Two',
@@ -142,7 +154,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_iri(Page.last, tab: :profile).to_s
+    assert_response :success
     assert_equal Page.last.profile.name, 'Utrecht Two'
     assert_equal Page.last.profile.about, 'Utrecht Two bio'
   end
@@ -151,7 +163,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_difference('Page.count', 0) do
-      post pages_path,
+      post collection_iri(argu, :pages),
            params: {
              page: {
                profile_attributes: {
@@ -163,7 +175,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_response 200
+    assert_response :unprocessable_entity
   end
 
   test 'user should get show when public' do
@@ -171,8 +183,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     get page
 
-    assert_response 200
-    assert_not_nil assigns(:profile)
+    assert_response :success
   end
 
   test 'user should not get show when not public' do
@@ -180,19 +191,15 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     get hidden_page
 
-    assert_response 404
+    assert_response :not_found
   end
 
-  define_freetown('amsterdam')
-  define_freetown('utrecht')
-  let(:user2) { create_initiator(amsterdam, create_initiator(utrecht)) }
-
-  test 'user should not get settings when not page owner' do
+  test 'user should get settings' do
     sign_in user
 
     get settings_iri(page)
 
-    assert_response 403
+    assert_response :success
   end
 
   test 'user should not update settings when not page owner' do
@@ -215,77 +222,35 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Forum initiator
-  ####################################
-  let(:forum_initiator) { create_initiator(freetown) }
-  let(:non_public_forum_initiator) { create_initiator(cairo) }
-
-  test 'forum_initiator should get show when public when one forum' do
-    sign_in forum_initiator
-
-    get page
-
-    assert_redirected_to freetown.iri.path
-    assert_not_nil assigns(:profile)
-  end
-
-  test 'forum_initiator should get show when not public when one forum' do
-    sign_in non_public_forum_initiator
-
-    get hidden_page
-
-    assert_redirected_to cairo.iri.path
-    assert_not_nil assigns(:profile)
-  end
-
-  test 'forum_initiator should get show when public when multiple forums' do
-    second_freetown
-
-    sign_in forum_initiator
-
-    get page
-
-    assert_response 200
-    assert_not_nil assigns(:profile)
-  end
-
-  test 'forum_initiator should get show when not public when multiple forums' do
-    second_cairo
-
-    sign_in non_public_forum_initiator
-
-    get hidden_page
-
-    assert_response 200
-    assert_not_nil assigns(:profile)
-  end
-
-  ####################################
   # As Administrator
   ####################################
-  test 'administrator should get index' do
-    sign_in page.publisher
+  let(:administrator) { page.publisher }
+  let(:argu_administrator) { argu.publisher }
+  let(:hidden_page_administrator) { hidden_page.publisher }
 
-    get pages_user_path(page.publisher)
-    assert_response 200
-    assert_select '.profile-box', 1
+  test 'administrator should get index' do
+    sign_in hidden_page_administrator
+
+    get collection_iri(nil, :pages, root: other_page)
+    assert_response :success
+    expect_triple(requested_iri, NS::AS[:totalItems], 1)
   end
 
   test 'administrator should get settings and all tabs' do
     create(:place, address: {country_code: 'nl'})
-    sign_in page.publisher
+    sign_in administrator
 
     get settings_iri(page)
-    assert_response 200
+    assert_response :success
 
     %i[profile groups forums general shortnames].each do |tab|
       get settings_iri(page, tab: tab)
-      assert_response 200
+      assert_response :success
     end
   end
 
   test 'administrator should update settings' do
-    sign_in page.publisher
+    sign_in administrator
 
     put page,
         params: {
@@ -303,7 +268,7 @@ class PagesTest < ActionDispatch::IntegrationTest
           }
         }
 
-    assert_redirected_to settings_iri(page, tab: :profile)
+    assert_response :success
     page.reload
     assert_equal 1, page.profile.media_objects.count
     assert_equal 'profile_photo.png', page.profile.default_profile_photo.content_identifier
@@ -312,7 +277,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   test 'administrator should put update page add latlon' do
     create(:place, address: {country_code: 'nl'})
-    sign_in page.publisher
+    sign_in administrator
 
     assert_difference('Placement.count' => 1, 'Place.count' => 1) do
       put page,
@@ -328,14 +293,14 @@ class PagesTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_redirected_to settings_iri(page, tab: :profile)
+    assert_response :success
     page.reload
     assert_equal 2, page.custom_placement.lat
     assert_equal 2, page.custom_placement.lon
   end
 
   test 'administrator should put update page change homepage' do
-    sign_in argu.publisher
+    sign_in argu_administrator
     assert_equal CustomMenuItem.pluck(:edge_id).compact.sort, [amsterdam.uuid, utrecht.uuid].sort
     assert_nil argu.primary_container_node
 
@@ -352,7 +317,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   test 'administrator should put update iri_prefix' do
     freetown
-    sign_in argu.publisher
+    sign_in argu_administrator
 
     assert_includes CustomMenuItem.where(resource: argu).first.href, Rails.application.config.host_name
     freetown.widgets.first.resource_iri.all? { |iri| iri.first.include?(Rails.application.config.host_name) }
@@ -366,20 +331,18 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should get new' do
-    sign_in page.publisher
+    sign_in administrator
 
-    get new_page_path
+    get new_iri(nil, :pages, root: argu)
 
-    assert_response 200
-
-    assert_have_tag response.body, 'section.page-limit-reached'
+    assert_disabled_form(error: I18n.t('pages.limit_reached_amount', amount: 1))
   end
 
   test 'administrator should not post create' do
-    sign_in page.publisher
+    sign_in administrator
 
     assert_no_difference('Page.count') do
-      post pages_path,
+      post collection_iri(argu, :pages),
            params: {
              page: {
                profile_attributes: {
@@ -391,12 +354,12 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_have_tag response.body, 'section.page-limit-reached'
+    assert_response :forbidden
   end
 
   test 'administrator should delete destroy and anonimize its content' do
     init_cairo_with_content
-    sign_in page.publisher
+    sign_in administrator
 
     assert_difference('Page.count' => -1,
                       'Tenant.count' => -1,
@@ -413,7 +376,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should delete destroy when page not owns a forum' do
-    sign_in page.publisher
+    sign_in administrator
 
     assert_difference('Page.count' => -1, 'Tenant.count' => -1) do
       delete page,
@@ -426,7 +389,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should not delete destroy when page owns a forum' do
-    sign_in page.publisher
+    sign_in administrator
     freetown
 
     assert_no_difference('Page.count') do
@@ -440,7 +403,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should not delete destroy page without confirmation' do
-    sign_in page.publisher
+    sign_in administrator
     freetown
 
     assert_difference('Page.count', 0) do
@@ -459,7 +422,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'staff should be able to create a page' do
     sign_in staff
 
-    post pages_path,
+    post collection_iri(argu, :pages),
          params: {
            page: {
              profile_attributes: {
@@ -475,7 +438,7 @@ class PagesTest < ActionDispatch::IntegrationTest
          }
 
     page = Page.last
-    assert_response 302
+    assert_response :success
     assert_equal 'profile_photo.png', page.profile.default_profile_photo.content_identifier
     assert_equal 1, page.profile.media_objects.count
   end
@@ -484,7 +447,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Page.count' => 0) do
-      post pages_path,
+      post collection_iri(argu, :pages),
            params: {
              page: {
                profile_attributes: {
@@ -495,6 +458,6 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }, headers: argu_headers(accept: :n3)
     end
-    assert_response 422
+    assert_response :unprocessable_entity
   end
 end
