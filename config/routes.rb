@@ -107,7 +107,6 @@ Rails.application.routes.draw do
         concerns :nested_actionable
       end
     end
-    get :forums, to: 'users/forums#index', on: :member
     get :drafts, to: 'drafts#index', on: :member
 
     get 'language', to: 'users/languages#edit', on: :collection, as: :edit_language
@@ -151,8 +150,6 @@ Rails.application.routes.draw do
 
   get '/i/about', to: 'static_pages#about'
   resources :info, path: 'i', only: [:show]
-
-  get :discover, to: 'forums#discover', as: :discover_forums
 
   resources :notifications,
             only: %i[index show],

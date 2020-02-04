@@ -1,23 +1,10 @@
 # frozen_string_literal: true
 
-class ContainerNodesController < EdgeableController # rubocop:disable Metrics/ClassLength
+class ContainerNodesController < EdgeableController
   prepend_before_action :redirect_generic_shortnames, only: :show
-  skip_before_action :authorize_action, only: %i[discover index]
-  skip_before_action :check_if_registered, only: %i[discover index]
-  skip_after_action :verify_authorized, only: :discover
+  skip_before_action :authorize_action, only: %i[index]
+  skip_before_action :check_if_registered, only: %i[index]
   active_response :new
-
-  def discover
-    ActsAsTenant.without_tenant do
-      @forums =
-        Forum
-          .public_forums
-          .includes(:default_cover_photo, :default_profile_photo, root: :shortname, parent: :shortname)
-          .page(show_params[:page])
-      skip_verify_policy_scoped(true)
-      render
-    end
-  end
 
   def show
     return unless policy(resource_by_id).show?

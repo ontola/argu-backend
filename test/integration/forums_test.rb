@@ -42,18 +42,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
 
-  test 'guest should get discover' do
-    secondary_forums
-    get discover_forums_path
-    assert_response 200
-    assert_select '.box.box-grid', 4
-  end
-
-  test 'guest should not get index' do
-    get forums_user_path(holland_moderator)
-    assert_response 302
-  end
-
   test 'guest should get show by upcased shortname' do
     get freetown.iri_path.gsub('freetown', 'Freetown')
     assert_redirected_to freetown.iri.path
@@ -68,24 +56,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
   # As User
   ####################################
   let(:user) { create(:user) }
-
-  test 'user should get discover' do
-    secondary_forums
-    sign_in
-    get discover_forums_path
-    assert_response 200
-    assert_select '.box.box-grid', 4
-  end
-
-  test 'user should get index' do
-    sign_in user
-    get forums_user_path(user)
-    assert_response 200
-
-    refute_have_tag response.body,
-                    '.box-grid h3',
-                    holland.display_name
-  end
 
   test 'should not show statistics' do
     sign_in
@@ -119,24 +89,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
   let(:cologne_initiator) { create_initiator(cologne) }
   let(:helsinki_initiator) { create_initiator(helsinki) }
 
-  test 'initiator should get discover' do
-    secondary_forums
-    sign_in holland_initiator
-    get discover_forums_path
-    assert_response 200
-    assert_select '.box.box-grid', 4
-  end
-
-  test 'initiator should get index' do
-    sign_in holland_initiator
-    get forums_user_path(holland_initiator)
-    assert_response 200
-
-    refute_have_tag response.body,
-                    '.box-grid h3',
-                    holland.display_name
-  end
-
   test 'initiator should show closed children to members' do
     sign_in cologne_initiator
 
@@ -155,51 +107,10 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Moderator
-  ####################################
-  let(:holland_moderator) { create_moderator(holland) }
-
-  test 'moderator should get discover' do
-    secondary_forums
-    sign_in holland_moderator
-    get discover_forums_path
-    assert_response 200
-    assert_select '.box.box-grid', 4
-  end
-
-  test 'moderator should get index' do
-    sign_in holland_moderator
-    get forums_user_path(holland_moderator)
-    assert_response 200
-
-    assert_have_tag response.body,
-                    '.box-grid h3',
-                    holland.display_name
-  end
-
-  ####################################
   # As Administrator
   ####################################
   let(:forum_pair) { create_forum_administrator_pair(type: :populated_forum) }
   let(:holland_administrator) { create_administrator(holland) }
-
-  test 'administrator should get discover' do
-    secondary_forums
-    sign_in holland_administrator
-    get discover_forums_path
-    assert_response 200
-    assert_select '.box.box-grid', 4
-  end
-
-  test 'administrator should get index' do
-    sign_in holland_administrator
-    get forums_user_path(holland_administrator)
-    assert_response 200
-
-    assert_have_tag response.body,
-                    '.box-grid h3',
-                    holland.display_name
-  end
 
   test 'administrator should put update' do
     sign_in holland_administrator
@@ -220,7 +131,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
           }
         }
 
-    assert_redirected_to holland.iri.path
+    assert_response :success
     assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
     assert_equal 'new name', holland.name
     assert_equal 'new bio', holland.bio
@@ -294,14 +205,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     create(:home_placement, place: binnenhof, placeable: create_follower(inhabited, create(:user)))
     create(:home_placement, place: paleis, placeable: create_follower(inhabited, create(:user)))
     create(:home_placement, place: nederland, placeable: create_follower(inhabited, create(:user)))
-  end
-
-  test 'staff should get discover' do
-    secondary_forums
-    sign_in staff
-    get discover_forums_path
-    assert_response 200
-    assert_select '.box.box-grid', 4
   end
 
   test 'staff should show statistics' do
