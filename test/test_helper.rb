@@ -30,7 +30,7 @@ DatabaseCleaner.strategy = :transaction
 WebMock.disable_net_connect!(
   allow: [
     "https://#{Rails.application.config.rakismet[:key]}.rest.akismet.com",
-    'http://localhost:9200'
+    ENV['ELASTICSEARCH_URL']
   ]
 )
 Thread.current[:mock_searchkick] = true

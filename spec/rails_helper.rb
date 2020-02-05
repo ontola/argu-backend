@@ -26,7 +26,10 @@ Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }
 
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: "https://#{Rails.application.config.rakismet[:key]}.rest.akismet.com"
+  allow: [
+    "https://#{Rails.application.config.rakismet[:key]}.rest.akismet.com",
+    ENV['ELASTICSEARCH_URL']
+  ]
 )
 
 Thread.current[:mock_searchkick] = true
