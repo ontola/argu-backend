@@ -28,12 +28,12 @@ module UsersHelper
   #   either an 'r' action
   #   or preferred_forum
   #   if the user hasn't got any favorites yet
-  def setup_favorites(user) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def setup_favorites(user)
     # changed? so we can safely write back to the DB
     return unless user.valid? && user.persisted?
     return if user.favorites.present?
     begin
-      forum = forum_from_r_action(user) || session.present? && GuestUser.new(id: session_id).profile.last_forum
+      forum = forum_from_r_action(user)
       Favorite.create!(user: user, edge: forum) if forum.present?
     rescue ActiveRecord::RecordNotFound => e
       Bugsnag.notify(e)

@@ -100,8 +100,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   def api
     @api ||= Argu::API.new(
       service_token: ENV['SERVICE_TOKEN'],
-      user_token: request.cookie_jar.encrypted['argu_client_token'],
-      cookie_jar: request.cookie_jar
+      user_token: doorkeeper_token.token
     )
   end
 

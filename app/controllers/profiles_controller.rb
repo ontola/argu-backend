@@ -38,7 +38,6 @@ class ProfilesController < AuthorizedController
   end
 
   def redirect_url
-    return cookies.delete(:token) if cookies[:token].present?
     return if @resource.try(:r).blank?
     r = @resource.r
     @resource.update r: ''

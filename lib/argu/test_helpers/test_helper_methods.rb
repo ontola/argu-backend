@@ -31,9 +31,9 @@ module Argu
           key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
         end
 
-        def client_token_from_cookie
+        def decoded_token_from_response
           JWT.decode(
-            ActionDispatch::Cookies::CookieJar.build(request, response.cookies).encrypted[:argu_client_token],
+            client_token_from_response,
             Rails.application.secrets.jwt_encryption_token
           ).first
         end
@@ -57,6 +57,12 @@ module Argu
             t.save!
           end
           t
+        end
+
+        def client_token_from_response
+          response.headers['New-Authorization'] || assigns(:doorkeeper_token).token
+        rescue NoMethodError
+          nil
         end
 
         def create(model_type, *args)

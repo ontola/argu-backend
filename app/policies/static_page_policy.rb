@@ -42,10 +42,6 @@ class StaticPagePolicy < Struct.new(:user, :static_pages) # rubocop:disable Styl
     true
   end
 
-  def persist_cookie?
-    true
-  end
-
   def developers?
     user.is_staff?
   end

@@ -59,8 +59,6 @@ module Argu
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    config.cookie_name = '_Argu_sesion'
-
     config.generators do |g|
       g.test_framework :rspec, fixture: true, views: false
       g.integration_tool :rspec, fixture: true, views: true

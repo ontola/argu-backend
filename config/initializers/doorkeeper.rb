@@ -17,16 +17,6 @@ module Doorkeeper
       Doorkeeper::Application.find(Doorkeeper::Application::SERVICE_ID)
     end
   end
-
-  module OAuth
-    class Token
-      class << self
-        def cookie_token_extractor(req)
-          req.cookie_jar.encrypted['argu_client_token']
-        end
-      end
-    end
-  end
 end
 
 Doorkeeper.configure do
@@ -125,8 +115,7 @@ Doorkeeper.configure do
   # falls back to the `:access_token` or `:bearer_token` params from the `params` object.
   # Check out the wiki for more information on customization
 
-  access_token_methods :from_bearer_authorization, :from_access_token_param, :from_bearer_param,
-                       :cookie_token_extractor
+  access_token_methods :from_bearer_authorization, :from_access_token_param, :from_bearer_param
 
   # Change the native redirect uri for client apps
   # When clients register with the following redirect uri, they won't be redirected to any server and

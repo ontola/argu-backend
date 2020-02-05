@@ -52,17 +52,6 @@ class StaticPagesController < AuthorizedController
     handle_error(ActionController::RoutingError.new('Route not found'))
   end
 
-  # Used for persistent redis-backed cookies
-  def persist_cookie
-    respond_to do |format|
-      if stubborn_set_from_params
-        format.json { head 200 }
-      else
-        format.json { head 400 }
-      end
-    end
-  end
-
   def token
     @token = params[:token] && params[:token].length <= 24 ? params[:token] : ''
     render :token

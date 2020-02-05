@@ -133,7 +133,6 @@ Rails.application.routes.draw do
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
   get '/c_a', to: 'actors#show', as: 'current_actor'
-  put 'persist_cookie', to: 'static_pages#persist_cookie'
 
   # @deprecated Please use info_controller. Kept for cached searches etc. do
   get '/about', to: redirect('/i/about')
@@ -146,7 +145,6 @@ Rails.application.routes.draw do
   get '/values', to: 'documents#show', name: 'values'
   get '/policy', to: 'documents#show', name: 'policy'
   get '/privacy', to: 'documents#show', name: 'privacy'
-  get '/cookies', to: 'documents#show', name: 'cookies'
 
   get '/i/about', to: 'static_pages#about'
   resources :info, path: 'i', only: [:show]

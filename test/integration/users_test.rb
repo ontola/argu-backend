@@ -21,7 +21,6 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
   let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
-  let(:dutch_forum) { create_forum(public_grant: 'participator', locale: 'nl-NL') }
 
   ####################################
   # Show as Guest
@@ -424,53 +423,6 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_select '.account-exists', "An account for #{user.email} already exists. "\
                                      'Log out and log in with this other account to accept the invitation.'
-  end
-
-  ####################################
-  # Language
-  ####################################
-  test 'guest should get language cookie' do
-    get freetown
-    assert_equal 'en', client_token_from_cookie['user']['language']
-    assert_nil flash[:error]
-  end
-
-  test 'guest should get language cookie when visiting dutch forum' do
-    get dutch_forum
-    assert_equal 'nl', client_token_from_cookie['user']['language']
-    assert_nil flash[:error]
-  end
-
-  test 'guest should put language' do
-    get freetown
-    assert_equal 'en', client_token_from_cookie['user']['language']
-    put language_users_path(:nl)
-    assert_equal 'nl', client_token_from_cookie['user']['language']
-    assert_nil flash[:error]
-  end
-
-  test 'guest should put language with nested param' do
-    get freetown
-    assert_equal 'en', client_token_from_cookie['user']['language']
-    put '/u/language', params: {user: {language: :nl}}
-    assert_equal 'nl', client_token_from_cookie['user']['language']
-    assert_nil flash[:error]
-  end
-
-  test 'user should put language' do
-    sign_in user
-    assert_equal 'en', user.language
-    put language_users_path(:nl)
-    assert_equal 'nl', user.reload.language
-    assert_nil flash[:error]
-  end
-
-  test 'user should not put non-existing language' do
-    sign_in user
-    assert_equal 'en', user.language
-    put language_users_path(:fake_language)
-    assert_equal 'en', user.reload.language
-    assert flash[:notice].present?
   end
 
   ####################################
