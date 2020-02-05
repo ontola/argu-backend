@@ -410,8 +410,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/beta', to: 'beta#show'
-
   get '/ns/core/:model', to: 'static_pages#context'
 
   mount Sidekiq::Prometheus::Exporter => '/d/sidekiq'
