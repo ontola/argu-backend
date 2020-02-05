@@ -112,7 +112,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'brakeman', '~> 4.1.1'
+  gem 'brakeman'
   gem 'license_finder'
   gem 'rubocop'
   gem 'rubocop-rspec'

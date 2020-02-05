@@ -194,7 +194,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootsnap (1.3.0)
       msgpack (~> 1.0)
-    brakeman (4.1.1)
+    brakeman (4.7.2)
     bugsnag (6.12.2)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
@@ -701,7 +701,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller (>= 0.7.3.pre1)
   bootsnap
-  brakeman (~> 4.1.1)
+  brakeman
   bugsnag
   bullet
   bundler-audit (~> 0.6.1)
