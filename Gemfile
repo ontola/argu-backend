@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org/'
-ruby '2.6.1'
-ruby = '2.6.1'
+ruby '2.6.3'
+ruby = '2.6.3'
 
 gem 'active_response', git: 'https://github.com/ontola/active_response', branch: :master
 gem 'acts_as_tenant', git: 'https://github.com/ArthurWD/acts_as_tenant', branch: :master
@@ -64,7 +64,7 @@ gem 'rubyzip'
 gem 'searchkick'
 gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
-gem 'carrierwave-vips', '~> 1.0.5'
+gem 'carrierwave-vips', '~> 1.2.0'
 gem 'carrierwave-aws', '~> 1.3.0'
 gem 'image_optim', '~> 0.25.0'
 gem 'image_optim_pack', '~> 0.5.0'
