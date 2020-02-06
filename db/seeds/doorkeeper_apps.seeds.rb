@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
-Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application::ARGU_ID) do |app|
+argu_app = Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application::ARGU_ID) do |app|
   app.id = Doorkeeper::Application::ARGU_ID
   app.name = 'Argu'
   app.owner_type = 'Profile'
   app.owner_id = Profile::COMMUNITY_ID
   app.redirect_uri = 'http://example.com/'
   app.scopes = 'guest user'
-end.save(validate: false)
+end
+argu_app.save(validate: false)
+# rubocop:disable Rails/SkipsModelValidations
+argu_app.update_columns(uid: ENV['ARGU_APP_ID'], secret: ENV['ARGU_APP_SECRET']) if ENV['ARGU_APP_ID']
+# rubocop:enable Rails/SkipsModelValidations
 Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application::AFE_ID) do |app|
   app.id = Doorkeeper::Application::AFE_ID
   app.name = 'Argu Front End'

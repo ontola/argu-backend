@@ -2,7 +2,7 @@
 
 module Argu
   module Errors
-    class AccountLocked < StandardError
+    class AccountLocked < Doorkeeper::Errors::InvalidGrantReuse
       attr_accessor :redirect
 
       # @param [Hash] options

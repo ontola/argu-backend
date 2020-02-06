@@ -2,7 +2,7 @@
 
 module Argu
   module Errors
-    class UnknownUsername < StandardError
+    class UnknownUsername < Doorkeeper::Errors::InvalidGrantReuse
       attr_accessor :redirect
 
       # @param [Hash] options

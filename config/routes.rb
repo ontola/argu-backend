@@ -248,9 +248,6 @@ Rails.application.routes.draw do
       get 'authorize', to: 'authorize#show'
       get 'current_user', to: 'users#current'
       get 'email_addresses', to: 'email_addresses#show'
-      scope :oauth do
-        post :token, to: 'tokens#create'
-      end
     end
   end
 

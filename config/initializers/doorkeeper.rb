@@ -56,25 +56,23 @@ Doorkeeper.configure do
     }
     request.env['devise.allow_params_authentication'] = true
     user = request.env['warden'].authenticate(scope: :user)
-    if user.blank? && !(argu_classic_frontend_request? || doorkeeper_token&.acceptable?('service'))
-      nil
-    elsif user.blank?
+    if user.blank?
       email = params[:user][:email]&.include?('@')
-      e = if email && EmailAddress.find_by(email: params[:user][:email]).nil?
-            Argu::Errors::UnknownEmail.new(r: r_with_authenticity_token)
-          elsif !email && Shortname.find_by(owner_type: 'User', shortname: params[:user][:email]).nil?
-            Argu::Errors::UnknownUsername.new(r: r_with_authenticity_token)
-          elsif request.env['warden'].message == :locked
-            Argu::Errors::AccountLocked.new(r: r_with_authenticity_token)
-          elsif request.env['warden'].message == :invalid
-            Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
-          elsif request.env['warden'].message == :not_found_in_database
-            Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
-          else
-            raise "unhandled login state #{request.env['warden'].message}"
-          end
-      raise e if argu_classic_frontend_request?
-      e
+      raise(
+        if email && EmailAddress.find_by(email: params[:user][:email]).nil?
+          Argu::Errors::UnknownEmail.new(r: r_with_authenticity_token)
+        elsif !email && Shortname.find_by(owner_type: 'User', shortname: params[:user][:email]).nil?
+          Argu::Errors::UnknownUsername.new(r: r_with_authenticity_token)
+        elsif request.env['warden'].message == :locked
+          Argu::Errors::AccountLocked.new(r: r_with_authenticity_token)
+        elsif request.env['warden'].message == :invalid
+          Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
+        elsif request.env['warden'].message == :not_found_in_database
+          Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
+        else
+          "unhandled login state #{request.env['warden'].message}"
+        end
+      )
     else
       request.env['warden'].logout
       user
@@ -113,8 +111,8 @@ Doorkeeper.configure do
   # Define access token scopes for your provider
   # For more information go to
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
-  default_scopes  :guest, :user
-  optional_scopes :guest, :user, :afe
+  default_scopes  :guest
+  optional_scopes :user
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then

@@ -291,9 +291,13 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     facebook_me(fields: {name: 'My Name'})
   end
 
-  def visit_facebook_oauth_path(opts) # rubocop:disable Metrics/AbcSize
-    post user_facebook_omniauth_authorize_path(r: opts[:r])
-    assert_redirected_to user_facebook_omniauth_callback_path
+  def setup_users_iri
+    "#{argu.iri}#{setup_users_path}"
+  end
+
+  def visit_facebook_oauth_path(opts) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    post "#{argu.iri}#{user_facebook_omniauth_authorize_path(r: opts[:r])}"
+    assert_redirected_to "#{argu.iri.to_s.sub('http', 'https')}#{user_facebook_omniauth_callback_path}"
 
     guest_vote
     other_guest_vote

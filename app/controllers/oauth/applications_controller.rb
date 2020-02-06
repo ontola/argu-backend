@@ -2,6 +2,7 @@
 
 # app/controllers/oauth/applications_controller.rb
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
+  include LinkedRails::Controller::ErrorHandling
   include Argu::Controller::ErrorHandling
   include OauthHelper
   respond_to :html
