@@ -70,10 +70,6 @@ class PagesController < EdgeableController
     Pundit.policy(user_context, resource)
   end
 
-  def redirect_current_resource?(_resource)
-    false
-  end
-
   def redirect_location
     return new_iri(nil, :pages) unless authenticated_resource.persisted?
     settings_iri(authenticated_resource, tab: tab)
