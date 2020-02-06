@@ -32,34 +32,31 @@ module Users
     # As guest
     ####################################
     test 'guest should get show confirmation' do
+      sign_in :guest_user
       assert_not user.confirmed?
       get user_confirmation_path(confirmation_token: user.confirmation_token)
-      assert_redirected_to new_user_session_path
-      assert user.reload.confirmed?
+      assert_response :success
+      assert response.headers['New-Authorization']
+      assert_not user.reload.confirmed?
+    end
+
+    test 'guest should not get show confirmation of confirmed user' do
+      sign_in :guest_user
+      assert confirmed_user.confirmed?
+      get user_confirmation_path(confirmation_token: confirmed_user.confirmation_token)
+      assert_response :success
+      assert response.headers['New-Authorization']
+      assert_not user.reload.confirmed?
     end
 
     test 'guest should get show wrong confirmation' do
+      sign_in :guest_user
       get user_confirmation_path(confirmation_token: 'wrong_token')
-      assert_response 200
-      assert_select 'header h2', 'Send confirmation link again'
-    end
-
-    test 'guest should not put confirm email with wrong token' do
-      put_confirm('wrong_token', 'password', 'password')
       assert_response 404
     end
 
-    test 'guest should put confirm email for user without password' do
-      put_confirm(user_without_password.confirmation_token, 'password', 'password')
-      assert_redirected_to root_path
-    end
-
-    test 'guest should not put confirm email for user with password' do
-      put_confirm(user.confirmation_token, 'password', 'password')
-      assert_not_authorized
-    end
-
     test 'guest should not put confirm email json' do
+      sign_in :guest_user
       put users_confirm_path,
           params: {
             email: user.email
@@ -69,7 +66,14 @@ module Users
       assert_not user.reload.confirmed?
     end
 
+    test 'guest should get new confirmation' do
+      sign_in :guest_user
+      get new_user_confirmation_path
+      assert_enabled_form
+    end
+
     test 'guest should post create confirmation' do
+      sign_in :guest_user
       create_email_mock(
         'requested_confirmation',
         user.email,
@@ -80,10 +84,38 @@ module Users
       post user_confirmation_path(user: {email: user.email})
       assert_equal user.primary_email_record.confirmation_sent_at.iso8601(6),
                    user.primary_email_record.reload.confirmation_sent_at.iso8601(6)
-      assert_redirected_to new_user_session_path
-      assert_equal flash[:notice],
-                   'You\'ll receive a mail containing instructions to confirm your account within a few minutes.'
+      assert_response :created
+      expect_ontola_action(
+        snackbar: 'You\'ll receive a mail containing instructions to confirm your account within a few minutes.'
+      )
       assert_email_sent
+    end
+
+    ####################################
+    # As other user
+    ####################################
+    test 'other_user should get show confirmation' do
+      sign_in other_user
+      assert_not user.confirmed?
+      get user_confirmation_path(confirmation_token: user.confirmation_token)
+      assert_response :success
+      assert response.headers['New-Authorization']
+      assert_not user.reload.confirmed?
+    end
+
+    test 'other_user should not get show confirmation of confirmed user' do
+      sign_in other_user
+      assert confirmed_user.confirmed?
+      get user_confirmation_path(confirmation_token: confirmed_user.confirmation_token)
+      assert_response :success
+      assert response.headers['New-Authorization']
+      assert_not user.reload.confirmed?
+    end
+
+    test 'other_user should not post create confirmation' do
+      sign_in other_user
+      post user_confirmation_path(user: {email: user.email})
+      assert_response :not_found
     end
 
     ####################################
@@ -98,7 +130,7 @@ module Users
       assert_not user.confirmed?
       assert_not user.url.present?
       get user_confirmation_path(confirmation_token: user.confirmation_token)
-      assert_redirected_to new_user_session_path
+      expect_ontola_action(snackbar: 'Your account has been confirmed')
       assert user.reload.confirmed?
     end
 
@@ -119,10 +151,16 @@ module Users
         end
       end
 
-      assert_redirected_to new_user_session_path
+      expect_ontola_action(snackbar: 'Your account has been confirmed')
       assert user.reload.confirmed?
       assert_equal [id1, edge1_id, id2, edge2_id],
                    [user.votes.first.id, user.votes.first.id, user.votes.second.id, user.votes.second.id]
+    end
+
+    test 'user should get new confirmation' do
+      sign_in user
+      get new_user_confirmation_path
+      assert_enabled_form
     end
 
     test 'user should post create confirmation' do
@@ -136,38 +174,10 @@ module Users
       post user_confirmation_path(user: {email: user.email})
       assert_equal user.primary_email_record.confirmation_sent_at.iso8601(6),
                    user.primary_email_record.reload.confirmation_sent_at.iso8601(6)
-      assert_redirected_to settings_path(tab: :authentication)
-      assert_equal flash[:notice],
-                   'You\'ll receive a mail containing instructions to confirm your account within a few minutes.'
+      expect_ontola_action(
+        snackbar: 'You\'ll receive a mail containing instructions to confirm your account within a few minutes.'
+      )
       assert_email_sent
-    end
-
-    test 'user should not put confirm email with wrong token' do
-      sign_in user
-      put_confirm('wrong_token', 'password', 'password')
-      assert_response 404
-    end
-
-    test 'user without password should put confirm email' do
-      sign_in user_without_password
-      put_confirm(user_without_password.confirmation_token, 'password', 'password')
-
-      assert_redirected_to root_path
-    end
-
-    test 'user with password should not put confirm email' do
-      sign_in user
-      put_confirm(user.confirmation_token, 'password', 'password')
-
-      put users_confirm_path,
-          params: {
-            user: {
-              confirmation_token: user.confirmation_token,
-              password: 'password',
-              password_confirmation: 'password'
-            }
-          }
-      assert_not_authorized
     end
 
     test 'user should not put confirm email json' do
@@ -211,18 +221,11 @@ module Users
 
     private
 
-    def put_confirm(confirmation_token, password, password_confirmation)
-      put users_confirm_path,
-          params: {
-            user: {
-              confirmation_token: confirmation_token,
-              password: password,
-              password_confirmation: password_confirmation
-            }
-          }
+    def user_confirmation_path(*args)
+      "/#{argu.url}#{super}"
     end
 
-    def user_confirmation_path(*args)
+    def new_user_confirmation_path(*args)
       "/#{argu.url}#{super}"
     end
 

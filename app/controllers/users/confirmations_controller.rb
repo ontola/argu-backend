@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 module Users
-  class ConfirmationsController < Devise::ConfirmationsController
+  class ConfirmationsController < Devise::ConfirmationsController # rubocop:disable Metrics/ClassLength
     include OauthHelper
     before_action :head_200, only: :show
-    active_response :new
+    before_action :login_user, only: :show
+    active_response :new, :show
 
     def create # rubocop:disable Metrics/AbcSize
       email = email_for_user
@@ -15,23 +16,7 @@ module Users
         email: email.email
       )
       set_flash_message :notice, :send_instructions if create_email
-      respond_with({}, location: after_resending_confirmation_instructions_path_for(resource))
-    end
-
-    def show # rubocop:disable Metrics/AbcSize
-      @original_token = params[:confirmation_token]
-      self.resource = email_by_token&.user
-      return super if resource.nil? || resource.encrypted_password.present?
-      email_by_token.confirm
-      sign_in resource unless current_user == resource
-      set_flash_message :notice, :confirmed
-      active_response_block do
-        token = resource.send(:set_reset_password_token)
-        respond_with_redirect(
-          location: iri_from_template(:user_set_password, reset_password_token: token),
-          notice: flash[:notice]
-        )
-      end
+      respond_with({}, location: after_resending_confirmation_instructions_path_for(current_user))
     end
 
     def confirm
@@ -45,6 +30,8 @@ module Users
     end
 
     protected
+
+    def active_response_success_message; end
 
     def ld_action(opts = {})
       opts[:resource].action(ACTION_MAP[action_name.to_sym] || action_name, user_context)
@@ -68,16 +55,12 @@ module Users
       current_user.guest? ? true : resource_params[:email] == current_user.email
     end
 
-    def current_resource
-      @current_resource ||= Users::Confirmation.new(user: current_user)
-    end
-
     def default_form_view(action)
       action
     end
 
     def email_by_token
-      @email_by_token ||= EmailAddress.find_first_by_auth_conditions(confirmation_token: @original_token)
+      @email_by_token ||= EmailAddress.find_first_by_auth_conditions(confirmation_token: original_token)
     end
 
     def email_by_token!
@@ -95,8 +78,21 @@ module Users
       head 200 if request.head?
     end
 
-    def new_execute
-      self.resource = resource_class.new
+    def login_user
+      return if current_user == current_resource.user
+
+      sign_in current_resource.user
+      active_response_block do
+        respond_with_resource(resource: current_resource)
+      end
+    end
+
+    def new_resource
+      Users::Confirmation.new(user: current_user)
+    end
+
+    def original_token
+      @original_token ||= params[:confirmation_token]
     end
 
     def resource_params
@@ -104,6 +100,31 @@ module Users
         params.fetch("#{resource_name.to_s.pluralize}/#{controller_name.singularize}", {})
     end
 
-    alias show_failure_options show_success_options
+    def requested_resource
+      Users::Confirmation.new(
+        current_user: current_user,
+        email: email_by_token,
+        user: email_by_token&.user || raise(ActiveRecord::RecordNotFound),
+        token: original_token
+      )
+    end
+
+    def show_execute
+      current_resource.confirm!
+    end
+
+    def show_failure
+      respond_with_resource(
+        resource: current_resource,
+        notice: email_by_token.errors.full_messages.first
+      )
+    end
+
+    def show_success
+      respond_with_resource(
+        resource: current_resource,
+        notice: find_message(:confirmed)
+      )
+    end
   end
 end
