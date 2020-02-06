@@ -13,7 +13,7 @@ module Placeable
     end
 
     def added_delta
-      return super unless parent.respond_to?(:children_placements_iri)
+      return super unless try(:parent).respond_to?(:children_placements_iri)
 
       super + [
         [parent.children_placements_iri, NS::SP[:Variable], NS::SP[:Variable], NS::ONTOLA[:invalidate]]
