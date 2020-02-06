@@ -17,6 +17,7 @@ require 'minitest/reporters'
 require 'rspec/matchers'
 require 'rspec/expectations'
 
+require 'support/custom_reporter'
 require 'support/database_cleaner'
 require 'argu/test_helpers/searchkick_mock'
 
