@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserSerializer < RecordSerializer # rubocop:disable Metrics/ClassLength
+class UserSerializer < RecordSerializer
   include ProfilePhotoable::Serializer
   include CoverPhotoable::Serializer
   include UriTemplateHelper
@@ -79,24 +79,8 @@ class UserSerializer < RecordSerializer # rubocop:disable Metrics/ClassLength
          end
        ]
 
-  def about
-    object.profile.about
-  end
-
-  def are_votes_public
-    object.profile.are_votes_public
-  end
-
   def birth_year
     object.birthday&.year
-  end
-
-  def default_cover_photo
-    object.profile.default_cover_photo
-  end
-
-  def default_profile_photo
-    object.profile.default_profile_photo
   end
 
   def group_ids
@@ -110,10 +94,6 @@ class UserSerializer < RecordSerializer # rubocop:disable Metrics/ClassLength
       .map do |group_id|
       iri_from_template(:groups_iri, id: group_id)
     end
-  end
-
-  def is_public
-    object.profile.is_public
   end
 
   def object

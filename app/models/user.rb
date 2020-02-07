@@ -70,7 +70,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   attr_accessor :current_password
 
-  delegate :description, to: :profile
+  delegate :about, :are_votes_public, :default_cover_photo, :default_profile_photo, :description, :is_public,
+           to: :profile
 
   enum reactions_email: {
     never_reactions_email: 0,
