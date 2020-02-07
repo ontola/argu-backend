@@ -35,7 +35,7 @@ class Vocabulary < LinkedRails::Vocabulary
     end
 
     def user_context
-      @user_context ||= create_user_context(%w[guest afe])
+      @user_context ||= create_user_context(%w[guest])
     end
   end
 end

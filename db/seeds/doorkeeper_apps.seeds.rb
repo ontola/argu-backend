@@ -18,7 +18,7 @@ Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application::AFE_ID) d
   app.owner_type = 'Profile'
   app.owner_id = Profile::COMMUNITY_ID
   app.redirect_uri = 'http://example.com/'
-  app.scopes = 'guest user afe'
+  app.scopes = 'guest user'
 end.save(validate: false)
 Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application::SERVICE_ID) do |app|
   app.id = Doorkeeper::Application::SERVICE_ID

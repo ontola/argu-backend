@@ -31,7 +31,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_difference("Doorkeeper::AccessToken.where(scopes: 'guest').count", 0) do
       get motion.iri.path, headers: argu_headers(accept: :json)
     end
-    assert_equal(decoded_token_from_response['scopes'], %w[guest afe])
+    assert_equal(decoded_token_from_response['scopes'], %w[guest])
 
     get motion.iri.path, headers: argu_headers(accept: :json, bearer: client_token_from_response)
     assert_nil response.headers['New-Authorization']

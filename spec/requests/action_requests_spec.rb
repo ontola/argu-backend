@@ -26,7 +26,7 @@ RSpec.describe 'Actions', type: :request do
       NotificationActionList.new(
         resource: notification,
         user_context: UserContext.new(
-          doorkeeper_scopes: 'afe',
+          doorkeeper_scopes: 'user',
           user: authorized_user,
           profile: authorized_user.profile
         )

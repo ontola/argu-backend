@@ -85,9 +85,8 @@ module OauthHelper
     doorkeeper_token&.resource_owner_id || SecureRandom.hex
   end
 
-  def new_token_scopes(requested_scope, application_id)
-    return requested_scope unless application_id == Doorkeeper::Application::AFE_ID
-    [requested_scope, :afe].join(' ')
+  def new_token_scopes(requested_scope, _application_id)
+    requested_scope
   end
 
   def needs_new_guest_token?
