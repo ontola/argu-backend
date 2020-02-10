@@ -5,15 +5,6 @@ class ProfilesController < AuthorizedController
   include UriTemplateHelper
   active_response :edit, :show
 
-  def index # rubocop:disable Metrics/AbcSize
-    return if current_user.guest? || params[:q].blank?
-    q = params[:q].tr(' ', '|')
-    @profiles = search_scope(q).includes(:default_profile_photo, profileable: %i[shortname email_addresses])
-    return unless params[:things]&.split(',')&.include?('pages')
-    @profiles += policy_scope(Profile)
-                   .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
-  end
-
   # GET /profiles/setup
   def setup
     active_response_block do
@@ -42,24 +33,6 @@ class ProfilesController < AuthorizedController
     r = @resource.r
     @resource.update r: ''
     r
-  end
-
-  def search_scope(q)
-    scope =
-      policy_scope(Profile)
-        .where(profileable_type: 'User')
-        .joins("INNER JOIN users ON profiles.profileable_id = users.uuid AND profiles.profileable_type = 'User'")
-        .joins("LEFT JOIN shortnames ON shortnames.owner_id = users.uuid AND shortnames.owner_type = 'User'")
-    wheres = [
-      'lower(shortname) SIMILAR TO lower(?)',
-      'lower(first_name) SIMILAR TO lower(?)',
-      'lower(last_name) SIMILAR TO lower(?)'
-    ]
-    if current_user.is_staff?
-      scope = scope.joins('INNER JOIN email_addresses ON email_addresses.user_id = users.id')
-      wheres << 'email_addresses.email SIMILAR TO lower(?)'
-    end
-    scope.where(wheres.join(' OR '), *wheres.map { |_| "%#{q}%" }).distinct
   end
 
   def setup_permit_params
