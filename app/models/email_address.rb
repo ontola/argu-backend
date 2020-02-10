@@ -41,7 +41,7 @@ class EmailAddress < ApplicationRecord
 
   def after_confirmation
     user.edges.update_all(confirmed: true) # rubocop:disable Rails/SkipsModelValidations
-    UserChannel.broadcast_to(user, n3_delta([invalidate_collection_delta(user.email_address_collection)]))
+    UserChannel.broadcast_to(user, hex_delta([invalidate_collection_delta(user.email_address_collection)]))
     Vote.fix_counts
   end
 

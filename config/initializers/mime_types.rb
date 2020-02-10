@@ -7,3 +7,4 @@
 Mime::Type.register 'font/opentype', :font
 Mime::Type.register 'text/widget', :widget
 Mime::Type.register 'application/vnd.api+json', :json_api
+Mime::Type.register 'application/hex+x-ndjson', :hndjson

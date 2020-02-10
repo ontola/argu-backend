@@ -24,6 +24,10 @@ class ExportWorker
 
   private
 
+  def add_hndjson(zip)
+    zip.get_output_stream('data.hndjson') { |f| f.write serializer_for(data.values, :hex_adapter).adapter.dump }
+  end
+
   def add_json(zip)
     json = data.map { |type, records| [type.tableize, JSON.parse(serializer_for(records, :attributes).to_json)] }
     zip.get_output_stream('data.json') { |f| f.write Hash[json].to_json }
@@ -81,6 +85,7 @@ class ExportWorker
       add_xls(zip)
       add_json(zip)
       add_triple_formats(zip)
+      add_hndjson(zip)
     end
     export.update!(zip: File.open(filename))
     File.delete(filename)

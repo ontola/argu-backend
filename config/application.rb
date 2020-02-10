@@ -15,6 +15,7 @@ require 'linked_rails/middleware/linked_data_params'
 Bundler.require(*Rails.groups)
 
 require_relative '../lib/ns'
+require_relative '../app/adapters/hex_adapter'
 require_relative '../lib/acts_as_tenant/sidekiq_with_tenant'
 require_relative '../lib/react-rails/lib/server_rendering/webpack_manifest_container'
 
@@ -37,6 +38,7 @@ module Argu
     end
     config.autoload_paths += %W[#{config.root}/app/models/menus]
     config.autoload_paths += %W[#{config.root}/app/models/menus/container_nodes]
+    config.autoload_paths += %W[#{config.root}/app/adapters]
     config.autoload_paths += %W[#{config.root}/app/responders]
     config.autoload_paths += %W[#{config.root}/app/services]
     config.autoload_paths += Dir["#{config.root}/app/services/**/"]

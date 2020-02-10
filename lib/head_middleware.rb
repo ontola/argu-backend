@@ -35,7 +35,7 @@ class HeadMiddleware
 
     {
       'Content-Length' => '0',
-      'Content-Type' => 'application/n-quads'
+      'Content-Type' => 'application/hex+x-ndjson'
     }
   end
 

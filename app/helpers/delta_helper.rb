@@ -37,10 +37,8 @@ module DeltaHelper
     ]
   end
 
-  def n3_delta(array)
-    repo = RDF::Repository.new
-    array.each { |nquad| repo << nquad }
-    repo.dump(:nquads)
+  def hex_delta(array)
+    array.map { |s| Oj.fast_generate(HexAdapter.new(nil).send(:rdf_array_to_hex, s)) }.join("\n")
   end
 
   def resource_added_delta(resource)

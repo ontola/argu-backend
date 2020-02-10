@@ -15,6 +15,7 @@ gem 'sass-rails', '~> 5.0.6'
 gem 'sass', '= 3.4.18'
 gem 'rails', '~>5.2.2.1'
 gem 'active_model_serializers', '~> 0.10.7'
+gem 'oj'
 
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
