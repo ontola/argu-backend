@@ -97,7 +97,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
     if email.blank?
       # No connection, no current_user and no email..
       session["devise.#{@provider}_data"] = request.env['omniauth.auth']
-      redirect_to new_user_registration_url(r: r_param(request.env)), notice: t('sign_in_facebook_failure')
+      redirect_to iri_from_template(:user_sign_in, r: r_param(request.env)), notice: t('sign_in_facebook_failure')
     elsif current_user.guest?
       create_new_user
     else

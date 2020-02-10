@@ -41,7 +41,7 @@ module Users
       if correct_mail && !current_user.guest?
         settings_path(tab: :authentication)
       else
-        RDF::DynamicURI(path_with_hostname('/u/sign_in')).path
+        iri_from_template(:user_sign_in).path
       end
     end
 

@@ -41,7 +41,7 @@ module Users
     end
 
     def after_sending_reset_password_instructions_path_for(_resource_name)
-      RDF::DynamicURI(path_with_hostname('/u/sign_in')).path
+      iri_from_template(:user_sign_in).path
     end
 
     def after_resetting_password_path_for(resource)

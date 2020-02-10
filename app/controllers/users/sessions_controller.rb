@@ -7,7 +7,7 @@ module Users
       request.flash[:notice] = params[:notice] if params[:notice]
       self.resource = resource_class.new({remember_me: true, r: r_from_url_or_header}.merge(sign_in_params))
       clean_up_passwords(resource)
-      respond_with_redirect location: RDF::DynamicURI(path_with_hostname('/u/sign_in')).path
+      respond_with_redirect location: iri_from_template(:user_sign_in).path
     end
 
     def create
