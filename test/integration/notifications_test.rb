@@ -25,7 +25,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'guest should get index' do
     argument
     sign_in :guest_user
-    get collection_iri(argu, :notifications), headers: argu_headers(accept: :json)
+    get collection_iri(argu, :notifications)
     assert_response 401
   end
 
@@ -43,17 +43,9 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   ####################################
   let(:follower) { motion.publisher }
 
-  test 'follower should get index json' do
-    argument
-    sign_in follower
-    get collection_iri(argu, :notifications), headers: argu_headers(accept: :json)
-    assert_response 200
-    assert_equal parsed_body['notifications']['unread'], 1
-  end
-
   test 'follower should get index as nq' do
     argument
-    sign_in follower, Doorkeeper::Application.argu_front_end
+    sign_in follower
     get collection_iri(argu, :notifications), headers: argu_headers(accept: :nq)
     assert_response 200
     expect_triple(RDF::URI("#{argu.iri}/n"), NS::ARGU[:unreadCount], 1)
@@ -61,7 +53,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
   test 'follower should put update as nq' do
     argument
-    sign_in follower, Doorkeeper::Application.argu_front_end
+    sign_in follower
     notification = follower.notifications.where(read_at: nil).first
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => -1) do
       put resource_iri(notification), headers: argu_headers(accept: :nq)
@@ -76,14 +68,5 @@ class NotificationsTest < ActionDispatch::IntegrationTest
       NS::ONTOLA[:replace]
     )
     expect_triple(resource_iri(notification), NS::ARGU[:unread], false, NS::ONTOLA[:replace])
-  end
-
-  test 'follower should mark as read' do
-    argument
-    sign_in follower
-    assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => -1) do
-      patch "#{collection_iri(argu, :notifications)}/read", headers: argu_headers(accept: :json)
-      assert_response 200
-    end
   end
 end

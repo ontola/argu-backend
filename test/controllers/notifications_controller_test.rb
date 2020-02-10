@@ -16,9 +16,9 @@ class NotificationsControllerTest < ActionController::TestCase
   test 'guest should not get index' do
     sign_in :guest_user
 
-    get :index
+    get :index, format: :nq
 
-    assert_redirected_to new_user_session_path(r: ActsAsTenant.without_tenant { collection_iri(nil, :notifications) })
+    assert_not_a_user
   end
 
   ####################################
@@ -30,10 +30,11 @@ class NotificationsControllerTest < ActionController::TestCase
     sign_in unconfirmed
     followed_content(unconfirmed)
 
-    get :index, format: :json
+    get :index, format: :nq
 
-    assert_response 200
-    assert_equal 4, parsed_body['notifications']['notifications'].count
+    assert_response 200, format: :nq
+    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
+    expect_triple(view, NS::AS[:totalItems], 4)
   end
 
   test 'unconfirmed user with notifications and redis_vote should get index' do
@@ -41,10 +42,11 @@ class NotificationsControllerTest < ActionController::TestCase
     sign_in unconfirmed
     followed_content(unconfirmed)
 
-    get :index, format: :json
+    get :index, format: :nq
 
     assert_response 200
-    assert_equal 5, parsed_body['notifications']['notifications'].count
+    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
+    expect_triple(view, NS::AS[:totalItems], 5)
   end
 
   ####################################
@@ -56,31 +58,11 @@ class NotificationsControllerTest < ActionController::TestCase
   test 'user without notifications should get index no content' do
     sign_in user
 
-    get :index, format: :json
-
-    assert_response 204
-  end
-
-  test 'user with notifications should get index' do
-    sign_in user
-    followed_content(user)
-
-    get :index, format: :json
+    get :index, format: :nq
 
     assert_response 200
-    assert_equal 4, parsed_body['notifications']['notifications'].count
-  end
-
-  test 'user with notifications should get index json_api' do
-    sign_in user
-    followed_content(user)
-
-    sleep(1.second)
-
-    get :index, format: :json_api
-
-    assert_response 200
-    expect_included(user.notifications.map(&:iri))
+    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
+    expect_triple(view, NS::AS[:totalItems], 0)
   end
 
   test 'user with notifications should get index nq' do
@@ -92,6 +74,8 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200
+    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
+    expect_triple(view, NS::AS[:totalItems], 4)
     user.notifications.each { |n| expect_triple(n.iri, NS::ONTOLA[:readAction], nil) }
   end
 

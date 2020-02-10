@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # @note: Common create ready
-class NotificationsController < AuthorizedController # rubocop:disable Metrics/ClassLength
+class NotificationsController < AuthorizedController
   include NotificationsHelper
 
   skip_before_action :authorize_action, only: :index
@@ -22,9 +22,7 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     if policy_scope(Notification)
          .where(read_at: nil, permanent: false)
          .update_all(read_at: Time.current)
-      @notifications = get_notifications
-      @unread = unread_notification_count
-      render 'notifications/index'
+      head 200
     else
       head 400
     end
@@ -36,40 +34,6 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
   def authorize_action
     return super unless action_name == 'read'
     authorize Notification, :read?
-  end
-
-  def fetch_more
-    begin
-      from_time = Time.parse(params[:from_time]).utc.to_s
-    rescue ArgumentError
-      from_time = nil
-    end
-    @from_time = from_time
-    @notifications = policy_scope(Notification)
-                       .order(created_at: :desc)
-                       .since(from_time)
-                       .page params[:page]
-    @unread = unread_notification_count
-  rescue ArgumentError
-    head 400
-  end
-
-  def get_notifications(since = nil)
-    policy_scope(Notification)
-      .includes(activity: :trackable)
-      .order(permanent: :desc, created_at: :desc)
-      .where(since ? ['created_at > ?', since] : nil)
-      .page params[:page]
-  end
-
-  def index_success_json
-    if current_user.guest?
-      head 204
-    elsif params[:from_time].present?
-      fetch_more
-    else
-      refresh
-    end
   end
 
   def index_collection
@@ -103,26 +67,8 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     m
   end
 
-  def new_available?(since)
-    return true if since.blank?
-    policy_scope(Notification).where('created_at > ?', since).count.positive?
-  end
-
   def permit_params
     params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
-  end
-
-  def refresh
-    since = Time.parse(last_notification).utc.to_s(:db) if last_notification
-    @notifications = get_notifications(since) if new_available?(since)
-    if @notifications.present?
-      @unread = unread_notification_count
-      render
-    else
-      head 204
-    end
-  rescue ArgumentError
-    head 400
   end
 
   def update_execute
@@ -145,10 +91,5 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
 
   def update_viewed_time
     current_user.update(notifications_viewed_at: Time.current) unless current_user.guest?
-  end
-
-  def last_notification
-    date = params[:lastNotification].presence || request.headers[:lastNotification].presence
-    date if date != 'null' && date != 'undefined'
   end
 end
