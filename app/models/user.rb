@@ -22,7 +22,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id
   has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
   has_many :favorites, dependent: :destroy
-  has_many :identities, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   # User content
@@ -47,8 +46,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # :token_authenticatable,
   devise :multi_email_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :multi_email_validatable,
-         :multi_email_confirmable, :lockable, :timeoutable,
-         :omniauthable, omniauth_providers: [:facebook].freeze
+         :multi_email_confirmable, :lockable, :timeoutable
   acts_as_follower
 
   with_collection :managed_pages, association_class: Page
@@ -137,10 +135,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def self.anonymous
     User.find(User::ANONYMOUS_ID)
-  end
-
-  def apply_omniauth(omniauth)
-    authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
   end
 
   def build_public_group_membership
@@ -450,22 +444,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       record if record && record.authenticatable_salt == salt
     end
 
-    def find_for_oauth(auth)
-      # Get the identity and user if they exist
-      identity = Identity.find_for_oauth(auth)
-      identity&.user
-    end
-
     def iri
       NS::SCHEMA[:Person]
-    end
-
-    private
-
-    def koala(auth)
-      access_token = auth['token']
-      facebook = Koala::Facebook::API.new(access_token)
-      facebook.get_object('me')
     end
   end
 end

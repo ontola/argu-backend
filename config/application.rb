@@ -24,8 +24,6 @@ module Argu
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"
 
-    OmniAuth.config.full_host = Rails.application.config.frontend_url
-
     config.autoload_paths += %w[lib]
     %i[controllers forms models policies serializers].each do |type|
       config.autoload_paths += %W[#{config.root}/app/#{type}/container_nodes]

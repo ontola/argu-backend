@@ -20,66 +20,6 @@ module Argu
           )
       end
 
-      def facebook_picture(opts = {})
-        uid = opts[:uid] || '102555400181774'
-        stub_request(:get, "https://graph.facebook.com/v2.8/#{uid}/picture?redirect=false&type=large")
-          .to_return(
-            status: 200,
-            body: File.new(File.expand_path('./test/fixtures/fb_image_silhouette.jpg'))
-          )
-      end
-
-      def facebook_auth_hash(opts = {}) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-        uid = opts[:uid] || '102555400181774'
-        facebook_picture(opts)
-        OmniAuth::AuthHash.new(
-          provider: 'facebook',
-          uid: uid,
-          info: {
-            email: opts[:email] || 'bpvjlwt_zuckersen_1467905538@tfbnw.net',
-            name: opts[:name] || 'Rick Alabhaidbbdfg Zuckersen',
-            image: opts[:image] || "https://graph.facebook.com/v2.8/#{uid}/picture?type=large"
-          },
-          credentials: {
-            token: opts[:token] ||
-              'EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLuFEMDBNe7v7jUpRCmb4SmSQ'\
-              'qcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5jvGZBE6ACZCZBmqkTewz65Deckyyf9br4'\
-              'Nsxz5dSZAQBJ8uqtFEEEj01ncwZDZD',
-            expires_at: 1_473_099_257,
-            expires: true
-          },
-          extra: {
-            raw_info: {
-              name: opts[:name] || 'Rick Alabhaidbbdfg Zuckersen',
-              email: opts[:email] || 'bpvjlwt_zuckersen_1467905538@tfbnw.net',
-              id: uid
-            }
-          }
-        )
-      end
-
-      def facebook_me(token: nil, fields: {email: 'bpvjlwt_zuckersen_1467905538@tfbnw.net'})
-        token ||= 'EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLuFEMDBNe7v7jUpRCmb4SmS'\
-                  'Qqcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5jvGZBE6ACZCZBmqkTewz65Deckyyf9b'\
-                  'r4Nsxz5dSZAQBJ8uqtFEEEj01ncwZDZD'
-        params = {
-          access_token: token,
-          fields: fields.keys.join(',')
-        }
-        if ENV['FACEBOOK_SECRET']
-          params[:appsecret_proof] =
-            OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), ENV['FACEBOOK_SECRET'], token)
-        end
-        stub_request(
-          :get,
-          "https://graph.facebook.com/me?#{params.to_param}"
-        )
-          .to_return(
-            status: 200,
-            body: {id: '102555400181774'}.merge(fields).to_json
-          )
-      end
-
       def mapbox_mock
         stub_request(
           :post,

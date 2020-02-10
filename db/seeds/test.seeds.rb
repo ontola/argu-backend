@@ -196,5 +196,3 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
 end
 
 Setting.set('suggested_forums', [freetown.uuid, other_page_forum.uuid].join(','))
-
-FactorySeeder.create(:user, email: ENV['FACEBOOK_TEST_EXISTING_EMAIL'] || 'facebook_user@example.com')

@@ -15,10 +15,6 @@ module UsersHelper
     resource.ancestor(:forum)
   end
 
-  def identity_token(identity)
-    sign_payload(identity: identity.id)
-  end
-
   def r_param
     r = (params[:user]&.permit(:r) || params.permit(:r)).try(:[], :r)
     r if argu_iri_or_relative?(r)

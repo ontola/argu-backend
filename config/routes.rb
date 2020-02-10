@@ -70,7 +70,6 @@ Rails.application.routes.draw do
                sessions: 'users/sessions',
                passwords: 'users/passwords',
                unlocks: 'users/unlocks',
-               omniauth_callbacks: 'omniauth_callbacks',
                confirmations: 'users/confirmations'
              }, skip: :registrations
 
@@ -87,16 +86,12 @@ Rails.application.routes.draw do
   resources :users,
             path: 'u',
             only: %i[show edit] do
-    resources :identities, only: :destroy, controller: 'users/identities'
     resources :email_addresses, only: %i[index new create] do
       collection do
         concerns :nested_actionable
       end
     end
     resource :follows, only: :destroy, controller: 'users/follows'
-
-    get :connect, to: 'users/identities#connect', on: :member
-    post :connect, to: 'users/identities#attach', on: :member
 
     get :setup, to: 'users/setup#edit', on: :collection
     put :setup, to: 'users/setup#update', on: :collection

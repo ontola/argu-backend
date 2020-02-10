@@ -14,11 +14,6 @@ class RegistrationsController < Devise::RegistrationsController
   skip_before_action :authenticate_scope!, only: :destroy
   before_action :handle_spammer, if: :is_spam?, only: :create
 
-  def create
-    super
-    session[:omniauth] = nil
-  end
-
   protected
 
   def after_sign_up_path_for(resource)
@@ -53,14 +48,11 @@ class RegistrationsController < Devise::RegistrationsController
     t('type_destroy_success', type: 'Account')
   end
 
-  def build_resource(*args) # rubocop:disable Metrics/AbcSize
+  def build_resource(*args)
     super
     resource.shortname = nil if resource.shortname&.shortname&.blank?
     resource.build_profile
     resource.language = I18n.locale
-    return unless session[:omniauth]
-    @user.apply_omniauth(session[:omniauth])
-    @user.valid?
   end
 
   def current_resource
