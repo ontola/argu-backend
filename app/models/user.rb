@@ -108,9 +108,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     update!(last_accepted: Time.current, notifications_viewed_at: Time.current)
     return true if skip_set_password_mail || encrypted_password.present?
 
-    token = set_reset_password_token
-    SendEmailWorker
-      .perform_async(:set_password, id, token_url: iri_from_template(:user_set_password, reset_password_token: token))
+    send_reset_password_token_email
 
     true
   end
@@ -371,6 +369,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     else
       raise "Trying to send a Devise #{notification} mail"
     end
+  end
+
+  def send_reset_password_token_email
+    token = set_reset_password_token
+    SendEmailWorker
+      .perform_async(:set_password, id, token_url: iri_from_template(:user_set_password, reset_password_token: token))
   end
 
   def self.service

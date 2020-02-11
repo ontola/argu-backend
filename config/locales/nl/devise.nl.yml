@@ -25,6 +25,7 @@ nl:
       invalid_email: 'We konden geen gebruiker vinden met dit e-mailadres.'
       invalid_password: 'Het wachtwoord is niet correct.'
       invalid_username: 'We konden geen gebruiker vinden met deze naam.'
+      no_password: 'Je hebt nog geen wachtwoord ingesteld voor dit account.'
       user:
         not_found_in_database: 'We konden geen gebruiker vinden met dat e-mailadres en wachtwoord.'
     sessions:

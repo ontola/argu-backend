@@ -46,6 +46,8 @@ Doorkeeper.configure do
     }
     request.env['devise.allow_params_authentication'] = true
     user = request.env['warden'].authenticate(scope: :user)
+    user_from_db = user || User.find_for_database_authentication(request.params[:user])
+
     if user.blank?
       email = params[:user][:email]&.include?('@')
       raise(
@@ -55,6 +57,8 @@ Doorkeeper.configure do
           Argu::Errors::UnknownUsername.new(r: r_with_authenticity_token)
         elsif request.env['warden'].message == :locked
           Argu::Errors::AccountLocked.new(r: r_with_authenticity_token)
+        elsif user_from_db.encrypted_password.blank?
+          Argu::Errors::NoPassword.new(r: r_with_authenticity_token, user: user_from_db)
         elsif request.env['warden'].message == :invalid
           Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
         elsif request.env['warden'].message == :not_found_in_database

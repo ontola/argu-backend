@@ -11,6 +11,7 @@ module Argu
           rescue_from Argu::Errors::UnknownEmail, with: :handle_error
           rescue_from Argu::Errors::UnknownUsername, with: :handle_error
           rescue_from Argu::Errors::WrongPassword, with: :handle_error
+          rescue_from Argu::Errors::NoPassword, with: :handle_error
         end
       end
     end

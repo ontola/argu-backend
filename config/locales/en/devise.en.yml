@@ -25,6 +25,7 @@ en:
       invalid_email: 'We couldn''t find a user with this email.'
       invalid_password: 'Invalid password.'
       invalid_username: 'We couldn''t find a user with this name.'
+      no_password: 'Your account does not have a password yet.'
       user:
         not_found_in_database: 'We couldn''t find a user with that email and password combination.'
     sessions:
