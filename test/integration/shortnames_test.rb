@@ -10,7 +10,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   let(:argument) { create(:argument, parent: motion) }
   let(:comment) { create(:comment, parent: argument) }
   let(:publication) { build(:publication) }
-  let(:comment_shortname) { create(:shortname, owner: comment) }
+  let(:comment_shortname) { create(:shortname, owner: comment, root: argu, primary: false) }
   let(:subject) do
     create(:discussion_shortname, owner: motion, primary: false, root_id: motion.root_id)
   end
@@ -21,7 +21,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   test 'guest should get forum' do
     sign_in :guest_user
 
-    get "/#{argu.url}/#{freetown.url}"
+    get "#{argu.iri}/#{freetown.url}"
 
     assert_response 200
   end
@@ -34,18 +34,22 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
       resource = create(klass, parent: parent)
       parent = resource
 
-      shortname = create(:shortname, owner: resource)
+      shortname = create(:shortname, owner: resource, root: argu, primary: false)
 
       general_show(200, resource, shortname)
     end
   end
 
+  test 'guest should head comment' do
+    sign_in :guest_user
+
+    general_head(200, comment, comment_shortname)
+  end
+
   test 'guest should get comment' do
     sign_in :guest_user
 
-    general_show(302, comment, comment_shortname) do
-      assert_redirected_to "#{comment.parent.iri.path}##{comment.identifier}"
-    end
+    general_show(200, comment, comment_shortname)
   end
 
   ####################################
@@ -109,7 +113,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   test 'administrator should delete destroy' do
     subject
     sign_in administrator
-    general_destroy response: 303, difference: -1
+    general_destroy response: 200, difference: -1
   end
 
   ####################################
@@ -126,8 +130,19 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   private
 
+  def general_head(response, resource, shortname)
+    head "#{argu.iri}/#{shortname.shortname}"
+    assert_redirected_to resource.iri.path
+    follow_redirect!
+
+    assert_response response
+
+    yield if block_given?
+  end
+
   def general_show(response, resource, shortname)
-    get "/#{shortname.shortname}"
+    get "#{argu.iri}/#{shortname.shortname}"
+
     assert_redirected_to resource.iri.path
     follow_redirect!
 
@@ -139,7 +154,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   def general_create(response: :created, differences: {'Shortname.count' => 1}, attrs: nil)
     attrs ||= shortname_attributes
     assert_difference(differences) do
-      post collection_iri(argu, :shortnames), params: attrs
+      post collection_iri(argu, :shortnames, root: argu), params: attrs
       assert_response response
     end
   end

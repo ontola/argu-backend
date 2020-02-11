@@ -136,7 +136,8 @@ module IRIHelper
   end
 
   def shortnameable_from_opts(opts)
-    opts[:class]&.find_via_shortname_or_id(opts[:id])
+    Shortname.find_resource(opts[:id], ActsAsTenant.current_tenant&.uuid) ||
+      opts[:class].find_via_shortname_or_id(opts[:id])
   end
 
   def shortnameable_from_opts?(opts)
