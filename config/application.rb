@@ -75,21 +75,6 @@ module Argu
     # Middlewares
     ############################
 
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins Rails.configuration.host_name, 'argu.co', 'd3hv9pr8szmavn.cloudfront.net'
-        resource '/assets/*',
-                 headers: :any,
-                 methods: %i[get options]
-      end
-
-      allow do
-        origins '*'
-        resource(/\d+.widget/,
-                 headers: %w[Origin Accept Content-Type],
-                 methods: [:get])
-      end
-    end
     # config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
     config.middleware.use TenantMiddleware

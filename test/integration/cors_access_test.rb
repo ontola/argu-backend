@@ -21,38 +21,6 @@ class CorsAccessTest < ActionDispatch::IntegrationTest
   ####################################
   # As Guest
   ####################################
-  test 'Guest should OPTIONS assets cross-origin' do
-    sign_in :guest_user
-
-    options ActionController::Base.helpers.asset_path('application.css'),
-            headers: {
-              Host: 'https://argu.co',
-              Origin: 'https://argu.co',
-              'Access-Control-Request-Method': 'GET',
-              'Access-Control-Request-Headers': 'X-Requested-With'
-            }
-
-    assert_equal 'https://argu.co',
-                 response.headers['Access-Control-Allow-Origin']
-    assert_equal 'GET, OPTIONS',
-                 response.headers['Access-Control-Allow-Methods']
-  end
-
-  test 'Guest should GET assets cross-origin' do
-    sign_in :guest_user
-
-    get ActionController::Base.helpers.asset_path('application.css'),
-        headers: {
-          Host: 'https://argu.co',
-          Origin: 'https://argu.co',
-          'Access-Control-Request-Method': 'GET',
-          'Access-Control-Request-Headers': 'X-Requested-With'
-        }
-
-    assert_equal 'https://argu.co',
-                 response.headers['Access-Control-Allow-Origin']
-  end
-
   test 'Guest should not OPTIONS non-assets cross-origin' do
     sign_in :guest_user
 
