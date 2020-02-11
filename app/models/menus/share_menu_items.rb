@@ -6,7 +6,6 @@ module Menus
       menu_item(
         :invite,
         image: 'fa-share',
-        link_opts: {data: {remote: 'true'}},
         href: new_iri(invites_iri_path(resource)),
         policy: :invite?
       )
@@ -17,7 +16,6 @@ module Menus
         :facebook,
         item_type: 'fb_share',
         image: 'fa-facebook',
-        link_opts: {target: '_blank'},
         href: RDF::URI(ShareHelper.facebook_share_url(url))
       )
     end
@@ -27,7 +25,6 @@ module Menus
         :twitter,
         item_type: 'twitter_share',
         image: 'fa-twitter',
-        link_opts: {target: '_blank'},
         href: RDF::URI(ShareHelper.twitter_share_url(url, title: resource.display_name))
       )
     end
@@ -45,7 +42,6 @@ module Menus
         :linked_in,
         item_type: 'linked_in_share',
         image: 'fa-linkedin',
-        link_opts: {target: '_blank'},
         href: RDF::URI(ShareHelper.linkedin_share_url(url, title: resource.display_name))
       )
     end

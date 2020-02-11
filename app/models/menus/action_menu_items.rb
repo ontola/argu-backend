@@ -6,7 +6,6 @@ module Menus
       menu_item(
         :contact,
         image: 'fa-send-o',
-        link_opts: {data: {remote: 'true'}},
         href: new_iri(resource, :direct_messages),
         policy: :contact?
       )
@@ -54,7 +53,6 @@ module Menus
         :export,
         href: collection_iri(resource, :exports, display: :table),
         image: 'fa-cloud-download',
-        link_opts: {data: {remote: 'true'}},
         policy: :create_child?,
         policy_arguments: [:exports]
       )
@@ -65,10 +63,7 @@ module Menus
         :convert,
         image: 'fa-retweet',
         href: new_iri(resource, :conversions),
-        policy: :convert?,
-        link_opts: {
-          data: {remote: 'true'}
-        }
+        policy: :convert?
       )
     end
 
@@ -77,10 +72,7 @@ module Menus
         :move,
         image: 'fa-sitemap',
         href: new_iri(Move.new(edge: resource).iri_path),
-        policy: :move?,
-        link_opts: {
-          data: {remote: 'true'}
-        }
+        policy: :move?
       )
     end
 
@@ -102,9 +94,6 @@ module Menus
         :destroy,
         href: delete_iri(resource),
         image: 'fa-close',
-        link_opts: {
-          data: {remote: 'true'}
-        },
         policy: :destroy?
       )
     end
@@ -114,9 +103,6 @@ module Menus
         :untrash,
         href: untrash_iri(resource),
         image: 'fa-eye',
-        link_opts: {
-          data: {remote: 'true'}
-        },
         policy: :untrash?
       )
     end
@@ -126,9 +112,6 @@ module Menus
         :trash,
         href: trash_iri(resource),
         image: 'fa-trash',
-        link_opts: {
-          data: {remote: 'true'}
-        },
         policy: :trash?
       )
     end

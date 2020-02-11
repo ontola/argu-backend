@@ -75,7 +75,6 @@ class ApplicationMenuList < LinkedRails::Menus::List
     def has_share_menu(opts = {})
       has_menu :share, {
         image: 'fa-share-alt',
-        link_opts: -> { opts.merge(iri: resource.iri) },
         menus: -> { share_menu_items }
       }.merge(opts)
     end

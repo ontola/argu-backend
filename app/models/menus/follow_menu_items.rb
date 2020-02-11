@@ -20,16 +20,10 @@ module Menus
     end
 
     def follow_menu_item(type, follow, follow_type)
-      if type == :never
-        method = follow && 'DELETE'
-        href = follow && follow_url(follow)
-      else
-        method = 'POST'
-        href = follows_url(gid: resource.uuid, follow_type: type)
-      end
+      href = type == :never ? follow && follow_url(follow) : follows_url(gid: resource.uuid, follow_type: type)
       image = follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o'
       action = resource.action(:"follow_#{type}", user_context)
-      menu_item(type, action: action, href: href, image: image, link_opts: {data: {remote: true, method: method}})
+      menu_item(type, action: action, href: href, image: image)
     end
   end
 end

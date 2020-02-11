@@ -7,12 +7,10 @@ class AppMenuList < ApplicationMenuList
   has_menu :info,
            label: LinkedRails.translations(-> { I18n.t('about.info') }),
            image: 'fa-info',
-           link_opts: -> { {triggerClass: 'navbar-item', defaultAction: RDF::URI(i_about_url)} },
            menus: -> { info_menu_items }
   has_menu :user,
            label: -> { resource.display_name },
            image: -> { resource.profile.default_profile_photo.thumbnail },
-           link_opts: -> { {triggerClass: 'navbar-item', defaultAction: user_url(user)} },
            menus: -> { user_menu_items }
 
   def iri_opts
