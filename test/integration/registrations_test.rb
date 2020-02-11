@@ -78,42 +78,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_response 422
   end
 
-  test 'should block spammer' do
-    sign_in guest_user
-    r = '/freetown/con/846/c/new?comment%5Bbody%5D=online+casino&confirm=true'
-    attrs = attributes_for(:user)
-    attrs[:r] = r
-
-    assert_difference('User.count' => 0,
-                      'Favorite.count' => 0,
-                      worker_count_string('RedisResourceWorker') => 0,
-                      worker_count_string('SendEmailWorker') => 0) do
-      post user_registration_path,
-           params: {user: attrs, accept_terms: true, r: r}
-      assert_response 200
-    end
-    assert_includes(
-      response.body,
-      'It seems like you&#39;re trying to post a comment containing advertising or illegal content'
-    )
-  end
-
-  test 'should not block valid content' do
-    sign_in guest_user
-    r = '/freetown/con/846/c/new?comment%5Bbody%5D=valid+comment&confirm=true'
-    attrs = attributes_for(:user)
-    attrs[:r] = r
-
-    assert_difference('User.count' => 1,
-                      'Favorite.count' => 0,
-                      worker_count_string('RedisResourceWorker') => 1,
-                      worker_count_string('SendEmailWorker') => 1) do
-      post user_registration_path,
-           params: {user: attrs, accept_terms: true, r: r}
-      assert_response :created
-    end
-  end
-
   test 'should post create en' do
     sign_in guest_user
     locale = :en

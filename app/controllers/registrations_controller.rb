@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spam_checker'
-
 class RegistrationsController < Devise::RegistrationsController
   include Argu::Controller::Authorization
   include LinkedRails::Enhancements::Destroyable::Controller
@@ -12,7 +10,6 @@ class RegistrationsController < Devise::RegistrationsController
   alias new_resource build_resource
 
   skip_before_action :authenticate_scope!, only: :destroy
-  before_action :handle_spammer, if: :is_spam?, only: :create
 
   protected
 
@@ -84,10 +81,6 @@ class RegistrationsController < Devise::RegistrationsController
     root_path
   end
 
-  def handle_spammer
-    render 'application/spam', content: @content_checked_for_spam
-  end
-
   def send_confirmation_mail(user, guest_votes) # rubocop:disable Metrics/AbcSize
     if guest_votes&.count&.positive?
       SendEmailWorker.perform_async(
@@ -106,13 +99,5 @@ class RegistrationsController < Devise::RegistrationsController
 
   def user_confirmation_url(user)
     iri_from_template(:user_confirmation, confirmation_token: user.confirmation_token)
-  end
-
-  def is_spam? # rubocop:disable Metrics/AbcSize
-    r = sign_up_params[:r] || params[:r]
-    body = Rack::Utils.parse_nested_query(r&.split('?')&.second).with_indifferent_access
-    @content_checked_for_spam = body[:comment].try(:[], :body)
-    return false if @content_checked_for_spam.blank?
-    SpamChecker.new(content: @content_checked_for_spam, email: sign_up_params[:email]).spam?
   end
 end

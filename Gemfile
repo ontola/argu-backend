@@ -7,7 +7,6 @@ ruby = '2.6.3'
 gem 'active_response', git: 'https://github.com/ontola/active_response', branch: :master
 gem 'acts_as_tenant', git: 'https://github.com/ArthurWD/acts_as_tenant', branch: :master
 gem 'apartment', git: 'https://github.com/ArthurWD/apartment', ref: '9d2db15'
-gem 'rakismet'
 gem 'bootsnap', require: false
 gem 'bunny', '~> 2.6.1'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
