@@ -58,9 +58,6 @@ Rails.application.routes.draw do
                 tokens: 'oauth/tokens'
   end
 
-  get '/', to: 'static_pages#developers', constraints: {subdomain: 'developers'}
-  get '/developers', to: 'static_pages#developers'
-  get '/token', to: 'static_pages#token'
   get '/ns/core', to: 'vocabularies#show'
   get '/manifest', to: 'manifests#show'
 
@@ -134,14 +131,12 @@ Rails.application.routes.draw do
   get '/product', to: redirect('/i/product')
   get '/team', to: redirect('/i/team')
   get '/governments', to: redirect('/i/governments')
-  get '/how_argu_works', to: 'static_pages#how_argu_works'
   # end
 
   get '/values', to: 'documents#show', name: 'values'
   get '/policy', to: 'documents#show', name: 'policy'
   get '/privacy', to: 'documents#show', name: 'privacy'
 
-  get '/i/about', to: 'static_pages#about'
   resources :info, path: 'i', only: [:show]
 
   resources :notifications,
@@ -404,8 +399,6 @@ Rails.application.routes.draw do
       include_route_concerns
     end
   end
-
-  get '/ns/core/:model', to: 'static_pages#context'
 
   mount Sidekiq::Prometheus::Exporter => '/d/sidekiq'
 
