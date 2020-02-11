@@ -5,8 +5,13 @@ class InfoController < ApplicationController
   def show
     setting = Setting.get(params[:id])
     raise ActiveRecord::RecordNotFound if setting.blank?
-    @document = JSON.parse setting
-    raise ActiveRecord::RecordNotFound if @document['sections'].blank?
+
+    active_response_block do
+      respond_with_resource(
+        include: :sections,
+        resource: InfoDocument.new(iri: RDF::URI(request.original_url), json: JSON.parse(setting))
+      )
+    end
   rescue JSON::ParserError
     raise ActiveRecord::RecordNotFound
   end

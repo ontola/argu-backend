@@ -89,8 +89,6 @@ class InfoControllerTest < ActionController::TestCase
     get :show, params: {id: team.key}, format: :nq
 
     assert_response 200
-    assert assigns(:document)
-    assert_equal 'image-wide', assigns(:document)['sections'].first['type']
   end
 
   test 'should 404 for get nonexistent when not logged in' do
@@ -124,8 +122,6 @@ class InfoControllerTest < ActionController::TestCase
     get :show, params: {id: team.key}, format: :nq
 
     assert_response 200
-    assert assigns(:document)
-    assert_equal 'image-wide', assigns(:document)['sections'].first['type']
   end
 
   test 'should 404 for get nonexistent' do
