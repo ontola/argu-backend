@@ -77,35 +77,6 @@ class MotionsTest < ActionDispatch::IntegrationTest
     )
   end
 
-  test 'initiator should show tutorial only on first post create' do
-    sign_in initiator
-
-    general_create(
-      parent: :freetown,
-      results: {
-        should: true,
-        response: :created
-      }
-    )
-    assert_not_nil assigns(:create_service).resource
-    assert_equal(
-      response.headers['Location'],
-      argu_url(assigns(:create_service).resource.iri.path, start_motion_tour: true)
-    )
-    WebMock.reset!
-
-    general_create(
-      parent: :freetown,
-      results: {
-        should: true,
-        response: :created
-      }
-    )
-    assert_not_nil assigns(:create_service).resource
-
-    assert_redirected_to assigns(:create_service).resource.iri.path
-  end
-
   test 'initiator should post create motion with latlon' do
     sign_in initiator
 

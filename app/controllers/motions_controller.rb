@@ -25,9 +25,4 @@ class MotionsController < DiscussionsController
   def show_params
     params.permit(:page, :page_arg_pro, :page_arg_con)
   end
-
-  def redirect_location
-    first = current_profile.motions.count == 1 || nil
-    authenticated_resource.iri(start_motion_tour: first)
-  end
 end
