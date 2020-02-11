@@ -15,7 +15,7 @@ module Users
         token_url: iri_from_template(:user_confirmation, confirmation_token: email.confirmation_token),
         email: email.email
       )
-      set_flash_message :notice, :send_instructions if create_email
+      add_exec_action_header(response.headers, ontola_snackbar_action(find_message(:send_instructions))) if create_email
       respond_with({}, location: after_resending_confirmation_instructions_path_for(current_user))
     end
 

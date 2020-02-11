@@ -42,7 +42,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def active_response_success_message
     return super unless action_name == 'destroy'
-    t('type_destroy_success', type: 'Account')
+    I18n.t('type_destroy_success', type: 'Account')
   end
 
   def build_resource(*args)
@@ -58,7 +58,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def delete_execute
     if current_user.guest?
-      flash[:error] = 'Not signed in'
       redirect_to root_path
       false
     else
@@ -68,8 +67,8 @@ class RegistrationsController < Devise::RegistrationsController
 
   def destroy_execute # rubocop:disable Metrics/AbcSize
     @user = User.find current_user.id
-    unless params[:user].try(:[], :confirmation_string) == t('users_cancel_string')
-      @user.errors.add(:confirmation_string, t('errors.messages.should_match'))
+    unless params[:user].try(:[], :confirmation_string) == I18n.t('users_cancel_string')
+      @user.errors.add(:confirmation_string, I18n.t('errors.messages.should_match'))
     end
     return false if @user.errors.present? || !@user.destroy
 

@@ -44,7 +44,7 @@ class StatisticsController < ParentableController
       DataCube::Set.new(
         dimensions: observation_dimensions.keys,
         iri: RDF::URI(request.original_url),
-        label: t('statistics.header'),
+        label: I18n.t('statistics.header'),
         measures: observation_measures.keys,
         observations: [
           dimensions: observation_dimensions,

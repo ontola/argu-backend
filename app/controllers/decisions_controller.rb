@@ -32,9 +32,9 @@ class DecisionsController < EdgeableController
   def active_response_success_message
     if authenticated_resource.argu_publication.published_at.present?
       parent_key = authenticated_resource.parent.model_name.singular
-      t("decisions.#{parent_key}.#{authenticated_resource.state}")
+      I18n.t("decisions.#{parent_key}.#{authenticated_resource.state}")
     else
-      t('type_save_success', type: t('decisions.type').capitalize)
+      I18n.t('type_save_success', type: I18n.t('decisions.type').capitalize)
     end
   end
 

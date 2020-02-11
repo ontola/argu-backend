@@ -36,7 +36,7 @@ module Oauth
     test 'guest should not edit applications' do
       sign_in :guest_user
       get edit_oauth_application_path(subject)
-      assert_not_authorized
+      assert_response :not_found
     end
 
     test 'guest should not show applications' do
@@ -90,7 +90,7 @@ module Oauth
     test 'user should not edit applications' do
       sign_in user
       get edit_oauth_application_path(subject)
-      assert_not_authorized
+      assert_response :not_found
     end
 
     test 'user should not show applications' do
@@ -179,12 +179,12 @@ module Oauth
       "#{argu.iri}#{super}"
     end
 
-    def new_oauth_application_path(*args)
-      "#{argu.iri}#{super}"
+    def new_oauth_application_path
+      "#{oauth_applications_path}/new"
     end
 
-    def edit_oauth_application_path(*args)
-      "#{argu.iri}#{super}"
+    def edit_oauth_application_path(id)
+      "#{oauth_application_path(id)}/edit"
     end
   end
 end

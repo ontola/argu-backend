@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
+class ApplicationController < ActionController::API # rubocop:disable Metrics/ClassLength
+  include ActionController::MimeResponds
   include ActiveResponse::Controller
   include LinkedRails::Controller
   include Argu::Controller::Authentication
@@ -219,7 +220,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   end
 
   def is_flashing_format?
-    true
+    false
   end
 
   # The name of the current model.

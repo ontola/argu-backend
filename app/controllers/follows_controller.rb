@@ -18,7 +18,7 @@ class FollowsController < AuthorizedController
   def destroy_failure_rdf
     respond_with_redirect(
       location: authenticated_resource.followable.iri,
-      notice: t('notifications.unsubscribe.failed', item: authenticated_resource.followable.display_name)
+      notice: I18n.t('notifications.unsubscribe.failed', item: authenticated_resource.followable.display_name)
     )
   end
 
@@ -26,7 +26,7 @@ class FollowsController < AuthorizedController
     add_exec_action_header(
       headers,
       ontola_snackbar_action(
-        t('notifications.unsubscribe.success', item: authenticated_resource.followable.display_name)
+        I18n.t('notifications.unsubscribe.success', item: authenticated_resource.followable.display_name)
       )
     )
     add_exec_action_header(
@@ -45,7 +45,7 @@ class FollowsController < AuthorizedController
   def collection_from_parent_name; end
 
   def active_response_success_message
-    t('notifications.changed_successfully')
+    I18n.t('notifications.changed_successfully')
   end
 
   def find_params

@@ -64,14 +64,12 @@ Rails.application.routes.draw do
   devise_for :users,
              controllers: {
                registrations: 'registrations',
-               sessions: 'users/sessions',
                passwords: 'users/passwords',
                unlocks: 'users/unlocks',
                confirmations: 'users/confirmations'
              }, skip: :registrations
 
   as :user do
-    get 'users/verify', to: 'users/sessions#verify'
     get 'users/delete', to: 'registrations#delete', as: :cancel_user_registration
     get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
     get 'users/wrong_email', to: 'users#wrong_email'

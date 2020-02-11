@@ -34,7 +34,7 @@ module Users
     end
 
     def update_failure
-      respond_with_redirect(location: request.headers['Referer'] || root_path, notice: t('errors.general'))
+      respond_with_redirect(location: request.headers['Referer'] || root_path, notice: I18n.t('errors.general'))
     end
 
     def update_success

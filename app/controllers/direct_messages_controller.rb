@@ -40,6 +40,6 @@ class DirectMessagesController < ParentableController
 
   def active_response_success_message
     return super unless action_name == 'create'
-    t('direct_messages.notice.success')
+    I18n.t('direct_messages.notice.success')
   end
 end

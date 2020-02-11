@@ -13,7 +13,6 @@ class UsersController < AuthorizedController
   def authorized_current_user
     return current_resource_owner unless current_resource_owner&.guest?
 
-    flash[:error] = t('devise.failure.unauthenticated')
     raise Argu::Errors::Unauthorized.new
   end
 
@@ -73,9 +72,9 @@ class UsersController < AuthorizedController
 
   def active_response_success_message
     if @email_changed
-      t('users.registrations.confirm_mail_change_notice')
+      I18n.t('users.registrations.confirm_mail_change_notice')
     else
-      t('type_save_success', type: t('type_changes'))
+      I18n.t('type_save_success', type: I18n.t('type_changes'))
     end
   end
 

@@ -31,9 +31,9 @@ class Notification < ApplicationRecord
       activity_string_for(activity, user)
     elsif confirmation_reminder?
       vote_count = user.edges.joins(:parent).where(owner_type: 'Vote', parents_edges: {owner_type: 'VoteEvent'}).count
-      t('notifications.permanent.confirm_account', count: vote_count, email: user.email)
+      I18n.t('notifications.permanent.confirm_account', count: vote_count, email: user.email)
     elsif finish_intro?
-      t('notifications.permanent.finish_intro')
+      I18n.t('notifications.permanent.finish_intro')
     else
       title
     end

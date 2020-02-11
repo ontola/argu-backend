@@ -20,6 +20,8 @@ require_relative '../lib/acts_as_tenant/sidekiq_with_tenant'
 
 module Argu
   class Application < Rails::Application
+    config.api_only = true
+
     config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || "app.#{ENV['HOSTNAME']}"}"
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"

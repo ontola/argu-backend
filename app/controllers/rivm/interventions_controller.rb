@@ -8,7 +8,7 @@ class InterventionsController < EdgeableController
   def active_response_success_message
     return super unless resource_was_published? && current_resource.argu_publication.publish_time_lapsed?
 
-    t('interventions.publish_success')
+    I18n.t('interventions.publish_success')
   end
 
   def create_service_parent

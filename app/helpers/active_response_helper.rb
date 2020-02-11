@@ -6,12 +6,12 @@ module ActiveResponseHelper
   def active_response_success_message # rubocop:disable Metrics/AbcSize
     if current_resource.try(:is_publishable?) && (action_name == 'create' || resource_was_published?)
       if current_resource.try(:argu_publication)&.publish_time_lapsed?
-        t('type_publish_success', type: type_for(current_resource).capitalize)
+        I18n.t('type_publish_success', type: type_for(current_resource).capitalize)
       else
-        t('type_draft_success', type: type_for(current_resource).capitalize)
+        I18n.t('type_draft_success', type: type_for(current_resource).capitalize)
       end
     else
-      t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
+      I18n.t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
     end
   end
 
@@ -57,9 +57,9 @@ module ActiveResponseHelper
 
   def redirect_message
     if action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?
-      t('type_publish_success', type: type_for(current_resource).capitalize)
+      I18n.t('type_publish_success', type: type_for(current_resource).capitalize)
     else
-      t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
+      I18n.t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
     end
   end
 
@@ -104,7 +104,7 @@ module ActiveResponseHelper
   def respond_with_block_options(resource, opts)
     active_response_options
       .merge(opts)
-      .merge(resource: resource.presence, notice: flash[:notice] || flash[:success])
+      .merge(resource: resource.presence)
   end
 
   def update_success_location

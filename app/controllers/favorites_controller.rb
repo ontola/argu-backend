@@ -31,9 +31,9 @@ class FavoritesController < ParentableController
 
   def active_response_success_message
     if action_name == :destroy
-      t('type_destroy_success', type: type_for(authenticated_resource)).capitalize
+      I18n.t('type_destroy_success', type: type_for(authenticated_resource)).capitalize
     elsif action_name == :save
-      t('type_create_success', type: type_for(authenticated_resource)).capitalize
+      I18n.t('type_create_success', type: type_for(authenticated_resource)).capitalize
     end
   end
 end
