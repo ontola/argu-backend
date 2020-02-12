@@ -5,8 +5,6 @@ Rails.application.configure do
   Rails.application.routes.default_url_options[:protocol] = :https
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.logstasher.enabled = true
-
   # Code is not reloaded between requests.
   config.cache_classes = true
 

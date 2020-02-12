@@ -12,8 +12,6 @@ Rails.application.configure do
   Rails.application.routes.default_url_options[:host] = config.host_name
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.logstasher.enabled = true
-
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
