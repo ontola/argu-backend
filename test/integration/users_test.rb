@@ -53,9 +53,9 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     expect_resource_type(NS::ONTOLA[:AnonymousUser])
     expect_triple(requested_iri, NS::SCHEMA[:name], I18n.t('users.anonymous'))
-    refute_includes(response.body, user_hidden_votes.first_name)
-    refute_includes(response.body, user_hidden_votes.last_name)
-    refute_includes(response.body, user_hidden_votes.email)
+    assert_not_includes(response.body, user_hidden_votes.first_name)
+    assert_not_includes(response.body, user_hidden_votes.last_name)
+    assert_not_includes(response.body, user_hidden_votes.email)
   end
 
   test 'guest should get show without feed' do

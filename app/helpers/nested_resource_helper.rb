@@ -24,6 +24,7 @@ module NestedResourceHelper
   def parent_from_iri(iri)
     root = TenantFinder.from_url(iri)
     return nil if root.blank?
+
     route_opts = Rails.application.routes.recognize_path(DynamicUriHelper.rewrite(iri, root))
     parent_from_params(root, route_opts) if parent_resource_key(route_opts)
   rescue ActionController::RoutingError

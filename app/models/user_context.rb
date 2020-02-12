@@ -16,6 +16,7 @@ class UserContext
 
   def cache_key(ident, key, val)
     return val if ident.nil?
+
     @lookup_map[ident] ||= {}
     @lookup_map[ident][key] = val
     val
@@ -23,6 +24,7 @@ class UserContext
 
   def check_key(ident, key)
     return if ident.nil?
+
     @lookup_map.dig(ident, key)
   end
 
@@ -36,6 +38,7 @@ class UserContext
     unless edge.persisted_edge.root_id == tree_root.uuid
       raise "#{edge.owner_type} #{edge.owner_id} lies outside the tree of root #{tree_root.url}"
     end
+
     @grant_trees[edge.persisted_edge.root_id] ||= GrantTree.new(edge.persisted_edge.root)
   end
 
@@ -65,6 +68,7 @@ class UserContext
 
   def with_root(root)
     raise 'no root given' if root.nil?
+
     ActsAsTenant.with_tenant(root) { yield }
   end
 end

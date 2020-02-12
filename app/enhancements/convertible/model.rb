@@ -51,6 +51,7 @@ module Convertible
 
     def convert_to?(klass)
       return false unless respond_to?(:convertible_classes)
+
       convertible_classes.include?(klass.class_name.to_sym)
     end
 
@@ -89,5 +90,5 @@ module Convertible
       false
     end
   end
-  ActiveRecord::Base.send(:include, ActiveRecordExtension)
+  ActiveRecord::Base.include ActiveRecordExtension
 end

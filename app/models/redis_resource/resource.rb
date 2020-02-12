@@ -56,6 +56,7 @@ module RedisResource
     def remove_from_redis
       raise ActiveRecord::RecordNotFound if key.blank?
       raise "Cannot destroy a key with wildcards: #{key.key}" if key.has_wildcards?
+
       Argu::Redis.delete(key.key)
     end
 
@@ -77,6 +78,7 @@ module RedisResource
         key = RedisResource::Key.parse(key) if key.is_a?(String)
         attributes = key.attributes&.except('publisher_id', 'creator_id')
         return if attributes.nil?
+
         parent ||= Edge.find_by(root_id: key.root_id, id: key.parent_id)
         user ||= key.user
         resource = Edge.new(

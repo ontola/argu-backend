@@ -36,7 +36,7 @@ module Edgeable
         )
       end
 
-      def order_child_count_sql(type, direction: :desc, as: 'edges')
+      def order_child_count_sql(type, direction: :desc, as: 'edges') # rubocop:disable Naming/MethodParameterName
         column =
           Arel::Nodes::InfixOperation
             .new('->', Edge.arel_table.alias(as)[:children_counts], Arel::Nodes::SqlLiteral.new("'#{type}'"))

@@ -42,12 +42,13 @@ class RegistrationsController < Devise::RegistrationsController
 
   def active_response_success_message
     return super unless action_name == 'destroy'
+
     I18n.t('type_destroy_success', type: 'Account')
   end
 
   def build_resource(*args)
     super
-    resource.shortname = nil if resource.shortname&.shortname&.blank?
+    resource.shortname = nil if resource.shortname&.shortname.blank?
     resource.build_profile
     resource.language = I18n.locale
   end

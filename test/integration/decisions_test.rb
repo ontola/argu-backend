@@ -243,6 +243,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
       assert false, 'Model changed when it should not have'
     end
     return unless changed
+
     assert_equal 'Changed content', decision.reload.content
     assert_equal 'update', decision.activities.last.action
   end

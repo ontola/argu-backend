@@ -208,6 +208,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   def create_staff_grant
     staff_group = Group.find_by(id: Group::STAFF_ID)
     return if staff_group.nil?
+
     grant = Grant.new(grant_set: GrantSet.staff, edge: self, group: staff_group)
     grant.save!(validate: false)
   end

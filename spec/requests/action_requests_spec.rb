@@ -32,6 +32,7 @@ RSpec.describe 'Actions', type: :request do
         )
       ).action(:read)
     end
+
     let(:notification) { Notification.first }
     let(:non_existing_notification) { Notification.new(id: non_existing_id) }
     let(:authorized_user) { notification.user }

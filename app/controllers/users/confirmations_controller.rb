@@ -23,6 +23,7 @@ module Users
       respond_to do |format|
         format.json do
           raise Argu::Errors::Forbidden.new(query: :confirm?) unless doorkeeper_scopes.include?('service')
+
           EmailAddress.find_by!(email: params[:email]).confirm
           head 200
         end
@@ -70,6 +71,7 @@ module Users
     def email_for_user
       email = resource_params[:email]
       return EmailAddress.find_by!(email: email) if current_user.guest?
+
       current_user.email_addresses.find_by(email: email) ||
         raise(ActiveRecord::RecordNotFound.new(I18n.t('devise.confirmations.invalid_email', email: email)))
     end

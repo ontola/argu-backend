@@ -10,11 +10,13 @@ RSpec.describe 'Discussions', type: :request do
   context 'for page' do
     let(:subject_parent) { argu }
     let(:non_existing_index_path) { '/non_existing/discussions' }
+
     it_behaves_like 'get index', skip: %i[unauthorized]
   end
 
   context 'for discoverable forum' do
     let(:subject_parent) { freetown }
+
     it_behaves_like 'get index'
   end
 
@@ -23,6 +25,7 @@ RSpec.describe 'Discussions', type: :request do
     let(:expect_unauthorized) { expect_not_found }
     let(:expect_redirect_to_login) { expect_not_found }
     let(:expect_get_index_guest_serializer) { expect_not_found }
+
     it_behaves_like 'get index'
   end
 end

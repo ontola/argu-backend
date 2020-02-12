@@ -5,6 +5,7 @@ class ActivityPolicy < EdgeTreePolicy
     def resolve
       @scope = @scope.where(root_id: grant_tree.tree_root_id) if grant_tree&.tree_root_id&.present?
       return @scope if staff?
+
       s = filter_unpublished_and_unmanaged(@scope)
       s = filter_inaccessible_forums(s)
       filter_private_votes(s)
@@ -28,7 +29,7 @@ class ActivityPolicy < EdgeTreePolicy
         .joins('INNER JOIN "profiles" ON "profiles"."id" = "activities"."owner_id"')
         .where(activities[:key].not_eq('vote.create').or(
                  profiles[:are_votes_public].eq(true)
-        ))
+               ))
     end
 
     # Trackable should be published OR be created by one of the managed profiles OR be placed in a managed forum

@@ -23,6 +23,7 @@ class StatisticsController < ParentableController
 
   def observation_measures # rubocop:disable Metrics/AbcSize
     return @observation_measures if @observation_measures
+
     counts = descendants.group(:owner_type).count
     votes = descendants.joins(:parent).where(owner_type: 'Vote', parents_edges: {owner_type: 'VoteEvent'})
     @observation_measures = {

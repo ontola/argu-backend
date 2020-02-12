@@ -26,6 +26,7 @@ class Feed
         favorite_activities
       else
         raise "#{parent.class} is not a valid parent type for generating a feed" unless parent.is_a?(Edge)
+
         edge_activities
       end
   end
@@ -65,6 +66,7 @@ class Feed
               .where('edges.owner_type != ? OR recipients_activities.owner_type != ?', 'Vote', 'Argument')
     scope = scope.where(edges: {root_id: root_id}) if root_id
     return scope unless relevant_only
+
     scope.where("key IN (?) AND (edges.trashed_at IS NULL OR key ~ '*.trash')", RELEVANT_KEYS)
   end
 
@@ -75,6 +77,7 @@ class Feed
   def favorite_activities
     raise 'Staff only' unless parent.is_staff?
     return Activity.none if parent.favorites.empty?
+
     activity_base.where(edges: {root_id: parent.favorites.joins(:edge).pluck('edges.root_id')})
   end
 

@@ -8,6 +8,7 @@ class ContainerNodesController < EdgeableController
 
   def show
     return unless policy(resource_by_id).show?
+
     super
   end
 
@@ -89,8 +90,10 @@ class ContainerNodesController < EdgeableController
 
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
+
     resource = Shortname.find_resource(params[:id], tree_root_id) || raise(ActiveRecord::RecordNotFound)
     return if resource.is_a?(ContainerNode)
+
     redirect_to resource.iri
   end
 
@@ -107,7 +110,9 @@ class ContainerNodesController < EdgeableController
   end
 
   def tab!
+    # rubocop:disable Naming/MemoizedInstanceVariableName
     @verified_tab ||= policy(resource_by_id || Forum).verify_tab(tab)
+    # rubocop:enable Naming/MemoizedInstanceVariableName
   end
 
   def tab

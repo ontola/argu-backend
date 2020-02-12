@@ -33,11 +33,12 @@ class NotificationsController < AuthorizedController
 
   def authorize_action
     return super unless action_name == 'read'
+
     authorize Notification, :read?
   end
 
   def index_collection
-    @collection ||= ::Collection.new(
+    @index_collection ||= ::Collection.new(
       collection_options.merge(
         association_class: Notification,
         default_type: :infinite,

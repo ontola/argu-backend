@@ -4,7 +4,7 @@ require 'test_helper'
 
 class InterventionsTest < ActionDispatch::IntegrationTest
   before do
-    load(Dir[Rails.root.join('db', 'seeds', 'rivm.seeds.rb')][0])
+    load(Dir[Rails.root.join('db/seeds/rivm.seeds.rb')][0])
     Apartment::Tenant.switch! :rivm
   end
 

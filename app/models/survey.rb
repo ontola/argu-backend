@@ -2,7 +2,7 @@
 
 class Survey < Discussion
   TYPEFORM_MANAGE_TEMPLATE = URITemplate.new('https://admin.typeform.com/form/{typeform_id}/create')
-  TYPEFORM_TEMPLATE = %r{\Ahttps:\/\/(\w*).typeform.com\/to\/(\w*)\z}
+  TYPEFORM_TEMPLATE = %r{\Ahttps:\/\/(\w*).typeform.com\/to\/(\w*)\z}.freeze
   include Edgeable::Content
 
   property :external_iri, :string, NS::ARGU[:externalIRI]

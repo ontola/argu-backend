@@ -59,6 +59,7 @@ class Place < ApplicationRecord
     # @return [Place, nil] {Place} or nil if it doesn't exist yet
     def find_by_opts(opts = {})
       return if opts[:lat] || opts[:lon]
+
       scope = all
       opts.each do |key, value|
         scope = if value.present?
@@ -76,6 +77,7 @@ class Place < ApplicationRecord
       result = JSON.parse(HTTParty.get(url).body).first
       return nil if result.nil?
       return find_by(nominatim_id: result['place_id']) if exists?(nominatim_id: result['place_id'])
+
       new(fetched_opts(result))
     end
 

@@ -140,8 +140,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
         custom_placement_attributes: {
           id: '',
           placement_type: 'custom',
-          lat:  2.0,
-          lon:  2.0,
+          lat: 2.0,
+          lon: 2.0,
           zoom_level: '1'
         }
       },

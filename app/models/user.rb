@@ -58,7 +58,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   ANONYMOUS_ID = -1
   SERVICE_ID = -2
   TEMP_EMAIL_PREFIX = 'change@me'
-  TEMP_EMAIL_REGEX = /\Achange@me/
+  TEMP_EMAIL_REGEX = /\Achange@me/.freeze
   LOGIN_ATTRS = %w[updated_at failed_attempts].freeze
   FAILED_LOGIN_ATTRS = %w[current_sign_in_at last_sign_in_at sign_in_count updated_at].freeze
 
@@ -138,6 +138,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def build_public_group_membership
     return if Group.public.nil?
     return if profile.group_memberships.any? { |m| m.group_id == Group::PUBLIC_ID }
+
     profile.group_memberships.build(
       member: profile,
       group_id: Group::PUBLIC_ID,
@@ -155,6 +156,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def create_confirmation_reminder_notification(root_id)
     return if guest? || confirmed? || notifications.confirmation_reminder.any?
+
     Notification.confirmation_reminder.create(
       user: self,
       url: settings_iri('/u', tab: :authentication),
@@ -166,6 +168,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def create_finish_intro_notification
     return if url.present? || notifications.finish_intro.any?
+
     Notification.finish_intro.create(
       user: self,
       url: Rails.application.routes.url_helpers.setup_users_path,
@@ -188,6 +191,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   def follow(followable, type = :reactions, ancestor_type = nil)
     return if self == followable || !accepted_terms?
+
     if type.present?
       follow = follows.find_or_initialize_by(followable_id: followable.uuid,
                                              followable_type: 'Edge')
@@ -395,6 +399,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def validate_r
     return if argu_iri_or_relative?(r)
+
     errors.add(:r, "Redirecting to #{r} is not allowed")
   end
 
@@ -432,7 +437,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def should_broadcast_changes
     keys = previous_changes.keys
     return true if keys.length != LOGIN_ATTRS.length && keys.length != FAILED_LOGIN_ATTRS.length
-    !(keys & LOGIN_ATTRS == keys || keys & FAILED_LOGIN_ATTRS == keys)
+
+    !(keys & LOGIN_ATTRS == keys || keys & FAILED_LOGIN_ATTRS == keys) # rubocop:disable Style/MultipleComparison
   end
 
   class << self

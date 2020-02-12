@@ -8,6 +8,7 @@ RSpec.describe 'Votes', type: :request do
   before do
     freetown.update(public_grant: :participator)
   end
+
   let(:unauthorized_user) do
     freetown.grants.destroy_all
     create_forum(public_grant: 'participator', parent: create(:page))
@@ -42,6 +43,7 @@ RSpec.describe 'Votes', type: :request do
     end
     let(:expect_redirect_to_login) { new_iri(subject_parent, :votes, confirm: true) }
     let(:created_resource_path) { subject_parent.iri.path }
+
     it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid]
     it_behaves_like 'by parent'
   end
@@ -57,6 +59,7 @@ RSpec.describe 'Votes', type: :request do
       end
       let(:expect_redirect_to_login) { new_iri(motion.default_vote_event, :votes, confirm: true) }
       let(:created_resource_path) { motion.iri.path }
+
       it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid]
       it_behaves_like 'by parent'
     end
@@ -80,11 +83,14 @@ RSpec.describe 'Votes', type: :request do
         collection_iri(subject_parent.iri(id: non_existing_id).path, :votes, root: argu).path
       end
       let(:created_resource_path) { linked_record.iri.path }
+
       it_behaves_like 'requests', skip: %i[trash untrash edit delete update new create_invalid]
       it_behaves_like 'by parent'
     end
 
     context 'with non-persisted linked_record parent' do
+      subject { build(:vote, parent: non_persisted_linked_record) }
+
       let(:create_guest_differences) do
         {
           'Argu::Redis.keys("temporary.*").count' => 1,
@@ -95,7 +101,7 @@ RSpec.describe 'Votes', type: :request do
       let(:non_persisted_linked_record) do
         LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid)
       end
-      subject { build(:vote, parent: non_persisted_linked_record) }
+
       let(:parent_path) {}
       let(:index_path) do
         collection_iri(non_persisted_linked_record.default_vote_event.iri(id: 'default').path, :votes).path
@@ -118,6 +124,7 @@ RSpec.describe 'Votes', type: :request do
           root: argu
         ).path
       end
+
       it_behaves_like 'post create'
       it_behaves_like 'get index'
     end

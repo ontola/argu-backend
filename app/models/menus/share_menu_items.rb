@@ -74,6 +74,7 @@ module Menus
 
     def share_menu_items # rubocop:disable Metrics/AbcSize
       return [not_published_notice] unless resource.is_published?
+
       url = resource.iri
 
       items = [invite_link]

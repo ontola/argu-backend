@@ -26,4 +26,4 @@ module ActiveRecordWith
   end
 end
 
-ActiveRecord::Relation.send(:prepend, ActiveRecordWith)
+ActiveRecord::Relation.prepend ActiveRecordWith

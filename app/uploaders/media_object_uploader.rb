@@ -50,6 +50,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
 
   def aws_signer
     return if ENV['AWS_ID'].blank? || public_content?
+
     lambda do |unsigned_url, _options|
       signer = Aws::S3::Presigner.new
       key = URI.parse(unsigned_url).path
@@ -68,6 +69,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
 
   def default_url
     return unless profile_photo?
+
     email =
       if model.about.try(:profileable_type) == 'Page'
         'anonymous'
@@ -83,6 +85,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
 
   def is_image?(_file = nil)
     return true if profile_photo? || cover_photo?
+
     content_type&.split('/')&.first == 'image'
   end
 

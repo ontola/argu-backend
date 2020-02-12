@@ -82,9 +82,9 @@ module Argu
 
     # Delegate `::Redis::CannotConnectError` to this method.
     # It automatically logs and sends to bugsnag.
-    def self.rescue_redis_connection_error(e)
+    def self.rescue_redis_connection_error(error)
       Rails.logger.error 'Redis not available'
-      ::Bugsnag.notify(e) do |report|
+      ::Bugsnag.notify(error) do |report|
         report.severity = 'error'
       end
       nil

@@ -9,7 +9,7 @@ Rails.application.config.assets.version = ::VERSION
 # Rails.application.config.assets.paths << Emoji.images_path
 
 Rails.application.config.assets.initialize_on_precompile = true
-Rails.application.config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
+Rails.application.config.assets.paths << Rails.root.join('lib/assets/javascripts')
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 # Precompile additional assets.

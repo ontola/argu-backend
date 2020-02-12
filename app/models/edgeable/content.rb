@@ -22,6 +22,7 @@ module Edgeable
 
       def capitalize_title
         return if display_name.blank?
+
         display_name[0] = display_name[0].upcase
         self.display_name = display_name
       end

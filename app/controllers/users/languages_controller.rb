@@ -28,8 +28,10 @@ module Users
 
     def update_execute
       return false unless valid_locale?
+
       I18n.locale = locale_param
       return false unless current_user.guest? || current_user.update(language: locale_param)
+
       update_oauth_token(new_oauth_token.token)
     end
 
@@ -43,6 +45,7 @@ module Users
 
     def valid_locale?
       return true if I18n.available_locales.include?(locale_param)
+
       Bugsnag.notify(RuntimeError.new("Invalid locale #{locale_param}"))
       false
     end

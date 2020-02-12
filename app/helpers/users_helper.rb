@@ -9,9 +9,11 @@ module UsersHelper
 
   def forum_from_r_action(user) # rubocop:disable Metrics/CyclomaticComplexity
     return if user.r.nil?
+
     resource = resource_from_iri(path_to_url(user.r)) if user.r.present?
     return if resource.nil? || resource.is_a?(Page) || !resource.is_fertile?
     return resource if resource.is_a?(Forum)
+
     resource.ancestor(:forum)
   end
 
@@ -28,6 +30,7 @@ module UsersHelper
     # changed? so we can safely write back to the DB
     return unless user.valid? && user.persisted?
     return if user.favorites.present?
+
     begin
       forum = forum_from_r_action(user)
       Favorite.create!(user: user, edge: forum) if forum.present?
@@ -40,6 +43,7 @@ module UsersHelper
     shortname = shortname_from_email(resource.email)
     existing = Shortname.where('shortname ~* ?', "^#{shortname}\\d*$").pluck(:shortname).map(&:downcase)
     return shortname unless existing.include?(shortname)
+
     "#{shortname}#{shortname_gap(existing.map { |s| s[/\d+/].to_i }.sort)}"
   end
 

@@ -23,7 +23,7 @@ class Group < ApplicationRecord
            primary_key_property: :default_decision_group_id,
            class_name: 'Forum',
            dependent: :restrict_with_exception
-  belongs_to :page, required: true, inverse_of: :groups, primary_key: :uuid, foreign_key: :root_id
+  belongs_to :page, optional: false, inverse_of: :groups, primary_key: :uuid, foreign_key: :root_id
   has_many :decisions, primary_key_property: :forwarded_group_id, dependent: :nullify
   accepts_nested_attributes_for :grants, reject_if: :all_blank
   alias_attribute :display_name, :name

@@ -21,9 +21,9 @@ module SPI
 
     private
 
-    def handle_error(e)
-      error_mode(e)
-      error_response_json_api(e)
+    def handle_error(error)
+      error_mode(error)
+      error_response_json_api(error)
     end
   end
 end

@@ -63,6 +63,7 @@ class Notification < ApplicationRecord
 
   def set_notification_type
     return if activity.nil?
+
     self.notification_type = activity.follow_type.singularize.to_sym
   end
 

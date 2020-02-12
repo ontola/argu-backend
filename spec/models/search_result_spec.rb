@@ -27,6 +27,7 @@ RSpec.describe SearchResult, type: :model do
 
     context 'as admin' do
       let(:user) { create_administrator(argu) }
+
       it { expect(search_result.total_count).to eq(8) }
     end
 
@@ -100,9 +101,9 @@ RSpec.describe SearchResult, type: :model do
     )
   end
 
-  def wait_for_count(q, count)
+  def wait_for_count(query, count)
     Timeout.timeout(5, Timeout::Error, "Expecting #{count} results for #{q}") do
-      sleep(0.1) until search_result(q: q).total_count == count
+      sleep(0.1) until search_result(q: query).total_count == count
     end
   end
 end

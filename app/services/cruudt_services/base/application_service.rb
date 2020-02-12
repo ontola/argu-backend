@@ -15,6 +15,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     assign_attributes
     set_nested_associations
     return if resource.is_a?(Activity) || resource.is_a?(Grant) || options.fetch(:publisher)&.guest?
+
     subscribe(
       ActivityListener.new(
         comment: options[:comment],
@@ -34,6 +35,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     ActiveRecord::Base.transaction do
       persist_parents
       raise(ActiveRecord::RecordInvalid) if resource.errors.present?
+
       @actions[service_action] = resource.public_send(service_method)
       after_save if @actions[service_action]
       publish_success_signals
@@ -41,6 +43,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     resource
   rescue ActiveRecord::ActiveRecordError => e
     raise(e) if e.is_a?(ActiveRecord::StatementInvalid)
+
     Bugsnag.notify(e) unless e.is_a?(ActiveRecord::RecordInvalid)
     publish("#{signal_base}_failed".to_sym, resource)
   end
@@ -73,6 +76,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   def argu_publication_follow_type
     important = @attributes.delete(:mark_as_important)
     return resource.argu_publication.follow_type if important.nil? && resource.argu_publication.present?
+
     %w[true 1].include?(important.to_s) ? :news : :reactions
   end
 
@@ -88,6 +92,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
 
   def persist_parents
     return unless resource.try(:parent)
+
     while resource.parent.new_record?
       non_persisted = resource.parent
       non_persisted = non_persisted.parent until non_persisted.parent.persisted? || non_persisted.parent.nil?
@@ -115,8 +120,10 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   # @note Requires `object_attributes=` to be overridden in the child class.
   def set_nested_associations
     return unless resource.try(:nested_attributes_options?)
+
     resource.nested_attributes_options.each_key do |association|
       next if association == :edge
+
       association_instance = resource.public_send(association)
       if association_instance.respond_to?(:length)
         association_instance.each do |record|
@@ -136,6 +143,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
 
   def prepare_attributes
     return unless resource.is_a?(Edge)
+
     prepare_argu_publication_attributes
     prepare_placement_attributes
     prepare_media_object_attributes
@@ -144,6 +152,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
 
   def prepare_argu_publication_attributes
     return unless resource.is_publishable?
+
     @attributes[:argu_publication_attributes] = argu_publication_attributes
   end
 

@@ -10,14 +10,15 @@ module SearchkickMock
   end
 end
 
-Searchkick::Index.send(:prepend, SearchkickMock)
-Searchkick::RecordIndexer.send(:prepend, SearchkickMock)
+Searchkick::Index.prepend SearchkickMock
+Searchkick::RecordIndexer.prepend SearchkickMock
 
 module ElasticsearchAPIMock
   def bulk(_arguments = {})
     return super unless Thread.current[:mock_searchkick]
+
     {}
   end
 end
 
-Elasticsearch::Transport::Client.send(:prepend, ElasticsearchAPIMock)
+Elasticsearch::Transport::Client.prepend ElasticsearchAPIMock

@@ -59,10 +59,10 @@ class CustomReporter < Minitest::Reporters::BaseReporter
     puts
   end
 
-  def format_time(t)
-    t = t.to_i
+  def format_time(time)
+    t = time.to_i
     sec = t % 60
-    min  = (t / 60) % 60
+    min = (t / 60) % 60
     hour = t / 3600
     format('%<hour>02d:%<min>02d:%<sec>02d', hour: hour, min: min, sec: sec)
   end

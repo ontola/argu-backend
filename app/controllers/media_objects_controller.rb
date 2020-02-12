@@ -7,6 +7,7 @@ class MediaObjectsController < ParentableController
 
   def authorize_action
     return super unless action_name == 'index'
+
     authorize parent_resource, :index_children?, controller_name
   end
 
@@ -16,6 +17,7 @@ class MediaObjectsController < ParentableController
 
   def collection_from_parent_name
     return super if params[:used_as].blank?
+
     "#{params[:used_as]}_collection"
   end
 end

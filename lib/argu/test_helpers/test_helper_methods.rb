@@ -188,6 +188,7 @@ module Argu
             service = service_class.new(parent_edge, attributes: attributes, options: options)
             service.commit
             raise service.resource.errors.full_messages.first unless service.resource.valid?
+
             service.resource.store_in_redis? ? service.resource : service.resource.reload
           end
         end
@@ -219,6 +220,7 @@ module Argu
 
         def reset_publication(publication)
           return if publication.nil?
+
           publication.update(published_at: publication.published_at - 10.seconds) if publication.published_at.present?
           if publication.publish_time_lapsed?
             Sidekiq::Testing.inline! do
@@ -363,6 +365,7 @@ module Argu
                 example.example_group.parent.parent.description
               end
             return nil unless desc.is_a?(String) && desc != '#initialize'
+
             desc[1..-1].to_sym
           end
         end

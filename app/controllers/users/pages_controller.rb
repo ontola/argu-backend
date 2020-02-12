@@ -12,6 +12,7 @@ module Users
 
     def user
       return @user if @user.present?
+
       @user = User.find_via_shortname! params[:id]
       authorize @user, :update?
       @user

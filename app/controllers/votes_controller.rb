@@ -21,11 +21,13 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def active_response_success_message
     return super unless action_name == 'create'
+
     I18n.t('votes.alerts.success')
   end
 
   def authorize_action
     return super unless action_name == 'create'
+
     method = authenticated_resource.persisted? ? :update? : :create?
     authorize authenticated_resource, method
   end
@@ -33,6 +35,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def execute_action
     return super unless action_name == 'create'
     return super unless unmodified?
+
     respond_to do |format|
       format.json do
         head 304
@@ -59,7 +62,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def resource_by_id
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
 
-    @_resource_by_id ||=
+    @resource_by_id ||=
       Edge
         .where_owner('Vote', creator: current_profile, root_id: tree_root_id)
         .find_by(parent: parent_resource, primary: true) || abstain_vote
@@ -92,11 +95,13 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def parent_from_params(root = tree_root, opts = params_for_parent)
     return super unless default_vote_event_id?
+
     super(root, opts.except(:vote_event_id))&.default_vote_event if parent_resource_key(opts.except(:vote_event_id))
   end
 
   def linked_record_parent(opts = params)
     return super unless default_vote_event_id?
+
     super(opts.except(:vote_event_id))&.default_vote_event
   end
 
@@ -110,6 +115,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def permit_params
     return super if params[:vote].present?
+
     params.permit(:id)
   end
 

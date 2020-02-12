@@ -12,6 +12,7 @@ module OauthHelper
 
   def current_actor
     return @current_actor if @current_actor.present?
+
     refresh_guest_token if needs_new_guest_token?
     user = current_resource_owner || GuestUser.new
     @current_actor =
@@ -47,7 +48,7 @@ module OauthHelper
   end
 
   def session_id
-    @_session_id ||= doorkeeper_token.resource_owner_id
+    @session_id ||= doorkeeper_token.resource_owner_id
   end
 
   private

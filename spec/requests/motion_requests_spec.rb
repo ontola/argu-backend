@@ -9,11 +9,13 @@ RSpec.describe 'Motions', type: :request do
 
   context 'with question parent' do
     subject { motion }
+
     it_behaves_like 'requests', move: true
   end
 
   context 'with forum parent' do
     subject { forum_motion }
+
     it_behaves_like 'requests', move: true
   end
 end

@@ -6,10 +6,6 @@ RSpec.describe GrantTree, type: :model do
   define_spec_objects
   define_model_spec_objects
 
-  let(:constructor_args) { root }
-  let(:described_instance) { described_class.new(constructor_args) }
-  let(:root) { argu }
-
   subject do
     s = described_instance
     s.cache_node(cache) if try(:cache).present?
@@ -28,6 +24,10 @@ RSpec.describe GrantTree, type: :model do
     end
   end
 
+  let(:constructor_args) { root }
+  let(:described_instance) { described_class.new(constructor_args) }
+  let(:root) { argu }
+
   describe '#initialize' do
     context 'with root id' do
       it { is_expected.to be_a(described_class) }
@@ -39,11 +39,13 @@ RSpec.describe GrantTree, type: :model do
 
     context 'without root' do
       let(:constructor_args) { nil }
+
       it { expect { subject }.to raise_error(ArgumentError) }
     end
 
     context 'with erroneous root' do
       let(:constructor_args) { '5' }
+
       it { expect { subject }.to raise_error(ArgumentError) }
     end
   end
@@ -54,7 +56,9 @@ RSpec.describe GrantTree, type: :model do
 
       context 'without filters' do
         it do
-          is_expected.to match_array [root.groups.custom.order(:created_at).first.id, Group::STAFF_ID, Group::PUBLIC_ID]
+          expect(subject).to(
+            match_array([root.groups.custom.order(:created_at).first.id, Group::STAFF_ID, Group::PUBLIC_ID])
+          )
         end
       end
 
@@ -122,11 +126,13 @@ RSpec.describe GrantTree, type: :model do
     context 'with edge' do
       let(:method_args) { root }
       let(:cache) { root }
+
       it { is_expected.to be_present }
     end
 
     context 'with id' do
       let(:method_args) { root.id }
+
       it { is_expected.to be_nil }
     end
   end

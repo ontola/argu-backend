@@ -30,6 +30,7 @@ class Decision < Edge
 
   def display_name
     return self[:display_name] if destroyed?
+
     self[:display_name] = I18n.t("decisions.#{parent.model_name.i18n_key}.#{state}")
   end
 
@@ -49,12 +50,14 @@ class Decision < Edge
       return
     end
     return if forwarded_user_id.nil? && forwarded_user.nil?
+
     group_id = forwarded_group_id || forwarded_group.id
     user_id = forwarded_user.uuid || User.find(forwarded_user_id).uuid
     return if GroupMembership
                 .joins(:member)
                 .where(profiles: {profileable_type: 'User', profileable_id: user_id}, group_id: group_id)
                 .any?
+
     errors.add(:forwarded_to, I18n.t('decisions.forward_failed', user_id: user_id, group_id: group_id))
   end
 

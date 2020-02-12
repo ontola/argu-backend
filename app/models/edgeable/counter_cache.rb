@@ -16,6 +16,7 @@ module Edgeable
 
     def counter_cache_names
       return [class_name] if self.class.counter_cache_options == true
+
       matches = self.class.counter_cache_options.select do |_, conditions|
         conditions.all? { |key, value| send("#{key}_before_type_cast") == value }
       end
@@ -49,6 +50,7 @@ module Edgeable
       # @return [Array<Hash>]
       def fix_counts
         return unless class_variable_defined?(:@@counter_cache_options)
+
         if counter_cache_options == true
           fix_counts_with_options
         else
@@ -80,6 +82,7 @@ module Edgeable
                     "'0') AS integer) AS #{connection.quote_string(cache_name.to_s)}_count")
             .reorder('parents_edges.id ASC')
         return query if conditions.nil?
+
         query.where(conditions)
       end
 
@@ -93,6 +96,7 @@ module Edgeable
           records.each do |model|
             count = model.read_attribute('count') || 0
             next if model.read_attribute("#{cache_name}_count") == count
+
             fixed << {
               entity: 'Edge',
               id: model.id,

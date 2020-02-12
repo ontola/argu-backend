@@ -40,7 +40,9 @@ module Settingable
     end
 
     def tab!
+      # rubocop:disable Naming/MemoizedInstanceVariableName
       @verified_tab ||= policy(authenticated_resource).verify_tab(tab)
+      # rubocop:enable Naming/MemoizedInstanceVariableName
     end
   end
 end

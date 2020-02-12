@@ -14,6 +14,7 @@ module Edgeable
 
     def preload_properties(force = false)
       return if !force && (properties_preloaded || !association_cached?(:properties))
+
       self.property_managers = {}
 
       defined_properties&.each do |p|
@@ -118,7 +119,7 @@ module ActiveRecord
       class Association #:nodoc:
         private
 
-        def associate_records_to_owner(owner, records) # rubocop:disable Metrics/AbcSize
+        def associate_records_to_owner(owner, records)
           association = owner.association(reflection.name)
           association.loaded!
           if reflection.collection?
@@ -146,6 +147,7 @@ module ActiveRecord
       unless klass <= Edge && opts.is_a?(Hash) && opts.present? && (properties = properties_from_opts(opts)).presence
         return super
       end
+
       properties.reduce(where(opts.except(*properties.keys), *rest)) do |query, condition|
         key = condition.first.to_sym
         value = property_filter_value(key, condition.second)
@@ -157,6 +159,7 @@ module ActiveRecord
 
     def order(*args)
       return super unless klass <= Edge
+
       sanitize_order_args(args)
       return super if args.detect { |arg| order_property?(arg) }.nil?
 
@@ -165,6 +168,7 @@ module ActiveRecord
 
     def reorder(*args)
       return super unless klass <= Edge
+
       sanitize_order_args(args)
       return super if args.detect { |arg| order_property?(arg) }.nil?
 
@@ -179,7 +183,7 @@ module ActiveRecord
       end
     end
 
-    def order_by_property(q, statement)
+    def order_by_property(query, statement)
       if statement.is_a?(Hash)
         order_key = statement.keys.first
         order_predicate = statement.values.first
@@ -187,13 +191,14 @@ module ActiveRecord
         order_key = statement
         order_predicate = :asc
       end
-      q
+      query
         .joins(property_join_string(order_key))
         .order(arel_table.alias("#{order_key}_filter")[:value].send(order_predicate))
     end
 
     def order_property?(arg)
       return false if arg.is_a?(String)
+
       key =
         case arg
         when Hash
@@ -213,6 +218,7 @@ module ActiveRecord
     def property_filter_value(key, value)
       property = property_options(name: key)
       return value if property[:enum].blank? || value.is_a?(Integer)
+
       property[:enum][value&.to_sym]
     end
 
@@ -222,6 +228,7 @@ module ActiveRecord
 
     def target_class
       return klass unless klass == Edge && where_values_hash['owner_type'].is_a?(String)
+
       where_values_hash['owner_type'].constantize || klass
     end
   end
@@ -252,4 +259,4 @@ module EnumTypeExtensions
     value.each(&method(:assert_valid_value))
   end
 end
-ActiveRecord::Enum::EnumType.send(:prepend, EnumTypeExtensions)
+ActiveRecord::Enum::EnumType.prepend EnumTypeExtensions

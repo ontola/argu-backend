@@ -38,7 +38,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def seed_schema(name, iri_prefix, page_url = nil) # rubocop:disable Metrics/AbcSize
       Apartment::Tenant.switch(name) do
-        load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0])
+        load(Dir[Rails.root.join('db/seeds/grant_sets.seeds.rb')][0])
         create_system_users
 
         first_page = create_first_page(page_url || name, iri_prefix)

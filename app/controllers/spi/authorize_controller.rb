@@ -20,6 +20,7 @@ module SPI
 
     def resource # rubocop:disable Metrics/AbcSize
       return resource_from_iri_param if resource_iri_param.present?
+
       case params[:resource_type]
       when 'CurrentActor'
         profile = if (/[a-zA-Z]/i =~ params[:resource_id].to_s).present?

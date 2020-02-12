@@ -107,6 +107,7 @@ group :development, :test do
   gem 'brakeman'
   gem 'license_finder'
   gem 'rubocop'
+  gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'spring', '~> 2.0.2'
   gem 'spring-commands-rspec'

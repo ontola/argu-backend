@@ -19,11 +19,13 @@ RSpec.describe 'Exports', type: :request do
 
   context 'with forum parent' do
     subject { forum_export }
+
     it_behaves_like 'requests', skip: %i[edit update trash untrash show invalid]
   end
 
   context 'with motion parent' do
     subject { motion_export }
+
     it_behaves_like 'requests', skip: %i[edit update trash untrash show invalid]
   end
 end

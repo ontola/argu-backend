@@ -20,6 +20,7 @@ class PlacementPolicy < RestrictivePolicy
 
   def show?
     return unless record.placeable_type == 'Edge'
+
     placeable_policy.show?
   end
 

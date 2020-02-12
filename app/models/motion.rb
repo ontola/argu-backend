@@ -36,6 +36,7 @@ class Motion < Discussion
   def self.edge_includes_for_index(full = false)
     includes = super().deep_merge(default_vote_event: {}, last_published_decision: :properties)
     return includes unless full
+
     includes.deep_merge(
       attachments: {},
       creator: Profile.includes_for_profileable,
@@ -46,6 +47,7 @@ class Motion < Discussion
 
   def self.order_by_predicate(predicate, direction)
     return super unless predicate == NS::ARGU[:votesProCount]
+
     Edge.order_child_count_sql(:votes_pro, as: 'default_vote_events_edges', direction: direction)
   end
 end

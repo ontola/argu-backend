@@ -11,17 +11,17 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   active_response :index, :show
 
-  attr_reader :resource
-
   private
 
   def add_errors_tab(notification)
     return if authenticated_resource&.errors.blank?
+
     notification.add_tab(:errors, authenticated_resource.errors.to_h)
   end
 
   def after_login_location
     return redirect_location if authenticated_resource!.present? && request.method != 'GET'
+
     request.original_url
   end
 
@@ -48,7 +48,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   # @author Fletcher91 <thom@argu.co>
   # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
   def authenticated_resource!
-    @resource ||=
+    @authenticated_resource ||=
       case action_name
       when 'create', 'new'
         new_resource_from_params
@@ -60,6 +60,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   def check_if_registered
     return unless current_user.guest?
+
     raise Argu::Errors::Unauthorized.new(r: after_login_location)
   end
 
@@ -91,6 +92,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   def language_from_edge_tree
     return if current_forum.blank?
+
     I18n.available_locales.include?(current_forum.language) ? current_forum.language : :en
   end
 
@@ -157,6 +159,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   def verify_terms_accepted
     return if current_user.guest? || current_user.accepted_terms?
+
     if accept_terms_param
       current_user.accept_terms!
     else

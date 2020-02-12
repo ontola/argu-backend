@@ -4,7 +4,7 @@ module Users
   class PasswordsController < Devise::PasswordsController
     include OauthHelper
 
-    skip_before_action :require_no_authentication, only: :create, if: :no_password_required?
+    skip_before_action :require_no_authentication, only: :create
     active_response :new, :edit
 
     def create # rubocop:disable Metrics/AbcSize

@@ -29,8 +29,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :parent,
              class_name: 'Edge',
              inverse_of: :children
-  belongs_to :publisher, class_name: 'User', required: true, foreign_key: :publisher_id, autosave: false
-  belongs_to :creator, class_name: 'Profile', required: true, foreign_key: :creator_id, autosave: false
+  belongs_to :publisher, class_name: 'User', optional: false, foreign_key: :publisher_id, autosave: false
+  belongs_to :creator, class_name: 'Profile', optional: false, foreign_key: :creator_id, autosave: false
   has_many :activities,
            -> { order(:created_at) },
            foreign_key: :trackable_edge_id,
@@ -231,11 +231,13 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return self if owner_type == type.to_s.classify
     return parent.ancestor(type) if !root_object? && association_cached?(:parent)
     return persisted_edge&.ancestor(type) unless persisted?
+
     parent_by_type(type)
   end
 
   def persisted_edge
     return @persisted_edge if @persisted_edge.present?
+
     persisted = self
     persisted = persisted.parent until persisted.persisted? || persisted.parent.nil?
     persisted = persisted.root unless persisted.persisted?
@@ -244,6 +246,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def persisted_edge=(edge)
     raise "#{edge.class} is not an Edge" unless edge.is_a?(Edge) || edge.nil?
+
     @persisted_edge = edge
   end
 
@@ -257,6 +260,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def publish!
     return if is_published
+
     self.class.transaction do
       update!(is_published: true)
       increment_counter_caches unless is_trashed?
@@ -267,6 +271,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def root(*args) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     return self if root_object? && parent_id.nil? && parent.nil?
     return @root || super if association_cached?(:root)
+
     @root ||= association_cached?(:parent) && parent ? parent.root : association(:root).reader(*args)
   end
 
@@ -296,6 +301,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def trash
     return if trashed_at.present?
+
     self.class.transaction do
       update!(trashed_at: Time.current)
       destroy_notifications if is_loggable?
@@ -313,6 +319,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def untrash
     return if trashed_at.nil?
+
     self.class.transaction do
       update!(trashed_at: nil)
       increment_counter_caches if is_published?
@@ -352,6 +359,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def destroy_children
     return if owner_type == 'Page'
+
     children.destroy_all
   end
 

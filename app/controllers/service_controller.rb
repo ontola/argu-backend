@@ -4,7 +4,7 @@ class ServiceController < ParentableController
   private
 
   def action_service
-    @_action_service ||=
+    @action_service ||=
       case action_name
       when 'create'
         create_service
@@ -23,7 +23,7 @@ class ServiceController < ParentableController
   end
 
   def authenticated_resource!
-    @resource ||=
+    @authenticated_resource ||=
       case action_name
       when 'create', 'destroy', 'update', 'untrash', 'trash'
         action_service.resource
@@ -63,6 +63,7 @@ class ServiceController < ParentableController
 
   def execute_action
     return super if action_service.blank?
+
     action_service.on(*signals_success, &method(:active_response_handle_success))
     action_service.on(*signals_failure, &method(:active_response_handle_failure))
     action_service.commit

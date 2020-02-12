@@ -89,7 +89,7 @@ module Argu
             forum: @resource.ancestor(:forum),
             publisher: profile.profileable,
             content: Rack::Test::UploadedFile.new(
-              Rails.root.join('test', 'fixtures', 'profile_photo.png')
+              Rails.root.join('test/fixtures/profile_photo.png')
             )
           )
         end

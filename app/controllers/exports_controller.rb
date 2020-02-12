@@ -8,7 +8,7 @@ class ExportsController < ServiceController
   private
 
   def authenticated_tree
-    @_tree ||=
+    @authenticated_tree ||=
       case action_name
       when 'new', 'create', 'index'
         parent_resource&.self_and_ancestors

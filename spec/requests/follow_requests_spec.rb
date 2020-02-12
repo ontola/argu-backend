@@ -9,6 +9,8 @@ RSpec.describe 'Follows', type: :request do
     default_formats
   end
 
+  subject { create(:follow, follower: staff, followable: freetown) }
+
   let(:create_path) { "#{collection_iri(argu, :follows)}?gid=#{freetown.uuid}" }
   let(:non_existing_create_path) { "#{collection_iri(argu, :follows, root: argu)}?gid=#{non_existing_id}" }
   let(:create_params) { {follow_type: 'reactions'} }
@@ -31,8 +33,6 @@ RSpec.describe 'Follows', type: :request do
   let(:expect_delete_destroy_unauthorized_serializer) { expect_delete_destroy_serializer }
   let(:expect_delete_destroy_guest_json_api) { expect_delete_destroy_json_api }
   let(:expect_delete_destroy_guest_serializer) { expect_delete_destroy_serializer }
-
-  subject { create(:follow, follower: staff, followable: freetown) }
 
   it_behaves_like 'post create', skip: %i[invalid]
   it_behaves_like 'delete destroy'

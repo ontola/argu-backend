@@ -20,8 +20,10 @@ class Publication < ApplicationRecord
   # @TODO: wrap in transaction
   def commit
     return if publishable.is_published?
+
     publishable.publish!
     return unless publishable.is_published
+
     publish("publish_#{publishable.model_name.singular}_successful", publishable)
   end
 

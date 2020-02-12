@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Groups', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   subject { group }
+
   let(:update_differences) { {'Group.count' => 0} }
   let(:create_differences) { {'Group.count' => 1} }
   let(:destroy_differences) { {'Group.count' => -1} }

@@ -23,10 +23,11 @@ class GrantTree
     # @return [Edge] The child that was added
     def add_child(edge)
       raise 'Inconsistent node' unless edge.parent_id == id
+
       Node.new(edge, self, grant_tree)
     end
 
-    def expired? # rubocop:disable Metrics/AbcSize
+    def expired?
       @expired ||=
         parent&.expired? ||
         edge.expires_at && edge.expires_at < Time.current ||
@@ -38,15 +39,17 @@ class GrantTree
       if action.nil? && resource_type.nil? && parent_type.nil?
         return permitted_actions.values.map(&:values).flatten.map(&:values).flatten.uniq
       end
+
       parent_type ||= '*'
       ids = permitted_actions.dig(resource_type.to_s, action.to_s, parent_type.to_s) || []
       return ids if parent_type == '*'
+
       (ids + (permitted_actions.dig(resource_type.to_s, action.to_s, '*') || [])).uniq
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
     def permission_groups
-      @granted_groups ||= granted_group_ids.map { |id| PermissionGroup.new(id, self) }
+      @permission_groups ||= granted_group_ids.map { |id| PermissionGroup.new(id, self) }
     end
 
     def permitted_parent_types(action: nil, group_id: nil, resource_type: nil)

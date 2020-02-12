@@ -9,6 +9,7 @@ module RedisResource
     # @return [Hash] The stored attributes
     def attributes
       return @attributes if @attributes.present?
+
       raw = Argu::Redis.get(key)
       @attributes = raw && JSON.parse(raw)
     rescue JSON::ParserError
@@ -71,7 +72,7 @@ module RedisResource
 
     # @return [ApplicationRecord] The redis resource stored by this key
     def redis_resource
-      @redis_resources ||= RedisResource::Resource.find(
+      @redis_resource ||= RedisResource::Resource.find(
         self,
         user: user,
         parent: parent

@@ -32,6 +32,7 @@ RSpec.describe 'Forums', type: :request do
 
   context 'with public forum' do
     subject { freetown }
+
     it_behaves_like 'requests', skip: %i[trash untrash index show_unauthorized]
   end
 

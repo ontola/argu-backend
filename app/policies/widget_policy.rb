@@ -4,6 +4,7 @@ class WidgetPolicy < EdgeTreePolicy
   class Scope < Scope
     def resolve
       return if user.nil?
+
       scope
         .joins("JOIN edges ON edges.uuid = widgets.owner_id AND widgets.owner_type = 'Edge'")
         .with(granted_paths(show_only: false))

@@ -79,6 +79,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def thumbnail_or_icon # rubocop:disable Metrics/CyclomaticComplexity
     return thumbnail if file.nil?
+
     case content_type
     when *(MediaObjectUploader::IMAGE_TYPES + MediaObjectUploader::VIDEO_TYPES)
       thumbnail
@@ -121,6 +122,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       self.creator = about.is_a?(Edge) ? about.creator : about
     end
     return if publisher.present? || publisher_id.present?
+
     self.publisher = about.is_a?(Edge) ? about.publisher : creator.profileable
   end
 
@@ -128,6 +130,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     url = content.url(type)
     return url && RDF::DynamicURI(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
     return if content.file.blank?
+
     if File.exist?(content.file.path)
       RDF::DynamicURI(content.url(:icon))
     else
@@ -139,6 +142,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def video_info
     return unless remote_url.present? && VideoInfo.usable?(remote_url)
+
     @video_info ||= VideoInfo.new(remote_url)
   end
 

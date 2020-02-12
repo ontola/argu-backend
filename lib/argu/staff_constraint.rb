@@ -8,6 +8,7 @@ module Argu
       token = Doorkeeper.authenticate(request)
       return true if token&.scopes&.include?('service') && token.accessible?
       return false unless token&.scopes&.include?('user') && token.accessible?
+
       GroupMembership
         .joins(:member)
         .joins('INNER JOIN users ON profiles.profileable_type = \'User\' AND profiles.profileable_id = users.uuid')

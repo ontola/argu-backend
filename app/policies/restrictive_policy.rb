@@ -149,6 +149,7 @@ class RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def check_action(action)
     return nil if record.try(:id).blank?
+
     user_context.check_key(record.identifier, action)
   end
 

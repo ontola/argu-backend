@@ -45,6 +45,7 @@ class Vote < Edge
 
   def upvoted_arguments
     return [] if publisher.guest?
+
     @upvoted_arguments ||=
       Argument
         .untrashed
@@ -67,6 +68,7 @@ class Vote < Edge
 
   def iri_template_name
     return super unless store_in_redis?
+
     :vote_iri
   end
 

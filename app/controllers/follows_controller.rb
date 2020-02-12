@@ -68,15 +68,19 @@ class FollowsController < AuthorizedController
   end
 
   def new_resource_from_params # rubocop:disable Metrics/AbcSize
-    return @resource if instance_variable_defined?(:@resource)
+    return @authenticated_resource if instance_variable_defined?(:@authenticated_resource)
+
     followable = Edge.find_by(uuid: find_params[:gid])
-    return @resource = nil if followable.nil? || PERMITTED_CLASSES.detect { |klass| followable.is_a?(klass) }.nil?
-    @resource = current_user.follows.find_or_initialize_by(
+    if followable.nil? || PERMITTED_CLASSES.detect { |klass| followable.is_a?(klass) }.nil?
+      return @authenticated_resource = nil
+    end
+
+    @authenticated_resource = current_user.follows.find_or_initialize_by(
       followable_id: followable.uuid,
       followable_type: 'Edge'
     )
-    @resource.follow_type = action_name == 'create' ? find_params[:follow_type] || :reactions : :never
-    @resource
+    @authenticated_resource.follow_type = action_name == 'create' ? find_params[:follow_type] || :reactions : :never
+    @authenticated_resource
   end
 
   def permit_params

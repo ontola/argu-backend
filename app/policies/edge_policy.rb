@@ -23,12 +23,14 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   def initialize(context, record)
     super
     raise('No edge available in policy') unless record
+
     @grant_tree = init_grant_tree
   end
 
   %i[spectator participator moderator administrator staff].each do |role|
     define_method "#{role}?" do
       return instance_variable_get("@#{role}") if instance_variable_defined?("@#{role}")
+
       instance_variable_set("@#{role}", has_grant_set?(role))
     end
   end
@@ -61,6 +63,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def has_grant_set?(grant_set)
     return false if grant_tree.nil?
+
     grant_tree
       .grant_sets(persisted_edge, group_ids: user.profile.group_ids)
       .include?(grant_set.to_s)
@@ -97,12 +100,14 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def show?
     return if has_unpublished_ancestors? && !show_unpublished?
+
     has_grant?(:show)
   end
 
   def create?
     return create_expired? if has_expired_ancestors?
     return create_trashed? if has_trashed_ancestors?
+
     has_grant?(:create)
   end
 
@@ -122,6 +127,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def destroy?
     return super if has_content_children?
+
     is_creator? || has_grant?(:destroy)
   end
 

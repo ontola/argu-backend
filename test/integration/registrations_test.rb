@@ -369,7 +369,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     photo = motion.build_default_cover_photo(
       creator: user.profile,
       publisher: user,
-      content: Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'profile_photo.png'))
+      content: Rack::Test::UploadedFile.new(Rails.root.join('test/fixtures/profile_photo.png'))
     )
     photo.save!
     create(

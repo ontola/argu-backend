@@ -20,12 +20,9 @@ class QuestionTest < ActiveSupport::TestCase
   end
 
   test 'raise when converting to non-convertible class' do
-    begin
-      subject.convert_to(Argument)
-    rescue ArgumentError
-      assert true
-    else
-      assert_not true
-    end
+    subject.convert_to(Argument)
+    assert false
+  rescue ArgumentError
+    assert true
   end
 end

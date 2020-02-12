@@ -57,6 +57,7 @@ class GroupMembership < ApplicationRecord
 
   def end_date_after_start_date
     return unless end_date.present? && end_date < start_date
+
     errors.add(:end_date, "can't be before start date")
   end
 
@@ -70,6 +71,7 @@ class GroupMembership < ApplicationRecord
                  .ids
     existing.delete(id)
     return if existing.empty?
+
     errors.add(:group_id, :taken, value: group_id)
   end
 

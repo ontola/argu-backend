@@ -15,6 +15,7 @@ class DirectMessagesController < ParentableController
     unless authenticated_resource.email_address.confirmed? && authenticated_resource.email_address.user == current_user
       raise Argu::Errors::Forbidden.new(record: authenticated_resource, query: 'email?')
     end
+
     authenticated_resource.send_email!
   end
 
@@ -40,6 +41,7 @@ class DirectMessagesController < ParentableController
 
   def active_response_success_message
     return super unless action_name == 'create'
+
     I18n.t('direct_messages.notice.success')
   end
 end

@@ -42,6 +42,7 @@ class PagePolicy < EdgePolicy
 
   def list?
     raise(ActiveRecord::RecordNotFound) if record.hidden? && !show?
+
     true
   end
 
@@ -83,6 +84,7 @@ class PagePolicy < EdgePolicy
 
   def valid_child?(klass)
     return true if klass == Shortname
+
     super
   end
 end

@@ -70,7 +70,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     }
     assert_difference(differences) do
       Sidekiq::Testing.inline! do
-        token_user = post_token(r: freetown.iri.path)
+        token_user = post_token(redirect: freetown.iri.path)
         assert_equal user.email, token_user['email']
         assert_equal user.id, token_user['id']
       end
@@ -80,21 +80,21 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should post create token with username' do
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
-      post_token(username: user.url)
+      post_token(name: user.url)
     end
   end
 
   test 'User should post create token with caps' do
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
-      post_token(username: user.email.capitalize)
+      post_token(name: user.email.capitalize)
     end
   end
 
   test 'User should post create token with r' do
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
-      post_token(r: freetown.iri.path)
+      post_token(redirect: freetown.iri.path)
     end
   end
 
@@ -104,14 +104,14 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with credentials and empty password' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(password: nil, error_code: 'WRONG_PASSWORD')
+      post_token(password: nil, err_code: 'WRONG_PASSWORD')
     end
   end
 
   test 'User should not post create token with credentials and blank password' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(password: '', error_code: 'WRONG_PASSWORD')
+      post_token(password: '', err_code: 'WRONG_PASSWORD')
     end
   end
 
@@ -121,14 +121,14 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with wrong password' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(password: 'wrong', error_code: 'WRONG_PASSWORD')
+      post_token(password: 'wrong', err_code: 'WRONG_PASSWORD')
     end
   end
 
   test 'User should not post create token with wrong password and r' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(password: 'wrong', error_code: 'WRONG_PASSWORD', r: freetown.iri.path)
+      post_token(password: 'wrong', err_code: 'WRONG_PASSWORD', redirect: freetown.iri.path)
     end
   end
 
@@ -138,14 +138,14 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown email for other domain' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(username: 'wrong@example.com', error_code: 'UNKNOWN_EMAIL')
+      post_token(name: 'wrong@example.com', err_code: 'UNKNOWN_EMAIL')
     end
   end
 
   test 'User should not post create token with unknown email and r for Argu domain' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(username: 'wrong@example.com', error_code: 'UNKNOWN_EMAIL', r: freetown.iri.path)
+      post_token(name: 'wrong@example.com', err_code: 'UNKNOWN_EMAIL', redirect: freetown.iri.path)
     end
   end
 
@@ -155,14 +155,14 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown username' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(username: 'wrong', error_code: 'UNKNOWN_USERNAME')
+      post_token(name: 'wrong', err_code: 'UNKNOWN_USERNAME')
     end
   end
 
   test 'User should not post create token with r and unknown username' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(username: 'wrong', error_code: 'UNKNOWN_USERNAME', r: freetown.iri.path)
+      post_token(name: 'wrong', err_code: 'UNKNOWN_USERNAME', redirect: freetown.iri.path)
     end
   end
 
@@ -172,14 +172,14 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with service scope' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(error_type: 'invalid_scope', scope: 'service')
+      post_token(err_type: 'invalid_scope', scope: 'service')
     end
   end
 
   test 'User should not post create token with user and service scope for other domain' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(error_type: 'invalid_scope', scope: 'user service')
+      post_token(err_type: 'invalid_scope', scope: 'user service')
     end
   end
 
@@ -199,9 +199,9 @@ class TokensTest < ActionDispatch::IntegrationTest
                       'Favorite.count' => 1) do
       Sidekiq::Testing.inline! do
         token_user = post_token(
-          username: unconfirmed_user.email,
+          name: unconfirmed_user.email,
           password: unconfirmed_user.password,
-          r: freetown.iri.path
+          redirect: freetown.iri.path
         )
         assert_equal unconfirmed_user.email, token_user['email']
         assert_equal unconfirmed_user.id, token_user['id']
@@ -220,7 +220,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_nil user.locked_at
 
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(error_code: 'ACCOUNT_LOCKED', password: 'wrong')
+      post_token(err_code: 'ACCOUNT_LOCKED', password: 'wrong')
     end
 
     assert_not_nil user.reload.locked_at
@@ -233,7 +233,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     user.update!(locked_at: Time.current)
 
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(error_code: 'ACCOUNT_LOCKED')
+      post_token(err_code: 'ACCOUNT_LOCKED')
     end
   end
 
@@ -252,20 +252,20 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists
-  def post_token(error_code: nil, error_type: nil, username: user.email, password: user.password, scope: 'user', r: nil)
+  def post_token(err_code: nil, err_type: nil, name: user.email, password: user.password, scope: 'user', redirect: nil)
     post oauth_token_path,
          headers: argu_headers(accept: :json),
          params: {
-           username: username,
+           username: name,
            password: password,
            grant_type: 'password',
            scope: scope,
-           r: r
+           r: redirect
          }
 
-    if error_code || error_type
-      expect_error_type(error_type || 'invalid_grant')
-      expect_error_code(error_code) if error_code
+    if err_code || err_type
+      expect_error_type(err_type || 'invalid_grant')
+      expect_error_code(err_code) if err_code
       assert_response 401
     else
       assert_response 200

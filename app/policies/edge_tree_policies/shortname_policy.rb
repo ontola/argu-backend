@@ -24,6 +24,7 @@ class ShortnamePolicy < EdgeTreePolicy
 
   def destroy?
     return if record.primary?
+
     edgeable_policy.update?
   end
 

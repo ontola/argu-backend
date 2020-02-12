@@ -10,7 +10,7 @@ Apartment::Tenant.switch!('argu')
 DatabaseCleaner.clean_with(:deletion, except: %w[ar_internal_metadata])
 DatabaseCleaner.strategy = :transaction
 
-load(Dir[Rails.root.join('db', 'seeds', 'doorkeeper_apps.seeds.rb')][0])
+load(Dir[Rails.root.join('db/seeds/doorkeeper_apps.seeds.rb')][0])
 
 Tenant.seed_schema('argu', "app.#{Rails.application.config.host_name}/public_page", 'public_page')
 

@@ -8,9 +8,10 @@ module RedirectHelper
     Rails.env.test? ? 'https://127.0.0.1:42000' : nil
   ].uniq.compact.freeze
 
-  def argu_iri_or_relative?(r)
-    uri = r && URI.parse(r)
+  def argu_iri_or_relative?(redirect)
+    uri = redirect && URI.parse(redirect)
     return true if uri.nil? || uri.hostname.nil?
+
     uri.scheme = 'https' if Rails.env.test?
     port = [nil, 80, 443].include?(uri.port) ? '' : ":#{uri.port}"
     VALID_HOSTNAMES.include?("#{uri.scheme}://#{uri.hostname}#{port}")

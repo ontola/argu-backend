@@ -13,18 +13,16 @@ class SendActivityNotificationsWorker
       return if wrong_delivery_type?(delivery_type)
 
       ActiveRecord::Base.transaction do
-        begin
-          collect_activity_notifications
-          if @notifications.length.zero?
-            logger.warn 'No notifications to send'
-          else
-            logger.info "Preparing to possibly send #{@notifications.length} notifications"
-            send_activity_notifications_mail if outside_cooldown_period
-          end
-        rescue ActiveRecord::StatementInvalid => e
-          logger.error 'Queue collision occurred' if e.message.include? 'LockNotAvailable'
-          Bugsnag.notify(e) if Rails.env.production?
+        collect_activity_notifications
+        if @notifications.length.zero?
+          logger.warn 'No notifications to send'
+        else
+          logger.info "Preparing to possibly send #{@notifications.length} notifications"
+          send_activity_notifications_mail if outside_cooldown_period
         end
+      rescue ActiveRecord::StatementInvalid => e
+        logger.error 'Queue collision occurred' if e.message.include? 'LockNotAvailable'
+        Bugsnag.notify(e) if Rails.env.production?
       end
     end
   end
@@ -108,6 +106,7 @@ class SendActivityNotificationsWorker
 
   def wrong_delivery_type?(delivery_type)
     return false if delivery_type.present? && User.reactions_emails[@user.reactions_email] == delivery_type
+
     logger.warn "Not sending notifications to mismatched delivery type #{delivery_type} for user #{@user.id}"
     true
   end

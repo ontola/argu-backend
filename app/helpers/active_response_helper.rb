@@ -52,6 +52,7 @@ module ActiveResponseHelper
 
   def redirect_location
     return current_resource.iri if current_resource.persisted? || !current_resource.respond_to?(:parent)
+
     current_resource.parent.iri
   end
 

@@ -110,6 +110,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
     return unless user_context.with_root(forum.root) do
       Pundit.policy(user_context, forum).show?
     end
+
     forum
   rescue ActiveRecord::RecordNotFound
     nil

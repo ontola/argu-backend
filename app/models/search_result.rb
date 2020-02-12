@@ -25,21 +25,25 @@ class SearchResult
 
   def first
     return nil if search_result.total_pages <= 1
+
     RDF::DynamicURI(path_with_hostname(iri_path(page: 1)))
   end
 
   def last
     return nil if search_result.total_pages <= 1
+
     RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.total_pages)))
   end
 
   def prev
     return nil if search_result.total_pages <= 1
+
     RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.previous_page)))
   end
 
   def next
     return nil if search_result.total_pages <= 1 || search_result.next_page.nil?
+
     RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.next_page)))
   end
 

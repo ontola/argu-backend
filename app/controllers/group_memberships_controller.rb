@@ -6,6 +6,7 @@ class GroupMembershipsController < ServiceController
   def index # rubocop:disable Metrics/AbcSize
     return super if params[:group_id].present?
     return if params[:q].nil?
+
     q = params[:q].tr(' ', '|')
     # Matched groups with members
     @results = policy_scope(
@@ -51,6 +52,7 @@ class GroupMembershipsController < ServiceController
   def existing_record # rubocop:disable Metrics/AbcSize
     return @existing_record if @existing_record.present?
     return if authenticated_resource.valid?
+
     duplicate_values = authenticated_resource
                          .errors
                          .details
@@ -78,10 +80,12 @@ class GroupMembershipsController < ServiceController
     params.permit(:r)[:r]
   end
 
-  def redirect_location # rubocop:disable Metrics/AbcSize
+  def redirect_location
     return redirect_param if redirect_param.present?
+
     forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
     return forum_grants.first.edge.iri if forum_grants.count == 1
+
     authenticated_resource!.page.iri
   end
   alias destroy_success_location redirect_location

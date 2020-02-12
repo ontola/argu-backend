@@ -18,6 +18,7 @@ class MediaObjectPolicy < EdgeTreePolicy
 
   def show?
     return true if record.profile_photo?
+
     edgeable_policy.show?
   end
 

@@ -10,14 +10,11 @@ class PageTest < ActiveSupport::TestCase
   end
 
   test 'should invalidate policy not accepted' do
-    begin
-      page = Page.create!(attributes_for(:page, last_accepted: nil))
-    rescue ActiveRecord::RecordInvalid => e
-      assert e.message.include?("Last accepted can't be blank")
-    else
-      assert_not true, 'Terms can be unaccepted'
-    ensure
-      assert_nil page
-    end
+    page = Page.create!(attributes_for(:page, last_accepted: nil))
+    assert_not true, 'Terms can be unaccepted'
+  rescue ActiveRecord::RecordInvalid => e
+    assert e.message.include?("Last accepted can't be blank")
+  ensure
+    assert_nil page
   end
 end

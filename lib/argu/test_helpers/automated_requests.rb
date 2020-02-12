@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Dir[Rails.root.join('spec', 'shared_examples', '*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec/shared_examples/*.rb')].sort.each { |f| require f }
 
 module Argu
   module TestHelpers

@@ -41,6 +41,7 @@ class LinkedRecord < Edge
 
   def self.new_for_forum(organization_shortname, forum_shortname, id)
     raise(ActiveRecord::RecordNotFound) unless uuid?(id)
+
     forum =
       Page
         .find_via_shortname!(organization_shortname)
@@ -48,6 +49,7 @@ class LinkedRecord < Edge
         .joins(:shortname)
         .find_by(shortnames: {shortname: forum_shortname})
     raise(ActiveRecord::RecordNotFound) if forum.nil?
+
     forum.children.new(
       is_published: true,
       publisher: User.community,

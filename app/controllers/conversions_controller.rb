@@ -13,7 +13,7 @@ class ConversionsController < ServiceController
   end
 
   def authenticated_resource!
-    @resource ||=
+    @authenticated_resource ||=
       case action_name
       when 'create'
         create_service.resource
@@ -69,6 +69,7 @@ class ConversionsController < ServiceController
 
   def verify_convertible_edge
     return if parent_resource!.is_convertible?
+
     respond_to do |format|
       format.json do
         render status: 422,

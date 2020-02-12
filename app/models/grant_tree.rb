@@ -9,6 +9,7 @@ class GrantTree
 
   def initialize(root)
     raise ArgumentError.new("Edge expected as root, but got: #{root}") unless root.is_a?(Edge)
+
     @tree_root = root
     @cached_nodes = {}
   end
@@ -19,6 +20,7 @@ class GrantTree
 
   def cache_node(node) # rubocop:disable Metrics/AbcSize
     return cached_node(node) if cached?(node)
+
     edge = node.is_a?(Edge) ? node : Edge.find_by!(id: node)
     ancestor_ids = edge.path.split('.').map(&:to_i) - cached_nodes.keys - [edge.id]
     ancestors = ancestor_ids.present? ? Edge.where(root: tree_root, id: ancestor_ids) : []
@@ -34,6 +36,7 @@ class GrantTree
   # @return [Bool] Whether the edge or any of its ancestors is expired
   def expired?(edge)
     return true if edge.expired?
+
     find_or_cache_node(edge).expired?
   end
 
@@ -97,6 +100,7 @@ class GrantTree
   # @return [Bool] Whether the edge or any of its ancestors is trashed
   def trashed?(edge)
     return true if edge.is_trashed?
+
     find_or_cache_node(edge).trashed?
   end
 
@@ -109,6 +113,7 @@ class GrantTree
   # @return [Bool] Whether the edge or any of its ancestors is unpublished
   def unpublished?(edge)
     return true unless edge.is_published?
+
     find_or_cache_node(edge).unpublished?
   end
 
@@ -116,6 +121,7 @@ class GrantTree
 
   def cached_node(edge)
     raise 'UUID given' if uuid?(edge)
+
     cached_nodes[edge.is_a?(Edge) ? edge.id : edge]
   end
 
@@ -132,6 +138,7 @@ class GrantTree
   def root_node(node = nil) # rubocop:disable Metrics/AbcSize
     return cached_node(tree_root.id) if cached?(tree_root.id)
     raise SecurityError.new('Node with different root given') if node.root_id != tree_root_id
+
     @tree_root ||= node if node.present?
     cached_nodes[tree_root.id] = Node.new(tree_root, nil, self)
   end

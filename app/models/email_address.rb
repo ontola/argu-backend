@@ -11,7 +11,7 @@ class EmailAddress < ApplicationRecord
   include Parentable
   include RedisResourcesHelper
   include DeltaHelper
-  TEMP_EMAIL_REGEX = /\Achange@me/
+  TEMP_EMAIL_REGEX = /\Achange@me/.freeze
 
   belongs_to :user, inverse_of: :email_addresses
   scope :confirmed, -> { where('confirmed_at IS NOT NULL') }
@@ -51,7 +51,7 @@ class EmailAddress < ApplicationRecord
     super
   end
 
-  def destroy
+  def destroy # rubocop:disable Rails/ActiveRecordOverride
     super unless primary?
   end
 
@@ -67,11 +67,13 @@ class EmailAddress < ApplicationRecord
 
   def dont_update_confirmed_email
     return unless persisted? && confirmed? && email_changed?
+
     errors.add(:email, 'You cannot change a confirmed email')
   end
 
   def newly_secondary_email_not_primary
     return if !primary? || user.email_addresses.count.zero?
+
     errors.add(:email, 'You cannot set a new email to primary on creation')
   end
 
@@ -83,6 +85,7 @@ class EmailAddress < ApplicationRecord
   # Confirmation instructions for primary emails are send by the {RegistationsController}
   def send_confirmation_instructions
     return if primary?
+
     SendEmailWorker.perform_async(
       :confirm_secondary,
       user.guest? ? nil : user.id,
@@ -93,8 +96,10 @@ class EmailAddress < ApplicationRecord
 
   def remove_other_primaries
     return unless primary?
+
     user.email_addresses.each do |email|
       next if email == self
+
       email.update(primary: false)
     end
   end

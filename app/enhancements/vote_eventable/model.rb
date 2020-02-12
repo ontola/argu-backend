@@ -12,6 +12,7 @@ module VoteEventable
     end
 
     def create_default_vote_event
+      # rubocop:disable Naming/MemoizedInstanceVariableName
       @default_vote_event ||=
         VoteEvent.create!(
           parent: self,
@@ -21,6 +22,7 @@ module VoteEventable
           starts_at: Time.current,
           root_id: root.uuid
         )
+      # rubocop:enable Naming/MemoizedInstanceVariableName
     end
 
     def vote_for(user)

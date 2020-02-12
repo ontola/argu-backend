@@ -137,5 +137,5 @@ module Shortnameable
       false
     end
   end
-  ActiveRecord::Base.send(:include, ActiveRecordExtension)
+  ActiveRecord::Base.include ActiveRecordExtension
 end

@@ -44,6 +44,7 @@ class AppMenuList < ApplicationMenuList
 
   def public_pages
     return @public_pages if instance_variable_defined?('@public_pages')
+
     page_ids =
       Forum
         .joins(:parent)

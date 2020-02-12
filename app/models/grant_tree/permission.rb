@@ -20,6 +20,7 @@ class GrantTree
     PermittedAction::ACTIONS.each do |action|
       define_method action do
         return instance_variable_get("@#{action}") if instance_variable_defined?("@#{action}")
+
         instance_variable_set(
           "@#{action}",
           node
@@ -30,11 +31,13 @@ class GrantTree
 
       define_method "#{action}_icon" do
         return 'fa-close' if send(action).blank?
+
         send(action).include?(NS::ARGU[:contentTreeClass]) ? 'fa-check' : 'fa-question'
       end
 
       define_method "#{action}_tooltip" do
         return nil if send(action).blank? || send(action).include?(NS::ARGU[:contentTreeClass])
+
         send(action).map { |parent_type| I18n.t("#{parent_type.to_s.split('#').last.tableize}.plural") }.join(', ')
       end
     end

@@ -24,6 +24,7 @@ module IRIHelper
 
   def decision_from_opts(opts)
     return unless opts[:class] == Decision
+
     Decision
       .joins(:parent)
       .where('parents_edges.root_id = edges.root_id')
@@ -61,6 +62,7 @@ module IRIHelper
       Rails.application.routes.recognize_path(iri.to_s)
     end
     return {} if opts[:controller].blank?
+
     opts[:type] = opts[:controller].singularize
     opts
   rescue ActionController::RoutingError
@@ -81,6 +83,7 @@ module IRIHelper
 
   def path_to_url(path)
     return path unless relative_path?(path)
+
     port = [80, 443].include?(request.port) ? nil : request.port
     URI::Generic.new(request.scheme, nil, request.host, port, nil, path, nil, nil, nil).to_s
   end
@@ -126,6 +129,7 @@ module IRIHelper
       return linked_record_from_opts(opts) if linked_record_from_opts?(opts)
       return decision_from_opts(opts) if decision_from_opts?(opts)
       return edge_from_opts(opts) if edge_from_opts?(opts)
+
       resource_by_id_from_opts(opts)
     end
   end

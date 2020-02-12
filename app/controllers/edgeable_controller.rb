@@ -11,7 +11,7 @@ class EdgeableController < ServiceController
   private
 
   def action_service
-    @_action_service ||=
+    @action_service ||=
       case action_name
       when 'untrash'
         untrash_service
@@ -31,7 +31,9 @@ class EdgeableController < ServiceController
   end
 
   def create_meta
-    !resource.is_publishable? || resource.is_published? ? resource_added_delta(resource) : []
+    return [] if authenticated_resource.is_publishable? && !authenticated_resource.is_published?
+
+    resource_added_delta(authenticated_resource)
   end
 
   def default_publication_follow_type

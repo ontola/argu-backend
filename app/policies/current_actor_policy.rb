@@ -27,6 +27,7 @@ class CurrentActorPolicy < RestrictivePolicy
       owner == user
     else
       return unless user.confirmed?
+
       owner == user.profile || user.managed_profile_ids.include?(owner.profile.id)
     end
   end

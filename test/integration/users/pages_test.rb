@@ -49,7 +49,7 @@ module Users
 
       get collection_iri(user, :pages, root: other_page)
       assert_response :success
-      refute_includes(response.body, requested_iri)
+      assert_not_includes(response.body, requested_iri)
     end
   end
 end

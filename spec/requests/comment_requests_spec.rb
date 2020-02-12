@@ -19,6 +19,7 @@ RSpec.describe 'Comments', type: :request do
 
   context 'with comment parent' do
     subject { nested_comment }
+
     let(:index_path) { collection_iri(subject.parent_comment, table_sym).path }
 
     it_behaves_like 'requests'
@@ -26,31 +27,40 @@ RSpec.describe 'Comments', type: :request do
 
   context 'with argument parent' do
     subject { comment }
+
     it_behaves_like 'requests'
   end
 
   context 'with motion parent' do
     subject { motion_comment }
+
     let(:redirect_url) { index_path }
     let(:created_resource_path) { redirect_url }
+
     it_behaves_like 'requests'
   end
 
   context 'with blog_post parent' do
     subject { blog_post_comment }
+
     it_behaves_like 'requests'
   end
 
   context 'with linked_record parent' do
     subject { linked_record_comment }
+
     let(:parent_path) {}
+
     it_behaves_like 'requests'
   end
 
   context 'with non-persisted linked_record parent' do
-    let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
     subject { build(:comment, parent: non_persisted_linked_record) }
+
+    let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
+
     let(:parent_path) {}
+
     it_behaves_like 'post create'
     it_behaves_like 'get index'
   end

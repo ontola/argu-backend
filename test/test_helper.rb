@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ENV['RAILS_ENV'] = 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 require 'minitest/rails'
 require 'mocha/mini_test'
@@ -41,7 +41,7 @@ module TestHelper
   Sidekiq::Testing.fake!
   MiniTest::Reporters.use!
 
-  MiniTest.after_run { FileUtils.rm_rf(Rails.root.join('public', 'photos', '[^.]*')) }
+  MiniTest.after_run { FileUtils.rm_rf(Rails.root.join('public/photos/[^.]*')) }
 end
 
 module SidekiqMinitestSupport
@@ -103,6 +103,7 @@ module ActionDispatch
 
     def follow_redirect!
       raise "not a redirect! #{status} #{status_message}" unless redirect?
+
       get(response.location)
       process_new_authorization
       status

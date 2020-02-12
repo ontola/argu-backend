@@ -11,15 +11,15 @@ RSpec.configure do |config|
     extend FactoryBot::Syntax::Methods
     extend Argu::TestHelpers::TestHelperMethods::InstanceMethods
 
-    load(Dir[Rails.root.join('db', 'seeds', 'test.seeds.rb')][0])
+    load(Dir[Rails.root.join('db/seeds/test.seeds.rb')][0])
     Forum.find_via_shortname('freetown').update(public_grant: :spectator)
   end
 
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after do
     DatabaseCleaner.clean
   end
 

@@ -25,6 +25,7 @@ module Moveable
 
     def update_activities_on_move(new_parent)
       return unless is_loggable? && new_parent.ancestor(:forum) != ancestor(:forum)
+
       # rubocop:disable Rails/SkipsModelValidations
       activities
         .lock(true)

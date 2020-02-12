@@ -7,6 +7,7 @@ class ExportUploader < CarrierWave::Uploader::Base
 
   def aws_signer
     return if Rails.env.development? || Rails.env.test?
+
     lambda do |unsigned_url, _options|
       signer = Aws::S3::Presigner.new
       key = URI.parse(unsigned_url).path

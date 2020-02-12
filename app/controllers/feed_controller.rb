@@ -29,6 +29,7 @@ class FeedController < AuthorizedController
 
   def from_time
     return Time.current if params[:from_time].blank?
+
     begin
       Time.parse(params[:from_time]).utc.to_s
     rescue ArgumentError
@@ -42,6 +43,7 @@ class FeedController < AuthorizedController
 
   def index_success_serializer
     return respond_with_collection(active_response_options) if index_collection_or_view.present?
+
     head 204
   end
   alias index_success_rdf index_success_serializer
@@ -53,6 +55,7 @@ class FeedController < AuthorizedController
 
   def resource_by_id
     return nil if feed_resource.blank?
+
     @resource_by_id ||=
       Feed.new(
         parent: feed_resource,

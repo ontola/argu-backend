@@ -23,7 +23,7 @@ class PagesController < EdgeableController
   end
 
   def index_collection
-    @collection ||= ::Collection.new(
+    @index_collection ||= ::Collection.new(
       collection_options.merge(
         association_base: discoverable_pages,
         association_class: Page,
@@ -51,6 +51,7 @@ class PagesController < EdgeableController
 
   def permit_params
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
+
     @_permit_params = super
     merge_photo_params(@_permit_params)
     @_permit_params[:last_accepted] = Time.current if %w[true 1].include?(@_permit_params[:last_accepted].to_s)
@@ -59,19 +60,23 @@ class PagesController < EdgeableController
 
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
+
     resource = ActsAsTenant.without_tenant { Shortname.find_resource(params[:id]) }
     resource || raise(ActiveRecord::RecordNotFound)
     return if resource.is_a?(Page)
+
     redirect_to resource.iri
   end
 
   def policy(resource)
     return super unless resource.is_a?(Page)
+
     Pundit.policy(user_context, resource)
   end
 
   def redirect_location
     return new_iri(nil, :pages) unless authenticated_resource.persisted?
+
     settings_iri(authenticated_resource, tab: tab)
   end
 

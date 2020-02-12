@@ -21,11 +21,13 @@ RSpec.describe 'Grants', type: :request do
     let(:subject) { create(:grant, edge: argu, group: group) }
     let(:non_existing_index_path) { '/non_existing/grants' }
     let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }
+
     it_behaves_like 'requests', skip: %i[trash untrash new edit update delete index]
   end
 
   context 'with forum parent' do
     let(:subject) { create(:grant, edge: freetown, group: group) }
+
     it_behaves_like 'requests', skip: %i[trash untrash new edit update delete index]
   end
 end

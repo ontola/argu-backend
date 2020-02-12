@@ -13,6 +13,7 @@ class ArgumentsController < EdgeableController
 
   def authenticated_resource!
     return super unless params[:action] == 'index'
+
     parent_resource!
   end
 
@@ -34,6 +35,7 @@ class ArgumentsController < EdgeableController
 
   def redirect_location
     return super unless action_name == 'create' && authenticated_resource.persisted?
+
     authenticated_resource.parent.iri
   end
 

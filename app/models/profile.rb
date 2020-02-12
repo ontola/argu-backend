@@ -64,7 +64,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def active_pages_ids
-    @active_page_ids ||=
+    @active_pages_ids ||=
       activities.where('key IN (?)', Feed::RELEVANT_KEYS).joins(:trackable).pluck('edges.root_id').uniq
   end
 
@@ -107,10 +107,12 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @granted_edges[root_id] ||= {}
     @granted_edges[root_id][owner_type] ||= {}
     return @granted_edges[root_id][owner_type][grant_set] if @granted_edges[root_id][owner_type].key?(grant_set)
+
     scope = granted_edges_scope
     scope = scope.where(root_id: root_id) if root_id.present?
     scope = scope.where(owner_type: owner_type) if owner_type.present?
     raise 'not grant_set given' if grant_set.blank?
+
     scope =
       scope
         .joins('INNER JOIN grant_sets ON grants.grant_set_id = grant_sets.id')
@@ -121,6 +123,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def granted_root_ids(grant_set = :moderator)
     @granted_root_ids ||= {}
     return @granted_root_ids[grant_set] if @granted_root_ids.key?(grant_set)
+
     scope = granted_edges_scope
     if grant_set.present?
       scope =

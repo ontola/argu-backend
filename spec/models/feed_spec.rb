@@ -6,7 +6,7 @@ RSpec.describe Feed, type: :model do
   define_spec_objects
   subject { argu_feed }
 
-  let(:argu_feed) { Feed.new(parent: argu, relevant_only: relevant_only, root_id: argu.uuid) }
+  let(:argu_feed) { described_class.new(parent: argu, relevant_only: relevant_only, root_id: argu.uuid) }
   let(:relevant_only) { false }
   let(:user) { create(:user) }
   let(:scoped_activities) do
@@ -71,8 +71,8 @@ RSpec.describe Feed, type: :model do
       end
 
       it 'does not include ungranted_activities' do
-        expect(granted_paths.all? { |path| scoped_activities.any? { |a| a.trackable.path.include?("#{path}.") } }).to(
-          be_truthy
+        expect(granted_paths).to(
+          be_all { |path| scoped_activities.any? { |a| a.trackable.path.include?("#{path}.") } }
         )
         expect(ungranted_activities).to be_present
         expect(scoped_activities & ungranted_activities).to be_empty
@@ -86,6 +86,7 @@ RSpec.describe Feed, type: :model do
 
   context 'freetown moderator' do
     let(:user) { create_moderator(freetown) }
+
     it_behaves_like 'scope'
   end
 
@@ -93,6 +94,7 @@ RSpec.describe Feed, type: :model do
     let(:user) { create_moderator(argu) }
     let(:granted_paths) { [freetown.path, holland.path] }
     let!(:ungranted_motion) { create(:motion, parent: create(:forum, url: 'other_forum', parent: create_page)) }
+
     it_behaves_like 'scope'
   end
 

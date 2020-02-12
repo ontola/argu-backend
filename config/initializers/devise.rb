@@ -287,4 +287,4 @@ module FlashOverwrite
   end
 end
 
-DeviseController.send(:include, FlashOverwrite)
+DeviseController.include FlashOverwrite

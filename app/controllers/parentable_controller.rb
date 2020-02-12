@@ -12,6 +12,7 @@ class ParentableController < AuthorizedController
 
   def authorize_action
     return super unless action_name == 'index'
+
     authorize parent_resource!, :index_children?, controller_name
   end
 
@@ -21,6 +22,7 @@ class ParentableController < AuthorizedController
 
   def linked_record_parent(opts = params)
     return unless parent_resource_param(opts) == 'linked_record_id'
+
     @linked_record_parent ||=
       LinkedRecord.find_by(deku_id: opts[:linked_record_id]) ||
       LinkedRecord.new_for_forum(tree_root.url, opts[:container_node_id], opts[:linked_record_id])
@@ -30,8 +32,9 @@ class ParentableController < AuthorizedController
     @parent_resource ||= linked_record_parent || resource_by_id_parent || super
   end
 
-  def redirect_edge_parent_requests # rubocop:disable Metrics/AbcSize
+  def redirect_edge_parent_requests
     return unless parent_resource == Edge
+
     path = expand_uri_template(
       "#{controller_name}_collection_iri",
       parent_iri: split_iri_segments(parent_resource.iri)

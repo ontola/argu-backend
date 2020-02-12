@@ -37,6 +37,7 @@ class GroupPolicy < EdgeTreePolicy
 
   def destroy?
     return false unless record.deletable
+
     edgeable_policy.update?
   end
 
@@ -46,6 +47,7 @@ class GroupPolicy < EdgeTreePolicy
 
   def valid_child?(klass)
     return true if klass == Grant
+
     super
   end
 end

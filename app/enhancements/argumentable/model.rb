@@ -17,9 +17,10 @@ module Argumentable
 
       def invert_arguments=(invert)
         return if invert == '0'
+
         Motion.transaction do
           arguments.each do |a|
-            a.update_attributes pro: !a.pro
+            a.update pro: !a.pro
           end
         end
       end

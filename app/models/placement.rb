@@ -31,13 +31,13 @@ class Placement < ApplicationRecord
   # @return [Placement, nil] {Placement} or nil if no placement is found in the path
   def self.find_by_path(path, sort) # rubocop:disable Metrics/AbcSize
     return if path.nil?
+
     edge_uuids = Edge.where(id: path.split('.')).pluck(:uuid)
     joins('INNER JOIN edges ON placements.placeable_id = edges.uuid AND placements.placeable_type = \'Edge\'')
       .where(placeable_id: edge_uuids)
       .select('*, nlevel(edges.path) AS nlevel')
       .select { |placement| sort.index(placement.placement_type).present? }
-      .sort_by { |placement| [sort.index(placement.placement_type), -placement.nlevel] }
-      .first
+      .min_by { |placement| [sort.index(placement.placement_type), -placement.nlevel] }
   end
 
   private

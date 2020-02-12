@@ -7,26 +7,31 @@ RSpec.describe '#iri_cache', type: :model do
 
   context 'iri of a cached motion' do
     subject { motion.iri_cache }
+
     it { is_expected.to eq("/m/#{motion.fragment}") }
   end
 
   context 'iri of a cleared motion' do
     subject { ActsAsTenant.with_tenant(argu) { motion.update!(iri_cache: nil) } && motion.iri_path }
+
     it { is_expected.to eq("/m/#{motion.fragment}") }
   end
 
   context 'iri of a cached page' do
     subject { argu.iri_cache }
+
     it { is_expected.to eq('') }
   end
 
   context 'iri of a cleared page' do
     subject { argu.update!(iri_cache: nil) && argu.iri_path }
+
     it { is_expected.to eq('') }
   end
 
   context 'iri of a page after updated shortname' do
     subject { argu.update!(url: 'new_url') && argu.reload.iri_path }
+
     it { is_expected.to eq('') }
   end
 end

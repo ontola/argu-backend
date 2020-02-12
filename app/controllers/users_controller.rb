@@ -40,6 +40,7 @@ class UsersController < AuthorizedController
 
   def email_changed? # rubocop:disable Metrics/AbcSize
     return if permit_params[:email_addresses_attributes].blank?
+
     permit_params[:email_addresses_attributes].any? do |email|
       email.second['id'].nil? ||
         email.second['email'].present? &&

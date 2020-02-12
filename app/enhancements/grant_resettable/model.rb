@@ -15,6 +15,7 @@ module GrantResettable
         singular = child_type.to_s.singularize
         child_class = child_type.to_s.classify.constantize
         raise "#{child_type} is not a child of #{class_name}" unless child_class.valid_parent?(self)
+
         custom_grants << [singular, action]
         method_identifier = "#{action}_#{singular}"
 
@@ -57,6 +58,7 @@ module GrantResettable
 
       def custom_grant_group_ids(action, singular, grant_tree)
         return attributes["#{action}_#{singular}_group_ids"] unless attributes["#{action}_#{singular}_group_ids"].nil?
+
         grant_tree ||= GrantTree.new(persisted_edge.root)
         attributes["#{action}_#{singular}_group_ids"] =
           grant_tree
@@ -72,6 +74,7 @@ module GrantResettable
         @grant_resets_for ||= {}
         @grant_resets_for[action] ||= {}
         return @grant_resets_for[action][resource_type] if @grant_resets_for[action].key?(resource_type)
+
         @grant_resets_for[action][resource_type] =
           grant_resets.find_by(action: action, resource_type: resource_type)
       end
@@ -83,6 +86,7 @@ module GrantResettable
 
       def reset_custom_grant(action, singular)
         return attributes["reset_#{action}_#{singular}"] unless attributes["reset_#{action}_#{singular}"].nil?
+
         grant_reset_for(action, singular.classify).present?
       end
 
@@ -91,11 +95,12 @@ module GrantResettable
       end
 
       def sanitized_reset_custom_grant(value)
-        value == true || value == 'true'
+        [true, 'true'].include?(value)
       end
 
       def sync_custom_grants(action, singular)
         return unless send("reset_#{action}_#{singular}")
+
         granted_group_ids = send("#{action}_#{singular}_group_ids")
         current_granted_group_ids =
           if send("saved_change_to_reset_#{action}_#{singular}?")

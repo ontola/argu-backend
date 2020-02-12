@@ -11,7 +11,7 @@ class Shortname < ApplicationRecord
   belongs_to :owner,
              polymorphic: true,
              primary_key: :uuid,
-             required: true
+             optional: false
   belongs_to :root,
              primary_key: :uuid,
              class_name: 'Edge'
@@ -46,7 +46,7 @@ class Shortname < ApplicationRecord
   after_create :destroy_finish_intro_notification
   attr_reader :destination
 
-  SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i
+  SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i.freeze
 
   def display_name; end
 

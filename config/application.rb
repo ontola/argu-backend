@@ -45,7 +45,7 @@ module Argu
     config.autoload_paths += Dir["#{config.root}/app/enhancements/**/"]
     Dir.glob("#{config.root}/app/enhancements/**{,/*/**}/*.rb").each { |file| require_dependency file }
 
-    config.paths['app/views'].unshift(Rails.root.join('lib', 'app', 'views'))
+    config.paths['app/views'].unshift(Rails.root.join('lib/app/views'))
 
     config.active_job.queue_adapter = :sidekiq
     ENV['REDIS_URL'] = ENV['REDIS_URL'].presence ||
@@ -90,7 +90,7 @@ module Argu
     config.time_zone = 'UTC'
     I18n.available_locales = %i[nl en]
     config.i18n.available_locales = %i[nl en]
-    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}')]
     config.i18n.enforce_available_locales = true
     I18n.enforce_available_locales = true
     config.i18n.default_locale = ENV['DEFAULT_LOCALE'] || :nl

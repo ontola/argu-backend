@@ -89,9 +89,10 @@ class ContainerNode < Edge
     true
   end
 
-  def reset_country # rubocop:disable Metrics/AbcSize
+  def reset_country
     country_code = locale.split('-').second
     return if country_placement&.country_code == country_code
+
     place = Place.find_or_fetch_country(country_code)
     placement =
       placements

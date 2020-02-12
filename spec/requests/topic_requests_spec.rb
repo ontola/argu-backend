@@ -7,6 +7,7 @@ RSpec.describe 'Topic', type: :request do
 
   context 'with forum parent' do
     subject { forum_topic }
+
     it_behaves_like 'requests', move: true
   end
 end

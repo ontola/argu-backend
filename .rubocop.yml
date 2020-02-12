@@ -1,6 +1,6 @@
-inherit_from: service_module/.rubocop_todo.yml
+inherit_from: service_module/.rubocop.yml
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.6
   Exclude:
     - 'node_modules/**/*'
     - 'vendor/**/*'
@@ -11,8 +11,26 @@ AllCops:
     - 'db/schema.rb'
     - 'db/migrate/*'
     - 'bin/*'
-Rails:
-  Enabled: true
+Lint/UselessAssignment:
+  Exclude:
+    - 'Gemfile'
+Metrics/BlockLength:
+  Exclude:
+    - '**/*.jbuilder'
+    - 'spec/rails_helper.rb'
+    - 'config/**/*.rb'
+    - 'db/seeds.rb'
+    - 'spec/support/database_cleaner.rb'
+    - 'spec/shared_examples/*.rb'
+Metrics/ClassLength:
+  Exclude:
+    - 'test/controllers/*.rb'
+    - 'test/integration/**/*.rb'
+    - 'test/unit/*.rb'
+Metrics/MethodLength:
+  Max: 30
+Naming/PredicateName:
+  Enabled: false
 Rails/ApplicationRecord:
   Exclude:
     - 'config/initializers/doorkeeper.rb'
@@ -22,64 +40,15 @@ Rails/DynamicFindBy:
     - find_by_iri
     - find_by_iri!
     - find_by_path
-Style/RaiseArgs:
-  EnforcedStyle: compact
-Layout/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space
-Layout/MultilineOperationIndentation:
-  EnforcedStyle: indented
-Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented_relative_to_receiver
-Lint/UselessAssignment:
-  Exclude:
-    - 'Gemfile'
-Metrics/LineLength:
-  Max: 120
-Metrics/MethodLength:
-  Max: 30
-Metrics/ModuleLength:
-  Max: 225
-Metrics/ClassLength:
-  Exclude:
-    - 'test/controllers/*.rb'
-    - 'test/integration/**/*.rb'
-    - 'test/unit/*.rb'
-Naming/PredicateName:
-  Enabled: false
-Style/Documentation:
-  Enabled: false
-Metrics/BlockLength:
-  Exclude:
-    - '**/*.jbuilder'
-    - 'spec/rails_helper.rb'
-    - 'config/**/*.rb'
-    - 'db/seeds.rb'
-    - 'spec/support/database_cleaner.rb'
-    - 'spec/shared_examples/*.rb'
-  ExcludedMethods:
-    - context
-    - define
-    - describe
-    - draw
-    - factory
-    - feature
-    - has_one
-    - included
-    - it
-    - let
-    - namespace
-    - scenario
-    - shared_examples
-    - shared_examples_for
-    - test
-    - setup
-Rails/LexicallyScopedActionFilter:
-  Enabled: false
-Rails/UnknownEnv:
-  Environments:
-    - production
-    - development
-    - test
-    - staging
 Rails/InverseOf:
+  Enabled: false
+RSpec/ContextWording:
+  Enabled: false
+RSpec/DescribeClass:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/RepeatedExampleGroupBody:
   Enabled: false

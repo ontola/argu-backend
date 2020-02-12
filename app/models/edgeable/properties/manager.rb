@@ -41,6 +41,7 @@ module Edgeable
 
       def default_value
         return array? ? [] : nil if options[:default].nil?
+
         build_property(options[:default], 0).value
       end
 

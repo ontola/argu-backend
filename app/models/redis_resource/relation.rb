@@ -73,6 +73,7 @@ module RedisResource
 
     def filtered_keys # rubocop:disable Metrics/AbcSize
       return key.matched_keys if where_clause.blank?
+
       @filtered_keys ||= key.matched_keys.select do |key|
         resource = key.redis_resource.resource
         where_clause.all? do |k, v|
@@ -118,6 +119,7 @@ module RedisResource
     def user_from_opts(opts)
       return opts.delete(:publisher) if opts[:publisher].present?
       return opts.delete(:creator)&.profileable if opts[:creator].present?
+
       user
     end
 

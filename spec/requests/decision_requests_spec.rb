@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe 'Decisions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
+  subject { decision }
+
   let(:created_resource_path) { parent_path }
   let(:updated_resource_path) { parent_path }
 
@@ -20,6 +22,5 @@ RSpec.describe 'Decisions', type: :request do
   end
   let(:required_keys) { %w[content] }
 
-  subject { decision }
   it_behaves_like 'requests', skip: %i[trash untrash delete destroy update_invalid]
 end

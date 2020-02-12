@@ -14,6 +14,7 @@ class CollectionPolicy < LinkedRails::CollectionPolicy
 
   def create_opinion?
     return false unless record.parent.try(:enhanced_with?, Opinionable)
+
     vote = record.parent.vote_for(user_context.user)
     vote.present? && vote.comment.nil?
   end
@@ -42,6 +43,7 @@ class CollectionPolicy < LinkedRails::CollectionPolicy
 
   def parent_policy # rubocop:disable Metrics/AbcSize
     return if record.parent.blank?
+
     if record.parent.is_a?(Edge) && user_context.tree_root_id.nil?
       @parent_policy ||= NoRootPolicy.new(user_context, record.parent)
     end

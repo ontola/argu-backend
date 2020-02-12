@@ -10,6 +10,7 @@ class ExportWorker
   def perform(export_id) # rubocop:disable Metrics/AbcSize
     self.export = Export.find_by(id: export_id)
     return if export.blank?
+
     export.processing!
     ActsAsTenant.with_tenant(export.edge.root) do
       generate_zip
@@ -80,7 +81,7 @@ class ExportWorker
   end
 
   def generate_zip
-    filename = Rails.root.join('tmp', 'argu-data-export.zip')
+    filename = Rails.root.join('tmp/argu-data-export.zip')
     Zip::File.open(filename, Zip::File::CREATE) do |zip|
       add_xls(zip)
       add_json(zip)

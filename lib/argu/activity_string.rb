@@ -42,6 +42,7 @@ module Argu
     # @return [String, nil] Singlar name of activity.trackable.group, as text
     def group_singular_string
       return nil unless @activity.trackable.try(:group)
+
       @activity.trackable.group.name_singular
     end
 
@@ -61,6 +62,7 @@ module Argu
     def parent_string
       recipient = @activity.recipient_type == 'VoteEvent' ? @activity.recipient&.voteable : @activity.recipient
       return @activity.audit_data.try(:[], 'recipient_name') if recipient.nil?
+
       case @render
       when :embedded_link
         "[#{recipient.display_name}](#{recipient.iri})"
@@ -74,6 +76,7 @@ module Argu
     # @return [String, nil] Translation of pro, neutral or con
     def side_string
       return nil unless @activity&.trackable&.is_a?(Vote) || @activity&.trackable&.is_a?(Argument)
+
       I18n.t("activities.#{@activity.trackable_type.tableize}.#{@activity.trackable.key}",
              default: I18n.t(@activity.trackable.key))
     end
@@ -99,8 +102,9 @@ module Argu
       end
     end
 
-    def sub_action_key # rubocop:disable Metrics/AbcSize
+    def sub_action_key
       return unless @activity.trackable_type == 'Decision' && @activity.action == 'forwarded'
+
       if @activity.trackable.forwarded_user == @user
         :to_you
       elsif @activity.trackable.forwarded_user.nil? &&

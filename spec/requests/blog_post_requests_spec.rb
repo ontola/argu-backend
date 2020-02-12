@@ -7,11 +7,13 @@ RSpec.describe 'BlogPosts', type: :request do
 
   context 'with motion parent' do
     subject { motion_blog_post }
+
     it_behaves_like 'requests'
   end
 
   context 'with question parent' do
     subject { blog_post }
+
     it_behaves_like 'requests'
   end
 end

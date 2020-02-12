@@ -36,6 +36,7 @@ class ContainerNodePolicy < EdgePolicy
   def show?
     verdict = super
     raise(ActiveRecord::RecordNotFound) unless record.discoverable? || verdict
+
     verdict
   end
 

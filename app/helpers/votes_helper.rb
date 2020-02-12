@@ -26,6 +26,7 @@ module VotesHelper
 
   def vote_iri_path(model, vote)
     return collection_iri_path(model, :votes, for: :pro) if vote.blank?
+
     if vote.try(:persisted?)
       vote.iri_path
     else

@@ -9,7 +9,5 @@ class EmailAddressSerializer < BaseSerializer
 
   def updated_at; end
 
-  def primary
-    object.primary if object.primary
-  end
+  delegate :primary, to: :object
 end

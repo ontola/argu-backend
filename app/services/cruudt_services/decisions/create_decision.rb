@@ -18,6 +18,7 @@ class CreateDecision < CreateEdge
   def prepare_argu_publication_attributes
     super
     return if @attributes['state'] == 'forwarded'
+
     @attributes[:argu_publication_attributes][:follow_type] = 'news'
   end
 end

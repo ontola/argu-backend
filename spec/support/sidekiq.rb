@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.configure do |config|
-  config.before(:each) do
+  config.before do
     Sidekiq::Worker.clear_all
   end
 end
