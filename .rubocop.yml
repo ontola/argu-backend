@@ -11,8 +11,6 @@ AllCops:
     - 'db/schema.rb'
     - 'db/migrate/*'
     - 'bin/*'
-Bundler/OrderedGems:
-  Enabled: false
 Rails:
   Enabled: true
 Rails/ApplicationRecord:
