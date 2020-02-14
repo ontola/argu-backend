@@ -23,6 +23,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
   let!(:user) { create(:user) }
   let!(:user_without_password) { create(:user, :no_password) }
+  let(:application) { create(:application) }
 
   ####################################
   # GENERATE GUEST TOKEN
@@ -70,7 +71,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     }
     assert_difference(differences) do
       Sidekiq::Testing.inline! do
-        token_user = post_token(redirect: freetown.iri.path)
+        token_user = post_token_password(redirect: freetown.iri.path)
         assert_equal user.email, token_user['email']
         assert_equal user.id, token_user['id']
       end
@@ -80,21 +81,61 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should post create token with username' do
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
-      post_token(name: user.url)
+      post_token_password(name: user.url)
     end
   end
 
   test 'User should post create token with caps' do
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
-      post_token(name: user.email.capitalize)
+      post_token_password(name: user.email.capitalize)
     end
   end
 
   test 'User should post create token with r' do
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
-      post_token(redirect: freetown.iri.path)
+      post_token_password(redirect: freetown.iri.path)
+    end
+  end
+
+  ####################################
+  # CLIENT_CREDENTIALS
+  ####################################
+  test 'Service should not post create client credentials without credentials' do
+    sign_in :service
+    assert_difference('Doorkeeper::AccessToken.count' => 0) do
+      post_token_client_credentials(results: {error_type: 'invalid_client'})
+    end
+  end
+
+  test 'Service should not post create client credentials without secret' do
+    sign_in :service
+    assert_difference('Doorkeeper::AccessToken.count' => 0) do
+      post_token_client_credentials(client_id: application.uid, results: {error_type: 'invalid_client'})
+    end
+  end
+
+  test 'Service should not post create client credentials with user scope' do
+    sign_in :service
+    assert_difference('Doorkeeper::AccessToken.count' => 0) do
+      post_token_client_credentials(
+        client_id: application.uid,
+        client_secret: application.secret,
+        results: {error_type: 'invalid_grant'},
+        scope: 'user'
+      )
+    end
+  end
+
+  test 'Service should post create client credentials' do
+    sign_in :service
+    assert_difference('Doorkeeper::AccessToken.count' => 1) do
+      post_token_client_credentials(
+        client_id: application.uid,
+        client_secret: application.secret,
+        results: {scope: 'guest'}
+      )
     end
   end
 
@@ -104,14 +145,14 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with credentials and empty password' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(password: nil, err_code: 'WRONG_PASSWORD')
+      post_token_password(password: nil, results: {error_code: 'WRONG_PASSWORD'})
     end
   end
 
   test 'User should not post create token with credentials and blank password' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(password: '', err_code: 'WRONG_PASSWORD')
+      post_token_password(password: '', results: {error_code: 'WRONG_PASSWORD'})
     end
   end
 
@@ -121,31 +162,24 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with wrong password' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(password: 'wrong', err_code: 'WRONG_PASSWORD')
+      post_token_password(password: 'wrong', results: {error_code: 'WRONG_PASSWORD'})
     end
   end
 
   test 'User should not post create token with wrong password and r' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(password: 'wrong', err_code: 'WRONG_PASSWORD', redirect: freetown.iri.path)
+      post_token_password(password: 'wrong', results: {error_code: 'WRONG_PASSWORD'}, redirect: freetown.iri.path)
     end
   end
 
   ####################################
   # UNKOWN EMAIL
   ####################################
-  test 'User should not post create token with unknown email for other domain' do
+  test 'User should not post create token with unknown email' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(name: 'wrong@example.com', err_code: 'UNKNOWN_EMAIL')
-    end
-  end
-
-  test 'User should not post create token with unknown email and r for Argu domain' do
-    sign_in guest_user
-    assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(name: 'wrong@example.com', err_code: 'UNKNOWN_EMAIL', redirect: freetown.iri.path)
+      post_token_password(name: 'wrong@example.com', results: {error_code: 'UNKNOWN_EMAIL'})
     end
   end
 
@@ -155,14 +189,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown username' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(name: 'wrong', err_code: 'UNKNOWN_USERNAME')
-    end
-  end
-
-  test 'User should not post create token with r and unknown username' do
-    sign_in guest_user
-    assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(name: 'wrong', err_code: 'UNKNOWN_USERNAME', redirect: freetown.iri.path)
+      post_token_password(name: 'wrong', results: {error_code: 'UNKNOWN_USERNAME'})
     end
   end
 
@@ -172,14 +199,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with service scope' do
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(err_type: 'invalid_scope', scope: 'service')
-    end
-  end
-
-  test 'User should not post create token with user and service scope for other domain' do
-    sign_in guest_user
-    assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(err_type: 'invalid_scope', scope: 'user service')
+      post_token_password(results: {error_type: 'invalid_scope'}, scope: 'service')
     end
   end
 
@@ -198,7 +218,7 @@ class TokensTest < ActionDispatch::IntegrationTest
                       'Argu::Redis.keys("temporary*").count' => -1,
                       'Favorite.count' => 1) do
       Sidekiq::Testing.inline! do
-        token_user = post_token(
+        token_user = post_token_password(
           name: unconfirmed_user.email,
           password: unconfirmed_user.password,
           redirect: freetown.iri.path
@@ -220,7 +240,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_nil user.locked_at
 
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(err_code: 'ACCOUNT_LOCKED', password: 'wrong')
+      post_token_password(results: {error_code: 'ACCOUNT_LOCKED'}, password: 'wrong')
     end
 
     assert_not_nil user.reload.locked_at
@@ -233,7 +253,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     user.update!(locked_at: Time.current)
 
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token(err_code: 'ACCOUNT_LOCKED')
+      post_token_password(results: {error_code: 'ACCOUNT_LOCKED'})
     end
   end
 
@@ -251,8 +271,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     "/#{argu.url}#{super}"
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists
-  def post_token(err_code: nil, err_type: nil, name: user.email, password: user.password, scope: 'user', redirect: nil)
+  def post_token_password(name: user.email, password: user.password, scope: 'user', redirect: nil, results: {})
     post oauth_token_path,
          headers: argu_headers(accept: :json),
          params: {
@@ -263,21 +282,42 @@ class TokensTest < ActionDispatch::IntegrationTest
            r: redirect
          }
 
-    if err_code || err_type
-      expect_error_type(err_type || 'invalid_grant')
-      expect_error_code(err_code) if err_code
+    token = token_response(results)
+    return unless token
+
+    token_user = token['user']
+    assert_equal scope, token_user['type']
+    token_user
+  end
+
+  def post_token_client_credentials(scope: nil, redirect: nil, results: {}, client_id: nil, client_secret: nil)
+    post oauth_token_path,
+         headers: argu_headers(accept: :json),
+         params: {
+           grant_type: 'client_credentials',
+           client_id: client_id,
+           client_secret: client_secret,
+           scope: scope,
+           r: redirect
+         }
+
+    puts token_response(results)
+  end
+
+  def token_response(error_code: nil, error_type: nil, scope: 'user') # rubocop:disable Metrics/AbcSize
+    if error_code || error_type
+      expect_error_type(error_type || 'invalid_grant')
+      expect_error_code(error_code) if error_code
       assert_response 401
+      assert_nil parsed_body['access_token']
+      nil
     else
       assert_response 200
 
-      assert_equal 'user', parsed_body['scope']
+      assert_equal scope, parsed_body['scope']
       assert_equal 'Bearer', parsed_body['token_type']
       assert_equal 1_209_600, parsed_body['expires_in']
-      token = JWT.decode(parsed_body['access_token'], nil, false)[0]
-      token_user = token['user']
-      assert_equal 'user', token_user['type']
-      token_user
+      JWT.decode(parsed_body['access_token'], nil, false)[0]
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/ParameterLists
 end

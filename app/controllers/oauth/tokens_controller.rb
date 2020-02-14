@@ -2,7 +2,6 @@
 
 module Oauth
   class TokensController < Doorkeeper::TokensController
-    def r_with_authenticity_token; end
     include RedisResourcesHelper
     include Argu::Controller::ErrorHandling::Helpers
 
@@ -22,7 +21,7 @@ module Oauth
     end
 
     def process_previous_token(res)
-      return unless doorkeeper_token
+      return unless doorkeeper_token && res.token.resource_owner_id
 
       schedule_redis_resource_worker(
         GuestUser.new(id: doorkeeper_token.resource_owner_id),
@@ -30,5 +29,7 @@ module Oauth
         params[:r]
       )
     end
+
+    def r_with_authenticity_token; end
   end
 end

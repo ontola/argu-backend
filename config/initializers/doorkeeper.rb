@@ -1,24 +1,5 @@
 # frozen_string_literal: true
 
-module Doorkeeper
-  class Application < ActiveRecord::Base
-    ARGU_ID = 0
-    def self.argu
-      Doorkeeper::Application.find(Doorkeeper::Application::ARGU_ID)
-    end
-
-    AFE_ID = 1
-    def self.argu_front_end
-      Doorkeeper::Application.find(Doorkeeper::Application::AFE_ID)
-    end
-
-    SERVICE_ID = 2
-    def self.argu_service
-      Doorkeeper::Application.find(Doorkeeper::Application::SERVICE_ID)
-    end
-  end
-end
-
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use.
   # Currently supported options are :active_record, :mongoid2, :mongoid3,
@@ -151,7 +132,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  grant_flows %w[authorization_code password]
+  grant_flows %w[authorization_code password client_credentials]
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
@@ -173,7 +154,7 @@ Doorkeeper::JWT.configure do
     user =
       if opts[:scopes].include?('guest')
         GuestUser.new(
-          id: opts[:resource_owner_id],
+          id: opts[:resource_owner_id] || SecureRandom.hex,
           language: I18n.locale
         )
       elsif opts[:resource_owner_id]
@@ -185,7 +166,7 @@ Doorkeeper::JWT.configure do
       scopes: opts[:scopes].entries,
       application_id: opts[:application]&.id
     }
-    if opts[:resource_owner_id]
+    if user
       payload[:user] = {
         type: user.guest? ? 'guest' : 'user',
         '@id': user.iri,
@@ -221,6 +202,16 @@ end
 
 module Doorkeeper
   class AccessToken < ActiveRecord::Base
+    validate :validate_scope_for_resource_owner
+
+    private
+
+    def validate_scope_for_resource_owner
+      return if resource_owner_id || scopes.to_s == 'guest'
+
+      raise Doorkeeper::Errors::DoorkeeperError.new(:invalid_grant)
+    end
+
     class << self
       def by_token(token)
         guest_token(token) || find_by(token: token.to_s)
@@ -245,6 +236,23 @@ module Doorkeeper
       rescue ::JWT::DecodeError
         nil
       end
+    end
+  end
+
+  class Application < ActiveRecord::Base
+    ARGU_ID = 0
+    def self.argu
+      Doorkeeper::Application.find(Doorkeeper::Application::ARGU_ID)
+    end
+
+    AFE_ID = 1
+    def self.argu_front_end
+      Doorkeeper::Application.find(Doorkeeper::Application::AFE_ID)
+    end
+
+    SERVICE_ID = 2
+    def self.argu_service
+      Doorkeeper::Application.find(Doorkeeper::Application::SERVICE_ID)
     end
   end
 end

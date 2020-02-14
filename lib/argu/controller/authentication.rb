@@ -9,10 +9,6 @@ module Argu
         include OauthHelper
       end
 
-      def allowed_scopes
-        %i[user guest service]
-      end
-
       # @return [Profile] The {Profile} of the {User}
       def current_profile
         current_user.profile
