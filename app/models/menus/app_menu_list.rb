@@ -59,27 +59,27 @@ class AppMenuList < ApplicationMenuList
       :signout,
       action: NS::ONTOLA['actions/logout'],
       label: I18n.t('sign_out'),
-      href: destroy_user_session_url
+      href: RDF::DynamicURI(destroy_user_session_url)
     )
   end
 
-  def user_base_items
+  def user_base_items # rubocop:disable Metrics/AbcSize
     if resource.url.present?
       [
         menu_item(
-          :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_url(user)
+          :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: RDF::DynamicURI(user_url(user))
         ),
         menu_item(
-          :profile, label: I18n.t('profiles.edit.title'), href: edit_profile_link
+          :profile, label: I18n.t('profiles.edit.title'), href: RDF::DynamicURI(edit_profile_link)
         )
       ]
     else
-      [menu_item(:setup, label: I18n.t('profiles.setup.link'), href: setup_users_url)]
+      [menu_item(:setup, label: I18n.t('profiles.setup.link'), href: RDF::DynamicURI(setup_users_url))]
     end
   end
 
   def user_forum_management_item
-    menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource))
+    menu_item(:forums, label: I18n.t('forums.management.title'), href: RDF::DynamicURI(forums_user_url(resource)))
   end
 
   def user_menu_items
@@ -94,14 +94,14 @@ class AppMenuList < ApplicationMenuList
   end
 
   def user_pages_item
-    menu_item(:pages, label: I18n.t('pages.my_pages'), href: pages_user_url(resource))
+    menu_item(:pages, label: I18n.t('pages.my_pages'), href: RDF::DynamicURI(pages_user_url(resource)))
   end
 
   def user_settings_item
     menu_item(
       :settings,
       label: I18n.t('users.settings.title'),
-      href: settings_user_users_url
+      href: RDF::DynamicURI(settings_user_users_url)
     )
   end
 end

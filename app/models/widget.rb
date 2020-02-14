@@ -56,7 +56,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @resource_sequence ||=
       LinkedRails::Sequence.new(
         resource_iri
-          .map { |iri, predicate| predicate.present? ? property_shape(iri, predicate).iri : RDF::DynamicURI(iri) }
+          .map { |iri, predicate| predicate.present? ? property_shape(iri, predicate).iri : RDF::URI(iri) }
       )
   end
 
@@ -81,8 +81,8 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @property_shapes ||= {}
     @property_shapes[[iri, predicate]] ||=
       LinkedRails::PropertyQuery.new(
-        target_node: RDF::DynamicURI(iri),
-        path: RDF::DynamicURI(predicate)
+        target_node: RDF::URI(iri),
+        path: RDF::URI(predicate)
       )
   end
 

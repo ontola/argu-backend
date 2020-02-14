@@ -23,7 +23,7 @@ class ArgumentActionList < EdgeActionList
     image: 'fa-arrow-up',
     policy: :create_child?,
     policy_resource: -> { resource.vote_collection },
-    url: -> { RDF::DynamicURI(vote_iri(resource, Vote.new)) },
+    url: -> { vote_iri(resource, Vote.new) },
     http_method: :delete,
     favorite: true,
     condition: -> { current_vote.present? }

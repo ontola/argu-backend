@@ -32,6 +32,6 @@ class EdgeSerializer < RecordSerializer
   end
 
   def granted_groups
-    RDF::DynamicURI("#{object.iri}/granted")
+    RDF::URI("#{object.iri}/granted")
   end
 end

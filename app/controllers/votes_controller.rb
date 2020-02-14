@@ -200,7 +200,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def replace_vote_event_meta(data) # rubocop:disable Metrics/AbcSize
     iri =
       if parent_resource.parent.is_a?(LinkedRecord)
-        RDF::DynamicURI(parent_resource.iri.to_s.gsub('/lr/', '/od/').split('/vote_events/')[0])
+        RDF::URI(parent_resource.iri.to_s.gsub('/lr/', '/od/').split('/vote_events/')[0])
       else
         parent_resource.iri
       end

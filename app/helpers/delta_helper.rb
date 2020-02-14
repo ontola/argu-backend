@@ -9,7 +9,7 @@ module DeltaHelper
         data << [
           obj.iri,
           pred,
-          ::RDF::DynamicURI("#{object.iri}/actions/#{action}"),
+          ::RDF::URI("#{object.iri}/actions/#{action}"),
           delta_iri(delta)
         ]
       end

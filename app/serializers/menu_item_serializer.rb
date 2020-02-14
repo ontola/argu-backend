@@ -4,7 +4,7 @@ class MenuItemSerializer < LinkedRails::Menus::ItemSerializer
   has_one :image, predicate: NS::SCHEMA[:image]
 
   def href
-    object.href.is_a?(String) ? RDF::DynamicURI(object.href) : object.href
+    object.href.is_a?(String) ? RDF::URI(object.href) : object.href
   end
 
   def image

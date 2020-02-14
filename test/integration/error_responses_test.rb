@@ -229,7 +229,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     assert_response status
 
     ActsAsTenant.current_tenant = argu
-    subject = RDF::DynamicURI("#{Rails.application.config.origin}#{path}")
+    subject = RDF::URI("#{Rails.application.config.origin}#{path}")
 
     expect_resource_type(NS::ONTOLA["errors/#{opts[:error]}Error"], iri: subject)
     expect_triple(subject, NS::SCHEMA[:name], I18n.t('status')[status])
