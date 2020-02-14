@@ -55,7 +55,8 @@ class LinkedRecord < Edge
       publisher: User.community,
       creator: Profile.community,
       owner_type: name,
-      deku_id: id
+      deku_id: id,
+      root: forum.root
     )
   end
 

@@ -32,7 +32,7 @@ module Edgeable
       end
 
       def build_property(value, order)
-        instance.properties.build(edge: instance, predicate: predicate, value: value, order: order)
+        instance.properties.build(root: instance.root, edge: instance, predicate: predicate, value: value, order: order)
       end
 
       def current_value

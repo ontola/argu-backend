@@ -73,7 +73,7 @@ class SearchResult
     @results ||= LinkedRails::Sequence.new(search_result)
   end
 
-  def write_to_cache(cache = Argu::Cache)
+  def write_to_cache(cache = Argu::Cache.new)
     super
   rescue Searchkick::Error
     nil

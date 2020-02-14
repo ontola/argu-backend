@@ -10,8 +10,15 @@ class Property < ApplicationRecord
   belongs_to :linked_edge, class_name: 'Edge', primary_key: :uuid
   belongs_to :user, foreign_key: :integer
   belongs_to :group, foreign_key: :integer
+  belongs_to :root, primary_key: :uuid, class_name: 'Edge'
+
+  before_validation proc { |p| p.root_id ||= ActsAsTenant.current_tenant&.uuid || p.edge&.root_id }, on: :create
 
   attribute :iri, IRIType.new
+
+  default_scope lambda {
+    ActsAsTenant.current_tenant ? where(root_id: ActsAsTenant.current_tenant.uuid) : all
+  }
 
   def raw_value
     attributes[type.to_s]
