@@ -8,7 +8,6 @@ class ContainerNode < Edge
   enhance Feedable
   enhance Followable
   enhance LinkedRails::Enhancements::Menuable
-  enhance Moveable
   enhance Placeable
   enhance ChildrenPlaceable
   enhance ProfilePhotoable
@@ -75,12 +74,6 @@ class ContainerNode < Edge
 
   def language
     locale.split('-').first.to_sym
-  end
-
-  def move_to(_new_parent)
-    super do
-      grants.where('group_id != ?', Group::PUBLIC_ID).destroy_all
-    end
   end
 
   private

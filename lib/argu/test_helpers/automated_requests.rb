@@ -102,7 +102,7 @@ module Argu
           let(:expect_post_move_unauthorized_serializer) { expect_unauthorized }
           let(:expect_post_move) do
             subject.reload
-            assert_equal other_page_forum, subject_parent
+            assert_equal other_forum, subject_parent
             case subject
             when Motion
               assert subject.arguments.count.positive?
@@ -111,7 +111,7 @@ module Argu
             end
             assert subject.activities.count.positive?
             subject.activities.pluck(:recipient_id).each do |id|
-              assert_equal other_page_forum.id, id
+              assert_equal other_forum.id, id
             end
             subject.activities.pluck(:recipient_type).each do |type|
               assert_equal 'Forum', type
@@ -157,7 +157,7 @@ module Argu
           let(:invalid_create_params) { {class_sym => Hash[required_keys.map { |k| [k, ' '] }]} }
           let(:update_params) { {class_sym => Hash[required_keys.map { |k| [k, '12345'] }]} }
           let(:invalid_update_params) { invalid_create_params }
-          let(:move_params) { {move: {new_parent_id: other_page_forum.uuid}} }
+          let(:move_params) { {move: {new_parent_id: other_forum.uuid}} }
           let(:destroy_params) { {} }
 
           # Paths

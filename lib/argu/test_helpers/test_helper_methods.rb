@@ -314,7 +314,7 @@ module Argu
           let(:argu) { Page.argu }
           let(:other_page) { Page.find_via_shortname('other_page') }
           let(:other_page_forum) { Forum.find_via_shortname('other_page_forum') }
-
+          let(:other_forum) { Forum.find_via_shortname('holland') }
           define_freetown_spec_objects
           define_hidden_spec_objects
         end

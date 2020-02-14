@@ -14,7 +14,6 @@ class ContainerNodeMenuList < ApplicationMenuList
       search_link,
       statistics_link,
       export_link,
-      move_link,
       widgets_link,
       copy_share_link(resource.iri),
       destroy_link,

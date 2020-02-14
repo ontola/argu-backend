@@ -202,40 +202,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'staff should transfer' do
-    sign_in staff
-    create(:grant,
-           group: create(:group, parent: holland.root),
-           edge: holland,
-           grant_set: GrantSet.participator)
-    assert_difference('transfer_to.forums.reload.count' => 1, 'holland.reload.grants.size' => -1) do
-      post resource_iri(Move.new(edge: holland)),
-           params: {move: {new_parent_id: transfer_to.uuid}},
-           headers: argu_headers
-    end
-    assert_equal holland.parent, transfer_to
-    holland.instance_variable_set('@root', nil)
-    assert_equal holland.root, transfer_to
-    assert_equal holland.questions.first.root, transfer_to
-  end
-
-  test 'staff should transfer by iri' do
-    sign_in staff
-    create(:grant,
-           group: create(:group, parent: holland.root),
-           edge: holland,
-           grant_set: GrantSet.participator)
-    assert_difference('transfer_to.forums.reload.count' => 1, 'holland.reload.grants.size' => -1) do
-      post resource_iri(Move.new(edge: holland)),
-           params: {move: {new_parent_id: transfer_to.iri}},
-           headers: argu_headers
-    end
-    assert_equal holland.parent, transfer_to
-    holland.instance_variable_set('@root', nil)
-    assert_equal holland.root, transfer_to
-    assert_equal holland.questions.first.root, transfer_to
-  end
-
   test 'staff should post create forum with latlon' do
     sign_in staff
 

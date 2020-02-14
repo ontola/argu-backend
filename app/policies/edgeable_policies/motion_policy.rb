@@ -14,10 +14,6 @@ class MotionPolicy < DiscussionPolicy
     staff?
   end
 
-  def move?
-    staff? || administrator? || moderator?
-  end
-
   def decide?
     record.state == 'pending' && Pundit.policy(context, record.last_or_new_decision(true)).update?
   end

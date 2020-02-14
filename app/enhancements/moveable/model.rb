@@ -4,19 +4,13 @@ module Moveable
   module Model
     extend ActiveSupport::Concern
 
-    def move_to(new_parent) # rubocop:disable Metrics/AbcSize
+    def move_to(new_parent)
       self.class.transaction do
         yield if block_given?
-        ActsAsTenant.without_tenant { update_activities_on_move(new_parent) }
-        if root_id != new_parent.root_id
-          self.fragment = nil
-          update_root_id(new_parent.root_id)
-          @root = new_parent.root
-          descendants.update_all(root_id: new_parent.root_id) # rubocop:disable Rails/SkipsModelValidations
-          shortnameable? && shortname&.update(root_id: new_parent.root_id)
-        end
+        update_activities_on_move(new_parent)
         self.parent = new_parent
         save!
+        try(:write_to_cache)
       end
       true
     end

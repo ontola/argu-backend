@@ -17,8 +17,4 @@ class QuestionPolicy < DiscussionPolicy
   def convert?
     staff?
   end
-
-  def move?
-    staff? || administrator? || moderator?
-  end
 end

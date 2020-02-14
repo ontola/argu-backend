@@ -9,5 +9,9 @@ module Moveable
       attributes.append(:move_to_edge_id)
       attributes
     end
+
+    def move?
+      staff? || administrator? || moderator?
+    end
   end
 end

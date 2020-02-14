@@ -6,8 +6,4 @@ class TopicPolicy < DiscussionPolicy
     attributes.concat %i[display_name description]
     attributes
   end
-
-  def move?
-    staff? || administrator? || moderator?
-  end
 end

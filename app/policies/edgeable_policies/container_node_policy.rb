@@ -40,10 +40,6 @@ class ContainerNodePolicy < EdgePolicy
     verdict
   end
 
-  def move?
-    staff?
-  end
-
   def new?
     return super unless record.class == ContainerNode
 
