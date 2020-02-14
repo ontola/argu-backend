@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Tenant.setup_schema('rivm', "app.#{Rails.application.config.host_name}/omgevingsveiligheid", 'omgevingsveiligheid')
+Tenant.setup_schema('rivm', "#{Rails.application.config.host_name}/omgevingsveiligheid", 'omgevingsveiligheid')
 
 Apartment::Tenant.switch('rivm') do # rubocop:disable Metrics/BlockLength
   @actions = HashWithIndifferentAccess.new

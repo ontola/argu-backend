@@ -6,7 +6,7 @@ nl:
   properties:
     surveys:
       external_iri:
-        helper_text: "Ga voor meer informatie over surveys naar [onze helpdesk](https://app.argu.co/argu/t/10509)"
+        helper_text: "Ga voor meer informatie over surveys naar [onze helpdesk](https://argu.co/argu/t/10509)"
   formtastic:
     placeholders:
       survey:

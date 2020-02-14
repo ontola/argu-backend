@@ -53,7 +53,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'guest should get show by upcased page shortname' do
     sign_in :guest_user
 
-    get freetown.iri.to_s.gsub("/#{argu.url}", "/#{argu.url.upcase}"), headers: argu_headers
+    get freetown.iri.to_s.gsub("/#{argu.url}/", "/#{argu.url.upcase}/"), headers: argu_headers
     assert_response 200
   end
 

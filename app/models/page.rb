@@ -242,6 +242,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       Widget
         .where(scope)
         .update_all("resource_iri = replace(resource_iri::text, '#{escaped_from}', '#{escaped_to}')::text[]")
+      Property
+        .where(predicate: NS::SCHEMA.url.to_s)
+        .where(scope)
+        .update_all("text = replace(text, '#{escaped_from}', '#{escaped_to}')")
       CustomMenuItem
         .where(scope)
         .update_all("href = replace(href, '#{escaped_from}', '#{escaped_to}')")

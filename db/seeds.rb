@@ -20,7 +20,7 @@ if current_tenant == 'public'
     end
   end
 
-  Tenant.setup_schema('argu', "app.#{Rails.application.config.host_name}/argu")
+  Tenant.setup_schema('argu', "#{Rails.application.config.host_name}/argu")
 end
 
 if current_tenant == 'argu'

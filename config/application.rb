@@ -22,9 +22,9 @@ module Argu
   class Application < Rails::Application
     config.api_only = true
 
-    config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || "app.#{ENV['HOSTNAME']}"}"
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"
+    config.frontend_url = config.origin
 
     config.autoload_paths += %w[lib]
     %i[controllers forms models policies serializers].each do |type|

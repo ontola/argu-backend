@@ -23,7 +23,7 @@ RSpec.describe "Iri's", type: :model do
 
   before do
     ActsAsTenant.current_tenant = argu
-    Rails.application.routes.default_url_options[:host] = 'http://app.argu.localtest/argu'
+    Rails.application.routes.default_url_options[:host] = 'http://argu.localtest/argu'
   end
 
   context 'Page' do

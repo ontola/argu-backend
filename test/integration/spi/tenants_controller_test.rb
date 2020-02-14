@@ -28,7 +28,7 @@ module SPI
       assert_response 200
       assert_equal parsed_body, {
         uuid: argu.uuid,
-        iri_prefix: 'app.argu.localtest/argu',
+        iri_prefix: 'argu.localtest/argu',
         accent_background_color: '#475668',
         accent_color: '#FFFFFF',
         navbar_background: '#475668',

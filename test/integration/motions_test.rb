@@ -56,24 +56,13 @@ class MotionsTest < ActionDispatch::IntegrationTest
            publisher: guest_user)
   end
 
-  test 'guest should get guest_vote included' do
-    sign_in guest_user
-    guest_vote
-    get subject, headers: argu_headers(accept: :nq)
-    parent_segments = split_iri_segments(subject.default_vote_event.iri_path)
-    vote_iri = ActsAsTenant.with_tenant(argu) do
-      RDF::DynamicURI(argu_url(expand_uri_template(:vote_iri, parent_iri: parent_segments)))
-    end
-    expect(response.body).to(include("<#{vote_iri}>"))
-  end
-
   test 'guest should not get other guest_vote included' do
     sign_in other_guest_user
     guest_vote
     get subject, headers: argu_headers(accept: :nq)
     parent_segments = split_iri_segments(subject.default_vote_event.iri.path)
-    expect(response.body).not_to(
-      include("<#{expand_uri_template(:vote_iri, parent_iri: parent_segments, with_hostname: true)}>")
+    expect(rdf_body.subjects).not_to(
+      include(RDF::URI(expand_uri_template(:vote_iri, parent_iri: parent_segments, with_hostname: true)))
     )
   end
 

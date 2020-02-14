@@ -7,7 +7,7 @@ Rails.application.configure do
 
   config.host_name = 'argu.localtest'
   config.origin = "http://#{config.host_name}"
-  config.frontend_url = 'https://app.argu.localtest'
+  config.frontend_url = 'https://argu.localtest'
 
   Rails.application.routes.default_url_options[:host] = config.host_name
   # Settings specified here will take precedence over those in config/application.rb.

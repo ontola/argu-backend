@@ -10,7 +10,7 @@ Apartment::Tenant.switch('public') do
 end
 
 Apartment::Tenant.drop('argu') if ApplicationRecord.connection.schema_exists?('argu')
-Tenant.setup_schema('argu', "app.#{Rails.application.config.host_name}/first_page", 'first_page')
+Tenant.setup_schema('argu', "#{Rails.application.config.host_name}/first_page", 'first_page')
 
 ActsAsTenant.current_tenant.update(url: 'first_page')
 ActsAsTenant.current_tenant = nil
@@ -40,7 +40,7 @@ page = FactorySeeder.create(
   last_accepted: Time.current,
   profile_attributes: {name: 'Argu page'},
   url: 'argu',
-  iri_prefix: 'app.argu.localtest/argu',
+  iri_prefix: 'argu.localtest/argu',
   publisher: staff,
   creator: staff.profile,
   is_published: true,
@@ -80,7 +80,7 @@ other_page = FactorySeeder.create(
   navbar_background: '#800000',
   url: 'other_page',
   locale: 'en-GB',
-  iri_prefix: 'app.argu.localtest/other_page'
+  iri_prefix: 'argu.localtest/other_page'
 )
 other_page_forum = ActsAsTenant.with_tenant(other_page) do
   FactorySeeder.create_forum(

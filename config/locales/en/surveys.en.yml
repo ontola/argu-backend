@@ -6,7 +6,7 @@ en:
   properties:
     surveys:
       external_iri:
-        helper_text: "See [our helpdesk](https://app.argu.co/argu/t/10509) for more information about creating surveys"
+        helper_text: "See [our helpdesk](https://argu.co/argu/t/10509) for more information about creating surveys"
   formtastic:
     placeholders:
       survey:

@@ -14,7 +14,7 @@ module Argu
       end
 
       def request_headers(format)
-        host! 'app.argu.localtest'
+        host! 'argu.localtest'
         argu_headers(accept: format, bearer: @bearer_token)
       end
 

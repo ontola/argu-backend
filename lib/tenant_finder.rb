@@ -40,7 +40,7 @@ class TenantFinder
   end
 
   def matching_iris
-    [host_with_port, uri_with_suffix, "app.#{uri_with_suffix}"]
+    [host_with_port, uri_with_suffix]
   end
 
   def tenant_by_prefix

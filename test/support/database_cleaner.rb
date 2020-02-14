@@ -12,7 +12,7 @@ DatabaseCleaner.strategy = :transaction
 
 load(Dir[Rails.root.join('db/seeds/doorkeeper_apps.seeds.rb')][0])
 
-Tenant.seed_schema('argu', "app.#{Rails.application.config.host_name}/public_page", 'public_page')
+Tenant.seed_schema('argu', "#{Rails.application.config.host_name}/public_page", 'public_page')
 
 ActsAsTenant.current_tenant = nil
 
