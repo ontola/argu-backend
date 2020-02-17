@@ -32,7 +32,7 @@ class Publication < ApplicationRecord
   end
 
   def draft=(value)
-    self.published_at = Time.current if value.to_s == 'false'
+    self.published_at = Time.current if draft && value.to_s == 'false'
   end
 
   def publish_time_lapsed?
