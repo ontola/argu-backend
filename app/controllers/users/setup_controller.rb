@@ -4,7 +4,7 @@ module Users
   class SetupController < AuthorizedController
     skip_before_action :authorize_action
     skip_before_action :verify_setup
-    before_action :redirect_to_root, if: :has_shortname?
+    before_action :redirect_to_root, if: :redirect_to_root?
     active_response :edit, :update
 
     private
@@ -16,6 +16,10 @@ module Users
 
     def redirect_to_root
       redirect_to root_path
+    end
+
+    def redirect_to_root?
+      current_user.guest? || has_shortname?
     end
 
     def resource_by_id
