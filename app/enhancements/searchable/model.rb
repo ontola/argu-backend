@@ -5,7 +5,7 @@ module Searchable
     extend ActiveSupport::Concern
 
     included do
-      searchkick callbacks: :async,
+      searchkick callbacks: Rails.application.config.disable_searchkick ? false : :async,
                  index_name: lambda {
                    env = ENV['SEARCH_INDEX'] || Rails.env
                    "#{env}.#{table_name}.#{ActsAsTenant.current_tenant.uuid}"

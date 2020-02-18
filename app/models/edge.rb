@@ -332,6 +332,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def reindex(method_name = nil, **options)
+    return if Rails.application.config.disable_searchkick
+
     ActsAsTenant.with_tenant(ActsAsTenant.current_tenant || root) do
       Searchkick::RecordIndexer.new(self).reindex(method_name, **options)
     end

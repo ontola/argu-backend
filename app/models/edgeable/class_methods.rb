@@ -45,6 +45,8 @@ module Edgeable
       end
 
       def reindex_with_tenant(async: {wait: true})
+        return if Rails.application.config.disable_searchkick
+
         ActsAsTenant.without_tenant do
           Page.find_each { |page| page.reindex_tree(async: async) }
         end

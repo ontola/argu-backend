@@ -11,11 +11,15 @@ class SearchController < EdgeableController
 
   def index_association
     skip_verify_policy_scoped(true)
-    SearchResult.new(
-      page: params[:page],
-      parent: parent_resource,
-      q: params[:q],
-      user_context: user_context
+
+    return search_result unless Rails.application.config.disable_searchkick
+
+    Collection.new(
+      association_base: Edge.none,
+      association_class: Edge,
+      parent_uri_template: :search_results_iri,
+      parent_uri_template_canonical: :search_results_iri,
+      title: ''
     )
   end
 
@@ -26,5 +30,14 @@ class SearchController < EdgeableController
 
   def index_includes
     [results: :members]
+  end
+
+  def search_result
+    @search_result = SearchResult.new(
+      page: params[:page],
+      parent: parent_resource,
+      q: params[:q],
+      user_context: user_context
+    )
   end
 end
