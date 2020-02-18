@@ -44,6 +44,10 @@ class UserContext
     @grant_trees[edge.persisted_edge.root_id] ||= GrantTree.new(edge.persisted_edge.root)
   end
 
+  def cache_scope?
+    doorkeeper_scopes&.include? 'cache'
+  end
+
   def export_scope?
     doorkeeper_scopes&.include? 'export'
   end

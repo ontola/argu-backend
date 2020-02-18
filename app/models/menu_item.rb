@@ -17,7 +17,9 @@ class MenuItem < LinkedRails::Menus::Item
   end
 
   def menu_sequence
-    return LinkedRails::Sequence.new([], id: menu_sequence_iri) if parent.user_context.tree_root.nil?
+    if parent.user_context.cache_scope? || parent.user_context.export_scope?
+      return LinkedRails::Sequence.new([], id: menu_sequence_iri)
+    end
 
     super
   end
