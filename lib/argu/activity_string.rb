@@ -24,7 +24,8 @@ module Argu
                        owner: owner_string,
                        type: type_string,
                        subject: subject_string,
-                       parent: parent_string)
+                       parent: parent_string,
+                       default: nil)
       # rubocop:disable Rails/OutputSafety
       I18n.t(translation_key("activities.#{@activity.trackable_type.tableize}"),
              owner: owner_string,
@@ -78,7 +79,7 @@ module Argu
       return nil unless @activity&.trackable&.is_a?(Vote) || @activity&.trackable&.is_a?(Argument)
 
       I18n.t("activities.#{@activity.trackable_type.tableize}.#{@activity.trackable.key}",
-             default: I18n.t(@activity.trackable.key))
+             default: @activity.trackable.key)
     end
 
     def subject_display_name

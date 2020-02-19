@@ -10,6 +10,8 @@ nl:
       remote_content_url:
         label: "Of voer een link in naar een bestand of filmpje:"
   image_objects:
+    type: "Afbeelding"
+    plural: "Afbeeldingen"
     form:
       content:
         label: "Selecteer een bestand"

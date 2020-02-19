@@ -54,7 +54,7 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
 
   # Raises error for missing translations
-  config.action_view.raise_on_missing_translations = true
+  I18n.exception_handler = I18nErrorHandler.new
 
   config.active_support.test_order = :random
 

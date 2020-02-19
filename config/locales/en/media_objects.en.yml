@@ -10,6 +10,8 @@ en:
       remote_content_url:
         label: "Or enter a link to a file or movie:"
   image_objects:
+    type: "Image"
+    plural: "Images"
     form:
       content:
         label: "Select a file"

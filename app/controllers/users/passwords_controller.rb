@@ -32,6 +32,15 @@ module Users
 
     private
 
+    def active_response_success_message
+      case action_name
+      when 'create'
+        I18n.t('devise.passwords.send_instructions')
+      when 'update'
+        I18n.t('devise.passwords.updated')
+      end
+    end
+
     def assert_reset_token_passed
       raise Argu::Errors::Unauthorized.new if params[:reset_password_token].blank?
     end
