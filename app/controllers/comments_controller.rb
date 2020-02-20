@@ -23,16 +23,9 @@ class CommentsController < EdgeableController
   end
 
   def redirect_location
-    case authenticated_resource.parent
-    when BlogPost, ProArgument, ConArgument
-      authenticated_resource.parent.iri(fragment: authenticated_resource.identifier)
-    else
-      expand_uri_template(
-        'comments_collection_iri',
-        parent_iri: split_iri_segments(authenticated_resource.parent.iri.path),
-        with_hostname: true
-      )
-    end
+    return super unless action_name == 'create' && authenticated_resource.persisted?
+
+    authenticated_resource.parent.iri
   end
 
   def destroy_success_location

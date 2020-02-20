@@ -5,16 +5,14 @@ require 'rails_helper'
 RSpec.describe 'Comments', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
-  let(:redirect_url) { "#{subject_parent.iri.path}#comments_#{subject.id}" }
+  let(:created_resource_path) { parent_path }
   let(:create_failed_path) do
     "#{new_iri(index_path).path}?#{{comment: {body: create_params[:comment][:body]}, confirm: true}.to_query}"
   end
-  let(:created_resource_path) { "#{Comment.last.parent.iri.path}#comments_#{Comment.last.id}" }
   let(:destroy_differences) { {'Comment.where(description: "").count' => 1, 'Activity.count' => 1} }
   let(:required_keys) { %w[body] }
   let(:authorized_user_update) { subject.publisher }
   let(:authorized_user_trash) { staff }
-  let(:update_failed_path) { redirect_url }
   let(:create_differences) { {"#{subject.class}.count" => 1, 'Activity.count' => 1} }
 
   context 'with comment parent' do
@@ -33,9 +31,6 @@ RSpec.describe 'Comments', type: :request do
 
   context 'with motion parent' do
     subject { motion_comment }
-
-    let(:redirect_url) { index_path }
-    let(:created_resource_path) { redirect_url }
 
     it_behaves_like 'requests'
   end
