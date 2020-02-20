@@ -19,9 +19,9 @@ nl:
     type_new: "Nieuw scenario"
     plural: "Scenarios"
   intervention_types:
-    type: "Interventie type"
-    type_new: "Nieuw interventie type"
-    plural: "Interventie types"
+    type: "Interventietype"
+    type_new: "Nieuw interventietype"
+    plural: "Interventietypes"
     properties:
       interventions_count:
         label: "Interventies in de praktijk"
@@ -359,25 +359,27 @@ nl:
     interventions:
       create:
         description: |
-          Door het delen van veiligheidsinterventies leren andere Arboprofessionals van uw ervaringen. Met behulp van dit invulformulier kunt u eenvoudig interventies delen. Door interventies in de praktijk toe te passen zal de veiligheid binnen organisaties worden verbeterd.
+          Door veiligheidsinterventies te delen leren andere Arbo-professionals van uw ervaringen. U kunt eenvoudig interventies delen met behulp van dit invulformulier. Door interventies in de praktijk toe te passen kan de veiligheid binnen organisaties worden verbeterd.
 
           **Voor wie is dit invulformulier bedoeld?**
 
-          Het invulformulier en de interventiedatabase zijn bedoeld voor Arboprofessionals die de veiligheid op de werkvloer willen verbeteren. Voorbeelden van Arboprofessionals die de interventiedatabase gebruiken zijn veiligheidskundigen, veiligheidsprofessionals maar ook adviseurs en onderzoekers.
+          Het invulformulier en het interventieplatform zijn bedoeld voor Arbo-professionals die de veiligheid op de werkvloer willen verbeteren. Denk hierbij bijvoorbeeld aan veiligheidskundigen, veiligheidsprofessionals, adviseurs en onderzoekers.
 
-          **Het invulformulier**
+          **Hoe werkt het invulformulier?**
 
-          Het formulier is opgedeeld in de volgende categorieën:
-          * Beschrijving van de interventie
-          * Invoering van de interventie
-          * Kosten van de interventie
-          * Effectiviteit van de interventie
+          Het invulformulier is verdeeld in de volgende categorieën:
+          - een beschrijving van de interventie;
+          - de invoering van de interventie;
+          - de kosten van de interventie;
+          - de effectiviteit van de interventie.
 
-          Bepaalde categorieën en vragen beginnen met een toelichtende tekst om u op weg te helpen. In het invulformulier zijn gesloten vragen en open vragen opgenomen. De gesloten vragen zijn noodzakelijk voor de database, de open vragen zijn gewenst. Met de open vragen kunt u toelichting en informatie geven over uw interventie. Het is gewenst dat u diepgaand antwoordt, zo zorgt u ervoor dat andere Arboprofessionals uw interventie goed begrijpen en deze eventueel kunnen toepassen in hun eigen organisatie.
+          Bepaalde categorieën en vragen beginnen met een toelichtende tekst om u op weg te helpen. Het invulformulier bevat gesloten en open vragen. Het invullen van de gesloten vragen is noodzakelijk voor een goede werking van het interventieplatform en goede weergave van uw interventie. Via de open vragen kunt u een toelichting en/of meer informatie geven over uw interventie. Het is gewenst dat u zo nauwkeurig mogelijk antwoordt, zodat andere Arbo-professionals uw interventie goed begrijpen. Zo kunnen zij de interventie op de juiste wijze toepassen in hun eigen organisatie.
 
-          Het invullen van één interventie duurt ongeveer 30 minuten. U heeft een account nodig om interventies op te slaan en te delen. U kunt een concept van een (onvolledig) ingevulde interventie opslaan op uw account. Wij delen geen bedrijfs- of persoonsgegevens als u dat niet wenst, dit kunt u per interventie aangeven in het invulformulier. U kunt uw account te allen tijde weer verwijderen. Wel behouden wij recht op de informatie die u heeft gedeeld.
+          ** Opslaan en delen van een interventie **
 
-          Voor dit invulformulier en deze interventiedatabase richten we ons op ‘veiligheidsinterventies’. Als u meer wilt weten over interventies, de achtergrond van dit project en privacy, kunt u naar [Privacy](https://argu.co/arbeidsveiligheid/privacy).
+          Om interventies op te slaan en te delen heeft u een account nodig. Dit kunt u zelf aanmaken op het platform als u voor de eerste keer een interventie invult. U kunt uw account op elk moment weer verwijderen.
+
+          U kunt een concept van een (onvolledig) ingevulde interventie opslaan op uw account. Bedrijfs- of persoonsgegevens worden niet gedeeld, als u dat niet wenst. U kunt dit per interventie aangeven op het invulformulier.
   forms:
     goal_and_effect:
       label: "Doelen en effecten van de interventie"
