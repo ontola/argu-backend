@@ -19,7 +19,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable, primary_key: :uuid
-  has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id
+  has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
   has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
   has_many :favorites, dependent: :destroy
   has_many :notifications, dependent: :destroy

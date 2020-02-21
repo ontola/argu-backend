@@ -40,8 +40,6 @@ Rails/DynamicFindBy:
     - find_by_iri
     - find_by_iri!
     - find_by_path
-Rails/InverseOf:
-  Enabled: false
 RSpec/ContextWording:
   Enabled: false
 RSpec/DescribeClass:

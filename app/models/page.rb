@@ -25,6 +25,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   has_many :descendant_shortnames,
            -> { where(primary: false) },
            class_name: 'Shortname',
+           inverse_of: :root,
            foreign_key: :root_id,
            primary_key: :uuid
 

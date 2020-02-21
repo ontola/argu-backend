@@ -15,7 +15,8 @@ class Comment < Edge
            -> { active },
            primary_key_property: :in_reply_to_id,
            class_name: 'Comment',
-           dependent: false
+           dependent: false,
+           inverse_of: :parent_comment
   belongs_to :commentable, polymorphic: true
 
   after_commit :set_vote, on: :create

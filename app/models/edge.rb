@@ -29,8 +29,16 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :parent,
              class_name: 'Edge',
              inverse_of: :children
-  belongs_to :publisher, class_name: 'User', optional: false, foreign_key: :publisher_id, autosave: false
-  belongs_to :creator, class_name: 'Profile', optional: false, foreign_key: :creator_id, autosave: false
+  belongs_to :publisher,
+             class_name: 'User',
+             optional: false,
+             autosave: false,
+             inverse_of: :edges
+  belongs_to :creator,
+             class_name: 'Profile',
+             optional: false,
+             autosave: false,
+             inverse_of: :edges
   has_many :activities,
            -> { order(:created_at) },
            foreign_key: :trackable_edge_id,
@@ -40,6 +48,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :recipient_activities,
            class_name: 'Activity',
            foreign_key: :recipient_edge_id,
+           inverse_of: :recipient,
            dependent: :nullify,
            primary_key: :uuid
   has_many :children,
@@ -48,7 +57,12 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
            foreign_key: :parent_id,
            dependent: false
   has_many :custom_menu_items, dependent: :destroy, primary_key: :uuid
-  has_many :navigations_menu_items, -> { navigations }, primary_key: :uuid, as: :resource, class_name: 'CustomMenuItem'
+  has_many :navigations_menu_items,
+           -> { navigations },
+           primary_key: :uuid,
+           inverse_of: :resource,
+           as: :resource,
+           class_name: 'CustomMenuItem'
   has_many :exports, dependent: :destroy, primary_key: :uuid
   has_many :favorites, dependent: :destroy, primary_key: :uuid
   has_many :followings,
@@ -59,6 +73,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
            primary_key: :uuid
   has_many :grants, dependent: :destroy, primary_key: :uuid
   has_many :grant_resets, inverse_of: :edge, dependent: :destroy, primary_key: :uuid
+  has_many :grant_sets, inverse_of: :page, dependent: :destroy, primary_key: :uuid, foreign_key: :root_id
   has_many :granted_groups, through: :grants, class_name: 'Group', source: :group
   has_many :group_memberships, -> { active }, through: :granted_groups
 

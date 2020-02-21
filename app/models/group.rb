@@ -15,7 +15,7 @@ class Group < ApplicationRecord
   include Parentable
   include Edgeable::PropertyAssociations
 
-  has_many :group_memberships, -> { active }
+  has_many :group_memberships, -> { active }, inverse_of: :group
   has_many :unscoped_group_memberships, class_name: 'GroupMembership', dependent: :destroy
   has_many :grants, dependent: :destroy, inverse_of: :group
   has_many :members, through: :group_memberships, class_name: 'Profile'
