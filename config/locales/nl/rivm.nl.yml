@@ -165,8 +165,8 @@ nl:
       comments_are_allowed: "Ja"
       comments_not_allowed: "Nee"
     contact_allowed:
-      comments_are_allowed: "Ja"
-      comments_not_allowed: "Nee"
+      contact_is_allowed: "Ja"
+      contact_not_allowed: "Nee"
     properties:
       employment:
         label: "Ingediend door"
