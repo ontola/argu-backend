@@ -74,6 +74,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :home_menu_label, :string, NS::ONTOLA[:homeMenuLabel]
   property :home_menu_image, :string, NS::ONTOLA[:homeMenuImage]
   property :requires_intro, :boolean, NS::ONTOLA[:requiresIntro], default: false
+  property :matomo_site_id, :string, NS::ONTOLA[:matomoSiteId]
 
   belongs_to :primary_container_node,
              foreign_key_property: :primary_container_node_id,

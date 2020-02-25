@@ -40,11 +40,13 @@ class Manifest < VirtualResource
   end
   alias short_name name
 
-  def ontola
+  def ontola # rubocop:disable Metrics/AbcSize
     {
       secondary_main: page.accent_background_color,
       secondary_text: page.accent_color,
       css_class: page.template,
+      matomoHostname: ENV['MATOMO_HOST'],
+      matomoSiteId: page.matomo_site_id,
       primary_main: page.navbar_background,
       primary_text: page.navbar_color,
       template: page.template,
