@@ -10,6 +10,9 @@ class ImageObjectForm < ApplicationForm
     :hidden,
     iri: NS::ONTOLA[:hiddenGroup],
     order: 98,
-    properties: [content_type: {sh_in: -> { target.allowed_content_types }}]
+    properties: [
+      {content_type: {sh_in: -> { target.allowed_content_types }}},
+      {position_y: {default_value: 50}}
+    ]
   )
 end
