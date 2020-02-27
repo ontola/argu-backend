@@ -4,7 +4,7 @@ ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 require 'minitest/rails'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require 'model_test_base'
 require 'wisper/minitest/assertions'
 require 'simplecov'

@@ -3,7 +3,6 @@
 require 'gravatar'
 
 class MediaObjectUploader < CarrierWave::Uploader::Base
-  include ::CarrierWave::Backgrounder::Delay
   include CarrierWave::Vips
   extend UrlHelper
 
@@ -97,7 +96,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  def extension_white_list
+  def extension_whitelist
     content_type_white_list.map { |type| MIME::Types[type].map(&:extensions).flatten.uniq }.flatten.uniq
   end
 

@@ -8,7 +8,7 @@ en:
       already_confirmed: "was already confirmed, try to log in."
       not_locked: "was not locked"
       should_match: "should match"
-      extension_white_list_error: "This file type can't be uploaded."
+      extension_whitelist_error: "This file type can't be uploaded."
       not_saved:
         one: "1 error caused %{resource} to be unable to save:"
         other: "%{count} errors caused %{resource} to be unable to save:"
