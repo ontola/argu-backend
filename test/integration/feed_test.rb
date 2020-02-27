@@ -79,7 +79,6 @@ class FeedTest < ActionDispatch::IntegrationTest
     case accept
     when :nq
       collection = RDF::URI("#{resource_iri(feed(parent))}/feed#{complete ? '?complete=true' : ''}")
-      puts "looking for #{collection}"
       view = rdf_body.query([collection, NS::ONTOLA[:pages]]).first.object
       expect_triple(view, NS::AS[:totalItems], count)
     else

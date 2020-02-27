@@ -45,7 +45,7 @@ class GrantTree
   # @param [Hash] filters The filters the grants should apply to
   # @return [Array<Integer>] A list of group_ids with a grant
   def granted_group_ids(edge, filters = {})
-    find_or_cache_node(edge).granted_group_ids(filters)
+    find_or_cache_node(edge).granted_group_ids(**filters)
   end
 
   # Find all groups with a grant as specified in the filters

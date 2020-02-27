@@ -99,7 +99,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
-    controller_class.new(resource_new_params)
+    controller_class.new(**resource_new_params)
   end
 
   def permit_params

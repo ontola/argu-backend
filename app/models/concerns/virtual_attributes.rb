@@ -30,7 +30,7 @@ module VirtualAttributes
       self.virtual_attributes << name
       virtual_attribute_reader(name, opts.delete(:value))
       virtual_attribute_dependence(name, opts.delete(:dependent_on)) if opts[:dependent_on]
-      attribute name, type, opts
+      attribute name, type, **opts
     end
 
     def virtual_attribute_dependence(name, dependent_on)

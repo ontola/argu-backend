@@ -301,7 +301,7 @@ class TokensTest < ActionDispatch::IntegrationTest
            r: redirect
          }
 
-    puts token_response(results)
+    token_response(results)
   end
 
   def token_response(error_code: nil, error_type: nil, scope: 'user') # rubocop:disable Metrics/AbcSize

@@ -94,7 +94,7 @@ module Edgeable
         attr_opts = {default: opts[:default]}
         attr_opts[:array] = true if opts[:array]
 
-        attribute name, property_type(type), attr_opts
+        attribute name, property_type(type), **attr_opts
 
         enum name => opts[:enum] if opts[:enum].present?
 

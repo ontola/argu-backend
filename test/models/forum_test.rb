@@ -6,7 +6,7 @@ class ForumTest < ActiveSupport::TestCase
   include ModelTestBase
 
   define_cairo
-  define_holland('subject')
+  define_holland('subject', attributes: {bio: 'test_bio'})
   define_cairo('cairo2')
   define_cairo('youngbelegen')
 

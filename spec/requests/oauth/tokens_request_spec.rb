@@ -24,7 +24,6 @@ RSpec.describe 'Tokens', type: :request do
     it 'does not create a guest token' do
       post_token
 
-      puts response.body
       expect(response.status).to eq 401
     end
   end

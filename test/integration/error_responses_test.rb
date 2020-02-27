@@ -217,7 +217,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   def test_error_json_api(method, url, params, status, opts)
     send(method, url, params: params, headers: argu_headers(accept: :json_api))
 
-    errors = json_api_errors(opts.except(:error))
+    errors = json_api_errors(**opts.except(:error))
 
     assert_response status
     assert_equal parsed_body, 'errors' => errors

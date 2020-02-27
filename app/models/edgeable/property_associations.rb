@@ -36,7 +36,7 @@ module Edgeable
           type,
           property_association_reference(name),
           property_association_scope(property_opts),
-          property_association_options(opts)
+          **property_association_options(opts)
         )
         send(
           type,

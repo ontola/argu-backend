@@ -18,7 +18,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
 
   def default_label(tag, options)
     LinkedRails.translations(
-      -> { I18n.t("menus.#{resource&.class&.name&.tableize}.#{tag}", options[:label_params]) }
+      -> { I18n.t("menus.#{resource&.class&.name&.tableize}.#{tag}", **options[:label_params]) }
     )
   end
 

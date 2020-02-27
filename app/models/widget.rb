@@ -97,24 +97,24 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def create_blog_posts(owner)
       blog_posts_iri = collection_iri(owner, :blog_posts, type: :infinite)
-      discussions
-        .create(
-          owner: owner,
-          permitted_action: PermittedAction.find_by!(title: 'blog_post_show'),
-          resource_iri: [[blog_posts_iri, nil]],
-          size: 3
-        )
+      Widget.create!(
+        widget_type: :discussions,
+        owner: owner,
+        permitted_action: PermittedAction.find_by!(title: 'blog_post_show'),
+        resource_iri: [[blog_posts_iri, nil]],
+        size: 3
+      )
     end
 
     def create_discussions(owner)
       discussions_iri = collection_iri(owner, :discussions, display: :grid, type: :infinite)
-      discussions
-        .create(
-          owner: owner,
-          permitted_action: PermittedAction.find_by!(title: 'motion_show'),
-          resource_iri: [[discussions_iri, nil]],
-          size: 3
-        )
+      Widget.create!(
+        widget_type: :discussions,
+        owner: owner,
+        permitted_action: PermittedAction.find_by!(title: 'motion_show'),
+        resource_iri: [[discussions_iri, nil]],
+        size: 3
+      )
     end
 
     def create_new_motion(owner)
@@ -131,13 +131,14 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         submit_label_translation: true,
         submit_label: 'motions.type_new'
       )
-      new_motion
-        .preview_view
-        .create(
-          owner: owner,
-          permitted_action: PermittedAction.find_by!(title: 'motion_create'),
-          resource_iri: [[custom_action.iri, nil]]
-        )
+
+      Widget.create!(
+        widget_type: :new_motion,
+        view: :preview_view,
+        owner: owner,
+        permitted_action: PermittedAction.find_by!(title: 'motion_create'),
+        resource_iri: [[custom_action.iri, nil]]
+      )
     end
 
     def create_new_question(owner)
@@ -154,13 +155,14 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         submit_label_translation: true,
         submit_label: 'questions.type_new'
       )
-      new_question
-        .preview_view
-        .create(
-          owner: owner,
-          permitted_action: PermittedAction.find_by!(title: 'question_create'),
-          resource_iri: [[custom_action.iri, nil]]
-        )
+
+      Widget.create!(
+        widget_type: :new_question,
+        view: :preview_view,
+        owner: owner,
+        permitted_action: PermittedAction.find_by!(title: 'question_create'),
+        resource_iri: [[custom_action.iri, nil]]
+      )
     end
 
     def create_new_topic(owner)
@@ -177,13 +179,14 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         submit_label_translation: true,
         submit_label: 'topics.type_new'
       )
-      new_topic
-        .preview_view
-        .create(
-          owner: owner,
-          permitted_action: PermittedAction.find_by!(title: 'topic_create'),
-          resource_iri: [[custom_action.iri, nil]]
-        )
+
+      Widget.create!(
+        widget_type: :new_topic,
+        view: :preview_view,
+        owner: owner,
+        permitted_action: PermittedAction.find_by!(title: 'topic_create'),
+        resource_iri: [[custom_action.iri, nil]]
+      )
     end
 
     def preview_includes

@@ -114,7 +114,7 @@ module ActionDispatch
         super(
           path.try(:iri)&.path || path,
           *args,
-          merge_req_opts(opts)
+          merge_req_opts(**opts)
           )
       )
     end
@@ -124,7 +124,7 @@ module ActionDispatch
         super(
           path.try(:iri)&.path || path,
           *args,
-          merge_req_opts(opts)
+          merge_req_opts(**opts)
           )
       )
     end
@@ -134,7 +134,7 @@ module ActionDispatch
         super(
           path.try(:iri)&.path || path,
           *args,
-          merge_req_opts(opts)
+          **merge_req_opts(**opts)
           )
       )
     end
@@ -144,7 +144,7 @@ module ActionDispatch
         super(
           path.try(:iri)&.path || path,
           *args,
-          merge_req_opts(opts)
+          merge_req_opts(**opts)
           )
       )
     end
@@ -160,7 +160,7 @@ module ActionDispatch
         super(
           path.try(:iri)&.path || path,
           *args,
-          merge_req_opts(opts)
+          merge_req_opts(**opts)
           )
       )
     end
@@ -170,7 +170,7 @@ module ActionDispatch
         super(
           path.try(:iri)&.path || path,
           *args,
-          merge_req_opts(opts)
+          merge_req_opts(**opts)
           )
       )
     end
