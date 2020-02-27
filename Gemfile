@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org/'
-ruby '2.6.3'
-ruby = '2.6.3'
+ruby '2.7.0'
+ruby = '2.7.0'
 
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'active_record-postgres-constraints',
