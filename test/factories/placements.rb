@@ -6,11 +6,11 @@ FactoryBot.define do
     association :placeable, factory: :motion
     association :creator, factory: :profile
     association :publisher, factory: :user
-    placement_type :custom
+    placement_type { :custom }
 
     factory :home_placement do
       association :placeable, factory: :user
-      placement_type :home
+      placement_type { :home }
     end
   end
 end

@@ -9,7 +9,7 @@ FactoryBot.define do
 
     association :owner, factory: :profile
     recipient { passed_in?(:recipient) ? recipient : tenant }
-    key :create
+    key { :create }
 
     trait :t_question do
       trackable { create(:question, creator: owner, parent: tenant) }

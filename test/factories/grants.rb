@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :grant do
-    grant_set 'initiator'
+    grant_set { 'initiator' }
   end
 end

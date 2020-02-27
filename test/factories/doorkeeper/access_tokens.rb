@@ -6,19 +6,19 @@ FactoryBot.define do
     association :resource_owner_id, factory: :user
 
     trait :guest do
-      scopes 'guest'
+      scopes { 'guest' }
     end
 
     trait :user do
-      scopes 'user'
+      scopes { 'user' }
     end
 
     trait :service do
-      scopes 'service'
+      scopes { 'service' }
     end
 
     trait :export do
-      scopes 'export'
+      scopes { 'export' }
     end
   end
 end

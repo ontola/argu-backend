@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :notification do
     transient do
-      forum nil
+      forum { nil }
     end
 
     association :user

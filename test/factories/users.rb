@@ -9,23 +9,23 @@ FactoryBot.define do
       "user#{n}@example.com"
     end
     encrypted_password { Devise::Encryptor.digest(User, 'password') }
-    password 'password'
-    password_confirmation 'password'
-    language 'en'
-    has_analytics false
-    notifications_viewed_at nil
+    password { 'password' }
+    password_confirmation { 'password' }
+    language { 'en' }
+    has_analytics { false }
+    notifications_viewed_at { nil }
     sequence(:first_name) { |n| "first_name_#{n}" }
     sequence(:last_name) { |n| "last_name_#{n}" }
-    last_accepted Time.current
+    last_accepted { Time.current }
 
     trait :not_accepted_terms do
-      last_accepted nil
+      last_accepted { nil }
     end
 
     trait :no_password do
-      password nil
-      password_confirmation nil
-      encrypted_password nil
+      password { nil }
+      password_confirmation { nil }
+      encrypted_password { nil }
     end
 
     trait :no_shortname do
@@ -48,43 +48,43 @@ FactoryBot.define do
     end
 
     trait :viewed_notifications_hour_ago do
-      notifications_viewed_at 1.hour.ago
+      notifications_viewed_at { 1.hour.ago }
     end
 
     trait :viewed_notifications_now do
-      notifications_viewed_at Time.current
+      notifications_viewed_at { Time.current }
     end
 
     trait :follows_reactions_directly do
-      reactions_email User.reactions_emails[:direct_reactions_email]
+      reactions_email { User.reactions_emails[:direct_reactions_email] }
     end
 
     trait :follows_reactions_daily do
-      reactions_email User.reactions_emails[:daily_reactions_email]
+      reactions_email { User.reactions_emails[:daily_reactions_email] }
     end
 
     trait :follows_reactions_weekly do
-      reactions_email User.reactions_emails[:weekly_reactions_email]
+      reactions_email { User.reactions_emails[:weekly_reactions_email] }
     end
 
     trait :follows_reactions_never do
-      reactions_email User.reactions_emails[:never_reactions_email]
+      reactions_email { User.reactions_emails[:never_reactions_email] }
     end
 
     trait :follows_news_directly do
-      news_email User.news_emails[:direct_news_email]
+      news_email { User.news_emails[:direct_news_email] }
     end
 
     trait :follows_news_daily do
-      news_email User.news_emails[:daily_news_email]
+      news_email { User.news_emails[:daily_news_email] }
     end
 
     trait :follows_news_weekly do
-      news_email User.news_emails[:weekly_news_email]
+      news_email { User.news_emails[:weekly_news_email] }
     end
 
     trait :follows_news_never do
-      reactions_email User.news_emails[:never_news_email]
+      reactions_email { User.news_emails[:never_news_email] }
     end
 
     factory :user_with_votes do
