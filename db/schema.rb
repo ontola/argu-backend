@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_14_112212) do
+ActiveRecord::Schema.define(version: 2020_02_27_151752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -20,13 +20,11 @@ ActiveRecord::Schema.define(version: 2020_02_14_112212) do
   enable_extension "uuid-ossp"
 
   create_table "activities", id: :serial, force: :cascade do |t|
-    t.integer "trackable_id"
     t.string "trackable_type", null: false
     t.integer "owner_id"
     t.string "owner_type", default: "Profile"
     t.ltree "key"
     t.text "parameters"
-    t.integer "recipient_id"
     t.string "recipient_type", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -38,12 +36,9 @@ ActiveRecord::Schema.define(version: 2020_02_14_112212) do
     t.index ["key"], name: "index_activities_on_key", using: :gist
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
     t.index ["recipient_edge_id"], name: "index_activities_on_recipient_edge_id"
-    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
     t.index ["root_id", "key"], name: "index_activities_on_root_id_and_key"
-    t.index ["root_id", "trackable_id"], name: "index_activities_on_root_id_and_trackable_id"
     t.index ["root_id"], name: "index_activities_on_root_id"
     t.index ["trackable_edge_id"], name: "index_activities_on_trackable_edge_id"
-    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
   end
 
   create_table "authentications", id: :serial, force: :cascade do |t|

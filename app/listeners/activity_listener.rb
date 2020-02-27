@@ -87,7 +87,7 @@ class ActivityListener
   def destroy_recent_similar_activities(resource, recipient, action)
     ids = Activity
             .where('created_at >= :date', date: 6.hours.ago)
-            .where(recipient_id: recipient.id,
+            .where(recipient_edge_id: recipient.uuid,
                    owner_id: @creator.id,
                    key: "#{resource.model_name.singular}.#{action}")
             .pluck(:id)

@@ -110,8 +110,8 @@ module Argu
               assert subject.motions.count.positive?
             end
             assert subject.activities.count.positive?
-            subject.activities.pluck(:recipient_id).each do |id|
-              assert_equal other_forum.id, id
+            subject.activities.pluck(:recipient_edge_id).each do |id|
+              assert_equal other_forum.uuid, id
             end
             subject.activities.pluck(:recipient_type).each do |type|
               assert_equal 'Forum', type

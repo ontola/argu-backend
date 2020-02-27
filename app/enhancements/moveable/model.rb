@@ -24,7 +24,7 @@ module Moveable
       activities
         .lock(true)
         .update_all(
-          recipient_id: new_parent.id,
+          recipient_edge_id: new_parent.uuid,
           recipient_type: new_parent.owner_type
         )
       # rubocop:enable Rails/SkipsModelValidations
