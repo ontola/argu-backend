@@ -72,6 +72,7 @@ gem 'sidekiq-logging-json',
 gem 'sidekiq-prometheus-exporter'
 gem 'sidetiq'
 gem 'spreadsheet'
+gem 'sprockets', '~> 3'
 gem 'tzinfo-data'
 gem 'uri_template'
 gem 'video_info'
