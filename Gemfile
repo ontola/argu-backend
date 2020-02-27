@@ -49,7 +49,7 @@ gem 'pg'
 gem 'public_activity'
 gem 'puma', platform: :ruby
 gem 'pundit'
-gem 'rack-attack'
+gem 'rack-attack', '~> 4.3.1'
 gem 'rails', '~>5.2.2.1'
 gem 'rails-i18n'
 gem 'rdf'
