@@ -77,9 +77,9 @@ class Activity < PublicActivity::Activity
   end
 
   def touch_edge(edge)
-    previous_changes = edge.previous_changes
+    mutations = edge.send(:mutations_before_last_save)
     edge.last_activity_at = Time.current
     edge.save(touch: false)
-    edge.instance_variable_set(:@previously_changed, previous_changes)
+    edge.instance_variable_set(:@mutations_before_last_save, mutations)
   end
 end

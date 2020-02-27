@@ -53,6 +53,10 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     content.content_type_white_list
   end
 
+  def content=(val)
+    super unless val.is_a?(String)
+  end
+
   def content_type
     content&.content_type
   rescue Aws::S3::Errors::NotFound

@@ -148,7 +148,7 @@ Rails.application.routes.draw do
   end
 
   constraints(Argu::NoTenantConstraint) do
-    root to: 'static_pages#home'
+    root to: 'static_pages#home', as: :static_root
 
     {
       q: Question,

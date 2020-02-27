@@ -18,11 +18,13 @@ module ActiveRecordWith
   end
 
   def with_clause
-    get_value(:with_clause)
+    @values.fetch(:with_clause, nil)
   end
 
   def with_clause=(value)
-    set_value(:with_clause, value)
+    assert_mutability!
+
+    @values[:with_clause] = value
   end
 end
 

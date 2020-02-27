@@ -5,15 +5,13 @@ ruby '2.7.0'
 ruby = '2.7.0'
 
 gem 'active_model_serializers'
-gem 'active_record-postgres-constraints',
-    git: 'https://github.com/ArthurWD/active_record-postgres-constraints',
-    ref: '1daecf7'
+gem 'active_record-postgres-constraints'
 gem 'active_response', git: 'https://github.com/ontola/active_response', branch: :master
 gem 'acts_as_follower',
     git: 'https://github.com/tcocca/acts_as_follower.git',
     ref: 'ff4a7d1f8206be13b9b68526a5062611f36509aa'
 gem 'acts_as_list'
-gem 'acts_as_tenant', git: 'https://github.com/ArthurWD/acts_as_tenant', branch: :master
+gem 'acts_as_tenant', git: 'https://github.com/ErwinM/acts_as_tenant', ref: '1ba28'
 gem 'apartment', git: 'https://github.com/ArthurWD/apartment', ref: '9d2db15'
 gem 'auto_strip_attributes'
 gem 'bcrypt-ruby'
@@ -41,7 +39,7 @@ gem 'httparty'
 gem 'json-ld'
 gem 'jwt'
 gem 'kaminari-activerecord'
-gem 'linked_rails', git: 'https://github.com/ontola/linked_rails'
+gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', ref: '5401fbdbcbb2714bd4d2197b0c604334e11c27f2'
 gem 'ltree_hierarchy'
 gem 'oauth2'
 gem 'oj'
@@ -50,7 +48,7 @@ gem 'public_activity'
 gem 'puma', platform: :ruby
 gem 'pundit'
 gem 'rack-attack', '~> 4.3.1'
-gem 'rails', '~>5.2.2.1'
+gem 'rails'
 gem 'rails-i18n'
 gem 'rdf'
 gem 'rdf-n3'
