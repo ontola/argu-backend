@@ -14,7 +14,7 @@ class FavoritesController < ParentableController
   def parent_resource
     return super if params[:iri].blank?
 
-    @parent_resource ||= resource_from_iri(params[:iri])&.ancestor(:forum) || super
+    @parent_resource ||= LinkedRails.resource_from_iri(params[:iri])&.ancestor(:forum) || super
   end
 
   def permit_params

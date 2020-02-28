@@ -22,7 +22,7 @@ module OauthHelper
 
   def current_actor_profile(user)
     if request.parameters[:actor_iri].present? && request.parameters[:actor_iri] != '-1'
-      resource_from_iri!(request.parameters[:actor_iri]).profile
+      LinkedRails.resource_from_iri!(request.parameters[:actor_iri]).profile
     else
       user.profile
     end

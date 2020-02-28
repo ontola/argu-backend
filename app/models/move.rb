@@ -2,7 +2,7 @@
 
 class Move < VirtualResource
   include Parentable
-  include IRIHelper
+  include UUIDHelper
 
   parentable :edge
 
@@ -55,6 +55,6 @@ class Move < VirtualResource
   private
 
   def find_parent(id)
-    ActsAsTenant.without_tenant { uuid?(id) ? Edge.find_by!(uuid: id) : resource_from_iri!(id) }
+    ActsAsTenant.without_tenant { uuid?(id) ? Edge.find_by!(uuid: id) : LinkedRails.resource_from_iri!(id) }
   end
 end

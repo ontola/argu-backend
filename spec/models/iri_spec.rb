@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe "Iri's", type: :model do
   include Rails.application.routes.url_helpers
   include ActionDispatch::Routing::UrlFor
-  include IRIHelper
 
   define_spec_objects
   let(:url) { url_for([subject, protocol: :http]) }
@@ -17,7 +16,7 @@ RSpec.describe "Iri's", type: :model do
     end
 
     it 'can be found with resource_from_iri' do
-      expect(resource_from_iri(subject.iri)).to eq(iri_owner)
+      expect(LinkedRails.resource_from_iri(subject.iri)).to eq(iri_owner)
     end
   end
 

@@ -4,7 +4,6 @@ class DirectMessage
   include ActiveModel::Model
   include LinkedRails::Model
   include ApplicationModel
-  include IRIHelper
   include Parentable
 
   parentable :resource
@@ -60,7 +59,7 @@ class DirectMessage
   end
 
   def resource
-    @resource ||= resource_from_iri(@resource_iri)
+    @resource ||= LinkedRails.resource_from_iri(@resource_iri)
   end
 
   def send_email! # rubocop:disable Metrics/AbcSize

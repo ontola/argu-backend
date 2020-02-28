@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module UsersHelper
-  include IRIHelper
+  include UriTemplateHelper
 
   def accept_terms_param
     params[:accept_terms].to_s == 'true'
@@ -10,7 +10,7 @@ module UsersHelper
   def forum_from_r_action(user) # rubocop:disable Metrics/CyclomaticComplexity
     return if user.r.nil?
 
-    resource = resource_from_iri(path_to_url(user.r)) if user.r.present?
+    resource = LinkedRails.resource_from_iri(path_to_url(user.r)) if user.r.present?
     return if resource.nil? || resource.is_a?(Page) || !resource.is_fertile?
     return resource if resource.is_a?(Forum)
 

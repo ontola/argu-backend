@@ -5,7 +5,7 @@
 # @note Has been designed with a single parent resource in mind (route wise)
 # @author Fletcher91 <thom@argu.co>
 module NestedResourceHelper
-  include IRIHelper
+  include UriTemplateHelper
 
   def params_for_parent
     params.dup
@@ -17,6 +17,18 @@ module NestedResourceHelper
 
   def parent_resource!
     parent_resource || raise(ActiveRecord::RecordNotFound)
+  end
+
+  # Finds a 'resource key' from a params Hash
+  # @example Resource key from motion_id
+  #   params = {motion_id: 1}
+  #   parent_resource_key # => :motion_id
+  def parent_resource_key(hash)
+    hash
+      .keys
+      .reject { |k| k.to_s == 'root_id' }
+      .reverse
+      .find { |k| /_id/ =~ k }
   end
 
   # Extracts a parent resource from an Argu URI
@@ -55,7 +67,7 @@ module NestedResourceHelper
   #   parent_id_from_params # => '1'
   def parent_id_from_params(opts = params)
     if resource_params[:parent].present?
-      opts_from_iri(resource_params[:parent])[:id]
+      LinkedRails.opts_from_iri(resource_params[:parent])[:id]
     else
       opts[parent_resource_param(opts)]
     end
@@ -78,7 +90,7 @@ module NestedResourceHelper
   end
 
   def parent_resource_or_collection(root, opts)
-    resource = resource_from_opts(root, opts.merge(type: controller_name))
+    resource = LinkedRails.resource_from_opts(root, opts.merge(type: controller_name))
     return resource if opts[:collection].blank?
 
     parent_collection(resource, opts)
@@ -114,11 +126,22 @@ module NestedResourceHelper
   #   parent_resource_type # => 'motion'
   def parent_resource_type(opts = params)
     if resource_params[:parent].present?
-      opts_from_iri(resource_params[:parent])[:type]
+      LinkedRails.opts_from_iri(resource_params[:parent])[:type]
     else
       key = parent_resource_key(opts)
       key[0..-4] if key
     end
+  end
+
+  def path_to_url(path)
+    return path unless relative_path?(path)
+
+    port = [80, 443].include?(request.port) ? nil : request.port
+    URI::Generic.new(request.scheme, nil, request.host, port, nil, path, nil, nil, nil).to_s
+  end
+
+  def relative_path?(string)
+    string.is_a?(String) && string.starts_with?('/') && !string.starts_with?('//')
   end
 
   # Return the params nested for the current resource

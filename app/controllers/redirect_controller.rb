@@ -10,7 +10,7 @@ class RedirectController < ApplicationController
   private
 
   def resource_from_params
-    resource_from_opts(nil, params)
+    LinkedRails.resource_from_opts(nil, params)
   end
 
   def resource_by_shortname

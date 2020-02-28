@@ -3,8 +3,6 @@
 module Public
   module SPI
     class TenantFinderController < SPI::SPIController
-      include IRIHelper
-
       TENANT_META_ATTRS = %w[
         uuid iri_prefix accent_background_color accent_color navbar_background navbar_color
         database_schema use_new_frontend display_name
@@ -34,7 +32,7 @@ module Public
       end
 
       def tenant_from_parsed_iri
-        parsed_iri = resource_from_iri(iri_param)&.iri
+        parsed_iri = LinkedRails.resource_from_iri(iri_param)&.iri
         TenantFinder.from_url(parsed_iri) if parsed_iri
       end
 

@@ -31,7 +31,7 @@ class ShortnamesController < ParentableController
   def parent_resource
     return tree_root if destination_param.blank?
 
-    @parent_resource ||= resource_from_iri(destination_param)
+    @parent_resource ||= LinkedRails.resource_from_iri(destination_param)
   end
 
   def permit_params

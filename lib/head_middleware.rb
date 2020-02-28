@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class HeadMiddleware
-  include IRIHelper
   include Argu::Controller::Authentication
   attr_reader :headers, :request
 
@@ -44,7 +43,7 @@ class HeadMiddleware
   def resource_from_request
     return unless ActsAsTenant.current_tenant
 
-    resource_from_iri(request.original_url, ActsAsTenant.current_tenant)
+    LinkedRails.resource_from_iri(request.original_url, ActsAsTenant.current_tenant)
   end
 
   def prepare_request(env)
