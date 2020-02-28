@@ -30,11 +30,11 @@ Doorkeeper.configure do
     user_from_db = user || User.find_for_database_authentication(request.params[:user])
 
     if user.blank?
-      email = params[:user][:email]&.include?('@')
+      email = request.params[:user][:email]&.include?('@')
       raise(
-        if email && EmailAddress.find_by(email: params[:user][:email]).nil?
+        if email && EmailAddress.find_by(email: request.params[:user][:email]).nil?
           Argu::Errors::UnknownEmail.new(r: r_with_authenticity_token)
-        elsif !email && Shortname.find_by(owner_type: 'User', shortname: params[:user][:email]).nil?
+        elsif !email && Shortname.find_by(owner_type: 'User', shortname: request.params[:user][:email]).nil?
           Argu::Errors::UnknownUsername.new(r: r_with_authenticity_token)
         elsif request.env['warden'].message == :locked
           Argu::Errors::AccountLocked.new(r: r_with_authenticity_token)
@@ -182,7 +182,7 @@ Doorkeeper::JWT.configure do
   # Use the application secret specified in the Access Grant token
   # Defaults to false
   # If you specify `use_application_secret true`, both secret_key and secret_key_path will be ignored
-  use_application_secret true
+  # use_application_secret true
 
   # Set the encryption secret. This would be shared with any other applications
   # that should be able to read the payload of the token.
@@ -192,7 +192,7 @@ Doorkeeper::JWT.configure do
   # If you want to use RS* encoding specify the path to the RSA key
   # to use for signing.
   # If you specify a secret_key_path it will be used instead of secret_key
-  secret_key_path 'path/to/file.pem'
+  # secret_key_path 'path/to/file.pem'
 
   # Specify encryption type. Supports any algorithim in
   # https://github.com/progrium/ruby-jwt
@@ -202,6 +202,8 @@ end
 
 module Doorkeeper
   class AccessToken < ActiveRecord::Base
+    extend JWTHelper
+
     validate :validate_scope_for_resource_owner
 
     private
@@ -222,7 +224,7 @@ module Doorkeeper
       def guest_token(token) # rubocop:disable Metrics/AbcSize
         return if token.blank?
 
-        data = ::JWT.decode(token, ::Rails.application.secrets.jwt_encryption_token).first
+        data = decode_token(token)
         return unless data['scopes']&.include?('guest')
 
         new(
@@ -253,6 +255,16 @@ module Doorkeeper
     SERVICE_ID = 2
     def self.argu_service
       Doorkeeper::Application.find(Doorkeeper::Application::SERVICE_ID)
+    end
+  end
+
+  module OAuth
+    class PasswordAccessTokenRequest < BaseRequest
+      private
+
+      def validate_client
+        client.present?
+      end
     end
   end
 end

@@ -24,7 +24,7 @@ RSpec.describe 'Tokens', type: :request do
     it 'does not create a guest token' do
       post_token
 
-      expect(response.status).to eq 401
+      expect(response.status).to eq 400
     end
   end
 
@@ -34,6 +34,8 @@ RSpec.describe 'Tokens', type: :request do
         post_token(
           scope: :user,
           params: {
+            client_id: Doorkeeper::Application.argu.uid,
+            client_secret: Doorkeeper::Application.argu.secret,
             grant_type: 'password',
             password: user.password,
             username: user.email
@@ -54,6 +56,8 @@ RSpec.describe 'Tokens', type: :request do
         post_token(
           scope: :user,
           params: {
+            client_id: Doorkeeper::Application.argu.uid,
+            client_secret: Doorkeeper::Application.argu.secret,
             grant_type: 'password',
             password: 'wrong',
             username: user.email
@@ -61,7 +65,7 @@ RSpec.describe 'Tokens', type: :request do
         )
       end.to change { Doorkeeper::AccessToken.count }.by(0)
 
-      expect(response.status).to eq 401
+      expect(response.status).to eq 400
     end
   end
 end

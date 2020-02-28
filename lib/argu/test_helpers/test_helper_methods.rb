@@ -10,6 +10,7 @@ module Argu
       end
 
       module InstanceMethods # rubocop:disable Metrics/ModuleLength
+        include JWTHelper
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i[
           argument pro_argument con_argument blog_post comment forum group_membership motion export
@@ -30,10 +31,7 @@ module Argu
         end
 
         def decoded_token_from_response
-          JWT.decode(
-            client_token_from_response,
-            Rails.application.secrets.jwt_encryption_token
-          ).first
+          decode_token(client_token_from_response)
         end
 
         def doorkeeper_token_for(resource)

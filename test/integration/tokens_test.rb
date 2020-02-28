@@ -50,6 +50,59 @@ class TokensTest < ActionDispatch::IntegrationTest
 
     expect_error_type('invalid_request')
     expect_error_code('SERVER_ERROR')
+    assert_response 400
+  end
+
+  ####################################
+  # WITH WRONG CLIENT
+  ####################################
+  test 'Guest should not post create token without client' do
+    sign_in :guest_user
+
+    post oauth_token_path,
+         headers: argu_headers(accept: :json),
+         params: {
+           username: user.email,
+           password: user.password,
+           grant_type: 'password',
+           scope: 'user'
+         }
+
+    expect_error_type('invalid_client')
+    assert_response 401
+  end
+
+  test 'Guest should not post create token without client secret' do
+    sign_in :guest_user
+
+    post oauth_token_path,
+         headers: argu_headers(accept: :json),
+         params: {
+           client_id: Doorkeeper::Application.argu.uid,
+           username: user.email,
+           password: user.password,
+           grant_type: 'password',
+           scope: 'user'
+         }
+
+    expect_error_type('invalid_client')
+    assert_response 401
+  end
+
+  test 'Guest should not post create token with wrong client secret' do
+    sign_in :guest_user
+
+    post oauth_token_path,
+         headers: argu_headers(accept: :json),
+         params: {
+           client_id: Doorkeeper::Application.argu.uid,
+           username: user.email,
+           password: user.password,
+           grant_type: 'password',
+           scope: 'user'
+         }
+
+    expect_error_type('invalid_client')
     assert_response 401
   end
 
@@ -275,6 +328,8 @@ class TokensTest < ActionDispatch::IntegrationTest
     post oauth_token_path,
          headers: argu_headers(accept: :json),
          params: {
+           client_id: Doorkeeper::Application.argu.uid,
+           client_secret: Doorkeeper::Application.argu.secret,
            username: name,
            password: password,
            grant_type: 'password',
@@ -282,7 +337,7 @@ class TokensTest < ActionDispatch::IntegrationTest
            r: redirect
          }
 
-    token = token_response(results)
+    token = token_response(**results)
     return unless token
 
     token_user = token['user']
@@ -301,14 +356,14 @@ class TokensTest < ActionDispatch::IntegrationTest
            r: redirect
          }
 
-    token_response(results)
+    token_response(**results)
   end
 
   def token_response(error_code: nil, error_type: nil, scope: 'user') # rubocop:disable Metrics/AbcSize
     if error_code || error_type
       expect_error_type(error_type || 'invalid_grant')
       expect_error_code(error_code) if error_code
-      assert_response 401
+      assert_response %w[invalid_client invalid_token].include?(error_type) ? 401 : 400
       assert_nil parsed_body['access_token']
       nil
     else
