@@ -85,4 +85,12 @@ class PagesController < EdgeableController
 
     @resource_by_id ||= ActsAsTenant.without_tenant { super } || ActsAsTenant.current_tenant
   end
+
+  def update_meta
+    meta = super
+    if current_resource.previous_changes.key?(:primary_container_node_id)
+      meta << invalidate_resource_delta(current_resource.menu(:navigations))
+    end
+    meta
+  end
 end

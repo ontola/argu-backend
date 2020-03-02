@@ -229,7 +229,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     CustomMenuItem
       .navigations
       .find_by(resource: self, edge_id: previous_changes[:primary_container_node_id].second)
-      .destroy
+      &.destroy
     true
   end
 
