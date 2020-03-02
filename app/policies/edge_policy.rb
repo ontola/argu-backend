@@ -126,7 +126,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def destroy?
-    return super if has_content_children?
+    return has_grant?(:destroy) if has_content_children?
 
     is_creator? || has_grant?(:destroy)
   end
