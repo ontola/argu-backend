@@ -242,7 +242,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       ActsAsTenant.without_tenant do
         pids = favorite_forums.joins(:parent).pluck('parents_edges.uuid') + page_ids
         Kaminari.paginate_array(
-          Page.where(uuid: pids).includes(:shortname, profile: :default_profile_photo).to_a
+          Page
+            .joins(:profile)
+            .order('profiles.name')
+            .where(uuid: pids)
+            .includes(:shortname, :tenant, profile: :default_profile_photo)
+            .to_a
         )
       end
   end
