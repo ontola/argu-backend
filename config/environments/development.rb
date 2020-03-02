@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
+  # Settings specified here will take precedence over those in config/application.rb.
   Rails.application.routes.default_url_options[:host] = config.host_name
   Rails.application.routes.default_url_options[:protocol] = :https
-  # Settings specified here will take precedence over those in config/application.rb.
+  config.hosts << config.host_name
 
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
   config.web_console.whitelisted_ips = ['192.168.0.0/16', '10.0.1.0/16', '172.17.0.0/16', ENV['TRUSTED_IP']]
