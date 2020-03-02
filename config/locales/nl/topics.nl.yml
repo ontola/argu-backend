@@ -1,8 +1,8 @@
 nl:
   topics:
-    type: "Topic"
-    type_new: "Nieuw topic"
-    plural: "Topics"
+    type: "Thread"
+    type_new: "Nieuwe thread"
+    plural: "Threads"
     call_to_action:
       title: "Onderwerp bespreken?"
       body: "Wil je een gesprek beginnen over een bepaald onderwerp?"

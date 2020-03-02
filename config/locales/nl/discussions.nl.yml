@@ -1,9 +1,9 @@
 nl:
   discussions:
-    type: 'Discussie'
-    plural: 'Discussies'
+    type: 'Onderwerp'
+    plural: 'Onderwerpen'
     new:
-      title: 'Nieuwe discussie'
+      title: 'Nieuw onderwerp'
       start_header: 'Start een nieuwe discussie'
       start_body: 'Wil jij anderen laten meedenken over een bepaalde uitdaging, of heb je een goed idee om te delen?'
       forum_notice: 'Je staat op het punt een discussie te starten in het forum: '
