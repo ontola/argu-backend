@@ -29,6 +29,6 @@ namespace :iris do
   end
 
   def custom_iri_prefixes
-    Tenant.where('iri_prefix NOT LIKE ?', "%#{URI(Rails.application.config.frontend_url).hostname}%").pluck(:iri_prefix)
+    Tenant.where('iri_prefix NOT LIKE ?', "%#{Rails.application.config.host_name}%").pluck(:iri_prefix)
   end
 end

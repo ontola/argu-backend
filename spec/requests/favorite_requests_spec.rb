@@ -26,7 +26,9 @@ RSpec.describe 'Favorites', type: :request do
   it_behaves_like 'delete destroy'
 
   context 'with iri' do
-    let(:create_path) { "#{collection_iri(argu, :favorites)}?iri=#{favorable_iri}" }
+    let(:create_path) do
+      "#{collection_iri(nil, :favorites, root: argu)}?iri=#{favorable_iri}"
+    end
 
     context 'for motion iri' do
       let(:favorable_iri) { holland.motions.first.iri }

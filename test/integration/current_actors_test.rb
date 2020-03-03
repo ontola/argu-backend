@@ -14,7 +14,7 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
     id = assigns[:doorkeeper_token].resource_owner_id
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data'],
-                 'id' => "#{Rails.application.config.frontend_url.sub('https', 'http')}/#{argu.url}/sessions/#{id}",
+                 'id' => "#{Rails.application.config.origin.sub('https', 'http')}/#{argu.url}/sessions/#{id}",
                  'type' => 'guestUsers'
   end
 
@@ -25,6 +25,6 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],
-                 "#{Rails.application.config.frontend_url.sub('https', 'http')}/#{argu.url}/u/#{user.url}"
+                 "#{Rails.application.config.origin.sub('https', 'http')}/#{argu.url}/u/#{user.url}"
   end
 end

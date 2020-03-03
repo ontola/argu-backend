@@ -25,7 +25,8 @@ module Argu
 
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"
-    config.frontend_url = config.origin
+    config.frontend_host_name = ENV['FRONTEND_HOSTNAME'] || ENV['HOSTNAME']
+    config.frontend_url = "https://#{config.frontend_host_name}"
 
     config.autoload_paths += %w[lib]
     %i[controllers forms models policies serializers].each do |type|

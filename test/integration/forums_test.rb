@@ -54,7 +54,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :guest_user
 
     get freetown.iri.to_s.gsub("/#{argu.url}/", "/#{argu.url.upcase}/"), headers: argu_headers
-    assert_response 200
+    assert_redirected_to freetown.iri.to_s
   end
 
   ####################################

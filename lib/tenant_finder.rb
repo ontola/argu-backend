@@ -48,7 +48,7 @@ class TenantFinder
   end
 
   def tenant_by_shortname
-    return unless @host == Rails.application.config.host_name
+    return unless [Rails.application.config.host_name, Rails.application.config.frontend_host_name].include?(@host)
 
     Apartment::Tenant.each do
       match = Page.find_via_shortname(iri_suffix)

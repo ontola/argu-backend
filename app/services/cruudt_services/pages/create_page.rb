@@ -2,7 +2,7 @@
 
 class CreatePage < CreateEdge
   def initialize(parent, attributes: {}, options: {})
-    attributes[:iri_prefix] ||= "#{Rails.application.config.frontend_url.split('://').last}/#{attributes[:url]}"
+    attributes[:iri_prefix] ||= "#{Rails.application.config.host_name}/#{attributes[:url]}"
     super
   end
 

@@ -2,8 +2,8 @@
 
 class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
   IRI_PREFIX_BLACKLIST = [
-    Rails.application.config.frontend_url.split('://').last,
-    "#{Rails.application.config.frontend_url.split('://').last}/"
+    Rails.application.config.host_name,
+    "#{Rails.application.config.host_name}/"
   ].freeze
 
   has_one :page, foreign_key: :uuid, primary_key: :root_id, inverse_of: :tenant, dependent: false

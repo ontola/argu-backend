@@ -5,6 +5,8 @@ require 'test_helper'
 class HeadRequestsTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
+  let(:demogemeente) { create(:page, url: 'demogemeente', iri_prefix: 'demogemeente.nl') }
+  let(:demogemeente_forum) { create_forum(parent: demogemeente, url: 'forum', public_grant: 'initiator') }
   let(:freetown_motion) { create(:motion, parent: freetown) }
   let(:pro_argument) { create(:pro_argument, parent: freetown_motion) }
   let(:cairo_motion) { create(:motion, parent: cairo) }
@@ -61,6 +63,60 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     head "#{argu.iri}/settings#container_nodes", headers: argu_headers(accept: :nq)
 
     expect_response(200)
+  end
+
+  test 'guest should head demogemeente' do
+    sign_in guest_user
+
+    assert_equal demogemeente.iri, 'http://demogemeente.nl'
+    head demogemeente.iri, headers: argu_headers(accept: :nq)
+
+    expect_response(200, page: demogemeente)
+  end
+
+  test 'guest should head demogemeente argu.co' do
+    sign_in guest_user
+
+    assert_equal demogemeente.iri, 'http://demogemeente.nl'
+    head "#{Rails.application.config.origin}/demogemeente", headers: argu_headers(accept: :nq)
+
+    assert_redirected_to demogemeente.iri
+  end
+
+  test 'guest should head demogemeente app.argu.co' do
+    sign_in guest_user
+
+    assert_equal demogemeente.iri, 'http://demogemeente.nl'
+    head "#{Rails.application.config.frontend_url}/demogemeente", headers: argu_headers(accept: :nq)
+
+    assert_redirected_to demogemeente.iri
+  end
+
+  test 'guest should head demogemeente forum' do
+    sign_in guest_user
+
+    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/forum'
+    head demogemeente_forum.iri, headers: argu_headers(accept: :nq)
+
+    expect_response(200, page: demogemeente)
+  end
+
+  test 'guest should head demogemeente forum argu.co' do
+    sign_in guest_user
+
+    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/forum'
+    head "#{Rails.application.config.origin}/demogemeente/forum", headers: argu_headers(accept: :nq)
+
+    assert_redirected_to demogemeente_forum.iri
+  end
+
+  test 'guest should head demogemeente forum app.argu.co' do
+    sign_in guest_user
+
+    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/forum'
+    head "#{Rails.application.config.frontend_url}/demogemeente/forum", headers: argu_headers(accept: :nq)
+
+    assert_redirected_to demogemeente_forum.iri
   end
 
   test 'guest should head freetown' do

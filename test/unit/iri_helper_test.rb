@@ -38,15 +38,15 @@ class IriHelperTest < ActiveSupport::TestCase
   end
 
   test 'should find example.com by its iri with slash' do
-    resource_from_path(example_page, '/', old_fe: false)
+    resource_from_path(example_page, '/')
   end
 
   test 'should find example.com by its iri without slash' do
-    resource_from_path(example_page, '', old_fe: false)
+    resource_from_path(example_page, '')
   end
 
   test 'should find forum of example.com' do
-    resource_from_path(example, '/example', old_fe: false)
+    resource_from_path(example, '/example')
     assert_equal example, LinkedRails.resource_from_iri!('https://example.com/example')
   end
 
@@ -56,10 +56,7 @@ class IriHelperTest < ActiveSupport::TestCase
     resource_from_path(freetown, path)
   end
 
-  def resource_from_path(resource, path, old_fe: true)
-    if old_fe
-      assert_equal(LinkedRails.resource_from_iri(argu_url("/#{resource.root.url}#{path}", frontend: false)), resource)
-    end
+  def resource_from_path(resource, path)
     assert_equal(LinkedRails.resource_from_iri("#{resource.root.iri}#{path}"), resource)
   end
 end

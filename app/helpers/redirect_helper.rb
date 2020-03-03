@@ -4,7 +4,6 @@ module RedirectHelper
   VALID_HOSTNAMES = [
     'https://argu.co',
     "https://#{Rails.application.config.host_name}",
-    Rails.application.config.frontend_url,
     Rails.env.test? ? 'https://127.0.0.1:42000' : nil
   ].uniq.compact.freeze
 
