@@ -18,8 +18,8 @@ require 'rspec/matchers'
 require 'rspec/expectations'
 
 require 'support/custom_reporter'
-require 'support/database_cleaner'
 require 'argu/test_helpers/searchkick_mock'
+require 'support/database_cleaner'
 
 Sidekiq::Testing.server_middleware do |chain|
   chain.add ActsAsTenant::Sidekiq::Server
@@ -33,7 +33,6 @@ WebMock.disable_net_connect!(
     ENV['ELASTICSEARCH_URL']
   ]
 )
-Thread.current[:mock_searchkick] = true
 
 module TestHelper
   include RSpec::Expectations

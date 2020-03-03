@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+Thread.current[:mock_searchkick] = true
+
 Apartment::Tenant.create('argu') unless ApplicationRecord.connection.schema_exists?('argu')
 Apartment::Tenant.switch('public') do
   Tenant.delete_all

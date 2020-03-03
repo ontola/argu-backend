@@ -8,11 +8,11 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'argu/test_helpers/searchkick_mock'
 require 'database_cleaner'
 require 'fakeredis/rspec'
 require 'sidekiq/testing'
 require 'webmock/rspec'
-require 'argu/test_helpers/searchkick_mock'
 
 Sidekiq::Testing.server_middleware do |chain|
   chain.add ActsAsTenant::Sidekiq::Server
@@ -30,8 +30,6 @@ WebMock.disable_net_connect!(
     ENV['ELASTICSEARCH_URL']
   ]
 )
-
-Thread.current[:mock_searchkick] = true
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods

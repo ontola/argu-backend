@@ -2,6 +2,8 @@
 
 RSpec.configure do |config|
   config.before(:suite) do
+    Thread.current[:mock_searchkick] = true
+
     Apartment::Tenant.create('argu') unless ApplicationRecord.connection.schema_exists?('argu')
     Apartment::Tenant.switch!('argu')
 
