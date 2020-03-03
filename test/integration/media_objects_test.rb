@@ -8,6 +8,7 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
   let(:motion) { create(:motion, parent: freetown) }
   let(:media_object) { create(:media_object, about: motion) }
   let(:image_object) { create(:image_object, about: motion) }
+  let(:profile_photo) { create(:profile_photo, about: user.profile) }
 
   ####################################
   # As Guest
@@ -37,5 +38,23 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_equal NS::SCHEMA[:ImageObject].to_s, primary_resource['attributes']['type']
+  end
+
+  test 'Guest should get redirect original version of image' do
+    sign_in :guest_user
+
+    get ActsAsTenant.with_tenant(argu) { profile_photo.url_for_version('content') },
+        headers: argu_headers(accept: :json_api)
+
+    assert_redirected_to path_with_hostname("/photos/#{profile_photo.id}/profile_photo.png").sub('http:', 'https:')
+  end
+
+  test 'Guest should get redirect box version of image' do
+    sign_in :guest_user
+
+    get ActsAsTenant.with_tenant(argu) { profile_photo.url_for_version('box') },
+        headers: argu_headers(accept: :json_api)
+
+    assert_redirected_to path_with_hostname("/photos/#{profile_photo.id}/box_profile_photo.jpg").sub('http:', 'https:')
   end
 end

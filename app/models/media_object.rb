@@ -110,6 +110,10 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     RDF::DynamicURI(type == 'video' ? remote_url : content.url(*args)).presence
   end
 
+  def url_for_version(version)
+    RDF::DynamicURI(path_with_hostname("#{root_relative_iri}/content/#{version}"))
+  end
+
   private
 
   def set_file_name

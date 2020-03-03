@@ -18,11 +18,11 @@ class MediaObjectSerializer < RecordSerializer
             datatype: NS::XSD[:integer]
   attribute :used_as
 
-  MediaObjectUploader::VERSIONS.each do |format, opts|
+  MediaObjectUploader::IMAGE_VERSIONS.each do |format, opts|
     attribute format, predicate: NS::ONTOLA[:"imgUrl#{opts[:w]}x#{opts[:h]}"]
 
     define_method format do
-      url_for_version(format)
+      object.url_for_version(format)
     end
   end
 
@@ -41,11 +41,11 @@ class MediaObjectSerializer < RecordSerializer
   end
 
   def url
-    url_for_version('default')
+    object.url_for_version('default')
   end
 
   def content
-    url_for_version('content')
+    object.url_for_version('content')
   end
 
   def position_y
@@ -57,12 +57,6 @@ class MediaObjectSerializer < RecordSerializer
   end
 
   def thumbnail
-    url_for_version('thumbnail')
-  end
-
-  private
-
-  def url_for_version(version)
-    RDF::DynamicURI(path_with_hostname("#{object.root_relative_iri}/content/#{version}"))
+    object.url_for_version('thumbnail')
   end
 end

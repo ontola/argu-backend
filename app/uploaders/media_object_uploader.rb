@@ -17,6 +17,10 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   SPREADSHEET_TYPES = %w[text/csv application/excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
                          text/comma-separated-values application/vnd.oasis.opendocument.spreadsheet].freeze
   VIDEO_TYPES = %w[video/mp4].freeze
+  EXTENSION_REGEX = IMAGE_TYPES
+                      .map { |type| MIME::Types[type].map { |mime| mime.extensions.map { |ext| ".#{ext}" } } }
+                      .flatten
+                      .join('|')
 
   storage ENV['AWS_ID'].present? ? :aws : :file
 
@@ -30,16 +34,20 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     quant_table: 3,
     quality: 75
   }.freeze
-  VERSIONS = {
+  IMAGE_VERSIONS = {
     icon: {if: :is_image?, w: 64, h: 64, strategy: :resize_to_fill, conversion_opts: {quant_table: 0, quality: 90}},
     avatar: {if: :is_image?, w: 256, h: 256, strategy: :resize_to_fill},
     box: {if: :is_image?, w: 568, h: 400, strategy: :resize_to_limit},
     cover: {if: :cover_photo?, w: 1500, h: 2000, strategy: :resize_to_limit, conversion_opts: {quality: 100}}
   }.freeze
-  VERSIONS.each do |type, opts|
+  IMAGE_VERSIONS.each do |type, opts|
     version type, if: opts[:if] do
       process convert: ['jpeg', CONVERSION_OPTIONS.merge(opts[:conversion_opts] || {})]
       process opts[:strategy] => [opts[:w], opts[:h]]
+
+      def full_filename(for_file)
+        super.sub(/#{EXTENSION_REGEX}/, '.jpg')
+      end
     end
   end
 

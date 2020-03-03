@@ -17,7 +17,7 @@ class MediaObjectContentsController < ParentableController
       parent_resource.content.url
     when :thumbnail
       parent_resource.thumbnail
-    when *MediaObjectUploader::VERSIONS.keys
+    when *MediaObjectUploader::IMAGE_VERSIONS.keys
       parent_resource.content.url(params[:version])
     else
       parent_resource.url

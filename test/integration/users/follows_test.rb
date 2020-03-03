@@ -9,9 +9,10 @@ module Users
     let(:second_motion) { create(:motion, parent: freetown) }
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }
+    let(:news_follow) { create(:news_follow, followable: motion, follower: user) }
     let!(:follows) do
       create(:news_follow, followable: motion, follower: other_user)
-      create(:news_follow, followable: motion, follower: user)
+      news_follow
       create(:follow, followable: second_motion, follower: user)
       create(:never_follow, followable: freetown, follower: user)
     end
@@ -44,6 +45,15 @@ module Users
       end
       assert_response :success
       expect_ontola_action(snackbar: 'Notifications deleted successfully')
+    end
+
+    test 'user should post destroy follows' do
+      sign_in user
+      assert_difference('Follow.news.count' => -1) do
+        post news_follow.iri
+      end
+      assert_response :success
+      expect_ontola_action(snackbar: "You no longer receive notifications for '#{motion.display_name}'")
     end
 
     private
