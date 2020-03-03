@@ -12,6 +12,7 @@ end
 Apartment::Tenant.drop('argu') if ApplicationRecord.connection.schema_exists?('argu')
 Tenant.setup_schema('argu', "#{Rails.application.config.host_name}/first_page", 'first_page')
 
+Apartment::Tenant.switch!('argu')
 ActsAsTenant.current_tenant.update(url: 'first_page')
 ActsAsTenant.current_tenant = nil
 
