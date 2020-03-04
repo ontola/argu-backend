@@ -15,8 +15,6 @@ class EmploymentModeration < Employment
     user.email
   end
 
-  def iri_path_from_cache(opts = {}); end
-
   def iri_template_name
     :employment_moderations_iri
   end

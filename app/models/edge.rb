@@ -15,7 +15,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Parentable
   include Shortnameable
   include Uuidable
-  include CacheableIri
   include Cacheable
 
   enhance LinkedRails::Enhancements::Actionable

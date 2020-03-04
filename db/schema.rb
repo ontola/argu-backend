@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_151752) do
+ActiveRecord::Schema.define(version: 2020_03_04_143348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2020_02_27_151752) do
     t.integer "fragment", null: false
     t.integer "creator_id", null: false
     t.boolean "primary"
-    t.string "iri_cache"
     t.integer "attachments_count", default: 0, null: false
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
     t.index ["parent_id", "creator_id"], name: "index_edges_on_parent_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"

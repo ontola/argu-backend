@@ -16,8 +16,8 @@ class Shortname < ApplicationRecord
              primary_key: :uuid,
              class_name: 'Edge'
   before_save :remove_primary_shortname, if: :primary?
-  after_save :cache_iri_path!, if: :primary?
-  after_destroy :cache_iri_path!, if: :primary?
+  after_save :update_caches, if: :primary?
+  after_destroy :update_caches, if: :primary?
 
   with_columns settings: [
     NS::ARGU[:alias],
@@ -98,9 +98,15 @@ class Shortname < ApplicationRecord
     scope.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
   end
 
-  def cache_iri_path!
-    owner.cache_iri_path!
-    Page.update_iris(owner.url_change.first, owner.url_change.last, root_id: root_id) if update_iris?
+  def update_caches
+    owner.try(:cache_iri_path!)
+
+    return unless update_iris?
+
+    new_path = owner.iri.path
+    old_path = new_path.sub(*owner.url_change.reverse)
+
+    Page.update_iris(old_path, new_path, root_id: root_id)
   end
 
   def update_iris?

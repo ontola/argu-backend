@@ -4,34 +4,23 @@ require 'rails_helper'
 
 RSpec.describe '#iri_cache', type: :model do
   define_spec_objects
+  let(:user) { create(:user) }
 
-  context 'iri of a cached motion' do
-    subject { motion.iri_cache }
+  context 'iri of a cached user' do
+    subject { user.iri_cache }
 
-    it { is_expected.to eq("/m/#{motion.fragment}") }
+    it { is_expected.to eq("/u/#{user.url}") }
   end
 
-  context 'iri of a cleared motion' do
-    subject { ActsAsTenant.with_tenant(argu) { motion.update!(iri_cache: nil) } && motion.iri_path }
+  context 'iri of a cleared user' do
+    subject { ActsAsTenant.with_tenant(argu) { user.update!(iri_cache: nil) } && user.iri_path }
 
-    it { is_expected.to eq("/m/#{motion.fragment}") }
+    it { is_expected.to eq("/u/#{user.url}") }
   end
 
-  context 'iri of a cached page' do
-    subject { argu.iri_cache }
+  context 'iri of a user after updated shortname' do
+    subject { user.update!(url: 'new_url') && user.reload.iri_path }
 
-    it { is_expected.to eq('') }
-  end
-
-  context 'iri of a cleared page' do
-    subject { argu.update!(iri_cache: nil) && argu.iri_path }
-
-    it { is_expected.to eq('') }
-  end
-
-  context 'iri of a page after updated shortname' do
-    subject { argu.update!(url: 'new_url') && argu.reload.iri_path }
-
-    it { is_expected.to eq('') }
+    it { is_expected.to eq('/u/new_url') }
   end
 end

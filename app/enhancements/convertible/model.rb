@@ -22,7 +22,7 @@ module Convertible
 
         parent = new_model.parent
         parent = parent.parent until new_model.class.valid_parent?(parent.class)
-        update!(parent: parent, iri_cache: nil)
+        update!(parent: parent)
 
         new_model.run_callbacks :convert do
           new_model.save!(validate: validate)
