@@ -7,6 +7,7 @@ class Vote < Edge
   enhance LinkedRails::Enhancements::Updatable
 
   include RedisResource::Concern
+  include Trashable::Model
 
   property :for, :integer, NS::SCHEMA[:option], default: 3, enum: {con: 0, pro: 1, neutral: 2, abstain: 3}
   property :comment_id, :linked_edge_id, NS::ARGU[:explanation]

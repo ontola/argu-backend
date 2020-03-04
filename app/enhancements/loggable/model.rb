@@ -7,6 +7,7 @@ module Loggable
 
     included do
       before_destroy :destroy_notifications, prepend: true
+      after_trash :destroy_notifications
     end
 
     def destroy_notifications

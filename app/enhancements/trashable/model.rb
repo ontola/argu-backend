@@ -25,6 +25,28 @@ module Trashable
       true
     end
 
+    def trash
+      return if trashed_at.present?
+
+      self.class.transaction do
+        self.trashed_at = Time.current
+        save(validate: false)
+        run_callbacks :trash
+      end
+      true
+    end
+
+    def untrash
+      return if trashed_at.nil?
+
+      self.class.transaction do
+        self.trashed_at = nil
+        save(validate: false)
+        run_callbacks :untrash
+      end
+      true
+    end
+
     module ClassMethods
       def includes_for_serializer
         super.merge(trash_activity: {}, untrash_activity: {})

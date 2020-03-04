@@ -6,6 +6,8 @@ module Edgeable
 
     included do
       before_destroy :decrement_counter_caches, unless: :is_trashed?
+      after_trash :decrement_counter_caches, if: :is_published?
+      after_untrash :increment_counter_caches, if: :is_published?
     end
 
     def reload_children_counts

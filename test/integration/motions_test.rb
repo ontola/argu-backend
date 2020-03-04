@@ -186,4 +186,30 @@ class MotionsTest < ActionDispatch::IntegrationTest
       delete draft_motion
     end
   end
+
+  test 'staff should trash invalid draft' do
+    sign_in staff
+    draft_motion.properties.destroy_all
+    assert_not draft_motion.reload.valid?
+    assert_difference('Motion.count' => 0, 'Motion.trashed.count' => 1, 'Activity.count' => 1) do
+      delete draft_motion
+    end
+  end
+
+  test 'staff should destroy motion' do
+    sign_in staff
+    motion_with_placement
+    assert_difference('Motion.count' => -1, 'Activity.count' => 1) do
+      delete motion_with_placement.iri(destroy: true)
+    end
+  end
+
+  test 'staff should destroy invalid motion' do
+    sign_in staff
+    motion_with_placement.properties.destroy_all
+    assert_not motion_with_placement.reload.valid?
+    assert_difference('Motion.count' => -1, 'Activity.count' => 1) do
+      delete motion_with_placement.iri(destroy: true)
+    end
+  end
 end

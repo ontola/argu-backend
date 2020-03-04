@@ -314,33 +314,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     persisted_edge.path.split('.').map(&:to_i)
   end
 
-  def trash
-    return if trashed_at.present?
-
-    self.class.transaction do
-      update!(trashed_at: Time.current)
-      destroy_notifications if is_loggable?
-      decrement_counter_caches if is_published?
-      run_callbacks :trash
-    end
-    true
-  end
-
   def trashed_ancestors
     persisted_edge
       .self_and_ancestors
       .trashed
-  end
-
-  def untrash
-    return if trashed_at.nil?
-
-    self.class.transaction do
-      update!(trashed_at: nil)
-      increment_counter_caches if is_published?
-      run_callbacks :untrash
-    end
-    true
   end
 
   def reindex(method_name = nil, **options)
