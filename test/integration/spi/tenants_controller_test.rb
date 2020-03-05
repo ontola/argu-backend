@@ -38,7 +38,6 @@ module SPI
         navbar_background: '#475668',
         navbar_color: '#FFFFFF',
         database_schema: 'argu',
-        use_new_frontend: false,
         display_name: 'Argu'
       }.as_json
     end

@@ -10,7 +10,6 @@ class PageSerializer < RecordSerializer
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
   attribute :last_accepted, predicate: NS::ARGU[:lastAccepted], datatype: NS::XSD[:boolean], if: :never
   attribute :database_schema, predicate: NS::ARGU[:dbSchema], if: :service_scope?
-  attribute :use_new_frontend, predicate: NS::ARGU[:useNewFrontend], if: :service_scope?
 
   belongs_to :primary_container_node, predicate: NS::FOAF[:homepage], unless: :service_scope?
   has_one :profile, predicate: NS::ARGU[:profile]
