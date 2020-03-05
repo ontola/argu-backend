@@ -82,8 +82,7 @@ module Argu
                                user: user), subject)
       end
 
-      def reset_grants(subject, user_type) # rubocop:disable Metrics/AbcSize
-        subject.visible! if subject.is_a?(Page)
+      def reset_grants(user_type)
         case user_type
         when :spectator
           [freetown, expired_freetown].each do |record|
@@ -97,7 +96,6 @@ module Argu
           [freetown, expired_freetown].each do |record|
             record.public_grant = 'none'
           end
-          subject.hidden! if subject.is_a?(Page)
         end
         [freetown, expired_freetown].each do |record|
           record.send(:reset_public_grant)
@@ -108,7 +106,7 @@ module Argu
         failures = []
         class_name = self.class.name.gsub('PolicyTest', '')
         test_cases.each do |user, expected|
-          reset_grants(subject, user)
+          reset_grants(user)
           subject.try(:reload) unless subject.try(:new_record?)
           result =
             begin

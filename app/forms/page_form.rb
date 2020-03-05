@@ -4,7 +4,6 @@ class PageForm < ApplicationForm
   fields [
     :name,
     :about,
-    :visibility,
     :url,
     {
       primary_container_node_id: {

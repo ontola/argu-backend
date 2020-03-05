@@ -5,37 +5,34 @@ require 'test_helper'
 class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create_page }
   let!(:other_page) { create_page }
-  let(:hidden_page) { create_page(visibility: Page.visibilities[:hidden]) }
   let(:freetown) { create_forum(name: 'freetown', parent: page) }
   let(:second_freetown) { create_forum(name: 'second_freetown', parent: page) }
   let(:helsinki) { create_forum(name: 'second_freetown', parent: page, discoverable: false) }
-  let(:cairo) { create_forum(name: 'cairo', parent: hidden_page) }
-  let(:second_cairo) { create_forum(name: 'second_cairo', parent: hidden_page) }
   define_freetown('amsterdam')
   define_freetown('utrecht')
 
   let(:motion) do
     create(:motion,
-           parent: cairo,
-           creator: page.profile,
-           publisher: page.publisher)
+           parent: freetown,
+           creator: other_page.profile,
+           publisher: other_page.publisher)
   end
   let(:argument) do
     create(:argument,
            parent: motion,
-           creator: page.profile,
-           publisher: page.publisher)
+           creator: other_page.profile,
+           publisher: other_page.publisher)
   end
 
   let(:comment) do
     create(:comment,
            parent: argument,
-           creator: page.profile,
-           publisher: page.publisher)
+           creator: other_page.profile,
+           publisher: other_page.publisher)
   end
 
-  def init_cairo_with_content
-    [cairo, motion, argument, comment]
+  def init_freetown_with_content
+    [freetown, motion, argument, comment]
   end
 
   ####################################
@@ -82,14 +79,6 @@ class PagesTest < ActionDispatch::IntegrationTest
     get page
 
     assert_response :success
-  end
-
-  test 'guest should not get show when not public' do
-    sign_in :guest_user
-
-    get hidden_page
-
-    assert_response :not_found
   end
 
   ####################################
@@ -186,14 +175,6 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'user should not get show when not public' do
-    sign_in user
-
-    get hidden_page
-
-    assert_response :not_found
-  end
-
   test 'user should get settings' do
     sign_in user
 
@@ -226,10 +207,10 @@ class PagesTest < ActionDispatch::IntegrationTest
   ####################################
   let(:administrator) { page.publisher }
   let(:argu_administrator) { argu.publisher }
-  let(:hidden_page_administrator) { hidden_page.publisher }
+  let(:other_page_administrator) { other_page.publisher }
 
   test 'administrator should get index' do
-    sign_in hidden_page_administrator
+    sign_in administrator
 
     get collection_iri(nil, :pages, root: other_page)
     assert_response :success
@@ -358,15 +339,15 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should delete destroy and anonimize its content' do
-    init_cairo_with_content
-    sign_in administrator
+    init_freetown_with_content
+    sign_in other_page_administrator
 
     assert_difference('Page.count' => -1,
                       'Tenant.count' => -1,
                       'Argument.anonymous.count' => 1,
                       'Comment.anonymous.count' => 1,
                       'Motion.anonymous.count' => 1) do
-      delete page,
+      delete other_page,
              params: {
                page: {
                  confirmation_string: 'remove'

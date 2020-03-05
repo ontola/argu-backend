@@ -3,21 +3,13 @@
 class PagePolicy < EdgePolicy
   class Scope < Scope
     def resolve
-      page_ids = user.profile.granted_root_ids(nil)
-                   .concat(user.page_ids)
       scope
-        .property_join(:visibility)
-        .where(
-          'visibility_filter.value IN (?) OR edges.uuid IN (?)',
-          Page.visibilities[:visible],
-          page_ids
-        )
     end
   end
 
   def permitted_attribute_names # rubocop:disable Metrics/AbcSize
     attributes = super
-    attributes.concat %i[visibility url iri_prefix]
+    attributes.concat %i[url iri_prefix]
     attributes.concat %i[primary_container_node_id] if record.container_nodes.any?
     attributes.concat %i[display_name about last_accepted] unless record.persisted? && record.last_accepted?
     attributes.append(shortname_attributes: %i[shortname]) if new_record?
@@ -37,12 +29,10 @@ class PagePolicy < EdgePolicy
   def is_creator?; end
 
   def show?
-    record.visible? || group_member? || service?
+    true
   end
 
   def list?
-    raise(ActiveRecord::RecordNotFound) if record.hidden? && !show?
-
     true
   end
 

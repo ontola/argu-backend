@@ -7,7 +7,6 @@ FactoryBot.define do
 
   factory :page do
     last_accepted { Time.current }
-    visibility { Page.visibilities[:visible] }
     is_published { true }
     sequence :url do |n|
       "page_#{n}"

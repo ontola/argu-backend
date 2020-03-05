@@ -11,6 +11,18 @@ class PagePolicyTest < Argu::TestHelpers::PolicyTest
 
   generate_edgeable_tests
 
+  def feed_results
+    super.except(:non_member)
+  end
+
+  def follow_results
+    super.except(:non_member)
+  end
+
+  def show_results
+    super.except(:non_member)
+  end
+
   def destroy_results
     nobody_results.merge(administrator: true, staff: true)
   end

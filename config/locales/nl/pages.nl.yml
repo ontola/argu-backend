@@ -10,9 +10,6 @@ nl:
     discover: "Ontdek Argu websites"
     discover_header: "Ontdek"
     my_pages: "Mijn Argu websites"
-    visibility:
-      visible: 'Zichtbaar'
-      hidden: 'Verborgen'
     settings:
       title: "Organisatie instellingen"
       menu:
@@ -65,5 +62,4 @@ nl:
       page:
         name: 'Naam'
         shortname: 'Argu URL'
-        visibility: 'Zichtbaarheid'
         f_delete: 'Verwijderen'

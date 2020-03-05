@@ -8,7 +8,6 @@ class PagesControllerTest < ActionController::TestCase
   let!(:forum1) { create_forum(parent: page1, public_grant: 'initiator') }
   let!(:page2) { create_page }
   let!(:forum2) { create_forum(parent: page2) }
-  let!(:hidden_page) { create_page(visibility: Page.visibilities[:hidden]) }
 
   ####################################
   # Index
@@ -21,7 +20,6 @@ class PagesControllerTest < ActionController::TestCase
 
     expect_default_view
     expect_included(RDF::DynamicURI(argu_url('/o', page: 1)))
-    expect_not_included(hidden_page.iri)
     expect_not_included(page2.iri)
   end
 
@@ -32,7 +30,6 @@ class PagesControllerTest < ActionController::TestCase
     expect_no_relationship('partOf')
 
     expect_view_members(primary_resource, 1)
-    expect_not_included(hidden_page.iri)
     expect_not_included(page2.iri)
   end
 end
