@@ -42,6 +42,7 @@ class Manifest < VirtualResource
 
   def ontola # rubocop:disable Metrics/AbcSize
     {
+      allowed_external_sources: page.allowed_external_sources,
       secondary_main: page.accent_background_color,
       secondary_text: page.accent_color,
       css_class: page.template,
