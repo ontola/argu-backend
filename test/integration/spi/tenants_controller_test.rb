@@ -17,7 +17,11 @@ module SPI
       get _public_spi_tenants_path
 
       assert_response 200
-      assert_equal parsed_body, 'schemas' => %w[argu]
+      assert_equal parsed_body['schemas'], %w[argu]
+      sites = parsed_body['sites']
+      assert_equal sites.length, 2
+      assert_includes sites, 'name' => 'argu', 'location' => 'https://argu.localtest/argu'
+      assert_includes sites, 'name' => 'argu', 'location' => 'https://argu.localtest/public_page'
     end
 
     test 'service should get tenant of iri' do

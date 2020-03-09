@@ -8,7 +8,12 @@ module Public
       skip_after_action :verify_authorized
 
       def index
-        render json: {schemas: Tenant.distinct.pluck(:database_schema)}
+        info = Tenant.pluck(:database_schema, :iri_prefix)
+
+        render json: {
+          schemas: info.transpose.first.uniq,
+          sites: info.map { |i| {name: i.first, location: "https://#{i.second}"} }
+        }
       end
     end
   end
