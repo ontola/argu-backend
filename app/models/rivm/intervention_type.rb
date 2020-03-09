@@ -47,6 +47,14 @@ class InterventionType < Edge
       NS::RIVM
     end
 
+    def default_collection_display
+      :table
+    end
+
+    def default_per_page
+      30
+    end
+
     def unknown
       find_or_create_by(parent: ActsAsTenant.current_tenant, display_name: 'Weet ik niet')
     end
