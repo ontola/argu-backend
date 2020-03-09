@@ -105,17 +105,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
     )
   end
 
-  def authorize_forum(forum)
-    return if forum.nil?
-    return unless user_context.with_root(forum.root) do
-      Pundit.policy(user_context, forum).show?
-    end
-
-    forum
-  rescue ActiveRecord::RecordNotFound
-    nil
-  end
-
   def controller_class
     self.class.controller_class
   end
@@ -136,23 +125,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   def parse_graph_params?
     !request.format.json_api?
-  end
-
-  # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses
-  # {Forum.first_public}.
-  def preferred_forum(profile = nil)
-    profile ||= current_profile
-    ActsAsTenant.without_tenant do
-      preferred_forum = authorize_forum(current_forum) || preferred_forum_for(profile) || Forum.first_public
-      preferred_forum.parent
-      preferred_forum
-    end
-  end
-
-  def preferred_forum_for(profile)
-    return if profile.nil?
-
-    profile.last_forum || profile.preferred_forum
   end
 
   # @private

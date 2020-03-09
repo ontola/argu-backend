@@ -24,7 +24,6 @@ module UsersHelper
 
   # Assigns certain favorites based on
   #   either an 'r' action
-  #   or preferred_forum
   #   if the user hasn't got any favorites yet
   def setup_favorites(user)
     # changed? so we can safely write back to the DB

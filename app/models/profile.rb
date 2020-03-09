@@ -169,20 +169,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # ######Methods########
-  # Returns the last visted forum
-  def last_forum
-    forum_id = Argu::Redis.get("profile:#{id}:last_forum")
-    Forum.find_by(uuid: forum_id) if uuid?(forum_id)
-  end
-
-  # Returns the preferred forum, based the first favorite or the first public forum
-  def preferred_forum
-    ActsAsTenant.without_tenant do
-      profileable.try(:favorites)&.joins(:edge)&.where(edges: {owner_type: 'Forum'})&.first&.edge ||
-        Forum.first_public
-    end
-  end
-
   def requires_name?
     profileable.class == Page
   end
