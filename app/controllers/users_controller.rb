@@ -22,6 +22,13 @@ class UsersController < AuthorizedController
     ]
   end
 
+  def destroy_execute
+    super
+
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    true
+  end
+
   def resource_by_id
     @resource_by_id ||=
       case action_name

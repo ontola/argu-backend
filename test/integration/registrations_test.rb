@@ -316,6 +316,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_equal decoded_token_from_response['scopes'], %w[guest]
   end
 
   test 'user should not delete destroy without confirmation' do

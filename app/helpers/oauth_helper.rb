@@ -35,6 +35,12 @@ module OauthHelper
     warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource
   end
 
+  def sign_out(*args)
+    super
+
+    update_oauth_token(generate_guest_token(SecureRandom.hex, application: doorkeeper_token.application).token)
+  end
+
   def doorkeeper_guest_token?
     doorkeeper_scopes.include? 'guest'
   end
