@@ -15,8 +15,7 @@ class MeasureType < Edge
   parentable :page, :risk, :category
   with_columns default: [
     NS::SCHEMA[:name],
-    NS::ARGU[:measuresCount],
-    NS::SCHEMA[:datePublished]
+    NS::ARGU[:measuresCount]
   ]
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
