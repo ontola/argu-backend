@@ -16,6 +16,7 @@ class InterventionType < Edge
     NS::ARGU[:interventionsCount],
     NS::SCHEMA[:datePublished]
   ]
+  self.default_sortings = [{key: NS::ARGU[:interventionsCount], direction: :desc}]
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
 
