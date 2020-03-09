@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'sidekiq/prometheus/exporter'
-require 'sidekiq/web'
 
 ####
 # Routes
