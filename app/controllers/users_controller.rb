@@ -65,12 +65,6 @@ class UsersController < AuthorizedController
     r_param || resource_settings_iri
   end
 
-  def tree_root_fallback
-    return super if params[:id].blank? || resource_by_id == current_resource_owner
-
-    user_root_fallback || super
-  end
-
   def active_response_success_message
     if @email_changed
       I18n.t('users.registrations.confirm_mail_change_notice')
@@ -91,9 +85,5 @@ class UsersController < AuthorizedController
   def password_required
     permit_params[:password].present? ||
       params[:user][:primary_email].present? && params[:user][:primary_email] != '[0]'
-  end
-
-  def user_root_fallback
-    resource_by_id&.edges&.last&.root || Page.argu
   end
 end

@@ -23,7 +23,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   force_ssl unless: :internal_request?, host: Rails.application.config.origin
   before_bugsnag_notify :add_user_info_to_bugsnag
 
-  prepend_before_action :set_tenant_header
   prepend_before_action :current_actor
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
@@ -132,11 +131,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
     I18n.locale = current_user.language
   end
 
-  def set_tenant_header
-    ActsAsTenant.current_tenant ||=
-      tree_root_fallback || raise(ActiveRecord::RecordNotFound.new("No tenant found for #{request.url}"))
-  end
-
   def set_vary
     response.set_header('Vary', 'Accept')
     response.set_header('Vary', 'Content-Type')
@@ -166,10 +160,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   def tree_root
     @tree_root ||= ActsAsTenant.current_tenant
-  end
-
-  def tree_root_fallback
-    (preferred_forum_for(current_resource_owner&.profile) || Forum.first_public).try(:root)
   end
 
   def tree_root_id

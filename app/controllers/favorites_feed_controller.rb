@@ -26,6 +26,4 @@ class FavoritesFeedController < FeedController
   end
 
   def parent_resource; end
-
-  def set_tenant_header; end
 end

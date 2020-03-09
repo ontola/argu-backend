@@ -79,12 +79,6 @@ class EdgeableController < ServiceController
     )
   end
 
-  def tree_root_fallback
-    return unless controller_name == 'pages' || controller_name == 'forums' && %w[index].include?(action_name)
-
-    super
-  end
-
   # Prepares a memoized {UntrashService} for the relevant model for use in controller#untrash
   # @return [UntrashService] The service, generally initialized with {resource_id}
   # @example
