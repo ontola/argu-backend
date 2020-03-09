@@ -2,9 +2,9 @@
 
 class CategoryForm < ApplicationForm
   fields(
-    %i[
-      display_name
-      description
+    [
+      :display_name,
+      {description: {datatype: NS::FHIR[:markdown]}}
     ]
   )
 end
