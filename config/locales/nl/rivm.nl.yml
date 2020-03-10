@@ -84,7 +84,7 @@ nl:
       other_tools: "Een ander aspect van gereedschap, materiaal en (reserve) onderdelen"
       no_tools: "Geen effect op gereedschap, materiaal en (reserve) onderdelen"
     target_audience:
-      operational_employess: "Operationele medewerkers"
+      operational_employees: "Operationele medewerkers"
       contractors: "(Onder)aannemers"
       hired_peronel: "Ingehuurde medewerkers"
       managers: "Direct leidinggevenden"

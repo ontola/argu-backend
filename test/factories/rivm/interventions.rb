@@ -24,5 +24,6 @@ FactoryBot.define do
     business_section_employees { :business_section_100_249 }
     comments_allowed { :comments_are_allowed }
     contact_allowed { :contact_is_allowed }
+    target_audience { [:operational_employees] }
   end
 end

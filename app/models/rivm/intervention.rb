@@ -43,16 +43,10 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   property :tools, :integer, NS::RIVM[:tools], array: true, enum: tools_options
   property :target_audience, :integer, NS::RIVM[:targetAudience], array: true, enum: target_audience_options
   property :risk_reduction, :integer, NS::RIVM[:riskReduction], array: true, enum: risk_reduction_options
-  property :continuous, :integer, NS::RIVM[:continuous], array: true, enum: continuous_options
-  property :independent, :integer, NS::RIVM[:independent], array: true, enum: independent_options
-  property(
-    :management_involvement,
-    :integer,
-    NS::RIVM[:managementInvolvement],
-    array: true,
-    enum: management_involvement_options
-  )
-  property :training_required, :integer, NS::RIVM[:trainingRequired], array: true, enum: training_required_options
+  property :continuous, :integer, NS::RIVM[:continuous], enum: continuous_options
+  property :independent, :integer, NS::RIVM[:independent], enum: independent_options
+  property(:management_involvement, :integer, NS::RIVM[:managementInvolvement], enum: management_involvement_options)
+  property :training_required, :integer, NS::RIVM[:trainingRequired], enum: training_required_options
   property :nature_of_costs, :integer, NS::RIVM[:natureOfCosts], array: true, enum: nature_of_costs_options
   property :one_off_costs, :integer, NS::RIVM[:oneOffCosts], enum: one_off_costs_options
   property :recurring_costs, :integer, NS::RIVM[:recurringCosts], enum: recurring_costs_options
@@ -82,7 +76,7 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   validates_presence_of(
     :goal, :risk_reduction, :continuous, :independent, :management_involvement, :training_required, :nature_of_costs,
     :one_off_costs, :recurring_costs, :effectivity_research_method, :security_improved, :business_section,
-    :business_section_employees, :comments_allowed, :contact_allowed, :employment_id
+    :business_section_employees, :comments_allowed, :contact_allowed, :employment_id, :target_audience
   )
   # rubocop:enable Rails/Validation
   validate :validate_parent_type

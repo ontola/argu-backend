@@ -89,7 +89,7 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
     label: -> { I18n.t('forms.costs_section.label') },
     description: -> { I18n.t('forms.costs_section.description') },
     properties: [
-      {nature_of_costs: {max_count: 99}},
+      {nature_of_costs: {min_count: 1, max_count: 99}},
       {cost_estimate: {type: :resource, description: -> { I18n.t('forms.cost_estimate') }}},
       :one_off_costs,
       :recurring_costs,

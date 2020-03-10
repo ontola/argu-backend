@@ -39,7 +39,7 @@ module InterventionOptions
 
   def target_audience_options
     {
-      operational_employess: 1, contractors: 2, hired_peronel: 3, managers: 4,
+      operational_employees: 1, contractors: 2, hired_peronel: 3, managers: 4,
       higher_management: 5, safety_professionals: 6, trainers: 7
     }
   end
