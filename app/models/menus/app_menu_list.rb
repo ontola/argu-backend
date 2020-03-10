@@ -26,8 +26,14 @@ class AppMenuList < ApplicationMenuList
   def info_menu_items
     [
       *custom_menu_items(:info, ActsAsTenant.current_tenant),
-      menu_item(:powered_by, label: I18n.t('about.powered_by'), href: RDF::URI('https://ontola.io/nl/webdevelopment'))
+      powered_by_link
     ]
+  end
+
+  def powered_by_link
+    return if ActsAsTenant.current_tenant.enable_white_label?
+
+    menu_item(:powered_by, label: I18n.t('about.powered_by'), href: RDF::URI('https://ontola.io/nl/webdevelopment'))
   end
 
   def edit_profile_link
