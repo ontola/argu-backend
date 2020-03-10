@@ -53,6 +53,8 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
           description: -> { I18n.t('forms.target_audience_text') }
         }
       },
+      {target_audience: {min_count: 1, max_count: 99}},
+      {risk_reduction: {min_count: 1, max_count: 99}},
       {
         goal_and_audience_info: {
           type: :resource,
@@ -68,8 +70,6 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
       {conflict_and_prioritization: {max_count: 99}},
       {ergonomics: {max_count: 99}},
       {tools: {max_count: 99}},
-      {target_audience: {max_count: 99}},
-      {risk_reduction: {max_count: 99}},
       :goal
     ]
   )
