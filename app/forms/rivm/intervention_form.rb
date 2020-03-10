@@ -30,7 +30,10 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
         parent_id: {
           min_count: 1,
           sh_in: lambda {
-            iri_from_template(:intervention_types_collection_iri, page: 1, page_size: 100, fragment: :members)
+            InterventionType
+              .root_collection(page_size: 100, sort: [{key: NS::SCHEMA[:name], direction: :asc}])
+              .default_view
+              .members_iri
           },
           datatype: NS::XSD[:string],
           input_field: NS::ONTOLA['element/select'],
