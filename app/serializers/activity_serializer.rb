@@ -4,15 +4,15 @@ class ActivitySerializer < RecordSerializer
   include ActivityHelper
   ACTION_TYPE = {
     create: NS::AS[:Create],
-    publish: NS::ARGU[:Publish],
+    publish: NS::ARGU[:PublishActivity],
     update: NS::AS[:Update],
     destroy: NS::AS[:Delete],
     trash: NS::AS[:Remove],
     approved: NS::AS[:Accept],
     rejected: NS::AS[:Reject],
-    forwarded: NS::ARGU[:Forward],
+    forwarded: NS::ARGU[:ForwardActivity],
     untrash: NS::AS[:Add],
-    convert: NS::ARGU[:Convert]
+    convert: NS::ARGU[:ConvertActivity]
   }.freeze
 
   attribute :published, predicate: NS::AS[:published]
@@ -38,7 +38,7 @@ class ActivitySerializer < RecordSerializer
   end
 
   def type
-    ACTION_TYPE[object.action] || NS::AS[:Activity]
+    ACTION_TYPE[object.action.to_sym] || NS::AS[:Activity]
   end
 
   def updated
