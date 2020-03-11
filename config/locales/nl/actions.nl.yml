@@ -118,6 +118,10 @@ nl:
     pages:
       create:
         label: "Nieuwe website"
+      destroy:
+        label: "Vernietigen"
+        description: "Weet je zeker dat je de volledige organisatie permanent wil verwijderen? Deze actie is niet ongedaan te maken."
+        submit: "Verwijder"
     employments:
       confirm:
         submit: "Bevestig"

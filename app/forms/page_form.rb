@@ -13,7 +13,11 @@ class PageForm < ApplicationForm
       }
     },
     :last_accepted,
-    :theme
+    :theme,
+    delete_button: {
+      type: :resource,
+      url: -> { delete_iri(target) }
+    }
   ]
 
   property_group :theme,

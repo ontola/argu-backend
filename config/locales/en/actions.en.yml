@@ -118,6 +118,10 @@ en:
     pages:
       create:
         label: "New website"
+    destroy:
+      label: "Destroy"
+      description: "Are you sure you want to permanently delete this entire organisation?. This cannot be undone."
+      submit: "Delete"
     employments:
       confirm:
         submit: "Confirm"
