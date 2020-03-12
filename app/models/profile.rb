@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
-  enhance ProfilePhotoable
-  enhance CoverPhotoable
   enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Updatable
 
   include Uuidable
 
@@ -44,11 +41,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   delegate :ancestor, :iri, to: :profileable
 
-  validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
-  validates :about, length: {maximum: 3000}
-
   auto_strip_attributes :name, squish: true
-  auto_strip_attributes :about, nullify: false
 
   COMMUNITY_ID = 0
   ANONYMOUS_ID = -1
@@ -57,19 +50,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def as_json(options = {})
     # Hide profileable for the more friendly actor
     super(options.merge(except: %i[profileable profileable_type profileable_id], methods: %i[actor_type actor_id]))
-  end
-
-  # Pages the profile has activities in
-  def active_pages(filter = nil)
-    ActsAsTenant.without_tenant do
-      page_ids = filter.nil? ? active_pages_ids : filter & active_pages_ids
-      Page.where(edges: {uuid: page_ids}).includes(:shortname)
-    end
-  end
-
-  def active_pages_ids
-    @active_pages_ids ||=
-      activities.where('key IN (?)', Feed::RELEVANT_KEYS).joins(:trackable).pluck('edges.root_id').uniq
   end
 
   def actor_type
@@ -90,11 +70,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def confirmed?
     profileable.try :confirmed?
-  end
-
-  # http://schema.org/description
-  def description
-    about
   end
 
   def display_name
@@ -139,18 +114,13 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.includes_for_profileable
-    {default_profile_photo: {}, profileable: {}}
+    {profileable: {}}
   end
 
   # @return [Boolean] Whether the user has a group_membership for the provided group_id
   def is_group_member?(group_id)
     group_ids.include?(group_id)
   end
-
-  def owner
-    profileable
-  end
-  deprecate :owner
 
   # @todo remove when pages are no longer profileable
   def profileable
@@ -169,16 +139,8 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # ######Methods########
-  def requires_name?
-    profileable.class == Page
-  end
-
   def reserved?
     id <= 0
-  end
-
-  def serializer_class
-    "#{profileable.class}Serializer".constantize
   end
 
   def vote_cache

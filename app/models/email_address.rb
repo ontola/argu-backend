@@ -37,7 +37,6 @@ class EmailAddress < ApplicationRecord
             allow_blank: false,
             format: {with: RegexHelper::EMAIL}
   validate :newly_secondary_email_not_primary, on: :create
-  delegate :greeting, to: :user
 
   def after_confirmation
     user.edges.update_all(confirmed: true) # rubocop:disable Rails/SkipsModelValidations

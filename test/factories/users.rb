@@ -14,6 +14,8 @@ FactoryBot.define do
     language { 'en' }
     has_analytics { false }
     notifications_viewed_at { nil }
+    show_feed { true }
+    is_public { true }
     sequence(:first_name) { |n| "first_name_#{n}" }
     sequence(:last_name) { |n| "last_name_#{n}" }
     last_accepted { Time.current }

@@ -6,13 +6,14 @@ FactoryBot.define do
   end
 
   factory :page do
+    association :profile
     last_accepted { Time.current }
     is_published { true }
     sequence :url do |n|
       "page_#{n}"
     end
-    sequence :profile_attributes do |n|
-      {name: "page_#{n}"}
+    sequence :name do |n|
+      "page_#{n}"
     end
   end
 end

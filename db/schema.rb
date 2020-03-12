@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_143348) do
+ActiveRecord::Schema.define(version: 2020_03_12_102057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -343,17 +343,12 @@ ActiveRecord::Schema.define(version: 2020_03_04_143348) do
     t.string "picture", limit: 255, default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "profile_photo", limit: 255
-    t.string "cover_photo", limit: 255
-    t.string "slug"
     t.boolean "is_public", default: true
     t.boolean "are_votes_public", default: true
     t.string "profileable_type"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.uuid "profileable_id", null: false
-    t.integer "attachments_count", default: 0, null: false
     t.index ["profileable_type", "profileable_id"], name: "index_profiles_on_profileable_type_and_profileable_id", unique: true
-    t.index ["slug"], name: "index_profiles_on_slug", unique: true
     t.index ["uuid"], name: "index_profiles_on_uuid", unique: true
   end
 
@@ -481,6 +476,9 @@ ActiveRecord::Schema.define(version: 2020_03_04_143348) do
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.string "iri_cache"
     t.boolean "hide_last_name", default: false
+    t.boolean "is_public", default: true
+    t.boolean "show_feed", default: true
+    t.text "about", default: ""
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uuid"], name: "index_users_on_uuid", unique: true

@@ -16,7 +16,8 @@ class CreatePage < CreateEdge
     Page.new(
       created_at: attributes.with_indifferent_access[:created_at],
       publisher: options[:publisher],
-      creator: options[:creator]
+      creator: options[:creator],
+      profile: Profile.new
     )
   end
 

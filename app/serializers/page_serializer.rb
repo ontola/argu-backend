@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 class PageSerializer < RecordSerializer
-  include ProfilePhotoable::Serializer
-
   attribute :name, predicate: NS::FOAF[:name], datatype: NS::XSD[:string]
-  attribute :about, predicate: NS::SCHEMA[:description], datatype: NS::XSD[:string]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
   attribute :last_accepted, predicate: NS::ARGU[:lastAccepted], datatype: NS::XSD[:boolean], if: :never
@@ -25,10 +22,6 @@ class PageSerializer < RecordSerializer
 
   def object
     super.is_a?(Profile) ? super.profileable : super
-  end
-
-  def default_profile_photo
-    object.profile.default_profile_photo
   end
 
   def widget_sequence

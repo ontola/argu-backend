@@ -68,7 +68,8 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
       page = Page.create!(
         publisher_id: User::SERVICE_ID,
         creator_id: Profile::SERVICE_ID,
-        profile_attributes: {name: name.humanize},
+        profile: Profile.new,
+        name: name.humanize,
         url: name,
         last_accepted: Time.current,
         is_published: true,

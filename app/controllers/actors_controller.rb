@@ -11,7 +11,7 @@ class ActorsController < ParentableController
 
   def index_collection
     [current_user] +
-      current_user.managed_pages.includes(:default_cover_photo, :shortname, profile: :default_profile_photo)
+      current_user.managed_pages.includes(:default_cover_photo, :shortname, :default_profile_photo)
   end
 
   def index_includes_collection

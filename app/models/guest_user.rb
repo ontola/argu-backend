@@ -10,6 +10,10 @@ class GuestUser < User
 
   def build_shortname_if; end
 
+  def default_profile_photo
+    @default_profile_photo ||= User.community.default_profile_photo
+  end
+
   def display_name
     I18n.t('users.guest')
   end
@@ -45,7 +49,7 @@ class GuestUser < User
   end
 
   def profile
-    @profile ||= GuestProfile.find(0)
+    @profile ||= GuestProfile.find(COMMUNITY_ID)
     @profile.profileable = self
     @profile
   end

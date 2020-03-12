@@ -57,7 +57,7 @@ module ChildHelper
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
   def prepare_edge_child(parent, child)
-    child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
+    child.publisher = User.new(show_feed: true) if child.respond_to?(:publisher=)
     child.persisted_edge = parent.try(:persisted_edge)
     child.is_published = true
     grant_tree.cache_node(parent.try(:persisted_edge)) if respond_to?(:grant_tree)

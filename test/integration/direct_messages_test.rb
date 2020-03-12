@@ -42,7 +42,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
       actor: {
         display_name: administrator.display_name,
         iri: resource_iri(administrator, root: argu),
-        thumbnail: administrator.profile.default_profile_photo.thumbnail
+        thumbnail: administrator.default_profile_photo.thumbnail
       },
       body: 'body',
       email: administrator.email,

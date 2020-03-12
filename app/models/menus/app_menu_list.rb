@@ -10,7 +10,7 @@ class AppMenuList < ApplicationMenuList
            menus: -> { info_menu_items }
   has_menu :user,
            label: -> { resource.display_name },
-           image: -> { resource.profile.default_profile_photo.thumbnail },
+           image: -> { resource.default_profile_photo.thumbnail },
            menus: -> { user_menu_items }
 
   def iri_opts

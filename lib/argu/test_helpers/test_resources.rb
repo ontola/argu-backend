@@ -37,7 +37,7 @@ module Argu
         def define_page
           let!(:argu) do
             Page.find_via_shortname('argu') ||
-              create(:page, locale: 'en-GB', url: 'argu', profile_attributes: {name: 'Argu'})
+              create(:page, locale: 'en-GB', url: 'argu', name: 'Argu')
           end
         end
 

@@ -39,9 +39,9 @@ class VotesControllerTest < ActionController::TestCase
 
     expect_relationship('defaultFilteredCollections', size: 3)
 
-    included_votes = vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true})
+    included_votes = vote_event.votes.joins(:publisher).where(users: {show_feed: true})
     expect_view_members(expect_default_view, included_votes.count)
-    expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
+    expect_not_included(vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri))
   end
 
   test 'should get index votes of vote_event with filter' do
@@ -57,7 +57,7 @@ class VotesControllerTest < ActionController::TestCase
 
     expect_relationship('unfilteredCollection')
 
-    included_votes = vote_event.votes.joins(:creator).where(for: :pro, profiles: {are_votes_public: true})
+    included_votes = vote_event.votes.joins(:publisher).where(for: :pro, users: {show_feed: true})
     expect_view_members(expect_default_view, included_votes.count)
     expect_not_included(vote_event.votes.where(for: :con))
   end

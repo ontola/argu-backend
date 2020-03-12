@@ -47,7 +47,7 @@ class Notification < ApplicationRecord
 
   def image
     if activity.present?
-      activity.owner.default_profile_photo.url(:avatar)
+      activity.owner.profileable.default_profile_photo.url(:avatar)
     else
       ActionController::Base.helpers.asset_path('assets/favicons/default/favicon-192x192.png', skip_pipeline: true)
     end

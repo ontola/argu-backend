@@ -22,7 +22,7 @@ class CurrentActorSerializer < BaseSerializer
   end
 
   def default_profile_photo
-    object.actor&.default_profile_photo
+    object.user&.default_profile_photo
   end
 
   def has_analytics?

@@ -22,8 +22,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     u.iri_cache = nil
     u
   end
-  let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
-  let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
+  let(:user_non_public) { create(:user, is_public: false) }
+  let(:user_hidden_votes) { create(:user, show_feed: false) }
 
   ####################################
   # Show as Guest
@@ -426,42 +426,36 @@ class UsersTest < ActionDispatch::IntegrationTest
         params: {
           user: {
             first_name: 'name',
-            profile_attributes: {
-              id: user.profile.id,
-              default_profile_photo_attributes: {
-                id: user.profile.default_profile_photo.id,
-                content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
-              },
-              default_cover_photo_attributes: {
-                content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
-              }
+            default_profile_photo_attributes: {
+              id: user.default_profile_photo.id,
+              content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
+            },
+            default_cover_photo_attributes: {
+              content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
             }
           }
         }
     assert_response :success
     assert_equal 'name', user.reload.first_name
-    assert_equal 2, user.profile.media_objects.reload.count
-    assert_equal('profile_photo.png', user.profile.default_profile_photo.content_identifier)
-    assert_equal('cover_photo.jpg', user.profile.default_cover_photo.content_identifier)
+    assert_equal 2, user.media_objects.reload.count
+    assert_equal('profile_photo.png', user.default_profile_photo.content_identifier)
+    assert_equal('cover_photo.jpg', user.default_cover_photo.content_identifier)
 
     assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
 
     put resource_iri(user, root: argu),
         params: {
           user: {
-            profile_attributes: {
-              id: user.profile.id,
-              default_profile_photo_attributes: {
-                id: user.profile.default_profile_photo.id,
-                content_cache: '',
-                used_as: :profile_photo,
-                remove_content: '1'
-              }
+            default_profile_photo_attributes: {
+              id: user.default_profile_photo.id,
+              content_cache: '',
+              used_as: :profile_photo,
+              remove_content: '1'
             }
           }
         }
     assert_equal 'name', user.reload.first_name
-    assert_nil(user.profile.default_profile_photo.content_identifier)
+    assert_nil(user.default_profile_photo.content_identifier)
   end
 
   let(:place) { create(:place) }

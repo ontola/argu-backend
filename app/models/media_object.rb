@@ -127,7 +127,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   def set_publisher_and_creator
     if creator.nil? && creator_id.nil? && about.present?
-      self.creator = about.is_a?(Edge) ? about.creator : about
+      self.creator = about.is_a?(Edge) ? about.creator : about.profile
     end
     return if publisher.present? || publisher_id.present?
 

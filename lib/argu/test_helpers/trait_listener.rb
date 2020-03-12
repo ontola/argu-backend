@@ -192,7 +192,7 @@ module Argu
         service = CreateVote.new(
           edge,
           attributes: vote_attrs(side),
-          options: service_options(are_votes_public: false)
+          options: service_options(show_feed: false)
         )
         service.commit
         create_comment_for_vote(service.resource)
@@ -207,7 +207,7 @@ module Argu
       end
 
       def service_options(opts = {})
-        user = create(:user, profile: build(:profile, opts))
+        user = create(:user, opts)
         {
           creator: user.profile,
           publisher: user

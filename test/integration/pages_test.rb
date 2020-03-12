@@ -61,10 +61,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       post collection_iri(argu, :pages),
            params: {
              page: {
-               profile_attributes: {
-                 name: 'Utrecht Two',
-                 about: 'Utrecht Two bio'
-               },
+               name: 'Utrecht Two',
                url: 'UtrechtNumberTwo',
                last_accepted: '1'
              }
@@ -113,10 +110,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       post collection_iri(argu, :pages),
            params: {
              page: {
-               profile_attributes: {
-                 name: 'Utrecht Two',
-                 about: 'Utrecht Two bio'
-               },
+               name: 'Utrecht Two',
                url: 'UtrechtNumberTwo',
                last_accepted: '1'
              }
@@ -137,15 +131,13 @@ class PagesTest < ActionDispatch::IntegrationTest
            params: {
              page: {
                name: 'Utrecht Two',
-               about: 'Utrecht Two bio',
                url: 'UtrechtNumberTwo',
                last_accepted: '1'
              }
            }
     end
     assert_response :success
-    assert_equal Page.last.profile.name, 'Utrecht Two'
-    assert_equal Page.last.profile.about, 'Utrecht Two bio'
+    assert_equal Page.last.reload.name, 'Utrecht Two'
   end
 
   test 'user should not post create invalid' do
@@ -155,10 +147,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       post collection_iri(argu, :pages),
            params: {
              page: {
-               profile_attributes: {
-                 name: 'a',
-                 about: 'bio'
-               },
+               name: 'a',
                url: 'shortnmae',
                last_accepted: '1'
              }
@@ -186,20 +175,17 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'user should not update settings when not page owner' do
     sign_in user
 
-    about = page.profile.about
+    name = page.name
 
     put page,
         params: {
           page: {
-            profile_attributes: {
-              id: page.profile.id,
-              about: 'new_about'
-            }
+            name: 'new name'
           }
         }
 
     assert_response 403
-    assert_equal about, page.profile.reload.about
+    assert_equal name, page.reload.name
   end
 
   ####################################
@@ -237,23 +223,18 @@ class PagesTest < ActionDispatch::IntegrationTest
         params: {
           id: page.url,
           page: {
-            profile_attributes: {
-              id: page.profile.id,
-              name: 'name',
-              about: 'new_about',
-              default_profile_photo_attributes: {
-                id: page.profile.default_profile_photo.id,
-                content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
-              }
+            name: 'name',
+            default_profile_photo_attributes: {
+              id: page.default_profile_photo.id,
+              content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
             }
           }
         }
 
     assert_response :success
     page.reload
-    assert_equal 1, page.profile.media_objects.count
-    assert_equal 'profile_photo.png', page.profile.default_profile_photo.content_identifier
-    assert_equal 'new_about', page.profile.about
+    assert_equal 1, page.media_objects.count
+    assert_equal 'profile_photo.png', page.default_profile_photo.content_identifier
   end
 
   test 'administrator should put update page add latlon' do
@@ -326,10 +307,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       post collection_iri(argu, :pages),
            params: {
              page: {
-               profile_attributes: {
-                 name: 'Utrecht Two',
-                 about: 'Utrecht Two bio'
-               },
+               name: 'Utrecht Two',
                url: 'UtrechtNumberTwo',
                last_accepted: '1'
              }
@@ -406,12 +384,9 @@ class PagesTest < ActionDispatch::IntegrationTest
     post collection_iri(argu, :pages),
          params: {
            page: {
-             profile_attributes: {
-               name: 'Utrecht Two',
-               about: 'Utrecht Two bio',
-               default_profile_photo_attributes: {
-                 content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
-               }
+             name: 'Utrecht Two',
+             default_profile_photo_attributes: {
+               content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
              },
              url: 'UtrechtNumberTwo',
              last_accepted: '1'
@@ -420,8 +395,8 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     page = Page.last
     assert_response :success
-    assert_equal 'profile_photo.png', page.profile.default_profile_photo.content_identifier
-    assert_equal 1, page.profile.media_objects.count
+    assert_equal 'profile_photo.png', page.default_profile_photo.content_identifier
+    assert_equal 1, page.media_objects.count
   end
 
   test 'staff should not post create a page with existing url' do
@@ -431,9 +406,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       post collection_iri(argu, :pages),
            params: {
              page: {
-               profile_attributes: {
-                 name: 'Name'
-               },
+               name: 'Name',
                url: staff.url,
                last_accepted: '1'
              }

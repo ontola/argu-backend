@@ -14,7 +14,7 @@ class VotePolicyTest < Argu::TestHelpers::PolicyTest
            creator: user_hidden_votes.profile,
            publisher: user_hidden_votes)
   end
-  let(:user_hidden_votes) { create(:user, profile: build(:profile, are_votes_public: false)) }
+  let(:user_hidden_votes) { create(:user, show_feed: false) }
 
   generate_edgeable_tests
 

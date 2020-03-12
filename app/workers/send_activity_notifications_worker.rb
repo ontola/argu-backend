@@ -56,7 +56,7 @@ class SendActivityNotificationsWorker
       type: trackable.owner_type,
       creator: {
         id: activity.owner.iri,
-        thumbnail: activity.owner.default_profile_photo.thumbnail,
+        thumbnail: activity.owner.profileable.default_profile_photo.thumbnail,
         display_name: activity.owner.display_name
       }
     }
@@ -86,7 +86,9 @@ class SendActivityNotificationsWorker
     @notifications
       .includes(
         activity: [
-          :recipient, :trackable, owner: %i[default_profile_photo profileable]
+          :recipient,
+          :trackable,
+          owner: [profileable: :default_profile_photo]
         ]
       )
       .each { |notification| add_prepared_notification(result, notification) }

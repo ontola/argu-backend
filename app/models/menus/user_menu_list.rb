@@ -16,7 +16,7 @@ class UserMenuList < ApplicationMenuList
 
   def profile_menu_items # rubocop:disable Metrics/AbcSize
     items = []
-    items << menu_item(:activity, href: feeds_iri(resource)) if resource == user || resource.are_votes_public
+    items << menu_item(:activity, href: feeds_iri(resource)) if resource == user || resource.show_feed
     if resource == user
       items.concat [
         menu_item(:notifications, href: Notification.root_collection.iri),

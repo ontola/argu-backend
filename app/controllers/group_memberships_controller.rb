@@ -11,7 +11,7 @@ class GroupMembershipsController < ServiceController
     # Matched groups with members
     @results = policy_scope(
       GroupMembership
-        .includes(:group, user: [:shortname, :email_addresses, profile: :default_profile_photo])
+        .includes(:group, user: %i[shortname email_addresses default_profile_photo])
         .where('groups.root_id = ? AND groups.id > 0', tree_root.uuid)
         .where('shortnames.owner_type = ?', 'User')
         .where('lower(groups.name) SIMILAR TO lower(?) OR ' \

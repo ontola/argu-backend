@@ -24,17 +24,17 @@ RSpec.describe 'Pages', type: :request do
   let(:create_params) do
     {
       page: {
-        profile_attributes: {name: 'name'},
+        name: 'name',
         url: 'new_page',
         last_accepted: '1'
       }
     }
   end
-  let(:invalid_create_params) { {page: {profile_attributes: {name: 'new_name'}}} }
-  let(:update_params) { {page: {profile_attributes: {id: subject.profile.id, name: 'new_name'}}} }
+  let(:invalid_create_params) { {page: {name: 'new_name'}} }
+  let(:update_params) { {page: {name: 'new_name'}} }
   let(:invalid_update_params) do
     nominatim_netherlands
-    {page: {profile_attributes: {name: 'a'}}}
+    {page: {name: 'a'}}
   end
   let(:destroy_params) { {page: {confirmation_string: 'remove'}} }
   let(:expect_get_show_unauthorized_serializer) { expect_success }

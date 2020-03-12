@@ -3,10 +3,9 @@
 class VotePolicy < EdgePolicy
   class Scope < EdgePolicy::Scope
     def resolve
-      voter_ids = user.managed_profile_ids
       super
-        .joins(:creator, parent: :parent)
-        .where('profiles.are_votes_public = true OR profiles.id IN (?)', voter_ids)
+        .joins(:publisher, parent: :parent)
+        .where('users.show_feed = true OR users.id = ?', user.guest? ? nil : user.id)
         .where(edges: {confirmed: true}, parents_edges_2: {is_published: true, trashed_at: nil})
     end
   end
@@ -19,7 +18,7 @@ class VotePolicy < EdgePolicy
   def show? # rubocop:disable Metrics/CyclomaticComplexity
     return if has_unpublished_ancestors? && !show_unpublished?
 
-    (record.creator.are_votes_public && has_grant?(:show)) || is_creator? || staff? || service?
+    (record.publisher.show_feed? && has_grant?(:show)) || is_creator? || staff? || service?
   end
 
   private

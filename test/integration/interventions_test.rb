@@ -15,7 +15,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
   let(:argu) do
     ActsAsTenant.current_tenant = nil
     Page.find_via_shortname('argu') ||
-      create(:page, locale: 'en-GB', url: 'argu', profile_attributes: {name: 'Argu'})
+      create(:page, locale: 'en-GB', url: 'argu', name: 'Argu')
   end
   let(:freetown) do
     create_forum(

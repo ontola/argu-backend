@@ -39,7 +39,7 @@ page = FactorySeeder.create(
   :page,
   id: 0,
   last_accepted: Time.current,
-  profile_attributes: {name: 'Argu page'},
+  name: 'Argu page',
   url: 'argu',
   iri_prefix: 'argu.localtest/argu',
   publisher: staff,
@@ -76,7 +76,7 @@ other_page = FactorySeeder.create(
   publisher: staff,
   creator: staff.profile,
   is_published: true,
-  profile_attributes: {name: 'Other page'},
+  name: 'Other page',
   accent_background_color: '#800000',
   navbar_background: '#800000',
   url: 'other_page',
@@ -134,8 +134,7 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   vote_event = motion.default_vote_event
   FactorySeeder.create(:vote, parent: vote_event)
 
-  profile_hidden_votes =
-    FactorySeeder.create(:user, profile: FactorySeeder.build(:profile, are_votes_public: false)).profile
+  profile_hidden_votes = FactorySeeder.create(:user, show_feed: false).profile
   FactorySeeder
     .create(:vote, parent: vote_event, creator: profile_hidden_votes, publisher: profile_hidden_votes.profileable)
 

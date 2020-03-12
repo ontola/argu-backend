@@ -3,7 +3,6 @@
 class PageForm < ApplicationForm
   fields [
     :name,
-    :about,
     :url,
     {
       primary_container_node_id: {
@@ -23,10 +22,11 @@ class PageForm < ApplicationForm
   property_group :theme,
                  label: -> { I18n.t('forms.theme.label') },
                  description: -> { I18n.t('forms.theme.description') },
-                 properties: %i[
-                   navbar_color
-                   navbar_background
-                   accent_color
-                   accent_background_color
+                 properties: [
+                   {default_profile_photo: {min_count: 0}},
+                   :navbar_color,
+                   :navbar_background,
+                   :accent_color,
+                   :accent_background_color
                  ]
 end

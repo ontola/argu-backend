@@ -8,23 +8,19 @@ class UserPolicy < RestrictivePolicy
   end
   include ChildOperations
 
-  def permitted_attribute_names(password = false) # rubocop:disable Metrics/AbcSize
+  def permitted_attribute_names(password = false)
     attrs = super()
     attrs.concat %i[password password_confirmation primary_email current_password]
-    attrs.append(profile_attributes: %i[name profile_photo])
     attrs.append(home_placement_attributes: home_placement_attributes)
     attrs.append(email_addresses_attributes: %i[email _destroy id])
     attrs.append(:url, shortname_attributes: %i[shortname]) if record.url.nil?
-    attrs.concat %i[first_name middle_name last_name hide_last_name]
+    attrs.concat %i[first_name middle_name last_name hide_last_name about show_feed is_public]
     attrs.concat(
       %i[reactions_email news_email decisions_email memberships_email
          created_email has_analytics has_analytics time_zone language
          birthday]
     )
     attrs.concat %i[current_password password password_confirmation] if password
-    attrs.append(profile_attributes: ProfilePolicy
-                                       .new(context, record.profile)
-                                       .permitted_attributes)
     attrs
   end
 
@@ -38,7 +34,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def show?
-    (record.profile.is_public? || !user.guest?) || super
+    (record.is_public? || !user.guest?) || super
   end
 
   def create?

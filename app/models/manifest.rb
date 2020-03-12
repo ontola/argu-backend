@@ -10,7 +10,6 @@ class Manifest < VirtualResource
   include Cacheable
 
   attr_accessor :page
-  delegate :description, to: :page
   alias_attribute :root, :page
 
   def background_color

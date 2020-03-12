@@ -33,22 +33,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 1, notification_count(subject)
   end
 
-  test 'should greet with best available name' do
-    user = create(:user,
-                  first_name: 'first_name')
-    assert_equal 'first_name', user.greeting
-
-    user = create(:user,
-                  first_name: nil)
-    assert_includes user.greeting, 'fg_shortname'
-
-    user = create(:user,
-                  first_name: nil,
-                  email: 'testmail@example.com',
-                  shortname: nil)
-    assert_equal user.greeting, 'testmail'
-  end
-
   test 'should adjust birthday' do
     subject.update('birthday(2i)' => '1', 'birthday(3i)' => '1', 'birthday(1i)' => '1970')
     assert_equal Date.new(1970, 7, 1), subject.birthday

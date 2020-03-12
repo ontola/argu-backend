@@ -11,8 +11,12 @@ class ProfilePolicy < RestrictivePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[id about are_votes_public is_public]
-    attributes.concat %i[name] if record.profileable.is_a?(Page)
+    attributes.concat %i[id]
+    if record.profileable.is_a?(Page)
+      attributes.concat %i[name]
+    else
+      attributes.concat %i[first_name last_name hide_last_name]
+    end
     attributes
   end
 
@@ -26,7 +30,7 @@ class ProfilePolicy < RestrictivePolicy
   end
 
   def feed?
-    record.are_votes_public? || Pundit.policy(context, record.profileable).update?
+    record.profileable.show_feed? || Pundit.policy(context, record.profileable).update?
   end
 
   def setup?

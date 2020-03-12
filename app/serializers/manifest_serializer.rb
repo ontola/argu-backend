@@ -3,7 +3,6 @@
 class ManifestSerializer < ActiveModel::Serializer
   attributes(
     :background_color,
-    :description,
     :dir,
     :display,
     :icons,

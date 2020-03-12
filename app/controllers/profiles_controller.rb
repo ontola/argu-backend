@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class ProfilesController < AuthorizedController
-  include SettingsHelper
-  include UriTemplateHelper
-  active_response :edit, :show
+  active_response :show
 
   # GET /profiles/setup
   def setup

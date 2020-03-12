@@ -10,6 +10,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance Settingable
   enhance LinkedRails::Enhancements::Menuable
 
+  has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable, primary_key: :uuid
+  enhance ProfilePhotoable
+  enhance CoverPhotoable
+
   include Broadcastable
   include RedirectHelper
   include Shortnameable
@@ -18,7 +22,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
-  has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable, primary_key: :uuid
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
   has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
   has_many :favorites, dependent: :destroy
@@ -39,7 +42,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
            inverse_of: :publisher,
            foreign_key: 'publisher_id',
            dependent: :restrict_with_exception
-  accepts_nested_attributes_for :profile, update_only: true
   accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
 
   # Include default devise modules. Others available are:
@@ -54,6 +56,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   placeable :home
 
+  auto_strip_attributes :about, nullify: false
+
   COMMUNITY_ID = 0
   ANONYMOUS_ID = -1
   SERVICE_ID = -2
@@ -65,11 +69,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_save :adjust_birthday, if: :birthday_changed?
   before_create :skip_confirmation_notification!
   before_create :build_public_group_membership
+  validates :about, length: {maximum: 3000}
 
   attr_accessor :current_password
-
-  delegate :about, :are_votes_public, :default_cover_photo, :default_profile_photo, :description, :is_public,
-           to: :profile
 
   enum reactions_email: {
     never_reactions_email: 0,
@@ -115,14 +117,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def accepted_terms?
     last_accepted.present?
-  end
-
-  def active_at(redis = nil)
-    Argu::Redis.get("user:#{id}:active.at", redis)
-  end
-
-  def active_since?(datetime, redis = nil)
-    active_at(redis).to_i >= datetime.to_i
   end
 
   def active_for_authentication?
@@ -181,6 +175,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       url ||
       [I18n.t('groups.public.name_singular'), id].join(' ')
   end
+  alias name display_name
 
   def enforce_hidden_last_name!
     update!(hide_last_name: true)
@@ -246,14 +241,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
             .joins(:profile)
             .order('profiles.name')
             .where(uuid: pids)
-            .includes(:shortname, :tenant, profile: :default_profile_photo)
+            .includes(:shortname, :tenant, :default_profile_photo)
             .to_a
         )
       end
-  end
-
-  def greeting
-    first_name.presence || url.presence || email.split('@').first
   end
 
   def guest?
@@ -272,16 +263,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     {id: url || id}
   end
 
-  def is_omni_only
-    authentications.any? && password.blank?
-  end
-
   def is_staff?
     @is_staff ||= profile.is_group_member?(Group::STAFF_ID)
-  end
-
-  def last_email_sent_at(redis = nil)
-    Argu::Redis.get("user:#{id}:email.sent.at", redis)
   end
 
   # @return [ActiveRecord::Relation] The pages managed by the user
@@ -396,10 +379,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def sync_notification_count
     Argu::Redis.set("user:#{id}:notification.count", notifications.count)
-  end
-
-  def user_to_recipient_option
-    Hash[profile.email, profile.attributes.slice('id', 'name')]
   end
 
   def validate_r

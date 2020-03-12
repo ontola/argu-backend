@@ -18,7 +18,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   let!(:lr_hidden_vote) do
     create(:vote, parent: lr_vote_event, creator: user_hidden_votes.profile, publisher: user_hidden_votes)
   end
-  let(:user_hidden_votes) { create(:user, profile: build(:profile, are_votes_public: false)) }
+  let(:user_hidden_votes) { create(:user, show_feed: false) }
 
   ####################################
   # VoteEvents of Motion
@@ -35,8 +35,8 @@ class VoteEventsControllerTest < ActionController::TestCase
     %w[yes other no].each do |side|
       expect_included(collection_iri(vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
     end
-    expect_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
-    expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
+    expect_included(vote_event.votes.joins(:publisher).where(users: {show_feed: true}).map(&:iri))
+    expect_not_included(vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri))
   end
 
   test 'should get show vote_event of motion with default id' do
@@ -59,7 +59,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_view_members(expect_default_view, 2)
 
     expect_not_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri)
+      vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri)
     )
   end
 
@@ -79,8 +79,8 @@ class VoteEventsControllerTest < ActionController::TestCase
     %w[yes other no].each do |side|
       expect_included(collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
     end
-    expect_included(lr_vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
-    expect_not_included(lr_vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
+    expect_included(lr_vote_event.votes.joins(:publisher).where(users: {show_feed: true}).map(&:iri))
+    expect_not_included(lr_vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri))
   end
 
   test 'should get show vote_event of linked_record with default id' do

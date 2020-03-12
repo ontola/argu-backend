@@ -42,7 +42,7 @@ class UsersController < AuthorizedController
 
   def show_anonymous_user?(user)
     (current_resource_owner.nil? || current_resource_owner.guest?) &&
-      user.present? && !user.profile.is_public?
+      user.present? && !user.is_public?
   end
 
   def email_changed? # rubocop:disable Metrics/AbcSize

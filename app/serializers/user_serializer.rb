@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class UserSerializer < RecordSerializer
-  include ProfilePhotoable::Serializer
-  include CoverPhotoable::Serializer
   include UriTemplateHelper
   extend LanguageHelper
 
@@ -14,13 +12,14 @@ class UserSerializer < RecordSerializer
     object == scope&.user
   end
 
-  has_one :profile, predicate: NS::ARGU[:profile]
+  attribute :display_name, predicate: NS::SCHEMA[:name]
+  attribute :name, predicate: NS::FOAF[:name]
   attribute :about, predicate: NS::SCHEMA[:description]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string], if: :service_or_self?
   attribute :first_name, predicate: NS::SCHEMA[:givenName], datatype: NS::XSD[:string], if: :service_or_self?
   attribute :last_name, predicate: NS::SCHEMA[:familyName], datatype: NS::XSD[:string], if: :service_or_self?
   attribute :hide_last_name, predicate: NS::ARGU[:hideLastName], if: :service_or_self?
-  attribute :are_votes_public, predicate: NS::ARGU[:votesPublic]
+  attribute :show_feed, predicate: NS::ARGU[:votesPublic]
   attribute :is_public, predicate: NS::ARGU[:public]
   attribute :group_ids, predicate: NS::ORG[:organization]
 

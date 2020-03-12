@@ -15,7 +15,7 @@ RSpec.describe Feed, type: :model do
       subject.activities
     ).resolve
   end
-  let(:hidden_votes) { Vote.joins(:creator).where(profiles: {are_votes_public: false}) }
+  let(:hidden_votes) { Vote.joins(:publisher).where(users: {show_feed: false}) }
   let(:ungranted_activities) do
     Activity
       .all

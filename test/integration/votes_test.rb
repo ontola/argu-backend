@@ -74,7 +74,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            expires_at: Time.current)
   end
   let(:creator) { create(:user) }
-  let(:profile_hidden_votes) { create(:user, profile: build(:profile, are_votes_public: false)).profile }
+  let(:profile_hidden_votes) { create(:user, show_feed: false).profile }
   let(:context) { UserContext.new(doorkeeper_scopes: 'test') }
 
   ####################################

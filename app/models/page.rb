@@ -17,10 +17,11 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance Statable
   enhance Stylable
   enhance CreativeWorkable
+  enhance ProfilePhotoable
+  enhance CoverPhotoable
 
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
-  accepts_nested_attributes_for :profile, update_only: true
   has_one :tenant, dependent: :destroy, foreign_key: :root_id, primary_key: :uuid, inverse_of: :page
   has_many :descendant_shortnames,
            -> { where(primary: false) },
@@ -36,11 +37,11 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       .distinct
   }
 
-  delegate :about, :description, :default_profile_photo, to: :profile
   delegate :database_schema, to: :tenant, allow_nil: true
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :last_accepted, :iri_prefix, presence: true
+  validates :name, presence: true, length: {minimum: 3, maximum: 75}
 
   after_save :create_or_update_tenant
   after_create :create_default_groups
@@ -64,6 +65,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   parentable :user
   placeable :custom
+  property :display_name, :string, NS::SCHEMA[:name]
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
   property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
   property :primary_container_node_id, :linked_edge_id, NS::FOAF[:homepage]
@@ -80,28 +82,13 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
              foreign_key_property: :primary_container_node_id,
              class_name: 'Edge',
              dependent: false
-  validates :about, length: {maximum: 3000}
 
   def build_profile(*options)
     super(*options) if profile.nil?
   end
 
-  def about=(value)
-    build_profile
-    profile.about = value
-  end
-
-  def display_name=(value)
-    build_profile
-    profile.name = value
-  end
-
   def display_name
-    if profile.present?
-      profile.name || url
-    else
-      url
-    end
+    super || url
   end
 
   def email
@@ -109,7 +96,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def home_menu_image
-    return default_profile_photo.iri if super.nil?
+    return default_profile_photo&.iri if super.nil?
 
     RDF::URI(super) if super.present?
   end

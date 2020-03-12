@@ -8,7 +8,7 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
   let(:motion) { create(:motion, parent: freetown) }
   let(:media_object) { create(:media_object, about: motion) }
   let(:image_object) { create(:image_object, about: motion) }
-  let(:profile_photo) { create(:profile_photo, about: user.profile) }
+  let(:profile_photo) { create(:profile_photo, about: user) }
 
   ####################################
   # As Guest
@@ -34,7 +34,7 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
   test 'Guest should get show user profile photo' do
     sign_in :guest_user
 
-    get resource_iri(user.profile.default_profile_photo, root: argu), headers: argu_headers(accept: :json_api)
+    get resource_iri(user.default_profile_photo, root: argu), headers: argu_headers(accept: :json_api)
 
     assert_response 200
     assert_equal NS::SCHEMA[:ImageObject].to_s, primary_resource['attributes']['type']

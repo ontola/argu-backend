@@ -24,12 +24,12 @@ class ActivityPolicy < EdgeTreePolicy
     # If trackable is a vote, its profile should have public votes
     def filter_private_votes(scope)
       activities = Activity.arel_table
-      profiles = Profile.arel_table
+      users = User.arel_table
       scope
         .joins('INNER JOIN "profiles" ON "profiles"."id" = "activities"."owner_id"')
-        .where(activities[:key].not_eq('vote.create').or(
-                 profiles[:are_votes_public].eq(true)
-               ))
+        .joins('LEFT JOIN "users" ON "users"."uuid" = "profiles"."profileable_id" '\
+               'AND "profiles"."profileable_type" = \'User\'')
+        .where(activities[:key].not_eq('vote.create').or(users[:show_feed].eq(true)))
     end
 
     # Trackable should be published OR be created by one of the managed profiles OR be placed in a managed forum

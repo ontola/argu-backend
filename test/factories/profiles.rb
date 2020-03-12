@@ -2,8 +2,6 @@
 
 FactoryBot.define do
   factory :profile do
-    are_votes_public { true }
-    is_public { true }
     before(:create) do |profile|
       profile.profileable ||= build(:user, profile: profile)
     end

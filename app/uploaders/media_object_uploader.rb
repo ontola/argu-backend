@@ -78,7 +78,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     return unless profile_photo?
 
     email =
-      if model.about.try(:profileable_type) == 'Page'
+      if model.about.is_a?(Page)
         'anonymous'
       else
         "#{model.about_type}_#{model.about_id}@gravatar.argu.co"

@@ -69,7 +69,7 @@ class DirectMessage
       actor: {
         display_name: actor.display_name,
         iri: actor.profileable.iri,
-        thumbnail: actor.default_profile_photo.thumbnail
+        thumbnail: actor.profileable.default_profile_photo.thumbnail
       },
       body: body,
       email: email_address.email,
