@@ -9,9 +9,9 @@ class PagePolicy < EdgePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[url iri_prefix]
+    attributes.concat %i[display_name name url iri_prefix]
     attributes.concat %i[primary_container_node_id] if record.container_nodes.any?
-    attributes.concat %i[display_name name about last_accepted] unless record.persisted? && record.last_accepted?
+    attributes.concat %i[last_accepted] unless record.persisted? && record.last_accepted?
     attributes.append(shortname_attributes: %i[shortname]) if new_record?
     attributes.flatten
   end
@@ -38,7 +38,7 @@ class PagePolicy < EdgePolicy
   end
 
   def default_tab
-    'profile'
+    'general'
   end
 
   def index_children?(raw_klass)

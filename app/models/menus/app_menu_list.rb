@@ -36,10 +36,6 @@ class AppMenuList < ApplicationMenuList
     menu_item(:powered_by, label: I18n.t('about.powered_by'), href: RDF::URI('https://ontola.io/nl/webdevelopment'))
   end
 
-  def edit_profile_link
-    "#{settings_user_users_url}#profile"
-  end
-
   def language_menu_item
     menu_item(
       :language,
@@ -73,10 +69,10 @@ class AppMenuList < ApplicationMenuList
     if resource.url.present?
       [
         menu_item(
-          :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: RDF::DynamicURI(user_url(user))
+          :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: resource.menu(:profile).iri
         ),
         menu_item(
-          :profile, label: I18n.t('profiles.edit.title'), href: RDF::DynamicURI(edit_profile_link)
+          :profile, label: I18n.t('profiles.edit.title'), href: resource.menu(:profile).iri(fragment: :profile)
         )
       ]
     else
@@ -107,7 +103,7 @@ class AppMenuList < ApplicationMenuList
     menu_item(
       :settings,
       label: I18n.t('users.settings.title'),
-      href: RDF::DynamicURI(settings_user_users_url)
+      href: resource.menu(:profile).iri(fragment: :settings)
     )
   end
 end

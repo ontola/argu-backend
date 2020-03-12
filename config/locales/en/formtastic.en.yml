@@ -17,7 +17,7 @@ en:
       accent_background_color: "Background color of buttons"
       accent_color: "Text color of buttons"
       alias: 'Alias'
-      are_votes_public: "Show my activity and my votes on my profile"
+      show_feed: "Show my activity and my votes on my profile"
       attachments: "Attachments"
       attachment_collection: "Attachments"
       audience: "Audience"
@@ -126,15 +126,11 @@ en:
         destination: "Destination"
       user:
         shortname: "Username"
-        first_name: "First name"
-        middle_name: "Middele name(s)"
-        last_name: "Last name"
-        has_analytics: "Browser services"
+        has_analytics: "Enable browser services"
         reactions_email: "For new items"
         news_email: "For important items"
         decisions_email: "For official decisions"
         url: "Username"
-        hide_last_name: 'Hide my last name'
       setup:
         first_name: "First name"
         last_name: "Last name"
@@ -160,6 +156,7 @@ en:
         bio: "Summarize in one sentence what function the blog has. This text will appear under the name of the forum. There's a maximum of 80 characters."
       user:
         shortname: "No spaces. Only letters, numbers and _. Start with a letter."
+        has_analytics: "We use Bugsnag to get notified of and help fix errors in your browser. We use Matomo to analyze how the website is used, so we can improve the user experience."
       shortname:
         shortname: "No spaces. Only letters, numbers and _. Start with a letter."
         destination: "Enter the part of the url following %{iri_prefix}/"

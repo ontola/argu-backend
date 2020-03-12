@@ -29,7 +29,6 @@ class UserSerializer < RecordSerializer
   attribute :email, predicate: NS::SCHEMA[:email], if: :service_or_self?
 
   attribute :has_analytics, predicate: NS::ARGU[:hasAnalytics], if: :self?
-  attribute :birth_year, predicate: NS::DBO[:birthYear], datatype: NS::XSD[:gYear], if: :self?
   attribute :news_email, predicate: NS::ARGU[:newsEmails], if: :self?
   attribute :reactions_email, predicate: NS::ARGU[:reactionsEmails], if: :self?
 
@@ -77,10 +76,6 @@ class UserSerializer < RecordSerializer
            [value.name.to_sym, {iri: NS::DBPEDIA[value.tzinfo.name.gsub(%r{Etc\/([A-Z]+)}, 'UTC')], label: value.to_s}]
          end
        ]
-
-  def birth_year
-    object.birthday&.year
-  end
 
   def group_ids
     return unless ActsAsTenant.current_tenant

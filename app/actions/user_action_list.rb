@@ -4,42 +4,19 @@ class UserActionList < ApplicationActionList
   extend LanguageHelper
 
   has_action(
-    :privacy,
-    type: NS::SCHEMA[:UpdateAction],
-    policy: :update?,
-    image: 'fa-update',
-    url: -> { resource.iri },
-    http_method: :put,
-    form: ::Users::PrivacyForm,
-    root_relative_iri: lambda do
-      expand_uri_template(:edit_iri, form: :privacy, parent_iri: split_iri_segments(resource.iri_path))
-    end
+    :update,
+    update_options.merge(
+      label: -> { I18n.t('actions.users.update.label') }
+    )
   )
 
   has_action(
-    :notifications,
-    type: NS::SCHEMA[:UpdateAction],
-    policy: :update?,
-    image: 'fa-update',
-    url: -> { resource.iri },
-    http_method: :put,
-    form: ::Users::NotificationsForm,
-    root_relative_iri: lambda do
-      expand_uri_template(:edit_iri, form: :notifications, parent_iri: split_iri_segments(resource.iri_path))
-    end
-  )
-
-  has_action(
-    :authentication,
-    type: NS::SCHEMA[:UpdateAction],
-    policy: :update?,
-    image: 'fa-update',
-    url: -> { resource.iri },
-    http_method: :put,
-    form: ::Users::AuthenticationForm,
-    root_relative_iri: lambda do
-      expand_uri_template(:edit_iri, form: :authentication, parent_iri: split_iri_segments(resource.iri_path))
-    end
+    :profile,
+    update_options.merge(
+      label: -> { I18n.t('profiles.edit.title') },
+      form: ::Users::ProfileForm,
+      root_relative_iri: nil
+    )
   )
 
   has_action(

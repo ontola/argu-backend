@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 class UserMenuList < ApplicationMenuList
-  include SettingsHelper
   include Menus::FollowMenuItems
   include Menus::ActionMenuItems
 
-  has_menu :settings,
-           iri_base: -> { '/u' },
-           menus: -> { setting_menu_items }
   has_menu :profile,
            iri_base: -> { resource.iri_path },
            menus: -> { profile_menu_items }
@@ -20,19 +16,11 @@ class UserMenuList < ApplicationMenuList
     if resource == user
       items.concat [
         menu_item(:notifications, href: Notification.root_collection.iri),
-        menu_item(:drafts, label: I18n.t('users.drafts.title'), href: RDF::DynamicURI(drafts_user_url(resource)))
+        menu_item(:drafts, label: I18n.t('users.drafts.title'), href: RDF::DynamicURI(drafts_user_url(resource))),
+        menu_item(:profile, label: I18n.t('menus.default.profile'), href: resource.action(:profile).iri),
+        menu_item(:settings, label: I18n.t('menus.default.settings'), href: edit_iri(resource))
       ]
     end
     items
-  end
-
-  def setting_menu_items # rubocop:disable Metrics/AbcSize
-    [
-      setting_item(:general, href: edit_iri(resource)),
-      setting_item(:profile, href: edit_iri(resource.profile)),
-      setting_item(:authentication, href: edit_iri(resource, form: :authentication)),
-      setting_item(:notifications, href: edit_iri(resource, form: :notifications)),
-      setting_item(:privacy, href: edit_iri(resource, form: :privacy))
-    ]
   end
 end

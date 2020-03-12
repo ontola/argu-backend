@@ -95,6 +95,10 @@ en:
       destroy_vote:
         submit: "Upvote"
     users:
+      update:
+        label: "Settings"
+      profile:
+        submit: "Save"
       notifications:
         label: "Notifications"
         description: "When would you like to receive an email for items you follow?</br>Moderators of an organisation can mark items as 'important'. For example a decison on a discussion you are following."
@@ -107,6 +111,7 @@ en:
         label: "Authentication"
         submit: "Save"
       privacy:
+        label: "Privacy"
         submit: "Save"
       destroy:
         label: "Remove account"

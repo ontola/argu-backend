@@ -181,7 +181,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_not_equal user.primary_email_record.email, 'secondary@argu.co'
 
     assert_response :success
-    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
+    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
     assert_email_sent
   end
 
@@ -211,7 +211,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal user.primary_email_record.email, second_email.email
 
     assert_response :success
-    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
+    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
   end
 
   test 'user should delete secondary email' do
@@ -233,7 +233,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
+    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
   end
 
   test 'user should not delete primary email' do
@@ -289,7 +289,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal unconfirmed_email.email, 'changed@argu.co'
 
     assert_response :success
-    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
+    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
     assert_email_sent
   end
 
@@ -393,29 +393,64 @@ class UsersTest < ActionDispatch::IntegrationTest
   ####################################
   # Settings and Update
   ####################################
-  test 'user should show settings and all tabs' do
-    sign_in user
-
-    get settings_iri('/u', root: argu)
-    assert_user_settings_shown
-
-    %i[general profile authentication notifications privacy].each do |tab|
-      get settings_iri('/u', root: argu, tab: tab)
-      assert_user_settings_shown tab
-    end
-  end
-
   test 'user should put settings' do
     sign_in user
-    profile_id = user.profile.id
-    put user, params: {
+    put resource_iri(user, root: argu), params: {
       user: {
-        profile_attributes: {
-          name: 'new name'
-        }
+        show_feed: false,
+        is_public: false,
+        has_analytics: true,
+        first_name: 'new name'
       }
     }
-    assert_equal profile_id, user.reload.profile.id
+    expect_triple(user.iri, NS::ARGU[:hasAnalytics], true, NS::LL[:replace])
+    expect_triple(user.iri, NS::ARGU[:votesPublic], false, NS::LL[:replace])
+    expect_triple(user.iri, NS::ARGU[:public], false, NS::LL[:replace])
+    expect_triple(user.iri, NS::SCHEMA[:givenName], 'new name', NS::LL[:replace])
+    expect_triple(user.iri, NS::SCHEMA[:name], "new name #{user.last_name}", NS::LL[:replace])
+    assert_response :success
+    assert_equal 'new name', user.reload.first_name
+  end
+
+  test 'user should not put update password without current password' do
+    sign_in user
+    password = user.encrypted_password
+    put resource_iri(user, root: argu), params: {
+      user: {
+        password: 'new_password'
+      }
+    }
+    assert_response :unprocessable_entity
+    assert_equal password, user.reload.encrypted_password
+    expect_ontola_action(snackbar: 'Current password can\'t be blank')
+  end
+
+  test 'user should not put update password with wrong current password' do
+    sign_in user
+    password = user.encrypted_password
+    put resource_iri(user, root: argu), params: {
+      user: {
+        password: 'new_password',
+        current_password: 'wrong'
+      }
+    }
+    assert_response :unprocessable_entity
+    assert_equal password, user.reload.encrypted_password
+    expect_ontola_action(snackbar: 'Current password is invalid')
+  end
+
+  test 'user should not put update password with current password' do
+    sign_in user
+    password = user.encrypted_password
+    put resource_iri(user, root: argu), params: {
+      user: {
+        password: 'new_password',
+        current_password: 'password'
+      }
+    }
+    assert_response :success
+    assert_not_equal password, user.reload.encrypted_password
+    expect_ontola_action(snackbar: 'Changes saved successfully')
   end
 
   test 'user should update and remove profile_photo and cover_photo' do
@@ -441,7 +476,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal('profile_photo.png', user.default_profile_photo.content_identifier)
     assert_equal('cover_photo.jpg', user.default_cover_photo.content_identifier)
 
-    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
+    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
 
     put resource_iri(user, root: argu),
         params: {
@@ -477,7 +512,7 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
     assert_response :success
-    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
+    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
   end
 
   test 'user should create place and placement on update with only country code' do
@@ -498,7 +533,7 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
     assert_response :success
-    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
+    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
   end
 
   test 'user should not create place and placement on update with only postal code' do
@@ -558,7 +593,7 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
     assert_response :success
-    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
+    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
   end
 
   test 'user should destroy placement on update with blank postal code and country code' do
@@ -582,15 +617,6 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
     assert_response :success
-    assert_equal(response.headers['Location'], settings_iri(:u, tab: :general, root: argu).to_s)
-  end
-
-  private
-
-  # Asserts that the user settings are shown on a specific tab
-  # @param [Symbol] tab The tab to be shown (defaults to :general)
-  def assert_user_settings_shown(tab = :general)
-    assert_response 200
-    expect_resource_type(NS::ONTOLA[:MenuItem], iri: settings_iri('/u', root: argu, tab: tab))
+    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
   end
 end

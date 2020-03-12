@@ -16,7 +16,7 @@ class EmailAddressesController < ParentableController
   end
 
   def redirect_location
-    iri_from_template(:settings_iri, parent_iri: 'u', fragment: :authentication).to_s
+    current_user.menu(:profile).iri(fragment: :settings)
   end
 
   def resource_new_params

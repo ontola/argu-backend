@@ -40,7 +40,7 @@ module Users
 
     def after_resending_confirmation_instructions_path_for(_resource)
       if correct_mail && !current_user.guest?
-        settings_path(tab: :authentication)
+        current_user.menu(:profile).iri(fragment: :settings)
       else
         iri_from_template(:user_sign_in).path
       end

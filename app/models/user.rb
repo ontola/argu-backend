@@ -7,7 +7,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance Placeable
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Updatable
-  enhance Settingable
   enhance LinkedRails::Enhancements::Menuable
 
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable, primary_key: :uuid
@@ -153,7 +152,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     Notification.confirmation_reminder.create(
       user: self,
-      url: settings_iri('/u', tab: :authentication),
+      url: menu(:profile).iri(fragment: :settings),
       permanent: true,
       root_id: root_id,
       send_mail_after: 24.hours.from_now

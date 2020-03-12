@@ -62,7 +62,6 @@ class PageMenuList < ApplicationMenuList
   def setting_menu_items # rubocop:disable Metrics/AbcSize
     [
       setting_item(:general, label: I18n.t('pages.settings.menu.general'), href: edit_iri(resource)),
-      setting_item(:profile, label: I18n.t('pages.settings.menu.profile'), href: edit_iri(resource.profile)),
       setting_item(
         :container_nodes,
         label: I18n.t('pages.settings.menu.container_nodes'),

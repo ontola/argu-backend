@@ -101,9 +101,6 @@ Rails.application.routes.draw do
     get 'language', to: 'users/languages#edit', on: :collection, as: :edit_language
     put 'language/:locale', to: 'users/languages#update', on: :collection, as: :language
     put 'language', to: 'users/languages#update', on: :collection
-    get 'settings', to: 'users#settings', as: 'settings_user', on: :collection
-    put 'settings', to: 'users#update', on: :collection
-    get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings', on: :collection
     get 'profile', to: 'menus#show', id: 'profile'
     get 'profile/menus', to: 'sub_menus#index', menu_id: 'profile'
 

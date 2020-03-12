@@ -95,6 +95,10 @@ nl:
       destroy_vote:
         submit: "Upvote"
     users:
+      update:
+        label: "Instellingen"
+      profile:
+        submit: "Opslaan"
       notifications:
         label: "Meldingen"
         description: "Wanneer wil je een email ontvangen over items die je volgt? Beheerders van een organisatie kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt."
@@ -107,6 +111,7 @@ nl:
         label: "Authenticatie"
         submit: "Opslaan"
       privacy:
+        label: "Privacy"
         submit: "Opslaan"
       destroy:
         label: "Account verwijderen"

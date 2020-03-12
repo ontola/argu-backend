@@ -15,7 +15,7 @@ module Users
         self.resource = resource_class.send_reset_password_instructions(resource_params)
 
         if successfully_sent?(resource)
-          respond_with({}, location: settings_iri('/u'))
+          respond_with({}, location: current_user.menu(:profile).iri(fragment: :settings))
         else
           respond_with(resource)
         end

@@ -17,7 +17,7 @@ nl:
       accent_background_color: "Achtergrondkleur van knoppen"
       accent_color: "Tekstkleur van knoppen"
       alias: 'Alias'
-      are_votes_public: "Toon mijn activiteit en mijn stemmen in mijn profiel"
+      show_feed: "Toon mijn activiteit en mijn stemmen in mijn profiel"
       attachments: "Bijlagen"
       attachment_collection: "Bijlagen"
       audience: "Publiek"
@@ -126,15 +126,11 @@ nl:
         destination: "Bestemming"
       user:
         shortname: "Gebruikersnaam"
-        first_name: "Voornaam"
-        middle_name: "Middelste naam(en)"
-        last_name: "Achternaam"
-        has_analytics: "Browser diensten"
+        has_analytics: "Activeer browser diensten"
         reactions_email: "Bij nieuwe items"
         news_email: "Bij belangrijke items"
         decisions_email: "Bij officiele besluiten"
         url: "Gebruikersnaam"
-        hide_last_name: 'Verberg mijn achternaam'
       setup:
         first_name: "Voornaam"
         last_name: "Achternaam"
@@ -161,6 +157,7 @@ nl:
         bio_long: "Hier kan je verder toelichten over het blog. Je kunt hier markdown gebruiken."
       user:
         shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
+        has_analytics: "We gebruiken Bugsnag om fouten in je browser te detecteren en op te lossen. We gebruiken Matomo om geanonimiseerd op te slaan hoe de website wordt gebruikt, zodat we hem sneller kunnen verbeteren."
       shortname:
         shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
         destination: "Voer het gedeelte van de url in dat komt na %{iri_prefix}/"
