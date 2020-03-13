@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ArthurWD/apartment
-  revision: 9d2db15de7c412321245f48680aae880157c400d
-  ref: 9d2db15
+  revision: 4eb1681658d9eed8f78dd04a4ce34d38211eb2d4
+  ref: 4eb1681
   specs:
-    apartment (2.2.1)
+    ros-apartment (2.3.0)
       activerecord (>= 3.1.2, < 6.1)
       parallel (>= 0.7.1)
       public_suffix (>= 2)
@@ -638,7 +638,6 @@ DEPENDENCIES
   acts_as_list
   acts_as_tenant!
   addressable
-  apartment!
   auto_strip_attributes
   bcrypt-ruby
   better_errors
@@ -705,6 +704,7 @@ DEPENDENCIES
   redis
   rest-client
   rfc-822
+  ros-apartment!
   rspec-rails
   rspec-retry
   rubocop

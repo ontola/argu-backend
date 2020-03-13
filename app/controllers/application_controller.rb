@@ -78,6 +78,11 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   private
 
   def add_info_to_bugsnag(notification)
+    add_tenant_tab(notification)
+    add_user_info(notification)
+  end
+
+  def add_tenant_tab(notification)
     notification.add_tab(
       :tenant,
       schema: Apartment::Tenant.current,
@@ -85,7 +90,9 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
       tenant: ActsAsTenant.current_tenant&.iri_prefix,
       tenant_id: ActsAsTenant.current_tenant&.uuid
     )
+  end
 
+  def add_user_info(notification)
     notification.user = {
       confirmed: current_user.confirmed?,
       id: current_user.id,
