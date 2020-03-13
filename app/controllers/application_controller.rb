@@ -21,7 +21,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   before_action :verify_internal_ip, if: :service_token?
   force_ssl unless: :internal_request?, host: Rails.application.config.origin
-  before_bugsnag_notify :add_user_info_to_bugsnag
+  before_bugsnag_notify :add_info_to_bugsnag
 
   prepend_before_action :current_actor
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -77,7 +77,15 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   private
 
-  def add_user_info_to_bugsnag(notification)
+  def add_info_to_bugsnag(notification)
+    notification.add_tab(
+      :tenant,
+      schema: Apartment::Tenant.current,
+      server: ENV['SERVER_NAME'],
+      tenant: ActsAsTenant.current_tenant&.iri_prefix,
+      tenant_id: ActsAsTenant.current_tenant&.uuid
+    )
+
     notification.user = {
       confirmed: current_user.confirmed?,
       id: current_user.id,
