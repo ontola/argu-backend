@@ -107,7 +107,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
         user_id,
         scopes,
         10.years.to_i,
-        false
+        true
       )
       token.update(token: secret)
       token

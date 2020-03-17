@@ -150,7 +150,7 @@ module ActionDispatch
 
     def process_new_authorization(result = nil)
       new_token = client_token_from_response
-      @_argu_headers = (@_argu_headers || {}).merge(argu_headers(bearer: new_token)) if new_token
+      sign_in new_token if new_token
       result
     end
 
@@ -175,7 +175,8 @@ module ActionDispatch
     end
 
     def sign_in(resource = create(:user))
-      @_argu_headers = (@_argu_headers || {}).merge(argu_headers(bearer: doorkeeper_token_for(resource).token))
+      token = resource.is_a?(String) ? resource : doorkeeper_token_for(resource).token
+      @_argu_headers = (@_argu_headers || {}).merge(argu_headers(bearer: token))
     end
 
     private

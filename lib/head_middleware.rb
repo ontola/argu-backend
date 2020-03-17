@@ -64,6 +64,7 @@ class HeadMiddleware
   end
 
   def update_oauth_token(token)
-    headers['New-Authorization'] = token
+    headers['New-Refresh-Token'] = token.refresh_token
+    headers['New-Authorization'] = token.token
   end
 end

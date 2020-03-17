@@ -7,6 +7,12 @@ class LanguageTest < ActionDispatch::IntegrationTest
   let(:dutch_forum) { create_forum(public_grant: 'participator', locale: 'nl-NL') }
   let(:user) { create(:user) }
 
+  test 'guest without token should get edit language' do
+    get language_iri, headers: argu_headers
+
+    assert_enabled_form
+  end
+
   test 'guest should set freetown language' do
     get freetown, headers: argu_headers
 
@@ -30,12 +36,15 @@ class LanguageTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should put language' do
-    sign_in user
+    token = doorkeeper_token_for(user)
+    sign_in token.token
+    assert_nil token.reload.revoked_at
 
     assert_equal 'en', user.language
 
     put language_iri(:nl)
 
+    assert_not_nil token.reload.revoked_at
     assert_equal 'nl', user.reload.language
   end
 
@@ -55,7 +64,7 @@ class LanguageTest < ActionDispatch::IntegrationTest
     assert_equal language.to_s, decoded_token_from_response['user']['language']
   end
 
-  def language_iri(language)
+  def language_iri(language = nil)
     ActsAsTenant.with_tenant(argu) { iri_from_template(:languages_iri, language: language) }
   end
 end

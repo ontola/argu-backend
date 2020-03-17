@@ -32,7 +32,7 @@ module Users
       I18n.locale = locale_param
       return false unless current_user.guest? || current_user.update(language: locale_param)
 
-      update_oauth_token(new_oauth_token.token)
+      update_oauth_token(new_oauth_token)
     end
 
     def update_failure

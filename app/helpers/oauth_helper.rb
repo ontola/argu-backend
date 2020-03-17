@@ -15,6 +15,8 @@ module OauthHelper
 
     refresh_guest_token if needs_new_guest_token?
     user = current_resource_owner || GuestUser.new
+    doorkeeper_render_error unless valid_token?
+
     @current_actor =
       CurrentActor.new(user: user, actor: current_actor_profile(user))
     @current_actor
@@ -28,8 +30,19 @@ module OauthHelper
     end
   end
 
+  def doorkeeper_unauthorized_render_options(error: nil)
+    @user_context ||= UserContext.new(doorkeeper_scopes: [], profile: nil, user: nil)
+
+    {
+      json: {
+        error: :invalid_token,
+        error_description: error&.description
+      }
+    }
+  end
+
   def sign_in(resource, *_args)
-    update_oauth_token(generate_user_token(resource, application: doorkeeper_token.application).token)
+    update_oauth_token(generate_user_token(resource, application: doorkeeper_token.application))
     current_actor.user = resource
     user_context.user = resource
     warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource
@@ -38,7 +51,7 @@ module OauthHelper
   def sign_out(*args)
     super
 
-    update_oauth_token(generate_guest_token(SecureRandom.hex, application: doorkeeper_token.application).token)
+    update_oauth_token(generate_guest_token(SecureRandom.hex, application: doorkeeper_token.application))
   end
 
   def doorkeeper_guest_token?
@@ -65,24 +78,28 @@ module OauthHelper
 
   def generate_user_token(resource, application: nil)
     application ||= Doorkeeper::Application.argu
+    doorkeeper_token.revoke if doorkeeper_token&.resource_owner_id
+
     Doorkeeper::AccessToken.find_or_create_for(
       application,
       resource.id,
       new_token_scopes(:user, application.id),
       Doorkeeper.configuration.access_token_expires_in,
-      false
+      true
     )
   end
 
   def generate_guest_token(guest_id, application: nil, locale: nil)
     application ||= Doorkeeper::Application.argu_front_end
     I18n.locale = locale || language_for_guest
+    doorkeeper_token.revoke if doorkeeper_token&.resource_owner_id
 
     token = Doorkeeper::AccessToken.new(
       application: application,
       resource_owner_id: guest_id,
       scopes: new_token_scopes(:guest, application.id),
-      expires_in: 2.days
+      expires_in: 2.days,
+      use_refresh_token: true
     )
     token.send(:generate_token)
     token
@@ -97,13 +114,12 @@ module OauthHelper
   end
 
   def needs_new_guest_token?
-    doorkeeper_token.blank? || doorkeeper_token&.expired? || current_resource_owner.blank?
+    doorkeeper_token.blank? || doorkeeper_token.resource_owner_id.nil?
   end
 
   def refresh_guest_token
-    doorkeeper_token.destroy! if doorkeeper_token&.expired?
     @doorkeeper_token = generate_guest_token(guest_session_id)
-    update_oauth_token(doorkeeper_token.token)
+    update_oauth_token(doorkeeper_token)
     true
   end
 
@@ -112,6 +128,11 @@ module OauthHelper
   end
 
   def update_oauth_token(token)
-    response.headers['New-Authorization'] = token
+    response.headers['New-Refresh-Token'] = token.refresh_token
+    response.headers['New-Authorization'] = token.token
+  end
+
+  def valid_token?
+    doorkeeper_token&.accessible?
   end
 end

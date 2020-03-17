@@ -50,7 +50,8 @@ module Argu
             application: Doorkeeper::Application.argu,
             resource_owner_id: id,
             scopes: role,
-            expires_in: 10.minutes
+            expires_in: 10.minutes,
+            use_refresh_token: true
           )
           if resource.is_a?(GuestUser) || resource == :guest_user
             t.send(:generate_token)

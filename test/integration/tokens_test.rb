@@ -152,6 +152,40 @@ class TokensTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'User should post create token and refresh' do
+    sign_in guest_user
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      post_token_password
+    end
+    refresh_token = parsed_body['refresh_token']
+    assert refresh_token
+    sleep 1
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      refresh_access_token(refresh_token)
+    end
+    token_response
+    sleep 1
+    assert_difference('Doorkeeper::AccessToken.count', 0) do
+      refresh_access_token(refresh_token)
+    end
+    token_response(error_type: 'invalid_grant')
+  end
+
+  test 'User should refresh token with expired token' do
+    token = expired_token(user)
+    sign_in token.token
+
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      refresh_access_token(token.refresh_token)
+    end
+    token_response
+    sleep 1
+    assert_difference('Doorkeeper::AccessToken.count', 0) do
+      refresh_access_token(token.refresh_token)
+    end
+    token_response(error_type: 'invalid_grant')
+  end
+
   ####################################
   # CLIENT_CREDENTIALS
   ####################################
@@ -310,6 +344,17 @@ class TokensTest < ActionDispatch::IntegrationTest
     end
   end
 
+  ####################################
+  # Make request with expired token
+  ####################################
+  test 'Make request with expired token' do
+    sign_in expired_token(user).token
+
+    get argu.iri
+
+    token_response(error_type: 'invalid_token')
+  end
+
   private
 
   def expect_error_code(error_code)
@@ -318,6 +363,13 @@ class TokensTest < ActionDispatch::IntegrationTest
 
   def expect_error_type(error_type)
     assert_equal(parsed_body['error'], error_type, parsed_body)
+  end
+
+  def expired_token(resource)
+    token = doorkeeper_token_for(resource)
+    token.update(expires_in: 1)
+    sleep 1
+    token
   end
 
   def oauth_token_path
@@ -359,6 +411,17 @@ class TokensTest < ActionDispatch::IntegrationTest
     token_response(**results)
   end
 
+  def refresh_access_token(refresh_token)
+    post oauth_token_path,
+         headers: argu_headers(accept: :json),
+         params: {
+           client_id: Doorkeeper::Application.argu.uid,
+           client_secret: Doorkeeper::Application.argu.secret,
+           grant_type: :refresh_token,
+           refresh_token: refresh_token
+         }
+  end
+
   def token_response(error_code: nil, error_type: nil, scope: 'user') # rubocop:disable Metrics/AbcSize
     if error_code || error_type
       expect_error_type(error_type || 'invalid_grant')
@@ -371,7 +434,7 @@ class TokensTest < ActionDispatch::IntegrationTest
 
       assert_equal scope, parsed_body['scope']
       assert_equal 'Bearer', parsed_body['token_type']
-      assert_equal 1_209_600, parsed_body['expires_in']
+      assert_equal 7200, parsed_body['expires_in']
       JWT.decode(parsed_body['access_token'], nil, false)[0]
     end
   end
