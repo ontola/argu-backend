@@ -46,19 +46,13 @@ module Argu
             else
               [resource.id, 'user']
             end
-          t = Doorkeeper::AccessToken.new(
+          Doorkeeper::AccessToken.create!(
             application: Doorkeeper::Application.argu,
             resource_owner_id: id,
             scopes: role,
             expires_in: 10.minutes,
             use_refresh_token: true
           )
-          if resource.is_a?(GuestUser) || resource == :guest_user
-            t.send(:generate_token)
-          else
-            t.save!
-          end
-          t
         end
 
         def client_token_from_response

@@ -213,32 +213,6 @@ module Doorkeeper
 
       raise Doorkeeper::Errors::DoorkeeperError.new(:invalid_grant)
     end
-
-    class << self
-      def by_token(token)
-        guest_token(token) || find_by(token: token.to_s)
-      end
-
-      private
-
-      def guest_token(token) # rubocop:disable Metrics/AbcSize
-        return if token.blank?
-
-        data = decode_token(token)
-        return unless data['scopes']&.include?('guest')
-
-        new(
-          token: token,
-          application_id: data['application_id'],
-          resource_owner_id: data['user'].try(:[], 'id'),
-          scopes: data['scopes'].join(' '),
-          created_at: Time.zone.at(data['iat']),
-          expires_in: data['exp'] - data['iat']
-        )
-      rescue ::JWT::DecodeError
-        nil
-      end
-    end
   end
 
   class Application < ActiveRecord::Base

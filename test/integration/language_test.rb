@@ -13,22 +13,14 @@ class LanguageTest < ActionDispatch::IntegrationTest
     assert_enabled_form
   end
 
-  test 'guest should set freetown language' do
-    get freetown, headers: argu_headers
+  test 'guest without token should not put language' do
+    put language_iri(:nl), headers: argu_headers(bearer: client_token_from_response)
 
-    assert_language :en
-  end
-
-  test 'guest should set dutch language' do
-    get dutch_forum, headers: argu_headers
-
-    assert_language :nl
+    assert_not_a_user
   end
 
   test 'guest should put language' do
-    get freetown, headers: argu_headers
-
-    assert_language :en
+    sign_in :guest_user
 
     put language_iri(:nl), headers: argu_headers(bearer: client_token_from_response)
 

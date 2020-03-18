@@ -26,21 +26,6 @@ class TokensTest < ActionDispatch::IntegrationTest
   let(:application) { create(:application) }
 
   ####################################
-  # GENERATE GUEST TOKEN
-  # ##################################
-  test 'Guest should get guest token if none is present and reuse it' do
-    sign_in :guest_user
-
-    assert_difference("Doorkeeper::AccessToken.where(scopes: 'guest').count", 0) do
-      get motion.iri.path, headers: argu_headers(accept: :json)
-    end
-    assert_equal(decoded_token_from_response['scopes'], %w[guest])
-
-    get motion.iri.path, headers: argu_headers(accept: :json, bearer: client_token_from_response)
-    assert_nil response.headers['New-Authorization']
-  end
-
-  ####################################
   # WITHOUT CREDENTIALS
   ####################################
   test 'Guest should not post create token without params' do
@@ -184,6 +169,15 @@ class TokensTest < ActionDispatch::IntegrationTest
       refresh_access_token(token.refresh_token)
     end
     token_response(error_type: 'invalid_grant')
+  end
+
+  test 'User should not refresh token without refresh_token' do
+    sign_in user
+
+    assert_difference('Doorkeeper::AccessToken.count', 0) do
+      refresh_access_token(nil)
+    end
+    token_response(error_type: 'invalid_request')
   end
 
   ####################################
