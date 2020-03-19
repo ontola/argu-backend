@@ -38,6 +38,13 @@ en:
       moderator: "moderate"
       administrator: "manage"
       staff: "staff"
+    descriptions:
+      spectator: "This allows you to read content. It's not possible to post your reactions."
+      participator: "This allows you to react to content posted by moderators. Users cannot start new topics themselves."
+      initiator: "This allows users to both react to topics of others as to start new topics themselves."
+      moderator: "Besides reacting and starting new topics, this also enables the ability to edit and delete content of others."
+      administrator: "The most advanced set of grants. This allows you to read and edit everything."
+      staff: "Employees of Ontola"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-remote='true' data-confirm='Are you sure to revoke this grant?'><span class='fa fa-close'></span></a>"
   grant_resets:

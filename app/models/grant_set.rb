@@ -38,6 +38,10 @@ class GrantSet < ApplicationRecord
     I18n.t("roles.types.#{title}", default: title).capitalize
   end
 
+  def description
+    I18n.t("roles.descriptions.#{title}", default: nil)&.capitalize
+  end
+
   class << self
     def for_one_action(resource_type, action)
       title = "#{resource_type.underscore}_#{action}"

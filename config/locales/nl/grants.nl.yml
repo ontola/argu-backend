@@ -38,6 +38,13 @@ nl:
       moderator: "modereren"
       administrator: "beheren"
       staff: "staff"
+    descriptions:
+      spectator: "Hiermee kan alleen content bekeken worden. Er kan niet worden gereageerd."
+      participator: "Hiermee kan worden gereageerd op onderwerpen die door de organisatie geplaatst zijn. Gebruikers kunnen niet zelf onderwerpen starten."
+      initiator: "Hiermee kunnen gebruikers zowel reageren op onderwerpen van anderen, als zelf nieuwe onderwerpen starten."
+      moderator: "Naast reageren en onderwerpen starten kan je hiermee ook sommige reacties van anderen aanpassen of verwijderen."
+      administrator: "De hoogst mogelijke rechtenset. Hiermee kan alles worden bewerkt en bekeken."
+      staff: "Medewerkers van Ontola"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-remote='true' data-confirm='Weet je zeker dat je dit recht wilt intrekken?'><span class='fa fa-close'></span></a>"
   grant_resets:
