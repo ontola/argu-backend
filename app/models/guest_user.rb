@@ -2,7 +2,7 @@
 
 class GuestUser < User
   include NoPersistence
-  attr_accessor :id, :session
+  attr_writer :id
 
   def access_tokens
     []
@@ -20,6 +20,10 @@ class GuestUser < User
 
   def follow_for(_followable)
     nil
+  end
+
+  def id
+    @id ||= SecureRandom.hex
   end
 
   def iri_opts

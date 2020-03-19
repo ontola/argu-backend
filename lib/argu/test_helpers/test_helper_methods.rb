@@ -112,7 +112,7 @@ module Argu
         end
 
         def create_guest_user(id: nil)
-          GuestUser.new(id: id || @request&.session&.id || SecureRandom.hex)
+          GuestUser.new(id: id || @request&.session&.id)
         end
 
         def create_moderator(record, user = nil)

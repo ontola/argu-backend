@@ -21,7 +21,7 @@ module Oauth
     end
 
     def process_previous_token(res)
-      return unless doorkeeper_token && res.token.resource_owner_id
+      return unless doorkeeper_token && !res.token.scopes.scopes?(%i[guest])
 
       schedule_redis_resource_worker(
         GuestUser.new(id: doorkeeper_token.resource_owner_id),

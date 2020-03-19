@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class GuestUserTest < ActiveSupport::TestCase
-  subject { GuestUser.new(attributes_for(:user).merge(session: OpenStruct.new(id: 'session_id'))) }
+  subject { GuestUser.new(attributes_for(:user)) }
 
   test 'should raise when saving GuestUser' do
     assert_raises Argu::Errors::NoPersistence do
@@ -16,7 +16,7 @@ class GuestUserTest < ActiveSupport::TestCase
   test 'should raise when creating GuestUser' do
     assert_raises Argu::Errors::NoPersistence do
       assert_no_difference('User.count') do
-        GuestUser.create(attributes_for(:user).merge(session: OpenStruct.new(id: 'session_id')))
+        GuestUser.create(attributes_for(:user))
       end
     end
   end

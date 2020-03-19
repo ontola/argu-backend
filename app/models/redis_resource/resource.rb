@@ -61,8 +61,11 @@ module RedisResource
     end
 
     def store_in_redis
-      Argu::Redis.set(key.key, resource.attributes.to_json)
-      Argu::Redis.expire(key.key, ttl) if ttl.present?
+      key_string = key.key
+      raise "Trying to store a key with wildcards: #{key_string}" if key_string.include?('*')
+
+      Argu::Redis.set(key_string, resource.attributes.to_json)
+      Argu::Redis.expire(key_string, ttl) if ttl.present?
     end
 
     def ttl

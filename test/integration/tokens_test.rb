@@ -181,6 +181,22 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
+  # AS GUEST
+  ####################################
+  test 'Guest should post create token with guest scope without username' do
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      token = post_token_password(
+        name: nil,
+        password: nil,
+        scope: 'guest',
+        results: {scope: 'guest'}
+      )
+      assert token['id']
+      assert_equal Doorkeeper::AccessToken.last.resource_owner_id, token['id']
+    end
+  end
+
+  ####################################
   # CLIENT_CREDENTIALS
   ####################################
   test 'Service should not post create client credentials without credentials' do
@@ -215,7 +231,7 @@ class TokensTest < ActionDispatch::IntegrationTest
       post_token_client_credentials(
         client_id: application.uid,
         client_secret: application.secret,
-        results: {scope: 'guest'}
+        results: {scope: 'guest', refresh_token: false}
       )
     end
   end
@@ -416,7 +432,8 @@ class TokensTest < ActionDispatch::IntegrationTest
          }
   end
 
-  def token_response(error_code: nil, error_type: nil, scope: 'user') # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def token_response(error_code: nil, error_type: nil, refresh_token: true, scope: 'user')
     if error_code || error_type
       expect_error_type(error_type || 'invalid_grant')
       expect_error_code(error_code) if error_code
@@ -429,7 +446,9 @@ class TokensTest < ActionDispatch::IntegrationTest
       assert_equal scope, parsed_body['scope']
       assert_equal 'Bearer', parsed_body['token_type']
       assert_equal 7200, parsed_body['expires_in']
+      assert_not_nil parsed_body['refresh_token'] if refresh_token
       JWT.decode(parsed_body['access_token'], nil, false)[0]
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 end
