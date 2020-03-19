@@ -57,6 +57,12 @@ class Grant < ApplicationRecord
   end
   alias edgeable_record parent
 
+  def parent_collections(user_context)
+    [group, edge].map do |parent|
+      parent_collections_for(parent, user_context)
+    end.flatten
+  end
+
   def grant_set=(value)
     value = GrantSet.find_by!(title: value) if value.is_a?(String)
     super
