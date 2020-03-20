@@ -49,6 +49,7 @@ class Manifest < VirtualResource
       matomo_site_id: page.matomo_site_id,
       primary_main: page.navbar_background,
       primary_text: page.navbar_color,
+      styled_headers: page.styled_headers,
       template: page.template,
       template_options: template_options
     }

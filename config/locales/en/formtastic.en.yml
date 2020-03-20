@@ -80,6 +80,7 @@ en:
       remove_image: "Remove photo"
       settings_menu: 'Settings'
       status: 'Status'
+      styled_headers: "Use button color for headings"
       title: "Title"
       time_zone: "Time zone"
       updated_at: "Updated at"

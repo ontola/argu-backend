@@ -27,6 +27,7 @@ class PageForm < ApplicationForm
                    :navbar_color,
                    :navbar_background,
                    :accent_color,
-                   :accent_background_color
+                   :accent_background_color,
+                   :styled_headers
                  ]
 end

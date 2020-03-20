@@ -80,6 +80,7 @@ nl:
       remove_image: "Foto verwijderen"
       settings_menu: 'Instellingen'
       status: 'Status'
+      styled_headers: 'Gebruik knopkleur voor titels'
       title: "Titel"
       time_zone: "Tijdzone"
       updated_at: "Aangepast op"
