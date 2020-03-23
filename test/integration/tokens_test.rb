@@ -365,6 +365,24 @@ class TokensTest < ActionDispatch::IntegrationTest
     token_response(error_type: 'invalid_token')
   end
 
+  ####################################
+  # Revoke token
+  ####################################
+  test 'user should revoke token' do
+    token = doorkeeper_token_for(user)
+    sign_in token.token
+
+    assert_difference('Doorkeeper::AccessToken.count' => 0, 'Doorkeeper::AccessToken.active_for(user).count' => -1) do
+      post oauth_revoke_path,
+           params: {
+             client_id: Doorkeeper::Application.argu.uid,
+             client_secret: Doorkeeper::Application.argu.secret,
+             token: token.token
+           }
+    end
+    assert_response :success
+  end
+
   private
 
   def expect_error_code(error_code)
@@ -380,6 +398,10 @@ class TokensTest < ActionDispatch::IntegrationTest
     token.update(expires_in: 1)
     sleep 1
     token
+  end
+
+  def oauth_revoke_path
+    "/#{argu.url}#{super}"
   end
 
   def oauth_token_path
