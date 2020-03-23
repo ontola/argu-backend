@@ -15,11 +15,11 @@ class ServiceController < ParentableController
       end
   end
 
-  def activity_comment
+  def activity_options
     activity_key = "#{action_name}_activity_attributes"
-    return if params.dig(model_name, activity_key, :comment).blank?
+    return {} if params.dig(model_name, activity_key).blank?
 
-    params.require(model_name).require(activity_key).require(:comment)
+    params.require(model_name).require(activity_key).permit(:comment, :notify)
   end
 
   def authenticated_resource!
@@ -90,9 +90,8 @@ class ServiceController < ParentableController
   def service_options(options = {})
     {
       creator: service_creator,
-      publisher: service_publisher,
-      comment: activity_comment
-    }.merge(options)
+      publisher: service_publisher
+    }.merge(activity_options).merge(options).with_indifferent_access
   end
 
   def service_publisher

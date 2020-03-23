@@ -20,7 +20,8 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
       ActivityListener.new(
         comment: options[:comment],
         creator: options.fetch(:creator),
-        publisher: options.fetch(:publisher)
+        publisher: options.fetch(:publisher),
+        notify: options[:notify]
       )
     )
     subscribe(NotificationListener.new,

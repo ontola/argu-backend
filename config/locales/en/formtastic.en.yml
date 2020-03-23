@@ -61,6 +61,7 @@ en:
       name: "Name"
       navbar_background: "Background of top bar"
       navbar_color: "Text color of top bar"
+      notify: 'Verstuur notificatie naar de plaatser'
       password_confirmation: "Confirm password"
       email: "Email"
       email_or_username: "Email or username"

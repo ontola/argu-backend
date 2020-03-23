@@ -34,6 +34,8 @@ class Activity < PublicActivity::Activity
 
   before_create :touch_edges
 
+  attr_accessor :notify
+
   def action
     key.split('.').last
   end

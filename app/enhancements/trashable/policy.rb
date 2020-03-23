@@ -6,8 +6,8 @@ module Trashable
 
     def permitted_attribute_names
       attributes = super
-      attributes.append(trash_activity_attributes: :comment)
-      attributes.append(untrash_activity_attributes: :comment)
+      attributes.append(trash_activity_attributes: %i[notify comment])
+      attributes.append(untrash_activity_attributes: %i[notify comment])
       attributes
     end
   end

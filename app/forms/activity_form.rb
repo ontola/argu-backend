@@ -3,5 +3,6 @@
 class ActivityForm < ApplicationForm
   fields %i[
     comment
+    notify
   ]
 end

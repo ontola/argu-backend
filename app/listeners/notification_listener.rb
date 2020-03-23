@@ -22,7 +22,7 @@ class NotificationListener
   private
 
   def create_notifications_for_activity?(activity)
-    activity.new_content? || activity.action == 'trash'
+    activity.new_content? || activity.notify
   end
 
   def create_notifications_for(activity) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity

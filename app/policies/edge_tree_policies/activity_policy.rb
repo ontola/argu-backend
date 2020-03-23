@@ -56,7 +56,7 @@ class ActivityPolicy < EdgeTreePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes << :comment
+    attributes.concat(%i[comment notify])
     attributes
   end
 end

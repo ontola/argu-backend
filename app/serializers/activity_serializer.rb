@@ -19,6 +19,7 @@ class ActivitySerializer < RecordSerializer
   attribute :updated, predicate: NS::AS[:updated]
   attribute :action_status
   attribute :comment, predicate: NS::SCHEMA[:text]
+  attribute :notify, predicate: NS::ARGU[:sendNotifications], datatype: NS::XSD[:boolean]
 
   has_one :forum
   has_one :owner, predicate: NS::AS[:actor]
