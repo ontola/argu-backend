@@ -54,6 +54,37 @@ class MotionsControllerTest < ActionController::TestCase
     expect_not_included(holland.motions.trashed.map(&:iri))
   end
 
+  test 'should get index infinite motions of forum' do
+    ActsAsTenant.with_tenant(holland.parent) do
+      get :index, params: {
+        format: :json_api,
+        root_id: holland.parent.url,
+        container_node_id: holland.url,
+        type: :infinite
+      }
+    end
+    assert_response 200
+
+    expect_relationship('partOf')
+
+    default_view = expect_default_view
+    current_time = CGI.parse(default_view['id'])['before[]'].second.split('=').last
+    expect_included(
+      collection_iri(
+        holland,
+        :motions,
+        type: :infinite,
+        'before%5B%5D': %W[
+          #{CGI.escape(NS::ARGU[:pinnedAt])}=#{LinkedRails::Collection::Sorting::DATE_TIME_MIN.iso8601(6)}
+          #{CGI.escape(NS::ARGU[:lastActivityAt])}=#{current_time}
+          #{CGI.escape(NS::ONTOLA[:primaryKey])}=-2147483648
+        ]
+      )
+    )
+    expect_not_included(question.motions.map(&:iri))
+    expect_not_included(holland.motions.trashed.map(&:iri))
+  end
+
   test 'should get index motions of forum page 1' do
     ActsAsTenant.with_tenant(holland.parent) do
       get :index,
