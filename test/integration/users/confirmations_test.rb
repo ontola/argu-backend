@@ -31,6 +31,14 @@ module Users
     ####################################
     # As guest
     ####################################
+    test 'guest without token should get show confirmation' do
+      assert_not user.confirmed?
+      get user_confirmation_path(confirmation_token: user.confirmation_token), headers: argu_headers
+      assert_response :success
+      assert response.headers['New-Authorization']
+      assert_not user.reload.confirmed?
+    end
+
     test 'guest should get show confirmation' do
       sign_in :guest_user
       assert_not user.confirmed?
