@@ -40,18 +40,6 @@ class ContainerNodesController < EdgeableController
     super
   end
 
-  def collect_children(resource)
-    policy_scope(
-      resource
-        .children
-        .where(owner_type: %w[Motion Question])
-        .order('edges.pinned_at DESC NULLS LAST, edges.last_activity_at DESC')
-    )
-      .includes(Question.edge_includes_for_index.deep_merge(Motion.edge_includes_for_index))
-      .page(show_params[:page])
-      .per(30)
-  end
-
   def controller_classes
     ([ContainerNode] + ContainerNode.descendants)
   end
