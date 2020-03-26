@@ -61,6 +61,7 @@ class Thing < Edge
     associations ||= {}
     associations[predicate] ||=
       properties
+        .order(:order)
         .select { |prop| prop.type == 'linked_edge_id' && prop.predicate == predicate }
         .map { |prop| prop.linked_edge.iri }
   end
