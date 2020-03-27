@@ -22,7 +22,7 @@ class HeadMiddleware
     headers['Include-Resources'] = resource.try(:include_resources)&.join(',')
 
     status_code = status_code_for_request(resource)
-    Rails.logger.info "Completed #{status_code} #{Rack::Utils::HTTP_STATUS_CODES[status_code]}"
+    Rails.logger.info "Completed HEAD #{status_code} #{Rack::Utils::HTTP_STATUS_CODES[status_code]}"
 
     [status_code, headers, []]
   end
@@ -57,6 +57,7 @@ class HeadMiddleware
     actual_iri = resource.try(:iri_path)
     if !actual_iri.nil? && actual_iri != request.fullpath && !(actual_iri == '' && request.fullpath == '/')
       headers['Location'] = resource.iri.to_s
+      Rails.logger.info "Redirecting #{request.fullpath} to #{resource.iri.to_s} (#{actual_iri}"
       return 302
     end
 
