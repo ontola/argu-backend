@@ -113,5 +113,9 @@ class EmailAddress < ApplicationRecord
     def input_select_property
       NS::SCHEMA[:email]
     end
+
+    def sort_options(_collection)
+      [NS::SCHEMA[:email]]
+    end
   end
 end

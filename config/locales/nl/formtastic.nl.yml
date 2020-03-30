@@ -55,6 +55,7 @@ nl:
       is_trashed: "Is verborgen"
       invert_arguments: "Argumenten omdraaien"
       last_accepted: "Ik ga akkoord"
+      last_activity_at: "Activiteit"
       language: "Taal"
       locale: "Taal"
       mark_as_important: "Markeer als belangrijk"
@@ -68,6 +69,7 @@ nl:
       password: "Wachtwoord"
       path: "alias"
       pinned: "Vastzetten"
+      votes_pro_count: "Stemmen voor"
       postal_code: "Postcode"
       require_location: "Locatie is verplicht"
       current_password: "Huidig wachtwoord"
@@ -94,7 +96,6 @@ nl:
         memberships: "Mijn forums"
         created: "Mijn items"
       page:
-        name: "Naam van pagina"
         shortname: "Argu URL"
         last_accepted: "Ik ga akkoord met de gebruiksvoorwaarden"
       forum:

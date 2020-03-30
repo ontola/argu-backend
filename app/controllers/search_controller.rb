@@ -6,7 +6,7 @@ class SearchController < EdgeableController
   private
 
   def authorize_action
-    authorize parent_resource, :show?
+    authorize parent_resource!, :show?
   end
 
   def index_association
@@ -24,15 +24,17 @@ class SearchController < EdgeableController
   end
 
   def index_includes
-    [results: :members]
+    collection_includes.merge(results: {})
   end
 
   def search_result
     @search_result = SearchResult.new(
-      page: params[:page],
-      parent: parent_resource,
-      q: params[:q],
-      user_context: user_context
+      {
+        page: params[:page],
+        parent: parent_resource,
+        q: params[:q],
+        user_context: user_context
+      }.merge(collection_params)
     )
   end
 end

@@ -4,8 +4,8 @@ nl:
   search:
     type: "Zoeken"
     title: "zoekresultaten voor %{q}"
-    placeholder: "Zoek op thema, inhoud..."
+    placeholder: "Voer een zoekopdracht in"
     results_found:
-      zero: "Er zijn geen resultaten gevonden."
-      one: "Er is 1 resultaat gevonden."
-      other: "Er zijn %{count} resultaten gevonden."
+      zero: "Er zijn geen resultaten gevonden"
+      one: "Er is 1 resultaat gevonden"
+      other: "Er zijn %{count} resultaten gevonden"

@@ -52,6 +52,12 @@ module Edgeable
         end
       end
 
+      def sort_options(collection)
+        return [NS::SCHEMA[:dateCreated]] if collection.type == :infinite
+
+        [NS::SCHEMA[:name], NS::SCHEMA[:dateCreated]]
+      end
+
       # Selects edges of a certain type over persisted and transient models.
       # @param [String] type The (child) edges' #owner_type value
       # @param [Hash] where_clause Filter options for the owners of the edge akin to activerecords' `where`.

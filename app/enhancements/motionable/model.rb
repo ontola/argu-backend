@@ -26,13 +26,13 @@ module Motionable
         when 'popular'
           {key: NS::ARGU[:votesProCount], direction: :desc}
         when 'created_at'
-          {key: NS::ARGU[:createdAt], direction: :desc}
+          {key: NS::SCHEMA[:dateCreated], direction: :desc}
         when 'updated_at'
           {key: NS::ARGU[:lastActivityAt], direction: :desc}
         when 'popular_asc'
           {key: NS::ARGU[:votesProCount], direction: :asc}
         when 'created_at_asc'
-          {key: NS::ARGU[:createdAt], direction: :asc}
+          {key: NS::SCHEMA[:dateCreated], direction: :asc}
         when 'updated_at_asc'
           {key: NS::ARGU[:lastActivityAt], direction: :asc}
         end

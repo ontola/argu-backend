@@ -29,8 +29,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 9f0e059df7958e3accc0784aa9362a5d611351bb
-  ref: 9f0e059df7958e3accc0784aa9362a5d611351bb
+  revision: 5b499d2a67ece35c214e6e6dfab4a48bd1837c23
+  ref: 5b499d2a67ece35c214e6e6dfab4a48bd1837c23
   specs:
     linked_rails (0.0.0)
       active_response

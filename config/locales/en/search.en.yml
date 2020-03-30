@@ -4,8 +4,8 @@ en:
   search:
     type: "Search"
     title: "search results for %{q}"
-    placeholder: "Search for theme, content..."
+    placeholder: "Enter a search query"
     results_found:
-      zero: "No results found."
-      one: "One result found."
-      other: "%{count} results found."
+      zero: "No results found"
+      one: "One result found"
+      other: "%{count} results found"

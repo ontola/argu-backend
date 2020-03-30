@@ -33,21 +33,29 @@ class Motion < Discussion
     ))
   end
 
-  def self.edge_includes_for_index(full = false)
-    includes = super().deep_merge(default_vote_event: {}, last_published_decision: :properties)
-    return includes unless full
+  class << self
+    def edge_includes_for_index(full = false)
+      includes = super().deep_merge(default_vote_event: {}, last_published_decision: :properties)
+      return includes unless full
 
-    includes.deep_merge(
-      attachments: {},
-      creator: Profile.includes_for_profileable,
-      top_comment: [vote: :properties, creator: Profile.includes_for_profileable],
-      active_arguments: {}
-    )
-  end
+      includes.deep_merge(
+        attachments: {},
+        creator: Profile.includes_for_profileable,
+        top_comment: [vote: :properties, creator: Profile.includes_for_profileable],
+        active_arguments: {}
+      )
+    end
 
-  def self.order_by_predicate(predicate, direction)
-    return super unless predicate == NS::ARGU[:votesProCount]
+    def order_by_predicate(predicate, direction)
+      return super unless predicate == NS::ARGU[:votesProCount]
 
-    Edge.order_child_count_sql(:votes_pro, as: 'default_vote_events_edges', direction: direction)
+      Edge.order_child_count_sql(:votes_pro, as: 'default_vote_events_edges', direction: direction)
+    end
+
+    def sort_options(collection)
+      return super if collection.type == :infinite
+
+      [NS::ARGU[:votesProCount], NS::SCHEMA[:dateCreated], NS::ARGU[:lastActivityAt]]
+    end
   end
 end

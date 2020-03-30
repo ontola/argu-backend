@@ -55,6 +55,7 @@ en:
       is_trashed: "Is hidden"
       invert_arguments: "Invert argumens"
       last_accepted: "I agree"
+      last_activity_at: "Activity"
       language: "Language"
       locale: "Language"
       mark_as_important: "Mark as important"
@@ -68,6 +69,7 @@ en:
       password: "Password"
       path: "alias"
       pinned: "Pin"
+      votes_pro_count: "Votes in favour"
       postal_code: "Postal code"
       published_at: "Published"
       require_location: "Location is required"
@@ -94,7 +96,6 @@ en:
         memberships: "My forums"
         created: "My items"
       page:
-        name: "Page name"
         shortname: "Argu URL"
         last_accepted: "I accept the terms of use"
       forum:
