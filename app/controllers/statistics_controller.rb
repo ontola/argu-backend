@@ -50,7 +50,8 @@ class StatisticsController < ParentableController
         observations: [
           dimensions: observation_dimensions,
           measures: observation_measures
-        ]
+        ],
+        parent: parent_resource
       )
   end
 
