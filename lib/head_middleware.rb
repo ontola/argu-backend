@@ -57,7 +57,7 @@ class HeadMiddleware
     actual_iri = resource.try(:iri_path)
     if !actual_iri.nil? && actual_iri != request.fullpath && !(actual_iri == '' && request.fullpath == '/')
       headers['Location'] = resource.iri.to_s
-      Rails.logger.info "Redirecting #{request.fullpath} to #{resource.iri.to_s} (#{actual_iri}"
+      Rails.logger.info "Redirecting #{request.fullpath} to #{resource.iri} (#{actual_iri})"
       return 302
     end
 
