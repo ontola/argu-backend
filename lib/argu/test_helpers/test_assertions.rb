@@ -43,8 +43,8 @@ module Argu
         last_match
       end
 
-      def expect_ontola_action(redirect: nil, snackbar: nil)
-        action = "actions/redirect?#{{location: redirect}.to_param}" if redirect
+      def expect_ontola_action(redirect: nil, snackbar: nil, reload: nil)
+        action = "actions/redirect?#{{location: redirect, reload: reload}.compact.to_param}" if redirect
         action = "actions/snackbar?#{{text: snackbar}.to_param}" if snackbar
         expect(response.headers['Exec-Action']).to(include(action))
       end

@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class CreatePage < CreateEdge
-  def initialize(parent, attributes: {}, options: {})
-    attributes[:iri_prefix] ||= "#{Rails.application.config.host_name}/#{attributes[:url]}"
-    super
-  end
-
   def commit
+    resource.errors.add(:iri_prefix, :blank) if resource.iri_prefix.blank?
     ActsAsTenant.with_tenant(resource) { super }
   end
 

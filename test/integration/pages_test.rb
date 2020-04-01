@@ -414,4 +414,38 @@ class PagesTest < ActionDispatch::IntegrationTest
     end
     assert_response :unprocessable_entity
   end
+
+  test 'staff should not post create a page without url' do
+    sign_in staff
+
+    assert_difference('Page.count' => 0) do
+      post collection_iri(argu, :pages),
+           params: {
+             page: {
+               name: 'Name',
+               last_accepted: '1'
+             }
+           }, headers: argu_headers(accept: :n3)
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test 'staff should put update a page change url' do
+    sign_in staff
+    assert_equal argu.url, 'argu'
+    assert_equal argu.iri, argu_url('/argu')
+
+    put argu,
+        params: {
+          page: {
+            url: 'newURL'
+          }
+        }
+
+    assert_response :success
+    updated_argu = Page.argu
+    assert_equal updated_argu.url, 'newURL'
+    assert_equal updated_argu.iri, argu_url('/newURL')
+    expect_ontola_action(redirect: argu_url('/newURL'), reload: true)
+  end
 end

@@ -155,6 +155,14 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     super || Tenant.find_by(root_id: root_id)
   end
 
+  def url=(value)
+    if iri_prefix.blank? || iri_prefix.starts_with?(Rails.application.config.host_name)
+      @iri_prefix = "#{Rails.application.config.host_name}/#{value}"
+      @iri = nil
+    end
+    super
+  end
+
   def write_to_cache(cache = Argu::Cache.new)
     manifest.write_to_cache(cache)
     SearchResult.new(parent: self).write_to_cache(cache)
@@ -198,7 +206,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   def create_or_update_tenant
     return tenant.update!(iri_prefix: iri_prefix) if tenant.present?
 
-    create_tenant(root_id: uuid, iri_prefix: iri_prefix, database_schema: Apartment::Tenant.current)
+    create_tenant!(root_id: uuid, iri_prefix: iri_prefix, database_schema: Apartment::Tenant.current)
   end
 
   def create_staff_grant
