@@ -44,6 +44,12 @@ class ContainerNodesController < EdgeableController
     ([ContainerNode] + ContainerNode.descendants)
   end
 
+  def create_meta
+    meta = super
+    meta << invalidate_resource_delta(parent_resource.menu(:navigations))
+    meta
+  end
+
   def current_forum
     resource_by_id
   end
