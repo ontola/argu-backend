@@ -83,15 +83,6 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     assert_redirected_to demogemeente.iri
   end
 
-  test 'guest should head demogemeente app.argu.co' do
-    sign_in guest_user
-
-    assert_equal demogemeente.iri, 'http://demogemeente.nl'
-    head "#{Rails.application.config.frontend_url}/demogemeente", headers: argu_headers(accept: :nq)
-
-    assert_redirected_to demogemeente.iri
-  end
-
   test 'guest should head demogemeente forum' do
     sign_in guest_user
 
@@ -106,15 +97,6 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
 
     assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/forum'
     head "#{Rails.application.config.origin}/demogemeente/forum", headers: argu_headers(accept: :nq)
-
-    assert_redirected_to demogemeente_forum.iri
-  end
-
-  test 'guest should head demogemeente forum app.argu.co' do
-    sign_in guest_user
-
-    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/forum'
-    head "#{Rails.application.config.frontend_url}/demogemeente/forum", headers: argu_headers(accept: :nq)
 
     assert_redirected_to demogemeente_forum.iri
   end
