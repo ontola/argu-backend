@@ -63,7 +63,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
            as: :resource,
            class_name: 'CustomMenuItem'
   has_many :exports, dependent: :destroy, primary_key: :uuid
-  has_many :favorites, dependent: :destroy, primary_key: :uuid
   has_many :followings,
            class_name: 'Follow',
            inverse_of: :followable,

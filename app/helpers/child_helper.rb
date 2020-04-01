@@ -16,7 +16,7 @@ module ChildHelper
       {resource: parent}
     when 'Discussion'
       {forum: parent}
-    when 'Export', 'Favorite', 'GrantTree'
+    when 'Export', 'GrantTree'
       {edge: parent}
     when 'Grant'
       if parent.is_a?(Group)

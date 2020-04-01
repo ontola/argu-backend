@@ -30,16 +30,8 @@ class GuestUser < User
     {id: id}
   end
 
-  def favorite_forum_ids
-    []
-  end
-
   def guest?
     true
-  end
-
-  def has_favorite?(_edge)
-    false
   end
 
   def initialize(attributes = {})

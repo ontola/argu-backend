@@ -25,13 +25,6 @@ class CreateEdge < CreateService
     return if resource.is_a?(ContainerNode)
 
     follow_edge
-    create_favorite
-  end
-
-  def create_favorite
-    forum = resource.ancestor(:forum)
-
-    resource.publisher.favorites.create(edge: forum) if forum && !resource.publisher.has_favorite?(forum)
   end
 
   # @param [Edge, Integer] parent The instance or id of the parent edge of the new child

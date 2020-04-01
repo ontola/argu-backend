@@ -22,22 +22,6 @@ module UsersHelper
     r if argu_iri_or_relative?(r)
   end
 
-  # Assigns certain favorites based on
-  #   either an 'r' action
-  #   if the user hasn't got any favorites yet
-  def setup_favorites(user)
-    # changed? so we can safely write back to the DB
-    return unless user.valid? && user.persisted?
-    return if user.favorites.present?
-
-    begin
-      forum = forum_from_r_action(user)
-      Favorite.create!(user: user, edge: forum) if forum.present?
-    rescue ActiveRecord::RecordNotFound => e
-      Bugsnag.notify(e)
-    end
-  end
-
   def suggested_shortname(resource)
     shortname = shortname_from_email(resource.email)
     existing = Shortname.where('shortname ~* ?', "^#{shortname}\\d*$").pluck(:shortname).map(&:downcase)

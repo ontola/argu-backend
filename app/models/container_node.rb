@@ -4,7 +4,6 @@ class ContainerNode < Edge
   enhance ConfirmedDestroyable
   enhance CoverPhotoable
   enhance Exportable
-  enhance Favorable
   enhance Feedable
   enhance Followable
   enhance LinkedRails::Enhancements::Menuable

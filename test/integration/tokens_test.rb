@@ -104,7 +104,6 @@ class TokensTest < ActionDispatch::IntegrationTest
     differences = {
       'Doorkeeper::AccessToken.count' => 1,
       'Vote.count' => 1,
-      'Favorite.count' => 0,
       'Argu::Redis.keys("temp*").count' => -2
     }
     assert_difference(differences) do
@@ -312,8 +311,7 @@ class TokensTest < ActionDispatch::IntegrationTest
 
     assert_difference('Doorkeeper::AccessToken.count' => 1,
                       'Vote.count' => 1,
-                      'Argu::Redis.keys("temporary*").count' => -1,
-                      'Favorite.count' => 1) do
+                      'Argu::Redis.keys("temporary*").count' => -1) do
       Sidekiq::Testing.inline! do
         token_user = post_token_password(
           name: unconfirmed_user.email,

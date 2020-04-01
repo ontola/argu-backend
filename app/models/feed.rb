@@ -22,8 +22,6 @@ class Feed
       case parent
       when Profile
         profile_activities
-      when User
-        favorite_activities
       else
         raise "#{parent.class} is not a valid parent type for generating a feed" unless parent.is_a?(Edge)
 
@@ -72,13 +70,6 @@ class Feed
 
   def edge_activities
     activity_base.where(edges: {root_id: parent.root_id}).where('edges.path <@ ?', parent.path)
-  end
-
-  def favorite_activities
-    raise 'Staff only' unless parent.is_staff?
-    return Activity.none if parent.favorites.empty?
-
-    activity_base.where(edges: {root_id: parent.favorites.joins(:edge).pluck('edges.root_id')})
   end
 
   def profile_activities

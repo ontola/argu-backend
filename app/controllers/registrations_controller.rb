@@ -35,7 +35,6 @@ class RegistrationsController < Devise::RegistrationsController
     )
     resource.accept_terms!(mail_sent) if accept_terms_param
     schedule_redis_resource_worker(guest_user, resource, resource.r) if session_id.present?
-    setup_favorites(resource)
   end
 
   private

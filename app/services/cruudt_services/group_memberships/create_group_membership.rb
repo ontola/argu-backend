@@ -15,18 +15,5 @@ class CreateGroupMembership < CreateService
 
   private
 
-  def after_save # rubocop:disable Metrics/AbcSize
-    if resource.member.profileable.is_a?(User)
-      forum_edge_ids = resource.grants.joins(:edge).where(edges: {owner_type: 'Forum'}).pluck('edges.uuid').uniq
-      if forum_edge_ids.empty? && resource.grants.joins(:edge).where(edge: resource.page).present?
-        forum_edge_ids = resource.page.children.where(owner_type: 'Forum').pluck(:uuid)
-      end
-      forum_edge_ids.each do |forum_edge_id|
-        Favorite.create(user: resource.member.profileable, edge_id: forum_edge_id)
-      end
-    end
-    super
-  end
-
   def object_attributes=(obj); end
 end

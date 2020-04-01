@@ -23,7 +23,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
   has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
-  has_many :favorites, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   # User content
@@ -216,25 +215,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     follow_for(followable)&.follow_type || 'never'
   end
 
-  def favorite_forums
-    @favorite_forums ||=
-      Forum
-        .joins(:favorites)
-        .where('favorites.user_id = ?', id)
-        .order(Favorite.arel_table[:created_at].asc)
-        .includes(:properties)
-  end
-
-  def favorite_forum_ids
-    @favorite_forum_ids ||= favorite_forums.pluck(:id)
-  end
-
   def favorite_pages
     return Page.none if guest?
 
     @favorite_pages ||=
       ActsAsTenant.without_tenant do
-        pids = favorite_forums.joins(:parent).pluck('parents_edges.uuid') + page_ids
+        pids = page_ids + profile.groups.pluck('distinct root_id')
         Kaminari.paginate_array(
           Page
             .joins(:profile)
@@ -252,10 +238,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def forum_management?
     page_management? || profile.grants.moderator.presence
-  end
-
-  def has_favorite?(edge)
-    favorites.where(edge: edge).any?
   end
 
   def iri_opts

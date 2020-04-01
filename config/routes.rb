@@ -112,7 +112,6 @@ Rails.application.routes.draw do
   end
 
   get :feed, controller: :feed, action: :index
-  get 'staff/feed', controller: :favorites_feed, action: :index
 
   resources :terms, only: %i[new create]
 
@@ -261,9 +260,6 @@ Rails.application.routes.draw do
   end
   resources :direct_messages, path: :dm, only: [:create]
   resources :exports, only: [] do
-    include_route_concerns
-  end
-  resources :favorites, only: [:create] do
     include_route_concerns
   end
   resources :grants, path: 'grants', only: %i[show new create] do
