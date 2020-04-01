@@ -137,7 +137,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         view: :preview_view,
         owner: owner,
         permitted_action: PermittedAction.find_by!(title: 'motion_create'),
-        resource_iri: [[custom_action.iri, nil]]
+        resource_iri: [[custom_action.iri(fragment: 'EntryPoint'), nil]]
       )
     end
 
@@ -161,7 +161,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         view: :preview_view,
         owner: owner,
         permitted_action: PermittedAction.find_by!(title: 'question_create'),
-        resource_iri: [[custom_action.iri, nil]]
+        resource_iri: [[custom_action.iri(fragment: 'EntryPoint'), nil]]
       )
     end
 
@@ -185,7 +185,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         view: :preview_view,
         owner: owner,
         permitted_action: PermittedAction.find_by!(title: 'topic_create'),
-        resource_iri: [[custom_action.iri, nil]]
+        resource_iri: [[custom_action.iri(fragment: 'EntryPoint'), nil]]
       )
     end
 
