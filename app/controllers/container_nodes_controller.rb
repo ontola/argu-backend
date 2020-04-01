@@ -112,4 +112,10 @@ class ContainerNodesController < EdgeableController
   def tab
     @tab ||= params[:tab] || params[:forum].try(:[], :tab) || policy(authenticated_resource).default_tab
   end
+
+  def update_success
+    return super unless current_resource.previous_changes.key?(:url)
+
+    respond_with_redirect(location: current_resource.iri, reload: true)
+  end
 end

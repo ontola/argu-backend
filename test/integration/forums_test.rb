@@ -148,6 +148,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
     )
     assert_includes updated_holland.widgets.discussions.first.resource_iri.first.first, updated_holland.iri_path
     assert_equal "#{updated_holland.parent.iri}/new_url", updated_holland.iri
+    updated_holland.custom_actions.map(&:href).all? do |iri|
+      iri.match?(%r{#{Regexp.escape(updated_holland.parent.iri)}\/new_url})
+    end
   end
 
   test 'administrator should update locale affecting placement' do
