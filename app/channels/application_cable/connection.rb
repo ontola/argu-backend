@@ -39,7 +39,7 @@ module ApplicationCable
     end
 
     def guest_user
-      GuestUser.new(id: doorkeeper_token.resource_owner_id) if doorkeeper_token
+      GuestUser.new(id: doorkeeper_token&.resource_owner_id)
     end
 
     def send_welcome_message
