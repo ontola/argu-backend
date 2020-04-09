@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class SearchResult # rubocop:disable Metrics/ClassLength
-  include ActiveModel::Model
-  include LinkedRails::Model
+class SearchResult < Collection
   include ActionDispatch::Routing
   include UriTemplateHelper
   include Rails.application.routes.url_helpers
@@ -10,85 +8,34 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   include IRITemplateHelper
   include Cacheable
 
-  attr_accessor :filter, :page, :page_size, :parent, :q, :user_context
-  attr_writer :sort
-  delegate :user, to: :user_context
-  delegate :total_count, :took, to: :search_result
-  delegate :root, to: :parent
+  attr_accessor :q
+  delegate :total_count, :took, to: :association_base
 
-  def association_class
-    Edge
+  def action_triples(*_args)
+    []
+  end
+
+  def association_base
+    @association_base ||= Result.new(self)
+  end
+
+  def default_display
+    :grid
   end
 
   def iri_opts
-    opts = {}
-    opts[:parent_iri] = split_iri_segments(parent&.iri_path) if parent&.iri_path
-    opts[:page] = page if page
-    opts[:q] = q if q
-    opts['sort%5B%5D'] = sort_iri_opts if @sort
+    opts = super
+    opts[:q] = q if q.present?
     opts
   end
 
-  def first
-    return nil if search_result.total_pages <= 1
-
-    RDF::DynamicURI(path_with_hostname(iri_path(page: 1)))
-  end
-
-  def last
-    return nil if search_result.total_pages <= 1
-
-    RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.total_pages)))
-  end
-
-  def name
-    return I18n.t('search.placeholder') if q.blank?
-
-    I18n.t('search.results_found', count: total_count)
-  end
-
-  def next
-    return nil if search_result.total_pages <= 1 || search_result.next_page.nil?
-
-    RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.next_page)))
-  end
-
-  def prev
-    return nil if search_result.total_pages <= 1
-
-    RDF::DynamicURI(path_with_hostname(iri_path(page: search_result.previous_page)))
-  end
-
-  def results
-    @results ||= LinkedRails::Sequence.new(search_result)
-  end
-
-  def route_key
-    :search
-  end
-
-  def search_result
-    @search_result ||= association_class.search(
-      q,
-      aggs: parent.searchable_aggregations,
-      order: sort_values,
-      page: page,
-      per_page: page_size || 15,
-      where: {
-        path: allowed_path_expression,
-        published_branch: true,
-        trashed_at: nil
-      }
-    )
-  end
-
-  def search_template
-    iri_template.to_s.gsub('{/parent_iri*}', parent&.iri || ActsAsTenant.current_tenant.iri)
-  end
-
-  def search_template_opts
+  def iri_template_opts
     opts = iri_opts.with_indifferent_access.slice(:display, :'filter%5B%5D', :'sort%5B%5D', :page_size, :q, :type)
-    Hash[opts.keys.map { |key| [CGI.escape(key), opts[key]] }].to_param
+    Hash[opts.keys.map { |key| [CGI.unescape(key), opts[key]] }].to_param
+  end
+
+  def page_size
+    @page_size&.to_i || 15
   end
 
   def sort_options
@@ -96,17 +43,15 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   end
 
   def sortings
-    @sortings ||= sort.map do |hash|
-      CollectionSorting.new(
-        association_class: association_class,
-        direction: hash[:direction],
-        key: hash[:key]
-      )
-    end
+    super
   end
 
-  def type
-    :paginated
+  def title
+    return I18n.t('search.results_found', count: total_count) if q.present?
+
+    I18n.available_locales.map do |locale|
+      RDF::Literal(I18n.t('search.placeholder', locale: locale), language: locale)
+    end
   end
 
   def write_to_cache(cache = Argu::Cache.new)
@@ -117,57 +62,99 @@ class SearchResult # rubocop:disable Metrics/ClassLength
 
   private
 
-  def allowed_paths
-    @allowed_paths ||= parent_granted? ? [parent.path] : granted_paths
-  end
-
-  def allowed_path_expression
-    exp = allowed_paths
-            .map { |p| "(#{Regexp.quote(p)}[$|(\\.0-9+)]*)" }
-            .join('|')
-    Regexp.new("\\A#{exp}\\z")
-  end
-
   def default_sortings
     [
       {
-        direction: :asc,
+        direction: :desc,
         key: NS::ONTOLA[:relevance]
       }
     ]
   end
 
-  def granted_paths # rubocop:disable Metrics/AbcSize
-    return [] if user_context.blank?
-
-    @granted_paths ||=
-      user_context
-        .grant_tree
-        .grants_in_scope
-        .select { |g| user_context.user.profile.group_ids.include?(g.group_id) }
-        .map { |g| g.edge.path }
-        .uniq
+  class << self
+    def iri
+      NS::ONTOLA[:SearchResult]
+    end
   end
 
-  def parent_granted?
-    granted_paths.any? { |p| p == parent.path || parent.path.starts_with?("#{p}.") }
-  end
+  class Result
+    include Enumerable
+    attr_accessor :collection
+    delegate :association_class, :page_size, :parent, :q, :sortings, :user_context, :views, to: :collection
+    delegate :took, :total_count, to: :result
 
-  def sort
-    @sort || default_sortings
-  end
+    def initialize(collection)
+      self.collection = collection
+    end
 
-  def sort_iri_opts
-    sort.map { |s| "#{CGI.escape(s[:key])}=#{s[:direction]}" }
-  end
+    def each(&block)
+      result.each(&block)
+    end
 
-  def sort_key(key)
-    return :_score if key == NS::ONTOLA[:relevance]
+    def page(*_args)
+      self
+    end
 
-    association_class.predicate_mapping[key]&.name
-  end
+    def per(*_args)
+      self
+    end
 
-  def sort_values
-    Hash[sort.map { |val| [sort_key(val[:key]), val[:direction]] }]
+    def result
+      @result ||= association_class.search(
+        q,
+        aggs: parent.searchable_aggregations,
+        order: sort_values,
+        page: views.first.page,
+        per_page: page_size,
+        where: {
+          path: allowed_path_expression,
+          published_branch: true,
+          trashed_at: nil
+        }
+      )
+    end
+
+    def unfiltered_collection
+      @unfiltered_collection ||= new_child(filter: [], q: q)
+    end
+
+    private
+
+    def allowed_paths
+      @allowed_paths ||= parent_granted? ? [parent.path] : granted_paths
+    end
+
+    def allowed_path_expression
+      exp = allowed_paths
+              .map { |p| "(#{Regexp.quote(p)}[$|(\\.0-9+)]*)" }
+              .join('|')
+      Regexp.new("\\A#{exp}\\z")
+    end
+
+    def granted_paths # rubocop:disable Metrics/AbcSize
+      return [] if user_context.blank?
+
+      @granted_paths ||=
+        user_context
+          .grant_tree
+          .grants_in_scope
+          .select { |g| user_context.user.profile.group_ids.include?(g.group_id) }
+          .map { |g| g.edge.path }
+          .uniq
+    end
+
+    def parent_granted?
+      granted_paths.any? { |p| p == parent.path || parent.path.starts_with?("#{p}.") }
+    end
+
+    def sort_key(key)
+      return :_score if key == NS::ONTOLA[:relevance]
+
+      association_class.predicate_mapping[key]&.name
+    end
+
+    def sort_values
+      Hash[sortings.select { |val| sort_key(val.key) }.map { |val| [sort_key(val.key), val.direction] }]
+    end
   end
 end

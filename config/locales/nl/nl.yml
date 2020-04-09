@@ -74,7 +74,6 @@ nl:
   image: "Afbeelding"
   pro: "voor"
   con: "tegen"
-  search: "Zoeken"
   log: "Log"
   feed: "Activiteit"
   feed_filter:

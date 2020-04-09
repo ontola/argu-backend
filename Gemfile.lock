@@ -18,8 +18,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 5b499d2a67ece35c214e6e6dfab4a48bd1837c23
-  ref: 5b499d2a67ece35c214e6e6dfab4a48bd1837c23
+  revision: 6460f74bc878aa3ede94177d07954a1d531be2cb
   specs:
     linked_rails (0.0.0)
       active_response
@@ -313,7 +312,7 @@ GEM
       with_env (= 1.1.0)
       xml-simple
     link_header (0.0.8)
-    loofah (2.4.0)
+    loofah (2.5.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     ltree_hierarchy (1.0.0)
@@ -458,7 +457,7 @@ GEM
     rdf-turtle (3.1.0)
       ebnf (~> 1.2)
       rdf (~> 3.1)
-    rdf-vocab (3.1.2)
+    rdf-vocab (3.1.4)
       rdf (~> 3.1)
     rdf-xsd (3.1.0)
       rdf (~> 3.1)
@@ -581,7 +580,7 @@ GEM
     timers (4.3.0)
     toml (0.2.0)
       parslet (~> 1.8.0)
-    tzinfo (1.2.6)
+    tzinfo (1.2.7)
       thread_safe (~> 0.1)
     tzinfo-data (1.2019.3)
       tzinfo (>= 1.0.0)

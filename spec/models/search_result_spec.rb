@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe SearchResult, type: :model do
   define_spec_objects
-  let(:page) { 1 }
   let(:parent) { argu }
   let(:q) { 'motion' }
   let(:user_context) { UserContext.new(user: user, profile: user.profile, doorkeeper_scopes: {}) }
@@ -36,8 +35,8 @@ RSpec.describe SearchResult, type: :model do
 
   describe 'pagination' do
     it { expect(search_result.total_count).to eq(4) }
-    it { expect(search_result(page_size: 3).search_result.count).to eq(3) }
-    it { expect(search_result(page_size: 3, page: 2).search_result.count).to eq(1) }
+    it { expect(search_result.default_view.count).to eq(4) }
+    it { expect(search_result(page_size: 3).default_view.count).to eq(3) }
   end
 
   describe 'search in branch' do
@@ -48,16 +47,16 @@ RSpec.describe SearchResult, type: :model do
 
   describe 'keeping index up to date' do
     it 'keeps trashed items in index' do
-      expect(search_result.search_result.count).to eq(4)
+      expect(search_result.association_base.count).to eq(4)
       motion.trash
-      expect(search_result.search_result.count).to eq(4)
+      expect(search_result.association_base.count).to eq(4)
     end
 
     it 'remove destroyed items from index' do
-      expect(search_result.search_result.count).to eq(4)
+      expect(search_result.association_base.count).to eq(4)
       motion.destroy
-      expect(search_result.search_result.count).to eq(3)
-      expect(search_result.search_result.reject(&:is_published?)).to be_empty
+      expect(search_result.association_base.count).to eq(3)
+      expect(search_result.association_base.reject(&:is_published?)).to be_empty
     end
 
     it 'updates a record' do
@@ -93,7 +92,7 @@ RSpec.describe SearchResult, type: :model do
   def search_result(opts = {})
     SearchResult.new(
       {
-        page: page,
+        association_class: Edge,
         parent: parent,
         q: q,
         user_context: user_context
