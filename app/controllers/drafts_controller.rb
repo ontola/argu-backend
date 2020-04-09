@@ -9,14 +9,16 @@ class DraftsController < AuthorizedController
 
   def index_collection
     @index_collection ||= ::Collection.new(
-      association_class: Edge,
-      association_scope: :draft,
-      name: :drafts,
-      parent: user_by_id,
-      parent_uri_template: :drafts_collection_iri,
-      parent_uri_template_canonical: :drafts_collection_canonical,
-      policy: DraftPolicy,
-      user_context: user_context
+      collection_options.merge(
+        association_class: Edge,
+        association_scope: :draft,
+        name: :drafts,
+        parent: user_by_id,
+        parent_uri_template: :drafts_collection_iri,
+        parent_uri_template_canonical: :drafts_collection_canonical,
+        policy: DraftPolicy,
+        user_context: user_context
+      )
     )
   end
 
