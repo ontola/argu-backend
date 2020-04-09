@@ -48,6 +48,10 @@ class CustomAction < Edge
     self.submit_label = value
   end
 
+  def searchable_should_index?
+    false
+  end
+
   def submit_label
     submit_label_translation ? LinkedRails.translations(-> { I18n.t(super) }) : super
   end
