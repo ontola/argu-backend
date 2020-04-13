@@ -8,4 +8,8 @@ class ManifestsController < ApplicationController
   private
 
   def doorkeeper_render_error; end
+
+  def valid_token?
+    true
+  end
 end
