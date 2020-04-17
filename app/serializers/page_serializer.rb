@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PageSerializer < RecordSerializer
+class PageSerializer < EdgeSerializer
   attribute :name, predicate: NS::FOAF[:name], datatype: NS::XSD[:string] do |object|
     profile = object.is_a?(Profile) ? object : object.profile
     profile.name

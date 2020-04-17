@@ -45,7 +45,7 @@ class ActivityListener
         resource,
         resource.parent,
         :create,
-        parameters: {for: resource.for}
+        parameters: {option: resource.option}
       )
     end
   end

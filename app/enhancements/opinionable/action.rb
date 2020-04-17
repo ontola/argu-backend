@@ -7,7 +7,7 @@ module Opinionable
     included do
       has_action(
         :update_opinion,
-        result: -> { opinion && "#{vote.for.classify}Opinion".safe_constantize },
+        result: -> { opinion && vote.opinion_class.safe_constantize },
         type: -> { [NS::ARGU['Update::Opinion'], NS::SCHEMA[:UpdateAction]] },
         policy: :update?,
         http_method: :put,

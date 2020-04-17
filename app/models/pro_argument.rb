@@ -3,9 +3,8 @@
 class ProArgument < Argument
   paginates_per 5
 
-  # To facilitate the group_by command
-  def key
-    :pro
+  def option
+    :yes
   end
 
   def pro

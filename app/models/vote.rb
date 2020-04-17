@@ -9,8 +9,13 @@ class Vote < Edge
   include RedisResource::Concern
   include Trashable::Model
 
-  property :for, :integer, NS::SCHEMA[:option], default: 3, enum: {con: 0, pro: 1, neutral: 2, abstain: 3}
+  property :option, :integer, NS::SCHEMA[:option], default: 3, enum: {no: 0, yes: 1, other: 2, abstain: 3}
   property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
+  OPINION_CLASSES = {
+    yes: 'ProOpinion',
+    other: 'NeutralOpinion',
+    no: 'ConOpinion'
+  }.with_indifferent_access
   attribute :primary, :boolean, default: true
 
   belongs_to :comment, foreign_key_property: :comment_id
@@ -24,19 +29,17 @@ class Vote < Edge
 
   parentable :pro_argument, :con_argument, :vote_event
 
-  filterable option: {
-    attr: :for,
-    key: :for,
-    values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]},
+  filterable NS::SCHEMA[:option] => {
+    values: Vote.options,
     counter_cache: {yes: :votes_pro, other: :votes_neutral, no: :votes_con}
   }
-  counter_cache votes_pro: {confirmed: true, for: Vote.fors[:pro]},
-                votes_con: {confirmed: true, for: Vote.fors[:con]},
-                votes_neutral: {confirmed: true, for: Vote.fors[:neutral]},
+  counter_cache votes_pro: {confirmed: true, option: Vote.options[:yes]},
+                votes_con: {confirmed: true, option: Vote.options[:no]},
+                votes_neutral: {confirmed: true, option: Vote.options[:other]},
                 votes: {confirmed: true}
   delegate :voteable, to: :parent
 
-  validates :creator, :for, presence: true
+  validates :creator, :option, presence: true
 
   # #########methods###########
   def argument_ids
@@ -55,11 +58,7 @@ class Vote < Edge
 
   # Needed for ActivityListener#audit_data
   def display_name
-    "#{self.for} vote for #{parent.display_name}"
-  end
-
-  def for?(item)
-    self.for.to_s == item.to_s
+    "#{option} vote for #{parent.display_name}"
   end
 
   def iri_opts
@@ -76,8 +75,8 @@ class Vote < Edge
     true
   end
 
-  def key
-    self.for.to_sym
+  def opinion_class
+    OPINION_CLASSES[option] || raise("Could not find an OpinionClass for #{option}")
   end
 
   def pinned_at

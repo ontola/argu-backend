@@ -16,13 +16,16 @@ class EdgeSerializer < RecordSerializer
   attribute :granted_groups, predicate: NS::ARGU[:grantedGroups], unless: method(:system_scope?) do |object|
     RDF::URI("#{object.iri}/granted")
   end
+  attribute :is_trashed,
+            predicate: NS::ARGU[:trashed],
+            if: ->(obj, _) { obj.is_trashable? },
+            datatype: NS::XSD[:boolean]
 
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
   attribute :last_activity_at, predicate: NS::ARGU[:lastActivityAt]
   attribute :pinned_at, predicate: NS::ARGU[:pinnedAt]
+  attribute :pinned, predicate: NS::ARGU[:pinned], datatype: NS::XSD[:boolean]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
-
-  delegate :is_publishable?, to: :object
 
   def self.count_attribute(type, opts = {})
     attribute "#{type}_count",

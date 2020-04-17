@@ -3,7 +3,6 @@
 class Thing < Edge
   enhance CoverPhotoable
 
-  include SerializationHelper
   has_many :linked_edges, through: :properties
 
   def action_triples(_user_context)

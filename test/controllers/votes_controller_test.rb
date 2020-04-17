@@ -36,8 +36,6 @@ class VotesControllerTest < ActionController::TestCase
 
     expect_relationship('part_of')
 
-    expect_relationship('default_filtered_collections', size: 3)
-
     included_votes = vote_event.votes.joins(:publisher).where(users: {show_feed: true})
     expect_view_members(expect_default_view, included_votes.count)
     expect_not_included(vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri))
@@ -50,14 +48,14 @@ class VotesControllerTest < ActionController::TestCase
           root_id: argu.url,
           motion_id: motion.fragment,
           vote_event_id: vote_event.fragment,
-          'filter[]' => 'option=yes'
+          'filter[]' => 'http://schema.org/option=yes'
         }
     assert_response 200
 
     expect_relationship('unfiltered_collection')
 
-    included_votes = vote_event.votes.joins(:publisher).where(for: :pro, users: {show_feed: true})
+    included_votes = vote_event.votes.joins(:publisher).where(option: :yes, users: {show_feed: true})
     expect_view_members(expect_default_view, included_votes.count)
-    expect_not_included(vote_event.votes.where(for: :con))
+    expect_not_included(vote_event.votes.where(option: :no))
   end
 end

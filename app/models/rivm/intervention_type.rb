@@ -54,6 +54,18 @@ class InterventionType < Edge
       30
     end
 
+    def sort_options(collection)
+      return super if collection.type == :infinite
+
+      [
+        NS::SCHEMA[:name],
+        NS::SCHEMA[:dateCreated],
+        NS::RIVM[:oneOffCostsScore],
+        NS::RIVM[:recurringCostsScore],
+        NS::RIVM[:securityImprovedScore]
+      ]
+    end
+
     def unknown
       find_or_create_by(parent: ActsAsTenant.current_tenant, display_name: 'Weet ik niet')
     end

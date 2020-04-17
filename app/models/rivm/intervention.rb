@@ -114,5 +114,17 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
     def iri_namespace
       NS::RIVM
     end
+
+    def sort_options(collection)
+      return super if collection.type == :infinite
+
+      [
+        NS::SCHEMA[:name],
+        NS::SCHEMA[:dateCreated],
+        NS::RIVM[:oneOffCostsScore],
+        NS::RIVM[:recurringCostsScore],
+        NS::RIVM[:securityImprovedScore]
+      ]
+    end
   end
 end

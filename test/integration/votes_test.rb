@@ -108,7 +108,7 @@ class VotesTest < ActionDispatch::IntegrationTest
       Sidekiq::Testing.inline! do
         post collection_iri(vote_event, :votes),
              params: {
-               vote: {for: :pro}
+               vote: {option: :yes}
              },
              headers: argu_headers(accept: :json)
       end
@@ -126,7 +126,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 0,
                       'vote_event.reload.children_count(:votes_con)' => 0) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes, 'filter%5B%5D' => 'option=no', type: :paginated),
+        post collection_iri(vote_event, :votes, type: :paginated, CGI.escape(NS::SCHEMA[:option]) => :no),
              headers: argu_headers(accept: :nq)
       end
     end
@@ -138,19 +138,19 @@ class VotesTest < ActionDispatch::IntegrationTest
       NS::ONTOLA[:replace]
     )
     expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :yes}), root: argu),
+      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[yes]}), root: argu),
       NS::AS[:totalItems],
       1,
       NS::ONTOLA[:replace]
     )
     expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :other}), root: argu),
+      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[other]}), root: argu),
       NS::AS[:totalItems],
       0,
       NS::ONTOLA[:replace]
     )
     expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :no}), root: argu),
+      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[no]}), root: argu),
       NS::AS[:totalItems],
       0,
       NS::ONTOLA[:replace]
@@ -163,7 +163,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     post collection_iri(closed_question_motion.default_vote_event, :votes, canonical: true),
          params: {
-           vote: {for: :con}
+           vote: {option: :no}
          },
          headers: argu_headers(accept: :json_api)
     assert_response 403
@@ -181,7 +181,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:yes]
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
       post collection_iri(vote_event, :votes, canonical: true),
-           params: {vote: {for: :con}},
+           params: {vote: {option: :no}},
            headers: argu_headers(accept: :json_api)
     end
     assert_response 201
@@ -196,7 +196,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     argument_guest_vote
     assert_difference('Argu::Redis.keys("temporary.*").count', -1) do
-      delete iri_from_template(:vote_iri, parent_iri: split_iri_segments(argument.iri_path), for: :pro, root: argu)
+      delete(
+        iri_from_template(:vote_iri, parent_iri: split_iri_segments(argument.iri_path), option: %i[yes], root: argu)
+      )
       assert_response :success
     end
   end
@@ -235,7 +237,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'vote_event.reload.children_count(:votes_pro)' => 0) do
       post collection_iri(vote_event, :votes, canonical: true),
            params: {
-             vote: {for: :pro}
+             vote: {option: :yes}
            },
            headers: argu_headers(accept: :json)
     end
@@ -257,7 +259,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'vote_event.reload.children_count(:votes_pro)' => 1) do
       post collection_iri(vote_event, :votes, canonical: true),
            params: {
-             vote: {for: :pro}
+             vote: {option: :yes}
            },
            headers: argu_headers(accept: :json)
     end
@@ -275,7 +277,7 @@ class VotesTest < ActionDispatch::IntegrationTest
       post iri,
            params: {
              vote: {
-               for: :pro
+               option: :yes
              }
            },
            headers: argu_headers(accept: :json)
@@ -292,13 +294,59 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'argument.reload.children_count(:votes_pro)' => 1) do
       post collection_iri(argument, :votes, canonical: true),
            params: {
-             for: :pro
+             vote: {
+               option: :yes
+             }
            },
            headers: argu_headers(accept: :json)
     end
 
     assert_response 201
     assert assigns(:create_service).resource.valid?
+  end
+
+  test 'user should post create for motion nq' do
+    sign_in user
+
+    expect(vote_event.votes.length).to be 1
+    assert_difference('Vote.count' => 1,
+                      'Edge.count' => 1,
+                      'vote_event.reload.children_count(:votes_con)' => 0,
+                      'vote_event.reload.children_count(:votes_pro)' => 1) do
+      Sidekiq::Testing.inline! do
+        post(
+          collection_iri(vote_event, :votes, CGI.escape(NS::SCHEMA[:option]) => :yes),
+          headers: argu_headers(accept: :nq)
+        )
+      end
+    end
+
+    expect_triple(
+      resource_iri(vote_event.vote_collection(user_context: context), root: argu),
+      NS::AS[:totalItems],
+      2,
+      NS::ONTOLA[:replace]
+    )
+    expect_triple(
+      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[yes]}), root: argu),
+      NS::AS[:totalItems],
+      2,
+      NS::ONTOLA[:replace]
+    )
+    expect_triple(
+      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[other]}), root: argu),
+      NS::AS[:totalItems],
+      0,
+      NS::ONTOLA[:replace]
+    )
+    expect_triple(
+      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[no]}), root: argu),
+      NS::AS[:totalItems],
+      0,
+      NS::ONTOLA[:replace]
+    )
+
+    assert_response 201
   end
 
   test 'user should post create json_api' do
@@ -312,7 +360,7 @@ class VotesTest < ActionDispatch::IntegrationTest
              data: {
                type: 'votes',
                attributes: {
-                 side: :pro
+                 side: :yes
                }
              }
            },
@@ -321,7 +369,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 201
     assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.pro?
+    assert assigns(:create_service).resource.yes?
   end
 
   test 'user should not post create json_api on closed vote_event' do
@@ -337,7 +385,7 @@ class VotesTest < ActionDispatch::IntegrationTest
              data: {
                type: 'votes',
                attributes: {
-                 side: :pro
+                 side: :yes
                }
              }
            },
@@ -353,12 +401,11 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     assert_difference('Vote.count' => 0,
-                      'vote_event.reload.total_vote_count' => 0,
                       'vote_event.children_count(:votes_pro)' => 0) do
       post collection_iri(vote_event, :votes, canonical: true),
            params: {
              vote: {
-               for: 'pro'
+               option: :yes
              }
            },
            headers: argu_headers(accept: :json)
@@ -372,12 +419,11 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     assert_difference('Vote.count' => 0,
-                      'vote_event.reload.total_vote_count' => 0,
                       'vote_event.children_count(:votes_pro)' => 0) do
       post collection_iri(vote_event, :votes, canonical: true),
            params: {
              vote: {
-               for: 'pro'
+               option: :yes
              }
            },
            headers: argu_headers(accept: :nq)
@@ -393,13 +439,12 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 1,
                       'Vote.untrashed.count' => 0,
                       'Activity.count' => 0,
-                      'vote_event.reload.total_vote_count' => 0,
-                      'vote_event.children_count(:votes_pro)' => -1,
-                      'vote_event.children_count(:votes_con)' => 1) do
+                      'vote_event.reload.children_count(:votes_pro)' => -1,
+                      'vote_event.reload.children_count(:votes_con)' => 1) do
       post collection_iri(vote_event, :votes, canonical: true),
            params: {
              vote: {
-               for: 'con'
+               option: :no
              }
            },
            headers: argu_headers(accept: :json)
@@ -414,15 +459,14 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_difference('Vote.count' => 1,
                       'Vote.untrashed.count' => 0,
-                      'vote_event.reload.total_vote_count' => 0,
-                      'vote_event.children_count(:votes_pro)' => -1,
-                      'vote_event.children_count(:votes_con)' => 1) do
+                      'vote_event.reload.children_count(:votes_pro)' => -1,
+                      'vote_event.reload.children_count(:votes_con)' => 1) do
       post collection_iri(vote_event, :votes, canonical: true),
            params: {
              data: {
                type: 'votes',
                attributes: {
-                 side: :con
+                 side: :no
                }
              }
            },
@@ -431,31 +475,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 201
     assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.con?
-  end
-
-  test 'creator should not put update json_api side' do
-    sign_in creator
-
-    assert_difference('Vote.count' => 0,
-                      'vote_event.reload.total_vote_count' => 0,
-                      'vote_event.children_count(:votes_pro)' => 0,
-                      'vote_event.children_count(:votes_con)' => 0) do
-      put vote,
-          params: {
-            data: {
-              type: 'votes',
-              attributes: {
-                side: :con
-              }
-            }
-          },
-          headers: argu_headers(accept: :json_api)
-    end
-
-    assert_response 204
-    assert assigns(:update_service).resource.valid?
-    assert assigns(:update_service).resource.pro?
+    assert assigns(:create_service).resource.no?
   end
 
   test 'creator should not delete destroy vote for motion twice' do
@@ -522,7 +542,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 1,
                       'vote_event.reload.children_count(:votes_con)' => 1) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes, 'filter%5B%5D' => 'option=no', type: :paginated),
+        post collection_iri(vote_event, :votes, type: :paginated, CGI.escape(NS::SCHEMA[:option]) => :no),
              headers: argu_headers(accept: :nq)
       end
     end
@@ -534,19 +554,19 @@ class VotesTest < ActionDispatch::IntegrationTest
       NS::ONTOLA[:replace]
     )
     expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :yes}), root: argu),
+      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[yes]}), root: argu),
       NS::AS[:totalItems],
       1,
       NS::ONTOLA[:replace]
     )
     expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :other}), root: argu),
+      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[other]}), root: argu),
       NS::AS[:totalItems],
       0,
       NS::ONTOLA[:replace]
     )
     expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: :no}), root: argu),
+      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[no]}), root: argu),
       NS::AS[:totalItems],
       1,
       NS::ONTOLA[:replace]
@@ -563,7 +583,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'vote_event.reload.children_count(:votes_pro)' => 1) do
       Sidekiq::Testing.inline! do
         post collection_iri(vote_event, :votes),
-             params: {vote: {for: :pro}},
+             params: {vote: {option: :yes}},
              headers: argu_headers(accept: :nq)
       end
     end

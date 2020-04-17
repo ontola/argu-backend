@@ -99,7 +99,7 @@ module RedisResource
         {
           creator: user.profile,
           publisher: user,
-          for: :pro,
+          option: :yes,
           parent: motion.default_vote_event,
           root_id: motion.root_id
         }.merge(attrs)

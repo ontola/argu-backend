@@ -39,9 +39,9 @@ module VoteEventable
           default_vote_event: [
             :current_vote,
             vote_collection: {
+              filter_fields: :options,
               filters: [],
-              sortings: [],
-              default_filtered_collections: inc_shallow_collection
+              sortings: []
             }.freeze
           ].freeze
         ]

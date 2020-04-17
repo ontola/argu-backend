@@ -88,7 +88,7 @@ class RegistrationsController < Devise::RegistrationsController
         token_url: user_confirmation_url(user),
         motions: guest_votes.map do |guest_vote|
           m = guest_vote.resource.ancestor(:motion)
-          {display_name: m.display_name, url: m.iri, option: guest_vote.resource.for} if m
+          {display_name: m.display_name, url: m.iri, option: guest_vote.resource.option} if m
         end.compact
       )
     elsif resource.password.present?

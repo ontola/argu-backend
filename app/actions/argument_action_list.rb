@@ -10,7 +10,7 @@ class ArgumentActionList < EdgeActionList
     image: 'fa-arrow-up',
     policy: :create_child?,
     policy_resource: -> { resource.vote_collection },
-    url: -> { collection_iri(resource, :votes, for: :pro) },
+    url: -> { collection_iri(resource, :votes, CGI.escape(NS::SCHEMA[:option]) => :yes) },
     http_method: :post,
     favorite: true,
     condition: -> { current_vote.nil? }

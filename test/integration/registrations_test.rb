@@ -186,8 +186,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       'test@example.com',
       token_url: /.+/,
       motions: [
-        {display_name: motion.display_name, option: 'pro', url: motion.iri},
-        {display_name: motion2.display_name, option: 'pro', url: motion2.iri}
+        {display_name: motion.display_name, option: 'yes', url: motion.iri},
+        {display_name: motion2.display_name, option: 'yes', url: motion2.iri}
       ]
     )
 
@@ -239,8 +239,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       attrs[:email],
       token_url: /.+/,
       motions: [
-        {display_name: motion.display_name, option: 'pro', url: motion.iri},
-        {display_name: motion2.display_name, option: 'pro', url: motion2.iri}
+        {display_name: motion.display_name, option: 'yes', url: motion.iri},
+        {display_name: motion2.display_name, option: 'yes', url: motion2.iri}
       ]
     )
 

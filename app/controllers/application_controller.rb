@@ -40,29 +40,9 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
       name.sub(/Controller$/, '').classify.safe_constantize || controller_name.classify.safe_constantize
   end
 
-  # The params, deserialized when format is json_api or LD and method is not safe
-  # @example Resource params from json_api request
-  #   params = {
-  #     data: {type: 'motions', attributes: {body: 'body'}},
-  #     relationships: {relation: {data: {type: 'motions', id: motion.id}}}
-  #   }
-  #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
-  # @example Resource params from LD request
-  # @return [Hash] The params
-  def params # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-    return @__params if instance_variable_defined?(:@__params)
-
-    if UNSAFE_METHODS.include?(request.method)
-      if parse_graph_params?
-        p = HashWithIndifferentAccess.new
-        p[model_name] = parse_filter(super[:filter], controller_class.try(:filter_options)) if super[:filter]
-        return @__params = ActionController::Parameters.new(super.to_unsafe_h.deep_merge(p))
-      end
-
-      return @__params = json_api_params(super) if request.format.json_api? && super[:data].present?
-    end
-
-    @__params = super
+  def params
+    @params ||=
+      UNSAFE_METHODS.include?(request.method) && parse_json_api_params?(super) ? json_api_params(super) : super
   end
 
   def redirect_to(*args)
@@ -132,10 +112,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   def internal_request?
     Argu::WhitelistConstraint.matches?(request)
-  end
-
-  def parse_graph_params?
-    !request.format.json_api?
   end
 
   def serializer_params

@@ -4,9 +4,9 @@ nl:
     timeline: "Tijdlijn"
     votes:
       create: "%{owner} %{side} %{parent}"
-      pro: "is vóór"
-      con: "is tegen"
-      neutral: "heeft nog geen mening over"
+      :yes: "is vóór"
+      :no: "is tegen"
+      other: "heeft nog geen mening over"
     decisions:
       approved: "%{owner} heeft %{parent} aangenomen"
       forwarded:
@@ -26,12 +26,16 @@ nl:
       update: "%{owner} heeft %{subject} gewijzigd"
     arguments:
       create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
-      pro: "vóór"
-      con: "tegen"
+      :yes: "vóór"
+      :no: "tegen"
     pro_arguments:
       create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
+      :yes: "vóór"
+      :no: "tegen"
     con_arguments:
       create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
+      :yes: "vóór"
+      :no: "tegen"
     blog_posts:
       create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
     motions:

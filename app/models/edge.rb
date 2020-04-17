@@ -13,6 +13,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Edgeable::Properties
   include Edgeable::PropertyAssociations
   include Parentable
+  include SerializationHelper
   include Shortnameable
   include Uuidable
   include Cacheable
@@ -24,6 +25,14 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   acts_as_followable
   has_ltree_hierarchy
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
+  filterable(
+    NS::ARGU[:trashed] => {
+      filter: lambda { |scope, value|
+        value ? scope.where.not(trashed_at: nil) : scope.where(trashed_at: nil)
+      },
+      values: [true, false]
+    }
+  )
 
   belongs_to :parent,
              class_name: 'Edge',
@@ -160,6 +169,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   acts_as_sequenced scope: :root_id, column: :fragment
   with_collection :exports
+  self.default_filters = {NS::ARGU[:trashed] => [false]}
 
   attr_writer :root
 
@@ -264,6 +274,15 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @persisted_edge = edge
   end
 
+  def pinned
+    pinned_at.present?
+  end
+  alias pinned? pinned
+
+  def pinned=(value)
+    self.pinned_at = %w[true 1].include?(value.to_s) ? Time.current : nil
+  end
+
   # Calculated the number of unique followers for at least {level}
   # @param [Symbol] level The lowest type of follower to include
   # @return [Integer] The number of followers
@@ -295,7 +314,9 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def search_data
     preload_properties(true)
-    data = serializable_hash.except(:id)
+    data = rdf_attributes
+    data[NS::ONTOLA[:primaryKey].to_s] = id
+    data[:path] = path
     data[:published_branch] = !has_unpublished_ancestors?
     data
   end
@@ -312,7 +333,11 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def searchable_aggregations
-    %i[owner_type is_trashed?]
+    [
+      RDF[:type].to_s,
+      NS::ARGU[:trashed].to_s,
+      NS::ARGU[:pinned].to_s
+    ]
   end
 
   def searchable_should_index?
@@ -374,6 +399,22 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return unless ancestor(:forum)&.enforce_hidden_last_name?
 
     publisher.enforce_hidden_last_name!
+  end
+
+  def json_attributes
+    serializable_resource(
+      self,
+      [:user]
+    ).as_json['data']['attributes']
+  end
+
+  def rdf_attributes
+    Hash[
+      json_attributes.map do |key, value|
+        predicate = self.class.predicate_for_key(key.to_s.underscore)
+        [predicate.to_s, value] if predicate
+      end.compact
+    ]
   end
 
   def reset_persisted_edge

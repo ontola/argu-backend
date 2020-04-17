@@ -2,7 +2,13 @@ nl:
   properties:
     display_name:
       label: "Titel"
+    is_trashed:
+      label: "Verborgen"
+    pinned:
+      label: "Vastgezet"
     trash_activity:
       label: "Toelichting"
+    type:
+      label: "Type"
     untrash_activity:
       label: "Toelichting"

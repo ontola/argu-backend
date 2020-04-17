@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Argument < Edge
-  VOTE_OPTIONS = [:pro].freeze unless defined?(VOTE_OPTIONS)
+  VOTE_OPTIONS = [:yes].freeze unless defined?(VOTE_OPTIONS)
 
   enhance LinkedRails::Enhancements::Creatable
   enhance ActivePublishable
@@ -41,7 +41,7 @@ class Argument < Edge
     service = CreateVote.new(
       self,
       attributes: {
-        for: :pro,
+        option: :yes,
         creator: profile
       },
       options: {

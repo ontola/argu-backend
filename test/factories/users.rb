@@ -95,7 +95,7 @@ FactoryBot.define do
         ActsAsTenant.with_tenant(motion.root) do
           CreateVote.new(
             motion.default_vote_event,
-            attributes: {for: :pro},
+            attributes: {option: :yes},
             options: {
               creator: user.profile,
               publisher: user
@@ -104,7 +104,7 @@ FactoryBot.define do
           trashed = Motion.trashed.first
           CreateVote.new(
             trashed.default_vote_event,
-            attributes: {for: :pro},
+            attributes: {option: :yes},
             options: {
               creator: user.profile,
               publisher: user

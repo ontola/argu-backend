@@ -179,6 +179,16 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
   let(:staff) { create(:user, :staff) }
 
+  test 'staff should put update motion pin' do
+    sign_in staff
+
+    general_update(
+      results: {should: true, response: :success},
+      attributes: {pinned: true},
+      differences: [['Motion.where(pinned_at: nil)', -1]]
+    )
+  end
+
   test 'staff should trash draft' do
     sign_in staff
     draft_motion

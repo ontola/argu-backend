@@ -148,7 +148,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
     CreateVote.new(
       motion.default_vote_event,
-      attributes: {for: :con},
+      attributes: {option: :no},
       options: service_options(
         motion
           .default_vote_event
@@ -166,7 +166,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
     CreateVote.new(
       motion.default_vote_event,
-      attributes: {for: :con},
+      attributes: {option: :no},
       options: service_options(unconfirmed)
     ).commit
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)

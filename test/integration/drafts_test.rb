@@ -53,6 +53,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
     get "/#{argu.url}#{drafts_user_path(user)}"
     assert 200
     expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
+    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:name], 'My drafts', NS::ONTOLA[:replace])
   end
 
   test 'user should publish draft with draft=false' do

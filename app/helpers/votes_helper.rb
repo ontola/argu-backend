@@ -25,12 +25,12 @@ module VotesHelper
   end
 
   def vote_iri_path(model, vote)
-    return collection_iri_path(model, :votes, for: :pro) if vote.blank?
+    return collection_iri_path(model, :votes, option: %i[yes]) if vote.blank?
 
     if vote.try(:persisted?)
       vote.iri_path
     else
-      expand_uri_template(:vote_iri, parent_iri: split_iri_segments(model.iri_path), for: :pro)
+      expand_uri_template(:vote_iri, parent_iri: split_iri_segments(model.iri_path), option: %i[yes])
     end
   end
 end

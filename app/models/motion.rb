@@ -24,7 +24,7 @@ class Motion < Discussion
   validates :title, presence: true
   validates :creator, presence: true
 
-  VOTE_OPTIONS = %i[pro neutral con].freeze unless defined?(VOTE_OPTIONS)
+  VOTE_OPTIONS = %i[yes other no].freeze unless defined?(VOTE_OPTIONS)
 
   def as_json(options = {})
     super((options || {}).merge(
@@ -55,7 +55,7 @@ class Motion < Discussion
     def sort_options(collection)
       return super if collection.type == :infinite
 
-      [NS::ARGU[:votesProCount], NS::SCHEMA[:dateCreated], NS::ARGU[:lastActivityAt]]
+      [NS::ARGU[:votesProCount], NS::SCHEMA[:dateCreated], NS::ARGU[:lastActivityAt], NS::SCHEMA[:name]]
     end
   end
 end

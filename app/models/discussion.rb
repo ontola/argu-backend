@@ -19,7 +19,20 @@ class Discussion < Edge
   enhance Timelineable
 
   parentable :container_node, :page
-  filterable pinned: {key: :pinned_at, values: {yes: 'NOT NULL', no: 'NULL'}}
+  filterable(
+    NS::ARGU[:pinned] => {
+      filter: lambda { |scope, value|
+        value ? scope.where.not(pinned_at: nil) : scope.where(pinned_at: nil)
+      },
+      values: [true, false]
+    },
+    NS::ARGU[:trashed] => {
+      filter: lambda { |scope, value|
+        value ? scope.where.not(trashed_at: nil) : scope.where(trashed_at: nil)
+      },
+      values: [true, false]
+    }
+  )
   paginates_per 12
   placeable :custom
 

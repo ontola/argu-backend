@@ -6,10 +6,10 @@ class VoteActionList < EdgeActionList
   has_action(
     :create,
     create_options.merge(
-      image: -> { create_image(resource.filter['option']) },
-      label: -> { create_label(resource.filter['option']) },
-      submit_label: -> { create_label(resource.filter['option']) },
-      favorite: -> { resource.filter['option'].present? }
+      image: -> { create_image(resource.filter[NS::SCHEMA[:option].to_s]) },
+      label: -> { create_label(resource.filter[NS::SCHEMA[:option].to_s]) },
+      submit_label: -> { create_label(resource.filter[NS::SCHEMA[:option].to_s]) },
+      favorite: -> { resource.filter[NS::SCHEMA[:option].to_s].present? }
     )
   )
   %i[yes no other].each do |option|
@@ -20,8 +20,10 @@ class VoteActionList < EdgeActionList
         label: -> { create_label(option) },
         submit_label: -> { create_label(option) },
         favorite: -> { resource.parent.is_a?(VoteEvent) },
-        root_relative_iri: -> { resource.new_child(filter: {option: option}).action(:create).iri_path },
-        url: -> { resource.new_child(filter: {option: option}).iri }
+        root_relative_iri: lambda do
+          resource.new_child(filter: {NS::SCHEMA[:option].to_s => [option]}).action(:create).iri_path
+        end,
+        url: -> { create_url(option) }
       )
     )
   end
@@ -38,5 +40,11 @@ class VoteActionList < EdgeActionList
     return I18n.t("#{association}.type_new") unless option
 
     I18n.t("#{association}.instance_type.#{option}")
+  end
+
+  def create_url(option)
+    iri = resource.unfiltered_collection.iri.dup
+    iri.query = {NS::SCHEMA[:option] => option}.to_query
+    iri
   end
 end

@@ -35,7 +35,7 @@ class MediaObjectSerializer < RecordSerializer
             datatype: NS::XSD[:integer] do |object|
     object.position_y || 50
   end
-  attribute :used_as
+  attribute :used_as, predicate: NS::ARGU[:fileUsage]
 
   MediaObjectUploader::IMAGE_VERSIONS.each do |format, opts|
     attribute format, predicate: NS::ONTOLA[:"imgUrl#{opts[:w]}x#{opts[:h]}"] do |object|

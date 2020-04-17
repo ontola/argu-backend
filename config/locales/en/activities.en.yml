@@ -4,9 +4,9 @@ en:
     timeline: "Timeline"
     votes:
       create: "%{owner} %{side} %{parent}"
-      pro: "is in favour of"
-      con: "is against"
-      neutral: "is neutral about"
+      :yes: "is in favour of"
+      :no: "is against"
+      other: "is neutral about"
     decisions:
       approved: "%{owner} passed %{parent}"
       forwarded:
@@ -26,12 +26,16 @@ en:
       update: "%{owner} updated %{subject}"
     arguments:
       create: "%{owner} posted a draft %{type} %{side} %{parent}"
-      pro: "in favour of"
-      con: "against"
+      :yes: "in favour of"
+      :no: "against"
     pro_arguments:
       create: "%{owner} posted a draft %{type} %{side} %{parent}"
+      :yes: "in favour of"
+      :no: "against"
     con_arguments:
       create: "%{owner} posted a draft %{type} %{side} %{parent}"
+      :yes: "in favour of"
+      :no: "against"
     blog_posts:
       create: "%{owner} posted a draft %{type} in %{parent}"
     motions:

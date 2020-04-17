@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :vote do
-    add_attribute(:for) { Vote.fors[:pro] }
+    add_attribute(:option) { :yes }
   end
 end

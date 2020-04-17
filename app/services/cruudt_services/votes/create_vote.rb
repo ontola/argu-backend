@@ -13,7 +13,7 @@ class CreateVote < CreateEdge
     Vote
       .where_with_redis(
         root_id: parent.root_id,
-        for: attributes[:for] || Vote.filter_options[:option][:values][attributes[:option]],
+        option: Vote.filter_options[NS::SCHEMA[:option]][:values][attributes[:option]],
         creator: options[:creator],
         primary: true
       ).find_by(parent: parent)

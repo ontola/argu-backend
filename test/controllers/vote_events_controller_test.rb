@@ -25,9 +25,6 @@ class VoteEventsControllerTest < ActionController::TestCase
 
     expect_relationship('vote_collection', size: 1)
     expect_included(collection_iri(vote_event, :votes))
-    %w[yes other no].each do |side|
-      expect_included(collection_iri(vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
-    end
     expect_included(vote_event.votes.joins(:publisher).where(users: {show_feed: true}).map(&:iri))
     expect_not_included(vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri))
   end

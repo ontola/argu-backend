@@ -19,7 +19,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates_download_of :content
 
   enum used_as: {content_photo: 0, cover_photo: 1, profile_photo: 2, attachment: 3}
-  filterable used_as: {values: MediaObject.used_as}
+  filterable NS::ARGU[:fileUsage] => {values: MediaObject.used_as}
   counter_culture :about,
                   column_name: proc { |model|
                     model.attachment? ? 'attachments_count' : nil

@@ -75,7 +75,7 @@ module Argu
             service.commit
             reset_publication(service.resource.publications.last)
           end
-          create_redis_vote(Argument.last, :pro)
+          create_redis_vote(Argument.last, :yes)
           TrashService.new(Argument.last, options: service_options).commit
         end
       end
@@ -153,7 +153,7 @@ module Argu
 
       # Adds 2 public and 1 hidden votes to the resource for pro, neutral and con
       def with_votes
-        %i[pro neutral con].each do |side|
+        %i[yes other no].each do |side|
           create_normal_vote(@resource.default_vote_event, side)
           create_hidden_vote(@resource.default_vote_event, side)
           create_redis_vote(@resource.default_vote_event, side)
@@ -216,7 +216,7 @@ module Argu
 
       def vote_attrs(side)
         {
-          for: side
+          option: side
         }
       end
     end

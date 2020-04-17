@@ -35,7 +35,7 @@ FactoryBot.define do
     trait :t_vote do
       trackable { create(:vote, creator: owner) }
       recipient { passed_in?(:recipient) ? recipient : create(:motion, parent: tenant) }
-      parameters { passed_in?(:parameters) ? parameters : {for: trackable.for} }
+      parameters { passed_in?(:parameters) ? parameters : {option: trackable.option} }
     end
   end
 end

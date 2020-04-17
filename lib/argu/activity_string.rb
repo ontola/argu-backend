@@ -78,8 +78,8 @@ module Argu
     def side_string
       return nil unless @activity&.trackable&.is_a?(Vote) || @activity&.trackable&.is_a?(Argument)
 
-      I18n.t("activities.#{@activity.trackable_type.tableize}.#{@activity.trackable.key}",
-             default: @activity.trackable.key)
+      I18n.t("activities.#{@activity.trackable_type.tableize}.#{@activity.trackable.option}",
+             default: @activity.trackable.option)
     end
 
     def subject_display_name

@@ -10,7 +10,7 @@ class SearchResult < Collection
 
   attr_accessor :q
 
-  delegate :total_count, :took, to: :association_base
+  delegate :aggs, :total_count, :took, to: :association_base
 
   def action_triples(*_args)
     []
@@ -18,6 +18,27 @@ class SearchResult < Collection
 
   def association_base
     @association_base ||= Result.new(self)
+  end
+
+  def filter_options
+    Hash[aggs.map(&method(:filter_option_for_aggregate)).compact]
+  end
+
+  def filter_option_for_aggregate(key, value)
+    return nil if value['buckets'].size <= 1
+
+    datatype = association_class.predicate_mapping[RDF::URI(key)].datatype
+
+    options = value['buckets'].map { |option| filter_options_for_bucket(option, datatype) }
+
+    [RDF::URI(key), {values: options}]
+  end
+
+  def filter_options_for_bucket(option, datatype)
+    {
+      count: option['doc_count'],
+      value: xsd_to_rdf(datatype, option['key_as_string'] || option['key'])
+    }
   end
 
   def default_display
@@ -30,9 +51,8 @@ class SearchResult < Collection
     opts
   end
 
-  def iri_template_opts
-    opts = iri_opts.with_indifferent_access.slice(:display, :'filter%5B%5D', :'sort%5B%5D', :page_size, :q, :type)
-    Hash[opts.keys.map { |key| [CGI.unescape(key), opts[key]] }].to_param
+  def iri_template_keys
+    super + %i[q]
   end
 
   def page_size
@@ -40,11 +60,11 @@ class SearchResult < Collection
   end
 
   def sort_options
-    [NS::ONTOLA[:relevance]] + association_class.sort_options(self)
-  end
-
-  def sortings
-    super
+    [NS::ONTOLA[:relevance]] +
+      (filtered_classes || [association_class])
+        .map { |klass| klass.sort_options(self) }
+        .reduce { |total, new| total & new }
+        .flatten(1)
   end
 
   def placeholder(locale = nil)
@@ -76,6 +96,14 @@ class SearchResult < Collection
     ]
   end
 
+  def filtered_classes
+    @filtered_classes ||=
+      filters
+        .detect { |filter| filter.key == NS::RDFV.type }
+        &.value
+        &.map { |type| association_class.descendants.detect { |klass| klass.iri.to_s == type } }
+  end
+
   class << self
     def iri
       NS::ONTOLA[:SearchResult]
@@ -87,7 +115,7 @@ class SearchResult < Collection
     attr_accessor :collection
 
     delegate :association_class, :page_size, :parent, :q, :sortings, :user_context, :views, to: :collection
-    delegate :took, :total_count, to: :result
+    delegate :aggs, :took, :total_count, to: :result
 
     def initialize(collection)
       self.collection = collection
@@ -114,14 +142,13 @@ class SearchResult < Collection
         per_page: page_size,
         where: {
           path: allowed_path_expression,
-          published_branch: true,
-          trashed_at: nil
-        }
+          published_branch: true
+        }.merge(collection.filter)
       )
     end
 
     def unfiltered_collection
-      @unfiltered_collection ||= new_child(filter: [], q: q)
+      @unfiltered_collection ||= new_child(filter: {}, q: q)
     end
 
     private
@@ -156,7 +183,7 @@ class SearchResult < Collection
     def sort_key(key)
       return :_score if key == NS::ONTOLA[:relevance]
 
-      association_class.predicate_mapping[key]&.name
+      key
     end
 
     def sort_values

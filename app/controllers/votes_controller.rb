@@ -53,10 +53,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def collection_includes(_member_includes = {})
-    super.merge(default_filtered_collections: Vote.inc_shallow_collection)
-  end
-
   def create_success
     super
     broadcast_vote_counts
@@ -93,15 +89,10 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     meta
   end
 
-  def for_param # rubocop:disable Metrics/AbcSize
-    if params[:for].is_a?(String) && params[:for].present?
-      # Still used for upvoting arguments
-      warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
-      param = params[:for]
-    elsif params[:vote].is_a?(ActionController::Parameters)
-      param = params[:vote][:for]
-    end
-    param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
+  def option_param
+    option = params[:vote].try(:[], :option)
+
+    option.present? && option !~ /\D/ ? Vote.options.key(option.to_i) : option
   end
 
   def parent_from_params(root = tree_root, opts = params_for_parent)
@@ -111,11 +102,11 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def unmodified?
-    create_service.resource.persisted? && !create_service.resource.for_changed?
+    create_service.resource.persisted? && !create_service.resource.option_changed?
   end
 
   def deserialize_params_options
-    {keys: {side: :for}}
+    {keys: {side: :option}}
   end
 
   def destroy_success
@@ -147,14 +138,14 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       voteable_path: parent_resource!.iri.path.split('/').select(&:present?),
       confirm: true,
       r: params[:r],
-      'vote%5Bfor%5D' => for_param,
+      'vote%5Bfor%5D' => option_param,
       with_hostname: true
     )
   end
 
   def resource_new_params
     super.merge(
-      for: for_param,
+      option: option_param,
       primary: true
     )
   end
@@ -165,10 +156,8 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       if default_vote_event_id?
         replace_vote_event_meta(data)
       else
-        parent_collection = index_collection.unfiltered
-        meta_replace_collection_count(data, index_collection.unfiltered)
-        parent_collection.default_filtered_collections.each do |filtered_collection|
-          meta_replace_collection_count(data, filtered_collection)
+        vote_collections.each do |collection|
+          meta_replace_collection_count(data, collection)
         end
       end
       voteable = authenticated_resource.parent.parent
@@ -191,7 +180,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     data
   end
 
-  def opinion_delta(data, voteable) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def opinion_delta(data, voteable) # rubocop:disable Metrics/MethodLength
     [
       voteable.action(:update_opinion, user_context),
       voteable.comment_collection.action(:create_opinion, user_context)
@@ -199,7 +188,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       data << [
         object.iri,
         NS::SCHEMA[:result],
-        "#{authenticated_resource.for.classify}Opinion".constantize.iri,
+        authenticated_resource.opinion_class.constantize.iri,
         delta_iri(:replace)
       ]
     end
@@ -216,5 +205,10 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
         delta_iri(:replace)
       ]
     )
+  end
+
+  def vote_collections
+    unfiltered = index_collection.unfiltered
+    [unfiltered] + %i[no yes other].map { |side| unfiltered.new_child(filter: {option: [side]}) }
   end
 end

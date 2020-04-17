@@ -72,14 +72,6 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     JSONAPI::IncludeDirective::Parser.parse_include_args([:root] + [show_includes])
   end
 
-  def collection_options
-    super.merge(
-      filter: parse_filter(params[:filter], controller_class.try(:filter_options)),
-      user_context: user_context,
-      include_map: collection_include_map
-    )
-  end
-
   def current_forum; end
 
   def form_action?
