@@ -23,7 +23,7 @@ class EdgeableController < ServiceController
   end
 
   def collection_include_map
-    nil
+    JSONAPI::IncludeDirective::Parser.parse_include_args(%i[root shortname])
   end
 
   def collection_view_includes(_member_includes = {})
