@@ -166,7 +166,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   def write_to_cache(cache = Argu::Cache.new)
     manifest.write_to_cache(cache)
-    SearchResult.new(parent: self).write_to_cache(cache)
+    search_result.write_to_cache(cache)
     super
   end
 

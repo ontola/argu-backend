@@ -299,6 +299,17 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     data
   end
 
+  def search_result(opts = {})
+    SearchResult.new(
+      opts.merge(
+        parent: self,
+        association_class: Edge,
+        parent_uri_template: :search_results_iri,
+        parent_uri_template_canonical: :search_results_iri
+      )
+    )
+  end
+
   def searchable_aggregations
     %i[owner_type is_trashed?]
   end

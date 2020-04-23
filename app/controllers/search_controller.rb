@@ -10,15 +10,6 @@ class SearchController < EdgeableController
   end
 
   def index_collection
-    @index_collection ||= ::SearchResult.new(
-      collection_options.merge(
-        parent: parent_resource,
-        association_class: Edge,
-        parent_uri_template: :search_results_iri,
-        parent_uri_template_canonical: :search_results_iri,
-        q: params[:q],
-        title: ''
-      )
-    )
+    @index_collection ||= parent_resource.search_result(collection_options.merge(q: params[:q]))
   end
 end
