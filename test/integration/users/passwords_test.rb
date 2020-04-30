@@ -86,6 +86,8 @@ module Users
       assert_response :success
       assert_not_equal user.encrypted_password, user.reload.encrypted_password
       assert user.confirmed?
+
+      expect_ontola_action(snackbar: 'Your password has been updated successfully')
     end
 
     test 'guest should put update password without shortname' do
