@@ -15,7 +15,9 @@ module Users
     end
 
     def redirect_to_root
-      redirect_to root_path
+      active_response_block do
+        respond_with_redirect location: tree_root.iri, reload: true
+      end
     end
 
     def redirect_to_root?

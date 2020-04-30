@@ -44,9 +44,24 @@ module Argu
       end
 
       def expect_ontola_action(redirect: nil, snackbar: nil, reload: nil)
-        action = "actions/redirect?#{{location: redirect, reload: reload}.compact.to_param}" if redirect
-        action = "actions/snackbar?#{{text: snackbar}.to_param}" if snackbar
-        expect(response.headers['Exec-Action']).to(include(action))
+        if redirect
+          expect_header('Exec-Action', "actions/redirect?#{{location: redirect, reload: reload}.compact.to_param}")
+        end
+        expect_header('Exec-Action', "actions/snackbar?#{{text: snackbar}.to_param}") if snackbar
+
+        expect_ontola_action_count([redirect, snackbar].compact.size)
+      end
+
+      def expect_ontola_action_count(count)
+        if count.zero?
+          assert_nil response.headers['Exec-Action']
+        else
+          assert_equal count, response.headers['Exec-Action'].count("\n"), response.headers['Exec-Action']
+        end
+      end
+
+      def expect_header(key, value)
+        expect(response.headers[key]).to(include(value))
       end
 
       def expect_resource_type(type, iri: requested_iri)

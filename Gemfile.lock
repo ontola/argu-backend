@@ -9,16 +9,15 @@ GIT
 
 GIT
   remote: https://github.com/ontola/active_response
-  revision: 8925a9ec7128ef62e3d9101d9346ac4998e56893
+  revision: 4a568f7d6b5a06385b4e6f3258c745a4445c249c
   branch: master
   specs:
     active_response (0.0.1)
-      active_model_serializers (~> 0.10)
       railties
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 6460f74bc878aa3ede94177d07954a1d531be2cb
+  revision: 745bfcbf5d1ec58037bbf4b1923654374344045c
   specs:
     linked_rails (0.0.0)
       active_response

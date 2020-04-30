@@ -53,7 +53,10 @@ module Users
         post news_follow.iri
       end
       assert_response :success
-      expect_ontola_action(snackbar: "You no longer receive notifications for '#{motion.display_name}'")
+      expect_ontola_action(
+        redirect: motion.iri,
+        snackbar: "You no longer receive notifications for '#{motion.display_name}'"
+      )
     end
 
     private
