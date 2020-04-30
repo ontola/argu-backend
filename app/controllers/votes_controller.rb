@@ -32,6 +32,12 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     authorize authenticated_resource, method
   end
 
+  def broadcast_vote_counts
+    return unless %w[create destroy].include?(action_name)
+
+    RootChannel.broadcast_to(tree_root, hex_delta(counter_cache_delta(authenticated_resource)))
+  end
+
   def execute_action
     return super unless action_name == 'create'
     return super unless unmodified?
@@ -49,6 +55,11 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def collection_includes(_member_includes = {})
     super.merge(default_filtered_collections: Vote.inc_shallow_collection)
+  end
+
+  def create_success
+    super
+    broadcast_vote_counts
   end
 
   def default_vote_event_id?
@@ -111,6 +122,11 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def deserialize_params_options
     {keys: {side: :for}}
+  end
+
+  def destroy_success
+    super
+    broadcast_vote_counts
   end
 
   def permit_params
