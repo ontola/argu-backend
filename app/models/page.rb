@@ -79,6 +79,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :allowed_external_sources, :string, NS::ONTOLA[:allowedExternalSources], array: true
   property :enable_white_label, :boolean, NS::ONTOLA[:enableWhiteLabel]
   property :styled_headers, :boolean, NS::ONTOLA[:styledHeaders]
+  property :live_updates, :boolean, NS::ONTOLA[:liveUpdates], default: false
 
   belongs_to :primary_container_node,
              foreign_key_property: :primary_container_node_id,
