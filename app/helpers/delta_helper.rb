@@ -3,17 +3,8 @@
 module DeltaHelper
   include LinkedRails::Helpers::DeltaHelper
 
-  def action_delta(data, delta, object, action, opts = {})
-    [NS::SCHEMA[:potentialAction], opts[:include_favorite] ? NS::ONTOLA[:favoriteAction] : nil].compact.each do |pred|
-      [object, opts[:include_parent] ? object.parent : nil].compact.each do |obj|
-        data << [
-          obj.iri,
-          pred,
-          ::RDF::URI("#{object.iri}/actions/#{action}"),
-          delta_iri(delta)
-        ]
-      end
-    end
+  def reset_potential_and_favorite_delta(object, cntx = user_context)
+    object.potential_and_favorite_triples(cntx)
   end
 
   def counter_cache_delta(resource)

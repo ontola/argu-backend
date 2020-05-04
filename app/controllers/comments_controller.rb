@@ -10,8 +10,8 @@ class CommentsController < EdgeableController
     data = super
     if authenticated_resource.parent.enhanced_with?(Opinionable) && authenticated_resource.vote_id.present?
       voteable = authenticated_resource.parent
-      action_delta(data, :remove, voteable.comment_collection, :create_opinion, include_parent: true)
-      action_delta(data, :add, voteable, :update_opinion)
+      data.concat(reset_potential_and_favorite_delta(voteable))
+      data.concat(reset_potential_and_favorite_delta(voteable.comment_collection))
     end
     data
   end
