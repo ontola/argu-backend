@@ -46,11 +46,15 @@ class SearchResult < Collection
     super
   end
 
+  def placeholder(locale = nil)
+    I18n.t('search.placeholder', locale: locale)
+  end
+
   def title
     return I18n.t('search.results_found', count: total_count) if q.present?
 
     I18n.available_locales.map do |locale|
-      RDF::Literal(I18n.t('search.placeholder', locale: locale), language: locale)
+      RDF::Literal(placeholder(locale), language: locale)
     end
   end
 
