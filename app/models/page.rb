@@ -151,6 +151,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     true
   end
 
+  def set_template_option(key, value)
+    opts = JSON.parse(template_options)
+    opts[key] = value
+    self.template_options = opts.to_json
+  end
+
   # Not sure why, but sometimes tenant is nil while it exists in the db
   def tenant
     super || Tenant.find_by(root_id: root_id)
