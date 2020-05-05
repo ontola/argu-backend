@@ -14,6 +14,10 @@ class ApplicationMenuList < LinkedRails::Menus::List
     super
   end
 
+  def custom_menu_items(menu_type, resource)
+    scoped_menu_items(menu_type, resource)
+  end
+
   private
 
   def default_label(tag, options)
@@ -32,16 +36,16 @@ class ApplicationMenuList < LinkedRails::Menus::List
     )
   end
 
-  def custom_menu_items(menu_type, resource)
-    scoped_menu_items(menu_type, resource)
-  end
-
   def scoped_menu_items(menu_type, resource)
     Pundit.policy_scope!(
       user_context,
       CustomMenuItem
-        .where(menu_type: menu_type, resource_type: resource.class.base_class.name, resource_id: resource.uuid)
-        .order(:order)
+        .where(
+          menu_type: menu_type,
+          parent_menu: nil,
+          resource_type: resource.class.base_class.name,
+          resource_id: resource.uuid
+        ).order(:order)
     )
   end
 

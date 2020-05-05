@@ -17,7 +17,20 @@ class MenusController < LinkedRails::MenusController
 
   def current_forum; end
 
+  def custom_menu
+    @custom_menu ||= LinkedRails.menus_item_class.new(
+      menus: menu_list.custom_menu_items(menu_tag, parent_resource),
+      parent: menu_list,
+      resource: parent_resource,
+      tag: menu_tag
+    )
+  end
+
+  def menu_tag
+    @menu_tag ||= params[:id].to_sym
+  end
+
   def resource_by_id
-    requested_resource if action_name == 'show'
+    requested_resource || custom_menu if action_name == 'show'
   end
 end

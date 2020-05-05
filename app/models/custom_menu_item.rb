@@ -19,6 +19,8 @@ class CustomMenuItem < ApplicationRecord
   belongs_to :resource, polymorphic: true, primary_key: :uuid
   belongs_to :edge, primary_key: :uuid, optional: true
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
+  belongs_to :parent_menu, class_name: 'CustomMenuItem', inverse_of: :custom_menu_items
+  has_many :custom_menu_items, -> { order(:order) }, foreign_key: :parent_menu_id, inverse_of: :parent_menu
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
   before_create :set_order
@@ -46,8 +48,27 @@ class CustomMenuItem < ApplicationRecord
     label_translation ? I18n.t(super) : super
   end
 
+  def menu_sequence
+    return if custom_menu_items.nil?
+
+    @menu_sequence ||=
+      LinkedRails::Sequence.new(
+        -> { custom_menu_items },
+        id: menu_sequence_iri
+      )
+  end
+
+  def menu_sequence_iri
+    return @menu_sequence_iri if @menu_sequence_iri
+
+    sequence_iri = iri.dup
+    sequence_iri.path ||= ''
+    sequence_iri.path += '/menus'
+    @menu_sequence_iri = sequence_iri
+  end
+
   def parent
-    @parent ||= resource&.menu(menu_type&.to_sym)
+    @parent ||= parent_menu || resource&.menu(menu_type&.to_sym)
   end
 
   def parent_collections(user_context)

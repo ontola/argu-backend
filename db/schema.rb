@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_01_130710) do
+ActiveRecord::Schema.define(version: 2020_05_04_112238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_130710) do
     t.uuid "resource_id", null: false
     t.uuid "edge_id"
     t.uuid "root_id", null: false
+    t.integer "parent_menu_id"
   end
 
   create_table "documents", id: :serial, force: :cascade do |t|

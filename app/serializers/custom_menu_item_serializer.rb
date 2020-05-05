@@ -12,7 +12,11 @@ class CustomMenuItemSerializer < MenuItemSerializer
   def data; end
 
   def menus_present?
-    false
+    object.custom_menu_items.any?
+  end
+
+  def parent_menu?
+    object.parent_menu
   end
 
   def raw_image
