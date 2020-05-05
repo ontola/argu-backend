@@ -2,6 +2,12 @@
 
 module Users
   class LanguageForm < ApplicationForm
-    fields %i[language]
+    fields(
+      [
+        language: {
+          label: ''
+        }
+      ]
+    )
   end
 end

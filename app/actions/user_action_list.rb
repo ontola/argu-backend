@@ -36,6 +36,7 @@ class UserActionList < ApplicationActionList
     policy: :update?,
     image: 'fa-update',
     label: -> { I18n.t('set_language') },
+    submit_label: -> { I18n.t('save') },
     url: -> { iri_from_template(:languages_iri) },
     http_method: :put,
     form: ::Users::LanguageForm,
