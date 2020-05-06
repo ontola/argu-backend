@@ -74,7 +74,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     model.cover_photo?
   end
 
-  def default_url
+  def default_url(*_args)
     return unless profile_photo?
 
     email =
