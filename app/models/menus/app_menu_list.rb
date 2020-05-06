@@ -89,14 +89,9 @@ class AppMenuList < ApplicationMenuList
 
     items = user_base_items
     items << user_settings_item
-    items << user_pages_item if Apartment::Tenant.current == 'argu'
     items << language_menu_item
     items << sign_out_menu_item
     items
-  end
-
-  def user_pages_item
-    menu_item(:pages, label: I18n.t('pages.my_pages'), href: RDF::DynamicURI(pages_user_url(resource)))
   end
 
   def user_settings_item
