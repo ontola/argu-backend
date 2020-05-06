@@ -8,4 +8,10 @@ class DiscussionsController < EdgeableController
 
     super && !%w[new index].include?(action_name)
   end
+
+  def new
+    return super unless controller_name == 'discussions'
+
+    raise(ActiveRecord::RecordNotFound)
+  end
 end
