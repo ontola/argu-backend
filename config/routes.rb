@@ -235,6 +235,9 @@ Rails.application.routes.draw do
       include_route_concerns
     end
   end
+  resources :banners, only: %i[show] do
+    include_route_concerns
+  end
   resources :blog_posts,
             path: 'posts',
             only: %i[show] do

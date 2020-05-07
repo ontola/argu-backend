@@ -21,6 +21,7 @@ en:
       attachments: "Attachments"
       attachment_collection: "Attachments"
       audience: "Audience"
+      dismiss_button: "Button text"
       birthday: "Year of birth"
       confirmation_string: "Confirmation"
       content: "Content"
@@ -164,7 +165,6 @@ en:
         shortname: "No spaces. Only letters, numbers and _. Start with a letter."
         destination: "Enter the part of the url following %{iri_prefix}/"
       password_confirmation: "Same as above"
-      expires_at: "Please fill in all fields if you want to set a deadline"
     placeholders:
       description: "Enter a description"
       display_name: "Enter your title"

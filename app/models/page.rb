@@ -19,6 +19,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance CreativeWorkable
   enhance ProfilePhotoable
   enhance CoverPhotoable
+  enhance Bannerable
 
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid

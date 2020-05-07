@@ -1,0 +1,11 @@
+en:
+  banners:
+    type: 'Banner'
+    plural: 'Banners'
+    audiences:
+      guests: 'Guests'
+      users: 'Users'
+      members: 'Members'
+      everyone: 'Everyone'
+  banner_dismissals:
+    type: 'Dismissal'

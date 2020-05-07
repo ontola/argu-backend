@@ -15,7 +15,7 @@ module Argu
         SERVICE_MODELS = %i[
           argument pro_argument con_argument blog_post comment forum group_membership motion export
           group question vote decision grant vote_event page topic risk intervention intervention_type
-          measure measure_type employment
+          measure measure_type employment banner
         ].freeze
 
         def argu_headers(accept: :nq, bearer: nil, host: nil)

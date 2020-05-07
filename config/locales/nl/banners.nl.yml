@@ -1,0 +1,11 @@
+nl:
+  banners:
+    type: 'Banner'
+    plural: 'Banners'
+    audiences:
+      guests: 'Gasten'
+      users: 'Gebruikers'
+      members: 'Leden'
+      everyone: 'Iedereen'
+  banner_dismissals:
+    type: 'Dismissal'

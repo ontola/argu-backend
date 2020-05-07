@@ -81,6 +81,11 @@ class PageMenuList < ApplicationMenuList
         :custom_menu_items,
         label: I18n.t('custom_menu_items.plural'),
         href: collection_iri(resource, :custom_menu_items, display: :table)
+      ),
+      setting_item(
+        :banners,
+        label: I18n.t('banners.plural'),
+        href: collection_iri(resource, :banners, display: :table)
       )
     ]
   end

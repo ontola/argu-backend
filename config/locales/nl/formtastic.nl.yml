@@ -21,6 +21,7 @@ nl:
       attachments: "Bijlagen"
       attachment_collection: "Bijlagen"
       audience: "Publiek"
+      dismiss_button: "Knoptekst"
       birthday: "Geboortejaar"
       confirmation_string: "Bevestiging"
       content: "Inhoud"
@@ -165,7 +166,6 @@ nl:
         shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
         destination: "Voer het gedeelte van de url in dat komt na %{iri_prefix}/"
       password_confirmation: "Zelfde als hierboven"
-      expires_at: "Vul alle velden in als je een deadline in wil stellen"
     placeholders:
       description: "Voer een beschrijving in"
       display_name: "Voer een titel in"

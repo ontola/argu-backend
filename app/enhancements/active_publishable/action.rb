@@ -10,6 +10,7 @@ module ActivePublishable
         type: [NS::SCHEMA[:Action], NS::ARGU[:PublishAction]],
         policy: :publish?,
         http_method: :put,
+        image: 'fa-send',
         url: lambda {
           RDF::URI(
             [

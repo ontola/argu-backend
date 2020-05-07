@@ -646,10 +646,4 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 201
   end
-
-  private
-
-  def assert_redis_resource_count(count, opts)
-    assert_equal count, RedisResource::Relation.where(opts).count
-  end
 end

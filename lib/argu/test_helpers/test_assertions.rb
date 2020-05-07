@@ -43,6 +43,10 @@ module Argu
         last_match
       end
 
+      def assert_redis_resource_count(count, opts)
+        assert_equal count, RedisResource::Relation.where(opts).count
+      end
+
       def expect_ontola_action(redirect: nil, snackbar: nil, reload: nil)
         if redirect
           expect_header('Exec-Action', "actions/redirect?#{{location: redirect, reload: reload}.compact.to_param}")

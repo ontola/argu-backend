@@ -218,6 +218,7 @@ module ActiveRecord
     def property_filter_value(key, value)
       property = property_options(name: key)
       return value if property[:enum].blank? || value.is_a?(Integer)
+      return value.map { |val| property_filter_value(key, val) } if value.is_a?(Array)
 
       property[:enum][value&.to_sym]
     end
