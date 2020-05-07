@@ -10,9 +10,8 @@ class CreateVote < CreateEdge
   end
 
   def existing_edge(parent, options, attributes)
-    Edge
-      .where_owner(
-        'Vote',
+    Vote
+      .where_with_redis(
         root_id: parent.root_id,
         for: attributes[:for] || Vote.filter_options[:option][:values][attributes[:option]],
         creator: options[:creator],

@@ -19,7 +19,6 @@ class Vote < Edge
   before_create :create_confirmation_reminder_notification
   after_trash :remove_primary
 
-  define_model_callbacks :redis_save, only: :before
   before_redis_save :trash_primary_votes
   before_redis_save :remove_other_temporary_votes
 
@@ -87,10 +86,6 @@ class Vote < Edge
 
   def searchable_should_index?
     false
-  end
-
-  def store_in_redis?(opts = {})
-    !opts[:skip_redis] && publisher.guest?
   end
 
   delegate :is_trashed?, :trashed_at, to: :parent, allow_nil: true

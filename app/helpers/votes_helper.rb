@@ -16,7 +16,7 @@ module VotesHelper
     if profile.confirmed?
       model.votes.detect { |vote| vote.creator_id == profile.id }
     else
-      Edge.where_owner('Vote', creator: profile, root_id: model.root_id).find_by(parent: model, primary: true)
+      Vote.where_with_redis(creator: profile, root_id: model.root_id).find_by(parent: model, primary: true)
     end
   end
 

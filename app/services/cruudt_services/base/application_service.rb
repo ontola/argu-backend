@@ -7,28 +7,17 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   include Wisper::Publisher
 
   # @note Call super when overriding.
-  def initialize(_orig_resource, attributes: {}, options: {}) # rubocop:disable Metrics/AbcSize
+  def initialize(_orig_resource, attributes: {}, options: {})
     @attributes = attributes
     @actions = {}
     @options = options
     prepare_attributes
     assign_attributes
     set_nested_associations
-    return if resource.is_a?(Activity) || resource.is_a?(Grant) || options.fetch(:publisher)&.guest?
-
-    subscribe(
-      ActivityListener.new(
-        comment: options[:comment],
-        creator: options.fetch(:creator),
-        publisher: options.fetch(:publisher),
-        notify: options[:notify]
-      )
-    )
-    subscribe(NotificationListener.new,
-              on: "update_#{resource.model_name.singular}_successful",
-              with: :update_successful)
+    subscribe_listeners
   end
-  attr_reader :resource
+
+  attr_reader :attributes, :options, :resource
 
   # Executes the action, so generally message broadcasts begin here.
   # @see {after_save}
@@ -134,6 +123,24 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
         self.object_attributes = association_instance
       end
     end
+  end
+
+  def subscribe_listeners # rubocop:disable Metrics/AbcSize
+    return if resource.is_a?(Activity) || resource.is_a?(Grant) || resource.try(:store_in_redis?)
+
+    subscribe(
+      ActivityListener.new(
+        comment: options[:comment],
+        creator: options.fetch(:creator),
+        publisher: options.fetch(:publisher),
+        notify: options[:notify]
+      )
+    )
+    subscribe(
+      NotificationListener.new,
+      on: "update_#{resource.model_name.singular}_successful",
+      with: :update_successful
+    )
   end
 
   # Method to set attributes on a nested model.

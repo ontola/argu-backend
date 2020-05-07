@@ -187,7 +187,7 @@ module Argu
             service.commit
             raise service.resource.errors.full_messages.first unless service.resource.valid?
 
-            service.resource.store_in_redis? ? service.resource : service.resource.reload
+            service.resource.try(:store_in_redis?) ? service.resource : service.resource.reload
           end
         end
         # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity

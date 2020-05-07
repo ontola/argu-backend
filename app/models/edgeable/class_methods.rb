@@ -58,20 +58,6 @@ module Edgeable
         [NS::SCHEMA[:name], NS::SCHEMA[:dateCreated]]
       end
 
-      # Selects edges of a certain type over persisted and transient models.
-      # @param [String] type The (child) edges' #owner_type value
-      # @param [Hash] where_clause Filter options for the owners of the edge akin to activerecords' `where`.
-      # @option where_clause [Integer, #confirmed?] :creator :publisher If the object is not `#confirmed?`,
-      #         the system will use transient resources.
-      # @return [ActiveRecord::Relation, RedisResource::Relation]
-      def where_owner(type, where_clause = {})
-        if where_clause[:publisher]&.guest? || where_clause[:creator]&.profileable&.guest?
-          RedisResource::EdgeRelation.where(where_clause.merge(owner_type: type))
-        else
-          type.constantize.where(where_clause)
-        end
-      end
-
       private
 
       def has_many_children(association, dependent: :destroy, order: {created_at: :asc}, through: nil)

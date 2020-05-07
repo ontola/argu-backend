@@ -11,8 +11,8 @@ class MotionsController < DiscussionsController
   end
 
   def show_execute
-    @vote = Edge
-              .where_owner('Vote', creator: current_profile, primary: true, root_id: tree_root_id)
+    @vote = Vote
+              .where_with_redis(creator: current_profile, primary: true, root_id: tree_root_id)
               .find_by(parent: authenticated_resource.default_vote_event)
     @vote ||= Vote.new(
       creator: current_profile,

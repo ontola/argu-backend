@@ -17,7 +17,7 @@ class CreateEdge < CreateService
   def after_save
     super
 
-    return if resource.store_in_redis?
+    return if resource.try(:store_in_redis?)
 
     @edge.publish! if publish_edge?
     notify

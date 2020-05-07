@@ -49,6 +49,7 @@ module RedisResource
       store_in_redis
       resource.parent.save! if resource.parent.new_record?
       resource.persisted? ? resource.save!(skip_redis: true) : resource.run_callbacks(:redis_save)
+      true
     end
 
     private
