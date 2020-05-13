@@ -9,7 +9,7 @@ RSpec.shared_examples_for 'get unsubscribe' do
       it 'as guest' do
         sign_in(guest_user)
         get unsubscribe_path, headers: request_headers(format)
-        expect(response.code).to eq(format == :json_api ? '204' : '200')
+        expect(response.code).to eq('200')
       end
 
       it 'as unauthorized' do
@@ -17,7 +17,7 @@ RSpec.shared_examples_for 'get unsubscribe' do
         assert_difference(no_differences) do
           get unsubscribe_path, headers: request_headers(format)
         end
-        expect(response.code).to eq(format == :json_api ? '204' : '200')
+        expect(response.code).to eq('200')
       end
 
       it 'as authorized' do
@@ -26,7 +26,7 @@ RSpec.shared_examples_for 'get unsubscribe' do
         assert_difference(destroy_differences) do
           get unsubscribe_path, headers: request_headers(format)
         end
-        expect(response.code).to eq(format == :json_api ? '204' : '200')
+        expect(response.code).to eq('200')
       end
 
       it 'non existing' do

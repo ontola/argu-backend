@@ -15,14 +15,14 @@ class FollowsController < AuthorizedController
       .compact
   end
 
-  def destroy_failure_rdf
+  def destroy_failure
     respond_with_redirect(
       location: authenticated_resource.followable.iri,
       notice: I18n.t('notifications.unsubscribe.failed', item: authenticated_resource.followable.display_name)
     )
   end
 
-  def destroy_success_rdf
+  def destroy_success
     add_exec_action_header(
       headers,
       ontola_snackbar_action(
