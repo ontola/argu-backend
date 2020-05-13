@@ -31,7 +31,7 @@ class EmailAddressesController < ParentableController
     meta
   end
 
-  def primary_change_meta
+  def primary_change_meta # rubocop:disable Metrics/MethodLength
     current_user
       .email_addresses
       .map do |e|

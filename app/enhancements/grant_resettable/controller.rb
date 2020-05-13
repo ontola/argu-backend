@@ -6,7 +6,7 @@ module GrantResettable
 
     private
 
-    def update_meta # rubocop:disable Metrics/AbcSize
+    def update_meta # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       meta = super
       if current_resource.previously_changed_relations.include?('grant_resets')
         potential = current_resource.actions_iri(:potentialAction)

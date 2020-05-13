@@ -38,7 +38,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     RootChannel.broadcast_to(tree_root, hex_delta(counter_cache_delta(authenticated_resource)))
   end
 
-  def execute_action
+  def execute_action # rubocop:disable Metrics/MethodLength
     return super unless action_name == 'create'
     return super unless unmodified?
 
@@ -165,7 +165,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def create_meta # rubocop:disable Metrics/AbcSize
+  def create_meta # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     data = counter_cache_delta(authenticated_resource)
     if authenticated_resource.parent.is_a?(VoteEvent)
       if default_vote_event_id?
@@ -197,7 +197,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     data
   end
 
-  def opinion_delta(data, voteable) # rubocop:disable Metrics/AbcSize
+  def opinion_delta(data, voteable) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     [
       voteable.action(:update_opinion, user_context),
       voteable.comment_collection.action(:create_opinion, user_context)
@@ -211,7 +211,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def replace_vote_event_meta(data) # rubocop:disable Metrics/AbcSize
+  def replace_vote_event_meta(data) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     iri =
       if parent_resource.parent.is_a?(LinkedRecord)
         RDF::URI(parent_resource.iri.to_s.gsub('/lr/', '/od/').split('/vote_events/')[0])

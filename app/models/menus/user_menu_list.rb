@@ -10,7 +10,7 @@ class UserMenuList < ApplicationMenuList
 
   private
 
-  def profile_menu_items # rubocop:disable Metrics/AbcSize
+  def profile_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     items = []
     items << menu_item(:activity, href: feeds_iri(resource)) if resource == user || resource.show_feed
     if resource == user

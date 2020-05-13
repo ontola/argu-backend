@@ -81,7 +81,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     url_for_environment(:icon)
   end
 
-  def thumbnail_or_icon # rubocop:disable Metrics/CyclomaticComplexity
+  def thumbnail_or_icon # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
     return thumbnail if file.nil?
 
     case content_type

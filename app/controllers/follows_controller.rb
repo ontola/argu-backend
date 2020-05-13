@@ -22,7 +22,7 @@ class FollowsController < AuthorizedController
     )
   end
 
-  def destroy_success
+  def destroy_success # rubocop:disable Metrics/MethodLength
     add_exec_action_header(
       headers,
       ontola_snackbar_action(
@@ -67,7 +67,7 @@ class FollowsController < AuthorizedController
     ]
   end
 
-  def new_resource_from_params # rubocop:disable Metrics/AbcSize
+  def new_resource_from_params # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return @authenticated_resource if instance_variable_defined?(:@authenticated_resource)
 
     followable = Edge.find_by(uuid: find_params[:gid])

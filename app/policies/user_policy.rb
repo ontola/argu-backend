@@ -8,7 +8,7 @@ class UserPolicy < RestrictivePolicy
   end
   include ChildOperations
 
-  def permitted_attribute_names(password = false)
+  def permitted_attribute_names(password = false) # rubocop:disable Metrics/MethodLength
     attrs = super()
     attrs.concat %i[password password_confirmation primary_email current_password]
     attrs.append(home_placement_attributes: home_placement_attributes)

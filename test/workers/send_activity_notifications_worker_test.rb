@@ -129,7 +129,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:di
            follower: user)
   end
 
-  def notification_email_mock(user)
+  def notification_email_mock(user) # rubocop:disable Metrics/MethodLength
     create_email_mock(
       'activity_notifications',
       user.email,

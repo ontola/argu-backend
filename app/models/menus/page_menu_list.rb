@@ -29,7 +29,7 @@ class PageMenuList < ApplicationMenuList
     )
   end
 
-  def navigations_menu_items
+  def navigations_menu_items # rubocop:disable Metrics/MethodLength
     [
       menu_item(
         :home,
@@ -59,7 +59,7 @@ class PageMenuList < ApplicationMenuList
     )
   end
 
-  def setting_menu_items # rubocop:disable Metrics/AbcSize
+  def setting_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     [
       setting_item(:general, label: I18n.t('pages.settings.menu.general'), href: edit_iri(resource)),
       setting_item(

@@ -174,7 +174,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     assert_response response
   end
 
-  def general_decide(response = 201, changed = false, state = 'approved') # rubocop:disable Metrics/AbcSize
+  def general_decide(response = 201, changed = false, state = 'approved') # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     assert_difference('Activity.count' => changed ? 1 : 0) do
       post  collection_iri(motion, :decisions),
             params: {
@@ -196,7 +196,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     assert_response response
   end
 
-  def general_forward(response = 201, changed = false, group_id = nil, user_id = nil) # rubocop:disable Metrics/AbcSize
+  def general_forward(response = 201, changed = false, group_id = nil, user_id = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     assert_difference('Activity.count' => changed ? 1 : 0,
                       'Decision.count' => changed ? 1 : 0) do
       post collection_iri(motion, :decisions),
@@ -214,7 +214,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     assert_equal 'reactions', Decision.last.activities.last.follow_type if changed
   end
 
-  def general_update_approved(response = 302, changed = false) # rubocop:disable Metrics/AbcSize
+  def general_update_approved(response = 302, changed = false) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     ch_method = method(changed ? :assert_not_equal : :assert_equal)
     approval
     decision = motion.reload.last_decision

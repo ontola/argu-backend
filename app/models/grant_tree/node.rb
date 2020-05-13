@@ -69,7 +69,7 @@ class GrantTree
 
     private
 
-    def calculate_permitted_actions(grant_tree) # rubocop:disable Metrics/AbcSize
+    def calculate_permitted_actions(grant_tree) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       grant_tree.grant_resets_in_scope.select { |grant| grant.edge.path == edge.path }.each do |grant_reset|
         permitted_actions[grant_reset.resource_type][grant_reset.action] = {}
       end

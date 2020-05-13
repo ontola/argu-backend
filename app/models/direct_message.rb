@@ -63,7 +63,7 @@ class DirectMessage
     @resource ||= LinkedRails.resource_from_iri(@resource_iri)
   end
 
-  def send_email! # rubocop:disable Metrics/AbcSize
+  def send_email! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     Argu::API.service_api.create_email(
       :direct_message,
       resource.publisher,

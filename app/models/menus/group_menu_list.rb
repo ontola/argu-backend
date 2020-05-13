@@ -9,7 +9,7 @@ class GroupMenuList < ApplicationMenuList
 
   private
 
-  def settings_menu_items # rubocop:disable Metrics/AbcSize
+  def settings_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     [
       setting_item(:members, href: collection_iri(resource, :group_memberships, display: :settingsTable)),
       setting_item(

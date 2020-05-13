@@ -10,7 +10,7 @@ class VoteCache
     cache!(parent).detect { |vote| vote.parent_id == parent.id } if parent&.persisted?
   end
 
-  def cache!(parent) # rubocop:disable Metrics/AbcSize
+  def cache!(parent) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     if @profile.profileable.guest?
       @cached[parent.root_id] ||= preload_from_redis(parent)
     else

@@ -80,7 +80,7 @@ class RegistrationsController < Devise::RegistrationsController
     root_path
   end
 
-  def send_confirmation_mail(user, guest_votes) # rubocop:disable Metrics/AbcSize
+  def send_confirmation_mail(user, guest_votes) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     if guest_votes&.count&.positive?
       SendEmailWorker.perform_async(
         :confirm_votes,

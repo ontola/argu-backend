@@ -37,7 +37,7 @@ class Argument < Edge
     @pro = value.to_s == 'pro' || value
   end
 
-  def upvote(user, profile)
+  def upvote(user, profile) # rubocop:disable Metrics/MethodLength
     service = CreateVote.new(
       self,
       attributes: {

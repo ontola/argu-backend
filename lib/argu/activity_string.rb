@@ -19,7 +19,7 @@ module Argu
       @render = render
     end
 
-    def to_s # rubocop:disable Metrics/AbcSize
+    def to_s # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       default = I18n.t(translation_key('activities.default'),
                        owner: owner_string,
                        type: type_string,

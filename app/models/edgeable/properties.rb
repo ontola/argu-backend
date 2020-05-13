@@ -197,7 +197,7 @@ module ActiveRecord
         .order(arel_table.alias("#{order_key}_filter")[:value].send(order_predicate))
     end
 
-    def order_property?(arg)
+    def order_property?(arg) # rubocop:disable Metrics/MethodLength
       return false if arg.is_a?(String)
 
       key =

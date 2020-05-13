@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SettingsHelper
-  def tab_icons
+  def tab_icons # rubocop:disable Metrics/MethodLength
     {
       general: 'gear',
       advanced: 'gears',

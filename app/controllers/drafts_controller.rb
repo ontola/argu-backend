@@ -7,7 +7,7 @@ class DraftsController < AuthorizedController
     authorize user_by_id, :edit?
   end
 
-  def index_collection
+  def index_collection # rubocop:disable Metrics/MethodLength
     @index_collection ||= ::Collection.new(
       collection_options.merge(
         association_class: Edge,

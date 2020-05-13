@@ -3,7 +3,7 @@
 module Argu
   module TestHelpers
     module DefaultPolicyResults
-      def everybody_results
+      def everybody_results # rubocop:disable Metrics/MethodLength
         {
           guest: true,
           creator: true,
@@ -18,7 +18,7 @@ module Argu
         }
       end
 
-      def nobody_results
+      def nobody_results # rubocop:disable Metrics/MethodLength
         {
           guest: false,
           user: false,

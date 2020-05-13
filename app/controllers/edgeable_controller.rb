@@ -42,7 +42,7 @@ class EdgeableController < ServiceController
 
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
-  def new_resource_from_params
+  def new_resource_from_params # rubocop:disable Metrics/MethodLength
     resource = super
     resource.parent = parent_resource!
     if resource.is_publishable?

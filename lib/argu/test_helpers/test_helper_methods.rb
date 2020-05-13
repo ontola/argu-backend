@@ -34,7 +34,7 @@ module Argu
           decode_token(client_token_from_response)
         end
 
-        def doorkeeper_token_for(resource)
+        def doorkeeper_token_for(resource) # rubocop:disable Metrics/MethodLength
           id, role =
             case resource
             when :service
@@ -172,7 +172,7 @@ module Argu
           user
         end
 
-        # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+        # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
         def create_resource(klass, attributes = {}, options = {})
           parent_edge = attributes.delete(:parent)
           ActsAsTenant.with_tenant(parent_edge&.root || ActsAsTenant.current_tenant) do
@@ -190,9 +190,9 @@ module Argu
             service.resource.try(:store_in_redis?) ? service.resource : service.resource.reload
           end
         end
-        # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+        # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 
-        def destroy_resource(resource, user = nil, profile = nil)
+        def destroy_resource(resource, user = nil, profile = nil) # rubocop:disable Metrics/MethodLength
           ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
             user ||= create(:user)
             profile ||= user.profile
@@ -245,7 +245,7 @@ module Argu
           ActsAsTenant.current_tenant = resource.root
         end
 
-        def trash_resource(resource, user = nil, profile = nil) # rubocop:disable Metrics/AbcSize
+        def trash_resource(resource, user = nil, profile = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
             user ||= create(:user)
             profile ||= user.profile
@@ -261,7 +261,7 @@ module Argu
           end
         end
 
-        def update_resource(resource, attributes = {}, user = nil, profile = nil) # rubocop:disable Metrics/AbcSize
+        def update_resource(resource, attributes = {}, user = nil, profile = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
             user ||= create(:user)
             profile ||= user.profile
@@ -317,7 +317,7 @@ module Argu
           define_hidden_spec_objects
         end
 
-        def define_freetown_spec_objects # rubocop:disable Metrics/AbcSize
+        def define_freetown_spec_objects # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           let(:freetown) { Forum.find_via_shortname('freetown') }
           let(:group) { Group.find_by(name: 'custom') }
           let(:group_membership) { group.group_memberships.first }
@@ -352,7 +352,7 @@ module Argu
           let(:hidden_motion) { holland.descendants.at_depth(4).where(owner_type: 'Motion').first }
         end
 
-        def define_model_spec_objects # rubocop:disable Metrics/AbcSize
+        def define_model_spec_objects # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           let(:described_method) do |example|
             desc =
               if example.example_group.description.starts_with?('#')

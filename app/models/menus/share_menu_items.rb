@@ -72,7 +72,7 @@ module Menus
         .include?(Group::PUBLIC_ID)
     end
 
-    def share_menu_items # rubocop:disable Metrics/AbcSize
+    def share_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       return [not_published_notice] unless resource.is_published?
 
       url = resource.iri

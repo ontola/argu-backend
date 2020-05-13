@@ -105,7 +105,7 @@ class SearchResult < Collection
       self
     end
 
-    def result
+    def result # rubocop:disable Metrics/MethodLength
       @result ||= association_class.search(
         q,
         aggs: parent.searchable_aggregations,

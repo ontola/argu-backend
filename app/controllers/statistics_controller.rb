@@ -21,7 +21,7 @@ class StatisticsController < ParentableController
     @observation_dimensions ||= {NS::SCHEMA[:about] => parent_resource.iri}
   end
 
-  def observation_measures # rubocop:disable Metrics/AbcSize
+  def observation_measures # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return @observation_measures if @observation_measures
 
     counts = descendants.group(:owner_type).count
@@ -40,7 +40,7 @@ class StatisticsController < ParentableController
     @observation_measures
   end
 
-  def resource_by_id
+  def resource_by_id # rubocop:disable Metrics/MethodLength
     @resource_by_id ||=
       DataCube::Set.new(
         dimensions: observation_dimensions.keys,

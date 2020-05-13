@@ -21,7 +21,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
 
   # Executes the action, so generally message broadcasts begin here.
   # @see {after_save}
-  def commit # rubocop:disable Metrics/AbcSize
+  def commit # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     ActiveRecord::Base.transaction do
       persist_parents
       raise(ActiveRecord::RecordInvalid) if resource.errors.present?
@@ -47,7 +47,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     # Stub
   end
 
-  def argu_publication_attributes # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  def argu_publication_attributes # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
     pub_attrs = @attributes[:argu_publication_attributes] || {}
     pub_attrs[:id] = resource.argu_publication.id if resource.argu_publication.present?
     unless resource.is_published?
@@ -108,7 +108,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   # Calls object_attributes= for each association that has been declared as `accepts_nested_attributes_for`
   # @author Fletcher91 <thom@argu.co>
   # @note Requires `object_attributes=` to be overridden in the child class.
-  def set_nested_associations
+  def set_nested_associations # rubocop:disable Metrics/MethodLength
     return unless resource.try(:nested_attributes_options?)
 
     resource.nested_attributes_options.each_key do |association|
@@ -125,7 +125,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def subscribe_listeners # rubocop:disable Metrics/AbcSize
+  def subscribe_listeners # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return if resource.is_a?(Activity) || resource.is_a?(Grant) || resource.try(:store_in_redis?)
 
     subscribe(

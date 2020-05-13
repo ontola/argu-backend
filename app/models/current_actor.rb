@@ -13,7 +13,7 @@ class CurrentActor
   delegate :display_name, to: :actor, allow_nil: true
   delegate :id, to: :user
 
-  def actor_type
+  def actor_type # rubocop:disable Metrics/MethodLength
     if actor.present?
       owner = actor.profileable
       if owner.is_a?(GuestUser)

@@ -21,7 +21,7 @@ module Argu
           end
         end
 
-        def generate_edgeable_tests # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+        def generate_edgeable_tests # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
           generate_crud_tests
 
           %i[trash follow log invite move convert feed].each do |method|

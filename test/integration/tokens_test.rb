@@ -406,6 +406,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     "/#{argu.url}#{super}"
   end
 
+  # rubocop:disable Metrics/MethodLength
   def post_token_password(name: user.email, password: user.password, scope: 'user', redirect: nil, results: {})
     post oauth_token_path,
          headers: argu_headers(accept: :json),
@@ -426,6 +427,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_equal scope, token_user['type']
     token_user
   end
+  # rubocop:enable Metrics/MethodLength
 
   def post_token_client_credentials(scope: nil, redirect: nil, results: {}, client_id: nil, client_secret: nil)
     post oauth_token_path,
@@ -452,7 +454,7 @@ class TokensTest < ActionDispatch::IntegrationTest
          }
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
   def token_response(error_code: nil, error_type: nil, refresh_token: true, scope: 'user', ttl: 7200)
     if error_code || error_type
       expect_error_type(error_type || 'invalid_grant')
@@ -470,5 +472,5 @@ class TokensTest < ActionDispatch::IntegrationTest
       JWT.decode(parsed_body['access_token'], nil, false)[0]
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 end

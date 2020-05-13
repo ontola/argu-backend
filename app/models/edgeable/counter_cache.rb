@@ -72,7 +72,7 @@ module Edgeable
         end
       end
 
-      def fix_counts_query(cache_name, conditions) # rubocop:disable Metrics/AbcSize
+      def fix_counts_query(cache_name, conditions) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         conditions = conditions.dup
         query =
           unscoped
@@ -88,7 +88,7 @@ module Edgeable
         query.where(conditions)
       end
 
-      def fix_counts_with_options(cache_name = nil, conditions = nil) # rubocop:disable Metrics/AbcSize
+      def fix_counts_with_options(cache_name = nil, conditions = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         fixed = []
         cache_name ||= name.tableize
         query = fix_counts_query(cache_name, conditions)

@@ -33,7 +33,7 @@ class ActivityPolicy < EdgeTreePolicy
     end
 
     # Trackable should be published OR be created by one of the managed profiles OR be placed in a managed forum
-    def filter_unpublished_and_unmanaged(scope)
+    def filter_unpublished_and_unmanaged(scope) # rubocop:disable Metrics/MethodLength
       scope
         .joins(:trackable)
         .joins(

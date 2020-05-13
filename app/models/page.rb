@@ -189,7 +189,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def create_default_groups # rubocop:disable Metrics/AbcSize
+  def create_default_groups # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     group = Group.new(
       name: 'Admins',
       name_singular: 'Admin',
@@ -247,7 +247,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       super + %i[default_profile_photo] - %w[navigations_menu settings_menu]
     end
 
-    def update_iris(from, to, scope = nil)
+    def update_iris(from, to, scope = nil) # rubocop:disable Metrics/MethodLength
       escaped_from = ApplicationRecord.connection.quote_string(from)
       escaped_to = ApplicationRecord.connection.quote_string(to)
       # rubocop:disable Rails/SkipsModelValidations

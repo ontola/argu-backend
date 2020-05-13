@@ -7,7 +7,7 @@ class ExportWorker
 
   attr_accessor :export
 
-  def perform(export_id) # rubocop:disable Metrics/AbcSize
+  def perform(export_id) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     self.export = Export.find_by(id: export_id)
     return if export.blank?
 
@@ -63,7 +63,7 @@ class ExportWorker
         .group_by { |m| m.class.name }
   end
 
-  def format_value_xls(value)
+  def format_value_xls(value) # rubocop:disable Metrics/MethodLength
     case value
     when Array
       value.map { |v| format_value_xls(v) }.join(', ')

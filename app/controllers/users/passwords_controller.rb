@@ -7,7 +7,7 @@ module Users
     skip_before_action :require_no_authentication, only: :create
     active_response :new, :edit
 
-    def create # rubocop:disable Metrics/AbcSize
+    def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       if no_password_required?
         params[:user] ||= {}
         params[:user][:email] = current_user.email

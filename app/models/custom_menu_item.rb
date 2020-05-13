@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CustomMenuItem < ApplicationRecord
+class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable

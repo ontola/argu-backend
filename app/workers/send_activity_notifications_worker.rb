@@ -5,7 +5,7 @@ class SendActivityNotificationsWorker
 
   COOLDOWN_PERIOD = 4.minutes
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
   def perform(user_id, delivery_type)
     ActsAsTenant.without_tenant do
       @user = User.find(user_id)
@@ -26,11 +26,11 @@ class SendActivityNotificationsWorker
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
   private
 
-  def add_prepared_notification(result, notification) # rubocop:disable Metrics/AbcSize
+  def add_prepared_notification(result, notification) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     activity = notification.activity
     trackable = activity.trackable
     followable = activity.new_content? ? activity.recipient : trackable
@@ -62,7 +62,7 @@ class SendActivityNotificationsWorker
     }
   end
 
-  def collect_activity_notifications
+  def collect_activity_notifications # rubocop:disable Metrics/MethodLength
     t_notifications = Notification.arel_table
     @notifications =
       @user
@@ -81,7 +81,7 @@ class SendActivityNotificationsWorker
     (last_viewed.blank? || last_viewed && (last_viewed < (Time.current - COOLDOWN_PERIOD)))
   end
 
-  def prepared_notifications
+  def prepared_notifications # rubocop:disable Metrics/MethodLength
     result = {}
     @notifications
       .includes(

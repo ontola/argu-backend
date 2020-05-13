@@ -28,7 +28,7 @@ module Edgeable
 
       private
 
-      def property_association(type, opts, name)
+      def property_association(type, opts, name) # rubocop:disable Metrics/MethodLength
         klass_name = property_association_klass(opts, name)
         property_opts = property_association_property_opts(klass_name, opts)
 

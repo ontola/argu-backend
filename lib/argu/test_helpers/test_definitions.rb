@@ -16,7 +16,7 @@ module Argu
         assert_response results[:response]
       end
 
-      def general_create(results: {}, # rubocop:disable Metrics/AbcSize
+      def general_create(results: {}, # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
                          parent: nil,
                          attributes: {},
                          differences: [[model_class.to_s, 1],
@@ -59,7 +59,7 @@ module Argu
         assert_response results[:response]
       end
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def general_update(results: {}, record: subject, attributes: {}, differences: [['Activity', 1]])
         record = record.is_a?(Symbol) ? send(record) : record.reload
 
@@ -85,7 +85,7 @@ module Argu
           assert false, "can't be changed"
         end
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       def general_trash(results: {}, record: subject)
         record = send(record) if record.is_a?(Symbol)

@@ -28,8 +28,6 @@ Metrics/ClassLength:
     - 'test/controllers/*.rb'
     - 'test/integration/**/*.rb'
     - 'test/unit/*.rb'
-Metrics/MethodLength:
-  Max: 30
 Naming/PredicateName:
   Enabled: false
 Rails/ApplicationRecord:

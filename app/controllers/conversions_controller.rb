@@ -68,20 +68,6 @@ class ConversionsController < ServiceController
   end
 
   def verify_convertible_edge
-    return if parent_resource!.is_convertible?
-
-    respond_to do |format|
-      format.json do
-        render status: 422,
-               json: {
-                 notifications: [
-                   {
-                     type: :error,
-                     message: "#{parent_resource!} is not convertible"
-                   }
-                 ]
-               }
-      end
-    end
+    raise "#{parent_resource!} is not convertible" unless parent_resource!.is_convertible?
   end
 end

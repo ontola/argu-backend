@@ -3,7 +3,7 @@
 class GroupMembershipsController < ServiceController
   skip_before_action :verify_terms_accepted
 
-  def index # rubocop:disable Metrics/AbcSize
+  def index # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return super if params[:group_id].present?
     return if params[:q].nil?
 

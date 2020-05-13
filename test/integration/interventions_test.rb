@@ -87,7 +87,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
 
   private
 
-  def intervention_attributes(opts = {})
+  def intervention_attributes(opts = {}) # rubocop:disable Metrics/MethodLength
     {
       parent_id: intervention_type.id,
       employment_id: employment.id,

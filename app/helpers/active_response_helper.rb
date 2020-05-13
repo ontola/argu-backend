@@ -85,7 +85,7 @@ module ActiveResponseHelper
     respond_with_invalid_resource(respond_with_block_options(resource, opts))
   end
 
-  def respond_with_block_success(resource, opts)
+  def respond_with_block_success(resource, opts) # rubocop:disable Metrics/MethodLength
     respond_with_success!
     response_options = respond_with_block_options(resource, opts)
     case action_name

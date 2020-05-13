@@ -64,7 +64,7 @@ class ActivityListener
     }
   end
 
-  def create_activity(resource, recipient, action, parameters: {})
+  def create_activity(resource, recipient, action, parameters: {}) # rubocop:disable Metrics/MethodLength
     a = CreateActivity.new(
       Activity.new(notify: @notify),
       attributes: {

@@ -122,7 +122,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
 
   private
 
-  def general_create_json(parent, pro = true)
+  def general_create_json(parent, pro = true) # rubocop:disable Metrics/MethodLength
     post collection_iri(parent, "#{pro ? 'pro' : 'con'}_arguments"),
          params: {
            data: {

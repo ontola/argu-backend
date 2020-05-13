@@ -40,7 +40,7 @@ class Manifest < VirtualResource
   end
   alias short_name name
 
-  def ontola # rubocop:disable Metrics/AbcSize
+  def ontola # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     {
       allowed_external_sources: page.allowed_external_sources,
       secondary_main: page.accent_background_color,

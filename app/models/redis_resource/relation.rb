@@ -72,7 +72,7 @@ module RedisResource
       @redis_resources&.clear
     end
 
-    def filtered_keys # rubocop:disable Metrics/AbcSize
+    def filtered_keys # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       return key.matched_keys if where_clause.blank?
 
       @filtered_keys ||= key.matched_keys.select do |key|

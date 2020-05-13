@@ -181,7 +181,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Creates a new {Follow} or updates an existing one, except when a higher follow or a never follow is present.
   # Follows the ancestors if #ancestor_type is given.
-  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
   def follow(followable, type = :reactions, ancestor_type = nil)
     return if self == followable || !accepted_terms?
 
@@ -199,7 +199,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     true
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 
   # The Follow for the followable by this User
   # @param [Edge] followable The Edge to find the Follow for
@@ -215,7 +215,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     follow_for(followable)&.follow_type || 'never'
   end
 
-  def favorite_pages
+  def favorite_pages # rubocop:disable Metrics/MethodLength
     return Page.none if guest?
 
     @favorite_pages ||=
@@ -328,7 +328,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def send_devise_notification(notification, *args)
+  def send_devise_notification(notification, *args) # rubocop:disable Metrics/MethodLength
     case notification
     when :reset_password_instructions
       SendEmailWorker.perform_async(

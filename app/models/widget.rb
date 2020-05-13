@@ -117,7 +117,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
       )
     end
 
-    def create_new_motion(owner)
+    def create_new_motion(owner) # rubocop:disable Metrics/MethodLength
       custom_action = CustomAction.create!(
         is_published: true,
         creator: Profile.service,
@@ -141,7 +141,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
       )
     end
 
-    def create_new_question(owner)
+    def create_new_question(owner) # rubocop:disable Metrics/MethodLength
       custom_action = CustomAction.create!(
         is_published: true,
         creator: Profile.service,
@@ -165,7 +165,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
       )
     end
 
-    def create_new_topic(owner)
+    def create_new_topic(owner) # rubocop:disable Metrics/MethodLength
       custom_action = CustomAction.create!(
         is_published: true,
         creator: Profile.service,

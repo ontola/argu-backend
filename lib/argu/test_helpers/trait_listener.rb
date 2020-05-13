@@ -65,7 +65,7 @@ module Argu
       end
 
       # Adds 3 pro (1 trashed) and 3 con (1 trashed) arguments to the resource
-      def with_arguments # rubocop:disable Metrics/AbcSize
+      def with_arguments # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         [true, false].each do |pro|
           3.times do
             service = CreateArgument
@@ -81,7 +81,7 @@ module Argu
       end
 
       # Adds 3 attachments to the resource
-      def with_attachments
+      def with_attachments # rubocop:disable Metrics/MethodLength
         3.times do
           profile = create(:profile)
           @resource.attachments.create(
@@ -130,7 +130,7 @@ module Argu
       end
 
       # Adds 2 published and 2 trashed motions to the resource
-      def with_motions # rubocop:disable Metrics/AbcSize
+      def with_motions # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         2.times do
           service = CreateEdge
                       .new(

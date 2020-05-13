@@ -19,7 +19,7 @@ module Motionable
         ]
       end
 
-      def default_motion_sorting_opts(parent) # rubocop:disable Metrics/CyclomaticComplexity
+      def default_motion_sorting_opts(parent) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
         return {key: NS::ARGU[:lastActivityAt], direction: :desc} unless parent.try(:default_motion_sorting)
 
         case parent.default_motion_sorting

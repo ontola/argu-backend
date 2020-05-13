@@ -45,7 +45,7 @@ module RedisResource
       key.include?('*')
     end
 
-    def matched_keys # rubocop:disable Metrics/AbcSize
+    def matched_keys # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       @matched_keys ||=
         if has_wildcards?
           keys = Argu::Redis.keys(key).map { |key| RedisResource::Key.parse(key, user) }.compact

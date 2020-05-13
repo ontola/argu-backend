@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class InterventionPolicy < EdgePolicy
-  def permitted_attribute_names
+  def permitted_attribute_names # rubocop:disable Metrics/MethodLength
     attributes = super
     attributes.concat %i[
       display_name description goal additional_introduction_information one_off_costs

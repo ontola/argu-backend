@@ -82,7 +82,7 @@ module Argu
                                user: user), subject)
       end
 
-      def reset_grants(user_type)
+      def reset_grants(user_type) # rubocop:disable Metrics/MethodLength
         case user_type
         when :spectator
           [freetown, expired_freetown].each do |record|
@@ -102,7 +102,7 @@ module Argu
         end
       end
 
-      def test_policy(subject, action, test_cases) # rubocop:disable Metrics/AbcSize
+      def test_policy(subject, action, test_cases) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         failures = []
         class_name = self.class.name.gsub('PolicyTest', '')
         test_cases.each do |user, expected|

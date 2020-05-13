@@ -81,7 +81,7 @@ class Place < ApplicationRecord
       new(fetched_opts(result))
     end
 
-    def fetched_opts(result) # rubocop:disable Metrics/AbcSize
+    def fetched_opts(result) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       {
         nominatim_id: result['place_id'],
         licence: result['licence'],

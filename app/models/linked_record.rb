@@ -39,7 +39,7 @@ class LinkedRecord < Edge
     @iri_opts ||= {container_node_id: parent.url, linked_record_id: deku_id}
   end
 
-  def self.new_for_forum(organization_shortname, forum_shortname, id)
+  def self.new_for_forum(organization_shortname, forum_shortname, id) # rubocop:disable Metrics/MethodLength
     raise(ActiveRecord::RecordNotFound) unless uuid?(id)
 
     forum =

@@ -65,7 +65,7 @@ class AppMenuList < ApplicationMenuList
     )
   end
 
-  def user_base_items # rubocop:disable Metrics/AbcSize
+  def user_base_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     if resource.url.present?
       [
         menu_item(

@@ -58,7 +58,7 @@ class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
 
   private
 
-  def follow_and_notification_pair(trackable, *traits) # rubocop:disable Metrics/AbcSize
+  def follow_and_notification_pair(trackable, *traits) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     traits.append(:viewed_notifications_hour_ago) if traits.none? { |t| t.to_s.include?('viewed_notifications') }
     user = create(:user, *(traits - [:not_accepted_terms]))
     create(:follow,

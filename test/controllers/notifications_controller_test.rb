@@ -81,7 +81,7 @@ class NotificationsControllerTest < ActionController::TestCase
 
   private
 
-  def followed_content(user)
+  def followed_content(user) # rubocop:disable Metrics/MethodLength
     user.follows.destroy_all
     parent = freetown
     create(:follow, followable: parent, follower: user)

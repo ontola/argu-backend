@@ -11,7 +11,7 @@ module GrantResettable
 
       accepts_nested_attributes_for :grant_resets, allow_destroy: true, reject_if: :all_blank
 
-      def self.custom_grants_for(child_type, action) # rubocop:disable Metrics/AbcSize
+      def self.custom_grants_for(child_type, action) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         singular = child_type.to_s.singularize
         child_class = child_type.to_s.classify.constantize
         raise "#{child_type} is not a child of #{class_name}" unless child_class.valid_parent?(self)

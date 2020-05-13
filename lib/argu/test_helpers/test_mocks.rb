@@ -3,7 +3,7 @@
 module Argu
   module TestHelpers
     module TestMocks
-      def create_email_mock(template, email, options)
+      def create_email_mock(template, email, options) # rubocop:disable Metrics/MethodLength
         email_only = options.delete(:email_only)
         tenant = options.delete(:tenant) || :argu
         recipient =
@@ -71,7 +71,7 @@ module Argu
           ].to_json)
       end
 
-      def nominatim_country_code_only
+      def nominatim_country_code_only # rubocop:disable Metrics/MethodLength
         stub_request(:get,
                      'http://open.mapquestapi.com/nominatim/v1/search?addressdetails=1&country=nl&'\
                      'extratags=1&format=json&limit=1&namedetails=1&polygon=0&postalcode=')
@@ -86,7 +86,7 @@ module Argu
           ].to_json)
       end
 
-      def nominatim_postal_code_valid
+      def nominatim_postal_code_valid # rubocop:disable Metrics/MethodLength
         stub_request(:get,
                      'http://open.mapquestapi.com/nominatim/v1/search?addressdetails=1&country=nl&'\
                      'extratags=1&format=json&limit=1&namedetails=1&polygon=0&postalcode=3583GP')

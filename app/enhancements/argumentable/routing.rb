@@ -8,7 +8,7 @@ module Argumentable
       [Argument]
     end
 
-    def route_concerns(mapper)
+    def route_concerns(mapper) # rubocop:disable Metrics/MethodLength
       mapper.concern :argumentable do
         mapper.resources :arguments, only: %i[new create]
         mapper.resources :pro_arguments, only: %i[new create index], path: 'pros', defaults: {pro: 'pro'} do
