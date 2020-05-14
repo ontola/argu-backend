@@ -358,10 +358,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     id == User::SERVICE_ID
   end
 
-  def sync_notification_count
-    Argu::Redis.set("user:#{id}:notification.count", notifications.count)
-  end
-
   def validate_r
     return if argu_iri_or_relative?(r)
 

@@ -7,6 +7,7 @@ require_relative './initializers/build'
 
 require_relative '../lib/tenant_finder'
 require_relative '../lib/tenant_middleware'
+require_relative '../lib/argu/redis'
 require_relative '../lib/argu/errors/i18n_error_handler'
 require 'rails/all'
 require 'linked_rails/middleware/linked_data_params'
@@ -70,7 +71,7 @@ module Argu
 
     VideoInfo.provider_api_keys = {youtube: ENV['YOUTUBE_KEY'], vimeo: ENV['VIMEO_KEY']}
 
-    Searchkick.redis = Redis.new
+    Searchkick.redis = Argu::Redis.redis_instance
     config.disable_searchkick = ENV['DISABLE_SEARCHKICK'] == 'true'
 
     ############################

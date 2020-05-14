@@ -27,12 +27,6 @@ class UserTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
-  test 'should sync notification count' do
-    assert_equal 0, notification_count(subject)
-    subject.sync_notification_count
-    assert_equal 1, notification_count(subject)
-  end
-
   test 'should adjust birthday' do
     subject.update('birthday(2i)' => '1', 'birthday(3i)' => '1', 'birthday(1i)' => '1970')
     assert_equal Date.new(1970, 7, 1), subject.birthday
@@ -67,11 +61,5 @@ class UserTest < ActiveSupport::TestCase
     assert_equal subject.reload.hide_last_name, false
     subject.update!(birthday: 18.years.ago)
     assert_equal subject.reload.hide_last_name, true
-  end
-
-  private
-
-  def notification_count(user)
-    Argu::Redis.get("user:#{user.id}:notification.count").to_i
   end
 end

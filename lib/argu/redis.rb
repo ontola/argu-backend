@@ -42,6 +42,7 @@ module Argu
       redis.keys(pattern)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
+      []
     end
 
     def self.persist(key, redis = redis_instance)
@@ -68,16 +69,30 @@ module Argu
       rescue_redis_connection_error(e)
     end
 
-    def self.hgetall(key, redis = ::Redis.new)
+    def self.hgetall(key, redis = redis_instance)
       redis.hgetall(key)
+    rescue ::Redis::CannotConnectError => e
+      rescue_redis_connection_error(e)
+      {}
+    end
+
+    def self.hmset(key, values: {}, redis: redis_instance)
+      redis.hmset(key, *values)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.hmset(key, values: {}, redis: ::Redis.new)
-      redis.hmset(key, *values)
+    def self.lpush(key, value, redis: redis_instance)
+      redis.lpush(key, value)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
+    end
+
+    def self.lrange(key, start, stop, redis: redis_instance)
+      redis.lrange(key, start, stop)
+    rescue ::Redis::CannotConnectError => e
+      rescue_redis_connection_error(e)
+      []
     end
 
     # Delegate `::Redis::CannotConnectError` to this method.

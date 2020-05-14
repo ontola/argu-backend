@@ -10,8 +10,6 @@ class Notification < ApplicationRecord
   belongs_to :user
   belongs_to :activity
   before_create :set_notification_type
-  after_destroy :sync_notification_count
-  after_update :sync_notification_count
 
   validates :title, length: {maximum: 140}
   validates :url, length: {maximum: 512}
@@ -21,10 +19,6 @@ class Notification < ApplicationRecord
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
   enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4, finish_intro: 5}
   virtual_attribute :unread, :boolean, default: false, dependent_on: :read_at, value: ->(r) { r.read_at.blank? }
-
-  def sync_notification_count
-    user.try :sync_notification_count
-  end
 
   def display_name # rubocop:disable Metrics/AbcSize
     if activity.present?
