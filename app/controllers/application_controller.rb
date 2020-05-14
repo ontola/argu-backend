@@ -20,7 +20,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze
 
   before_action :verify_internal_ip, if: :service_token?
-  force_ssl unless: :internal_request?, host: Rails.application.config.origin
   before_bugsnag_notify :add_info_to_bugsnag
 
   prepend_before_action :current_actor
