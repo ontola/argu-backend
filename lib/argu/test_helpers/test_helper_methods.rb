@@ -364,7 +364,7 @@ module Argu
               end
             return nil unless desc.is_a?(String) && desc != '#initialize'
 
-            desc[1..-1].to_sym
+            desc[1..].to_sym
           end
         end
 

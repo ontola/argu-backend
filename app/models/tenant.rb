@@ -15,7 +15,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def path
-    iri_prefix.split('/')[1..-1].join('/')
+    iri_prefix.split('/')[1..].join('/')
   end
 
   private

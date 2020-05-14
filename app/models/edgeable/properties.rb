@@ -9,6 +9,7 @@ module Edgeable
 
       attr_accessor :properties_preloaded
       attr_accessor :property_managers
+
       class_attribute :defined_properties
     end
 

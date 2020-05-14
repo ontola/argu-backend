@@ -64,7 +64,7 @@ class Decision < Edge
   class << self
     # @return [Array<Symbol>] States that indicate an action was taken on this decision
     def actioned_keys
-      states.keys[1..-1]
+      states.keys[1..]
     end
   end
 end

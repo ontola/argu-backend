@@ -92,7 +92,7 @@ class SendActivityNotificationsWorker
         ]
       )
       .each { |notification| add_prepared_notification(result, notification) }
-    Hash[result.map { |k, v| [k, v.to_h] }]
+    result.transform_values(&:to_h)
   end
 
   def send_activity_notifications_mail

@@ -27,6 +27,7 @@ class CustomMenuItem < ApplicationRecord
   before_create :set_root
 
   attr_writer :parent
+
   alias edgeable_record resource
 
   def href

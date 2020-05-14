@@ -1,5 +1,6 @@
 inherit_from: service_module/.rubocop.yml
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.6
   Exclude:
     - 'node_modules/**/*'

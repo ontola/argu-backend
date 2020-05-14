@@ -9,8 +9,8 @@ module DataCube
       observations.map! do |observation|
         Observation.new(
           data_set: self,
-          dimensions: Hash[observation[:dimensions].map { |key, value| [dimension_by_predicate(key), value] }],
-          measures: Hash[observation[:measures].map { |key, value| [measure_by_predicate(key), value] }]
+          dimensions: observation[:dimensions].transform_keys { |key| dimension_by_predicate(key) },
+          measures: observation[:measures].transform_keys { |key| measure_by_predicate(key) }
         )
       end
     end

@@ -13,7 +13,7 @@ class NotificationPolicy < RestrictivePolicy
 
   def initialize(context, record)
     super(context, record)
-    raise .new('must be logged in') unless user
+    raise.new('must be logged in') unless user
   end
 
   def permitted_attribute_names

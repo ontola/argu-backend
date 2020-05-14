@@ -162,6 +162,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   with_collection :exports
 
   attr_writer :root
+
   alias user publisher
   alias profile creator
 

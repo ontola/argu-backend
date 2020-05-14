@@ -9,6 +9,7 @@ class SearchResult < Collection
   include Cacheable
 
   attr_accessor :q
+
   delegate :total_count, :took, to: :association_base
 
   def action_triples(*_args)
@@ -84,6 +85,7 @@ class SearchResult < Collection
   class Result
     include Enumerable
     attr_accessor :collection
+
     delegate :association_class, :page_size, :parent, :q, :sortings, :user_context, :views, to: :collection
     delegate :took, :total_count, to: :result
 

@@ -13,6 +13,7 @@ class DirectMessage
 
   attr_accessor :actor, :body, :subject, :email_address
   attr_writer :resource, :resource_iri
+
   validates :actor, presence: true
   validates :body, presence: true
   validates :email_address, presence: true

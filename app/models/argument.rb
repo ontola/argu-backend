@@ -25,6 +25,7 @@ class Argument < Edge
   with_collection :votes
 
   attr_reader :pro
+
   alias pro? pro
 
   def default_vote_event

@@ -37,11 +37,9 @@ module Public
       end
 
       def tenant_meta
-        Hash[
-          TENANT_META_ATTRS.map do |key|
-            [key, tenant!.send(key)]
-          end
-        ]
+        TENANT_META_ATTRS.index_with do |key|
+          tenant!.send(key)
+        end
       end
     end
   end

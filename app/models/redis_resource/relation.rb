@@ -6,6 +6,7 @@ module RedisResource
     include ActiveModel::Model
     attr_accessor :where_clause, :user, :owner_type, :root_id
     attr_reader :parent, :parent_id
+
     delegate :count, :empty?, to: :filtered_keys
 
     # Clears the caches

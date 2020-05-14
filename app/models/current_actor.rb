@@ -9,6 +9,7 @@ class CurrentActor
   include Rails.application.routes.url_helpers
 
   attr_accessor :actor, :user
+
   delegate :display_name, to: :actor, allow_nil: true
   delegate :id, to: :user
 
