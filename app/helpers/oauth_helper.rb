@@ -79,11 +79,11 @@ module OauthHelper
     doorkeeper_token.revoke if doorkeeper_token&.resource_owner_id
 
     Doorkeeper::AccessToken.find_or_create_for(
-      doorkeeper_token&.application || Doorkeeper::Application.argu_front_end,
-      resource_owner.id,
-      resource_owner.guest? ? :guest : :user,
-      Doorkeeper.configuration.access_token_expires_in,
-      true
+      application: doorkeeper_token&.application || Doorkeeper::Application.argu_front_end,
+      resource_owner: resource_owner,
+      scopes: resource_owner.guest? ? :guest : :user,
+      expires_in: Doorkeeper.configuration.access_token_expires_in,
+      use_refresh_token: true
     )
   end
 

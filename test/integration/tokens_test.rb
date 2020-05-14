@@ -162,7 +162,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       refresh_access_token(token.refresh_token)
     end
-    token_response
+    token_response(ttl: 1)
     sleep 1
     assert_difference('Doorkeeper::AccessToken.count', 0) do
       refresh_access_token(token.refresh_token)
@@ -453,7 +453,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-  def token_response(error_code: nil, error_type: nil, refresh_token: true, scope: 'user')
+  def token_response(error_code: nil, error_type: nil, refresh_token: true, scope: 'user', ttl: 7200)
     if error_code || error_type
       expect_error_type(error_type || 'invalid_grant')
       expect_error_code(error_code) if error_code
@@ -465,7 +465,7 @@ class TokensTest < ActionDispatch::IntegrationTest
 
       assert_equal scope, parsed_body['scope']
       assert_equal 'Bearer', parsed_body['token_type']
-      assert_equal 7200, parsed_body['expires_in']
+      assert_equal ttl, parsed_body['expires_in']
       assert_not_nil parsed_body['refresh_token'] if refresh_token
       JWT.decode(parsed_body['access_token'], nil, false)[0]
     end

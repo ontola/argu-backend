@@ -103,11 +103,11 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def create_system_token(app, user_id, scopes, secret)
       token = Doorkeeper::AccessToken.find_or_create_for(
-        app,
-        user_id,
-        scopes,
-        10.years.to_i,
-        true
+        application: app,
+        resource_owner: user_id,
+        scopes: scopes,
+        expires_in: 10.years.to_i,
+        use_refresh_token: true
       )
       token.update(token: secret)
       token
