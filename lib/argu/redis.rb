@@ -4,8 +4,8 @@
 module Argu
   class Redis
     # Argu configured redis instance, use this by default.
-    def self.redis_instance(host = ENV['REDIS_ADDRESS'], port = ENV['REDIS_PORT'])
-      ::Redis.new(host: host, port: port)
+    def self.redis_instance(url = ENV['REDIS_URL'])
+      ::Redis.new(url: url)
     end
 
     def self.exists(key, redis = redis_instance)
