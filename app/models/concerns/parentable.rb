@@ -53,7 +53,7 @@ module Parentable
     extend ActiveSupport::Concern
     included do
       # rubocop:disable Rails/HasManyOrHasOneDependent
-      has_one :parent, key: :parent, predicate: NS::SCHEMA[:isPartOf]
+      has_one :parent, key: :parent, predicate: NS::SCHEMA[:isPartOf], polymorphic: true
       # rubocop:enable Rails/HasManyOrHasOneDependent
     end
   end

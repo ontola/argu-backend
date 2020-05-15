@@ -17,7 +17,6 @@ require 'linked_rails/middleware/linked_data_params'
 Bundler.require(*Rails.groups)
 
 require_relative '../lib/ns'
-require_relative '../app/adapters/hex_adapter'
 require_relative '../lib/acts_as_tenant/sidekiq_with_tenant'
 
 module Argu
@@ -64,8 +63,6 @@ module Argu
       g.test_framework :rspec, fixture: true, views: false
       g.integration_tool :rspec, fixture: true, views: true
     end
-
-    ActiveModelSerializers.config.key_transform = :camel_lower
 
     ActiveJob::Base.queue_adapter = :sidekiq
 

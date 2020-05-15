@@ -212,7 +212,7 @@ module Argu
         end
 
         def default_formats
-          %i[json_api].concat((RDF_CONTENT_TYPES - [:ttl]).shuffle[1..2])
+          [:json_api, :hndjson, (RDF_CONTENT_TYPES - [:ttl]).sample]
         end
 
         def show_formats

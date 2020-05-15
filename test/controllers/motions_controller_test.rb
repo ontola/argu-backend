@@ -17,18 +17,18 @@ class MotionsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, root_id: argu.url, id: motion.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('parent')
     expect_relationship('creator')
 
-    expect_relationship('proArgumentCollection')
-    expect_relationship('conArgumentCollection')
+    expect_relationship('pro_argument_collection')
+    expect_relationship('con_argument_collection')
     expect_included(collection_iri(motion, :pro_arguments))
     expect_included(collection_iri(motion, :con_arguments))
 
-    expect_relationship('attachmentCollection')
+    expect_relationship('attachment_collection')
     expect_included(collection_iri(motion, :attachments))
 
-    expect_relationship('voteEventCollection')
+    expect_relationship('vote_event_collection')
     expect_included(vote_event.iri)
     expect_included(collection_iri(vote_event, :votes))
     %w[yes other no].each do |side|
@@ -46,7 +46,7 @@ class MotionsControllerTest < ActionController::TestCase
     end
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
 
     expect_default_view
     expect_included(collection_iri(holland, :motions, page: 1))
@@ -65,7 +65,7 @@ class MotionsControllerTest < ActionController::TestCase
     end
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
 
     default_view = expect_default_view
     current_time = CGI.parse(default_view['id'])['before[]'].second.split('=').last
@@ -112,7 +112,7 @@ class MotionsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: argu.url, question_id: question.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
 
     expect_view_members(expect_default_view, question.motions.active.count)
     expect_not_included(question.motions.trashed.map(&:iri))

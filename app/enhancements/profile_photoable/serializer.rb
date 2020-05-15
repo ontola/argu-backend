@@ -4,7 +4,9 @@ module ProfilePhotoable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :default_profile_photo, predicate: NS::SCHEMA[:image]
+      has_one :default_profile_photo,
+              predicate: NS::SCHEMA[:image],
+              serializer: :media_object
     end
   end
 end

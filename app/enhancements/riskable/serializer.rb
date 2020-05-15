@@ -5,7 +5,7 @@ module Riskable
     extend ActiveSupport::Concern
 
     included do
-      attribute :example_of_id, predicate: NS::RIVM[:exampleOf], if: :never
+      attribute :example_of_id, predicate: NS::RIVM[:exampleOf], if: method(:never)
 
       with_collection :risks, predicate: NS::RIVM[:exampleOf]
     end

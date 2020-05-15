@@ -21,21 +21,21 @@ RSpec.describe SearchResult, type: :model do
 
   describe 'scoping' do
     context 'as user' do
-      it { expect(search_result.total_count).to eq(4) }
+      it { expect(search_result.total_count).to eq(5) }
     end
 
     context 'as admin' do
       let(:user) { create_administrator(argu) }
 
-      it { expect(search_result.total_count).to eq(8) }
+      it { expect(search_result.total_count).to eq(9) }
     end
 
     it { expect(search_result(parent: unpublished_question).total_count).to eq(0) }
   end
 
   describe 'pagination' do
-    it { expect(search_result.total_count).to eq(4) }
-    it { expect(search_result.default_view.count).to eq(4) }
+    it { expect(search_result.total_count).to eq(5) }
+    it { expect(search_result.default_view.count).to eq(5) }
     it { expect(search_result(page_size: 3).default_view.count).to eq(3) }
   end
 
@@ -47,15 +47,15 @@ RSpec.describe SearchResult, type: :model do
 
   describe 'keeping index up to date' do
     it 'keeps trashed items in index' do
-      expect(search_result.association_base.count).to eq(4)
+      expect(search_result.association_base.count).to eq(5)
       motion.trash
-      expect(search_result.association_base.count).to eq(4)
+      expect(search_result.association_base.count).to eq(5)
     end
 
     it 'remove destroyed items from index' do
-      expect(search_result.association_base.count).to eq(4)
+      expect(search_result.association_base.count).to eq(5)
       motion.destroy
-      expect(search_result.association_base.count).to eq(3)
+      expect(search_result.association_base.count).to eq(4)
       expect(search_result.association_base.reject(&:is_published?)).to be_empty
     end
 

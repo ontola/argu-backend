@@ -2,16 +2,16 @@
 
 module DataCube
   class ObservationSerializer < BaseSerializer
-    triples :dimensions
-    triples :measures
+    statements :dimensions
+    statements :measures
 
-    def dimensions
+    def self.dimensions(object, _params)
       object.dimensions.map do |dimension, value|
         RDF::Statement.new(object.iri, dimension.predicate, value, graph_name: NS::LL[:supplant])
       end
     end
 
-    def measures
+    def self.measures(object, _params)
       object.measures.map do |measure, value|
         RDF::Statement.new(object.iri, measure.predicate, value, graph_name: NS::LL[:supplant])
       end

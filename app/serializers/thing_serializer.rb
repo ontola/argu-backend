@@ -3,7 +3,7 @@
 class ThingSerializer < RecordSerializer
   statements :property_statements
 
-  delegate :type, to: :object
-
-  def display_name; end
+  def self.property_statements(object, _params)
+    object.property_statements
+  end
 end

@@ -18,7 +18,7 @@ class CommentsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: comment.fragment, root_id: argu.url}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('parent')
     expect_relationship('creator')
   end
 
@@ -29,7 +29,7 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
 
     expect_default_view
     expect_included(collection_iri(argument, :comments, page: 1))
@@ -54,7 +54,7 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
 
     expect_default_view
     expect_included(collection_iri(blog_post, :comments, page: 1))

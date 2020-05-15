@@ -14,7 +14,7 @@ class ContainerNodesControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: holland.url}
     assert_response 200
 
-    expect_relationship('motionCollection')
-    expect_relationship('questionCollection')
+    expect_relationship('motion_collection')
+    expect_relationship('question_collection')
   end
 end

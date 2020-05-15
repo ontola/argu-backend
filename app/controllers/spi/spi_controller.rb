@@ -8,8 +8,6 @@ module SPI
     include Argu::Controller::Authorization
     include OauthHelper
 
-    serialization_scope :user_context
-
     def user_context
       @user_context ||=
         UserContext.new(

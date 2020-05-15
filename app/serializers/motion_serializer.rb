@@ -1,30 +1,20 @@
 # frozen_string_literal: true
 
 class MotionSerializer < DiscussionSerializer
-  attribute :lat, if: :export_scope?
-  attribute :lon, if: :export_scope?
-
-  count_attribute :votes_pro, if: :export_scope?
-  count_attribute :votes_con, if: :export_scope?
-  count_attribute :votes_neutral, if: :export_scope?
-
-  def lat
+  attribute :lat, if: method(:export_scope?) do |object|
     object.custom_placement&.lat
   end
-
-  def lon
+  attribute :lon, if: method(:export_scope?) do |object|
     object.custom_placement&.lon
   end
 
-  def votes_con_count
+  count_attribute :votes_pro, if: method(:export_scope?) do |object|
+    object.default_vote_event.pro_count
+  end
+  count_attribute :votes_con, if: method(:export_scope?) do |object|
     object.default_vote_event.con_count
   end
-
-  def votes_neutral_count
+  count_attribute :votes_neutral, if: method(:export_scope?) do |object|
     object.default_vote_event.neutral_count
-  end
-
-  def votes_pro_count
-    object.default_vote_event.pro_count
   end
 end

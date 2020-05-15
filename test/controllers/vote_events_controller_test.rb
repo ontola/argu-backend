@@ -20,10 +20,10 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, id: vote_event.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('parent')
     expect_relationship('creator')
 
-    expect_relationship('voteCollection', size: 1)
+    expect_relationship('vote_collection', size: 1)
     expect_included(collection_iri(vote_event, :votes))
     %w[yes other no].each do |side|
       expect_included(collection_iri(vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
@@ -37,10 +37,10 @@ class VoteEventsControllerTest < ActionController::TestCase
     assert_response 200
 
     assert_equal primary_resource['id'], motion.default_vote_event.iri
-    expect_relationship('partOf')
+    expect_relationship('parent')
     expect_relationship('creator')
 
-    expect_relationship('voteCollection', size: 1)
+    expect_relationship('vote_collection', size: 1)
     expect_included(collection_iri(motion.default_vote_event, :votes))
   end
 
@@ -48,7 +48,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
     expect_view_members(expect_default_view, 2)
 
     expect_not_included(

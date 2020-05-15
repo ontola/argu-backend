@@ -14,13 +14,13 @@ class QuestionsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, root_id: argu.url, id: question.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('parent')
     expect_relationship('creator')
 
-    expect_relationship('attachmentCollection', size: 1)
+    expect_relationship('attachment_collection', size: 1)
     expect_included(collection_iri(question, :attachments))
 
-    expect_relationship('motionCollection', size: 1)
+    expect_relationship('motion_collection', size: 1)
     expect_included(collection_iri(question, :motions))
     expect_not_included(question.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.trashed.map(&:iri))
@@ -33,7 +33,7 @@ class QuestionsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
 
     expect_default_view
     expect_included(collection_iri(holland, :questions, page: 1))

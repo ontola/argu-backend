@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ManifestSerializer < ActiveModel::Serializer
+class ManifestSerializer < BaseSerializer
   attributes(
     :background_color,
     :dir,
@@ -12,7 +12,7 @@ class ManifestSerializer < ActiveModel::Serializer
     :serviceworker,
     :short_name,
     :start_url,
+    :scope,
     :theme_color
   )
-  attribute :manifest_scope, key: :scope
 end

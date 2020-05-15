@@ -208,30 +208,15 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in administator
 
     get :index,
-        format: :json,
         params: {
-          page_id: argu.url,
-          q: administator.first_name,
-          thing: 'fg_shortname26end'
-        }
+          root_id: argu.url,
+          group_id: group.id
+        },
+        format: :nq
 
-    assert_equal parsed_body['data'].size, 1
-    assert_response 200
-  end
-
-  test 'administrator should get index non found' do
-    sign_in administator
-
-    get :index,
-        format: :json,
-        params: {
-          page_id: argu.url,
-          q: 'wrong',
-          thing: 'fg_shortname26end'
-        }
-
-    assert_equal parsed_body['data'].size, 0
-    assert_response 200
+    assert_response :success
+    view = expect_triple(group.group_membership_collection.iri, NS::ONTOLA[:pages], nil).objects.first
+    expect_triple(view, NS::AS[:totalItems], 1)
   end
 
   ####################################

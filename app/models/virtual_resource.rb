@@ -14,4 +14,12 @@ class VirtualResource
   def persisted?
     false
   end
+
+  def self.serializer_class
+    "#{class_name.singularize}_serializer".classify.constantize
+  end
+
+  def serializer_class
+    self.class.serializer_class
+  end
 end

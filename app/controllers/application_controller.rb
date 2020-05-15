@@ -35,8 +35,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
     end
   end
 
-  serialization_scope :user_context
-
   def self.controller_class
     @controller_class ||=
       name.sub(/Controller$/, '').classify.safe_constantize || controller_name.classify.safe_constantize
@@ -138,6 +136,12 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   def parse_graph_params?
     !request.format.json_api?
+  end
+
+  def serializer_params
+    {
+      scope: user_context
+    }
   end
 
   # @private

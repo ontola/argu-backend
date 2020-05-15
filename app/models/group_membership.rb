@@ -49,6 +49,8 @@ class GroupMembership < ApplicationRecord
     ActsAsTenant.with_tenant(root || ActsAsTenant.current_tenant) { super }
   end
 
+  def display_name; end
+
   def publisher
     profile.profileable
   end

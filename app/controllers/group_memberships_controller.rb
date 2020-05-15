@@ -3,33 +3,7 @@
 class GroupMembershipsController < ServiceController
   skip_before_action :verify_terms_accepted
 
-  def index # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    return super if params[:group_id].present?
-    return if params[:q].nil?
-
-    q = params[:q].tr(' ', '|')
-    # Matched groups with members
-    @results = policy_scope(
-      GroupMembership
-        .includes(:group, user: %i[shortname email_addresses default_profile_photo])
-        .where('groups.root_id = ? AND groups.id > 0', tree_root.uuid)
-        .where('shortnames.owner_type = ?', 'User')
-        .where('lower(groups.name) SIMILAR TO lower(?) OR ' \
-               'lower(shortnames.shortname) SIMILAR TO lower(?) OR ' \
-               'lower(users.first_name) SIMILAR TO lower(?) OR ' \
-               'lower(users.last_name) SIMILAR TO lower(?)',
-               "%#{q}%", "%#{q}%", "%#{q}%", "%#{q}%")
-        .references(:groups, :users)
-    )
-
-    render json: @results, include: [:group, user: :default_profile_photo]
-  end
-
   private
-
-  def authorize_action
-    super unless action_name == 'index' && params[:group_id].blank?
-  end
 
   def create_failure
     if existing_record
@@ -42,7 +16,7 @@ class GroupMembershipsController < ServiceController
 
   def create_success_options_json
     opts = create_success_options
-    opts[:include] = :group
+    opts[:include] = %i[group]
     opts[:location] = authenticated_resource!.iri.to_s
     opts
   end
@@ -60,10 +34,6 @@ class GroupMembershipsController < ServiceController
                          .map { |key, errors| [key, errors.find { |error| error[:error] == :taken }[:value]] }
     @existing_record = controller_class
                          .find_by(Hash[duplicate_values].merge(member_id: authenticated_resource.member_id))
-  end
-
-  def parent_resource_key(opts)
-    action_name == 'index' ? super : :group_id
   end
 
   def permit_params

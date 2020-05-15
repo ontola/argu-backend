@@ -1,1 +1,0 @@
-../../service_module/app/serializers/collection_view_serializer.rb

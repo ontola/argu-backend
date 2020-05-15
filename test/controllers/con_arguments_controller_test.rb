@@ -15,7 +15,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
 
     expect_default_view
     expect_included(collection_iri(motion, :con_arguments, page: 1))

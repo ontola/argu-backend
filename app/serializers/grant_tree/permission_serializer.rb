@@ -6,9 +6,7 @@ class GrantTree
       attribute action, predicate: NS::ARGU["#{action}Permission"]
       attribute "#{action}_tooltip", predicate: NS::ARGU["#{action}PermissionTooltip"]
 
-      has_one "#{action}_icon", predicate: NS::ARGU["#{action}PermissionIcon"]
-
-      define_method "#{action}_icon" do
+      attribute "#{action}_icon", predicate: NS::ARGU["#{action}PermissionIcon"] do |object|
         serialize_image(object.send("#{action}_icon"))
       end
     end

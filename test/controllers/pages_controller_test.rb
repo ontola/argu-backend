@@ -16,7 +16,7 @@ class PagesControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api}
     assert_response 200
 
-    expect_no_relationship('partOf')
+    expect_no_relationship('part_of')
 
     expect_default_view
     expect_included(RDF::DynamicURI(argu_url('/o', page: 1)))
@@ -27,7 +27,7 @@ class PagesControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, type: 'paginated', page: 1}
     assert_response 200
 
-    expect_no_relationship('partOf')
+    expect_no_relationship('part_of')
 
     expect_view_members(primary_resource, 1)
     expect_not_included(page2.iri)

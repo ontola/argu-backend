@@ -3,15 +3,9 @@
 class RecordSerializer < BaseSerializer
   attribute :iri
   attribute :created_at, predicate: NS::SCHEMA[:dateCreated]
-  attribute :published_at, predicate: NS::SCHEMA[:datePublished]
-  attribute :display_name, predicate: NS::SCHEMA[:name]
-  attribute :_destroy, predicate: NS::ONTOLA[:_destroy], if: :never
-
-  def export?
-    scope&.doorkeeper_scopes&.include? 'export'
-  end
-
-  def published_at
+  attribute :published_at, predicate: NS::SCHEMA[:datePublished] do |object|
     object.is_publishable? ? object.published_at : object.created_at
   end
+  attribute :display_name, predicate: NS::SCHEMA[:name]
+  attribute :_destroy, predicate: NS::ONTOLA[:_destroy], if: method(:never)
 end

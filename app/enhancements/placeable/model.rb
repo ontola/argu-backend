@@ -48,7 +48,7 @@ module Placeable
       end
 
       def show_includes
-        super + placeable_types.map { |type| {"#{type}_placement".to_sym => :place} }
+        super + placeable_types.map { |type| "#{type}_placement.place".to_sym }
       end
     end
   end

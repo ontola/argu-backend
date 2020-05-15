@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Argu
-  class IRIMapper # rubocop:disable Metrics/ClassLength
+  class IRIMapper
     extend NestedResourceHelper
     extend RedirectHelper
     extend UriTemplateHelper

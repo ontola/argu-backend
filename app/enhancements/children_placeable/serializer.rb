@@ -5,11 +5,7 @@ module ChildrenPlaceable
     extend ActiveSupport::Concern
 
     included do
-      attribute :children_placements, predicate: NS::ARGU[:childrenPlacements]
-    end
-
-    def children_placements
-      object.children_placements_iri
+      attribute :children_placements_iri, predicate: NS::ARGU[:childrenPlacements]
     end
   end
 end

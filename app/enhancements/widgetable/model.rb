@@ -13,6 +13,10 @@ module Widgetable
       class_attribute :default_widgets
     end
 
+    def widgets_iri
+      collection_iri(self, :widgets)
+    end
+
     private
 
     def create_default_widgets

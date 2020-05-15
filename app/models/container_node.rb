@@ -63,6 +63,10 @@ class ContainerNode < Edge
     url == 'youngbelegen'
   end
 
+  def hide_header
+    !show_header
+  end
+
   def iri_opts
     {id: url}
   end

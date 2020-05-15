@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 class ContainerNodeSerializer < EdgeSerializer
-  has_one :parent, key: :partOf, predicate: NS::SCHEMA[:isPartOf] do
-    object.parent
-  end
+  has_one :parent, predicate: NS::SCHEMA[:isPartOf], &:parent
 
   attribute :bio, predicate: NS::SCHEMA[:description]
   attribute :bio_long, predicate: NS::SCHEMA[:text]
   attribute :language, predicate: NS::SCHEMA[:language], datatype: NS::XSD[:string]
-  attribute :locale, predicate: NS::ARGU[:locale]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
   attribute :hide_header, predicate: NS::ONTOLA[:hideHeader]
 
@@ -16,6 +13,7 @@ class ContainerNodeSerializer < EdgeSerializer
 
   enum :locale,
        type: NS::SCHEMA[:Thing],
+       predicate: NS::ARGU[:locale],
        options: Hash[
          ISO3166::Country.codes
            .flat_map do |code|
@@ -30,8 +28,4 @@ class ContainerNodeSerializer < EdgeSerializer
            end
          end
        ]
-
-  def hide_header
-    !object.show_header
-  end
 end

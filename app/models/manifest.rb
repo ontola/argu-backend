@@ -66,6 +66,7 @@ class Manifest < VirtualResource
   def manifest_scope
     @manifest_scope ||= "https://#{page.iri_prefix}"
   end
+  alias scope manifest_scope
 
   def start_url
     @start_url ||= "#{manifest_scope}/"

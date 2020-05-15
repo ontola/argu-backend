@@ -8,7 +8,7 @@ class InfoController < ApplicationController
 
     active_response_block do
       respond_with_resource(
-        include: :sections,
+        include: %i[sections],
         resource: InfoDocument.new(iri: RDF::URI(request.original_url), json: JSON.parse(setting))
       )
     end

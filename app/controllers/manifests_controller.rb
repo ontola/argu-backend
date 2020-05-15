@@ -2,7 +2,10 @@
 
 class ManifestsController < ApplicationController
   def show
-    render json: tree_root.manifest, adapter: :attributes, key_transform: :underscore
+    render json: Oj.dump(
+      ManifestSerializer.new(tree_root.manifest).serializable_hash[:data][:attributes],
+      mode: :compat
+    )
   end
 
   private

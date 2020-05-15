@@ -85,7 +85,7 @@ class VotesTest < ActionDispatch::IntegrationTest
         headers: argu_headers(accept: :json_api)
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('parent')
     creator = expect_relationship('creator')
     assert_equal creator.dig('data', 'id'), "#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}"
   end
@@ -213,7 +213,7 @@ class VotesTest < ActionDispatch::IntegrationTest
         headers: argu_headers(accept: :json_api)
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('parent')
     creator = expect_relationship('creator')
     assert_equal creator.dig('data', 'id'), "#{argu.iri}/u/#{unconfirmed.url}"
   end

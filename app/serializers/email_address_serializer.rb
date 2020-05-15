@@ -7,7 +7,5 @@ class EmailAddressSerializer < BaseSerializer
 
   has_one :user, predicate: NS::SCHEMA[:creator]
 
-  def updated_at; end
-
   delegate :primary, to: :object
 end

@@ -281,7 +281,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     freetown
     sign_in argu_administrator
 
-    assert_includes CustomMenuItem.where(resource: argu).first.href, Rails.application.config.host_name
+    assert_includes CustomMenuItem.where(resource: argu).first.href.to_s, Rails.application.config.host_name
     freetown.widgets.first.resource_iri.all? { |iri| iri.first.include?(Rails.application.config.host_name) }
     put argu, params: {id: argu.url, page: {iri_prefix: 'example.com'}}
     CustomMenuItem.where(resource: argu).where('href IS NOT NULL').each do |item|

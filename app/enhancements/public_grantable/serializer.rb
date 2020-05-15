@@ -5,11 +5,10 @@ module PublicGrantable
     extend ActiveSupport::Concern
 
     included do
-      attribute :public_grant, predicate: NS::ARGU[:publicGrant]
-
       enum :public_grant,
-           type: GrantSet.iri,
-           options: public_grant_options
+           options: public_grant_options,
+           predicate: NS::ARGU[:publicGrant],
+           type: GrantSet.iri
     end
 
     module ClassMethods

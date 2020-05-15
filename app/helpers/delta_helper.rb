@@ -2,6 +2,7 @@
 
 module DeltaHelper
   include LinkedRails::Helpers::DeltaHelper
+  include RDF::Serializers::HextupleSerializer
 
   def reset_potential_and_favorite_delta(object, cntx = user_context)
     object.potential_and_favorite_triples(cntx)
@@ -29,7 +30,7 @@ module DeltaHelper
   end
 
   def hex_delta(array)
-    array.map { |s| Oj.fast_generate(HexAdapter.new(nil).send(:rdf_array_to_hex, s)) }.join("\n")
+    array.map { |s| Oj.fast_generate(value_to_hex(*s)) }.join("\n")
   end
 
   def resource_added_delta(resource)

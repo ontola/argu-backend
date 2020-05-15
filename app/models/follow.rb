@@ -29,6 +29,12 @@ class Follow < ApplicationRecord
     ActsAsTenant.with_tenant(followable&.root || ActsAsTenant.current_tenant) { super }
   end
 
+  def created_at; end
+
+  def display_name; end
+
+  def published_at; end
+
   private
 
   def terms_accepted

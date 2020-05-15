@@ -11,7 +11,7 @@ class CurrentActor
   attr_accessor :actor, :user
 
   delegate :display_name, to: :actor, allow_nil: true
-  delegate :id, to: :user
+  delegate :id, :default_profile_photo, :default_profile_photo_id, :has_analytics?, to: :user
 
   def actor_type # rubocop:disable Metrics/MethodLength
     if actor.present?
@@ -28,11 +28,23 @@ class CurrentActor
     end
   end
 
+  def primary_email
+    user&.primary_email_record&.email
+  end
+
+  def rdf_type
+    NS::ONTOLA[actor_type]
+  end
+
   def shortname
     actor&.url
   end
 
   def url
     actor && dual_profile_url(actor, only_path: false)
+  end
+
+  def user_id
+    user&.id
   end
 end

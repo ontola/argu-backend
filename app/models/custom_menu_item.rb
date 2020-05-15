@@ -31,7 +31,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   alias edgeable_record resource
 
   def href
-    super || edge&.iri
+    super.present? ? RDF::URI(super) : edge&.iri
   end
 
   def iri_opts
@@ -117,6 +117,10 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def info
       where(menu_type: :info)
+    end
+
+    def iri
+      NS::ONTOLA[:MenuItem]
     end
 
     def navigations

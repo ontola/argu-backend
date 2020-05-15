@@ -15,10 +15,10 @@ class ProArgumentsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, root_id: argu.url, id: argument.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('parent')
     expect_relationship('creator')
 
-    expect_relationship('commentCollection')
+    expect_relationship('comment_collection')
     expect_included(collection_iri(argument, :comments))
   end
 
@@ -29,7 +29,7 @@ class ProArgumentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
 
     expect_default_view
     expect_included(collection_iri(motion, :pro_arguments, page: 1))

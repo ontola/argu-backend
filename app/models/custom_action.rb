@@ -60,6 +60,10 @@ class CustomAction < Edge
     @target ||= LinkedRails.entry_point_class.new(parent: self, url: href)
   end
 
+  def target_id
+    target.iri
+  end
+
   class << self
     def iri
       NS::SCHEMA.Action

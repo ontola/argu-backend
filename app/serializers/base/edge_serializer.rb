@@ -1,20 +1,21 @@
 # frozen_string_literal: true
 
 class EdgeSerializer < RecordSerializer
-  has_one :parent, key: :partOf, predicate: NS::SCHEMA[:isPartOf] do
-    if object.parent.is_a?(Page) && object.parent_collections(scope).count == 1
-      object.parent_collections(scope).first
+  has_one :parent, predicate: NS::SCHEMA[:isPartOf] do |object, opts|
+    if object.parent.is_a?(Page) && object.parent_collections(opts[:scope]).count == 1
+      object.parent_collections(opts[:scope]).first
     else
       object.parent
     end
   end
-  has_one :organization, predicate: NS::ONTOLA[:organization] do
-    object.root
-  end
-  has_one :creator, predicate: NS::SCHEMA[:creator] do
+  has_one :organization, predicate: NS::ONTOLA[:organization], &:root
+  has_one :creator,
+          predicate: NS::SCHEMA[:creator] do |object|
     object.creator.profileable
   end
-  attribute :granted_groups, predicate: NS::ARGU[:grantedGroups], unless: :system_scope?
+  attribute :granted_groups, predicate: NS::ARGU[:grantedGroups], unless: method(:system_scope?) do |object|
+    RDF::URI("#{object.iri}/granted")
+  end
 
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
   attribute :last_activity_at, predicate: NS::ARGU[:lastActivityAt]
@@ -24,14 +25,9 @@ class EdgeSerializer < RecordSerializer
   delegate :is_publishable?, to: :object
 
   def self.count_attribute(type, opts = {})
-    attribute "#{type}_count", {predicate: NS::ARGU["#{type.to_s.camelcase(:lower)}Count".to_sym]}.merge(opts)
-
-    define_method "#{type}_count" do
-      object.children_count(type)
+    attribute "#{type}_count",
+              {predicate: NS::ARGU["#{type.to_s.camelcase(:lower)}Count".to_sym]}.merge(opts) do |object, params|
+      block_given? ? yield(object, params) : object.children_count(type)
     end
-  end
-
-  def granted_groups
-    RDF::URI("#{object.iri}/granted")
   end
 end

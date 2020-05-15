@@ -2,7 +2,7 @@
 
 require 'zip'
 
-class ExportWorker
+class ExportWorker # rubocop:disable Metrics/ClassLength
   include Sidekiq::Worker
 
   attr_accessor :export
@@ -25,19 +25,25 @@ class ExportWorker
 
   private
 
-  def add_hndjson(zip)
-    zip.get_output_stream('data.hndjson') { |f| f.write serializer_for(data.values, :hex_adapter).adapter.dump }
-  end
-
   def add_json(zip)
-    json = data.map { |type, records| [type.tableize, JSON.parse(serializer_for(records, :attributes).to_json)] }
-    zip.get_output_stream('data.json') { |f| f.write Hash[json].to_json }
+    json = data.map do |type, records|
+      [
+        type,
+        records.map { |record| json_for(record) }
+      ]
+    end
+    zip.get_output_stream('data.json') { |f| f.write(Oj.dump(Hash[json], mode: :compat)) }
   end
 
   def add_triple_formats(zip)
-    serializer = serializer_for(data.values, :rdf)
-    %i[n3 ntriples jsonld rdf].map do |format|
-      zip.get_output_stream("data.#{format}") { |f| f.write serializer.adapter.dump(RDF::Format.for(format).to_sym) }
+    %i[n3 ntriples jsonld rdfxml hndjson].map do |format|
+      zip.get_output_stream("data.#{format}") do |f|
+        data.each do |_type, records|
+          records.each do |record|
+            f.write(serializer_for(record).dump(format))
+          end
+        end
+      end
     end
   end
 
@@ -45,9 +51,10 @@ class ExportWorker
     book = Spreadsheet::Workbook.new
     data.each do |type, records|
       sheet = book.create_worksheet(name: I18n.t("#{type.tableize}.plural"))
-      serializer_for(records, :attributes).as_json.each_with_index do |record, index|
-        sheet.row(0).replace(record.keys.map { |key| key.to_s.gsub('Collection', 'Count') }) if index.zero?
-        sheet.row(index + 1).replace(record.values.map { |value| format_value_xls(value) })
+      records.each_with_index do |record, index|
+        json = json_for(record)
+        sheet.row(0).replace(json.keys.map { |key| key.to_s.gsub('Collection', 'Count') }) if index.zero?
+        sheet.row(index + 1).replace(json.values.map { |value| format_value_xls(value) })
       end
     end
     zip.get_output_stream('data.xls') { |f| book.write(f) }
@@ -86,10 +93,14 @@ class ExportWorker
       add_xls(zip)
       add_json(zip)
       add_triple_formats(zip)
-      add_hndjson(zip)
     end
     export.update!(zip: File.open(filename))
     File.delete(filename)
+  end
+
+  def json_for(record)
+    json_api = serializer_for(record).serializable_hash
+    json_api[:data][:attributes].merge(json_api[:data][:relationships])
   end
 
   def relations(edge)
@@ -105,7 +116,7 @@ class ExportWorker
     @scope ||= UserContext.new(user: export.user, doorkeeper_scopes: %w[export])
   end
 
-  def serializer_for(records, adapter)
-    ActiveModelSerializers::SerializableResource.new(records, adapter: adapter, scope: scope)
+  def serializer_for(record)
+    RDF::Serializers.serializer_for(record)&.new(record, params: {scope: scope})
   end
 end

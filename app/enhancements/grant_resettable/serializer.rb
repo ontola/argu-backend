@@ -5,7 +5,7 @@ module GrantResettable
     extend ActiveSupport::Concern
 
     included do
-      has_many :grant_resets, if: :never
+      has_many :grant_resets, if: method(:never)
     end
   end
 end

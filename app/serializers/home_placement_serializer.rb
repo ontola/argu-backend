@@ -11,6 +11,7 @@ class HomePlacementSerializer < PlacementSerializer
   end
 
   enum :country_code,
+       predicate: NS::SCHEMA[:addressCountry],
        type: NS::SCHEMA[:Country],
        options: CountryOptions.options
 end

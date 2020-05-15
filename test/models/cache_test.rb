@@ -12,15 +12,14 @@ class CacheTest < ActiveSupport::TestCase
     assert_includes(
       File.read(file),
       Oj.fast_generate(
-        HexAdapter.new(nil).send(
-          :rdf_array_to_hex,
-          [
-            helsinki.iri,
-            NS::SCHEMA[:name],
-            helsinki.display_name,
-            NS::LL[:supplant]
-          ]
-        )
+        [
+          helsinki.iri,
+          NS::SCHEMA[:name],
+          helsinki.display_name,
+          NS::XSD[:string],
+          '',
+          NS::LL[:supplant]
+        ]
       )
     )
   end

@@ -18,10 +18,10 @@ class Thing < Edge
     association_statements +
       properties
         .reject { |prop| prop.predicate == RDF.type || prop.type == 'linked_edge_id' }
-        .map { |prop| [iri, prop.predicate, prop.value] }
+        .map { |prop| RDF::Statement.new(iri, prop.predicate, prop.value) }
   end
 
-  def type
+  def rdf_type
     properties
       .detect { |prop| prop.predicate == RDF.type }
       &.value || NS::SCHEMA.Thing
@@ -39,7 +39,7 @@ class Thing < Edge
   def association_sequence(predicate, association)
     sequence = LinkedRails::Sequence.new(association)
     [[iri, predicate, sequence.node]] +
-      serializable_resource(:rdf, sequence, {}).adapter.triples
+      serializable_resource(sequence, {}).triples
   end
 
   def association_statements

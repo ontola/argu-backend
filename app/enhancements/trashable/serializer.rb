@@ -7,11 +7,11 @@ module Trashable
     included do
       attribute :trashed_at,
                 predicate: NS::ARGU[:trashedAt],
-                if: :is_trashable?
+                if: ->(obj, _) { obj.is_trashable? }
       delegate :is_trashable?, to: :object
 
-      has_one :trash_activity, predicate: NS::ARGU[:trashActivity], if: :trashed?
-      has_one :untrash_activity, predicate: NS::ARGU[:untrashActivity], if: :never
+      has_one :trash_activity, predicate: NS::ARGU[:trashActivity], if: ->(obj, _) { obj.trashed_at.present? }
+      has_one :untrash_activity, predicate: NS::ARGU[:untrashActivity], if: method(:never)
     end
 
     def trashed?

@@ -205,7 +205,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def replace_vote_event_meta(data) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def replace_vote_event_meta(data)
     iri = parent_resource.iri
 
     data.push(

@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
 class Activity < PublicActivity::Activity
+  ACTION_TYPE = {
+    create: NS::AS[:Create],
+    publish: NS::ARGU[:PublishActivity],
+    update: NS::AS[:Update],
+    destroy: NS::AS[:Delete],
+    trash: NS::AS[:Remove],
+    approved: NS::AS[:Accept],
+    rejected: NS::AS[:Reject],
+    forwarded: NS::ARGU[:ForwardActivity],
+    untrash: NS::AS[:Add],
+    convert: NS::ARGU[:ConvertActivity]
+  }.freeze
+
   include LinkedRails::Model
   has_many :notifications, dependent: :destroy
   # The creator of the activity
@@ -69,6 +82,10 @@ class Activity < PublicActivity::Activity
 
   def object
     trackable_type.underscore
+  end
+
+  def rdf_type
+    ACTION_TYPE[action.to_sym] || NS::AS[:Activity]
   end
 
   def touch_edges

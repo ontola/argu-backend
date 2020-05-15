@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe 'Actions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   def self.index_formats
-    %i[nt json_api]
+    %i[nq hndjson]
   end
 
   def self.show_formats
-    %i[nt json_api]
+    %i[nq hndjson]
   end
 
   let(:index_path) do

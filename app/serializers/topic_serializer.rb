@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
 class TopicSerializer < DiscussionSerializer
-  attribute :lat, if: :export_scope?
-  attribute :lon, if: :export_scope?
-
-  def lat
+  attribute :lat, if: method(:export_scope?) do |object|
     object.custom_placement&.lat
   end
-
-  def lon
+  attribute :lon, if: method(:export_scope?) do |object|
     object.custom_placement&.lon
   end
 end

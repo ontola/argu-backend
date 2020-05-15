@@ -17,7 +17,7 @@ class VotesControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, root_id: argu.url, id: vote.fragment}
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('parent')
     expect_relationship('creator')
   end
 
@@ -34,9 +34,9 @@ class VotesControllerTest < ActionController::TestCase
         }
     assert_response 200
 
-    expect_relationship('partOf')
+    expect_relationship('part_of')
 
-    expect_relationship('defaultFilteredCollections', size: 3)
+    expect_relationship('default_filtered_collections', size: 3)
 
     included_votes = vote_event.votes.joins(:publisher).where(users: {show_feed: true})
     expect_view_members(expect_default_view, included_votes.count)
@@ -54,7 +54,7 @@ class VotesControllerTest < ActionController::TestCase
         }
     assert_response 200
 
-    expect_relationship('unfilteredCollection')
+    expect_relationship('unfiltered_collection')
 
     included_votes = vote_event.votes.joins(:publisher).where(for: :pro, users: {show_feed: true})
     expect_view_members(expect_default_view, included_votes.count)
