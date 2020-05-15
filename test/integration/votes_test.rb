@@ -61,8 +61,6 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
   let(:cairo_motion) { create(:motion, parent: cairo) }
   let!(:cairo_vote) { create(:vote, parent: cairo_motion.default_vote_event) }
-  let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
-  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:vote_event) do
     create(:vote_event,
            parent: motion,
@@ -346,80 +344,6 @@ class VotesTest < ActionDispatch::IntegrationTest
            headers: argu_headers(accept: :json_api)
     end
     assert_response :forbidden
-  end
-
-  test 'user should post create pro json_api for linked record' do
-    linked_record
-    sign_in user
-
-    assert_difference('Vote.count' => 1, 'Edge.count' => 1) do
-      vote_event = linked_record.default_vote_event
-      post collection_iri(vote_event, :votes, canonical: true),
-           params: {
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :pro
-               }
-             }
-           },
-           headers: argu_headers(accept: :json_api)
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.pro?
-  end
-
-  test 'user should post create pro json_api for linked record width default id' do
-    linked_record
-    sign_in user
-
-    default_iri = linked_record.default_vote_event.iri_path(id: 'default')
-    assert default_iri.include?('default')
-    iri = ActsAsTenant.with_tenant(argu) { collection_iri(default_iri, :votes, canonical: true) }
-
-    assert_difference('Vote.count' => 1, 'Edge.count' => 1) do
-      post iri,
-           params: {
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :pro
-               }
-             }
-           },
-           headers: argu_headers(accept: :json_api)
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.pro?
-  end
-
-  test 'user should post create pro json_api for non-persisted linked record' do
-    sign_in user
-
-    default_iri = non_persisted_linked_record.default_vote_event.iri_path(id: 'default')
-    assert default_iri.include?('default')
-    iri = ActsAsTenant.with_tenant(argu) { collection_iri(default_iri, :votes, canonical: true) }
-
-    assert_difference('Vote.count' => 1, 'LinkedRecord.count' => 1, 'VoteEvent.count' => 1, 'Edge.count' => 3) do
-      post iri,
-           params: {
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :pro
-               }
-             }
-           },
-           headers: argu_headers(accept: :json_api)
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.pro?
   end
 
   ####################################

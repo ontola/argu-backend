@@ -8,7 +8,6 @@ class VotesControllerTest < ActionController::TestCase
   let(:argument) { motion.pro_arguments.untrashed.first }
   let(:vote_event) { motion.default_vote_event }
   let(:vote) { motion.default_vote_event.votes.first }
-  let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:user) { create(:user) }
 
   ####################################

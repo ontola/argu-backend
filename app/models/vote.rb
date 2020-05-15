@@ -22,7 +22,7 @@ class Vote < Edge
   before_redis_save :trash_primary_votes
   before_redis_save :remove_other_temporary_votes
 
-  parentable :pro_argument, :con_argument, :vote_event, :linked_record
+  parentable :pro_argument, :con_argument, :vote_event
 
   filterable option: {
     attr: :for,

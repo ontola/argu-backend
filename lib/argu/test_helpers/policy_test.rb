@@ -33,9 +33,6 @@ module Argu
       let(:guest) { GuestUser.new(id: 'my_id') }
       let(:direct_child) { nil }
 
-      let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
-      let(:linked_record_argument) { create(:argument, parent: linked_record, publisher: creator) }
-
       before do
         ActsAsTenant.current_tenant = argu
       end

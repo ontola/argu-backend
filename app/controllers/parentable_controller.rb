@@ -20,16 +20,8 @@ class ParentableController < AuthorizedController
     @current_forum ||= parent_resource&.ancestor(:forum)
   end
 
-  def linked_record_parent(opts = params)
-    return unless parent_resource_param(opts) == 'linked_record_id'
-
-    @linked_record_parent ||=
-      LinkedRecord.find_by(deku_id: opts[:linked_record_id]) ||
-      LinkedRecord.new_for_forum(tree_root.url, opts[:container_node_id], opts[:linked_record_id])
-  end
-
   def parent_resource
-    @parent_resource ||= linked_record_parent || resource_by_id_parent || super
+    @parent_resource ||= resource_by_id_parent || super
   end
 
   def redirect_edge_parent_requests

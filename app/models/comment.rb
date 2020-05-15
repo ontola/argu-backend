@@ -25,7 +25,7 @@ class Comment < Edge
   counter_cache comments: {}, threads: {in_reply_to_id: nil}
   with_collection :comments, counter_cache_column: nil
   paginates_per 10
-  parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :linked_record, :topics,
+  parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :topics,
              :risk, :intervention, :intervention_type, :measure, :measure_type
 
   validates :description, presence: true, allow_nil: false, length: {in: 4..5000}

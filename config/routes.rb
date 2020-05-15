@@ -384,11 +384,6 @@ Rails.application.routes.draw do
       get :search, to: 'motions#search', on: :collection
     end
     resources :grants, only: :index
-    resources :linked_records,
-              only: %i[show],
-              path: :lr do
-      include_route_concerns
-    end
   end
 
   mount Sidekiq::Prometheus::Exporter => '/d/sidekiq'

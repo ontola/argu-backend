@@ -110,12 +110,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     super(root, opts.except(:vote_event_id))&.default_vote_event if parent_resource_key(opts.except(:vote_event_id))
   end
 
-  def linked_record_parent(opts = params)
-    return super unless default_vote_event_id?
-
-    super(opts.except(:vote_event_id))&.default_vote_event
-  end
-
   def unmodified?
     create_service.resource.persisted? && !create_service.resource.for_changed?
   end
@@ -212,12 +206,8 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def replace_vote_event_meta(data) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    iri =
-      if parent_resource.parent.is_a?(LinkedRecord)
-        RDF::URI(parent_resource.iri.to_s.gsub('/lr/', '/od/').split('/vote_events/')[0])
-      else
-        parent_resource.iri
-      end
+    iri = parent_resource.iri
+
     data.push(
       [
         iri,

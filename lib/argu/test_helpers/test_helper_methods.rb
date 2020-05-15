@@ -321,10 +321,6 @@ module Argu
           let(:freetown) { Forum.find_via_shortname('freetown') }
           let(:group) { Group.find_by(name: 'custom') }
           let(:group_membership) { group.group_memberships.first }
-          let(:linked_record) { LinkedRecord.first }
-          let(:linked_record_argument) { LinkedRecord.first.arguments.first }
-          let(:linked_record_vote) { LinkedRecord.first.default_vote_event.votes.first }
-          let(:linked_record_comment) { LinkedRecord.first.comments.first }
           let(:forum_motion) { freetown.motions.first }
           let(:question) { freetown.questions.first }
           let(:motion) { question.motions.first }

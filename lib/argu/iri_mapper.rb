@@ -61,7 +61,6 @@ module Argu
 
         ActsAsTenant.with_tenant(root) do
           return shortnameable_from_opts(opts) if shortnameable_from_opts?(opts)
-          return linked_record_from_opts(opts) if linked_record_from_opts?(opts)
           return decision_from_opts(opts) if decision_from_opts?(opts)
           return edge_from_opts(opts) if edge_from_opts?(opts)
 
@@ -110,14 +109,6 @@ module Argu
 
       def decision_from_opts?(opts)
         opts[:class] == Decision
-      end
-
-      def linked_record_from_opts(opts)
-        LinkedRecord.find_by(deku_id: opts[:id])
-      end
-
-      def linked_record_from_opts?(opts)
-        opts[:class] == LinkedRecord && uuid?(opts[:id])
       end
 
       def opts_from_route(root, iri, method)

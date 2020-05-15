@@ -113,11 +113,13 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
       .create(:group, id: 222, name: 'Moderators', name_singular: 'Moderator', parent: holland.root)
   FactorySeeder.create(:grant, edge: holland, group: moderators_group, grant_set: GrantSet.moderator)
 
-  linked_record = LinkedRecord.create_for_forum(page.url, freetown.url, SecureRandom.uuid)
-  FactorySeeder.create(:argument, parent: linked_record)
-  FactorySeeder.create(:comment, parent: linked_record)
-  linked_record_vote_event = linked_record.default_vote_event
-  FactorySeeder.create(:vote, parent: linked_record_vote_event)
+  placeholder =
+    FactorySeeder.create(:motion, creator: Profile.community, publisher: User.community, parent: freetown)
+  FactorySeeder.create(:argument, parent: placeholder)
+  FactorySeeder.create(:comment, parent: placeholder)
+  placeholder_vote_event = placeholder.default_vote_event
+  FactorySeeder.create(:vote, parent: placeholder_vote_event)
+
   forum_motion = FactorySeeder.create(:motion, parent: freetown)
   FactorySeeder.create(:argument, parent: forum_motion)
   question = FactorySeeder.create(:question, parent: freetown)

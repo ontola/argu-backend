@@ -7,7 +7,7 @@ class VoteEvent < Edge
   with_collection :votes, default_filters: [{'option' => 'no'}, {'option' => 'other'}, 'option' => 'yes']
 
   counter_cache true
-  parentable :motion, :linked_record
+  parentable :motion
   property :starts_at, :datetime, NS::SCHEMA[:startDate]
   property :upvote_only, :boolean, NS::ARGU[:upvoteOnly]
 
@@ -40,11 +40,7 @@ class VoteEvent < Edge
   end
 
   def vote_collection_iri_opts
-    if parent.is_a?(LinkedRecord)
-      parent.iri_opts.merge(vote_event_id: VoteEvent::DEFAULT_ID)
-    else
-      iri_opts.slice(:vote_event_id, :motion_id, :linked_record_id)
-    end
+    iri_opts.slice(:vote_event_id, :motion_id)
   end
 
   def voteable
