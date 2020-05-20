@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 endpoints_key = 'frontend.runtime.plain_endpoints'
+frontend_db = 0
 
-current_keys = Argu::Redis.lrange(endpoints_key, 0, -1)
+current_keys = Argu::Redis.lrange(endpoints_key, 0, -1, redis_opts: {db: frontend_db})
 required_keys = %w[
   /(.*/)?d/(.*)
   /(.*/)?portal/(.*)
@@ -10,5 +11,5 @@ required_keys = %w[
 
 (required_keys - current_keys).each do |key|
   Rails.logger.info "Registering #{key} as API endpoint"
-  Argu::Redis.lpush(endpoints_key, key)
+  Argu::Redis.lpush(endpoints_key, key, redis_opts: {db: frontend_db})
 end

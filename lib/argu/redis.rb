@@ -4,92 +4,122 @@
 module Argu
   class Redis
     # Argu configured redis instance, use this by default.
-    def self.redis_instance(url = ENV['REDIS_URL'])
-      ::Redis.new(url: url)
+    def self.redis_instance(opts = {})
+      opts[:url] ||= ENV['REDIS_URL']
+
+      ::Redis.new(opts)
     end
 
-    def self.exists(key, redis = redis_instance)
-      redis.exists(key)
+    def self.exists(key, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].exists(key)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.expire(key, seconds, redis = redis_instance)
-      redis.expire(key, seconds)
+    def self.expire(key, seconds, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].expire(key, seconds)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.delete(key, redis = redis_instance)
-      redis.del(key)
+    def self.delete(key, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].del(key)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.delete_all(keys, redis = redis_instance)
-      redis.del(*keys) if keys.present?
+    def self.delete_all(keys, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].del(*keys) if keys.present?
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.get(key, redis = redis_instance)
-      redis.get(key)
+    def self.get(key, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].get(key)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.keys(pattern = '*', redis = redis_instance)
-      redis.keys(pattern)
+    def self.keys(pattern = '*', opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].keys(pattern)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
       []
     end
 
-    def self.persist(key, redis = redis_instance)
-      redis.persist(key)
+    def self.persist(key, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].persist(key)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.rename(old_key, new_key, redis = redis_instance)
-      redis.rename(old_key, new_key)
+    def self.rename(old_key, new_key, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].rename(old_key, new_key)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.set(key, value, redis = redis_instance)
-      redis.set(key, value)
+    def self.set(key, value, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].set(key, value)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.setex(key, timeout, value, redis = redis_instance)
-      redis.setex(key, timeout, value)
+    def self.setex(key, timeout, value, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].setex(key, timeout, value)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.hgetall(key, redis = redis_instance)
-      redis.hgetall(key)
+    def self.hgetall(key, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].hgetall(key)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
       {}
     end
 
-    def self.hmset(key, values: {}, redis: redis_instance)
-      redis.hmset(key, *values)
+    def self.hmset(key, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].hmset(key, *opts[:values])
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.lpush(key, value, redis: redis_instance)
-      redis.lpush(key, value)
+    def self.lpush(key, value, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].lpush(key, value)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
     end
 
-    def self.lrange(key, start, stop, redis: redis_instance)
-      redis.lrange(key, start, stop)
+    def self.lrange(key, start, stop, opts = {})
+      opts[:redis] ||= redis_instance(opts[:redis_opts] || {})
+
+      opts[:redis].lrange(key, start, stop)
     rescue ::Redis::CannotConnectError => e
       rescue_redis_connection_error(e)
       []
