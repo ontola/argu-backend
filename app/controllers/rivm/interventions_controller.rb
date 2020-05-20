@@ -12,7 +12,7 @@ class InterventionsController < EdgeableController
   end
 
   def create_service_parent
-    Edge.find_by!(fragment: params.require(:intervention).require(:parent_id))
+    Edge.find_by!(id: params.require(:intervention).require(:parent_id))
   end
 
   def permit_params

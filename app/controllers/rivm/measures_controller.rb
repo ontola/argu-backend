@@ -10,6 +10,6 @@ class MeasuresController < EdgeableController
   end
 
   def create_service_parent
-    Edge.find_by!(fragment: params.require(:measure).require(:parent_id))
+    Edge.find_by!(id: params.require(:measure).require(:parent_id))
   end
 end

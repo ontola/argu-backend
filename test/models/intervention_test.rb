@@ -7,7 +7,7 @@ class InterventionTest < ActiveSupport::TestCase
   let(:intervention_type) { create(:intervention_type, parent: argu) }
   let(:intervention) do
     intervention_type
-    create(:intervention, parent: intervention_type, employment_id: create(:employment, parent: argu).fragment)
+    create(:intervention, parent: intervention_type, employment_id: create(:employment, parent: argu).id)
   end
 
   test 'Assign effects as symbol' do

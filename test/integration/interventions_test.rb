@@ -80,7 +80,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
     general_create(
       results: {should: true, response: :created},
       parent: :argu,
-      attributes: intervention_attributes(employment_id: validated_employment.fragment),
+      attributes: intervention_attributes(employment_id: validated_employment.id),
       differences: [['Intervention', 1], ['Intervention.published', 1], ['Activity', 2]]
     )
   end
@@ -89,8 +89,8 @@ class InterventionsTest < ActionDispatch::IntegrationTest
 
   def intervention_attributes(opts = {})
     {
-      parent_id: intervention_type.fragment,
-      employment_id: employment.fragment,
+      parent_id: intervention_type.id,
+      employment_id: employment.id,
       display_name: 'Name',
       description: 'Description',
       goal: 'Goal',

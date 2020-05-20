@@ -15,7 +15,7 @@ module Categorizable
     end
 
     def category_id=(value)
-      id = uuid?(value) ? value : Category.find_by!(root_id: root_id, fragment: value).uuid
+      id = uuid?(value) ? value : Category.find_by!(root_id: root_id, id: value).uuid
       assign_property(:category_id, id)
       super(id)
     end
