@@ -7,7 +7,7 @@ class CacheTest < ActiveSupport::TestCase
   define_holland
 
   test 'write helsinki to cache' do
-    file = Argu::Cache.new(directory: Rails.root.join('tmp/cache_test')).write(helsinki, :hex_adapter, :hndjson)
+    file = Argu::Cache.new(directory: Rails.root.join('tmp/cache_test')).write(helsinki, :hndjson)
 
     assert_includes(
       File.read(file),

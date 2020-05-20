@@ -78,7 +78,7 @@ class Manifest < VirtualResource
 
   def write_to_cache(cache = Argu::Cache.new)
     ActsAsTenant.with_tenant(try(:root) || ActsAsTenant.current_tenant) do
-      cache.write(self, :attributes, :json, key_transform: :underscore)
+      cache.write(self, :json)
     end
   end
 
