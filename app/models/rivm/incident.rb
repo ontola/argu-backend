@@ -8,8 +8,7 @@ class Incident < Edge
 
   with_columns default: [
     NS::SCHEMA[:name],
-    NS::ARGU[:scenariosCount],
-    NS::SCHEMA[:datePublished]
+    NS::ARGU[:scenariosCount]
   ]
 
   parentable :risk

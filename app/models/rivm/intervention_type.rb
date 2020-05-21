@@ -13,8 +13,7 @@ class InterventionType < Edge
   parentable :page
   with_columns default: [
     NS::SCHEMA[:name],
-    NS::ARGU[:interventionsCount],
-    NS::SCHEMA[:datePublished]
+    NS::ARGU[:interventionsCount]
   ]
   self.default_sortings = [{key: NS::ARGU[:interventionsCount], direction: :desc}]
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}

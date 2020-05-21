@@ -5,8 +5,7 @@ class Scenario < Edge
   enhance Attachable
   enhance LinkedRails::Enhancements::Tableable
   with_columns default: [
-    NS::SCHEMA[:name],
-    NS::SCHEMA[:datePublished]
+    NS::SCHEMA[:name]
   ]
 
   parentable :incident
