@@ -15,6 +15,17 @@ class MenusTest < ActionDispatch::IntegrationTest
       image: 'fa-info'
     )
   end
+  let!(:child_menu_item) do
+    CustomMenuItem.create(
+      menu_type: 'navigations',
+      parent_menu: custom_menu_item,
+      order: 0,
+      label: 'child',
+      href: 'https://example.com',
+      resource_type: 'Edge',
+      resource_id: argu.uuid
+    )
+  end
   let!(:settings) { Setting.set('suggested_forums', [freetown.uuid, SecureRandom.uuid].join(',')) }
   let(:user) { create(:user) }
   let(:user_context) { UserContext.new(user: user, profile: user.profile, doorkeeper_scopes: {}) }
@@ -50,6 +61,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     expect_sequence_member(sequence, 1, freetown_menu_iri)
     expect_sequence_member(sequence, 2, resource_iri(custom_menu_item, root: argu))
     expect_sequence_member(sequence, 3, feed_menu_iri)
+    expect_triple(resource_iri(custom_menu_item, root: argu), NS::ONTOLA[:menuItems], nil)
   end
 
   ####################################

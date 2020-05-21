@@ -18,6 +18,14 @@ class CustomMenuItemSerializer < MenuItemSerializer
     object.attribute_in_database(:href)
   end
   attribute :label_translation, predicate: NS::ARGU[:labelTranslation]
+  has_one :parent,
+          predicate: NS::ONTOLA[:parentMenu],
+          if: ->(o, p) { parent_menu?(o, p) },
+          polymorphic: true
+  has_one :menu_sequence,
+          predicate: NS::ONTOLA[:menuItems],
+          if: ->(o, p) { menus_present?(o, p) },
+          polymorphic: true
 
   def self.menus_present?(object, _params)
     object.custom_menu_items.any?

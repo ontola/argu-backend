@@ -9,11 +9,14 @@ class UsersTest < ActionDispatch::IntegrationTest
   define_cairo
 
   let(:user) { create(:user) }
+  let(:place) { create(:place) }
   let(:second_email) { create(:email_address, user: user, email: 'second@argu.co', confirmed_at: Time.current) }
   let(:unconfirmed_email) { create(:email_address, user: user, email: 'unconfirmed@argu.co') }
   let(:administrator) { create_administrator(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
   let(:user_hidden_last_name) { create(:user, hide_last_name: true) }
+  let(:home_placement) { create(:home_placement, placeable: user) }
+  let(:hidden_home_placement) { create(:home_placement, placeable: user_non_public) }
   let(:user_no_shortname) do
     u = create(:user, profile: create(:profile))
     u.shortname.destroy
@@ -493,7 +496,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_nil(user.default_profile_photo.content_identifier)
   end
 
-  let(:place) { create(:place) }
   test 'user should create place and placement on update with postal_code and country code' do
     nominatim_postal_code_valid
     sign_in user
@@ -618,5 +620,21 @@ class UsersTest < ActionDispatch::IntegrationTest
     end
     assert_response :success
     assert_equal(response.headers['Location'], resource_iri(user, root: argu))
+  end
+
+  test 'user should show own homePlacement' do
+    home_placement
+    sign_in user
+    get resource_iri(user, root: argu)
+    assert_response :success
+    expect_triple(resource_iri(user, root: argu), NS::SCHEMA[:homeLocation], nil)
+  end
+
+  test 'other user should not show homePlacement' do
+    home_placement
+    sign_in user_public
+    get resource_iri(user, root: argu)
+    assert_response :success
+    refute_triple(resource_iri(user, root: argu), NS::SCHEMA[:homeLocation], nil)
   end
 end
