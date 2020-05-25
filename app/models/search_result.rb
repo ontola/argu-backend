@@ -132,7 +132,7 @@ class SearchResult < Collection
 
     def allowed_path_expression
       exp = allowed_paths
-              .map { |p| "(#{Regexp.quote(p)}[$|(\\.0-9+)]*)" }
+              .map { |p| "(#{Regexp.quote(p)}($|\\.[0-9]+)*)" }
               .join('|')
       Regexp.new("\\A#{exp}\\z")
     end
