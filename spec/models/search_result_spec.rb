@@ -87,6 +87,15 @@ RSpec.describe SearchResult, type: :model do
     end
   end
 
+  describe 'write to cache' do
+    it do
+      cache = Argu::Cache.new(directory: Rails.root.join('tmp/cache_test'))
+      file = ActsAsTenant.with_tenant(argu) { argu.search_result.write_to_cache(cache) }
+      result = File.read(file)
+      assert_includes(result, ActsAsTenant.with_tenant(argu) { argu.search_result.iri })
+    end
+  end
+
   private
 
   def search_result(opts = {})
