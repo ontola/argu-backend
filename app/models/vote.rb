@@ -41,6 +41,10 @@ class Vote < Edge
 
   validates :creator, :option, presence: true
 
+  def cacheable?
+    false
+  end
+
   # Needed for ActivityListener#audit_data
   def display_name
     "#{option} vote for #{parent.display_name}"
@@ -54,10 +58,6 @@ class Vote < Edge
     return super unless store_in_redis?
 
     :vote_iri
-  end
-
-  def is_pro_con?
-    true
   end
 
   def opinion_class

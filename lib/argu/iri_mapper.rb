@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Argu
-  class IRIMapper
+  class IRIMapper # rubocop:disable Metrics/ClassLength
     extend NestedResourceHelper
     extend RedirectHelper
     extend UriTemplateHelper
@@ -132,6 +132,15 @@ module Argu
 
         URI(root.iri.path.present? ? iri.to_s.split("#{root.iri.path}/").last : iri).path
       end
+
+      # rubocop:disable Metrics/AbcSize
+      def sanitized_relative(iri, root)
+        iri.path = "#{iri.path}/" unless iri.path&.ends_with?('/')
+        uri = URI(root.iri.path.present? ? iri.to_s.split("#{root.iri.path}/").last : iri)
+
+        [uri.path, uri.query].compact.join('?')
+      end
+      # rubocop:enable Metrics/AbcSize
 
       def shortnameable_from_opts(opts)
         Shortname.find_resource(opts[:id], ActsAsTenant.current_tenant&.uuid) ||
