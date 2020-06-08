@@ -41,19 +41,8 @@ class Vote < Edge
 
   validates :creator, :option, presence: true
 
-  # #########methods###########
-  def argument_ids
-    @argument_ids ||= upvoted_arguments.pluck(:id).uniq
-  end
-
-  def upvoted_arguments
-    return [] if publisher.guest?
-
-    @upvoted_arguments ||=
-      Argument
-        .untrashed
-        .joins(:votes)
-        .where(votes_edges: {creator_id: creator_id}, parent_id: parent&.parent_id)
+  def cacheable?
+    false
   end
 
   # Needed for ActivityListener#audit_data
@@ -69,10 +58,6 @@ class Vote < Edge
     return super unless store_in_redis?
 
     :vote_iri
-  end
-
-  def is_pro_con?
-    true
   end
 
   def opinion_class

@@ -91,6 +91,10 @@ module OauthHelper
     requested_scope
   end
 
+  def require_doorkeeper_token?
+    ApplicationController::UNSAFE_METHODS.include?(request.method)
+  end
+
   def service_token?
     doorkeeper_scopes.include?('service')
   end
@@ -101,7 +105,7 @@ module OauthHelper
   end
 
   def valid_token?
-    return ApplicationController::SAFE_METHODS.include?(request.method) if doorkeeper_token.blank?
+    return !require_doorkeeper_token? if doorkeeper_token.blank?
 
     doorkeeper_token&.accessible?
   end

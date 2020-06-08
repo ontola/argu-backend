@@ -207,6 +207,7 @@ Rails.application.routes.draw do
     end
     namespace :spi do
       get 'authorize', to: 'authorize#show'
+      post 'bulk', to: 'bulk#show'
       get 'current_user', to: 'users#current'
       get 'email_addresses', to: 'email_addresses#show'
     end

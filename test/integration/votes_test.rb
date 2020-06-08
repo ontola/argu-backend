@@ -81,13 +81,16 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'guest should get show vote by parent' do
     sign_in guest_user
     guest_vote
-    get iri_from_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri_path), root: argu),
-        headers: argu_headers(accept: :json_api)
+    get iri_without_id
     assert_response 200
 
-    expect_relationship('parent')
-    creator = expect_relationship('creator')
-    assert_equal creator.dig('data', 'id'), "#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}"
+    expect_triple(RDF::URI(iri_without_id), NS::OWL.sameAs, guest_vote.iri)
+    expect_triple(guest_vote.iri, NS::SCHEMA.isPartOf, vote_event.iri)
+    expect_triple(
+      guest_vote.iri,
+      NS::SCHEMA.creator,
+      RDF::URI("#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}")
+    )
   end
 
   test 'guest should not get show non-existent vote' do
@@ -175,8 +178,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'guest should post update vote' do
     sign_in guest_user
     guest_vote
-    get iri_from_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri_path), root: argu),
-        headers: argu_headers(accept: :json_api)
+    get iri_without_id, headers: argu_headers(accept: :json_api)
     assert_response 200
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:yes]
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
@@ -186,8 +188,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
     assert_response 201
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
-    get iri_from_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri_path), root: argu),
-        headers: argu_headers(accept: :json_api)
+    get iri_without_id, headers: argu_headers(accept: :json_api)
     assert_response 200
     assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
   end
@@ -196,9 +197,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     argument_guest_vote
     assert_difference('Argu::Redis.keys("temporary.*").count', -1) do
-      delete(
-        iri_from_template(:vote_iri, parent_iri: split_iri_segments(argument.iri_path), option: %i[yes], root: argu)
-      )
+      delete iri_without_id(argument, option: %i[yes])
       assert_response :success
     end
   end
@@ -211,13 +210,16 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'unconfirmed should get show vote' do
     sign_in unconfirmed
     unconfirmed_vote
-    get iri_from_template(:vote_iri, parent_iri: split_iri_segments(vote_event.iri_path), root: argu),
-        headers: argu_headers(accept: :json_api)
+    get iri_without_id
     assert_response 200
 
-    expect_relationship('parent')
-    creator = expect_relationship('creator')
-    assert_equal creator.dig('data', 'id'), "#{argu.iri}/u/#{unconfirmed.url}"
+    expect_triple(RDF::URI(iri_without_id), NS::OWL.sameAs, unconfirmed_vote.iri)
+    expect_triple(unconfirmed_vote.iri, NS::SCHEMA.isPartOf, vote_event.iri)
+    expect_triple(
+      unconfirmed_vote.iri,
+      NS::SCHEMA.creator,
+      RDF::URI("#{argu.iri}/u/#{unconfirmed.url}")
+    )
   end
 
   test 'unconfirmed should not get show non-existent vote' do
@@ -589,5 +591,11 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 201
+  end
+
+  private
+
+  def iri_without_id(parent = vote_event, params = {})
+    iri_from_template(:vote_iri, params.merge(parent_iri: split_iri_segments(parent.iri_path), root: argu))
   end
 end

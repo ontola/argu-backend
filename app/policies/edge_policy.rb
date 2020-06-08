@@ -35,6 +35,16 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     end
   end
 
+  def granted_group_ids(action, check_class = class_name)
+    grant_tree
+      .granted_group_ids(
+        persisted_edge,
+        action: action,
+        resource_type: check_class,
+        parent_type: record&.parent&.owner_type
+      )
+  end
+
   def has_expired_ancestors?
     grant_tree.expired?(persisted_edge)
   end
@@ -50,15 +60,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   def has_grant?(action, check_class = class_name)
     return true if service?
 
-    group_ids =
-      grant_tree
-        .granted_group_ids(
-          persisted_edge,
-          action: action,
-          resource_type: check_class,
-          parent_type: record&.parent&.owner_type
-        )
-    (group_ids & user.profile.group_ids).any?
+    (granted_group_ids(action, check_class) & user.profile.group_ids).any?
   end
 
   def has_grant_set?(grant_set)
