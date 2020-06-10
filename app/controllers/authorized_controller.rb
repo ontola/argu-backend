@@ -7,6 +7,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   before_action :verify_terms_accepted, only: %i[update create]
   before_action :verify_setup, only: %i[update create]
   before_action :authorize_current_actor
+  after_action :set_cache_control_header
   before_bugsnag_notify :add_errors_tab
 
   active_response :index, :show
@@ -138,6 +139,21 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   def requires_setup?
     !(current_user.guest? || !tree_root.requires_intro? || has_shortname?)
+  end
+
+  def set_cache_control_header
+    return unless authenticated_resource!&.is_a?(ApplicationModel)
+
+    has_public_grant = policy(authenticated_resource).try(:granted_group_ids, :show)&.include?(Group::PUBLIC_ID)
+
+    response.headers['Cache-Control'] =
+      if has_public_grant
+        'public'
+      elsif authenticated_resource.try(:cacheable?)
+        'no-cache'
+      else
+        'private'
+      end
   end
 
   def verify_setup

@@ -51,7 +51,7 @@ module SPI
       response = Rails.application.routes.router.serve(resource_request(iri))
       {
         body: include ? response.last.body : nil,
-        cache: :private,
+        cache: response[1]['Cache-Control'] || :private,
         iri: iri.to_s,
         status: response.first
       }
