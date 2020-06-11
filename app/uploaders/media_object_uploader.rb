@@ -46,7 +46,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
       process opts[:strategy] => [opts[:w], opts[:h]]
 
       def full_filename(for_file)
-        super.sub(/#{EXTENSION_REGEX}/, '.jpg')
+        super.sub(/#{EXTENSION_REGEX}/i, '.jpg')
       end
     end
   end
