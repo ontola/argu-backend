@@ -6,7 +6,7 @@ class Setup < VirtualResource
   enhance LinkedRails::Enhancements::Updatable
   attr_accessor :user
 
-  delegate :url, :first_name, :last_name, to: :user
+  delegate :url, :first_name, :last_name, :errors, to: :user
   validates :first_name, :last_name, :url, presence: true, if: -> { ActsAsTenant.current_tenant.requires_intro? }
   validates :url,
             allow_nil: true,

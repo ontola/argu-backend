@@ -29,8 +29,8 @@ module Users
     end
 
     def update_execute
-      current_user.build_shortname shortname: permit_params[:url]
-      current_user.update_without_password(permit_params)
+      current_user.build_shortname(shortname: permit_params[:url]) if permit_params[:url].present?
+      current_user.update_without_password(permit_params.select { |_key, value| value.present? })
     end
 
     def update_success

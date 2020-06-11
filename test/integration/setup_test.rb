@@ -30,6 +30,40 @@ class SetupTest < ActionDispatch::IntegrationTest
     expect_ontola_action_count(0)
   end
 
+  test 'user without shortname should put setup' do
+    sign_in user_no_shortname
+    put iri_from_template(:setup_iri, root: argu), params: {
+      setup: {
+        url: 'new_url'
+      }
+    }
+    assert_response :success
+    assert_equal user_no_shortname.reload.url, 'new_url'
+  end
+
+  test 'user without shortname should put setup without shortname' do
+    sign_in user_no_shortname
+    put iri_from_template(:setup_iri, root: argu), params: {
+      setup: {
+        url: ''
+      }
+    }
+    assert_response :success
+    assert_nil user_no_shortname.reload.url
+  end
+
+  test 'user without shortname should not put setup existing shortname' do
+    sign_in user_no_shortname
+    put iri_from_template(:setup_iri, root: argu), params: {
+      setup: {
+        url: user.url
+      }
+    }
+    assert_response :unprocessable_entity
+    expect_ontola_action(snackbar: 'Shortname shortname has already been taken')
+    assert_nil user_no_shortname.reload.url
+  end
+
   ####################################
   # As User with shortname
   ####################################
