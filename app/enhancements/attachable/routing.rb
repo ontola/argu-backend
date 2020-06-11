@@ -6,7 +6,12 @@ module Attachable
   class << self
     def route_concerns(mapper)
       mapper.concern :attachable do
-        mapper.resources :media_objects, path: :attachments, only: :index, defaults: {used_as: :attachment}
+        mapper.resources(
+          :media_objects,
+          path: :attachments,
+          only: %i[index new create],
+          defaults: {used_as: :attachment}
+        )
       end
     end
   end

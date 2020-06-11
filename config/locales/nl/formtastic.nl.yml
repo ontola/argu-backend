@@ -44,6 +44,7 @@ nl:
       f_move: "Verplaatsen"
       f_convert: "Omzetten"
       f_delete: "Verwijderen"
+      filename: "Bestandsnaam"
       follows_count: 'Volgers'
       grant_set: 'Rechtenset'
       grant_set_id: 'Rechtenset'

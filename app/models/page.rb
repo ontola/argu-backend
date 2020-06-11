@@ -3,6 +3,7 @@
 class Page < Edge # rubocop:disable Metrics/ClassLength
   has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid, foreign_key: :root_id
 
+  enhance Attachable
   enhance BlogPostable
   enhance ConfirmedDestroyable
   enhance CoverPhotoable

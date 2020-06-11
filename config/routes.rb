@@ -291,6 +291,7 @@ Rails.application.routes.draw do
     end
   end
   resources :media_objects, only: :show do
+    include_route_concerns
     resource :media_object_contents, only: :show, path: 'content/:version'
   end
   resources :motions,

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class MediaObjectSerializer < RecordSerializer
+  extend LinkedRails::Helpers::OntolaActionsHelper
   include Parentable::Serializer
 
   attribute :type, predicate: RDF[:type] do |object|
@@ -36,6 +37,9 @@ class MediaObjectSerializer < RecordSerializer
     object.position_y || 50
   end
   attribute :used_as, predicate: NS::ARGU[:fileUsage]
+  attribute :copy_url, predicate: NS::ARGU[:copyUrl] do |object|
+    RDF::URI("#{object.menu(:actions).iri}#copy")
+  end
 
   MediaObjectUploader::IMAGE_VERSIONS.each do |format, opts|
     attribute format, predicate: NS::ONTOLA[:"imgUrl#{opts[:w]}x#{opts[:h]}"] do |object|

@@ -44,6 +44,7 @@ en:
       f_move: "Move"
       f_convert: "Convert"
       f_delete: "Delete"
+      filename: "Filename"
       follows_count: 'Followers'
       grant_set: 'Permission set'
       grant_set_id: 'Permission set'

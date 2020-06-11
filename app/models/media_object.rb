@@ -4,12 +4,22 @@ require 'types/file_type'
 
 class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Parentable
+  enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Menuable
+  enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Tableable
+
   belongs_to :about, polymorphic: true, inverse_of: :media_objects, primary_key: :uuid
   belongs_to :forum, primary_key: :uuid
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
 
   mount_uploader :content, MediaObjectUploader, mount_on: :content_uid
+  with_columns default: [
+    NS::DBO[:filename],
+    NS::SCHEMA[:uploadDate],
+    NS::ARGU[:copyUrl]
+  ]
 
   attribute :content, FileType.new
   validates :url, presence: true
@@ -36,7 +46,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   alias edgeable_record about
 
   parentable :container_node, :question, :motion, :profile, :blog_post, :topic,
-             :risk, :intervention, :intervention_type, :measure, :measure_type
+             :risk, :intervention, :intervention_type, :measure, :measure_type, :page
   alias_attribute :display_name, :title
 
   # Hands over publication of a collection to the Community profile
@@ -162,6 +172,10 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         MediaObjectUploader::PORTABLE_DOCUMENT_TYPES +
         MediaObjectUploader::PRESENTATION_TYPES +
         MediaObjectUploader::SPREADSHEET_TYPES
+    end
+
+    def default_collection_display
+      :table
     end
   end
 end

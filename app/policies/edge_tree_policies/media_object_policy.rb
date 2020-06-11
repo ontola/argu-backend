@@ -16,6 +16,10 @@ class MediaObjectPolicy < EdgeTreePolicy
     record.about if record.about.is_a?(Edge)
   end
 
+  def create?
+    edgeable_record.is_a?(Page) && edgeable_policy.update?
+  end
+
   def show?
     return true if record.profile_photo?
 
