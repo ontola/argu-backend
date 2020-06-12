@@ -25,7 +25,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 2c7788f761dfb4f84920a5dcac235286d888d493
+  revision: ddaca30400a03bc3d10f15334ae8f84af05c4472
   branch: filtering
   specs:
     linked_rails (0.0.0)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/rdf-serializers
-  revision: 690d4ed3468ca27fa236b0ea62bdfc954e34c9a5
+  revision: 4a8b234a06213a61f4406fc1564e998cf8c3620e
   branch: fast-jsonapi
   specs:
     rdf-serializers (0.0.7)
@@ -282,7 +282,7 @@ GEM
     httparty (0.18.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
-    i18n (1.8.2)
+    i18n (1.8.3)
       concurrent-ruby (~> 1.0)
     i18n_data (0.10.0)
     ice_cube (0.14.0)
@@ -301,10 +301,10 @@ GEM
       rdf (~> 3.1)
     jsonapi-renderer (0.2.2)
     jwt (2.2.1)
-    kaminari-activerecord (1.2.0)
+    kaminari-activerecord (1.2.1)
       activerecord
-      kaminari-core (= 1.2.0)
-    kaminari-core (1.2.0)
+      kaminari-core (= 1.2.1)
+    kaminari-core (1.2.1)
     license_finder (6.0.0)
       bundler
       rubyzip (>= 1, < 3)
@@ -435,7 +435,7 @@ GEM
       thor (>= 0.20.3, < 2.0)
     rainbow (3.0.0)
     rake (13.0.1)
-    rdf (3.1.1)
+    rdf (3.1.2)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (3.1.0)
@@ -458,8 +458,8 @@ GEM
     rdf-turtle (3.1.0)
       ebnf (~> 1.2)
       rdf (~> 3.1)
-    rdf-vocab (3.1.4)
-      rdf (~> 3.1)
+    rdf-vocab (3.1.5)
+      rdf (~> 3.1, >= 3.1.2)
     rdf-xsd (3.1.0)
       rdf (~> 3.1)
     redis (4.1.4)
@@ -609,7 +609,7 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.4)
+    websocket-extensions (0.1.5)
     wisper (2.0.1)
     wisper-minitest (0.0.3)
     wisper-rspec (1.1.0)
