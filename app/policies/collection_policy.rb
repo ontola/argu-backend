@@ -19,6 +19,10 @@ class CollectionPolicy < LinkedRails::CollectionPolicy
     vote.present? && vote.comment.nil?
   end
 
+  def expired?
+    has_expired_ancestors?
+  end
+
   def has_expired_ancestors?
     parent_policy.try(:has_expired_ancestors?)
   end

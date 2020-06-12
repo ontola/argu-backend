@@ -165,18 +165,22 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       data.concat(reset_potential_and_favorite_delta(voteable.comment_collection))
       opinion_delta(data, voteable)
     else
-      data.concat(reset_potential_and_favorite_delta(authenticated_resource.parent))
+      data.concat(reset_vote_action_status(authenticated_resource.parent))
     end
     data << same_as_statement
     data
   end
 
-  def destroy_meta
+  def destroy_meta # rubocop:disable Metrics/AbcSize
     data = super
     data.push(
       [current_vote_iri(authenticated_resource.parent), NS::SCHEMA.option, NS::ARGU[:abstain], delta_iri(:replace)]
     )
-    data.concat(reset_potential_and_favorite_delta(authenticated_resource.parent))
+    if authenticated_resource.parent.is_a?(VoteEvent)
+      data.concat(reset_potential_and_favorite_delta(authenticated_resource.parent))
+    else
+      data.concat(reset_vote_action_status(authenticated_resource.parent))
+    end
     data
   end
 
@@ -205,6 +209,13 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
         delta_iri(:replace)
       ]
     )
+  end
+
+  def reset_vote_action_status(argument)
+    %i[create_vote destroy_vote].map do |tag|
+      action = argument.action(tag, user_context)
+      [action.iri, NS::SCHEMA[:actionStatus], action.action_status, delta_iri(:replace)]
+    end
   end
 
   def vote_collections
