@@ -36,4 +36,10 @@ class DecisionPolicy < EdgePolicy
   def update?
     decision_is_assigned? || is_creator? || has_grant?(:update)
   end
+
+  class << self
+    def valid_state_options
+      %w[approved rejected]
+    end
+  end
 end

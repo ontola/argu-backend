@@ -33,9 +33,5 @@ class Vocabulary < LinkedRails::Vocabulary
         end
       @graph << RDF::Statement.new(iri, NS::RDFS[:subClassOf], parent.is_a?(Array) ? parent.first : parent)
     end
-
-    def user_context
-      @user_context ||= create_user_context(%w[guest])
-    end
   end
 end

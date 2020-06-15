@@ -2,5 +2,5 @@
 
 class DecisionSerializer < EdgeSerializer
   attribute :description, predicate: NS::SCHEMA[:text]
-  attribute :state, predicate: NS::ARGU[:decisionState]
+  enum :state, predicate: NS::ARGU[:decisionState]
 end

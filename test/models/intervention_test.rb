@@ -11,14 +11,18 @@ class InterventionTest < ActiveSupport::TestCase
   end
 
   test 'Assign effects as symbol' do
-    intervention
-    assert_equal intervention.effects, [NS::ONTOLA['form_option/plans_and_procedure/usability']]
-    intervention.update!(people_and_resources: :resources)
-    expected = [
-      NS::ONTOLA['form_option/plans_and_procedure/usability'],
-      NS::ONTOLA['form_option/people_and_resources/resources']
-    ]
-    assert_equal intervention.effects, expected
-    assert_equal intervention.reload.effects, expected
+    ActsAsTenant.with_tenant(argu) do
+      intervention
+      assert_equal intervention.effects, [
+        LinkedRails.iri(path: '/argu/enums/interventions/plans_and_procedure', fragment: :usability)
+      ]
+      intervention.update!(people_and_resources: :resources)
+      expected = [
+        LinkedRails.iri(path: '/argu/enums/interventions/plans_and_procedure', fragment: :usability),
+        LinkedRails.iri(path: '/argu/enums/interventions/people_and_resources', fragment: :resources)
+      ]
+      assert_equal intervention.effects, expected
+      assert_equal intervention.reload.effects, expected
+    end
   end
 end

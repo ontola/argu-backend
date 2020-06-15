@@ -87,7 +87,7 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
        motivation_and_commitment conflict_and_prioritization ergonomics tools].map do |attr|
       send(attr)
         .reject { |option| option.start_with?('no_') }
-        .map { |option| InterventionSerializer.enum_options(attr)[:options][option.to_sym][:iri] }
+        .map { |option| InterventionSerializer.enum_options(attr)[option.to_sym].iri }
     end.flatten
   end
 

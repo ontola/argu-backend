@@ -15,6 +15,10 @@ class ApplicationForm < LinkedRails::Form
   end
 
   class << self
+    def form_options_iri(attr)
+      -> { RDF::DynamicURI(LinkedRails.iri(path: "/enums/#{self.class.model_class.to_s.tableize}/#{attr}")) }
+    end
+
     private
 
     def actor_selector

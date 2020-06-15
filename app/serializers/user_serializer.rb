@@ -55,30 +55,30 @@ class UserSerializer < RecordSerializer
        if: method(:self?),
        type: NS::SCHEMA[:Thing],
        options: {
-         never_reactions_email: {iri: NS::ARGU[:never]},
-         weekly_reactions_email: {iri: NS::ARGU[:weekly]},
-         daily_reactions_email: {iri: NS::ARGU[:daily]},
-         direct_reactions_email: {iri: NS::ARGU[:direct]}
+         never_reactions_email: {exact_match: NS::ARGU[:never]},
+         weekly_reactions_email: {exact_match: NS::ARGU[:weekly]},
+         daily_reactions_email: {exact_match: NS::ARGU[:daily]},
+         direct_reactions_email: {exact_match: NS::ARGU[:direct]}
        }
   enum :news_email,
        predicate: NS::ARGU[:newsEmails],
        if: method(:self?),
        type: NS::SCHEMA[:Thing],
        options: {
-         never_news_email: {iri: NS::ARGU[:never]},
-         weekly_news_email: {iri: NS::ARGU[:weekly]},
-         daily_news_email: {iri: NS::ARGU[:daily]},
-         direct_news_email: {iri: NS::ARGU[:direct]}
+         never_news_email: {exact_match: NS::ARGU[:never]},
+         weekly_news_email: {exact_match: NS::ARGU[:weekly]},
+         daily_news_email: {exact_match: NS::ARGU[:daily]},
+         direct_news_email: {exact_match: NS::ARGU[:direct]}
        }
   enum :decisions_email,
        type: NS::SCHEMA[:Thing],
        predicate: NS::ARGU[:decisionsEmails],
        if: method(:self?),
        options: {
-         never_decisions_email: {iri: NS::ARGU[:never]},
-         weekly_decisions_email: {iri: NS::ARGU[:weekly]},
-         daily_decisions_email: {iri: NS::ARGU[:daily]},
-         direct_decisions_email: {iri: NS::ARGU[:direct]}
+         never_decisions_email: {exact_match: NS::ARGU[:never]},
+         weekly_decisions_email: {exact_match: NS::ARGU[:weekly]},
+         daily_decisions_email: {exact_match: NS::ARGU[:daily]},
+         direct_decisions_email: {exact_match: NS::ARGU[:direct]}
        }
   enum :language,
        type: NS::SCHEMA[:Language],
@@ -91,7 +91,8 @@ class UserSerializer < RecordSerializer
        if: method(:service_or_self?),
        options: Hash[
          ActiveSupport::TimeZone.all.uniq(&:tzinfo).map do |value|
-           [value.name.to_sym, {iri: NS::DBPEDIA[value.tzinfo.name.gsub(%r{Etc\/([A-Z]+)}, 'UTC')], label: value.to_s}]
+           id = value.tzinfo.name.gsub(%r{Etc\/([A-Z]+)}, 'UTC')
+           [id, {close_match: NS::DBPEDIA[id], label: value.to_s}]
          end
        ]
 end

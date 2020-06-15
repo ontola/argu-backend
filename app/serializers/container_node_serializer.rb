@@ -21,7 +21,7 @@ class ContainerNodeSerializer < EdgeSerializer
              [
                "#{language}-#{code}".to_sym,
                {
-                 iri: NS::ARGU["locale#{language}#{code}"],
+                 exact_match: NS::ARGU["locale-#{language}#{code}"],
                  label: -> { "#{ISO3166::Country.translations(I18n.locale)[code]} (#{language.upcase})" }
                }
              ]

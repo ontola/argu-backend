@@ -59,6 +59,7 @@ Rails.application.routes.draw do
 
   get '/ns/core', to: 'vocabularies#show'
   get '/manifest', to: 'manifests#show'
+  get '/enums/:klass/:attribute', to: 'linked_rails/enum_values#index'
 
   devise_for :users,
              controllers: {

@@ -17,7 +17,11 @@ module PublicGrantable
       def public_grant_options
         Hash[
           [:none].concat(GrantSet::SELECTABLE_TITLES).map do |title|
-            [title.to_sym, {iri: NS::ARGU["grantSet#{title}"], label: -> { I18n.t("roles.types.#{title}").capitalize }}]
+            [
+              title.to_sym,
+              exact_match: NS::ARGU["grantSet#{title}"],
+              label: -> { I18n.t("roles.types.#{title}").capitalize }
+            ]
           end
         ]
       end
