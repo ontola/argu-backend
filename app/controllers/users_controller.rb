@@ -23,7 +23,7 @@ class UsersController < AuthorizedController
   end
 
   def destroy_execute
-    super
+    ActsAsTenant.without_tenant { super }
 
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     true

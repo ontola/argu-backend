@@ -70,7 +70,7 @@ class RegistrationsController < Devise::RegistrationsController
     unless params[:user].try(:[], :confirmation_string) == I18n.t('users_cancel_string')
       @user.errors.add(:confirmation_string, I18n.t('errors.messages.should_match'))
     end
-    return false if @user.errors.present? || !@user.destroy
+    return false if @user.errors.present? || ActsAsTenant.without_tenant { !@user.destroy }
 
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     true

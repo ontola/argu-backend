@@ -6,6 +6,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   include TestHelper
 
   define_freetown
+  define_cairo
   let(:user) { create(:user) }
   let(:user_no_shortname) { create(:user, :no_shortname, first_name: nil, last_name: nil) }
   let(:guest_user) { create_guest_user }
@@ -394,6 +395,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     create :vote, publisher: user, creator: user.profile, parent: motion.default_vote_event
     create :question, publisher: user, creator: user.profile, parent: freetown
     create :argument, parent: Motion.last, publisher: user, creator: user.profile
+    create :motion, publisher: user, creator: user.profile, parent: cairo
 
     sign_in user
 
