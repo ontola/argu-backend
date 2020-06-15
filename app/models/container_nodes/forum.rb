@@ -11,6 +11,10 @@ class Forum < ContainerNode
   property :default_decision_group_id, :integer, NS::ARGU[:defaultDecisionGroupId]
 
   belongs_to :default_decision_group, class_name: 'Group', foreign_key_property: :default_decision_group_id
+  has_one :primary_container_node_of,
+          primary_key_property: :primary_container_node_id,
+          class_name: 'Page',
+          dependent: :nullify
 
   self.default_widgets = %i[new_motion new_question new_topic discussions]
 

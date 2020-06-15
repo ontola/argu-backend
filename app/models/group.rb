@@ -20,6 +20,7 @@ class Group < ApplicationRecord
   has_many :grants, dependent: :destroy, inverse_of: :group
   has_many :members, through: :group_memberships, class_name: 'Profile'
   has_many :default_decision_forums,
+           primary_key: :id,
            primary_key_property: :default_decision_group_id,
            class_name: 'Forum',
            dependent: :restrict_with_exception

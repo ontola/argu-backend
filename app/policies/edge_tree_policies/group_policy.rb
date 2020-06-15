@@ -36,7 +36,9 @@ class GroupPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    return forbid_with_message(I18n.t('groups.delete.not_allowed')) unless record.deletable
+    if !record.deletable || record.default_decision_forums.any?
+      return forbid_with_message(I18n.t('groups.delete.not_allowed'))
+    end
 
     edgeable_policy.update?
   end

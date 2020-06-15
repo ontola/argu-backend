@@ -22,6 +22,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance CoverPhotoable
   enhance Bannerable
 
+  property :primary_container_node_id, :linked_edge_id, NS::FOAF[:homepage]
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   has_one :tenant, dependent: :destroy, foreign_key: :root_id, primary_key: :uuid, inverse_of: :page
@@ -70,7 +71,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :display_name, :string, NS::SCHEMA[:name]
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
   property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
-  property :primary_container_node_id, :linked_edge_id, NS::FOAF[:homepage]
   property :template, :string, NS::ONTOLA[:template], default: :default
   property :template_options, :text, NS::ONTOLA[:templateOpts], default: '{}'
   property :home_menu_label, :string, NS::ONTOLA[:homeMenuLabel]
