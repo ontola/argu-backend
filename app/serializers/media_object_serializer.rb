@@ -38,12 +38,28 @@ class MediaObjectSerializer < RecordSerializer
   end
   attribute :used_as, predicate: NS::ARGU[:fileUsage]
   attribute :copy_url, predicate: NS::ARGU[:copyUrl] do |object|
-    RDF::URI("#{object.menu(:actions).iri}#copy")
+    ontola_copy_action(object.iri)
   end
+  statements :copy_action_statements
 
   MediaObjectUploader::IMAGE_VERSIONS.each do |format, opts|
     attribute format, predicate: NS::ONTOLA[:"imgUrl#{opts[:w]}x#{opts[:h]}"] do |object|
       object.url_for_version(format)
+    end
+  end
+
+  class << self
+    def copy_action_statements(object, _params) # rubocop:disable Metrics/AbcSize
+      action_iri = ontola_copy_action(object.iri)
+      target_iri = RDF::URI("#{action_iri}#entrypoint")
+      [
+        RDF::Statement.new(action_iri, RDF[:type], NS::ARGU[:CopyAction]),
+        RDF::Statement.new(action_iri, NS::SCHEMA.name, I18n.t('menus.default.copy')),
+        RDF::Statement.new(action_iri, NS::SCHEMA.target, target_iri),
+        RDF::Statement.new(target_iri, RDF[:type], NS::SCHEMA.EntryPoint),
+        RDF::Statement.new(target_iri, NS::SCHEMA.name, I18n.t('menus.default.copy')),
+        RDF::Statement.new(target_iri, NS::SCHEMA.image, RDF::URI('http://fontawesome.io/icon/clipboard'))
+      ]
     end
   end
 end
