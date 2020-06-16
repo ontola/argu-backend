@@ -16,6 +16,17 @@ GIT
       activesupport (>= 4.2)
 
 GIT
+  remote: https://github.com/mperham/sidekiq.git
+  revision: 9031b4ee2425780b6c37832a37c0f846b658c512
+  branch: 5-x
+  specs:
+    sidekiq (5.2.8)
+      connection_pool (~> 2.2, >= 2.2.2)
+      rack (< 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (>= 3.3.5, < 5)
+
+GIT
   remote: https://github.com/ontola/active_response
   revision: 4a568f7d6b5a06385b4e6f3258c745a4445c249c
   branch: master
@@ -202,7 +213,7 @@ GEM
     cocoon (1.2.14)
     coderay (1.1.2)
     concurrent-ruby (1.1.6)
-    connection_pool (2.2.2)
+    connection_pool (2.2.3)
     counter_culture (2.5.0)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
@@ -389,7 +400,7 @@ GEM
       nio4r (~> 2.0)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
-    rack (2.0.9)
+    rack (2.1.4)
     rack-attack (4.3.1)
       rack
     rack-contrib (2.2.0)
@@ -528,11 +539,6 @@ GEM
     sequenced (3.2.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
-    sidekiq (5.2.8)
-      connection_pool (~> 2.2, >= 2.2.2)
-      rack (< 2.1.0)
-      rack-protection (>= 1.5.0)
-      redis (>= 3.3.5, < 5)
     sidekiq-prometheus-exporter (0.1.13)
       sidekiq (>= 3.3.1)
     sidetiq (0.7.2)
@@ -708,7 +714,7 @@ DEPENDENCIES
   rubyzip
   searchkick
   sequenced
-  sidekiq (~> 5.2)
+  sidekiq!
   sidekiq-prometheus-exporter
   sidetiq
   simplecov
