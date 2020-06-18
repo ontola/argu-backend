@@ -144,19 +144,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     @manifest ||= Manifest.new(page: self)
   end
 
-  def rebuild_cache
-    ActsAsTenant.with_tenant(self) do
-      cache = Argu::Cache.new
-      Vocabulary.new.write_to_cache(cache)
-
-      Edge.descendants.each do |klass|
-        Edge.where(owner_type: klass.to_s).includes(klass.includes_for_serializer).find_each do |edge|
-          edge.write_to_cache(cache)
-        end
-      end
-    end
-  end
-
   def reindex_tree(async: {wait: true})
     return if Rails.application.config.disable_searchkick
 
@@ -183,12 +170,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       @iri_prefix = "#{Rails.application.config.host_name}/#{value}"
       @iri = nil
     end
-    super
-  end
-
-  def write_to_cache(cache = Argu::Cache.new)
-    manifest.write_to_cache(cache)
-    search_result.write_to_cache(cache)
     super
   end
 

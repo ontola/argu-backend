@@ -94,12 +94,6 @@ class Manifest < VirtualResource
     page.primary_color
   end
 
-  def write_to_cache(cache = Argu::Cache.new)
-    ActsAsTenant.with_tenant(try(:root) || ActsAsTenant.current_tenant) do
-      cache.write(self, :json)
-    end
-  end
-
   private
 
   def icon(name, size)

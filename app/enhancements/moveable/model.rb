@@ -10,7 +10,7 @@ module Moveable
         update_activities_on_move(new_parent)
         self.parent = new_parent
         save!
-        try(:write_to_cache)
+        try(:invalidate_cache, Argu::Cache.new)
       end
       true
     end

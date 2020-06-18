@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 module Cacheable
+  include DeltaHelper
+
   def cacheable?
     true
   end
 
-  def write_to_cache(cache = Argu::Cache.new)
-    return unless cacheable?
-
+  def invalidate_cache(cache)
     ActsAsTenant.with_tenant(try(:root) || ActsAsTenant.current_tenant) do
-      cache.write(self, :hndjson)
+      delta = [
+        [iri, LinkedRails::Vocab::SP[:Variable], LinkedRails::Vocab::SP[:Variable], delta_iri(:invalidate)]
+      ]
+      cache.write(delta)
     end
   end
 end

@@ -79,12 +79,6 @@ class SearchResult < Collection
     end
   end
 
-  def write_to_cache(cache = Argu::Cache.new)
-    super
-  rescue Searchkick::Error
-    nil
-  end
-
   private
 
   def default_sortings
