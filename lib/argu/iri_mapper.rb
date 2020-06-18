@@ -130,7 +130,9 @@ module Argu
       def sanitized_path(iri, root)
         iri.path = "#{iri.path}/" unless iri.path&.ends_with?('/')
 
-        URI(root.iri.path.present? ? iri.to_s.split("#{root.iri.path}/").last : iri).path
+        uri = URI(root.iri.path.present? ? iri.to_s.split("#{root.iri.path}/").last : iri)
+
+        "#{uri.path}?#{uri.query}"
       end
 
       def shortnameable_from_opts(opts)
