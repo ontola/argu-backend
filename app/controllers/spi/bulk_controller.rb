@@ -39,7 +39,8 @@ module SPI
       env = Rack::MockRequest.env_for(
         path,
         'HTTP_ACCEPT' => 'application/hex+x-ndjson',
-        'HTTP_AUTHORIZATION' => request.env['HTTP_AUTHORIZATION']
+        'HTTP_AUTHORIZATION' => request.env['HTTP_AUTHORIZATION'],
+        'HTTP_OPERATOR_ARG_GRAPH' => 'true'
       )
       req = ActionDispatch::Request.new(env)
       req.path_info = ActionDispatch::Journey::Router::Utils.normalize_path(req.path_info)
@@ -82,7 +83,7 @@ module SPI
       return if resource.nil?
 
       RDF::Serializers.serializer_for(resource)
-        .new(resource, {params: {scope: user_context}})
+        .new(resource, {params: {scope: user_context, context: resource&.try(:iri)}})
         .send(:render_hndjson)
     end
 

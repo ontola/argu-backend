@@ -116,6 +116,9 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   def serializer_params
     {
+      context: request.env['HTTP_OPERATOR_ARG_GRAPH'] == 'true' ?
+                 ((current_resource || index_collection_or_view).try(:iri).presence&.to_s || request.url) :
+                 nil,
       scope: user_context
     }
   end
