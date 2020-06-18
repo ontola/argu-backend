@@ -60,8 +60,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/rdf-serializers
-  revision: e74faf784d4a80341891593acfb896a204e1082c
-  branch: fast-jsonapi
+  revision: 8c7f795432ec2e00c808d253b2637ef650181d8e
+  branch: graph_operator
   specs:
     rdf-serializers (0.0.7)
       fast_jsonapi
