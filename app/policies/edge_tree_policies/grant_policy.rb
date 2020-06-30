@@ -3,13 +3,7 @@
 class GrantPolicy < EdgeTreePolicy
   class Scope < EdgeTreePolicy::Scope; end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[grant_set_id _destroy id]
-    attributes.concat %i[group_id] if record.persisted? || record.group.blank?
-    attributes.concat %i[edge_id] if record.persisted? || record.edge.blank?
-    attributes
-  end
+  permit_attributes %i[grant_set_id _destroy group_id edge_id]
 
   def create?
     edgeable_policy.update?

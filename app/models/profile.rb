@@ -31,6 +31,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :comments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :topics, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :uploaded_media_objects,
            class_name: 'MediaObject',
@@ -152,7 +153,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Sets the dependent foreign relations to the Community profile
   def anonymize_dependencies
     ActsAsTenant.without_tenant do
-      %w[comments motions arguments questions blog_posts vote_events activities
+      %w[comments motions arguments questions blog_posts topics vote_events activities
          uploaded_media_objects unscoped_group_memberships]
         .each do |association|
         send(association)

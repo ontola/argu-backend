@@ -1,14 +1,9 @@
 # frozen_string_literal: true
 
 class MotionPolicy < DiscussionPolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[display_name description votes question_id]
-    attributes.concat %i[forum_id f_convert] if staff?
-    attributes.concat %i[pinned] if moderator? || administrator? || staff?
-    attributes.concat %i[trash_activity untrash_activity]
-    attributes
-  end
+  permit_attributes %i[display_name description]
+  permit_attributes %i[forum_id f_convert], grant_sets: %i[staff]
+  permit_attributes %i[pinned], grant_sets: %i[moderator administrator staff]
 
   def convert?
     staff?

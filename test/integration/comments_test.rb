@@ -8,7 +8,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   let(:motion) { create(:motion, parent: freetown) }
   let(:vote) { create(:vote, parent: motion.default_vote_event) }
   let(:argument) do
-    create(:argument,
+    create(:pro_argument,
            :with_follower,
            parent: motion,
            creator: create(:profile_direct_email))

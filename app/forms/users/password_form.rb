@@ -2,7 +2,12 @@
 
 module Users
   class PasswordForm < ApplicationForm
-    fields %i[email password password_confirmation hidden]
-    property_group :hidden, label: 'hidden', properties: %i[reset_password_token], iri: NS::ONTOLA[:hiddenGroup]
+    field :email
+    field :password
+    field :password_confirmation
+
+    hidden do
+      field :reset_password_token
+    end
   end
 end

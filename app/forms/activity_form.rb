@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ActivityForm < ApplicationForm
-  fields %i[
-    comment
-    notify
-  ]
+  field :comment
+  field :notify
 end

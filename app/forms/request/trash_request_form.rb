@@ -2,8 +2,6 @@
 
 module Request
   class TrashRequestForm < ApplicationForm
-    fields [
-      {trash_activity: {path: NS::ARGU[:trashActivity]}}
-    ]
+    has_one :trash_activity, path: NS::ARGU[:trashActivity]
   end
 end

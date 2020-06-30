@@ -1,21 +1,13 @@
 # frozen_string_literal: true
 
 class SurveyForm < ContainerNodeForm
-  fields %i[
-    display_name
-    description
-    external_iri
-    default_cover_photo
-    custom_placement
-    footer
-  ]
+  field :display_name
+  field :description
+  field :external_iri
+  has_one :default_cover_photo
+  has_one :custom_placement
 
-  property_group(
-    :footer,
-    iri: NS::ONTOLA[:footerGroup],
-    order: 99,
-    properties: [
-      creator: actor_selector
-    ]
-  )
+  footer do
+    actor_selector
+  end
 end

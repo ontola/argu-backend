@@ -7,7 +7,7 @@ module ActivePublishable
     included do
       has_one :argu_publication, predicate: NS::ARGU[:arguPublication]
 
-      attribute :is_draft?, predicate: NS::ARGU[:isDraft]
+      attribute :is_draft, predicate: NS::ARGU[:isDraft], datatype: NS::XSD[:boolean]
     end
   end
 end

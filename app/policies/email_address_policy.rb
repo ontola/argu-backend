@@ -7,15 +7,11 @@ class EmailAddressPolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attribute_names
-    attrs = super
-    attrs.append(:email) if new_record?
-    attrs.append(:primary) if make_primary?
-    attrs
-  end
+  permit_attributes %i[email], new_record: true
+  permit_attributes %i[primary], has_values: {primary: false}
 
   def create?
-    show?
+    show? || record.user.nil?
   end
 
   def show?

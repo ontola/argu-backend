@@ -7,11 +7,7 @@ class ArgumentPolicy < EdgePolicy
     'ProArgument'
   end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[display_name description pro]
-    attributes
-  end
+  permit_attributes %i[display_name description pro]
 
   def up_vote?
     upvote_for(record, user.profile).blank?

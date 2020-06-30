@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
 class ShortnamePolicy < EdgeTreePolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[shortname destination]
-    attributes.concat %i[unscoped] if staff?
-    attributes
-  end
+  permit_attributes %i[shortname destination]
+  permit_attributes %i[unscoped], grant_sets: %i[staff]
+
   delegate :show?, to: :edgeable_policy
 
   def update?

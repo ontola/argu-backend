@@ -23,6 +23,7 @@ class VoteActionList < EdgeActionList
         root_relative_iri: lambda do
           resource.new_child(filter: {NS::SCHEMA[:option].to_s => [option]}).action(:create).iri_path
         end,
+        object: -> { resource.new_child(filter: {NS::SCHEMA[:option].to_s => [option]}).build_child },
         url: -> { create_url(option) }
       )
     )

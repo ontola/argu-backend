@@ -22,17 +22,22 @@ class UsersController < AuthorizedController
     ]
   end
 
-  def destroy_execute
-    ActsAsTenant.without_tenant { super }
+  def destroy_execute # rubocop:disable Metrics/AbcSize
+    unless params[:user].try(:[], :confirmation_string) == I18n.t('users_cancel_string')
+      current_resource.errors.add(:confirmation_string, I18n.t('errors.messages.should_match'))
+    end
+    return false if current_resource.errors.present? || !ActsAsTenant.without_tenant { super }
 
-    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    if current_resource == current_user
+      Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    end
     true
   end
 
   def resource_by_id
     @resource_by_id ||=
       case action_name
-      when 'show'
+      when 'show', 'delete', 'destroy'
         user = User.preload(:profile).find_via_shortname_or_id(params[:id])
         show_anonymous_user?(user) ? AnonymousUser.new(url: params[:id]) : user
       else
@@ -55,8 +60,8 @@ class UsersController < AuthorizedController
     end
   end
 
-  def permit_params(password = false) # rubocop:disable Metrics/AbcSize
-    attrs = policy(authenticated_resource || User).permitted_attribute_names(password)
+  def permit_params(_password = false) # rubocop:disable Metrics/AbcSize
+    attrs = policy(authenticated_resource || User).permitted_attributes
     pp = params.require(:user).permit(*attrs).to_h
     merge_photo_params(pp)
     merge_placement_params(pp, User)
@@ -69,6 +74,8 @@ class UsersController < AuthorizedController
   end
 
   def active_response_success_message
+    return super unless action_name == 'update'
+
     if @email_changed
       I18n.t('users.registrations.confirm_mail_change_notice')
     else

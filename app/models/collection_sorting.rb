@@ -6,7 +6,6 @@ class CollectionSorting < LinkedRails::Collection::Sorting
   def iri(_opts = {})
     self
   end
-  alias canonical_iri iri
 
   def sort_value
     return super unless children_count_sorting?

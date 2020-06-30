@@ -21,7 +21,7 @@ class ExportsController < ServiceController
     return authorize parent_resource!, :show? if form_action?
     return super unless action_name == 'index'
 
-    authorize parent_resource!, :index_children?, controller_name
+    authorize parent_resource!, :index_children?, controller_name, user_context: user_context
   end
 
   def check_if_registered?

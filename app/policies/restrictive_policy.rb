@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class RestrictivePolicy # rubocop:disable Metrics/ClassLength
+class RestrictivePolicy
   include LinkedRails::Policy
+  include Policies::AttributeConditions
 
   class Scope
     attr_reader :context, :user, :scope
@@ -45,30 +46,6 @@ class RestrictivePolicy # rubocop:disable Metrics/ClassLength
     super()
   end
 
-  def permitted_attribute_names
-    attributes = []
-    attributes.append(shortname_attributes: %i[shortname id]) if shortname?
-    attributes
-  end
-
-  def permitted_attributes
-    names = permitted_attribute_names
-    aliases =
-      record&.class&.try(:attribute_aliases)&.select { |_k, v| names.map(&:to_s).include?(v) }&.keys&.map(&:to_sym)
-    names + (aliases || [])
-  end
-
-  # @param parent_key [String, Symbol] Parent key of the wanted subset
-  # @param second_key [String, Symbol] Key for further digging
-  # @return [Array] Allowed attributes, nested under a parent key
-  def permitted_nested_attributes(parent_key, second_key = nil)
-    attributes = (permitted_attributes.find { |a| a.is_a?(Hash) && a[parent_key] } || {})[parent_key]
-    unless second_key.nil?
-      attributes = attributes.detect { |value| value.is_a?(Hash) && value.keys == [second_key] }[second_key]
-    end
-    attributes
-  end
-
   def create?
     staff?
   end
@@ -102,17 +79,12 @@ class RestrictivePolicy # rubocop:disable Metrics/ClassLength
     update?
   end
 
-  def create_child?(_raw_klass)
+  def create_child?(_raw_klass, _opts = {})
     false
   end
 
-  def index_children?(_raw_klass)
+  def index_children?(_raw_klass, _opts = {})
     false
-  end
-
-  # Can the current user change the item shortname?
-  def shortname?
-    new_record?
   end
 
   def scope
@@ -160,6 +132,11 @@ class RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def new_record?
     record.is_a?(Class) || record.new_record?
+  end
+
+  def sanitize_attribute(attr)
+    aliases = record&.class&.try(:attribute_aliases)&.select { |_k, v| attr.to_s == v }&.keys&.map(&:to_sym)
+    [attr] + (aliases || [])
   end
 
   def user_context

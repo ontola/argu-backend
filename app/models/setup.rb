@@ -7,7 +7,7 @@ class Setup < VirtualResource
   attr_accessor :user
 
   delegate :url, :first_name, :last_name, :errors, to: :user
-  validates :first_name, :last_name, :url, presence: true, if: -> { ActsAsTenant.current_tenant.requires_intro? }
+  validates :first_name, :last_name, presence: true, if: -> { ActsAsTenant.current_tenant.requires_intro? }
   validates :url,
             allow_nil: true,
             length: 3..50,

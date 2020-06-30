@@ -8,7 +8,7 @@ class CustomActionsController < EdgeableController
   end
 
   def show_includes
-    LinkedRails::Enhancements::Actionable::FORM_INCLUDES
+    %i[target]
   end
 
   def update_success

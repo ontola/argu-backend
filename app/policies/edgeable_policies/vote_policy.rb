@@ -10,15 +10,12 @@ class VotePolicy < EdgePolicy
     end
   end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.append(:option)
-  end
+  permit_attributes %i[option]
 
   def show? # rubocop:disable Metrics/CyclomaticComplexity
     return if has_unpublished_ancestors? && !show_unpublished?
 
-    (record.publisher.show_feed? && has_grant?(:show)) || is_creator? || staff? || service?
+    (has_grant?(:show) && (record.publisher.show_feed? || is_creator?)) || staff? || service?
   end
 
   private

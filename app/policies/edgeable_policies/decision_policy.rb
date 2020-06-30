@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class DecisionPolicy < EdgePolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[description]
-    attributes.concat %i[state forwarded_user_id forwarded_group_id] if record.new_record?
-    attributes
-  end
+  permit_attributes %i[description]
+  permit_attributes %i[state forwarded_user_id forwarded_group_id], new_record: true
 
   # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
   def decision_is_assigned?

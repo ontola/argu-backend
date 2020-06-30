@@ -2,9 +2,7 @@
 
 module Users
   class ConfirmationPolicy < RestrictivePolicy
-    def permitted_attribute_names
-      %i[email]
-    end
+    permit_attributes %i[email]
 
     def create?
       user.guest?

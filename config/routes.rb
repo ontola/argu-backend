@@ -60,6 +60,8 @@ Rails.application.routes.draw do
   get '/ns/core', to: 'vocabularies#show'
   get '/manifest', to: 'manifests#show'
   get '/enums/:klass/:attribute', to: 'linked_rails/enum_values#index'
+  get '/forms/:id', to: 'linked_rails/forms#show'
+  get '/forms/:module/:id', to: 'linked_rails/forms#show'
 
   devise_for :users,
              controllers: {
@@ -74,18 +76,12 @@ Rails.application.routes.draw do
     get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
     get 'users/wrong_email', to: 'users#wrong_email'
     post 'users', to: 'registrations#create', as: :user_registration
-    delete 'users', to: 'registrations#destroy', as: nil
     put 'users/confirm', to: 'users/confirmations#confirm'
   end
 
   resources :users,
             path: 'u',
             only: %i[show edit] do
-    resources :email_addresses, only: %i[index new create] do
-      collection do
-        concerns :nested_actionable
-      end
-    end
     resource :follows, only: :destroy, controller: 'users/follows'
 
     get :setup, to: 'users/setup#edit', on: :collection
@@ -175,7 +171,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :email_addresses, only: %i[show] do
+  resources :email_addresses, only: %i[show index new create] do
     include_route_concerns
   end
 

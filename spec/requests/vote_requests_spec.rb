@@ -9,10 +9,8 @@ RSpec.describe 'Votes', type: :request do
     freetown.update(public_grant: :participator)
   end
 
-  let(:unauthorized_user) do
-    freetown.grants.destroy_all
-    create_forum(public_grant: 'participator', parent: create(:page))
-    create(:user)
+  let(:before_unauthorized_create) do
+    freetown.update(public_grant: :spectator)
   end
 
   let(:destroy_differences) { {'Vote.count' => -1} }
@@ -31,7 +29,6 @@ RSpec.describe 'Votes', type: :request do
     let(:expect_delete_destroy_guest_json_api) { expect(response.code).to eq('204') }
     let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('200') }
     let(:expect_delete_destroy_unauthorized_serializer) { expect_not_found }
-    let(:expect_get_show_unauthorized_serializer) { expect_success }
     it_behaves_like 'get show', opts
     it_behaves_like 'delete destroy', opts
   end

@@ -3,7 +3,7 @@
 class CollectionPolicy < LinkedRails::CollectionPolicy
   def create_child?
     if parent_policy
-      verdict = parent_policy.create_child?(record.association_class.name)
+      verdict = parent_policy.create_child?(record.association_class.name, collection: record)
       @message = parent_policy.message
     else
       verdict = class_policy.create?

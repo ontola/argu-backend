@@ -115,13 +115,13 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
 
   placeholder =
     FactorySeeder.create(:motion, creator: Profile.community, publisher: User.community, parent: freetown)
-  FactorySeeder.create(:argument, parent: placeholder)
+  FactorySeeder.create(:pro_argument, parent: placeholder)
   FactorySeeder.create(:comment, parent: placeholder)
   placeholder_vote_event = placeholder.default_vote_event
   FactorySeeder.create(:vote, parent: placeholder_vote_event)
 
   forum_motion = FactorySeeder.create(:motion, parent: freetown)
-  FactorySeeder.create(:argument, parent: forum_motion)
+  FactorySeeder.create(:pro_argument, parent: forum_motion)
   question = FactorySeeder.create(:question, parent: freetown)
   motion = FactorySeeder.create(:motion, parent: question)
   actor_membership =
@@ -140,7 +140,7 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   FactorySeeder
     .create(:vote, parent: vote_event, creator: profile_hidden_votes, publisher: profile_hidden_votes.profileable)
 
-  argument = FactorySeeder.create(:argument, parent: motion)
+  argument = FactorySeeder.create(:pro_argument, parent: motion)
   FactorySeeder.create(:vote, parent: argument)
   comment = FactorySeeder.create(:comment, parent: argument)
   FactorySeeder.create(:comment, parent: argument, in_reply_to_id: comment.uuid)
@@ -164,7 +164,7 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
       :motion,
       parent: trashed_question
     )
-  FactorySeeder.create(:argument, parent: trashed_motion)
+  FactorySeeder.create(:pro_argument, parent: trashed_motion)
 
   unpublished_question =
     FactorySeeder.create(
@@ -177,7 +177,7 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
       :motion,
       parent: unpublished_question
     )
-  FactorySeeder.create(:argument, parent: unpublished_motion)
+  FactorySeeder.create(:pro_argument, parent: unpublished_motion)
 
   expired_question =
     FactorySeeder.create(
@@ -190,7 +190,7 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
       :motion,
       parent: expired_question
     )
-  FactorySeeder.create(:argument, parent: expired_motion)
+  FactorySeeder.create(:pro_argument, parent: expired_motion)
   FactorySeeder.create(:topic, parent: freetown)
 
   FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))

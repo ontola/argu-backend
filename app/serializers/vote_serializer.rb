@@ -3,7 +3,7 @@
 class VoteSerializer < EdgeSerializer
   has_one :comment, predicate: NS::ARGU[:explanation]
   has_one :creator, predicate: NS::SCHEMA[:creator] do |object|
-    object.publisher.show_feed? ? object.creator.profileable : User.anonymous
+    object.publisher.show_feed? ? object.creator&.profileable : User.anonymous
   end
 
   has_one :voteable, predicate: NS::SCHEMA[:isPartOf] do |object|

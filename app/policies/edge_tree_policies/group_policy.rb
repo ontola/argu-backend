@@ -7,16 +7,11 @@ class GroupPolicy < EdgeTreePolicy
     end
   end
 
+  permit_attributes %i[name display_name name_singular]
+  permit_nested_attributes %i[grants]
+
   def is_member?
     user&.profile&.is_group_member?(record.id)
-  end
-
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[name display_name name_singular]
-    attributes.append(grants_attributes: %i[id grant_set_id edge_id group_id _destroy])
-    attributes.append :id if staff?
-    attributes
   end
 
   def permitted_tabs

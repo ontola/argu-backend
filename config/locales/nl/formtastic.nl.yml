@@ -57,6 +57,7 @@ nl:
       is_trashed: "Is verborgen"
       invert_arguments: "Argumenten omdraaien"
       last_accepted: "Ik ga akkoord"
+      accepted_terms: "Ik ga akkoord"
       last_activity_at: "Activiteit"
       language: "Taal"
       locale: "Taal"
@@ -100,6 +101,7 @@ nl:
       page:
         shortname: "Argu URL"
         last_accepted: "Ik ga akkoord met de gebruiksvoorwaarden"
+        accepted_terms: "Ik ga akkoord met de gebruiksvoorwaarden"
       forum:
         bio: "Doel van forum"
         bio_long: "Meer informatie"

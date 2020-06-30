@@ -8,4 +8,8 @@ class ApplicationRecord < ActiveRecord::Base
   include VirtualAttributes
 
   self.abstract_class = true
+
+  def build_child(klass, opts = {})
+    ChildHelper.child_instance(self, klass, opts)
+  end
 end

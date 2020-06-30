@@ -1,25 +1,17 @@
 # frozen_string_literal: true
 
 class ProjectForm < ContainerNodeForm
-  fields [
-    :display_name,
-    {description: {datatype: NS::FHIR[:markdown]}},
-    :default_cover_photo,
-    :attachments,
-    :custom_placement,
-    :footer,
-    :hidden
-  ]
+  field :display_name
+  field :description, datatype: NS::FHIR[:markdown]
+  has_one :default_cover_photo
+  has_many :attachments
+  has_one :custom_placement
 
-  property_group :footer,
-                 iri: NS::ONTOLA[:footerGroup],
-                 order: 99,
-                 properties: [
-                   creator: actor_selector
-                 ]
+  footer do
+    actor_selector
+  end
 
-  property_group :hidden,
-                 order: 98,
-                 iri: NS::ONTOLA[:hiddenGroup],
-                 properties: %i[argu_publication]
+  hidden do
+    field :is_draft
+  end
 end

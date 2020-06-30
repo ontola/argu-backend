@@ -79,22 +79,22 @@ module Argu
                                user: user), subject)
       end
 
-      def reset_grants(user_type) # rubocop:disable Metrics/MethodLength
+      def reset_grants(user_type)
         case user_type
         when :spectator
-          [freetown, expired_freetown].each do |record|
-            record.public_grant = 'spectator'
-          end
+          self.public_grants = :spectator
         when :participator
-          [freetown, expired_freetown].each do |record|
-            record.public_grant = 'participator'
-          end
+          self.public_grants = :participator
         when :non_member, :member
-          [freetown, expired_freetown].each do |record|
-            record.public_grant = 'none'
-          end
+          self.public_grants = :none
+        else
+          self.public_grants = :initiator
         end
+      end
+
+      def public_grants=(grant_set)
         [freetown, expired_freetown].each do |record|
+          record.public_grant = grant_set
           record.send(:reset_public_grant)
         end
       end

@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class MeasurePolicy < EdgePolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[display_name description comments_allowed]
-    attributes.concat %i[parent_id] if new_record?
-    attributes
-  end
+  permit_attributes %i[display_name description comments_allowed]
+  permit_attributes %i[parent_id], new_record: true
 
   def create?
     return true if record.parent.is_a?(Page) || record.parent.nil?

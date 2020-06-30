@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class TopicPolicy < DiscussionPolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[display_name description]
-    attributes
-  end
+  permit_attributes %i[display_name description]
+  permit_attributes %i[pinned], grant_sets: %i[moderator administrator staff]
 end

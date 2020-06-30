@@ -34,15 +34,14 @@ RSpec.describe 'Actions', type: :request do
     end
 
     let(:notification) { Notification.first }
-    let(:non_existing_notification) { Notification.new(id: non_existing_id) }
     let(:authorized_user) { notification.user }
     let(:non_existing_index_path) do
       expand_uri_template(
         :action_items_iri,
-        parent_iri: split_iri_segments("#{non_existing_notification.iri.path}/actions")
+        parent_iri: split_iri_segments("/n/#{non_existing_id}/actions")
       )
     end
-    let(:non_existing_show_path) { non_existing_notification.iri }
+    let(:non_existing_show_path) { "/n/#{non_existing_id}" }
 
     it_behaves_like 'get show'
     it_behaves_like 'get index'

@@ -13,6 +13,9 @@ class CurrentActorSerializer < BaseSerializer
   attribute :url
   attribute :primary_email,
             predicate: NS::ARGU[:primaryEmail]
+  attribute :user_seq, predicate: RDF[:_0] do |object|
+    object&.user&.iri
+  end
 
   has_one :user, predicate: NS::ARGU[:user]
   has_one :actor, predicate: NS::ONTOLA[:actor] do |object|

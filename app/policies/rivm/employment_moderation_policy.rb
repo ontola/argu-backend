@@ -4,7 +4,10 @@ class EmploymentModerationPolicy < EmploymentPolicy
   class Scope < EdgeTreePolicy::Scope
     def resolve
       administrator = staff? ||
-        grant_tree.grant_sets(grant_tree.tree_root, group_ids: user.profile.group_ids).include?('administrator')
+        grant_tree
+          .grant_sets(grant_tree.tree_root, group_ids: user.profile.group_ids)
+          .map(&:title)
+          .include?('administrator')
 
       administrator ? scope.where(validated: [nil, false]) : scope.none
     end

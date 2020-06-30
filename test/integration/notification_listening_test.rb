@@ -8,7 +8,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
   let(:question) { create(:question, :with_follower, :with_news_follower, parent: freetown) }
   let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question) }
   let(:topic) { create(:topic, :with_follower, :with_news_follower, parent: freetown) }
-  let(:argument) { create(:argument, :with_follower, :with_news_follower, parent: motion) }
+  let(:argument) { create(:pro_argument, :with_follower, :with_news_follower, parent: motion) }
   let(:comment) { create(:comment, parent: argument) }
   let(:group) { create(:group, parent: argu) }
   let(:group_membership) { create(:group_membership, parent: group, member: user.profile) }

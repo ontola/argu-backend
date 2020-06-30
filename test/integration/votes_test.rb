@@ -9,12 +9,12 @@ class VotesTest < ActionDispatch::IntegrationTest
   let(:other_guest_user) { create_guest_user(id: 'other_id') }
   let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown) }
   let(:closed_question_motion) { create(:motion, parent: closed_question) }
-  let(:closed_question_argument) { create(:argument, parent: closed_question_motion) }
+  let(:closed_question_argument) { create(:pro_argument, parent: closed_question_motion) }
   let(:motion) { create(:motion, parent: freetown) }
   let(:motion2) { create(:motion, parent: freetown) }
-  let(:argument) { create(:argument, parent: motion) }
-  let(:argument2) { create(:argument, parent: motion) }
-  let(:argument3) { create(:argument, parent: motion) }
+  let(:argument) { create(:pro_argument, parent: motion) }
+  let(:argument2) { create(:pro_argument, parent: motion) }
+  let(:argument3) { create(:pro_argument, parent: motion) }
   let!(:vote) { create(:vote, parent: vote_event, creator: creator.profile, publisher: creator) }
   let(:guest_vote) do
     create(:vote, parent: vote_event, creator: guest_user.profile, publisher: guest_user)

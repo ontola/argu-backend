@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 class ForumForm < ContainerNodeForm
-  fields [
-    :display_name,
-    {bio: {datatype: NS::FHIR[:markdown]}},
-    :locale,
-    {url: url_options},
-    :default_cover_photo,
-    :custom_placement,
-    grants: grant_options
-  ]
+  field :display_name
+  field :bio, datatype: NS::FHIR[:markdown]
+  field :locale
+  field :url, url_options
+  has_one :default_cover_photo
+  has_one :custom_placement
+  has_many :grants, grant_options
 end

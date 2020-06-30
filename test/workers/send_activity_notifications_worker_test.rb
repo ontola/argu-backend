@@ -5,7 +5,7 @@ require 'test_helper'
 class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
   define_freetown
   let!(:motion) { create(:motion, parent: freetown) }
-  let!(:argument) { create(:argument, parent: motion) }
+  let!(:argument) { create(:pro_argument, parent: motion) }
 
   let!(:follow) do
     create(:follow,

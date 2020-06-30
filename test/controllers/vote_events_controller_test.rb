@@ -6,7 +6,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   define_freetown
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown) }
   let(:vote_event) { create(:vote_event, parent: motion) }
-  let(:argument) { create(:argument, :with_comments, parent: motion) }
+  let(:argument) { create(:pro_argument, :with_comments, parent: motion) }
   let!(:public_vote) { create(:vote, parent: vote_event) }
   let!(:hidden_vote) do
     create(:vote, parent: vote_event, creator: user_hidden_votes.profile, publisher: user_hidden_votes)

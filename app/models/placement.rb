@@ -20,6 +20,7 @@ class Placement < ApplicationRecord
   delegated_attribute :zoom_level, :integer, to: :place, default: 13
   alias_attribute :display_name, :title
   alias parent placeable
+  attr_writer :coordinates
 
   parentable :user, :edge
 
@@ -38,6 +39,10 @@ class Placement < ApplicationRecord
       .select('*, nlevel(edges.path) AS nlevel')
       .select { |placement| sort.index(placement.placement_type).present? }
       .min_by { |placement| [sort.index(placement.placement_type), -placement.nlevel] }
+  end
+
+  def coordinates
+    [lat, lon]
   end
 
   private

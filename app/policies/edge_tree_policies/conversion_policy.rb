@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 class ConversionPolicy < EdgeTreePolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[klass]
-    attributes
-  end
+  permit_attributes %i[klass]
 
   def create? # rubocop:disable Metrics/AbcSize
     klass = record.klass.is_a?(String) ? record.klass : record.klass.class_name

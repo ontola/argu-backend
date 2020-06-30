@@ -7,7 +7,7 @@ class FollowersCollectorTest < ActiveSupport::TestCase
   let(:creator) { create_initiator(cairo) }
   let(:motion) { create(:motion, parent: cairo, publisher: creator) }
   let(:important_motion) { create(:motion, parent: cairo, publisher: creator, mark_as_important: '1') }
-  let(:argument) { create(:argument, parent: motion, publisher: creator) }
+  let(:argument) { create(:pro_argument, parent: motion, publisher: creator) }
   let(:activity) { motion.activities.first }
   let!(:news_follow) { create(:news_follow, followable: cairo, follower: create_initiator(cairo)) }
   let!(:granted_follower) { create(:follow, followable: cairo, follower: create_initiator(cairo)) }

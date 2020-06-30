@@ -8,7 +8,8 @@ class DirectMessageActionList < ApplicationActionList
       description: lambda {
         I18n.t('actions.direct_messages.create.description', creator: resource.resource.publisher.display_name)
       },
-      include_resource: true,
+      object: nil,
+      include_object: true,
       label: -> { I18n.t('actions.direct_messages.create.label') },
       policy: :create?
     )

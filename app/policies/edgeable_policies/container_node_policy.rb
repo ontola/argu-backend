@@ -11,14 +11,8 @@ class ContainerNodePolicy < EdgePolicy
     end
   end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[display_name bio bio_long profile_id locale page]
-    attributes.append(grants_attributes: %i[id grant_set_id edge_id group_id _destroy])
-    attributes.concat %i[discoverable] if staff?
-    attributes.concat %i[owner_type] if service?
-    attributes
-  end
+  permit_attributes %i[display_name bio locale]
+  permit_nested_attributes %i[grants]
 
   def create?
     ContainerNode.descendants.detect { |klass| has_grant?(:create, klass.name) }

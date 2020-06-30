@@ -7,7 +7,7 @@ class NilClassPolicy < RestrictivePolicy
     raise Pundit::NotAuthorizedError.new('An error occurred')
   end
 
-  def permitted_attribute_names
+  def permitted_attributes
     []
   end
 

@@ -47,7 +47,7 @@ module Users
     end
 
     def after_sign_in_path_for(resource)
-      return super if resource.url.present?
+      return super if setup_finished?
 
       iri_from_template(:setup_iri)
     end

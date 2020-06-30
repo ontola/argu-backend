@@ -7,7 +7,7 @@ class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
   let(:publisher) { create(:user, :follows_reactions_never, :follows_news_never) }
   let(:question) { create(:question, parent: freetown, publisher: publisher) }
   let(:argument) do
-    create(:argument,
+    create(:pro_argument,
            publisher: publisher,
            parent: create(:motion, parent: freetown, publisher: publisher))
   end

@@ -7,9 +7,10 @@ module Users
       create_options.merge(
         collection: false,
         description: -> { I18n.t('devise.passwords.new.helper') },
-        include_resource: true,
+        include_object: true,
         label: -> { I18n.t('devise.passwords.new.header') },
         policy: nil,
+        object: nil,
         url: -> { iri_from_template(:passwords_iri) }
       )
     )
@@ -17,7 +18,7 @@ module Users
     has_action(
       :update,
       update_options.merge(
-        include_resource: true,
+        include_object: true,
         label: -> { I18n.t("devise.passwords.#{resource.user.encrypted_password.present? ? :edit : :set}.header") },
         root_relative_iri: -> { expand_uri_template(:edit_iri, update_template_opts) },
         url: -> { iri_from_template(:passwords_iri) }

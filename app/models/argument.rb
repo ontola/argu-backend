@@ -3,7 +3,6 @@
 class Argument < Edge
   VOTE_OPTIONS = [:yes].freeze unless defined?(VOTE_OPTIONS)
 
-  enhance LinkedRails::Enhancements::Creatable
   enhance ActivePublishable
   enhance Commentable
   enhance Convertible
@@ -11,7 +10,6 @@ class Argument < Edge
   enhance Feedable
   enhance Statable
 
-  include Edgeable::Content
   include VotesHelper
 
   validates :description, presence: false, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
@@ -60,6 +58,12 @@ class Argument < Edge
   end
 
   class << self
+    def inherited(klass)
+      klass.include Edgeable::Content
+
+      super
+    end
+
     def includes_for_serializer
       super.merge(votes: {})
     end

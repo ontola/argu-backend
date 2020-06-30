@@ -8,21 +8,11 @@ class UserPolicy < RestrictivePolicy
   end
   include ChildOperations
 
-  def permitted_attribute_names(password = false) # rubocop:disable Metrics/MethodLength
-    attrs = super()
-    attrs.concat %i[password password_confirmation primary_email current_password]
-    attrs.append(home_placement_attributes: home_placement_attributes)
-    attrs.append(email_addresses_attributes: %i[email _destroy id])
-    attrs.append(:url, shortname_attributes: %i[shortname]) if record.url.nil?
-    attrs.concat %i[first_name middle_name last_name hide_last_name about show_feed is_public]
-    attrs.concat(
-      %i[reactions_email news_email decisions_email memberships_email
-         created_email has_analytics has_analytics time_zone language
-         birthday]
-    )
-    attrs.concat %i[current_password password password_confirmation] if password
-    attrs
-  end
+  permit_nested_attributes %i[home_placement email_addresses]
+  permit_attributes %i[password password_confirmation primary_email current_password time_zone language]
+  permit_attributes %i[first_name middle_name last_name hide_last_name about show_feed is_public]
+  permit_attributes %i[reactions_email news_email decisions_email memberships_email created_email has_analytics]
+  permit_attributes %i[url], has_properties: {url: false}
 
   def permitted_tabs
     tabs = []
@@ -66,7 +56,7 @@ class UserPolicy < RestrictivePolicy
   alias wrong_email? update?
 
   def setup?
-    current_user? && user.url.blank?
+    current_user? && !user.setup_finished?
   end
 
   def destroy?

@@ -2,13 +2,11 @@
 
 module Users
   class ProfileForm < ApplicationForm
-    fields [
-      :first_name,
-      :last_name,
-      :hide_last_name,
-      :about,
-      {default_profile_photo: {min_count: 0}},
-      :default_cover_photo
-    ]
+    field :first_name
+    field :last_name
+    field :hide_last_name
+    field :about
+    has_one :default_profile_photo
+    has_one :default_cover_photo
   end
 end

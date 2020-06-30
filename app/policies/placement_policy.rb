@@ -12,11 +12,7 @@ class PlacementPolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[lat lon id]
-    attributes
-  end
+  permit_attributes %i[coordinates lat lon placement_type zoom_level]
 
   def show?
     return unless record.placeable_type == 'Edge'

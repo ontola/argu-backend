@@ -22,7 +22,7 @@ module Placeable
     alias removed_delta added_delta
 
     def requires_location?
-      is_a?(Edge) && owner_type == 'Motion' && parent.owner_type == 'Question' && parent.require_location
+      false
     end
 
     module ClassMethods

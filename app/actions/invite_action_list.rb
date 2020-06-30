@@ -6,8 +6,9 @@ class InviteActionList < ApplicationActionList
     create_options.merge(
       collection: false,
       description: -> { I18n.t('tokens.discussion.description') },
-      include_resource: true,
+      include_object: true,
       label: -> { I18n.t('tokens.discussion.title') },
+      object: nil,
       policy: :create?,
       url: -> { iri_from_template(:tokens_iri) }
     )

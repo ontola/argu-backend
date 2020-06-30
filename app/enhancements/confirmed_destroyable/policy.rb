@@ -4,10 +4,8 @@ module ConfirmedDestroyable
   module Policy
     extend ActiveSupport::Concern
 
-    def permitted_attribute_names
-      attributes = super
-      attributes.append(:confirmation_string)
-      attributes
+    included do
+      permit_attributes %i[confirmation_string]
     end
   end
 end

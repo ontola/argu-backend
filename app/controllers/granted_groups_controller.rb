@@ -10,6 +10,10 @@ class GrantedGroupsController < AuthorizedController
   end
 
   def index_collection
-    user_context.grant_tree.granted_groups(parent_resource!.persisted_edge)
+    @index_collection ||=
+      LinkedRails::Sequence.new(
+        user_context.grant_tree.granted_groups(parent_resource!.persisted_edge),
+        id: index_iri
+      )
   end
 end

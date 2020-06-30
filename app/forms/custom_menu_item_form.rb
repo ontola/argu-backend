@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class CustomMenuItemForm < ApplicationForm
-  fields %i[
-    raw_label
-    label_translation
-    raw_image
-    raw_href
-    order
-  ]
+  field :raw_label
+  field :label_translation
+  field :raw_image
+  field :raw_href
+  field :order
 end

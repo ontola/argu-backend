@@ -7,12 +7,8 @@ class EmploymentPolicy < EdgePolicy
     end
   end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[organization_name job_title industry show_organization_name]
-    attributes.concat %i[validated] if administrator? || staff?
-    attributes
-  end
+  permit_attributes %i[organization_name job_title industry show_organization_name]
+  permit_attributes %i[validated], grant_sets: %i[administrator staff]
 
   def create?
     true

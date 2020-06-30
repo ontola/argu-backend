@@ -2,9 +2,7 @@
 
 module Users
   class UnlockPolicy < RestrictivePolicy
-    def permitted_attribute_names
-      %i[email]
-    end
+    permit_attributes %i[email]
 
     def create?
       true

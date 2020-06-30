@@ -2,12 +2,6 @@
 
 module Users
   class LanguageForm < ApplicationForm
-    fields(
-      [
-        language: {
-          label: ''
-        }
-      ]
-    )
+    field :language, label: ''
   end
 end

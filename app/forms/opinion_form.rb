@@ -1,29 +1,13 @@
 # frozen_string_literal: true
 
 class OpinionForm < ApplicationForm
-  fields [
-    {description: {description: -> { I18n.t('opinions.form.placeholder') }}},
-    :hidden,
-    :footer
-  ]
+  field :description, description: -> { I18n.t('opinions.form.placeholder') }, datatype: NS::FHIR[:markdown]
 
-  property_group(
-    :footer,
-    iri: NS::ONTOLA[:footerGroup],
-    order: 99,
-    properties: [
-      creator: actor_step
-    ]
-  )
+  footer do
+    actor_step
+  end
 
-  property_group(
-    :hidden,
-    iri: NS::ONTOLA[:hiddenGroup],
-    order: 98,
-    properties: [
-      is_opinion: {
-        default_value: true
-      }
-    ]
-  )
+  hidden do
+    field :is_opinion
+  end
 end

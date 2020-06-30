@@ -8,7 +8,7 @@ nl:
       draft: 'Bewaar concept'
       schedule: 'Inplannen'
     follow_type:
-      helper: 'Stuur een melding naar %{news_audience} in plaats van %{reactions_audience} gebruiker(s)'
+      helper: 'Stuur een melding naar alle volgers'
     publish_in_one_minute: "Wordt binnen een minuut gepubliceerd."
     is_scheduled: "Publicatie staat gepland op %{date}."
     is_draft: "Concept versie, nog niet gepubliceerd."

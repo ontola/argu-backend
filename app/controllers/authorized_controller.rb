@@ -78,10 +78,6 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     %w[new edit delete bin unbin shift settings].include?(action_name)
   end
 
-  def has_shortname?
-    current_user.url.present?
-  end
-
   def language_from_edge_tree
     return if current_forum.blank?
 
@@ -137,7 +133,11 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   end
 
   def requires_setup?
-    !(current_user.guest? || !tree_root.requires_intro? || has_shortname?)
+    !(current_user.guest? || !tree_root.requires_intro? || setup_finished?)
+  end
+
+  def setup_finished?
+    current_user.setup_finished?
   end
 
   def verify_setup

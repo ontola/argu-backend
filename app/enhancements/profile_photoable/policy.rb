@@ -4,12 +4,8 @@ module ProfilePhotoable
   module Policy
     extend ActiveSupport::Concern
 
-    def permitted_attribute_names
-      attributes = super
-      attributes.append(
-        default_profile_photo_attributes: Pundit.policy(context, MediaObject.new(about: record)).permitted_attributes
-      )
-      attributes
+    included do
+      permit_nested_attributes %i[default_profile_photo], new_record: false
     end
   end
 end

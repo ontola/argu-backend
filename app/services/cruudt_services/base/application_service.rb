@@ -47,20 +47,23 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     # Stub
   end
 
-  def argu_publication_attributes # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+  def argu_publication_attributes
     pub_attrs = @attributes[:argu_publication_attributes] || {}
     pub_attrs[:id] = resource.argu_publication.id if resource.argu_publication.present?
-    unless resource.is_published?
-      if resource.argu_publication.blank?
-        pub_attrs[:published_at] ||= pub_attrs[:draft].to_s == 'true' ? nil : Time.current
-      end
-      if resource.new_record?
-        pub_attrs[:publisher] ||= @options[:publisher]
-        pub_attrs[:creator] ||= @options[:creator]
-      end
-    end
+    argu_publication_attributes_for_unpublished(pub_attrs) unless resource.is_published?
     pub_attrs[:follow_type] = argu_publication_follow_type
     pub_attrs
+  end
+
+  def argu_publication_attributes_for_unpublished(pub_attrs) # rubocop:disable Metrics/AbcSize
+    if resource.argu_publication.blank?
+      draft_param = @attributes[:is_draft] || pub_attrs[:draft]
+      pub_attrs[:published_at] ||= draft_param.to_s == 'true' ? nil : Time.current
+    end
+    return unless resource.new_record?
+
+    pub_attrs[:publisher] ||= @options[:publisher]
+    pub_attrs[:creator] ||= @options[:creator]
   end
 
   def argu_publication_follow_type

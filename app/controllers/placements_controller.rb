@@ -21,9 +21,12 @@ class PlacementsController < ParentableController
   end
 
   def index_meta
+    iri = collection_iri(parent_resource, :placements)
+    return [[iri, RDF[:first], RDF[:nil]]] if @index_collection.blank?
+
     RDF::List.new(
       graph: RDF::Graph.new,
-      subject: collection_iri(parent_resource, :placements),
+      subject: iri,
       values: @index_collection.map(&:iri)
     ).triples
   end

@@ -6,6 +6,7 @@ class ConversionActionList < ApplicationActionList
     create_options.merge(
       collection: false,
       label: -> { I18n.t('actions.conversions.convert.label') },
+      object: nil,
       policy: :create?
     )
   )

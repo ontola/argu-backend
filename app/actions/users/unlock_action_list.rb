@@ -7,8 +7,9 @@ module Users
       create_options.merge(
         collection: false,
         description: -> { I18n.t('devise.unlocks.new.helper') },
-        include_resource: true,
+        include_object: true,
         label: -> { I18n.t('devise.unlocks.new.header') },
+        object: nil,
         policy: nil,
         url: -> { iri_from_template(:user_unlock) }
       )

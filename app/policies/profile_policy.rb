@@ -9,16 +9,7 @@ class ProfilePolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[id]
-    if record.profileable.is_a?(Page)
-      attributes.concat %i[name]
-    else
-      attributes.concat %i[first_name last_name hide_last_name]
-    end
-    attributes
-  end
+  permit_attributes %i[name first_name last_name hide_last_name]
 
   def show?
     Pundit.policy(context, record.profileable).show?

@@ -7,11 +7,7 @@ class BannerPolicy < EdgePolicy
     end
   end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat(%i[display_name description audience published_at expires_at dismiss_button])
-    attributes
-  end
+  permit_attributes %i[display_name description audience published_at expires_at dismiss_button]
 
   def show?
     return if has_unpublished_ancestors? && !show_unpublished?

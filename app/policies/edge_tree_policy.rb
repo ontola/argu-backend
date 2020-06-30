@@ -11,6 +11,7 @@ class EdgeTreePolicy < RestrictivePolicy
     def staff?
       grant_tree
         .grant_sets(grant_tree.tree_root, group_ids: user.profile.group_ids)
+        .map(&:title)
         .include?('staff')
     end
 
@@ -77,7 +78,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
   end
   include ChildOperations
-  delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?,
+  delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?, :has_grant_set?,
            :persisted_edge, :spectator?, :participator?, :moderator?, :administrator?, :staff?, to: :edgeable_policy
 
   def grant_tree

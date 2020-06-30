@@ -6,6 +6,12 @@ class InvitesController < ParentableController
   private
 
   def resource_new_params
-    {edge: parent_resource!}
+    {
+      edge: parent_resource!,
+      message: I18n.t('tokens.discussion.default_message', resource: parent_resource!.display_name),
+      redirect_url: parent_resource!.iri.to_s,
+      root_id: parent_resource!.root_id,
+      send_mail: true
+    }
   end
 end

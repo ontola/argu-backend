@@ -3,31 +3,20 @@
 class BlogPostForm < ApplicationForm
   visibility_text
 
-  fields [
-    :display_name,
-    {description: {datatype: NS::FHIR[:markdown]}},
-    :default_cover_photo,
-    :attachments,
-    :advanced,
-    :hidden,
-    :footer
-  ]
+  field :display_name
+  field :description, datatype: NS::FHIR[:markdown]
+  has_one :default_cover_photo
+  has_many :attachments
 
-  property_group :advanced,
-                 label: -> { I18n.t('forms.advanced') },
-                 properties: [
-                   {mark_as_important: {description: -> { mark_as_important_label(target) }}}
-                 ]
+  group :advanced, label: -> { I18n.t('forms.advanced') } do
+    field :mark_as_important, description: -> { mark_as_important_label }
+  end
 
-  property_group :footer,
-                 iri: NS::ONTOLA[:footerGroup],
-                 order: 99,
-                 properties: [
-                   creator: actor_selector
-                 ]
+  footer do
+    actor_selector
+  end
 
-  property_group :hidden,
-                 iri: NS::ONTOLA[:hiddenGroup],
-                 order: 98,
-                 properties: %i[argu_publication]
+  hidden do
+    field :is_draft
+  end
 end

@@ -55,7 +55,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def resource_sequence
     @resource_sequence ||=
       LinkedRails::Sequence.new(
-        resource_iri
+        (resource_iri || [])
           .map { |iri, predicate| predicate.present? ? property_shape(iri, predicate).iri : RDF::URI(iri) }
       )
   end

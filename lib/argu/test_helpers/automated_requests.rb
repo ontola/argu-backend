@@ -139,7 +139,7 @@ module Argu
           let(:authorized_user_destroy) { staff }
           let(:authorized_user_trash) { authorized_user_update }
           let(:unauthorized_user) { create(:user) }
-          let(:guest_user) { create_guest_user }
+          let(:guest_user) { create_guest_user(id: 'guest_session_id') }
 
           let(:subject_parent) { subject.parent }
           # Symbols
@@ -209,6 +209,11 @@ module Argu
           let(:update_failed_path) { updated_resource_path }
           let(:destroy_failed_path) { update_failed_path }
           let(:move_failed_path) { update_failed_path }
+
+          # Hooks
+          let(:before_unauthorized_index) { freetown.grants.destroy_all }
+          let(:before_unauthorized_show) { before_unauthorized_index }
+          let(:before_unauthorized_create) { nil }
         end
 
         def default_formats

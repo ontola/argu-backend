@@ -18,7 +18,7 @@ class PagesTest < ActionDispatch::IntegrationTest
            publisher: other_page.publisher)
   end
   let(:argument) do
-    create(:argument,
+    create(:pro_argument,
            parent: motion,
            creator: other_page.profile,
            publisher: other_page.publisher)
@@ -63,7 +63,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              page: {
                name: 'Utrecht Two',
                url: 'UtrechtNumberTwo',
-               last_accepted: '1'
+               accepted_terms: 'true'
              }
            }
     end
@@ -112,7 +112,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              page: {
                name: 'Utrecht Two',
                url: 'UtrechtNumberTwo',
-               last_accepted: '1'
+               accepted_terms: 'true'
              }
            }
     end
@@ -132,7 +132,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              page: {
                name: 'Utrecht Two',
                url: 'UtrechtNumberTwo',
-               last_accepted: '1'
+               accepted_terms: 'true'
              }
            }
     end
@@ -149,7 +149,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              page: {
                name: 'a',
                url: 'shortnmae',
-               last_accepted: '1'
+               accepted_terms: 'true'
              }
            }
     end
@@ -309,7 +309,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              page: {
                name: 'Utrecht Two',
                url: 'UtrechtNumberTwo',
-               last_accepted: '1'
+               accepted_terms: 'true'
              }
            }
     end
@@ -322,7 +322,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     assert_difference('Page.count' => -1,
                       'Tenant.count' => -1,
-                      'Argument.anonymous.count' => 1,
+                      'ProArgument.anonymous.count' => 1,
                       'Comment.anonymous.count' => 1,
                       'Motion.anonymous.count' => 1) do
       delete other_page,
@@ -385,18 +385,12 @@ class PagesTest < ActionDispatch::IntegrationTest
          params: {
            page: {
              name: 'Utrecht Two',
-             default_profile_photo_attributes: {
-               content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
-             },
              url: 'UtrechtNumberTwo',
-             last_accepted: '1'
+             accepted_terms: 'true'
            }
          }
 
-    page = Page.last
     assert_response :success
-    assert_equal 'profile_photo.png', page.default_profile_photo.content_identifier
-    assert_equal 1, page.media_objects.count
   end
 
   test 'staff should not post create a page with existing url' do
@@ -408,7 +402,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              page: {
                name: 'Name',
                url: staff.url,
-               last_accepted: '1'
+               accepted_terms: 'true'
              }
            }, headers: argu_headers(accept: :n3)
     end
@@ -423,7 +417,7 @@ class PagesTest < ActionDispatch::IntegrationTest
            params: {
              page: {
                name: 'Name',
-               last_accepted: '1'
+               accepted_terms: 'true'
              }
            }, headers: argu_headers(accept: :n3)
     end

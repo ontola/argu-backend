@@ -92,7 +92,7 @@ class UserSerializer < RecordSerializer
        options: Hash[
          ActiveSupport::TimeZone.all.uniq(&:tzinfo).map do |value|
            id = value.tzinfo.name.gsub(%r{Etc\/([A-Z]+)}, 'UTC')
-           [id, {close_match: NS::DBPEDIA[id], label: value.to_s}]
+           [value.tzinfo.name, {close_match: NS::DBPEDIA[id], label: value.to_s}]
          end
        ]
 end

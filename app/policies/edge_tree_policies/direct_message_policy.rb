@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class DirectMessagePolicy < EdgeTreePolicy
-  def permitted_attribute_names
-    %i[body email_address_id resource_iri subject actor]
-  end
+  permit_attributes %i[body email_address_id resource_iri subject actor]
+  # permit_attributes %i[actor], creator: true, new_record: true
 
   def create?
     edgeable_policy.contact?

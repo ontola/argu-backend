@@ -7,7 +7,7 @@ class GrantTreeTest < ActiveSupport::TestCase
   let(:question) { create(:question, parent: freetown) }
   let(:other_question) { create(:question, parent: freetown) }
   let(:motion) { create(:motion, parent: question) }
-  let(:argument) { create(:argument, parent: motion) }
+  let(:argument) { create(:pro_argument, parent: motion) }
   let(:comment) { create(:comment, parent: argument) }
   let(:nested_comment) { create(:comment, parent: argument, in_reply_to_id: subject.uuid) }
   let(:user) { create(:user) }

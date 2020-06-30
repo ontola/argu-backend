@@ -33,6 +33,10 @@ class Motion < Discussion
     ))
   end
 
+  def requires_location?
+    parent.owner_type == 'Question' && parent.require_location
+  end
+
   class << self
     def edge_includes_for_index(full = false)
       includes = super().deep_merge(default_vote_event: {}, last_published_decision: :properties)

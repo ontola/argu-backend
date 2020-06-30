@@ -11,8 +11,8 @@ module PublicGrantable
       record.default_public_grant && record.default_public_grant != :none
     end
 
-    def permitted_attribute_names
-      super + %i[public_grant]
+    included do
+      permit_attributes %i[public_grant]
     end
   end
 end

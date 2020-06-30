@@ -85,9 +85,9 @@ class NotificationsControllerTest < ActionController::TestCase
     user.follows.destroy_all
     parent = freetown
     create(:follow, followable: parent, follower: user)
-    %i[question motion argument comment].each do |type|
+    %i[question motion pro_argument comment].each do |type|
       trackable = create(type, parent: parent)
-      if %i[question motion argument].include?(type)
+      if %i[question motion pro_argument].include?(type)
         parent = trackable
         create(:follow, followable: parent, follower: user)
       end

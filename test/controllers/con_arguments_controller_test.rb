@@ -6,7 +6,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
   define_freetown
   define_holland
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown) }
-  let(:argument) { create(:argument, :with_comments, parent: motion) }
+  let(:argument) { create(:pro_argument, :with_comments, parent: motion) }
 
   ####################################
   # Index for Motion

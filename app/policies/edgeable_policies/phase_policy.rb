@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class PhasePolicy < EdgePolicy
-  def permitted_attribute_names
-    super + %i[display_name description time order]
-  end
+  permit_attributes %i[display_name description time order]
 
   delegate :show?, to: :parent_policy
   delegate :update?, to: :parent_policy

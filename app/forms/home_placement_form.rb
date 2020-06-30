@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class HomePlacementForm < ApplicationForm
-  fields %i[
-    postal_code
-    country_code
-  ]
+  field :postal_code
+  field :country_code
 end

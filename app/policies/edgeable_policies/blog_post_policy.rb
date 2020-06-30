@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 class BlogPostPolicy < EdgePolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[display_name description trashed_at]
-    attributes
-  end
+  permit_attributes %i[display_name description trashed_at]
 
   def feed?
     false

@@ -7,18 +7,10 @@ class QuestionAnswerPolicy < EdgeTreePolicy
     end
   end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[id motion_id question_id]
-    attributes
-  end
+  permit_attributes %i[motion_id question_id]
 
   def create?
     edgeable_policy.update?
-  end
-
-  def shortname?
-    false
   end
 
   private

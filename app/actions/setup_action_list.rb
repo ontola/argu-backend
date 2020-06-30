@@ -5,7 +5,7 @@ class SetupActionList < ApplicationActionList
     :update,
     update_options.merge(
       collection: false,
-      include_resource: true,
+      include_object: true,
       label: -> { I18n.t('actions.setups.update.label') },
       root_relative_iri: lambda {
         uri = resource.root_relative_iri.dup

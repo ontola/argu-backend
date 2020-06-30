@@ -7,6 +7,7 @@ current_keys = Argu::Redis.lrange(endpoints_key, 0, -1, redis_opts: {db: fronten
 required_keys = %w[
   /(.*/)?d/(.*)
   /(.*/)?portal/(.*)
+  /(.*/)?__better_errors/(.*)
 ]
 
 (required_keys - current_keys).each do |key|

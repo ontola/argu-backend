@@ -4,11 +4,8 @@ module Trashable
   module Policy
     extend ActiveSupport::Concern
 
-    def permitted_attribute_names
-      attributes = super
-      attributes.append(trash_activity_attributes: %i[notify comment])
-      attributes.append(untrash_activity_attributes: %i[notify comment])
-      attributes
+    included do
+      permit_nested_attributes %i[trash_activity untrash_activity]
     end
   end
 end

@@ -11,6 +11,13 @@ class UserActionList < ApplicationActionList
   )
 
   has_action(
+    :destroy,
+    confirmed_destroy_options.merge(
+      description: -> { I18n.t('actions.users.destroy.description', name: resource.url || resource.generated_name) }
+    )
+  )
+
+  has_action(
     :profile,
     update_options.merge(
       label: -> { I18n.t('profiles.edit.title') },

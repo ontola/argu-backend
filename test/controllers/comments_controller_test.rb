@@ -5,7 +5,7 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   define_freetown
   let(:motion) { create(:motion, parent: freetown) }
-  let(:argument) { create(:argument, :with_comments, parent: motion) }
+  let(:argument) { create(:pro_argument, :with_comments, parent: motion) }
   let(:blog_post) do
     create(:blog_post, :with_comments, parent: motion)
   end

@@ -54,9 +54,5 @@ class ActivityPolicy < EdgeTreePolicy
 
   delegate :show?, to: :edgeable_policy
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat(%i[comment notify])
-    attributes
-  end
+  permit_attributes %i[comment notify]
 end

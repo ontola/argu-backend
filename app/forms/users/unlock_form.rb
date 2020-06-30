@@ -2,6 +2,6 @@
 
 module Users
   class UnlockForm < ApplicationForm
-    fields %i[email]
+    field :email
   end
 end

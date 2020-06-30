@@ -19,7 +19,7 @@ module Argu
           service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           reset_publication(service.resource.publications.last)
-          service = CreateArgument.new(
+          service = CreateProArgument.new(
             service.resource,
             attributes: attributes_for(:argument),
             options: service_options
@@ -68,7 +68,7 @@ module Argu
       def with_arguments # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         [true, false].each do |pro|
           3.times do
-            service = CreateArgument
+            service = CreateProArgument
                         .new(@resource,
                              attributes: attributes_for(:argument).merge(pro: pro),
                              options: service_options)

@@ -21,7 +21,7 @@ module Users
     end
 
     def redirect_to_root?
-      current_user.guest? || has_shortname?
+      current_user.guest? || setup_finished?
     end
 
     def resource_by_id

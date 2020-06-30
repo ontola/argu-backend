@@ -7,7 +7,7 @@ class CreateCommentTest < ActiveSupport::TestCase
   let(:user) { create_initiator(freetown) }
   let(:motion) { create(:motion, parent: freetown) }
   let(:commentable) do
-    create(:argument,
+    create(:pro_argument,
            parent: motion)
   end
   let(:comment_attributes) do

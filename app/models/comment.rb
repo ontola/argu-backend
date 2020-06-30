@@ -51,6 +51,8 @@ class Comment < Edge
     ]
   end
 
+  def is_opinion; end
+
   def shallow_wipe
     if is_trashed?
       self.body = '[DELETED]'

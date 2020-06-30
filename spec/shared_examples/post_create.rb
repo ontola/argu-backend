@@ -17,6 +17,7 @@ RSpec.shared_examples_for 'post create' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:create_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
+          before_unauthorized_create
           sign_in(unauthorized_user)
           assert_difference(no_differences) do
             post create_path, params: create_params, headers: request_headers(format)

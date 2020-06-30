@@ -13,7 +13,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   let(:other_guest_user) { create_guest_user(id: 'other_id') }
   let(:place) { create(:place) }
   let(:motion) { create(:motion, parent: freetown) }
-  let(:argument) { create(:argument, parent: motion) }
+  let(:argument) { create(:pro_argument, parent: motion) }
   let(:motion2) { create(:motion, parent: freetown) }
   let(:motion3) { create(:motion, parent: freetown) }
   let(:guest_vote) do
@@ -301,7 +301,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_difference('User.count' => -1) do
-      delete user_registration_path,
+      delete resource_iri(user, root: argu),
              params: {
                user: {
                  confirmation_string: 'remove'
@@ -317,7 +317,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_difference('User.count' => 0) do
-      delete user_registration_path,
+      delete resource_iri(user, root: argu),
              params: {
                user: {}
              }
@@ -330,7 +330,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     create(:group_membership, parent: group, member: user.profile)
 
     assert_difference('User.count' => -1, 'GroupMembership.active.count' => -2, 'GroupMembership.count' => 0) do
-      delete user_registration_path,
+      delete resource_iri(user, root: argu),
              params: {
                user: {
                  confirmation_string: 'remove'
@@ -347,7 +347,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     sign_in user_no_shortname
 
     assert_difference('User.count' => -1) do
-      delete user_registration_path,
+      delete resource_iri(user_no_shortname, root: argu),
              params: {
                user: {
                  confirmation_string: 'remove'
@@ -379,7 +379,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_difference('User.count' => -1, 'Placement.count' => -1, 'Place.count' => 0,
                       'MediaObject.count' => -1, 'MediaObject.where(publisher_id: 0, creator_id: 0).count' => 1) do
-      delete user_registration_path,
+      delete resource_iri(user, root: argu),
              params: {
                user: {
                  confirmation_string: 'remove'
@@ -394,13 +394,13 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     motion = create :motion, publisher: user, creator: user.profile, parent: freetown
     create :vote, publisher: user, creator: user.profile, parent: motion.default_vote_event
     create :question, publisher: user, creator: user.profile, parent: freetown
-    create :argument, parent: Motion.last, publisher: user, creator: user.profile
+    create :pro_argument, parent: Motion.last, publisher: user, creator: user.profile
     create :motion, publisher: user, creator: user.profile, parent: cairo
 
     sign_in user
 
     assert_difference('User.count' => -1, 'Edge.count' => -user.votes.count) do
-      delete user_registration_path,
+      delete resource_iri(user, root: argu),
              params: {
                user: {
                  confirmation_string: 'remove'
@@ -414,12 +414,12 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test 'user should delete destroy with content published by page' do
     create :motion, publisher: user, creator: argu.profile, parent: freetown
     create :question, publisher: user, creator: argu.profile, parent: freetown
-    create :argument, publisher: user, creator: argu.profile, parent: Motion.last
+    create :pro_argument, publisher: user, creator: argu.profile, parent: Motion.last
 
     sign_in user
 
     assert_difference('User.count' => -1) do
-      delete user_registration_path,
+      delete resource_iri(user, root: argu),
              params: {
                user: {
                  confirmation_string: 'remove'
@@ -428,6 +428,22 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+  end
+
+  test 'user should not delete destroy other user' do
+    sign_in user
+    user_no_shortname
+
+    assert_difference('User.count' => 0) do
+      delete resource_iri(user_no_shortname, root: argu),
+             params: {
+               user: {
+                 confirmation_string: 'remove'
+               }
+             }
+    end
+
+    assert_not_authorized
   end
 
   ####################################
@@ -439,7 +455,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_difference('User.count' => 0) do
-      delete user_registration_path,
+      delete resource_iri(administrator, root: argu),
              params: {
                user: {
                  confirmation_string: 'remove'
@@ -447,6 +463,42 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
     end
     assert_not_authorized
+  end
+
+  test 'administrator should not delete destroy other user' do
+    sign_in administrator
+    user_no_shortname
+
+    assert_difference('User.count' => 0) do
+      delete resource_iri(user_no_shortname, root: argu),
+             params: {
+               user: {
+                 confirmation_string: 'remove'
+               }
+             }
+    end
+
+    assert_not_authorized
+  end
+
+  ####################################
+  # As Staff
+  ####################################
+  let(:staff) { create :user, :staff }
+
+  test 'staff should delete destroy other user' do
+    sign_in staff
+    user
+
+    assert_difference('User.count' => -1) do
+      delete resource_iri(user, root: argu),
+             params: {
+               user: {
+                 confirmation_string: 'remove'
+               }
+             }
+    end
+    assert_response :success
   end
 
   private

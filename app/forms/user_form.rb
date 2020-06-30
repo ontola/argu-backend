@@ -1,55 +1,28 @@
 # frozen_string_literal: true
 
 class UserForm < ApplicationForm
-  fields %i[
-    time_zone
-    notifications_section
-    authentication_section
-    email_address_section
-    privacy_section
-  ]
+  field :time_zone
 
-  property_group(
-    :notifications_section,
-    label: -> { I18n.t('actions.users.notifications.label') },
-    properties: %i[
-      reactions_email
-      news_email
-    ]
-  )
+  group :notifications_section, label: -> { I18n.t('actions.users.notifications.label') } do
+    field :reactions_email
+    field :news_email
+  end
 
-  property_group(
-    :authentication_section,
-    label: -> { I18n.t('actions.users.authentication.label') },
-    properties: %i[
-      url
-      password
-      current_password
-    ]
-  )
+  group :authentication_section, label: -> { I18n.t('actions.users.authentication.label') } do
+    field :url
+    field :password
+    field :current_password
+  end
 
-  property_group(
-    :email_address_section,
-    label: -> { I18n.t('email_addresses.plural') },
-    properties: [
-      email_addresses_table: {
-        type: :resource,
-        url: -> { collection_iri(user_context.user, :email_addresses, display: :settingsTable) }
-      }
-    ]
-  )
+  group :email_address_section, label: -> { I18n.t('email_addresses.plural') } do
+    resource :email_addresses_table,
+             url: -> { collection_iri(nil, :email_addresses, display: :settingsTable) }
+  end
 
-  property_group(
-    :privacy_section,
-    label: -> { I18n.t('actions.users.privacy.label') },
-    properties: [
-      :has_analytics,
-      :is_public,
-      :show_feed,
-      delete_button: {
-        type: :resource,
-        url: -> { delete_iri(user_context.user) }
-      }
-    ]
-  )
+  group :privacy_section, label: -> { I18n.t('actions.users.privacy.label') } do
+    field :has_analytics
+    field :is_public
+    field :show_feed
+    resource :delete_button, url: -> { delete_iri('users') }
+  end
 end

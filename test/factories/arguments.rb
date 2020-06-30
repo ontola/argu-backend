@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :argument do
+  factory :argument, class: ProArgument do
     pro { true }
     sequence(:title) { |i| "fg argument title #{i}end" }
     sequence(:content) { |i| "fg argument content #{i}end" }
@@ -10,7 +10,7 @@ FactoryBot.define do
       owner_type { 'ProArgument' }
     end
 
-    factory :con_argument do
+    factory :con_argument, class: ConArgument do
       owner_type { 'ConArgument' }
       pro { false }
     end

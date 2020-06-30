@@ -5,7 +5,7 @@ FactoryBot.define do
     transient do
       tenant { passed_in?(:forum) ? forum : build(:forum) }
     end
-    trackable { passed_in?(:trackable) ? trackable : create(:argument, parent: tenant) }
+    trackable { passed_in?(:trackable) ? trackable : create(:pro_argument, parent: tenant) }
 
     association :owner, factory: :profile
     recipient { passed_in?(:recipient) ? recipient : tenant }
@@ -22,14 +22,14 @@ FactoryBot.define do
 
     trait :t_argument do
       trackable do
-        passed_in?(:trackable) ? trackable : create(:argument, parent: tenant, creator: owner)
+        passed_in?(:trackable) ? trackable : create(:pro_argument, parent: tenant, creator: owner)
       end
       recipient { passed_in?(:recipient) ? recipient : trackable.motion }
     end
 
     trait :t_comment do
       trackable { create(:comment, creator: owner) }
-      recipient { passed_in?(:recipient) ? recipient : create(:argument, parent: tenant) }
+      recipient { passed_in?(:recipient) ? recipient : create(:pro_argument, parent: tenant) }
     end
 
     trait :t_vote do

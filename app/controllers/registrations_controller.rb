@@ -2,14 +2,12 @@
 
 class RegistrationsController < Devise::RegistrationsController
   include Argu::Controller::Authorization
-  include LinkedRails::Enhancements::Destroyable::Controller
   include RedisResourcesHelper
   include OauthHelper
+  active_response :delete
   respond_to :json
 
   alias new_resource build_resource
-
-  skip_before_action :authenticate_scope!, only: :destroy
 
   protected
 
@@ -19,6 +17,12 @@ class RegistrationsController < Devise::RegistrationsController
     else
       setup_users_path
     end
+  end
+
+  def authorize_action
+    return authorize(current_user, :show?) if action_name == 'delete'
+
+    super
   end
 
   def sign_in(scope, resource)
@@ -39,12 +43,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   private
 
-  def active_response_success_message
-    return super unless action_name == 'destroy'
-
-    I18n.t('type_destroy_success', type: 'Account')
-  end
-
   def build_resource(*args)
     super
     resource.shortname = nil if resource.shortname&.shortname.blank?
@@ -56,28 +54,14 @@ class RegistrationsController < Devise::RegistrationsController
     @user || current_user
   end
 
-  def delete_execute
-    if current_user.guest?
-      redirect_to root_path
-      false
-    else
-      @user = current_user
-    end
-  end
-
-  def destroy_execute # rubocop:disable Metrics/AbcSize
-    @user = User.find current_user.id
-    unless params[:user].try(:[], :confirmation_string) == I18n.t('users_cancel_string')
-      @user.errors.add(:confirmation_string, I18n.t('errors.messages.should_match'))
-    end
-    return false if @user.errors.present? || ActsAsTenant.without_tenant { !@user.destroy }
-
-    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-    true
-  end
-
-  def destroy_success_location
-    root_path
+  def delete_success
+    respond_with_resource(
+      include: action_form_includes,
+      resource: current_user.action(:destroy, user_context),
+      meta: [
+        RDF::Statement.new(delete_iri('users'), NS::OWL.sameAs, delete_iri(current_user))
+      ]
+    )
   end
 
   def send_confirmation_mail(user, guest_votes) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

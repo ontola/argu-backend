@@ -4,10 +4,8 @@ module Moveable
   module Policy
     extend ActiveSupport::Concern
 
-    def permitted_attribute_names
-      attributes = super
-      attributes.append(:move_to_edge_id)
-      attributes
+    included do
+      permit_attributes %i[move_to_edge_id]
     end
 
     def move?

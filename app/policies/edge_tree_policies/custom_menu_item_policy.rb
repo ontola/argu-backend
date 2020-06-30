@@ -16,11 +16,8 @@ class CustomMenuItemPolicy < EdgeTreePolicy
     end
   end
 
-  def permitted_attribute_names
-    attrs = %i[raw_label label_translation raw_image order]
-    attrs.append(:raw_href) if record.edge_id.blank?
-    attrs
-  end
+  permit_attributes %i[raw_label label_translation raw_image order]
+  permit_attributes %i[raw_href], has_properties: {edge_id: false}
 
   def update?
     staff?

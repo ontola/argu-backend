@@ -1,16 +1,10 @@
 # frozen_string_literal: true
 
 class MediaObjectForm < ApplicationForm
-  fields %i[
-    content
-    remote_content_url
-    hidden
-  ]
+  field :content
+  field :remote_content_url
 
-  property_group(
-    :hidden,
-    iri: NS::ONTOLA[:hiddenGroup],
-    order: 98,
-    properties: [content_type: {sh_in: -> { target.allowed_content_types }}]
-  )
+  hidden do
+    field :content_type, sh_in: -> { MediaObject.content_type_white_list }
+  end
 end

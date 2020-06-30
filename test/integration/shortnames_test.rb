@@ -7,7 +7,7 @@ require 'test_helper'
 class ShortnamesTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:motion) { create(:motion, parent: freetown) }
-  let(:argument) { create(:argument, parent: motion) }
+  let(:argument) { create(:pro_argument, parent: motion) }
   let(:comment) { create(:comment, parent: argument) }
   let(:publication) { build(:publication) }
   let(:comment_shortname) { create(:shortname, owner: comment, root: argu, primary: false) }
@@ -30,7 +30,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     sign_in :guest_user
 
     parent = freetown
-    %i[question motion argument].each do |klass|
+    %i[question motion pro_argument].each do |klass|
       resource = create(klass, parent: parent)
       parent = resource
 

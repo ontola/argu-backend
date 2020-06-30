@@ -54,7 +54,6 @@ class PagesController < EdgeableController
 
     @_permit_params = super
     merge_photo_params(@_permit_params)
-    @_permit_params[:last_accepted] = Time.current if %w[true 1].include?(@_permit_params[:last_accepted].to_s)
     @_permit_params
   end
 

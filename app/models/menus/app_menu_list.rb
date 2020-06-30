@@ -59,14 +59,14 @@ class AppMenuList < ApplicationMenuList
   def sign_out_menu_item
     menu_item(
       :signout,
-      action: NS::ONTOLA['actions/logout'],
+      action: NS::LIBRO['actions/logout'],
       label: I18n.t('sign_out'),
       href: RDF::DynamicURI(destroy_user_session_url)
     )
   end
 
   def user_base_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    if resource.url.present?
+    if resource.setup_finished?
       [
         menu_item(
           :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: resource.menu(:profile).iri

@@ -8,13 +8,19 @@ class EdgeSerializer < RecordSerializer
       object.parent
     end
   end
-  has_one :organization, predicate: NS::ONTOLA[:organization], &:root
   has_one :creator,
           predicate: NS::SCHEMA[:creator] do |object|
-    object.creator.profileable
+    object.creator&.profileable
   end
   attribute :granted_groups, predicate: NS::ARGU[:grantedGroups], unless: method(:system_scope?) do |object|
-    RDF::URI("#{object.iri}/granted")
+    base_iri = object.persisted? ? object.iri : object.try(:persisted_edge)&.iri
+
+    RDF::URI("#{base_iri}/granted") if base_iri
+  end
+  attribute :granted_sets, predicate: NS::ARGU[:grantedSets], unless: method(:system_scope?) do |object|
+    base_iri = object.persisted? ? object.iri : object.try(:persisted_edge)&.iri
+
+    RDF::URI("#{base_iri}/grant_sets") if base_iri
   end
   attribute :is_trashed,
             predicate: NS::ARGU[:trashed],

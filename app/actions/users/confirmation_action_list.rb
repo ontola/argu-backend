@@ -6,9 +6,10 @@ module Users
       :create,
       create_options.merge(
         collection: false,
-        include_resource: true,
+        include_object: true,
         label: -> { I18n.t('devise.confirmations.edit.header') },
         policy: nil,
+        object: nil,
         url: -> { iri_from_template(:confirmations_iri) }
       )
     )

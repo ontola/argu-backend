@@ -115,6 +115,7 @@ en:
         submit: "Save"
       destroy:
         label: "Remove account"
+        description: "Are you sure you want to remove **%{name}**? The content posted by this account will be anonymized."
     setups:
       update:
         label: "Welcome!"

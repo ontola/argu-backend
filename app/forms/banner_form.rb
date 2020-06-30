@@ -1,30 +1,16 @@
 # frozen_string_literal: true
 
 class BannerForm < ApplicationForm
-  fields(
-    [
-      {description: {datatype: NS::FHIR[:markdown]}},
-      :audience,
-      :dismiss_button,
-      :expires_at,
-      :hidden,
-      :footer
-    ]
-  )
+  field :description, datatype: NS::FHIR[:markdown]
+  field :audience
+  field :dismiss_button
+  field :expires_at
 
-  property_group(
-    :footer,
-    iri: NS::ONTOLA[:footerGroup],
-    order: 99,
-    properties: [
-      creator: actor_selector
-    ]
-  )
+  footer do
+    actor_selector
+  end
 
-  property_group(
-    :hidden,
-    iri: NS::ONTOLA[:hiddenGroup],
-    order: 98,
-    properties: %i[argu_publication]
-  )
+  hidden do
+    field :is_draft
+  end
 end

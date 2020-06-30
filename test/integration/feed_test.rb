@@ -16,7 +16,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     end
     m
   end
-  let(:unpublished_motion_argument) { create(:argument, parent: unpublished_motion) }
+  let(:unpublished_motion_argument) { create(:pro_argument, parent: unpublished_motion) }
 
   ####################################
   # As Guest

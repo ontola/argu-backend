@@ -8,7 +8,6 @@ class EmailAddress < ApplicationRecord
   enhance LinkedRails::Enhancements::Tableable
 
   include Broadcastable
-  include Parentable
   include RedisResourcesHelper
   include DeltaHelper
   TEMP_EMAIL_REGEX = /\Achange@me/.freeze
@@ -34,7 +33,6 @@ class EmailAddress < ApplicationRecord
     values: [true, false]
   }
 
-  parentable :user
   self.default_sortings = [{key: NS::SCHEMA[:email], direction: :asc}]
 
   validate :dont_update_confirmed_email
@@ -45,7 +43,7 @@ class EmailAddress < ApplicationRecord
 
   def after_confirmation
     user.edges.update_all(confirmed: true) # rubocop:disable Rails/SkipsModelValidations
-    UserChannel.broadcast_to(user, hex_delta([invalidate_collection_delta(user.email_address_collection)]))
+    UserChannel.broadcast_to(user, hex_delta([invalidate_collection_delta(EmailAddress.root_collection)]))
     Vote.fix_counts
   end
 
@@ -61,6 +59,10 @@ class EmailAddress < ApplicationRecord
 
   def email_verified?
     email && email !~ TEMP_EMAIL_REGEX
+  end
+
+  def parent_collections(user_context)
+    [self.class.root_collection(user_context: user_context)]
   end
 
   def reconfirmation_required?

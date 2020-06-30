@@ -17,6 +17,10 @@ class AnonymousUser < User
 
   private
 
+  def anonymous_iri?
+    false
+  end
+
   def iri_template_name
     :users_iri
   end

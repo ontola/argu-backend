@@ -3,6 +3,7 @@
 class PlacementSerializer < RecordSerializer
   extend NamesHelper
 
+  attribute :coordinates, predicate: NS::ARGU[:geoCoordinates], if: method(:never)
   attribute :image, predicate: NS::SCHEMA[:image] do |object|
     image =
       if object.placement_type == 'custom'
@@ -22,10 +23,7 @@ class PlacementSerializer < RecordSerializer
   attribute :placement_type, predicate: NS::ARGU[:placementType]
   attribute :postal_code, predicate: NS::SCHEMA[:postalCode]
 
-  attribute :lat,
-            predicate: NS::SCHEMA[:latitude],
-            if: method(:export_scope?)
-  attribute :lon,
-            predicate: NS::SCHEMA[:longitude],
-            if: method(:export_scope?)
+  attribute :lat, predicate: NS::SCHEMA[:latitude]
+  attribute :lon, predicate: NS::SCHEMA[:longitude]
+  attribute :zoom_level, predicate: NS::ARGU[:zoomLevel]
 end

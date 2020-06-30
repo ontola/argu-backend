@@ -3,34 +3,35 @@
 class MotionForm < ApplicationForm
   visibility_text
 
-  fields [
-    :display_name,
-    {description: {datatype: NS::FHIR[:markdown]}},
-    :default_cover_photo,
-    :attachments,
-    :custom_placement,
-    :advanced,
-    :hidden,
-    :footer
-  ]
+  class << self
+    def location_required
+      @location_required ||= [
+        LinkedRails::SHACL::PropertyShape.new(
+          path: [NS::SCHEMA.isPartOf, NS::ARGU[:requireLocation]],
+          has_value: true
+        )
+      ]
+    end
+  end
 
-  property_group :advanced,
-                 label: -> { I18n.t('forms.advanced') },
-                 properties: [
-                   {mark_as_important: {description: -> { mark_as_important_label(target) }}},
-                   :pinned,
-                   :expires_at
-                 ]
+  field :display_name
+  field :description, datatype: NS::FHIR[:markdown]
+  has_one :default_cover_photo
+  has_many :attachments
+  has_one :custom_placement, min_count: 1, if: location_required
+  has_one :custom_placement, unless: location_required
 
-  property_group :footer,
-                 iri: NS::ONTOLA[:footerGroup],
-                 order: 99,
-                 properties: [
-                   creator: actor_selector
-                 ]
+  group :advanced, label: -> { I18n.t('forms.advanced') } do
+    field :mark_as_important, description: -> { mark_as_important_label }
+    field :pinned
+    field :expires_at
+  end
 
-  property_group :hidden,
-                 iri: NS::ONTOLA[:hiddenGroup],
-                 order: 98,
-                 properties: %i[argu_publication]
+  footer do
+    actor_selector
+  end
+
+  hidden do
+    field :is_draft
+  end
 end

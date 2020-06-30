@@ -13,7 +13,7 @@ class GrantTree
       self.id = edge.id
       self.grant_tree = grant_tree
       self.permitted_actions = parent.present? ? parent.permitted_actions.deep_dup : {}
-      self.grant_sets = parent.present? ? parent.grant_sets.deep_dup : {}
+      self.grant_sets = parent.present? ? dup_grant_sets(parent) : {}
       calculate_permitted_actions(grant_tree)
       grant_tree.cached_nodes[id] = self
     end
@@ -78,7 +78,8 @@ class GrantTree
         .select { |grant| grant.edge.path == edge.path }
         .each do |grant|
         grant_sets[grant.group_id] ||= []
-        grant_sets[grant.group_id] << grant.grant_set.title
+        grant.grant_set.iri
+        grant_sets[grant.group_id] << grant.grant_set
         grant.permitted_actions.each do |permission|
           permitted_actions[permission.resource_type] ||= {}
           permitted_actions[permission.resource_type][permission.action] ||= {}
@@ -86,6 +87,10 @@ class GrantTree
           permitted_actions[permission.resource_type][permission.action][permission.parent_type] << grant.group_id
         end
       end
+    end
+
+    def dup_grant_sets(parent)
+      parent.grant_sets.dup.transform_values(&:dup)
     end
   end
 end

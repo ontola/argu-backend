@@ -7,14 +7,9 @@ class PagePolicy < EdgePolicy
     end
   end
 
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[display_name name url iri_prefix styled_headers]
-    attributes.concat %i[primary_container_node_id] if record.container_nodes.any?
-    attributes.concat %i[last_accepted] unless record.persisted? && record.last_accepted?
-    attributes.append(shortname_attributes: %i[shortname]) if new_record?
-    attributes.flatten
-  end
+  permit_attributes %i[display_name name url iri_prefix]
+  permit_attributes %i[primary_container_node_id], new_record: false
+  permit_attributes %i[accepted_terms], has_properties: {last_accepted: false}
 
   def permitted_tabs
     tabs = []
@@ -41,7 +36,7 @@ class PagePolicy < EdgePolicy
     'general'
   end
 
-  def index_children?(raw_klass)
+  def index_children?(raw_klass, opts = {})
     return show? if %i[interventions measures].include?(raw_klass.to_sym)
 
     super

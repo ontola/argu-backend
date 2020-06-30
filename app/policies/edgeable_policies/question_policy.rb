@@ -1,18 +1,8 @@
 # frozen_string_literal: true
 
 class QuestionPolicy < DiscussionPolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[id display_name description forum_id cover_photo
-                         remove_cover_photo cover_photo_attribution]
-    attributes.concat %i[f_convert] if staff?
-    if moderator? || administrator? || staff?
-      attributes.concat %i[pinned require_location default_motion_sorting reset_create_motion]
-      attributes.concat [create_motion_group_ids: []]
-    end
-    attributes.concat %i[trash_activity untrash_activity]
-    attributes
-  end
+  permit_attributes %i[display_name description]
+  permit_attributes %i[pinned require_location default_motion_sorting], grant_sets: %i[moderator administrator staff]
 
   def convert?
     staff?

@@ -22,6 +22,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
+  has_many :exports, dependent: :destroy
   has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
   has_many :notifications, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
@@ -32,6 +33,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :decisions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :topics, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :votes, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :employments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
@@ -159,7 +161,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def create_finish_intro_notification
-    return if url.present? || notifications.finish_intro.any?
+    return if setup_finished? || notifications.finish_intro.any?
 
     Notification.finish_intro.create(
       user: self,
@@ -169,9 +171,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def display_name
-    [first_name, middle_name, (!hide_last_name && last_name).presence].compact.join(' ').presence ||
-      url ||
-      [I18n.t('groups.public.name_singular'), id].join(' ')
+    real_name || url || generated_name
   end
   alias name display_name
 
@@ -230,6 +230,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
             .to_a
         )
       end
+  end
+
+  def generated_name
+    [I18n.t('groups.public.name_singular'), id].join(' ')
   end
 
   def guest?
@@ -311,6 +315,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     encrypted_password.present? || password.present? || password_confirmation.present?
   end
 
+  def real_name
+    [first_name, middle_name, (!hide_last_name && last_name).presence].compact.join(' ').presence
+  end
+
   def reserved?
     id <= 0
   end
@@ -358,6 +366,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     id == User::SERVICE_ID
   end
 
+  def setup_finished?
+    (url || first_name).present?
+  end
+
   def validate_r
     return if argu_iri_or_relative?(r)
 
@@ -379,7 +391,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    %w[comments motions arguments questions blog_posts votes vote_events uploaded_media_objects]
+    %w[comments motions arguments questions blog_posts topics votes vote_events uploaded_media_objects]
       .each do |association|
       send(association)
         .model

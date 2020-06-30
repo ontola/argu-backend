@@ -22,10 +22,12 @@ module ActivePublishable
       accepts_nested_attributes_for :argu_publication
       validates :argu_publication, presence: true
       before_validation :build_default_publication
+      attr_writer :is_draft
 
-      def is_draft?
-        published_publications.empty?
+      def is_draft
+        @is_draft ||= published_publications.empty?
       end
+      alias_method :is_draft?, :is_draft
 
       def is_publishable?
         true

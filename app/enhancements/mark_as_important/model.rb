@@ -11,7 +11,7 @@ module MarkAsImportant
     end
 
     def mark_as_important
-      argu_publication&.follow_type&.to_s == 'news'
+      argu_publication&.persisted? && argu_publication&.follow_type&.to_s == 'news'
     end
   end
 end

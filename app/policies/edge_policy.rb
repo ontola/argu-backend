@@ -17,6 +17,10 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
   include ChildOperations
 
+  permit_attributes %i[expires_at], grant_sets: %i[moderator administrator staff]
+  permit_attributes %i[creator], creator: true, new_record: true
+  permit_attributes %i[url]
+
   delegate :persisted_edge, to: :record
   attr_reader :grant_tree
 
@@ -66,16 +70,8 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
     grant_tree
       .grant_sets(persisted_edge, group_ids: user.profile.group_ids)
+      .map(&:title)
       .include?(grant_set.to_s)
-  end
-
-  def permitted_attribute_names
-    attributes = super
-    attributes.append(:mark_as_important) if mark_as_important?
-    attributes.append(:creator) if new_record? && !user.guest?
-    attributes.concat %i[id expires_at] if expires_at?
-    attributes.concat([:url, shortname_attributes: %i[shortname id]]) if shortname?
-    attributes
   end
 
   def convert?
@@ -155,10 +151,6 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     has_grant?(:update)
   end
 
-  def shortname?
-    new_record? || update?
-  end
-
   private
 
   def cache_action(action, val)
@@ -181,10 +173,6 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     false
   end
 
-  def expires_at?
-    %w[Motion Question].include?(record.owner_type) && (moderator? || administrator? || staff?)
-  end
-
   def has_content_children?
     record
       .children
@@ -201,13 +189,6 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     return if record.creator_id.blank?
 
     record.publisher_id == user.id || user.managed_profile_ids.include?(record.creator_id)
-  end
-
-  def mark_as_important? # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-    (moderator? || administrator? || staff?) &&
-      record.is_publishable? &&
-      !record.is_a?(Decision) &&
-      (!record.argu_publication&.attribute_in_database(:published_at) || record.argu_publication&.reactions?)
   end
 
   def parent_policy(type = nil)

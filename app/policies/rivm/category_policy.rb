@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 class CategoryPolicy < EdgePolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[display_name description]
-    attributes
-  end
+  permit_attributes %i[display_name description]
 
   def show?
     return true if record.parent.is_a?(Page) || record.parent.nil?

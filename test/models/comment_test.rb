@@ -5,7 +5,7 @@ require 'test_helper'
 class CommentTest < ActiveSupport::TestCase
   define_freetown
   let(:motion) { create(:motion, parent: freetown) }
-  let(:argument) { create(:argument, parent: motion) }
+  let(:argument) { create(:pro_argument, parent: motion) }
   let(:nested_comment) { create(:comment, parent: argument, in_reply_to_id: subject.uuid) }
   subject { create(:comment, parent: argument) }
 

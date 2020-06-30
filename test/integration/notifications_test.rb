@@ -7,7 +7,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
   let(:question) { create(:question, :with_follower, :with_news_follower, parent: freetown) }
   let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question) }
-  let(:argument) { create(:argument, :with_follower, :with_news_follower, parent: motion) }
+  let(:argument) { create(:pro_argument, :with_follower, :with_news_follower, parent: motion) }
   let(:comment) { create(:comment, parent: argument) }
   let(:group) { create(:group, parent: argu) }
   let(:group_membership) { create(:group_membership, parent: group, member: user.profile) }

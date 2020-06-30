@@ -18,10 +18,6 @@ module Actions
 
     def current_forum; end
 
-    def index_includes
-      [:target]
-    end
-
     def requested_resource
       resource = super
       return resource unless parent_resource.is_a?(Page) && resource_id == 'redirect'

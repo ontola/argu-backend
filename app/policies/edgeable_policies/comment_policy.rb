@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class CommentPolicy < EdgePolicy
-  def permitted_attribute_names
-    attributes = super
-    attributes.concat %i[description in_reply_to_id vote_id]
-    attributes.append(:is_opinion) if new_record?
-    attributes
-  end
+  permit_attributes %i[description in_reply_to_id vote_id]
+  permit_attributes %i[is_opinion], new_record: true
 
   def create?
     assert_siblings! if record.try(:parent_comment).present?

@@ -1,29 +1,19 @@
 # frozen_string_literal: true
 
 class MeasureForm < ApplicationForm
-  fields [
-    :display_name,
-    {description: {datatype: NS::FHIR[:markdown]}},
-    {
-      parent_id: {
+  field :display_name
+  field :description, datatype: NS::FHIR[:markdown]
+  field :parent_id,
         min_count: 1,
         sh_in: lambda {
           iri_from_template(:measure_types_collection_iri, page: 1, page_size: 100, fragment: :members)
         },
         datatype: NS::XSD[:string],
-        input_field: NS::ONTOLA['element/select'],
-        default_value: -> { target.parent.is_a?(MeasureType) ? target.parent.iri : nil }
-      }
-    },
-    :comments_allowed,
-    :attachments,
-    :hidden
-  ]
+        input_field: LinkedRails::Form::Field::SelectInput
+  field :comments_allowed
+  has_many :attachments
 
-  property_group(
-    :hidden,
-    iri: NS::ONTOLA[:hiddenGroup],
-    order: 98,
-    properties: %i[argu_publication]
-  )
+  hidden do
+    field :is_draft
+  end
 end

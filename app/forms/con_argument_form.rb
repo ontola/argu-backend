@@ -1,16 +1,10 @@
 # frozen_string_literal: true
 
 class ConArgumentForm < ApplicationForm
-  fields [
-    :display_name,
-    {description: {datatype: NS::FHIR[:markdown]}},
-    :footer
-  ]
+  field :display_name
+  field :description, datatype: NS::FHIR[:markdown]
 
-  property_group :footer,
-                 iri: NS::ONTOLA[:footerGroup],
-                 order: 99,
-                 properties: [
-                   creator: actor_selector
-                 ]
+  footer do
+    actor_selector
+  end
 end

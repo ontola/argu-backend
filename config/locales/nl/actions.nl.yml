@@ -115,6 +115,7 @@ nl:
         submit: "Opslaan"
       destroy:
         label: "Account verwijderen"
+        description: "Weet je zeker dat je **%{name}** wil verwijderen? De content geplaatst door dit account wordt geanonimiseerd."
     setups:
       update:
         label: "Welkom!"

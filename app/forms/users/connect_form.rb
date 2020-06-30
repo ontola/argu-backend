@@ -2,6 +2,6 @@
 
 module Users
   class ConnectForm < ApplicationForm
-    fields %i[password]
+    field :password
   end
 end

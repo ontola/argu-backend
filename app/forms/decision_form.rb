@@ -1,16 +1,10 @@
 # frozen_string_literal: true
 
 class DecisionForm < ApplicationForm
-  fields [
-    :state,
-    {description: {datatype: NS::FHIR[:markdown]}},
-    :footer
-  ]
+  field :state, input_field: LinkedRails::Form::Field::RadioGroup
+  field :description, datatype: NS::FHIR[:markdown]
 
-  property_group :footer,
-                 iri: NS::ONTOLA[:footerGroup],
-                 order: 99,
-                 properties: [
-                   creator: actor_selector
-                 ]
+  footer do
+    actor_selector
+  end
 end

@@ -1,33 +1,17 @@
 # frozen_string_literal: true
 
-class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
-  fields [
-    :intervention_description,
-    :intervention_introduction,
-    :costs_section,
-    :effectivity_section,
-    :final_section,
-    {attachments: {description: I18n.t('interventions.attachments.description')}},
-    :hidden
-  ]
-
-  property_group(
-    :intervention_description,
-    label: -> { I18n.t('forms.intervention_description.label') },
-    properties: [
-      :display_name,
-      {description: {datatype: NS::FHIR[:markdown]}},
-      {
-        employment_id: {
+class InterventionForm < ApplicationForm
+  # rubocop:disable Metrics/BlockLength
+  group :intervention_description, label: -> { I18n.t('forms.intervention_description.label') } do
+    field :display_name
+    field :description, datatype: NS::FHIR[:markdown]
+    field :employment_id,
           min_count: 1,
           sh_in: lambda {
             iri_from_template(:employments_iri, page_size: 100)
           },
           datatype: NS::XSD[:string]
-        }
-      },
-      {
-        parent_id: {
+    field :parent_id,
           min_count: 1,
           sh_in: lambda {
             InterventionType
@@ -36,92 +20,66 @@ class InterventionForm < ApplicationForm # rubocop:disable Metrics/ClassLength
               .members_iri
           },
           datatype: NS::XSD[:string],
-          input_field: NS::ONTOLA['element/select'],
-          default_value: -> { target.parent.is_a?(InterventionType) ? target.parent.iri : nil }
-        }
-      },
-      {
-        goal_and_effect: {
-          type: :resource,
-          label: -> { I18n.t('forms.goal_and_effect.label') },
-          description: -> { I18n.t('forms.goal_and_effect.description') }
-        }
-      },
-      {
-        target_audience_text: {
-          type: :resource,
-          description: -> { I18n.t('forms.target_audience_text') }
-        }
-      },
-      {target_audience: {min_count: 1, max_count: 99}},
-      {risk_reduction: {min_count: 1, max_count: 99}},
-      {
-        goal_and_audience_info: {
-          type: :resource,
-          description: -> { I18n.t('forms.goal_and_effect.goal_and_audience_info.description') },
-          label: -> { I18n.t('forms.goal_and_effect.goal_and_audience_info.label') }
-        }
-      },
-      {plans_and_procedure: {max_count: 99}},
-      {people_and_resources: {max_count: 99}},
-      {competence: {max_count: 99}},
-      {communication: {max_count: 99}},
-      {motivation_and_commitment: {max_count: 99}},
-      {conflict_and_prioritization: {max_count: 99}},
-      {ergonomics: {max_count: 99}},
-      {tools: {max_count: 99}},
-      :goal
-    ]
-  )
+          input_field: LinkedRails::Form::Field::SelectInput
+    resource :goal_and_effect,
+             label: -> { I18n.t('forms.goal_and_effect.label') },
+             description: -> { I18n.t('forms.goal_and_effect.description') }
+    resource :target_audience_text, description: -> { I18n.t('forms.target_audience_text') }
+    field :target_audience, min_count: 1, max_count: 99
+    field :risk_reduction, min_count: 1, max_count: 99
+    resource :goal_and_audience_info,
+             description: -> { I18n.t('forms.goal_and_effect.goal_and_audience_info.description') },
+             label: -> { I18n.t('forms.goal_and_effect.goal_and_audience_info.label') }
+    field :plans_and_procedure, max_count: 99
+    field :people_and_resources, max_count: 99
+    field :competence, max_count: 99
+    field :communication, max_count: 99
+    field :motivation_and_commitment, max_count: 99
+    field :conflict_and_prioritization, max_count: 99
+    field :ergonomics, max_count: 99
+    field :tools, max_count: 99
+    field :goal
+  end
+  # rubocop:enable Metrics/BlockLength
 
-  property_group(
-    :intervention_introduction,
-    label: -> { I18n.t('forms.intervention_introduction.label') },
-    description: -> { I18n.t('forms.intervention_introduction.description') },
-    properties: %i[
-      continuous independent management_involvement training_required
-      additional_introduction_information
-    ]
-  )
+  group :intervention_introduction,
+        label: -> { I18n.t('forms.intervention_introduction.label') },
+        description: -> { I18n.t('forms.intervention_introduction.description') } do
+    field :continuous, input_field: LinkedRails::Form::Field::RadioGroup
+    field :independent, input_field: LinkedRails::Form::Field::RadioGroup
+    field :management_involvement, input_field: LinkedRails::Form::Field::RadioGroup
+    field :training_required, input_field: LinkedRails::Form::Field::RadioGroup
+    field :additional_introduction_information
+  end
 
-  property_group(
-    :costs_section,
-    label: -> { I18n.t('forms.costs_section.label') },
-    description: -> { I18n.t('forms.costs_section.description') },
-    properties: [
-      {nature_of_costs: {min_count: 1, max_count: 99}},
-      {cost_estimate: {type: :resource, description: -> { I18n.t('forms.cost_estimate') }}},
-      :one_off_costs,
-      :recurring_costs,
-      :cost_explanation
-    ]
-  )
+  group :costs_section,
+        label: -> { I18n.t('forms.costs_section.label') },
+        description: -> { I18n.t('forms.costs_section.description') } do
+    field :nature_of_costs, min_count: 1, max_count: 99
+    resource :cost_estimate, description: -> { I18n.t('forms.cost_estimate') }
+    field :one_off_costs, input_field: LinkedRails::Form::Field::RadioGroup
+    field :recurring_costs, input_field: LinkedRails::Form::Field::RadioGroup
+    field :cost_explanation
+  end
 
-  property_group(
-    :effectivity_section,
-    label: -> { I18n.t('forms.effectivity_section.label') },
-    properties: [
-      :effectivity_research_method,
-      {security_improved: {input_field: NS::ONTOLA['element/input/radio']}},
-      :security_improvement_reason
-    ]
-  )
+  group :effectivity_section, label: -> { I18n.t('forms.effectivity_section.label') } do
+    field :effectivity_research_method, input_field: LinkedRails::Form::Field::RadioGroup
+    field :security_improved, input_field: LinkedRails::Form::Field::RadioGroup
+    field :security_improvement_reason
+  end
 
-  property_group(
-    :final_section,
-    label: -> { I18n.t('forms.final_section.label') },
-    properties: [
-      :business_section,
-      {business_section_employees: {input_field: NS::ONTOLA['element/input/radio']}},
-      :contact_allowed,
-      :comments_allowed
-    ]
-  )
+  group :final_section, label: -> { I18n.t('forms.final_section.label') } do
+    field :business_section, input_field: LinkedRails::Form::Field::RadioGroup
+    field :business_section_employees, input_field: LinkedRails::Form::Field::RadioGroup
+    field :contact_allowed, input_field: LinkedRails::Form::Field::RadioGroup
+    field :comments_allowed, input_field: LinkedRails::Form::Field::RadioGroup
+  end
 
-  property_group(
-    :hidden,
-    iri: NS::ONTOLA[:hiddenGroup],
-    order: 98,
-    properties: %i[argu_publication]
-  )
+  group :attachments_section, collapsible: false do
+    has_many :attachments, description: -> { I18n.t('interventions.attachments.description') }
+  end
+
+  hidden do
+    field :is_draft
+  end
 end

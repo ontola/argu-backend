@@ -88,6 +88,14 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
              class_name: 'Edge',
              dependent: false
 
+  def accepted_terms
+    last_accepted.present?
+  end
+
+  def accepted_terms=(bool)
+    self.last_accepted = bool.to_s == 'true' ? Time.current : nil
+  end
+
   def build_profile(*options)
     super(*options) if profile.nil?
   end
@@ -115,6 +123,8 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def iri(_opts = {})
+    return anonymous_iri if iri_prefix.blank?
+
     @iri ||= RDF::URI("#{Rails.env.test? ? :http : :https}://#{iri_prefix}")
   end
 

@@ -7,6 +7,7 @@ class TermActionList < ApplicationActionList
       collection: false,
       description: -> { I18n.t('legal.continue_html', link: "[#{I18n.t('legal.documents.policy')}](/policy)") },
       label: -> { I18n.t('legal.documents.policy') },
+      object: nil,
       policy: nil
     )
   )

@@ -59,7 +59,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
     last_activity_at = motion.last_activity_at
     assert_difference('Argument.count' => 1, 'Activity.count' => 2, 'Notification.count' => 1) do
       ActsAsTenant.with_tenant(motion.root) do
-        service = CreateArgument.new(
+        service = CreateProArgument.new(
           motion,
           attributes: {title: 'argument title'},
           options: {publisher: user, creator: user.profile}

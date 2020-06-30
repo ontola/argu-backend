@@ -57,6 +57,7 @@ en:
       is_trashed: "Is hidden"
       invert_arguments: "Invert argumens"
       last_accepted: "I agree"
+      accepted_terms: "I agree"
       last_activity_at: "Activity"
       language: "Language"
       locale: "Language"
@@ -100,6 +101,7 @@ en:
       page:
         shortname: "Argu URL"
         last_accepted: "I accept the terms of use"
+        accepted_terms: "I accept the terms of use"
       forum:
         bio: "Forum goal"
         bio_long: "More information"

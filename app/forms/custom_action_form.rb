@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 class CustomActionForm < ApplicationForm
-  fields [
-    :raw_label,
-    :label_translation,
-    {raw_description: {max_length: 5000}},
-    :description_translation,
-    :raw_submit_label,
-    :submit_label_translation,
-    :href
-  ]
+  field :raw_label
+  field :label_translation
+  field :raw_description, max_length: 5000
+  field :description_translation
+  field :raw_submit_label
+  field :submit_label_translation
+  field :href
 end

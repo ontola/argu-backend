@@ -3,16 +3,9 @@
 class MoveForm < ApplicationForm
   field :new_parent_id,
         max_count: 1,
-        sh_in: -> { move_options(target.edge) }
+        sh_in: -> { move_options }
 
-  def move_options(resource)
-    case resource
-    when Motion
-      resource.root.forums.flat_map { |forum| [forum.iri] + forum.questions.map(&:iri) }
-    when Forum
-      Page.all.map(&:iri)
-    else
-      resource.root.forums.map(&:iri)
-    end
+  def move_options
+    ActsAsTenant.current_tenant.forums.flat_map { |forum| [forum.iri] + forum.questions.map(&:iri) }
   end
 end
