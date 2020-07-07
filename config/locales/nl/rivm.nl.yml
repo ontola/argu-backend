@@ -391,7 +391,7 @@ nl:
     intervention_description:
       label: "Beschrijving"
     intervention_introduction:
-      label: "Invoeren van de interventie"
+      label: "Invoering van de interventie"
       description: "De volgende vragen gaan over hoe de interventie in het bedrijf is ingevoerd. Tijdens de invoering worden vaak allerlei stappen gezet om de interventie tot een succes te maken."
     costs_section:
       label: "Kosten van de interventie"
