@@ -28,6 +28,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates_processing_of :content
   validates_download_of :content
 
+  enum content_source: {local: 0, remote: 1}
   enum used_as: {content_photo: 0, cover_photo: 1, profile_photo: 2, attachment: 3}
   filterable NS::ARGU[:fileUsage] => {values: MediaObject.used_as}
   counter_culture :about,
@@ -39,6 +40,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   delegate :file, :icon, :avatar, :is_image?, to: :content
 
   store_accessor :content_attributes, :position_y
+  attr_writer :content_source
 
   before_save :set_file_name
   before_save :set_publisher_and_creator
@@ -65,6 +67,10 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def content=(val)
     super unless val.is_a?(String)
+  end
+
+  def content_source
+    remote_url.present? ? :remote : :local
   end
 
   def content_type

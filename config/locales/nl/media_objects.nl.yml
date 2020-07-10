@@ -8,7 +8,12 @@ nl:
       content:
         label: "Selecteer een bestand"
       remote_content_url:
-        label: "Of voer een link in naar een bestand of filmpje:"
+        label: "Voer een link in naar een bestand of filmpje:"
+      content_source:
+        label: "Locatie van het bestand"
+    content_source:
+      local: "Op mijn computer"
+      remote: "Op het internet"
   image_objects:
     type: "Afbeelding"
     plural: "Afbeeldingen"
@@ -16,4 +21,4 @@ nl:
       content:
         label: "Selecteer een bestand"
       remote_content_url:
-        label: "Of voer een link in naar een bestand of filmpje:"
+        label: "Voer een link in naar een bestand of filmpje:"

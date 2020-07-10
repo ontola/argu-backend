@@ -14,7 +14,7 @@ class MediaObjectSerializer < RecordSerializer
     end
   end
   attribute :content, predicate: NS::SCHEMA[:contentUrl] do |object|
-    object.url_for_version('content')
+    object.url_for_version('content') if object.persisted?
   end
   attribute :content_type,
             predicate: NS::SCHEMA[:encodingFormat],
@@ -40,6 +40,7 @@ class MediaObjectSerializer < RecordSerializer
   attribute :copy_url, predicate: NS::ARGU[:copyUrl] do |object|
     ontola_copy_action(object.iri)
   end
+  enum :content_source, predicate: NS::ARGU[:contentSource]
   statements :copy_action_statements
 
   MediaObjectUploader::IMAGE_VERSIONS.each do |format, opts|

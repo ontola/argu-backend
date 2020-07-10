@@ -8,7 +8,12 @@ en:
       content:
         label: "Select a file"
       remote_content_url:
-        label: "Or enter a link to a file or movie:"
+        label: "Enter a link to a file or movie:"
+      content_source:
+        label: "Location of the file"
+    content_source:
+      local: "On my computer"
+      remote: "On the internet"
   image_objects:
     type: "Image"
     plural: "Images"
@@ -16,4 +21,4 @@ en:
       content:
         label: "Select a file"
       remote_content_url:
-        label: "Or enter a link to a file or movie:"
+        label: "Enter a link to a file or movie:"
