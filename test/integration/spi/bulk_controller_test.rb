@@ -19,6 +19,16 @@ module SPI
     let(:administrator) { create_administrator(argu) }
     let(:voter) { create(:user, show_feed: false) }
 
+    let(:demogemeente) { create(:page, url: 'demogemeente', iri_prefix: 'demogemeente.nl') }
+    let(:demogemeente_forum) do
+      create(:forum,
+             parent: demogemeente,
+             public_grant: 'initiator',
+             url: 'demogemeente',
+             locale: :nl)
+    end
+    let(:dg_motion1) { create(:motion, parent: demogemeente_forum) }
+
     ####################################
     # As Guest
     ####################################
@@ -26,6 +36,14 @@ module SPI
       sign_in guest_user
 
       bulk_request(responses: user_responses)
+    end
+
+    test 'guest should post bulk for demogemeente' do
+      sign_in guest_user
+
+      bulk_request(page: demogemeente,
+                   resources: bulk_resources_demogemeente,
+                   responses: bulk_responses_demogemeente)
     end
 
     ####################################
@@ -72,6 +90,7 @@ module SPI
 
     def bulk_resources
       [
+        {include: true, iri: current_actor_iri},
         {include: true, iri: motion1.iri},
         {include: false, iri: motion2.iri},
         {include: true, iri: holland_motion1.iri},
@@ -82,8 +101,18 @@ module SPI
       ]
     end
 
+    def bulk_resources_demogemeente
+      [
+        {include: true, iri: demogemeente.iri},
+        {include: true, iri: dg_current_actor_iri},
+        {include: true, iri: dg_motion1.iri},
+        {include: false, iri: 'https://example.com'}
+      ]
+    end
+
     def bulk_responses(opts = {})
       {
+        current_actor_iri => {cache: 'private', status: 200, include: true},
         motion1.iri => {cache: 'public', status: 200, include: true},
         motion2.iri => {cache: 'public', status: 200, include: false},
         holland_motion1.iri => {cache: 'no-cache', status: 200, include: true},
@@ -94,26 +123,50 @@ module SPI
       }.merge(opts)
     end
 
+    def bulk_responses_demogemeente
+      {
+        demogemeente.iri => {cache: 'no-cache', status: 200, include: true},
+        dg_current_actor_iri => {cache: 'private', status: 200, include: true},
+        dg_motion1.iri => {cache: 'public', status: 200, include: true},
+        'https://example.com' => {cache: 'private', status: 404, include: false}
+      }
+    end
+
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    def bulk_request(resources: bulk_resources, responses: bulk_responses)
-      post "/#{argu.url}#{spi_bulk_path}", params: {resources: resources}
+    def bulk_request(page: argu, resources: bulk_resources, responses: bulk_responses)
+      domain = page.iri_prefix.split('/')
+      host! domain[0]
+      tenant_prefix = domain[1].present? ? "/#{domain[1]}" : ''
+      post "#{tenant_prefix}#{spi_bulk_path}", params: {resources: resources}
 
       assert_response 200
 
       response = JSON.parse(body).map(&:with_indifferent_access)
-      assert_equal response.count, resources.count
+      assert_equal resources.count, response.count
 
       responses.each do |iri, expectation|
         resource = response.detect { |r| r[:iri] == iri }
-        assert_equal resource[:iri], iri.to_s
-        assert_equal resource[:status], expectation[:status], "#{iri} should be #{expectation[:status]}"
-        assert_equal resource[:cache], expectation[:cache], "#{iri} should be #{expectation[:cache]}"
+        assert_equal iri.to_s, resource[:iri]
+        assert_equal expectation[:status], resource[:status], "#{iri} should be #{expectation[:status]}"
+        assert_equal expectation[:cache], resource[:cache], "#{iri} should be #{expectation[:cache]}"
         type_statement = "\"#{iri}\",\"#{RDF[:type]}\""
         method = expectation[:include] ? :assert_includes : :refute_includes
         send(method, resource[:body] || '', type_statement)
       end
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+    def current_actor
+      CurrentActor.new(user: user)
+    end
+
+    def current_actor_iri
+      "http://#{argu.iri_prefix}/c_a"
+    end
+
+    def dg_current_actor_iri
+      "http://#{demogemeente.iri_prefix}/c_a"
+    end
 
     def user_responses(opts = {})
       bulk_responses(

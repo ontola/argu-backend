@@ -35,7 +35,7 @@ module SPI
     end
 
     def resource_request(iri)
-      path = "/#{LinkedRails.iri_mapper_class.send(:sanitized_relative, iri.dup, ActsAsTenant.current_tenant)}"
+      path = LinkedRails.iri_mapper_class.send(:sanitized_relative, iri.dup, ActsAsTenant.current_tenant)
       env = Rack::MockRequest.env_for(
         path,
         'HTTP_ACCEPT' => 'application/hex+x-ndjson',
