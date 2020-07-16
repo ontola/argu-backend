@@ -60,7 +60,7 @@ module SPI
       response = Rails.application.routes.router.serve(resource_request(iri))
       {
         body: include ? response.last.body : nil,
-        cache: :private,
+        cache: response[1]['Cache-Control']&.squish&.presence || :private,
         iri: iri.to_s,
         status: response.first
       }
@@ -109,7 +109,7 @@ module SPI
     end
 
     def wrong_host?(iri)
-      !iri.starts_with?(ActsAsTenant.current_tenant.iri)
+      URI.parse(iri).path != '/ns/core' && !iri.starts_with?(ActsAsTenant.current_tenant.iri)
     end
   end
 end

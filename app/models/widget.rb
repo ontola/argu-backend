@@ -3,6 +3,7 @@
 class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend UriTemplateHelper
   include Parentable
+  include Cacheable
 
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Indexable

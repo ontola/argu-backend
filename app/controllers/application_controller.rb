@@ -7,6 +7,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   include Argu::Controller::Authentication
   include Argu::Controller::ErrorHandling
   include ActiveResponseHelper
+  include CacheHelper
   include RedirectHelper
   include JsonAPIHelper
   include NestedAttributesHelper
