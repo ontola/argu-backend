@@ -2,7 +2,7 @@ development: &default
   adapter: postgresql
   encoding: unicode
   database: <%= ENV['POSTGRESQL_DATABASE'] %>
-  pool: 5
+  pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
   username: <%= ENV['POSTGRESQL_USERNAME'] %>
   password: <%= ENV['POSTGRESQL_PASSWORD'] %>
   host: <%= ENV['POSTGRESQL_ADDRESS'] %>
