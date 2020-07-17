@@ -27,7 +27,12 @@ class EmailAddress < ApplicationRecord
     NS::ONTOLA[:sendConfirmationAction],
     NS::ONTOLA[:destroyAction]
   ]
-  filterable NS::ARGU[:confirmed] => {key: :confirmed_at, values: {true => 'NOT NULL', false => 'NULL'}}
+  filterable NS::ARGU[:confirmed] => {
+    filter: lambda { |scope, value|
+      value ? scope.where.not(confirmed_at: nil) : scope.where(confirmed_at: nil)
+    },
+    values: [true, false]
+  }
 
   parentable :user
   self.default_sortings = [{key: NS::SCHEMA[:email], direction: :asc}]

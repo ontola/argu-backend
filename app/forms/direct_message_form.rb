@@ -7,7 +7,7 @@ class DirectMessageForm < ApplicationForm
         default_value: lambda {
           has_confirmed_email_addresses? ? user_context.user.primary_email_record.iri : nil
         },
-        sh_in: -> { collection_iri(user_context.user, :email_addresses, filter: {confirmed: ['yes']}) }
+      sh_in: -> { collection_iri(user_context.user, :email_addresses, filter: {CGI.escape(NS::ARGU[:confirmed]) => 'yes'}) }
       }
     },
     :subject,
