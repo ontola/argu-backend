@@ -23,6 +23,18 @@ module VirtualAttributes
   end
 
   module ClassMethods
+    def find(*ids)
+      records = super
+      records.send(:initialize_virtual_attributes) if ids.length == 1
+      records
+    end
+
+    def find_by(*ids)
+      records = super
+      records&.send(:initialize_virtual_attributes)
+      records
+    end
+
     private
 
     def virtual_attribute(name, type = Type::Value.new, opts = {})
