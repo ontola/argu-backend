@@ -5,6 +5,7 @@ class ArgumentActionList < EdgeActionList
 
   has_action(
     :create_vote,
+    completed: -> { current_vote.present? },
     result: Vote,
     type: -> { [NS::ONTOLA[:VoteAction], NS::ONTOLA[:CreateVoteAction]] },
     image: 'fa-arrow-up',
@@ -17,6 +18,7 @@ class ArgumentActionList < EdgeActionList
 
   has_action(
     :destroy_vote,
+    completed: -> { current_vote.nil? },
     result: Vote,
     type: -> { [NS::ONTOLA[:VoteAction], NS::ONTOLA[:DestroyVoteAction]] },
     image: 'fa-arrow-up',

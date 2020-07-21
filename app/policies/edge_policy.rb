@@ -82,6 +82,10 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     administrator? || staff?
   end
 
+  def expired?
+    has_expired_ancestors?
+  end
+
   def list?
     true
   end
