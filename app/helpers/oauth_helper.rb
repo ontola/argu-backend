@@ -13,7 +13,7 @@ module OauthHelper
   def current_actor
     return @current_actor if @current_actor.present?
 
-    user = current_resource_owner || GuestUser.new(language: language_for_guest)
+    user = current_resource_owner || GuestUser.new(id: :transient_session, language: language_for_guest)
     doorkeeper_render_error unless valid_token?
 
     @current_actor =
