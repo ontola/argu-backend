@@ -41,6 +41,8 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def property_shapes
+    resource_sequence
+
     @property_shapes || {}
   end
 
