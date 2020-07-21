@@ -181,10 +181,6 @@ Rails.application.routes.draw do
     post '', action: :destroy, on: :member
   end
 
-  resources :shortnames, only: [] do
-    include_route_concerns
-  end
-
   resources :grant_sets, only: :show
 
   constraints(Argu::StaffConstraint) do
@@ -318,7 +314,9 @@ Rails.application.routes.draw do
   resources :phases, only: %i[show] do
     include_route_concerns
   end
-  resources :shortnames, only: %i[new create index] do
+  resources :shortnames, only: %i[show new create index] do
+    include_route_concerns
+
     collection do
       concerns :nested_actionable
     end
