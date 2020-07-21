@@ -5,7 +5,7 @@ class InviteForm < ApplicationForm
 
   field :addresses, max_length: 5000, pattern: /\A(#{RegexHelper::SINGLE_EMAIL.source},?\s?)+\z/
   field :message, max_length: 5000
-  field :group_id, sh_in: -> { ActsAsTenant.current_tenant.groups.map(&:iri) }
+  field :group_id, sh_in: -> { collection_iri(nil, :groups) }
   field :redirect_url
 
   hidden do
