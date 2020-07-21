@@ -36,7 +36,6 @@ RSpec.describe Feed, type: :model do
       .all
       .select do |a|
       !a.trackable.is_published? ||
-        (a.trackable.is_trashed? && Feed::TRASH_KEYS.include?(a.key)) ||
         a.trackable.ancestors.any? { |trackable| !trackable.is_published || trackable.is_trashed? }
     end
   end

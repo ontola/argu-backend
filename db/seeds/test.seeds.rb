@@ -156,9 +156,12 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   trashed_question =
     FactorySeeder.create(
       :question,
-      parent: freetown,
-      trashed_at: Time.current
+      parent: freetown
     )
+  TrashService.new(
+    trashed_question,
+    options: {creator: trashed_question.creator, publisher: trashed_question.publisher}
+  ).commit
   trashed_motion =
     FactorySeeder.create(
       :motion,
