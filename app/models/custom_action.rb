@@ -68,5 +68,9 @@ class CustomAction < Edge
     def iri
       NS::SCHEMA.Action
     end
+
+    def preview_includes
+      %i[target]
+    end
   end
 end

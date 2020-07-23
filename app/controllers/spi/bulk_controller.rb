@@ -91,7 +91,12 @@ module SPI
       return if resource.nil?
 
       RDF::Serializers.serializer_for(resource)
-        .new(resource, params: {scope: user_context, context: resource&.try(:iri)})
+        .new(resource,
+             include: resource&.class.try(:preview_includes),
+             params: {
+               scope: user_context,
+               context: resource&.try(:iri)
+             })
         .send(:render_hndjson)
     end
 
