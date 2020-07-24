@@ -1,18 +1,24 @@
 # frozen_string_literal: true
 
+require 'benchmark'
+
 module SPI
   class BulkController < SPI::SPIController
     include NestedResourceHelper
     skip_after_action :verify_authorized
 
     def show
-      render json: authorized_resources
+      @timings = []
+      resources = authorized_resources
+      print_timings
+      render json: resources
     end
 
     private
 
     def authorize_action; end
 
+    # rubocop:disable Metrics/AbcSize
     def authorized_resource(opts)
       return response_for_wrong_host(opts[:iri]) if wrong_host?(opts[:iri])
 
@@ -22,12 +28,25 @@ module SPI
       return response_from_request(include, RDF::URI(opts[:iri])) unless resource.try(:cacheable?)
 
       response_from_resource(include, resource)
+    rescue StandardError => e
+      Bugsnag.notify(e)
+      unless Rails.env.production?
+        Rails.logger.error(e)
+        Rails.logger.error(e.backtrace.join("\n"))
+      end
+
+      resource_response(opts[:iri], status: 500)
     end
+    # rubocop:enable Metrics/AbcSize
 
     def authorized_resources
       @authorized_resources ||= params.require(:resources).map do |param|
         param.permit(:include, :iri)
-      end.map(&method(:authorized_resource))
+      end.map(&method(:timed_authorized_resource))
+    end
+
+    def print_timings
+      Rails.logger.debug "\n  CPU        system     user+system real        inc   status  iri\n#{@timings.join("\n")}"
     end
 
     def require_doorkeeper_token?
@@ -57,34 +76,39 @@ module SPI
     end
 
     def response_from_request(include, iri)
-      response = Rails.application.routes.router.serve(resource_request(iri))
-      {
-        body: include ? response.last.body : nil,
-        cache: response[1]['Cache-Control']&.squish&.presence || :private,
-        iri: iri.to_s,
-        status: response.first
-      }
+      status, headers, rack_body = Rails.application.routes.router.serve(resource_request(iri))
+
+      resource_response(
+        iri.to_s,
+        body: include ? rack_body.body : nil,
+        cache: headers['Cache-Control']&.squish&.presence || :private,
+        status: status
+      )
     end
 
     def response_from_resource(include, resource)
       resource_policy = policy(resource)
       status = resource_status(resource, resource_policy)
 
-      response = {
+      resource_response(
+        resource.iri,
         body: include && status == 200 ? resource_body(resource) : nil,
         cache: resource_cache_control(status, resource_policy),
-        iri: resource.iri,
         status: status
-      }
-      response
+      )
     end
 
     def response_for_wrong_host(iri)
+      resource_response(iri)
+    end
+
+    def resource_response(iri, **opts)
       {
+        body: nil,
         cache: :private,
         iri: iri,
         status: 404
-      }
+      }.merge(opts)
     end
 
     def resource_body(resource)
@@ -111,6 +135,13 @@ module SPI
       return 404 if resource.nil?
 
       resource_policy.show? ? 200 : 403
+    end
+
+    def timed_authorized_resource(resource)
+      res = nil
+      time = Benchmark.measure { res = authorized_resource(resource) }
+      @timings << "#{time.to_s[0..-2]} - #{resource[:include].to_s.ljust(5)}  #{res[:status]} #{resource[:iri]}"
+      res
     end
 
     def wrong_host?(iri)
