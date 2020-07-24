@@ -25,6 +25,7 @@ module Argu
 
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"
+    config.aws_url = "https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com"
 
     config.autoload_paths += %w[lib]
     %i[controllers forms models policies serializers].each do |type|

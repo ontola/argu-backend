@@ -161,7 +161,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       RDF::DynamicURI(content.url(:icon))
     else
       path = icon.path.gsub(File.expand_path(content.root), '')
-      RDF::DynamicURI("https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com#{path}")
+      RDF::DynamicURI("#{Rails.application.config.aws_url}#{path}")
     end
   end
   # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity

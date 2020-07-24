@@ -48,6 +48,9 @@ class Manifest < VirtualResource
       header_text: page.header_text.sub('text_', ''),
       matomo_hostname: page.matomo_host || ENV['MATOMO_HOST'],
       matomo_site_id: page.matomo_site_id,
+      preconnect: [
+        Rails.application.config.aws_url
+      ].compact,
       preload: preload_iris,
       primary_color: page.primary_color,
       secondary_color: page.secondary_color,

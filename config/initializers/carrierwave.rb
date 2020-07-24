@@ -6,7 +6,7 @@ CarrierWave.configure do |config|
   else
     config.storage    = :aws
     config.aws_bucket = ENV['AWS_BUCKET'] || 'argu-logos'
-    config.asset_host = ENV['CARRIERWAVE_HOST'] || "https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com"
+    config.asset_host = ENV['CARRIERWAVE_HOST'] || Rails.application.config.aws_url
     config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
 
     config.aws_credentials = {
