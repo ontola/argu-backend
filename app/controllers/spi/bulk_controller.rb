@@ -3,6 +3,7 @@
 require 'benchmark'
 
 module SPI
+  # rubocop:disable Metrics/ClassLength
   class BulkController < SPI::SPIController
     include NestedResourceHelper
     skip_after_action :verify_authorized
@@ -148,4 +149,5 @@ module SPI
       URI.parse(iri).path != '/ns/core' && !iri.starts_with?(ActsAsTenant.current_tenant.iri)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
