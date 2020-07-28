@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 35d5eebecacc0b7290917b1066a4bcb0ec9a21a3
+  revision: abf1d8e8b24aff71366df3ae811e51d1b4eb2221
   branch: filtering
   specs:
     linked_rails (0.0.0)
@@ -293,7 +293,7 @@ GEM
     httparty (0.18.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
-    i18n (1.8.3)
+    i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     i18n_data (0.10.0)
     ice_cube (0.14.0)
