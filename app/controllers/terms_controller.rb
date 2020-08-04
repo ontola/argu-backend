@@ -6,7 +6,8 @@ class TermsController < ApplicationController
   private
 
   def create_execute
-    current_user.accept_terms!
+    current_user.update(accept_terms: true)
+    current_user.send_reset_password_token_email if current_user.encrypted_password.blank?
   end
 
   def create_success

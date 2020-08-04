@@ -60,13 +60,11 @@ class UsersController < AuthorizedController
     end
   end
 
-  def permit_params(_password = false) # rubocop:disable Metrics/AbcSize
+  def permit_params(_password = false)
     attrs = policy(authenticated_resource || User).permitted_attributes
     pp = params.require(:user).permit(*attrs).to_h
     merge_photo_params(pp)
     merge_placement_params(pp, User)
-    pp['email_addresses_attributes'][pp[:primary_email][1..-2]][:primary] = true if pp[:primary_email].present?
-    pp.except(:primary_email)
   end
 
   def redirect_location
@@ -93,7 +91,6 @@ class UsersController < AuthorizedController
   end
 
   def password_required
-    permit_params[:password].present? ||
-      params[:user][:primary_email].present? && params[:user][:primary_email] != '[0]'
+    permit_params[:password].present?
   end
 end

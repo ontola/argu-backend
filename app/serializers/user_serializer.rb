@@ -12,6 +12,7 @@ class UserSerializer < RecordSerializer
     object == opts[:scope]&.user
   end
 
+  attribute :accept_terms, predicate: NS::ARGU[:acceptTerms], datatype: NS::XSD[:boolean]
   attribute :display_name, predicate: NS::SCHEMA[:name]
   attribute :name, predicate: NS::FOAF[:name]
   attribute :about, predicate: NS::SCHEMA[:description]
@@ -25,7 +26,7 @@ class UserSerializer < RecordSerializer
   attribute :show_feed, predicate: NS::ARGU[:votesPublic]
   attribute :is_public, predicate: NS::ARGU[:public]
   attribute :group_ids, predicate: NS::ORG[:organization] do |object|
-    if ActsAsTenant.current_tenant
+    if ActsAsTenant.current_tenant && object.profile
       Group
         .joins(group_memberships: :member)
         .where('groups.root_id = ? OR groups.id = ?', ActsAsTenant.current_tenant.uuid, Group::STAFF_ID)
@@ -40,15 +41,16 @@ class UserSerializer < RecordSerializer
   has_many :email_addresses, predicate: NS::ARGU[:emails], if: method(:service_or_self?)
   attribute :email, predicate: NS::SCHEMA[:email], if: method(:service_or_self?)
   attribute :has_analytics, predicate: NS::ARGU[:hasAnalytics], if: method(:self?)
-  attribute :password, predicate: NS::ARGU[:password], datatype: NS::ONTOLA['datatype/password'], if: method(:never)
+  attribute :password, predicate: NS::ONTOLA[:password], datatype: NS::ONTOLA['datatype/password'], if: method(:never)
   attribute :password_confirmation,
-            predicate: NS::ARGU[:passwordConfirmation],
+            predicate: NS::ONTOLA[:passwordConfirmation],
             datatype: NS::ONTOLA['datatype/password'],
             if: method(:never)
   attribute :current_password,
             predicate: NS::ARGU[:currentPassword],
             datatype: NS::ONTOLA['datatype/password'],
             if: method(:never)
+  attribute :r, predicate: NS::ONTOLA[:redirectUrl], datatype: NS::XSD[:string]
 
   enum :reactions_email,
        predicate: NS::ARGU[:reactionsEmails],

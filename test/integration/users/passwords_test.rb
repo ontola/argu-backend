@@ -7,6 +7,7 @@ module Users
     define_freetown
     let(:user) { create(:unconfirmed_user) }
     let(:user_no_shortname) { create(:user, :no_shortname, first_name: nil, last_name: nil) }
+    let(:password_form) { RDF::URI('https:example.com/password') }
 
     ####################################
     # As guest
@@ -19,9 +20,14 @@ module Users
 
     test 'guest should not post create password for non-existing email' do
       sign_in :guest_user
-      post user_password_path, params: {user: {email: 'wrong@email.com'}}
+      post user_password_path,
+           headers: argu_headers(referrer: password_form),
+           params: {user: {email: 'wrong@email.com'}}
       assert_response :unprocessable_entity
-      expect_ontola_action(snackbar: 'Email not found')
+      expect_errors(
+        password_form,
+        NS::SCHEMA[:email] => 'Not found'
+      )
     end
 
     test 'guest should post create password for existing email' do
@@ -60,6 +66,7 @@ module Users
     test 'guest should not put update password with non-matching passwords' do
       sign_in :guest_user
       put user_password_path,
+          headers: argu_headers(referrer: password_form),
           params: {
             user: {
               reset_password_token: user.send(:set_reset_password_token),
@@ -68,7 +75,10 @@ module Users
             }
           }
       assert_response :unprocessable_entity
-      expect_ontola_action(snackbar: 'Password confirmation doesn\'t match Password')
+      expect_errors(
+        password_form,
+        NS::ONTOLA[:passwordConfirmation] => "Doesn't match Password"
+      )
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end
 
@@ -161,6 +171,7 @@ module Users
     test 'user should not put update password with non-matching passwords' do
       sign_in user
       put user_password_path,
+          headers: argu_headers(referrer: password_form),
           params: {
             user: {
               reset_password_token: user.send(:set_reset_password_token),
@@ -169,7 +180,10 @@ module Users
             }
           }
       assert_response :unprocessable_entity
-      expect_ontola_action(snackbar: 'Password confirmation doesn\'t match Password')
+      expect_errors(
+        password_form,
+        NS::ONTOLA[:passwordConfirmation] => "Doesn't match Password"
+      )
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end
 

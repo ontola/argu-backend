@@ -4,6 +4,15 @@ class UserActionList < ApplicationActionList
   extend LanguageHelper
 
   has_action(
+    :create,
+    create_options.merge(
+      form: ::Users::RegistrationForm,
+      label: -> { I18n.t('actions.users.create.label') },
+      url: -> { RDF::DynamicURI(LinkedRails.iri(path: '/users')) }
+    )
+  )
+
+  has_action(
     :update,
     update_options.merge(
       label: -> { I18n.t('actions.users.update.label') }

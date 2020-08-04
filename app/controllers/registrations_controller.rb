@@ -37,7 +37,7 @@ class RegistrationsController < Devise::RegistrationsController
       resource,
       RedisResource::Relation.where(publisher: guest_user, parent: {owner_type: 'VoteEvent'})
     )
-    resource.accept_terms!(mail_sent) if accept_terms_param
+    resource.send_reset_password_token_email unless mail_sent
     schedule_redis_resource_worker(guest_user, resource, resource.r) if session_id.present?
   end
 
@@ -82,5 +82,11 @@ class RegistrationsController < Devise::RegistrationsController
 
   def user_confirmation_url(user)
     iri_from_template(:user_confirmation, confirmation_token: user.confirmation_token)
+  end
+
+  class << self
+    def controller_class
+      User
+    end
   end
 end

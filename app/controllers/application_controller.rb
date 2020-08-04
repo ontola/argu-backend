@@ -172,7 +172,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   # For Devise
   def configure_permitted_parameters
     devise_parameter_sanitizer
-      .permit(:sign_up, keys: [:email, :r, shortname_attributes: [:shortname]])
+      .permit(:sign_up, keys: [:email, :r, :accept_terms, shortname_attributes: [:shortname]])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:r])
   end
 

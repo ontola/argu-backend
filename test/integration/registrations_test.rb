@@ -90,11 +90,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
         post user_registration_path,
              params: {
                user: {
+                 accept_terms: true,
                  email: 'test@example.com',
                  password: 'password',
                  password_confirmation: 'password'
-               },
-               accept_terms: true
+               }
              }
         assert_response :success
         assert_equal response.header['Location'], setup_users_path

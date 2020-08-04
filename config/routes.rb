@@ -79,9 +79,14 @@ Rails.application.routes.draw do
     put 'users/confirm', to: 'users/confirmations#confirm'
   end
 
+  scope 'u' do
+    resource :sessions, only: %i[create]
+    get 'sign_in', to: 'sessions#new'
+    resources :tokens, only: %i[new]
+  end
   resources :users,
             path: 'u',
-            only: %i[show edit] do
+            only: %i[show edit new create] do
     resource :follows, only: :destroy, controller: 'users/follows'
 
     get :setup, to: 'users/setup#edit', on: :collection

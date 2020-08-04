@@ -13,7 +13,9 @@ RSpec.describe 'Tokens', type: :request do
   def post_token(scope: :guest, params: {})
     post oauth_token_iri,
          params: params.merge(scope: scope),
-         headers: headers
+         headers: {
+           'Accept' => 'application/json'
+         }
   end
 
   def oauth_token_iri

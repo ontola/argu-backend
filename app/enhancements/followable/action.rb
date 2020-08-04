@@ -11,7 +11,7 @@ module Followable
           type: [NS::SCHEMA[:Action]],
           url: -> { follow_iri(follow_type) },
           http_method: :post,
-          label: I18n.t("menus.default.#{follow_type}")
+          label: -> { I18n.t("menus.default.#{follow_type}") }
         )
       end
 

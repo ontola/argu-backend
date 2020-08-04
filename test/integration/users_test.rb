@@ -27,6 +27,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
   let(:user_non_public) { create(:user, is_public: false) }
   let(:user_hidden_votes) { create(:user, show_feed: false) }
+  let(:user_form) { RDF::URI('https:example.com/user') }
 
   ####################################
   # Show as Guest
@@ -188,35 +189,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_email_sent
   end
 
-  test 'user should switch primary email' do
-    sign_in user
-    second_email
-
-    assert_not_equal user.primary_email_record.email, second_email.email
-
-    assert_difference('EmailAddress.count' => 0,
-                      worker_count_string('SendEmailWorker') => 0) do
-      put resource_iri(user, root: argu),
-          params: {
-            user: {
-              email_addresses_attributes: {
-                '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
-                '1': {email: second_email.email, id: second_email.id}
-              },
-              primary_email: '[1]',
-              current_password: user.password
-            }
-          }
-    end
-    user.reload
-    assert_equal user.email_addresses.where(primary: true).count, 1
-    assert_not_equal user.email_addresses.last.email, second_email.email
-    assert_equal user.primary_email_record.email, second_email.email
-
-    assert_response :success
-    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
-  end
-
   test 'user should delete secondary email' do
     sign_in user
     second_email
@@ -335,6 +307,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_no_difference('EmailAddress.count') do
       put resource_iri(user, root: argu),
+          headers: argu_headers(referrer: user_form),
           params: {
             user: {
               email_addresses_attributes: {
@@ -347,7 +320,10 @@ class UsersTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_entity
-    expect_ontola_action(snackbar: 'Email has already been taken')
+    expect_errors(
+      user_form,
+      NS::SCHEMA[:email] => 'Has already been taken'
+    )
   end
 
   test 'user with other email should redirect to r on wrong_email' do
@@ -378,6 +354,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_no_difference('EmailAddress.count') do
       put resource_iri(user_public, root: argu),
+          headers: argu_headers(referrer: user_form),
           params: {
             user: {
               email_addresses_attributes: {
@@ -390,7 +367,10 @@ class UsersTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 422
-    expect_ontola_action(snackbar: 'Email has already been taken')
+    expect_errors(
+      user_form,
+      NS::SCHEMA[:email] => 'Has already been taken'
+    )
   end
 
   ####################################
@@ -418,28 +398,38 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should not put update password without current password' do
     sign_in user
     password = user.encrypted_password
-    put resource_iri(user, root: argu), params: {
-      user: {
-        password: 'new_password'
-      }
-    }
+    put resource_iri(user, root: argu),
+        headers: argu_headers(referrer: user_form),
+        params: {
+          user: {
+            password: 'new_password'
+          }
+        }
     assert_response :unprocessable_entity
     assert_equal password, user.reload.encrypted_password
-    expect_ontola_action(snackbar: 'Current password can\'t be blank')
+    expect_errors(
+      user_form,
+      NS::ARGU[:currentPassword] => 'Can\'t be blank'
+    )
   end
 
   test 'user should not put update password with wrong current password' do
     sign_in user
     password = user.encrypted_password
-    put resource_iri(user, root: argu), params: {
-      user: {
-        password: 'new_password',
-        current_password: 'wrong'
-      }
-    }
+    put resource_iri(user, root: argu),
+        headers: argu_headers(referrer: user_form),
+        params: {
+          user: {
+            password: 'new_password',
+            current_password: 'wrong'
+          }
+        }
     assert_response :unprocessable_entity
     assert_equal password, user.reload.encrypted_password
-    expect_ontola_action(snackbar: 'Current password is invalid')
+    expect_errors(
+      user_form,
+      NS::ARGU[:currentPassword] => 'Is invalid'
+    )
   end
 
   test 'user should not put update password with current password' do

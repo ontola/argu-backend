@@ -25,7 +25,7 @@ en:
       invalid_email: 'We couldn''t find a user with this email.'
       invalid_password: 'Invalid password.'
       invalid_username: 'We couldn''t find a user with this name.'
-      no_password: 'Your account does not have a password yet.'
+      no_password: "You account does not have a password yet. We've just send you a new email to set a password."
       user:
         not_found_in_database: 'We couldn''t find a user with that email and password combination.'
     sessions:
@@ -44,7 +44,7 @@ en:
         header: 'Choose a password'
       new:
         header: 'Forgotten password?'
-        helper: "Enter your email address or username and we'll send you a mail with a link where you can enter a new password."
+        helper: "Enter your email address and we'll send you a mail with a link where you can enter a new password."
         submit: 'Send reset instructions'
     confirmations:
       send: 'Send confirmation mail'

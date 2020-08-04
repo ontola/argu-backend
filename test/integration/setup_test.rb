@@ -9,6 +9,7 @@ class SetupTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
   let(:user_no_shortname) { create(:user, :no_shortname, first_name: nil, last_name: nil) }
   let(:guest_user) { create_guest_user }
+  let(:setup_form) { RDF::URI('https:example.com/setup') }
 
   ####################################
   # As Guest
@@ -54,13 +55,18 @@ class SetupTest < ActionDispatch::IntegrationTest
 
   test 'user without shortname should not put setup existing shortname' do
     sign_in user_no_shortname
-    put iri_from_template(:setup_iri, root: argu), params: {
-      setup: {
-        url: user.url
-      }
-    }
+    put iri_from_template(:setup_iri, root: argu),
+        headers: argu_headers(referrer: setup_form),
+        params: {
+          setup: {
+            url: user.url
+          }
+        }
     assert_response :unprocessable_entity
-    expect_ontola_action(snackbar: 'Shortname shortname has already been taken')
+    expect_errors(
+      setup_form,
+      NS::ARGU[:shortname] => 'Has already been taken'
+    )
     assert_nil user_no_shortname.reload.url
   end
 

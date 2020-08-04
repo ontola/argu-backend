@@ -6,6 +6,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance ConfirmedDestroyable
   enhance Placeable
   enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Menuable
 
@@ -95,24 +96,27 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
             }
   validate :r, :validate_r
   validate :validate_public_group_membership
+  validate :validate_url_uniqueness
 
   auto_strip_attributes :first_name, :last_name, :middle_name, squish: true
 
   def self.find_for_database_authentication(warden_conditions)
     if warden_conditions[:email].include?('@')
-      joins(:email_addresses).find_by('lower(email_addresses.email) = ?', warden_conditions[:email])
+      joins(:email_addresses).find_by('lower(email_addresses.email) = ?', warden_conditions[:email].downcase)
     else
-      joins(:shortname).find_by('lower(shortnames.shortname) = ?', warden_conditions[:email])
+      joins(:shortname).find_by('lower(shortnames.shortname) = ?', warden_conditions[:email].downcase)
     end
   end
 
-  def accept_terms!(skip_set_password_mail = false)
-    update!(last_accepted: Time.current, notifications_viewed_at: Time.current)
-    return true if skip_set_password_mail || encrypted_password.present?
+  def accept_terms
+    true if new_record?
+  end
 
-    send_reset_password_token_email
+  def accept_terms=(val)
+    return unless val.to_s == 'true'
 
-    true
+    self.last_accepted = Time.current
+    self.notifications_viewed_at = Time.current
   end
 
   def accepted_terms?
@@ -233,7 +237,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def generated_name
-    [I18n.t('groups.public.name_singular'), id].join(' ')
+    [I18n.t('groups.public.name_singular'), id].join(' ') unless new_record?
   end
 
   def guest?
@@ -370,16 +374,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     (url || first_name).present?
   end
 
-  def validate_r
-    return if argu_iri_or_relative?(r)
-
-    errors.add(:r, "Redirecting to #{r} is not allowed")
-  end
-
-  def validate_public_group_membership
-    profile&.group_memberships&.where(group_id: Group::PUBLIC_ID)&.present?
-  end
-
   private
 
   def adjust_birthday
@@ -412,6 +406,22 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return true if keys.length != LOGIN_ATTRS.length && keys.length != FAILED_LOGIN_ATTRS.length
 
     !(keys & LOGIN_ATTRS == keys || keys & FAILED_LOGIN_ATTRS == keys) # rubocop:disable Style/MultipleComparison
+  end
+
+  def validate_r
+    return if argu_iri_or_relative?(r)
+
+    errors.add(:r, "Redirecting to #{r} is not allowed")
+  end
+
+  def validate_url_uniqueness
+    shortname&.errors&.each do |_key, message|
+      errors.add(:url, message)
+    end
+  end
+
+  def validate_public_group_membership
+    profile&.group_memberships&.where(group_id: Group::PUBLIC_ID)&.present?
   end
 
   class << self

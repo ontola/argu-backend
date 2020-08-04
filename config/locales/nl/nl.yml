@@ -49,6 +49,7 @@ nl:
   update: "Bijwerken"
   update_type: "%{type} bijwerken"
   save: "Opslaan"
+  send: "Verstuur"
   new: "Nieuw"
   new_type: "Nieuw %{type}"
   newe_type: "Nieuwe %{type}"

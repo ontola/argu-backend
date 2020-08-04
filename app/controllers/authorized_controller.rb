@@ -150,11 +150,12 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     end
   end
 
-  def verify_terms_accepted
+  def verify_terms_accepted # rubocop:disable Metrics/AbcSize
     return if current_user.guest? || current_user.accepted_terms?
 
     if accept_terms_param
-      current_user.accept_terms!
+      current_user.update(accept_terms: true)
+      current_user.send_reset_password_token_email if current_user.encrypted_password.blank?
     else
       action = new_iri(expand_uri_template(:terms_iri), nil)
       add_exec_action_header(response.headers, ontola_dialog_action(action))

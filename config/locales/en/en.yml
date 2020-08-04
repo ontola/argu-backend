@@ -49,6 +49,7 @@ en:
   update: "Update"
   update_type: "Update %{type} "
   save: "Save"
+  send: "Send"
   new: "New"
   new_type: "New %{type}"
   newe_type: "New %{type}"

@@ -9,6 +9,7 @@ module Users
         description: -> { I18n.t('devise.passwords.new.helper') },
         include_object: true,
         label: -> { I18n.t('devise.passwords.new.header') },
+        submit_label: -> { I18n.t('send') },
         policy: nil,
         object: nil,
         url: -> { iri_from_template(:passwords_iri) }

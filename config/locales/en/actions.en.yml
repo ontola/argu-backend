@@ -94,7 +94,18 @@ en:
         submit: "Upvote"
       destroy_vote:
         submit: "Upvote"
+    sessions:
+      create:
+        label: "Sign in or register"
+        submit: "Confirm"
+    tokens:
+      create:
+        label: "Sign in"
+        submit: "Continue"
     users:
+      create:
+        label: "Register"
+        submit: "Confirm"
       update:
         label: "Settings"
       profile:

@@ -10,6 +10,7 @@ module Users
         label: -> { I18n.t('devise.confirmations.edit.header') },
         policy: nil,
         object: nil,
+        submit_label: -> { I18n.t('send') },
         url: -> { iri_from_template(:confirmations_iri) }
       )
     )

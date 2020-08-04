@@ -11,6 +11,7 @@ module Users
         label: -> { I18n.t('devise.unlocks.new.header') },
         object: nil,
         policy: nil,
+        submit_label: -> { I18n.t('send') },
         url: -> { iri_from_template(:user_unlock) }
       )
     )

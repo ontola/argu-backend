@@ -18,11 +18,12 @@ module Argu
           measure measure_type employment banner
         ].freeze
 
-        def argu_headers(accept: :nq, bearer: nil, host: nil)
+        def argu_headers(accept: :nq, bearer: nil, host: nil, referrer: nil)
           headers = {}
           headers['Accept'] = accept.is_a?(Symbol) ? Mime::Type.lookup_by_extension(accept).to_s : accept
           headers['Authorization'] = "Bearer #{bearer}" if bearer
           headers['HTTP_HOST'] = host if host
+          headers['Request-Referrer'] = referrer.to_s if referrer
           headers
         end
 

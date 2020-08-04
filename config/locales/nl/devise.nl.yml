@@ -25,7 +25,7 @@ nl:
       invalid_email: 'We konden geen gebruiker vinden met dit e-mailadres.'
       invalid_password: 'Het wachtwoord is niet correct.'
       invalid_username: 'We konden geen gebruiker vinden met deze naam.'
-      no_password: 'Je hebt nog geen wachtwoord ingesteld voor dit account.'
+      no_password: 'Je hebt nog geen wachtwoord ingesteld voor dit account. We hebben zojuist een nieuwe email gestuurd waarmee een wachtwoord kan worden ingesteld.'
       user:
         not_found_in_database: 'We konden geen gebruiker vinden met dat e-mailadres en wachtwoord.'
     sessions:
@@ -44,7 +44,7 @@ nl:
         header: 'Kies een wachtwoord'
       new:
         header: 'Wachtwoord vergeten?'
-        helper: 'Vul je e-mailadres of gebruikersnaam in en wij zullen jou een mail sturen met een link waarmee je een nieuw wachtwoord kan instellen.'
+        helper: 'Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je een nieuw wachtwoord kan instellen.'
         submit: 'Verzend reset instructies'
     confirmations:
       send: 'Verstuur bevestigingsmail'

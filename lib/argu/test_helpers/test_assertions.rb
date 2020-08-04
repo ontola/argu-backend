@@ -68,6 +68,14 @@ module Argu
         expect(response.headers[key]).to(include(value))
       end
 
+      def expect_errors(iri, errors)
+        error_response = expect_triple(iri, NS::LL[:errorResponse], nil).first.object
+        assert_equal expect_triple(error_response, nil, nil).count, errors.count
+        errors.each do |key, value|
+          expect_triple(error_response, key, value)
+        end
+      end
+
       def expect_resource_type(type, iri: requested_iri)
         expect_triple(iri, RDF[:type], type)
       end

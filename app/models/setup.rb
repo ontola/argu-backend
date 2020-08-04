@@ -18,7 +18,6 @@ class Setup < VirtualResource
                       .options[:with],
               message: I18n.t('profiles.should_start_with_capital')
             }
-
   def id; end
 
   def iri_opts
