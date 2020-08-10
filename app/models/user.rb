@@ -31,8 +31,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :arguments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :container_nodes, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :decisions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :pages, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :topics, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :votes, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
@@ -40,6 +42,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :employments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :uploaded_media_objects,
            class_name: 'MediaObject',
+           inverse_of: :publisher,
+           foreign_key: 'publisher_id',
+           dependent: :restrict_with_exception
+  has_many :content_placements,
+           -> { where(placement_type: %i[country custom]) },
+           class_name: 'Placement',
            inverse_of: :publisher,
            foreign_key: 'publisher_id',
            dependent: :restrict_with_exception
@@ -385,16 +393,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    %w[comments motions arguments questions blog_posts topics votes vote_events uploaded_media_objects]
+    (Edge.descendants.map(&:to_s).map(&:tableize) + %w[uploaded_media_objects content_placements])
       .each do |association|
-      send(association)
-        .model
-        .expropriate(send(association))
+      try(association)
+        &.model
+        &.expropriate(try(association))
     end
-    # rubocop:disable Rails/SkipsModelValidations
-    email_addresses.update_all(primary: false)
-    edges.update_all(publisher_id: User::COMMUNITY_ID, creator_id: Profile::COMMUNITY_ID)
-    # rubocop:enable Rails/SkipsModelValidations
+    email_addresses.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def minor?

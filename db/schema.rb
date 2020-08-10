@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_14_124908) do
+ActiveRecord::Schema.define(version: 2020_08_10_082006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -125,14 +125,6 @@ ActiveRecord::Schema.define(version: 2020_05_14_124908) do
     t.datetime "updated_at", null: false
     t.uuid "edge_id", null: false
     t.index ["edge_id"], name: "index_exports_on_edge_id"
-  end
-
-  create_table "favorites", id: :serial, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "edge_id", null: false
-    t.index ["user_id", "edge_id"], name: "index_favorites_on_user_id_and_edge_id", unique: true
   end
 
   create_table "follows", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -510,8 +502,6 @@ ActiveRecord::Schema.define(version: 2020_05_14_124908) do
   add_foreign_key "email_addresses", "users"
   add_foreign_key "exports", "edges", primary_key: "uuid"
   add_foreign_key "exports", "users"
-  add_foreign_key "favorites", "edges", primary_key: "uuid"
-  add_foreign_key "favorites", "users"
   add_foreign_key "follows", "edges", column: "followable_id", primary_key: "uuid"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "grant_resets", "edges", primary_key: "uuid"

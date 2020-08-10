@@ -41,21 +41,6 @@ class Vote < Edge
 
   validates :creator, :option, presence: true
 
-  # #########methods###########
-  def argument_ids
-    @argument_ids ||= upvoted_arguments.pluck(:id).uniq
-  end
-
-  def upvoted_arguments
-    return [] if publisher.guest?
-
-    @upvoted_arguments ||=
-      Argument
-        .untrashed
-        .joins(:votes)
-        .where(votes_edges: {creator_id: creator_id}, parent_id: parent&.parent_id)
-  end
-
   # Needed for ActivityListener#audit_data
   def display_name
     "#{option} vote for #{parent.display_name}"
@@ -114,6 +99,10 @@ class Vote < Edge
   end
 
   class << self
+    def anonymize(collection)
+      collection.destroy_all
+    end
+
     def includes_for_serializer
       super.merge(publisher: {}, comment: :properties)
     end

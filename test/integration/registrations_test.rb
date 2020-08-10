@@ -396,10 +396,15 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     create :question, publisher: user, creator: user.profile, parent: freetown
     create :pro_argument, parent: Motion.last, publisher: user, creator: user.profile
     create :motion, publisher: user, creator: user.profile, parent: cairo
+    motion.build_custom_placement(publisher: user, creator: user.profile, place: place).save
 
     sign_in user
 
-    assert_difference('User.count' => -1, 'Edge.count' => -user.votes.count) do
+    assert_difference(
+      'User.count' => -1,
+      'Edge.count' => -user.votes.count,
+      'Edge.where(creator_id: Profile::COMMUNITY_ID).count' => 6
+    ) do
       delete resource_iri(user, root: argu),
              params: {
                user: {
@@ -418,7 +423,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     sign_in user
 
-    assert_difference('User.count' => -1) do
+    assert_difference(
+      'User.count' => -1,
+      'Edge.count' => 0,
+      'Edge.where(creator_id: Profile::COMMUNITY_ID).count' => 0
+    ) do
       delete resource_iri(user, root: argu),
              params: {
                user: {

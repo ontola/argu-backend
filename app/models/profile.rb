@@ -29,10 +29,13 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :arguments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :blog_posts, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :comments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :container_nodes, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :pages, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :topics, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :placements, inverse_of: :creator, foreign_key: :creator_id, dependent: :restrict_with_exception
   has_many :uploaded_media_objects,
            class_name: 'MediaObject',
            inverse_of: :creator,
@@ -153,12 +156,11 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Sets the dependent foreign relations to the Community profile
   def anonymize_dependencies
     ActsAsTenant.without_tenant do
-      %w[comments motions arguments questions blog_posts topics vote_events activities
-         uploaded_media_objects unscoped_group_memberships]
-        .each do |association|
-        send(association)
-          .model
-          .anonymize(send(association))
+      (Edge.descendants.map(&:to_s).map(&:tableize) +
+        %w[activities uploaded_media_objects unscoped_group_memberships placements]).each do |association|
+        try(association)
+          &.model
+          &.anonymize(try(association))
       end
     end
   end
