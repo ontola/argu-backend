@@ -31,14 +31,14 @@ module SPI
 
       assert_response 200
       assert_equal parsed_body, {
-        uuid: argu.uuid,
-        iri_prefix: 'argu.localtest/argu',
-        accent_background_color: '#475668',
-        accent_color: '#FFFFFF',
-        navbar_background: '#475668',
-        navbar_color: '#FFFFFF',
         database_schema: 'argu',
-        display_name: 'Argu'
+        display_name: 'Argu',
+        header_background: 'primary',
+        header_text: '#FFFFFF',
+        iri_prefix: 'argu.localtest/argu',
+        primary_color: '#475668',
+        secondary_color: '#d96833',
+        uuid: argu.uuid
       }.as_json
     end
   end

@@ -5,11 +5,10 @@ module Stylable
     extend ActiveSupport::Concern
 
     included do
-      attribute :accent_color, predicate: NS::ARGU[:accentColor]
-      attribute :accent_background_color, predicate: NS::ARGU[:accentBackgroundColor]
-      attribute :base_color, predicate: NS::ARGU[:baseColor]
-      attribute :navbar_background, predicate: NS::ARGU[:navbarBackground]
-      attribute :navbar_color, predicate: NS::ARGU[:navbarColor]
+      attribute :secondary_color, predicate: NS::ARGU[:secondaryColor]
+      attribute :primary_color, predicate: NS::ARGU[:primaryColor]
+      enum :header_background, predicate: NS::ARGU[:headerBackground]
+      enum :header_text, predicate: NS::ARGU[:headerText]
     end
   end
 end

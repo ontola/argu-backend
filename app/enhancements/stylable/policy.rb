@@ -6,7 +6,7 @@ module Stylable
 
     included do
       permit_attributes(
-        %i[navbar_color navbar_background accent_color accent_background_color styled_headers],
+        %i[header_background header_text secondary_color primary_color styled_headers],
         new_record: false
       )
     end

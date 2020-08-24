@@ -57,6 +57,14 @@ nl:
              <h2>Wanneer mag ik een organisatie aanmaken?</h2>
              <p>Alleen als jij <b>toestemming</b> hebt om namens de organisatie te handelen op Argu.</p>
              "
+    header_background:
+      background_primary: "Primaire kleur"
+      background_secondary: "Secondaire kleur"
+      background_white: "Wit"
+    header_text:
+      text_primary: "Primaire kleur"
+      text_secondary: "Secondaire kleur"
+      text_auto: "Automatisch"
   activerecord:
     attributes:
       page:

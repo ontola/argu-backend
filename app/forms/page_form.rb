@@ -14,10 +14,12 @@ class PageForm < ApplicationForm
         label: -> { I18n.t('forms.theme.label') },
         description: -> { I18n.t('forms.theme.description') } do
     has_one :default_profile_photo, min_count: 0
-    field :navbar_color
-    field :navbar_background
-    field :accent_color
-    field :accent_background_color
+    field :primary_color,
+          input_field: LinkedRails::Form::Field::ColorInput
+    field :secondary_color,
+          input_field: LinkedRails::Form::Field::ColorInput
+    field :header_background
+    field :header_text
     field :styled_headers
   end
 end

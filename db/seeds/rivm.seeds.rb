@@ -70,7 +70,7 @@ Apartment::Tenant.switch('rivm') do # rubocop:disable Metrics/BlockLength
   PermittedAction.create_for_grant_sets('MeasureType', 'destroy', administrator_plus)
 
   ActsAsTenant.with_tenant(Page.first) do
-    Page.first.update!(accent_background_color: '#007BC7', base_color: '#007BC7', navbar_background: '#007BC7')
+    Page.first.update!(primary_color: '#007BC7')
 
     CustomMenuItem.create!(
       menu_type: :navigations,

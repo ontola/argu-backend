@@ -14,8 +14,6 @@ nl:
       question: "Uitdaging"
     labels:
       about: "Over"
-      accent_background_color: "Achtergrondkleur van knoppen"
-      accent_color: "Tekstkleur van knoppen"
       alias: 'Alias'
       show_feed: "Toon mijn activiteit en mijn stemmen in mijn profiel"
       attachments: "Bijlagen"
@@ -52,6 +50,8 @@ nl:
       grant_collection: "Rechten"
       group_membership_collection: 'Leden'
       group_id: 'Groep'
+      header_background: "Achtergrond van bovenste balk"
+      header_text: "Tekstkleur van bovenste balk"
       home_placement: "Adres"
       is_public: "Profiel zichtbaar voor niet-leden"
       is_trashed: "Is verborgen"
@@ -63,8 +63,6 @@ nl:
       locale: "Taal"
       mark_as_important: "Markeer als belangrijk"
       name: "Naam"
-      navbar_background: "Achtergrond van bovenste balk"
-      navbar_color: "Tekstkleur van bovenste balk"
       notify: 'Verstuur notificatie naar de plaatser'
       password_confirmation: "Wachtwoord bevestigen"
       email: "Email"
@@ -74,6 +72,7 @@ nl:
       pinned: "Vastzetten"
       votes_pro_count: "Stemmen voor"
       postal_code: "Postcode"
+      primary_color: "Primaire kleur"
       require_location: "Locatie is verplicht"
       current_password: "Huidig wachtwoord"
       primary_container_node_id: "Homepage"
@@ -84,9 +83,10 @@ nl:
       remove_content: "Afbeelding verwijderen"
       remove_profile_photo: "Profielfoto verwijderen"
       remove_image: "Foto verwijderen"
+      secondary_color: "Secondaire kleur"
       settings_menu: 'Instellingen'
       status: 'Status'
-      styled_headers: 'Gebruik knopkleur voor titels'
+      styled_headers: 'Gebruik primaire kleur voor titels'
       title: "Titel"
       time_zone: "Tijdzone"
       updated_at: "Aangepast op"

@@ -58,6 +58,14 @@ en:
              <h2>When am I allowed to create an organization?</h2>
              <p>Only if you have <b>permission</b> to participate on Argu on behalf of your organisation.</p>
              "
+    header_background:
+      background_primary: "Primary color"
+      background_secondary: "Secondary color"
+      background_white: "White"
+    header_text:
+      text_primary: "Primary color"
+      text_secondary: "Secondary color"
+      text_auto: "Automatic"
   activerecord:
     attributes:
       page:

@@ -5,19 +5,21 @@ module Stylable
     extend ActiveSupport::Concern
 
     included do
-      property :accent_color, :string, NS::ARGU[:accentColor], default: '#FFFFFF'
-      property :accent_background_color, :string, NS::ARGU[:accentBackgroundColor], default: '#475668'
-      property :base_color, :string, NS::ARGU[:baseColor], default: '#475668'
-      property :navbar_background, :string, NS::ARGU[:navbarBackground], default: '#475668'
-      property :navbar_color, :string, NS::ARGU[:navbarColor]
+      property :primary_color, :string, NS::ARGU[:primaryColor], default: '#475668'
+      property :secondary_color, :string, NS::ARGU[:secondaryColor], default: '#d96833'
+      property :header_background,
+               :integer,
+               NS::ARGU[:headerBackground],
+               default: 0,
+               enum: {background_primary: 0, background_secondary: 1, background_white: 2}
+      property :header_text,
+               :integer,
+               NS::ARGU[:headerText],
+               default: 2,
+               enum: {text_auto: 2, text_primary: 0, text_secondary: 1}
 
-      validates :accent_color, css_hex_color: true
-      validates :accent_background_color, css_hex_color: true
-      validates :base_color, css_hex_color: true
-
-      def navbar_color
-        super || accent_color
-      end
+      validates :secondary_color, css_hex_color: true
+      validates :primary_color, css_hex_color: true
     end
   end
 end

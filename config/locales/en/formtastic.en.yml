@@ -14,8 +14,6 @@ en:
       question: "Question"
     labels:
       about: "About"
-      accent_background_color: "Background color of buttons"
-      accent_color: "Text color of buttons"
       alias: 'Alias'
       show_feed: "Show my activity and my votes on my profile"
       attachments: "Attachments"
@@ -52,6 +50,8 @@ en:
       grant_collection: "Grants"
       group_membership_collection: 'Members'
       group_id: 'Group'
+      header_background: "Background of top bar"
+      header_text: "Text color of top bar"
       home_placement: "Address"
       is_public: "Show profile to non-members"
       is_trashed: "Is hidden"
@@ -63,8 +63,6 @@ en:
       locale: "Language"
       mark_as_important: "Mark as important"
       name: "Name"
-      navbar_background: "Background of top bar"
-      navbar_color: "Text color of top bar"
       notify: 'Verstuur notificatie naar de plaatser'
       password_confirmation: "Confirm password"
       email: "Email"
@@ -74,6 +72,7 @@ en:
       pinned: "Pin"
       votes_pro_count: "Votes in favour"
       postal_code: "Postal code"
+      primary_color: "Primary color"
       published_at: "Published"
       require_location: "Location is required"
       current_password: "Current password"
@@ -84,9 +83,10 @@ en:
       remove_content: "Remove image"
       remove_profile_photo: "Remove profile photo"
       remove_image: "Remove photo"
+      secondary_color: "Secondary color"
       settings_menu: 'Settings'
       status: 'Status'
-      styled_headers: "Use button color for headings"
+      styled_headers: "Use primary color for headings"
       title: "Title"
       time_zone: "Time zone"
       updated_at: "Updated at"

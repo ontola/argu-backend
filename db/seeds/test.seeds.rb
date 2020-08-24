@@ -77,8 +77,7 @@ other_page = FactorySeeder.create(
   creator: staff.profile,
   is_published: true,
   name: 'Other page',
-  accent_background_color: '#800000',
-  navbar_background: '#800000',
+  primary_color: '#800000',
   url: 'other_page',
   locale: 'en-GB',
   iri_prefix: 'argu.localtest/other_page'

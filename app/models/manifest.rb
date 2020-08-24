@@ -43,16 +43,16 @@ class Manifest < VirtualResource
   def ontola # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     {
       allowed_external_sources: page.allowed_external_sources,
-      secondary_main: page.accent_background_color,
-      secondary_text: page.accent_color,
       css_class: page.template,
+      header_background: page.header_background.sub('background_', ''),
+      header_text: page.header_text.sub('text_', ''),
       matomo_hostname: page.matomo_host || ENV['MATOMO_HOST'],
       matomo_site_id: page.matomo_site_id,
-      primary_main: page.navbar_background,
-      primary_text: page.navbar_color,
+      primary_color: page.primary_color,
+      secondary_color: page.secondary_color,
       styled_headers: page.styled_headers,
-      template: page.template,
-      template_options: template_options
+      theme: page.template,
+      theme_options: template_options
     }
   end
 
@@ -73,7 +73,7 @@ class Manifest < VirtualResource
   end
 
   def theme_color
-    page.navbar_background
+    page.primary_color
   end
 
   def write_to_cache(cache = Argu::Cache.new)

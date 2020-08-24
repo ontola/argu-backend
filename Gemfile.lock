@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 9ab874c3ba02c9fc0b720b5fb58150f22b9dad1b
+  revision: 383ca60e5c93d906af7ca08cf6c596f3044563a9
   branch: filtering
   specs:
     linked_rails (0.0.0)
@@ -212,7 +212,7 @@ GEM
       timers (>= 4.1.1)
     cocoon (1.2.14)
     coderay (1.1.2)
-    concurrent-ruby (1.1.6)
+    concurrent-ruby (1.1.7)
     connection_pool (2.2.3)
     counter_culture (2.5.0)
       activerecord (>= 4.2)
@@ -446,7 +446,7 @@ GEM
       thor (>= 0.20.3, < 2.0)
     rainbow (3.0.0)
     rake (13.0.1)
-    rdf (3.1.4)
+    rdf (3.1.5)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (3.1.0)
