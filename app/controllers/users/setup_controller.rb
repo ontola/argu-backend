@@ -14,6 +14,12 @@ module Users
       true
     end
 
+    def permit_params
+      return {} unless params.key?(:setup)
+
+      super
+    end
+
     def redirect_to_root
       active_response_block do
         respond_with_redirect location: tree_root.iri, reload: true
