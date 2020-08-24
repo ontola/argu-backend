@@ -96,6 +96,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     self.last_accepted = bool.to_s == 'true' ? Time.current : nil
   end
 
+  def all_shortnames
+    @all_shortnames = shortnames.pluck(:shortname)
+  end
+
   def build_profile(*options)
     super(*options) if profile.nil?
   end

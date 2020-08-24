@@ -31,10 +31,11 @@ module SPI
 
       assert_response 200
       assert_equal parsed_body, {
+        all_shortnames: %w[argu],
         database_schema: 'argu',
         display_name: 'Argu',
-        header_background: 'primary',
-        header_text: '#FFFFFF',
+        header_background: 'background_primary',
+        header_text: 'text_auto',
         iri_prefix: 'argu.localtest/argu',
         primary_color: '#475668',
         secondary_color: '#d96833',

@@ -4,7 +4,7 @@ module Public
   module SPI
     class TenantFinderController < SPI::SPIController
       TENANT_META_ATTRS = %w[
-        uuid iri_prefix header_background header_text secondary_color primary_color
+        uuid all_shortnames iri_prefix header_background header_text secondary_color primary_color
         database_schema display_name
       ].freeze
 
