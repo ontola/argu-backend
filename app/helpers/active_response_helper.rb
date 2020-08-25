@@ -3,6 +3,10 @@
 module ActiveResponseHelper
   private
 
+  def active_response_failure_message
+    I18n.t("type_#{action_name}_failure", type: type_for(current_resource, default: I18n.t('type_changes')).downcase)
+  end
+
   def active_response_success_message # rubocop:disable Metrics/AbcSize
     if current_resource.try(:is_publishable?) && (action_name == 'create' || resource_was_published?)
       if current_resource.try(:argu_publication)&.publish_time_lapsed?

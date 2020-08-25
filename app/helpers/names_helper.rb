@@ -160,7 +160,7 @@ module NamesHelper
   # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
   # @private
-  def type_for(item)
-    I18n.t("#{item.model_name.collection}.type")
+  def type_for(item, default: [])
+    I18n.t("#{item.model_name.collection}.type", default: default)
   end
 end
