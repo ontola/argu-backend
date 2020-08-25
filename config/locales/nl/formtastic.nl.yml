@@ -175,6 +175,7 @@ nl:
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"
       confirmation_string: "Type 'verwijder' om te bevestigen"
+      remote_content_url: "Voer een link in naar een bestand of filmpje"
       activity:
         comment: "Toelichting voor deze actie (optioneel)"
       argument:
