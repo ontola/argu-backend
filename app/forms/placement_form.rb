@@ -6,5 +6,6 @@ class PlacementForm < ApplicationForm
   hidden do
     field :lat
     field :lon
+    field :zoom_level
   end
 end

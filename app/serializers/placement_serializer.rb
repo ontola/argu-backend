@@ -25,5 +25,5 @@ class PlacementSerializer < RecordSerializer
 
   attribute :lat, predicate: NS::SCHEMA[:latitude]
   attribute :lon, predicate: NS::SCHEMA[:longitude]
-  attribute :zoom_level, predicate: NS::ARGU[:zoomLevel]
+  attribute :zoom_level, predicate: NS::ONTOLA[:zoomLevel]
 end

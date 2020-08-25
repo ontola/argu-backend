@@ -5,10 +5,11 @@ class Placement < ApplicationRecord
   include Parentable
 
   belongs_to :forum, primary_key: :uuid
-  belongs_to :place
+  belongs_to :place, autosave: true
   belongs_to :placeable, polymorphic: true, primary_key: :uuid
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
+  before_save :update_zoom
   before_validation :destruct_if_unneeded
   validate :validate_place, unless: :marked_for_destruction?
 
@@ -62,6 +63,10 @@ class Placement < ApplicationRecord
 
   def location_attributes_changed?
     %i[country_code lat lon postal_code].any? { |attr| send("#{attr}_changed?") }
+  end
+
+  def update_zoom
+    place.zoom_level = zoom_level if place && zoom_level.present?
   end
 
   # Validate whether the postal_code and country_code values are allowed and whether they match a {Place}
