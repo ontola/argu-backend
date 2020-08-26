@@ -205,7 +205,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
     end
     if ancestor_type.present?
-      followable.ancestors.where(owner_type: %w[Motion Question Forum Page]).find_each do |ancestor|
+      followable.ancestors.where(owner_type: self.class.followable_classes).find_each do |ancestor|
         follow(ancestor, ancestor_type)
       end
     end
@@ -430,6 +430,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
+    def followable_classes
+      @followable_classes ||= Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze.map(&:to_s)
+    end
+
     def preview_includes
       %i[
         default_profile_photo
