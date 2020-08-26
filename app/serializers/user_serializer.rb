@@ -51,6 +51,7 @@ class UserSerializer < RecordSerializer
             datatype: NS::ONTOLA['datatype/password'],
             if: method(:never)
   attribute :r, predicate: NS::ONTOLA[:redirectUrl], datatype: NS::XSD[:string]
+  statements :same_as_canonical
 
   enum :reactions_email,
        predicate: NS::ARGU[:reactionsEmails],
@@ -97,4 +98,12 @@ class UserSerializer < RecordSerializer
            [value.tzinfo.name, {close_match: NS::DBPEDIA[id], label: value.to_s}]
          end
        ]
+
+  def self.same_as_canonical(object, _params)
+    return [] if object.url.nil?
+
+    [
+      [object.canonical_iri, NS::OWL.sameAs, object.iri]
+    ]
+  end
 end
