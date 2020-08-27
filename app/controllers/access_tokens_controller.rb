@@ -10,10 +10,10 @@ class AccessTokensController < ApplicationController
   end
 
   def new_resource_params
-    params.permit(:r)
+    params.permit(:redirect_url)
   end
 
   def permit_params
-    params.require(:session).permit(:r, :email)
+    params.require(:session).permit(:redirect_url, :email)
   end
 end

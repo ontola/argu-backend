@@ -13,7 +13,7 @@ class UserPolicy < RestrictivePolicy
   permit_attributes %i[first_name middle_name last_name hide_last_name about show_feed is_public]
   permit_attributes %i[reactions_email news_email decisions_email memberships_email created_email has_analytics]
   permit_attributes %i[url], has_properties: {url: false}
-  permit_attributes %i[email r], new_record: true
+  permit_attributes %i[email redirect_url], new_record: true
 
   def permitted_tabs
     tabs = []

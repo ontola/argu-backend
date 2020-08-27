@@ -26,11 +26,11 @@ class ProfilesController < AuthorizedController
   end
 
   def redirect_url
-    return if authenticated_resource.try(:r).blank?
+    return if authenticated_resource.try(:redirect_url).blank?
 
-    r = authenticated_resource.r
-    authenticated_resource.update r: ''
-    r
+    redirect_url = authenticated_resource.redirect_url
+    authenticated_resource.update redirect_url: ''
+    redirect_url
   end
 
   def setup_permit_params
@@ -41,7 +41,7 @@ class ProfilesController < AuthorizedController
   end
 
   def user_or_redirect(redirect = nil)
-    raise Argu::Errors::Unauthorized.new(r: redirect) if current_user.guest?
+    raise Argu::Errors::Unauthorized.new(redirect_url: redirect) if current_user.guest?
 
     current_user
   end

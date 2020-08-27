@@ -141,7 +141,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     put iri_from_template(:languages_iri, language: locale, root: argu)
 
     attrs = attributes_for(:user)
-    attrs[:r] = freetown.iri
+    attrs[:redirect_url] = freetown.iri
     create_email_mock('confirmation', attrs[:email], token_url: /.+/)
     get freetown.iri.path
 

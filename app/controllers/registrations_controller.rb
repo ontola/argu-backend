@@ -38,7 +38,7 @@ class RegistrationsController < Devise::RegistrationsController
       RedisResource::Relation.where(publisher: guest_user, parent: {owner_type: 'VoteEvent'})
     )
     resource.send_reset_password_token_email unless mail_sent
-    schedule_redis_resource_worker(guest_user, resource, resource.r) if session_id.present?
+    schedule_redis_resource_worker(guest_user, resource, resource.redirect_url) if session_id.present?
   end
 
   private

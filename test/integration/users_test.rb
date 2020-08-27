@@ -314,7 +314,7 @@ class UsersTest < ActionDispatch::IntegrationTest
                 '99999' => {email: user.email}
               },
               form: 'wrong_email',
-              r: argu_url('/tokens/email/xxx')
+              redirect_url: argu_url('/tokens/email/xxx')
             }
           }
     end

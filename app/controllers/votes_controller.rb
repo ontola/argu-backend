@@ -121,7 +121,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def redirect_param
-    params.require(:vote).permit(:r)[:r]
+    params.require(:vote).permit(:redirect_url)[:redirect_url]
   end
 
   def redirect_location
@@ -137,7 +137,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       :new_vote,
       voteable_path: parent_resource!.iri.path.split('/').select(&:present?),
       confirm: true,
-      r: params[:r],
+      redirect_url: params[:redirect_url],
       'vote%5Bfor%5D' => option_param,
       with_hostname: true
     )

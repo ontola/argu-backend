@@ -50,7 +50,7 @@ class UserSerializer < RecordSerializer
             predicate: NS::ARGU[:currentPassword],
             datatype: NS::ONTOLA['datatype/password'],
             if: method(:never)
-  attribute :r, predicate: NS::ONTOLA[:redirectUrl], datatype: NS::XSD[:string]
+  attribute :redirect_url, predicate: NS::ONTOLA[:redirectUrl], datatype: NS::XSD[:string]
   statements :same_as_canonical
 
   enum :reactions_email,

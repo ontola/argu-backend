@@ -44,7 +44,7 @@ module Oauth
       schedule_redis_resource_worker(
         GuestUser.new(id: doorkeeper_token.resource_owner_id),
         User.find(res.token.resource_owner_id),
-        params[:r]
+        params[:redirect_url]
       )
     end
 

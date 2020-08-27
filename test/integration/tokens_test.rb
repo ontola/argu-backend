@@ -129,7 +129,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'User should post create token with r' do
+  test 'User should post create token with redirect_url' do
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post_token_password(redirect: freetown.iri.path)

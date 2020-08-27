@@ -6,20 +6,20 @@ module Argu
       attr_accessor :redirect
 
       # @param [Hash] options
-      # @option options [String] r The url to redirect to after sign in
+      # @option options [String] redirect_url The url to redirect to after sign in
       # @return [String] the message
       def initialize(options = {})
-        @redirect = options[:r]
+        @redirect = options[:redirect_url]
 
         message = I18n.t('devise.failure.locked')
         super(message)
       end
 
-      def r
-        r!.to_s.presence
+      def redirect_url
+        redirect_url!.to_s.presence
       end
 
-      def r!
+      def redirect_url!
         @redirect
       end
     end

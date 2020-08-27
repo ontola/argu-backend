@@ -82,8 +82,8 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   def after_sign_in_path_for(resource) # rubocop:disable Metrics/AbcSize
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
       freshdesk_redirect_url
-    elsif params[:r] && argu_iri_or_relative?(params[:r])
-      params[:r]
+    elsif params[:redirect_url] && argu_iri_or_relative?(params[:redirect_url])
+      params[:redirect_url]
     else
       super(resource || current_resource_owner)
     end
@@ -172,8 +172,8 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   # For Devise
   def configure_permitted_parameters
     devise_parameter_sanitizer
-      .permit(:sign_up, keys: [:email, :r, :accept_terms, shortname_attributes: [:shortname]])
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:r])
+      .permit(:sign_up, keys: [:email, :redirect_url, :accept_terms, shortname_attributes: [:shortname]])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:redirect_url])
   end
 
   def is_flashing_format?

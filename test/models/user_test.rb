@@ -33,19 +33,19 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should validate r' do
-    subject.r = ''
+    subject.redirect_url = ''
     assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.r = '/users/sign_in'
+    subject.redirect_url = '/users/sign_in'
     assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.r = 'https://argu.localtest/users/sign_in'
+    subject.redirect_url = 'https://argu.localtest/users/sign_in'
     assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.r = 'https://argu.localtest/users/sign_in?param=blabla'
+    subject.redirect_url = 'https://argu.localtest/users/sign_in?param=blabla'
     assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.r = 'https://beta.argu.dev/users/sign_in?param=blabla'
+    subject.redirect_url = 'https://beta.argu.dev/users/sign_in?param=blabla'
     assert_not subject.valid?
-    subject.r = 'https://evilwebsite.com/users/sign_in'
+    subject.redirect_url = 'https://evilwebsite.com/users/sign_in'
     assert_not subject.valid?
-    subject.r = 'https://evilwebsite.com/users/sign_in?param=blabla'
+    subject.redirect_url = 'https://evilwebsite.com/users/sign_in?param=blabla'
     assert_not subject.valid?
   end
 

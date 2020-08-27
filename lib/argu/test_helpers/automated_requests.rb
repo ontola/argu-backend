@@ -45,7 +45,7 @@ module Argu
           let(:expect_unauthorized) { expect(response.code).to eq('403') }
           let(:expect_not_found) { expect(response.code).to eq('404') }
           let(:expect_redirect_to_login) do
-            expect(response).to redirect_to(new_user_session_path(r: path_with_hostname(r_param)))
+            expect(response).to redirect_to(new_user_session_path(redirect_url: path_with_hostname(r_param)))
           end
 
           # Show

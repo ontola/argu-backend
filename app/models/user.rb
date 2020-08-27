@@ -102,7 +102,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
               in: I18n.available_locales.map(&:to_s),
               message: '%<value> is not a valid locale'
             }
-  validate :r, :validate_r
+  validate :redirect_url, :validate_r
   validate :validate_public_group_membership
   validate :validate_url_uniqueness
 
@@ -414,9 +414,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def validate_r
-    return if argu_iri_or_relative?(r)
+    return if argu_iri_or_relative?(redirect_url)
 
-    errors.add(:r, "Redirecting to #{r} is not allowed")
+    errors.add(:redirect_url, "Redirecting to #{redirect_url} is not allowed")
   end
 
   def validate_url_uniqueness

@@ -10,7 +10,7 @@ module Users
                       privacy: "[#{I18n.t('legal.documents.privacy')}](#{ActsAsTenant.current_tenant.iri}/privacy)")
              }
     hidden do
-      field :r
+      field :redirect_url
       field :accept_terms
     end
   end

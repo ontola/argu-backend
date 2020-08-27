@@ -7,6 +7,6 @@ class AccessTokenForm < ApplicationForm
         input_field: LinkedRails::Form::Field::PasswordInput,
         min_count: 1
   hidden do
-    field :r
+    field :redirect_url
   end
 end

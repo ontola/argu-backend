@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_141559) do
+ActiveRecord::Schema.define(version: 2020_08_26_175208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -438,7 +438,7 @@ ActiveRecord::Schema.define(version: 2020_08_12_141559) do
     t.datetime "updated_at", null: false
     t.string "unconfirmed_email", limit: 255
     t.boolean "finished_intro", default: false
-    t.text "r"
+    t.text "redirect_url"
     t.text "access_tokens"
     t.integer "follows_email", default: 0, null: false
     t.boolean "follows_mobile", default: true, null: false

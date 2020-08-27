@@ -8,9 +8,9 @@ module UsersHelper
   end
 
   def forum_from_r_action(user) # rubocop:disable Metrics/CyclomaticComplexity
-    return if user.r.nil?
+    return if user.redirect_url.nil?
 
-    resource = LinkedRails.resource_from_iri(path_to_url(user.r)) if user.r.present?
+    resource = LinkedRails.resource_from_iri(path_to_url(user.redirect_url)) if user.redirect_url.present?
     return if resource.nil? || resource.is_a?(Page) || !resource.is_fertile?
     return resource if resource.is_a?(Forum)
 
@@ -18,8 +18,8 @@ module UsersHelper
   end
 
   def r_param
-    r = (params[:user]&.permit(:r) || params.permit(:r)).try(:[], :r)
-    r if argu_iri_or_relative?(r)
+    redirect_url = (params[:user]&.permit(:redirect_url) || params.permit(:redirect_url)).try(:[], :redirect_url)
+    redirect_url if argu_iri_or_relative?(redirect_url)
   end
 
   def suggested_shortname(resource)

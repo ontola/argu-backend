@@ -32,17 +32,17 @@ Doorkeeper.configure do
       email = request.params[:user][:email]&.include?('@')
       raise(
         if email && EmailAddress.find_by(email: request.params[:user][:email]).nil?
-          Argu::Errors::UnknownEmail.new(r: r_with_authenticity_token)
+          Argu::Errors::UnknownEmail.new(redirect_url: r_with_authenticity_token)
         elsif !email && Shortname.find_by(owner_type: 'User', shortname: request.params[:user][:email]).nil?
-          Argu::Errors::UnknownUsername.new(r: r_with_authenticity_token)
+          Argu::Errors::UnknownUsername.new(redirect_url: r_with_authenticity_token)
         elsif request.env['warden'].message == :locked
-          Argu::Errors::AccountLocked.new(r: r_with_authenticity_token)
+          Argu::Errors::AccountLocked.new(redirect_url: r_with_authenticity_token)
         elsif user_from_db.encrypted_password.blank?
-          Argu::Errors::NoPassword.new(r: r_with_authenticity_token, user: user_from_db)
+          Argu::Errors::NoPassword.new(redirect_url: r_with_authenticity_token, user: user_from_db)
         elsif request.env['warden'].message == :invalid
-          Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
+          Argu::Errors::WrongPassword.new(redirect_url: r_with_authenticity_token)
         elsif request.env['warden'].message == :not_found_in_database
-          Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
+          Argu::Errors::WrongPassword.new(redirect_url: r_with_authenticity_token)
         else
           "unhandled login state #{request.env['warden'].message}"
         end
