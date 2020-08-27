@@ -3,6 +3,7 @@
 class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Destroyable
   enhance LinkedRails::Enhancements::Tableable

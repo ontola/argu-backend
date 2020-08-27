@@ -6,6 +6,7 @@ class Group < ApplicationRecord
 
   enhance ConfirmedDestroyable
   enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Menuable
   enhance Settingable

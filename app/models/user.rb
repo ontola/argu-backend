@@ -6,6 +6,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance ConfirmedDestroyable
   enhance Placeable
   enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Menuable

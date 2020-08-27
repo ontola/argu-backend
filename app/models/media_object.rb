@@ -7,6 +7,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Menuable
   enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Tableable
 
   belongs_to :about, polymorphic: true, inverse_of: :media_objects, primary_key: :uuid

@@ -3,6 +3,7 @@
 class Grant < ApplicationRecord
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Destroyable
   enhance LinkedRails::Enhancements::Tableable
 

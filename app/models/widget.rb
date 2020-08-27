@@ -5,6 +5,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Parentable
 
   enhance LinkedRails::Enhancements::Actionable
+  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Destroyable

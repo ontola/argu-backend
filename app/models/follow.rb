@@ -6,6 +6,7 @@ class Follow < ApplicationRecord
 
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Destroyable
 
   # NOTE: Follows belong to the "followable" interface, and also to followers
