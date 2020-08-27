@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-class TokenActionList < ApplicationActionList
+class AccessTokenActionList < ApplicationActionList
   has_action(
     :create,
     create_options.merge(
       collection: false,
       object: nil,
+      form: AccessTokenForm,
       label: -> { I18n.t('actions.tokens.create.label') },
       include_object: true,
       policy: :create?,

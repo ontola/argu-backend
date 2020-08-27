@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Token < LinkedRails::Resource
+class AccessToken < LinkedRails::Resource
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
 
@@ -12,7 +12,7 @@ class Token < LinkedRails::Resource
 
   class << self
     def iri_template
-      @iri_template ||= URITemplate.new("/u/#{route_key}{?r}")
+      @iri_template ||= URITemplate.new("/u/access_tokens{?r}")
     end
   end
 end

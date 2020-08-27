@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   scope 'u' do
     resource :sessions, only: %i[create]
     get 'sign_in', to: 'sessions#new'
-    resources :tokens, only: %i[new]
+    resources :access_tokens, only: %i[new]
   end
   resources :users,
             path: 'u',

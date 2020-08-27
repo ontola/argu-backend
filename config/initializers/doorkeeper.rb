@@ -21,7 +21,7 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_credentials do
-    request.params[:user] = request.params[:token] || {}
+    request.params[:user] = request.params[:access_token] || {}
     request.params[:user][:email] ||= (request.params[:username] || request.params[:email])&.downcase
     request.params[:user][:password] ||= request.params[:token] || request.params[:password]
     request.env['devise.allow_params_authentication'] = true

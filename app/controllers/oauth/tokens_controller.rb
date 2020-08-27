@@ -56,5 +56,11 @@ module Oauth
       token_with_errors.errors.add(field, exception.message)
       token_with_errors
     end
+
+    class << self
+      def controller_class
+        AccessToken
+      end
+    end
   end
 end

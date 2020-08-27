@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TokenPolicy < RestrictivePolicy
+class AccessTokenPolicy < RestrictivePolicy
   permit_attributes %i[email password r]
 
   def create?
