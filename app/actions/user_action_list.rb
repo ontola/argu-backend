@@ -8,7 +8,7 @@ class UserActionList < ApplicationActionList
     create_options.merge(
       form: ::Users::RegistrationForm,
       label: -> { I18n.t('actions.users.create.label') },
-      url: -> { RDF::DynamicURI(LinkedRails.iri(path: '/users')) }
+      url: -> { LinkedRails.iri(path: '/users') }
     )
   )
 

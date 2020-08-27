@@ -14,12 +14,12 @@ class InterventionTest < ActiveSupport::TestCase
     ActsAsTenant.with_tenant(argu) do
       intervention
       assert_equal intervention.effects, [
-        LinkedRails.iri(path: '/argu/enums/interventions/plans_and_procedure', fragment: :usability)
+        LinkedRails.iri(path: '/enums/interventions/plans_and_procedure', fragment: :usability)
       ]
       intervention.update!(people_and_resources: :resources)
       expected = [
-        LinkedRails.iri(path: '/argu/enums/interventions/plans_and_procedure', fragment: :usability),
-        LinkedRails.iri(path: '/argu/enums/interventions/people_and_resources', fragment: :resources)
+        LinkedRails.iri(path: '/enums/interventions/plans_and_procedure', fragment: :usability),
+        LinkedRails.iri(path: '/enums/interventions/people_and_resources', fragment: :resources)
       ]
       assert_equal intervention.effects, expected
       assert_equal intervention.reload.effects, expected

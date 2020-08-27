@@ -13,9 +13,9 @@ class SessionsController < ApplicationController
 
   def create_success_location
     if User.find_for_database_authentication(email: permit_params[:email])
-      RDF::DynamicURI(LinkedRails.iri(path: 'u/access_tokens/new'))
+      LinkedRails.iri(path: 'u/access_tokens/new')
     else
-      RDF::DynamicURI(LinkedRails.iri(path: 'u/new'))
+      LinkedRails.iri(path: 'u/new')
     end
   end
 

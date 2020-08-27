@@ -20,7 +20,7 @@ class CreativeWork < Edge
   validates :display_name, presence: true, length: {maximum: 110}
 
   def link_url
-    RDF::DynamicURI(LinkedRails.iri(path: url_path)) if url_path
+    LinkedRails.iri(path: url_path) if url_path
   end
 
   class << self

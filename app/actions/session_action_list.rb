@@ -9,7 +9,7 @@ class SessionActionList < ApplicationActionList
       label: -> { I18n.t('actions.sessions.create.label') },
       object: nil,
       policy: :create?,
-      url: -> { RDF::DynamicURI(LinkedRails.iri(path: '/u/sessions')) },
+      url: -> { LinkedRails.iri(path: '/u/sessions') },
       root_relative_iri: -> { resource.root_relative_iri }
     )
   )

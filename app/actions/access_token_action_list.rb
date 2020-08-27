@@ -10,7 +10,7 @@ class AccessTokenActionList < ApplicationActionList
       label: -> { I18n.t('actions.access_tokens.create.label') },
       include_object: true,
       policy: :create?,
-      url: -> { RDF::DynamicURI(LinkedRails.iri(path: '/login')) }
+      url: -> { LinkedRails.iri(path: '/login') }
     )
   )
 end

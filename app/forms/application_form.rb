@@ -4,12 +4,8 @@ class ApplicationForm < LinkedRails::Form
   extend UriTemplateHelper
 
   class << self
-    def form_iri
-      RDF::DynamicURI(LinkedRails.iri(path: "/forms/#{to_s.sub('Form', '').tableize}"))
-    end
-
     def form_options_iri(attr)
-      -> { RDF::DynamicURI(LinkedRails.iri(path: "/enums/#{model_class.to_s.tableize}/#{attr}")) }
+      -> { LinkedRails.iri(path: "/enums/#{model_class.to_s.tableize}/#{attr}") }
     end
 
     private
