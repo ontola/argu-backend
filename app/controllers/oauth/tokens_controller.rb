@@ -51,7 +51,7 @@ module Oauth
     def r_with_authenticity_token; end
 
     def token_with_errors(exception)
-      token_with_errors = Token.new
+      token_with_errors = AccessToken.new
       field = [Argu::Errors::WrongPassword, Argu::Errors::NoPassword].include?(exception.class) ? :password : :email
       token_with_errors.errors.add(field, exception.message)
       token_with_errors

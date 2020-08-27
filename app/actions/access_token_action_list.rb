@@ -7,7 +7,7 @@ class AccessTokenActionList < ApplicationActionList
       collection: false,
       object: nil,
       form: AccessTokenForm,
-      label: -> { I18n.t('actions.tokens.create.label') },
+      label: -> { I18n.t('actions.access_tokens.create.label') },
       include_object: true,
       policy: :create?,
       url: -> { RDF::DynamicURI(LinkedRails.iri(path: '/login')) }

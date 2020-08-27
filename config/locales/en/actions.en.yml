@@ -56,9 +56,10 @@ en:
         submit: "Send confirmation link again"
       make_primary:
         submit: "Make primary email address"
-    terms:
+    access_tokens:
       create:
-        submit: "Accept"
+        label: "Sign in"
+        submit: "Continue"
     blogs:
       create:
         description: "Keep people informed through blog posts."
@@ -98,10 +99,9 @@ en:
       create:
         label: "Sign in or register"
         submit: "Confirm"
-    tokens:
+    terms:
       create:
-        label: "Sign in"
-        submit: "Continue"
+        submit: "Accept"
     users:
       create:
         label: "Register"

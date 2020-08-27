@@ -12,7 +12,7 @@ class AccessToken < LinkedRails::Resource
 
   class << self
     def iri_template
-      @iri_template ||= URITemplate.new("/u/access_tokens{?r}")
+      @iri_template ||= URITemplate.new('/u/access_tokens{?r}')
     end
   end
 end
