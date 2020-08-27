@@ -9,7 +9,7 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
   test 'guest should get show current actor' do
     sign_in :guest_user
 
-    get "/#{argu.url}#{current_actor_path}", headers: argu_headers(accept: :json_api)
+    get "/#{argu.url}/c_a", headers: argu_headers(accept: :json_api)
 
     id = assigns[:doorkeeper_token].resource_owner_id
     assert_response 200
@@ -21,7 +21,7 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
   test 'user should get show current actor' do
     sign_in user
 
-    get "/#{argu.url}#{current_actor_path}", headers: argu_headers(accept: :json_api)
+    get "/#{argu.url}/c_a", headers: argu_headers(accept: :json_api)
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],

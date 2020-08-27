@@ -63,6 +63,10 @@ nl:
     blogs:
       create:
         description: "Houd mensen op de hoogte via blog posts."
+    confirmations:
+      create:
+        label: "Bevestigingslink opnieuw versturen"
+        submit: "Verstuur"
     conversions:
       create:
         label: "Omzetten"
@@ -98,6 +102,10 @@ nl:
         submit: "Upvote"
       destroy_vote:
         submit: "Upvote"
+    registrations:
+      create:
+        label: "Registreren"
+        submit: "Bevestig"
     sessions:
       create:
         label: "Inloggen of registeren"
@@ -106,9 +114,6 @@ nl:
       create:
         submit: "Accepteer"
     users:
-      create:
-        label: "Registreren"
-        submit: "Bevestig"
       update:
         label: "Instellingen"
       profile:
@@ -142,6 +147,17 @@ nl:
         label: "Vernietigen"
         description: "Weet je zeker dat je de volledige organisatie permanent wil verwijderen? Deze actie is niet ongedaan te maken."
         submit: "Verwijder"
+    passwords:
+      create:
+        label: "Wachtwoord vergeten?"
+        submit: "Verstuur"
+      update:
+        label: "Stel je wachtwoord in"
+    unlocks:
+      create:
+        label: 'Account vergrendeld?'
+        description: 'Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je je account kunt ontgrendelen.'
+        submit: "Verstuur"
     employments:
       confirm:
         submit: "Bevestig"

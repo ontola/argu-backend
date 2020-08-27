@@ -28,15 +28,12 @@ class LanguageTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should put language' do
-    token = doorkeeper_token_for(user)
-    sign_in token.token
-    assert_nil token.reload.revoked_at
+    sign_in user
 
     assert_equal 'en', user.language
 
     put language_iri(:nl)
 
-    assert_not_nil token.reload.revoked_at
     assert_equal 'nl', user.reload.language
   end
 

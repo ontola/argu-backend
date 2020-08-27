@@ -141,7 +141,7 @@ RSpec.describe "Iri's", type: :model do
     context 'Group' do
       subject { Group.first }
 
-      let(:url) { destroy_group_url(subject, protocol: :http) }
+      let(:url) { group_url(subject, protocol: :http) }
 
       let(:id) { subject.id }
 

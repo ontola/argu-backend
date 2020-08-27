@@ -16,7 +16,7 @@ module Stylable
                :integer,
                NS::ARGU[:headerText],
                default: 2,
-               enum: {text_auto: 2, text_primary: 0, text_secondary: 1}
+               enum: {text_auto: 2, text_primary: 0, text_secondary: 1, text_white: 3, text_black: 4}
 
       validates :secondary_color, css_hex_color: true
       validates :primary_color, css_hex_color: true

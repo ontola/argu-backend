@@ -79,35 +79,9 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'should post create en' do
     sign_in guest_user
-    locale = :en
-    put iri_from_template(:languages_iri, language: locale, root: argu)
-
-    create_email_mock('confirmation', 'test@example.com', token_url: /.+/)
-
     Sidekiq::Testing.inline! do
-      assert_difference('User.count' => 1,
-                        'Notification.confirmation_reminder.count' => 0) do
-        post user_registration_path,
-             params: {
-               user: {
-                 accept_terms: true,
-                 email: 'test@example.com',
-                 password: 'password',
-                 password_confirmation: 'password'
-               }
-             }
-        assert_response :success
-        assert_equal response.header['Location'], setup_users_path
-      end
+      create_user_with_locale(:en)
     end
-    assert_equal locale, User.last.language.to_sym
-    assert_not_nil User.last.current_sign_in_ip
-    assert_not_nil User.last.current_sign_in_at
-    assert_not_nil User.last.last_sign_in_ip
-    assert_not_nil User.last.last_sign_in_at
-    assert User.last.accepted_terms?
-
-    delete destroy_user_session_path
 
     assert_difference('EmailAddress.where(confirmed_at: nil).count' => -1) do
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
@@ -116,44 +90,19 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_email_sent(skip_sidekiq: true)
   end
 
-  test 'should post create nl' do
+  test 'should post create with redirect_url' do
     sign_in guest_user
-    locale = :nl
-    put iri_from_template(:languages_iri, language: locale, root: argu)
-
-    attrs = attributes_for(:user)
-    create_email_mock('confirmation', attrs[:email], token_url: /.+/)
-
-    assert_difference('User.count' => 1,
-                      worker_count_string('RedisResourceWorker') => 1,
-                      worker_count_string('SendEmailWorker') => 1) do
-      post user_registration_path,
-           params: {user: attrs}
-      assert_response :success
-      assert_equal response.header['Location'], setup_users_path
-    end
-    assert_equal locale, User.last.language.to_sym
+    create_user(redirect_url: motion.iri.path)
   end
 
-  test 'should post create after visiting freetown' do
+  test 'should post create nl' do
     sign_in guest_user
-    locale = :nl
-    put iri_from_template(:languages_iri, language: locale, root: argu)
-
-    attrs = attributes_for(:user)
-    attrs[:redirect_url] = freetown.iri
-    create_email_mock('confirmation', attrs[:email], token_url: /.+/)
-    get freetown.iri.path
-
-    assert_difference('User.count' => 1,
-                      worker_count_string('RedisResourceWorker') => 1,
-                      worker_count_string('SendEmailWorker') => 1) do
-      post user_registration_path,
-           params: {user: attrs}
-      assert_response :success
-      assert_equal response.header['Location'], setup_users_path
+    assert_difference(
+      worker_count_string('RedisResourceWorker') => 1,
+      worker_count_string('SendEmailWorker') => 1
+    ) do
+      create_user_with_locale(:nl)
     end
-    assert_equal locale, User.last.language.to_sym
     assert_email_sent
   end
 
@@ -171,6 +120,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       assert_response 201
     end
     assert_not User.last.accepted_terms?
+    assert_equal User.last.email, 'test@example.com'
     assert_equal parsed_body['data']['attributes']['email'], 'test@example.com'
     assert_equal parsed_body['data']['relationships']['email_addresses']['data'].count, 1
   end
@@ -208,7 +158,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       end
     end
 
-    delete destroy_user_session_path
+    delete sign_out_path
 
     assert_difference('EmailAddress.where(confirmed_at: nil).count' => -1,
                       'Edge.where(confirmed: true).count' => 3) do
@@ -255,7 +205,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       end
     end
     assert_response :success
-    assert_equal response.header['Location'], setup_users_path
+    assert_equal response.header['Location'], iri_from_template(:setup_iri, root: argu).path
     assert_email_sent(skip_sidekiq: true)
 
     create_email_mock('confirmation_reminder', attrs[:email], token_url: /.+/)
@@ -512,11 +462,44 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   private
 
-  def destroy_user_session_path
-    "#{argu.iri}#{super}"
+  def create_user(redirect_url: nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    yield if block_given?
+
+    create_email_mock('confirmation', 'test@example.com', token_url: /.+/)
+    assert_difference(
+      'User.count' => 1,
+      'Notification.confirmation_reminder.count' => 0
+    ) do
+      post user_registration_path,
+           params: {
+             user: {
+               accept_terms: true,
+               email: 'test@example.com',
+               password: 'password',
+               password_confirmation: 'password',
+               redirect_url: redirect_url
+             }
+           }
+      assert_response :success
+      assert_equal response.header['Location'], redirect_url || iri_from_template(:setup_iri, root: argu).path
+    end
+
+    assert_equal 'test@example.com', User.last.email
+    assert_not User.last.confirmed?
+    assert_not_nil User.last.current_sign_in_ip
+    assert_not_nil User.last.current_sign_in_at
+    assert_not_nil User.last.last_sign_in_ip
+    assert_not_nil User.last.last_sign_in_at
+    assert User.last.accepted_terms?
   end
 
-  def users_confirm_path(*args)
+  def create_user_with_locale(locale, &block)
+    put iri_from_template(:languages_iri, language: locale, root: argu)
+    create_user(&block)
+    assert_equal locale, User.last.language.to_sym
+  end
+
+  def sign_out_path
     "#{argu.iri}#{super}"
   end
 

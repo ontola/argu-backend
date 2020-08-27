@@ -28,9 +28,13 @@ module SettingsHelper
   end
 
   def setting_item(tag, opts)
+    menu_item(tag, setting_item_opts(tag, opts))
+  end
+
+  def setting_item_opts(tag, opts)
     opts[:image] ||= "fa-#{tab_icons[tag]}"
     opts[:policy] ||= :tab?
     opts[:policy_arguments] ||= [tag]
-    menu_item(tag, opts)
+    opts
   end
 end

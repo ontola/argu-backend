@@ -6,6 +6,10 @@ Doorkeeper.configure do
   # :mongoid4, :mongo_mapper
   orm :active_record
 
+  api_only
+  base_controller 'ApplicationController'
+  base_metal_controller 'ApplicationController'
+
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
     if doorkeeper_token&.acceptable?('user')
@@ -32,17 +36,17 @@ Doorkeeper.configure do
       email = request.params[:user][:email]&.include?('@')
       raise(
         if email && EmailAddress.find_by(email: request.params[:user][:email]).nil?
-          Argu::Errors::UnknownEmail.new(redirect_url: r_with_authenticity_token)
+          Argu::Errors::UnknownEmail.new
         elsif !email && Shortname.find_by(owner_type: 'User', shortname: request.params[:user][:email]).nil?
-          Argu::Errors::UnknownUsername.new(redirect_url: r_with_authenticity_token)
+          Argu::Errors::UnknownUsername.new
         elsif request.env['warden'].message == :locked
-          Argu::Errors::AccountLocked.new(redirect_url: r_with_authenticity_token)
+          Argu::Errors::AccountLocked.new
         elsif user_from_db.encrypted_password.blank?
-          Argu::Errors::NoPassword.new(redirect_url: r_with_authenticity_token, user: user_from_db)
+          Argu::Errors::NoPassword.new(user: user_from_db)
         elsif request.env['warden'].message == :invalid
-          Argu::Errors::WrongPassword.new(redirect_url: r_with_authenticity_token)
+          Argu::Errors::WrongPassword.new
         elsif request.env['warden'].message == :not_found_in_database
-          Argu::Errors::WrongPassword.new(redirect_url: r_with_authenticity_token)
+          Argu::Errors::WrongPassword.new
         else
           "unhandled login state #{request.env['warden'].message}"
         end

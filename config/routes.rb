@@ -52,38 +52,27 @@ Rails.application.routes.draw do
     health_check_routes
   end
 
-  use_doorkeeper do
-    controllers applications: 'oauth/applications',
-                tokens: 'oauth/tokens'
-  end
-
-  get '/ns/core', to: 'vocabularies#show'
-  get '/manifest', to: 'manifests#show'
-  get '/enums/:klass/:attribute', to: 'linked_rails/enum_values#index'
-  get '/forms/:id', to: 'linked_rails/forms#show'
-  get '/forms/:module/:id', to: 'linked_rails/forms#show'
-
-  devise_for :users,
-             controllers: {
-               registrations: 'registrations',
-               passwords: 'users/passwords',
-               unlocks: 'users/unlocks',
-               confirmations: 'users/confirmations'
-             }, skip: :registrations
+  use_linked_rails(
+    current_user: :actors,
+    enum_values: :enum_values,
+    forms: :forms,
+    manifests: :manifests,
+    vocabularies: :vocabularies
+  )
+  use_linked_rails_auth(
+    applications: 'oauth/applications',
+    tokens: 'oauth/tokens',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords',
+    confirmations: 'users/confirmations'
+  )
 
   as :user do
-    get 'users/delete', to: 'registrations#delete', as: :cancel_user_registration
-    get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
+    get 'users/delete', to: 'users#delete'
     get 'users/wrong_email', to: 'users#wrong_email'
-    post 'users', to: 'registrations#create', as: :user_registration
     put 'users/confirm', to: 'users/confirmations#confirm'
   end
 
-  scope 'u' do
-    resource :sessions, only: %i[create]
-    get 'sign_in', to: 'sessions#new'
-    resources :access_tokens, only: %i[new]
-  end
   resources :users,
             path: 'u',
             only: %i[show edit new create] do
@@ -119,7 +108,6 @@ Rails.application.routes.draw do
 
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
-  get '/c_a', to: 'actors#show', as: 'current_actor'
 
   # @deprecated Please use info_controller. Kept for cached searches etc. do
   get '/about', to: redirect('/i/about')
@@ -161,12 +149,6 @@ Rails.application.routes.draw do
     get ':shortname', to: 'redirect#show'
   end
   root to: 'pages#show'
-
-  scope :apex do
-    resources :menus, only: %i[show index] do
-      resources :sub_menus, only: :index, path: 'menus'
-    end
-  end
 
   # @todo canonical urls of edges should redirect
   resources :edges, only: [:show] do

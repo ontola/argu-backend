@@ -1,31 +1,14 @@
 # frozen_string_literal: true
 
 module Users
-  class Confirmation < VirtualResource
-    include LinkedRails::Model
-    enhance LinkedRails::Enhancements::Actionable
-    enhance LinkedRails::Enhancements::Creatable, except: %i[Controller]
-    attr_accessor :current_user, :email, :token, :user, :password_token
+  class Confirmation < LinkedRails::Auth::Confirmation
+    include UriTemplateHelper
 
     def confirm!
       return false unless email&.confirm
 
       set_reset_password_token if reset_password?
 
-      true
-    end
-
-    def iri_template_name
-      :confirmations_iri
-    end
-
-    def iri_opts
-      {confirmation_token: token}
-    end
-
-    alias identifier class_name
-
-    def new_record?
       true
     end
 
@@ -38,14 +21,14 @@ module Users
       @redirect_url = iri_from_template(:user_set_password, reset_password_token: password_token)
     end
 
-    private
+    class << self
+      def form_class
+        LinkedRails::Auth::ConfirmationForm
+      end
 
-    def reset_password?
-      user.present? && user.encrypted_password.blank?
-    end
-
-    def set_reset_password_token
-      self.password_token = user.send(:set_reset_password_token)
+      def policy_class
+        LinkedRails::Auth::ConfirmationPolicy
+      end
     end
   end
 end

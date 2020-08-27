@@ -14,10 +14,6 @@ module Settingable
       respond_with_form(default_form_options(:edit))
     end
 
-    def edit_view
-      default_form_view(:edit)
-    end
-
     def resource_settings_iri
       settings_iri(authenticated_resource, tab: tab)
     end

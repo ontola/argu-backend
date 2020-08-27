@@ -38,7 +38,8 @@ gem 'json-ld'
 gem 'jsonapi-renderer'
 gem 'jwt'
 gem 'kaminari-activerecord'
-gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', branch: 'filtering'
+gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', branch: 'linked_rails-auth'
+gem 'linked_rails-auth', git: 'https://github.com/ontola/linked_rails-auth'
 gem 'ltree_hierarchy'
 gem 'oauth2'
 gem 'oj'
@@ -100,9 +101,6 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'spring-commands-testunit'
 end
 
 group :development do

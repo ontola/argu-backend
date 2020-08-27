@@ -7,7 +7,9 @@ module ActiveResponseHelper
     I18n.t("type_#{action_name}_failure", type: type_for(current_resource, default: I18n.t('type_changes')).downcase)
   end
 
-  def active_response_success_message # rubocop:disable Metrics/AbcSize
+  def active_response_success_message # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
+    return send("#{action_name}_success_message") if respond_to?("#{action_name}_success_message", true)
+
     if current_resource.try(:is_publishable?) && (action_name == 'create' || resource_was_published?)
       if current_resource.try(:argu_publication)&.publish_time_lapsed?
         I18n.t('type_publish_success', type: type_for(current_resource).capitalize)
@@ -21,16 +23,6 @@ module ActiveResponseHelper
 
   def create_success_location
     redirect_location
-  end
-
-  def default_form_view(action)
-    if lookup_context.exists?("#{controller_path}/#{action}")
-      action
-    elsif lookup_context.exists?("application/#{action}")
-      "application/#{action}"
-    else
-      'form'
-    end
   end
 
   def destroy_meta

@@ -127,7 +127,7 @@ module Users
       sign_in user
       post user_password_path, params: {user: {email: 'wrong@email.com'}}
       assert_response :created
-      assert_equal(response.headers['Location'], settings_iri)
+      assert_equal(response.headers['Location'], '/argu/u/sign_in')
     end
 
     test 'user should post create password for existing email' do
@@ -136,7 +136,7 @@ module Users
       sign_in user
       post user_password_path, params: {user: {email: user.email}}
       assert_response :created
-      assert_equal(response.headers['Location'], settings_iri)
+      assert_equal(response.headers['Location'], '/argu/u/sign_in')
       expect_ontola_action(snackbar: 'You will receive an email shortly with instructions to reset your password.')
 
       assert_email_sent
@@ -227,12 +227,6 @@ module Users
 
     def user_password_path
       "#{argu.iri}#{super}"
-    end
-
-    def settings_iri
-      ActsAsTenant.with_tenant(argu) do
-        user.menu(:profile).iri(fragment: :settings)
-      end
     end
   end
 end

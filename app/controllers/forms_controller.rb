@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VocabulariesController < LinkedRails::VocabulariesController
+class FormsController < LinkedRails::FormsController
   private
 
   def authorize_action; end

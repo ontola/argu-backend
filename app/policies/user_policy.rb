@@ -8,8 +8,8 @@ class UserPolicy < RestrictivePolicy
   end
   include ChildOperations
 
-  permit_nested_attributes %i[accept_terms home_placement email_addresses]
-  permit_attributes %i[password password_confirmation current_password time_zone language]
+  permit_nested_attributes %i[home_placement email_addresses]
+  permit_attributes %i[accept_terms password password_confirmation current_password time_zone language]
   permit_attributes %i[first_name middle_name last_name hide_last_name about show_feed is_public]
   permit_attributes %i[reactions_email news_email decisions_email memberships_email created_email has_analytics]
   permit_attributes %i[url], has_properties: {url: false}

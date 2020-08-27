@@ -23,10 +23,6 @@ class GrantsController < ServiceController
     )
   end
 
-  def default_form_view(_action)
-    'pages/settings'
-  end
-
   def service_options
     super.except(:publisher, :creator)
   end

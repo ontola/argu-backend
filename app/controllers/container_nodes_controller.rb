@@ -54,12 +54,6 @@ class ContainerNodesController < EdgeableController
     requested_resource
   end
 
-  def default_form_view(action)
-    return action if lookup_context.exists?("container_nodes/#{action}")
-
-    super
-  end
-
   def forum_grants
     @forum_grants ||=
       Grant

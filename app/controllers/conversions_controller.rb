@@ -8,10 +8,6 @@ class ConversionsController < ServiceController
 
   private
 
-  def ld_action(opts)
-    opts[:resource].action(:create, user_context)
-  end
-
   def authenticated_resource!
     @authenticated_resource ||=
       case action_name

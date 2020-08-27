@@ -79,10 +79,10 @@ class MenusTest < ActionDispatch::IntegrationTest
   private
 
   def menu_url(tag, fragment = nil)
-    RDF::URI(["#{argu.iri}/apex/menus/#{tag}", fragment].compact.join('#'))
+    RDF::URI(["#{argu.iri}/menus/#{tag}", fragment].compact.join('#'))
   end
 
   def menus_path
-    "#{argu.iri}#{super}"
+    "#{argu.iri}/menus"
   end
 end

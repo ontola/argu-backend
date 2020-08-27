@@ -258,6 +258,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       find_via_shortname('argu')
     end
 
+    def menu_class
+      AppMenuList
+    end
+
     def preview_includes
       super + %i[default_profile_photo] - %w[navigations_menu settings_menu]
     end

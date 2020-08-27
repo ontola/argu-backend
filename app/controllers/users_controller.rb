@@ -22,6 +22,16 @@ class UsersController < AuthorizedController
     ]
   end
 
+  def delete_success
+    respond_with_resource(
+      include: action_form_includes,
+      resource: current_user.action(:destroy, user_context),
+      meta: [
+        RDF::Statement.new(delete_iri('users'), NS::OWL.sameAs, delete_iri(current_user))
+      ]
+    )
+  end
+
   def destroy_execute # rubocop:disable Metrics/AbcSize
     unless params[:user].try(:[], :confirmation_string) == I18n.t('users_cancel_string')
       current_resource.errors.add(:confirmation_string, I18n.t('errors.messages.should_match'))
@@ -38,7 +48,7 @@ class UsersController < AuthorizedController
     @requested_resource ||=
       case action_name
       when 'show', 'delete', 'destroy'
-        user = User.preload(:profile).find_via_shortname_or_id(params[:id])
+        user = params[:id] ? User.preload(:profile).find_via_shortname_or_id(params[:id]) : current_resource_owner
         show_anonymous_user?(user) ? AnonymousUser.new(url: params[:id]) : user
       else
         authorized_current_user

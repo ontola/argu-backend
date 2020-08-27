@@ -63,6 +63,10 @@ en:
     blogs:
       create:
         description: "Keep people informed through blog posts."
+    confirmations:
+      create:
+        label: "Send confirmation link again"
+        submit: "Send"
     conversions:
       convert:
         label: "Convert"
@@ -98,6 +102,10 @@ en:
         submit: "Upvote"
       destroy_vote:
         submit: "Upvote"
+    registrations:
+      create:
+        label: "Register"
+        submit: "Confirm"
     sessions:
       create:
         label: "Sign in or register"
@@ -106,9 +114,6 @@ en:
       create:
         submit: "Accept"
     users:
-      create:
-        label: "Register"
-        submit: "Confirm"
       update:
         label: "Settings"
       profile:
@@ -138,10 +143,21 @@ en:
     pages:
       create:
         label: "New website"
-    destroy:
-      label: "Destroy"
-      description: "Are you sure you want to permanently delete this entire organisation?. This cannot be undone."
-      submit: "Delete"
+      destroy:
+        label: "Destroy"
+        description: "Are you sure you want to permanently delete this entire organisation?. This cannot be undone."
+        submit: "Delete"
+    passwords:
+      create:
+        label: "Forgotten password?"
+        submit: "Send"
+      update:
+        label: "Set your password"
+    unlocks:
+      create:
+        label: 'Account locked?'
+        description: "Enter your email address and you'll receive a link to unlock your account."
+        submit: "Send"
     employments:
       confirm:
         submit: "Confirm"

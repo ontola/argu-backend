@@ -270,19 +270,3 @@ Devise.setup do |config|
 
   config.sign_in_after_reset_password = false
 end
-
-module FlashOverwrite
-  extend ActiveSupport::Concern
-
-  included do
-    protected
-
-    def set_flash_message!(_key, kind, options = {})
-      message = find_message(kind, options)
-
-      add_exec_action_header(response.headers, ontola_snackbar_action(message)) if message
-    end
-  end
-end
-
-DeviseController.include FlashOverwrite

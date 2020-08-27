@@ -17,10 +17,6 @@ class ShortnamesController < ParentableController
     update_execute
   end
 
-  def default_form_view(_action)
-    'pages/settings'
-  end
-
   def destination_param
     return @destination_param if instance_variable_defined?(:@destination_param)
     return if params[:shortname].try(:[], :destination).blank?

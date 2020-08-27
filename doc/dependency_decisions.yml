@@ -159,3 +159,9 @@
     :why: Temporary allow spreadsheet (ARGU-2009)
     :versions: []
     :when: 2020-02-04 09:47:30.541642310 Z
+- - :approve
+  - linked_rails-auth
+  - :who:
+    :why: Our own project
+    :versions: []
+    :when: 2020-08-28 12:18:31.471051847 Z

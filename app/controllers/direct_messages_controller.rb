@@ -3,10 +3,6 @@
 class DirectMessagesController < ParentableController
   private
 
-  def ld_action(opts = {})
-    opts[:resource].action(:create, user_context)
-  end
-
   def confirmed_email_addresses
     current_user.email_addresses.confirmed
   end

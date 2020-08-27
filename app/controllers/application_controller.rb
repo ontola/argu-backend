@@ -143,15 +143,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
     Time.use_zone(time_zone, &block)
   end
 
-  # Has the {User} enabled the `trashed` `param` and is he authorized?
-  def show_trashed?
-    if params[:trashed].present? && policy(resource_by_id).update?
-      params[:trashed] == 'true'
-    else
-      false
-    end
-  end
-
   def tree_root
     @tree_root ||= ActsAsTenant.current_tenant
   end
