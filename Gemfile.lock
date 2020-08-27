@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 383ca60e5c93d906af7ca08cf6c596f3044563a9
+  revision: c3b2e65e6d3374bc85bff40640d29f61dba3732a
   branch: filtering
   specs:
     linked_rails (0.0.0)
@@ -324,7 +324,7 @@ GEM
       with_env (= 1.1.0)
       xml-simple
     link_header (0.0.8)
-    loofah (2.6.0)
+    loofah (2.7.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     ltree_hierarchy (1.0.0)
