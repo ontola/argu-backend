@@ -34,7 +34,7 @@ class DirectMessagesController < ParentableController
     @parent_resource ||= LinkedRails.resource_from_iri(params[:direct_message].try(:[], :resource_iri))
   end
 
-  def resource_by_id; end
+  def requested_resource; end
 
   def redirect_location
     authenticated_resource.resource.iri

@@ -40,8 +40,8 @@ class StatisticsController < ParentableController
     @observation_measures
   end
 
-  def resource_by_id # rubocop:disable Metrics/MethodLength
-    @resource_by_id ||=
+  def requested_resource # rubocop:disable Metrics/MethodLength
+    @requested_resource ||=
       DataCube::Set.new(
         dimensions: observation_dimensions.keys,
         iri: RDF::URI(request.original_url),

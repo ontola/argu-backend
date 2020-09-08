@@ -30,7 +30,7 @@ class MenusController < LinkedRails::MenusController
     @menu_tag ||= params[:id].to_sym
   end
 
-  def resource_by_id
-    requested_resource || custom_menu if action_name == 'show'
+  def requested_resource
+    super || custom_menu if action_name == 'show'
   end
 end

@@ -48,7 +48,7 @@ class DecisionsController < EdgeableController
     authenticated_resource.parent.iri
   end
 
-  def resource_by_id
+  def requested_resource
     return if action_name == 'new' || action_name == 'create'
 
     parent_resource!.decisions.find_by(step: params[:id].to_i, root_id: tree_root_id)

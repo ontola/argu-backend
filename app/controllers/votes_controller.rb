@@ -66,10 +66,10 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     current_vote_iri(parent_resource)
   end
 
-  def resource_by_id
+  def requested_resource
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
 
-    @resource_by_id ||=
+    @requested_resource ||=
       Vote
         .where_with_redis(creator: current_profile, root_id: tree_root_id)
         .find_by(parent: parent_resource, primary: true) || abstain_vote

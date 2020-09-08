@@ -38,7 +38,7 @@ class FeedController < AuthorizedController
   end
 
   def index_collection
-    resource_by_id.activity_collection(collection_options)
+    requested_resource.activity_collection(collection_options)
   end
 
   def index_success_serializer
@@ -53,10 +53,10 @@ class FeedController < AuthorizedController
     params[:complete] != 'true'
   end
 
-  def resource_by_id
+  def requested_resource
     return nil if feed_resource.blank?
 
-    @resource_by_id ||=
+    @requested_resource ||=
       Feed.new(
         parent: feed_resource,
         relevant_only: relevant_only,

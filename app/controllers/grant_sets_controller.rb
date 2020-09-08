@@ -5,8 +5,8 @@ class GrantSetsController < AuthorizedController
 
   private
 
-  def resource_by_id
-    @resource_by_id ||=
+  def requested_resource
+    @requested_resource ||=
       if (/[a-zA-Z]/i =~ params[:id]).nil?
         GrantSet.find_by(id: params[:id])
       else

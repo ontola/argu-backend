@@ -44,10 +44,10 @@ class ConversionsController < ServiceController
   end
 
   def current_forum
-    @current_forum ||= resource_by_id&.ancestor(:forum)
+    @current_forum ||= requested_resource&.ancestor(:forum)
   end
 
-  def resource_by_id; end
+  def requested_resource; end
 
   def redirect_location
     authenticated_resource.is_a?(Edge) ? authenticated_resource.iri : authenticated_resource.edge.iri

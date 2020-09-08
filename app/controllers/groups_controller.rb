@@ -28,7 +28,7 @@ class GroupsController < ServiceController
 
   def tab!
     # rubocop:disable Naming/MemoizedInstanceVariableName
-    @verified_tab ||= policy(resource_by_id || Group).verify_tab(tab)
+    @verified_tab ||= policy(requested_resource || Group).verify_tab(tab)
     # rubocop:enable Naming/MemoizedInstanceVariableName
   end
 end

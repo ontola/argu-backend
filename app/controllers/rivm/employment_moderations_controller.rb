@@ -3,7 +3,7 @@
 class EmploymentModerationsController < EmploymentsController
   private
 
-  def resource_by_id
+  def requested_resource
     EmploymentModeration.find_by(id: super&.id)
   end
 end

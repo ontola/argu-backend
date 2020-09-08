@@ -34,8 +34,8 @@ class UsersController < AuthorizedController
     true
   end
 
-  def resource_by_id
-    @resource_by_id ||=
+  def requested_resource
+    @requested_resource ||=
       case action_name
       when 'show', 'delete', 'destroy'
         user = User.preload(:profile).find_via_shortname_or_id(params[:id])

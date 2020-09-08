@@ -7,7 +7,7 @@ class ContainerNodesController < EdgeableController
   active_response :new
 
   def show
-    return unless policy(resource_by_id).show?
+    return unless policy(requested_resource).show?
 
     super
   end
@@ -51,7 +51,7 @@ class ContainerNodesController < EdgeableController
   end
 
   def current_forum
-    resource_by_id
+    requested_resource
   end
 
   def default_form_view(action)
@@ -105,7 +105,7 @@ class ContainerNodesController < EdgeableController
 
   def tab!
     # rubocop:disable Naming/MemoizedInstanceVariableName
-    @verified_tab ||= policy(resource_by_id || Forum).verify_tab(tab)
+    @verified_tab ||= policy(requested_resource || Forum).verify_tab(tab)
     # rubocop:enable Naming/MemoizedInstanceVariableName
   end
 

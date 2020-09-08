@@ -56,7 +56,7 @@ class ServiceController < ParentableController
   #   destroy_service.commit # => true (Comment destroyed)
   def destroy_service
     @destroy_service ||= service_klass.new(
-      resource_by_id!,
+      requested_resource!,
       options: service_options.merge(confirmation_string: params[model_name].try(:[], :confirmation_string))
     )
   end
@@ -109,13 +109,13 @@ class ServiceController < ParentableController
   end
 
   # Prepares a memoized {UpdateService} for the relevant model for use in controller#update
-  # @return [UpdateService] The service, generally initialized with {resource_by_id} and {permit_params}
+  # @return [UpdateService] The service, generally initialized with {requested_resource} and {permit_params}
   # @example
   #   update_service # => UpdateComment<commentable_id: 6, parent_id: 5>
   #   update_service.commit # => true (Comment updated)
   def update_service
     @update_service ||= service_klass.new(
-      resource_by_id!,
+      requested_resource!,
       attributes: permit_params,
       options: service_options
     )

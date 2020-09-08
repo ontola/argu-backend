@@ -79,10 +79,10 @@ class PagesController < EdgeableController
     settings_iri(authenticated_resource, tab: tab)
   end
 
-  def resource_by_id
+  def requested_resource
     return if %w[new create].include?(action_name)
 
-    @resource_by_id ||= ActsAsTenant.without_tenant { super } || ActsAsTenant.current_tenant
+    @requested_resource ||= ActsAsTenant.without_tenant { super } || ActsAsTenant.current_tenant
   end
 
   def update_meta

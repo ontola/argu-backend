@@ -30,8 +30,8 @@ module Users
       current_user.guest? || setup_finished?
     end
 
-    def resource_by_id
-      @resource_by_id ||= Setup.new(user: current_user)
+    def requested_resource
+      @requested_resource ||= Setup.new(user: current_user)
     end
 
     def update_execute

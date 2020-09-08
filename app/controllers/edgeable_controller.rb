@@ -74,7 +74,7 @@ class EdgeableController < ServiceController
   #   trash_service.commit # => true (Comment trashed)
   def trash_service
     @trash_service ||= service_klass.new(
-      resource_by_id!,
+      requested_resource!,
       options: service_options
     )
   end
@@ -86,7 +86,7 @@ class EdgeableController < ServiceController
   #   untrash_service.commit # => true (Comment untrashed)
   def untrash_service
     @untrash_service ||= service_klass.new(
-      resource_by_id!,
+      requested_resource!,
       options: service_options
     )
   end

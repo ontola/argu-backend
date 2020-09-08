@@ -7,7 +7,7 @@ class LogsController < ParentableController
     authorize authenticated_resource, :log?
   end
 
-  def resource_by_id
+  def requested_resource
     parent_resource
   end
 

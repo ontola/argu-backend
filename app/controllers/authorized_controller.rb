@@ -53,7 +53,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
       when 'create', 'new'
         new_resource_from_params
       else
-        resource_by_id
+        requested_resource
       end
   end
   alias current_resource authenticated_resource!
@@ -93,7 +93,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   def permit_params
     params
       .require(model_name)
-      .permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
+      .permit(*policy(requested_resource || new_resource_from_params).permitted_attributes)
   end
 
   def policy(resource)
@@ -107,15 +107,15 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   # Searches the current primary resource by its id
   # @return [ActiveRecord::Base, nil] The resource by its id
-  def resource_by_id
+  def requested_resource
     resource_from_params
   end
 
   # Searches the current primary resource by its id, raises if the record cannot be found
   # @return [ActiveRecord::Base, nil] The resource by its id
   # @raise [ActiveRecord::RecordNotFound]
-  def resource_by_id!
-    resource_by_id || raise(ActiveRecord::RecordNotFound)
+  def requested_resource!
+    requested_resource || raise(ActiveRecord::RecordNotFound)
   end
 
   # Used in {authenticated_resource!} to build a new object.

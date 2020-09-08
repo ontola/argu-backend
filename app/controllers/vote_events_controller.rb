@@ -5,7 +5,7 @@ class VoteEventsController < EdgeableController
 
   private
 
-  def resource_by_id
+  def requested_resource
     return super unless resource_id == VoteEvent::DEFAULT_ID
 
     parent_resource.default_vote_event
