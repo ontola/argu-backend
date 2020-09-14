@@ -9,10 +9,17 @@ module Cacheable
 
   def invalidate_cache(cache)
     ActsAsTenant.with_tenant(try(:root) || ActsAsTenant.current_tenant) do
-      delta = [
-        [iri, LinkedRails::Vocab::SP[:Variable], LinkedRails::Vocab::SP[:Variable], delta_iri(:invalidate)]
-      ]
-      cache.write(delta)
+      cache.write(invalidation_statements)
     end
+  end
+
+  def invalidation_statements
+    [
+      invalidate_resource(iri)
+    ]
+  end
+
+  def invalidate_resource(iri)
+    [iri, LinkedRails::Vocab::SP[:Variable], LinkedRails::Vocab::SP[:Variable], delta_iri(:invalidate)]
   end
 end
