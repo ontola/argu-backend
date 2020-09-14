@@ -76,6 +76,29 @@ module Argu
         end
       end
 
+      # Tests if the property {path} starting at {start} resolves to {value}.
+      # If multiple solutions are present only one has to match to pass.
+      #
+      # @param [IRI] start The node to start at
+      # @param [Array] path The property path to traverse
+      # @param [IRI|IRI[]] value The value to match at the end, pass an array to
+      #                            match multiple values.
+      def expect_path(start, path, value) # rubocop:disable Metrics/AbcSize
+        match = path.each_with_index.reduce(start) do |node, (path_seg, i)|
+          obj = [*node].map { |cur_node| rdf_body.query([cur_node, path_seg, nil, nil]).map(&:object) }.flatten
+          break (obj & [*value]).present? if path.length - 1 == i
+
+          nodes = obj.filter { |o| o.is_a?(RDF::Resource) }
+          break false if nodes.blank?
+
+          nodes
+        end
+
+        segs = path.map(&:to_s).join(', ')
+        assert match,
+               "Expected to find '#{value}' from '#{start}' through '[#{segs}]' in\n#{response.body}"
+      end
+
       def expect_resource_type(type, iri: requested_iri)
         expect_triple(iri, RDF[:type], type)
       end

@@ -84,13 +84,15 @@ class VotesTest < ActionDispatch::IntegrationTest
     get iri_without_id
     assert_response 200
 
-    expect_triple(RDF::URI(iri_without_id), NS::OWL.sameAs, guest_vote.iri)
-    expect_triple(guest_vote.iri, NS::SCHEMA.isPartOf, vote_event.iri)
-    expect_triple(
-      guest_vote.iri,
-      NS::SCHEMA.creator,
-      RDF::URI("#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}")
-    )
+    expect_path(RDF::URI(iri_without_id),
+                [NS::OWL.sameAs, NS::SCHEMA.creator],
+                RDF::URI("#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}"))
+    expect_path(RDF::URI(iri_without_id),
+                [NS::OWL.sameAs, NS::SCHEMA.isPartOf],
+                vote_event.iri)
+    expect_path(RDF::URI(iri_without_id),
+                [NS::OWL.sameAs, NS::SCHEMA.creator],
+                RDF::URI("#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}"))
   end
 
   test 'guest should not get show non-existent vote' do
