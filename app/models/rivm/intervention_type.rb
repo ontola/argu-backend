@@ -38,7 +38,7 @@ class InterventionType < Edge
   private
 
   def average_score(predicate)
-    descendants.joins(:properties).where(properties: {predicate: predicate.to_s}).average(:integer).to_f
+    descendants.active.joins(:properties).where(properties: {predicate: predicate.to_s}).average(:integer).to_f
   end
 
   class << self
