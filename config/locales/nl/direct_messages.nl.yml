@@ -14,7 +14,4 @@ nl:
         body: "Bericht"
     hints:
       direct_message:
-        email_address_id: "Je kan email versturen vanaf een van de aan jouw account gekoppelde bevestigde email adressen."
-    actions:
-      direct_message:
-        create: "Verstuur"
+        email_address_id: "Je kan email versturen vanaf een van jouw bevestigde e-mailadressen. Staat je e-mailadres er niet tussen? Ga dan naar Gebruikersinstellingen via het menu in de bovenbalk om je e-mailadres te bevestigen."

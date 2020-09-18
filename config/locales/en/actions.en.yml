@@ -76,6 +76,9 @@ en:
         label: "Send message"
         description: "Send an e-mail to %{creator}, the poster of this item. If he replies to the e-mail, the reply will be send to your mailbox directly so you can continue the conversation outside of this platform."
         submit: "Send"
+        disabled:
+          guest: "Sign in to send a message."
+          not_allowed: "The poster does not allow contact by email."
     email_addresses:
       create:
         submit: "Add"

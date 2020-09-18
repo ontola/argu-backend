@@ -14,7 +14,4 @@ en:
         body: "Message"
     hints:
       direct_message:
-        email_address_id: "Je kan email versturen vanaf een van de aan jouw account gekoppelde bevestigde email adressen."
-    actions:
-      direct_message:
-        create: "Send"
+        email_address_id: "You can send an email from one of your confirmed emailadresses. Is your emailadress not visible? Go to User settings to confirm your address."

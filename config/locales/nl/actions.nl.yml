@@ -76,6 +76,9 @@ nl:
         label: "Verstuur bericht"
         description: "Verstuur een e-mail naar %{creator}, de plaatser van dit item. Als hij of zij reageert op de e-mail, dan komt het antwoord direct in jouw mailbox en kan je het gesprek buiten dit platform verder voeren."
         submit: "Verstuur"
+        disabled:
+          guest: "Log in om een bericht te kunnen versturen."
+          not_allowed: "De indiener staat contact via e-mail niet toe."
     email_addresses:
       create:
         submit: "Voeg toe"

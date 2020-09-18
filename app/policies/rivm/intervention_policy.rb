@@ -21,9 +21,10 @@ class InterventionPolicy < EdgePolicy
   end
 
   def contact?
-    return false if user.guest?
+    return forbid_with_message(I18n.t('actions.direct_messages.create.disabled.guest')) if user.guest?
+    return true if record.contact_is_allowed? || super
 
-    record.contact_is_allowed? || super
+    forbid_with_message(I18n.t('actions.direct_messages.create.disabled.not_allowed'))
   end
 
   def show?
