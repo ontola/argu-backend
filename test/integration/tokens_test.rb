@@ -110,7 +110,7 @@ class TokensTest < ActionDispatch::IntegrationTest
       Sidekiq::Testing.inline! do
         token_user = post_token_password(redirect: freetown.iri.path)
         assert_equal user.email, token_user['email']
-        assert_equal user.id, token_user['id']
+        assert_equal user.id.to_s, token_user['id']
       end
     end
   end
@@ -319,7 +319,7 @@ class TokensTest < ActionDispatch::IntegrationTest
           redirect: freetown.iri.path
         )
         assert_equal unconfirmed_user.email, token_user['email']
-        assert_equal unconfirmed_user.id, token_user['id']
+        assert_equal unconfirmed_user.id.to_s, token_user['id']
       end
     end
   end

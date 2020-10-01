@@ -19,8 +19,7 @@ module SPI
 
     def authorize_action; end
 
-    # rubocop:disable Metrics/AbcSize
-    def authorized_resource(opts)
+    def authorized_resource(opts) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
       return response_for_wrong_host(opts[:iri]) if wrong_host?(opts[:iri])
 
       include = opts[:include].to_s == 'true'
@@ -38,7 +37,6 @@ module SPI
 
       resource_response(opts[:iri], status: 500)
     end
-    # rubocop:enable Metrics/AbcSize
 
     def authorized_resources
       @authorized_resources ||= params.require(:resources).map do |param|
@@ -47,7 +45,9 @@ module SPI
     end
 
     def print_timings
-      Rails.logger.debug "\n  CPU        system     user+system real        inc   status  iri\n#{@timings.join("\n")}"
+      Rails.logger.debug "\n  CPU        system     user+system real        inc   status  iri\n" \
+                           "#{@timings.join("\n")}\n" \
+                           "  User: #{current_user.class}(#{current_user.id})"
     end
 
     def require_doorkeeper_token?
@@ -56,24 +56,29 @@ module SPI
 
     def resource_request(iri)
       path = LinkedRails.iri_mapper_class.send(:sanitized_relative, iri.dup, ActsAsTenant.current_tenant)
-      env = Rack::MockRequest.env_for(
-        path,
-        'HTTP_ACCEPT' => 'application/hex+x-ndjson',
-        'HTTP_ACCEPT_LANGUAGE' => request.env['HTTP_ACCEPT_LANGUAGE'],
-        'HTTP_AUTHORIZATION' => request.env['HTTP_AUTHORIZATION'],
-        'HTTP_FORWARDED' => request.env['HTTP_FORWARDED'],
-        'HTTP_HOST' => request.env['HTTP_HOST'],
-        'HTTP_OPERATOR_ARG_GRAPH' => 'true',
-        'HTTP_X_FORWARDED_FOR' => request.env['HTTP_X_FORWARDED_FOR'],
-        'HTTP_X_FORWARDED_PROTO' => request.env['HTTP_X_FORWARDED_PROTO'],
-        'HTTP_X_FORWARDED_SSL' => request.env['HTTP_X_FORWARDED_SSL'],
-        'HTTP_X_DEVICE_ID' => request.env['HTTP_X_DEVICE_ID'],
-        'HTTP_WEBSITE_IRI' => request.env['HTTP_WEBSITE_IRI']
-      )
+      fullpath = iri.query.blank? ? iri.path : "#{iri.path}?#{iri.query}"
+      env = Rack::MockRequest.env_for(path, resource_request_headers.merge('ORIGINAL_FULLPATH' => fullpath))
       req = ActionDispatch::Request.new(env)
       req.path_info = ActionDispatch::Journey::Router::Utils.normalize_path(req.path_info)
 
       req
+    end
+
+    def resource_request_headers # rubocop:disable Metrics/MethodLength
+      req_headers = request.env
+      {
+        'HTTP_ACCEPT' => 'application/hex+x-ndjson',
+        'HTTP_ACCEPT_LANGUAGE' => req_headers['HTTP_ACCEPT_LANGUAGE'],
+        'HTTP_AUTHORIZATION' => req_headers['HTTP_AUTHORIZATION'],
+        'HTTP_FORWARDED' => req_headers['HTTP_FORWARDED'],
+        'HTTP_HOST' => req_headers['HTTP_HOST'],
+        'HTTP_OPERATOR_ARG_GRAPH' => 'true',
+        'HTTP_X_FORWARDED_FOR' => req_headers['HTTP_X_FORWARDED_FOR'],
+        'HTTP_X_FORWARDED_PROTO' => req_headers['HTTP_X_FORWARDED_PROTO'],
+        'HTTP_X_FORWARDED_SSL' => req_headers['HTTP_X_FORWARDED_SSL'],
+        'HTTP_X_DEVICE_ID' => req_headers['HTTP_X_DEVICE_ID'],
+        'HTTP_WEBSITE_IRI' => req_headers['HTTP_WEBSITE_IRI']
+      }
     end
 
     def response_from_request(include, iri)
@@ -83,6 +88,7 @@ module SPI
         iri.to_s,
         body: include ? rack_body.body : nil,
         cache: headers['Cache-Control']&.squish&.presence || :private,
+        language: response_language(headers),
         status: status
       )
     end
@@ -95,6 +101,7 @@ module SPI
         resource.iri,
         body: include && status == 200 ? resource_body(resource) : nil,
         cache: resource_cache_control(status, resource_policy),
+        language: I18n.locale,
         status: status
       )
     end
@@ -136,6 +143,10 @@ module SPI
       return 404 if resource.nil?
 
       resource_policy.show? ? 200 : 403
+    end
+
+    def response_language(headers)
+      headers['Content-Language'] || I18n.locale
     end
 
     def timed_authorized_resource(resource)

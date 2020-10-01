@@ -173,7 +173,7 @@ Doorkeeper::JWT.configure do
       payload[:user] = {
         type: user.guest? ? 'guest' : 'user',
         '@id': user.iri,
-        id: user.id,
+        id: user.id.to_s,
         email: user.email,
         language: user.language
       }
