@@ -29,11 +29,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   around_action :time_zone
   after_action :set_version_header
   after_action :include_resources
-  if Rails.env.development? || Rails.env.staging?
-    before_action do
-      Rack::MiniProfiler.authorize_request if current_user.is_staff?
-    end
-  end
 
   def self.controller_class
     @controller_class ||=
