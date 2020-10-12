@@ -17,7 +17,7 @@ class PlacementSerializer < RecordSerializer
   end
 
   has_one :place, predicate: NS::SCHEMA[:geo]
-  has_one :placeable, predicate: NS::ARGU[:placeable], polymorphic: true
+  has_one :placeable, predicate: NS::SCHEMA[:isPartOf], polymorphic: true
 
   attribute :country_code, predicate: NS::SCHEMA[:addressCountry]
   attribute :placement_type, predicate: NS::ARGU[:placementType]
