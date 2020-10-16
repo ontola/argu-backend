@@ -24,17 +24,27 @@ namespace :cache do
       errors = bulk_request(iris, website)
       $stdout.write "]\n"
 
-      warn "Errors while warming: #{errors.join("\n")}" if errors.empty?
+      warn "Errors while warming: #{errors.join("\n")}" if errors.present?
       puts 'Finished warming cache'
     end
   end
 end
 
-def collect_iris
+def static_iris
+  [
+    RDF::URI("https://argu.co/ns/core")
+  ]
+end
+
+def dynamic_iris
   objects = Edge.all.flat_map { |o| traverse(o, o.class.show_includes, :show_includes) }
   objects
     .map { |o| o&.try(:iri) }
     .filter { |o| o.is_a?(RDF::URI) }
+end
+
+def collect_iris
+  static_iris + dynamic_iris
 end
 
 def bulk_request(iris, website)
@@ -56,6 +66,7 @@ def bulk_request_batch(resources, website)
   opts = {
     body: {resource: resources},
     headers: {
+      'Accept-Language': 'en',
       'Website-IRI': website,
       'X-Forwarded-Host': URI(website).host,
       'X-Forwarded-Proto': 'https'
