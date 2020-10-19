@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: a65bd4a2a8ca59d6df334cc1ec884e6d3651b106
+  revision: a65a9360df14ee7e250d5d9f7da639ef87ffb720
   branch: linked_rails-auth
   specs:
     linked_rails (0.0.0)
@@ -50,7 +50,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails-auth
-  revision: abd2290bf42543c15f8369c3d5aa42e01ba86370
+  revision: feba32840d56fa46d1ccb109f47df13ca15dc12c
   specs:
     linked_rails-auth (0.1.0)
       doorkeeper

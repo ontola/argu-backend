@@ -67,6 +67,8 @@ nl:
       create:
         label: "Bevestigingslink opnieuw versturen"
         submit: "Verstuur"
+      update:
+        submit: "Bevestig"
     conversions:
       create:
         label: "Omzetten"

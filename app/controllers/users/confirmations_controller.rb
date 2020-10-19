@@ -4,18 +4,13 @@ module Users
   class ConfirmationsController < LinkedRails::Auth::ConfirmationsController
     include OauthHelper
 
-    def confirm
-      respond_to do |format|
-        format.json do
-          raise Argu::Errors::Forbidden.new(query: :confirm?) unless doorkeeper_scopes.include?('service')
-
-          EmailAddress.find_by!(email: params[:email]).confirm
-          head 200
-        end
-      end
-    end
-
     private
+
+    def after_confirmation_path_for(_resource_name, resource)
+      return super if current_user != resource.user || !resource.password_token
+
+      iri_from_template(:user_set_password, reset_password_token: resource.password_token)
+    end
 
     def after_resending_confirmation_instructions_path_for(_resource)
       if correct_mail && !current_user.guest?
@@ -47,6 +42,8 @@ module Users
     end
 
     def email_by_token
+      return EmailAddress.find_by!(email: params[:email]) if doorkeeper_scopes.include?('service')
+
       @email_by_token ||= EmailAddress.find_first_by_auth_conditions(confirmation_token: original_token)
     end
 
@@ -63,30 +60,30 @@ module Users
     end
 
     def requested_resource
-      LinkedRails.confirmation_class.new(
-        current_user: current_user,
-        email: email_by_token,
-        user: email_by_token&.user || raise(ActiveRecord::RecordNotFound),
-        token: original_token
-      )
+      @requested_resource ||=
+        LinkedRails.confirmation_class.new(
+          current_user: current_user,
+          email: email_by_token,
+          user: email_by_token&.user || raise(ActiveRecord::RecordNotFound),
+          token: original_token
+        )
     end
 
-    def show_execute
-      current_resource.confirm!
-    end
-
-    def show_failure
+    def update_failure
       respond_with_resource(
         resource: current_resource,
         notice: email_by_token.errors.full_messages.first
       )
     end
 
-    def show_success
-      respond_with_resource(
-        resource: current_resource,
-        notice: find_message(:confirmed)
-      )
+    def update_success
+      if doorkeeper_scopes.include?('service')
+        head 200
+      else
+        sign_in current_resource.user if current_user != current_resource.user
+
+        super
+      end
     end
   end
 end

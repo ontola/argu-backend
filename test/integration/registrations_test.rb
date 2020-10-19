@@ -84,7 +84,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_difference('EmailAddress.where(confirmed_at: nil).count' => -1) do
-      get user_confirmation_path(confirmation_token: User.last.confirmation_token)
+      put user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_response :success
     assert_email_sent(skip_sidekiq: true)

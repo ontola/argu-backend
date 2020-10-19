@@ -70,7 +70,6 @@ Rails.application.routes.draw do
   as :user do
     get 'users/delete', to: 'users#delete'
     get 'users/wrong_email', to: 'users#wrong_email'
-    put 'users/confirm', to: 'users/confirmations#confirm'
   end
 
   resources :users,

@@ -35,7 +35,7 @@ module Users
       assert_not user.confirmed?
       get user_confirmation_path(confirmation_token: user.confirmation_token), headers: argu_headers
       assert_response :success
-      assert response.headers['New-Authorization']
+      assert_not response.headers['New-Authorization']
       assert_not user.reload.confirmed?
     end
 
@@ -44,7 +44,6 @@ module Users
       assert_not user.confirmed?
       get user_confirmation_path(confirmation_token: user.confirmation_token)
       assert_response :success
-      assert response.headers['New-Authorization']
       assert_not user.reload.confirmed?
     end
 
@@ -53,7 +52,7 @@ module Users
       assert confirmed_user.confirmed?
       get user_confirmation_path(confirmation_token: confirmed_user.confirmation_token)
       assert_response :success
-      assert response.headers['New-Authorization']
+      assert_not response.headers['New-Authorization']
       assert_not user.reload.confirmed?
     end
 
@@ -63,14 +62,38 @@ module Users
       assert_response 404
     end
 
+    test 'guest should put update confirmation' do
+      sign_in :guest_user
+      assert_not user.confirmed?
+      put user_confirmation_path(confirmation_token: user.confirmation_token)
+      assert_response :success
+      assert response.headers['New-Authorization']
+      assert user.reload.confirmed?
+    end
+
+    test 'guest should not put update confirmation of confirmed user' do
+      sign_in :guest_user
+      assert confirmed_user.confirmed?
+      put user_confirmation_path(confirmation_token: confirmed_user.confirmation_token)
+      assert_response :success
+      assert_not response.headers['New-Authorization']
+      expect_ontola_action(snackbar: 'Email was already confirmed, try to log in.')
+    end
+
+    test 'guest should put update wrong confirmation' do
+      sign_in :guest_user
+      put user_confirmation_path(confirmation_token: 'wrong_token')
+      assert_response 404
+    end
+
     test 'guest should not put confirm email json' do
       sign_in :guest_user
-      put users_confirm_path,
+      put user_confirmation_path,
           params: {
             email: user.email
           },
           headers: argu_headers(accept: :json)
-      assert_response :forbidden
+      assert_response :not_found
       assert_not user.reload.confirmed?
     end
 
@@ -107,7 +130,7 @@ module Users
       assert_not user.confirmed?
       get user_confirmation_path(confirmation_token: user.confirmation_token)
       assert_response :success
-      assert response.headers['New-Authorization']
+      assert_not response.headers['New-Authorization']
       assert_not user.reload.confirmed?
     end
 
@@ -116,8 +139,26 @@ module Users
       assert confirmed_user.confirmed?
       get user_confirmation_path(confirmation_token: confirmed_user.confirmation_token)
       assert_response :success
+      assert_not response.headers['New-Authorization']
+    end
+
+    test 'other_user should put update confirmation' do
+      sign_in other_user
+      assert_not user.confirmed?
+      put user_confirmation_path(confirmation_token: user.confirmation_token)
+      assert_response :success
       assert response.headers['New-Authorization']
-      assert_not user.reload.confirmed?
+      assert user.reload.confirmed?
+    end
+
+    test 'other_user should not put update confirmation of confirmed user' do
+      sign_in other_user
+      assert confirmed_user.confirmed?
+      put user_confirmation_path(confirmation_token: confirmed_user.confirmation_token)
+      assert_response :success
+      assert_not response.headers['New-Authorization']
+      assert confirmed_user.reload.confirmed?
+      expect_ontola_action(snackbar: 'Email was already confirmed, try to log in.')
     end
 
     test 'other_user should not post create confirmation' do
@@ -138,11 +179,27 @@ module Users
       assert_not user.confirmed?
       assert_not user.url.present?
       get user_confirmation_path(confirmation_token: user.confirmation_token)
-      expect_ontola_action(snackbar: 'Your account has been confirmed')
+      assert_response :success
+      assert_not user.reload.confirmed?
+      assert_not response.headers['New-Authorization']
+    end
+
+    test 'user without shortname should put update confirmation' do
+      sign_in user
+      user.shortname.destroy
+      user.reload
+      assert_not user.confirmed?
+      assert_not user.url.present?
+      put user_confirmation_path(confirmation_token: user.confirmation_token)
+      assert_response :success
+      expect_ontola_action(
+        snackbar: 'Your account has been confirmed',
+        redirect: '/argu'
+      )
       assert user.reload.confirmed?
     end
 
-    test 'user should get show confirmation and persist temporary votes' do
+    test 'user should put update confirmation and persist temporary votes' do
       id1 = unconfirmed_vote.id
       edge1_id = unconfirmed_vote.id
       id2 = unconfirmed_vote2.id
@@ -155,14 +212,29 @@ module Users
       assert_difference('Edge.where(confirmed: true).count' => 2,
                         'motion.default_vote_event.reload.children_count(:votes_pro)' => 1) do
         Sidekiq::Testing.inline! do
-          get user_confirmation_path(confirmation_token: user.confirmation_token)
+          put user_confirmation_path(confirmation_token: user.confirmation_token)
         end
       end
 
-      expect_ontola_action(snackbar: 'Your account has been confirmed')
+      assert_response :success
+      expect_ontola_action(
+        snackbar: 'Your account has been confirmed',
+        redirect: '/argu'
+      )
       assert user.reload.confirmed?
       assert_equal [id1, edge1_id, id2, edge2_id],
                    [user.votes.first.id, user.votes.first.id, user.votes.second.id, user.votes.second.id]
+    end
+
+    test 'user should not put confirm email json' do
+      sign_in user
+      put user_confirmation_path,
+          params: {
+            email: user.email
+          },
+          headers: argu_headers(accept: :json)
+      assert_response :not_found
+      assert_not user.reload.confirmed?
     end
 
     test 'user should get new confirmation' do
@@ -188,24 +260,13 @@ module Users
       assert_email_sent
     end
 
-    test 'user should not put confirm email json' do
-      sign_in user
-      put users_confirm_path,
-          params: {
-            email: user.email
-          },
-          headers: argu_headers(accept: :json)
-      assert_response :forbidden
-      assert_not user.reload.confirmed?
-    end
-
     ####################################
     # As service
     ####################################
     test 'service should not put confirm wrong email json' do
       sign_in :service
 
-      put users_confirm_path,
+      put user_confirmation_path,
           params: {
             email: 'wrong@example.com'
           },
@@ -218,12 +279,12 @@ module Users
       sign_in :service
 
       assert_not user.confirmed?
-      put users_confirm_path,
+      put user_confirmation_path,
           params: {
             email: user.email
           },
           headers: argu_headers(accept: :json)
-      assert_response 200
+      assert_response :success
       assert user.reload.confirmed?
     end
 
@@ -234,10 +295,6 @@ module Users
     end
 
     def new_user_confirmation_path(*args)
-      "/#{argu.url}#{super}"
-    end
-
-    def users_confirm_path
       "/#{argu.url}#{super}"
     end
   end

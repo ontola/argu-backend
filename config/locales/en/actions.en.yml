@@ -67,6 +67,8 @@ en:
       create:
         label: "Send confirmation link again"
         submit: "Send"
+      update:
+        submit: "Bevestig"
     conversions:
       convert:
         label: "Convert"

@@ -12,13 +12,8 @@ module Users
       true
     end
 
-    def redirect_url
-      return if current_user != user
-      return @redirect_url if @redirect_url
-
-      return @redirect_url = ActsAsTenant.current_tenant.iri unless password_token
-
-      @redirect_url = iri_from_template(:user_set_password, reset_password_token: password_token)
+    def confirmed?
+      email&.confirmed?
     end
 
     class << self
