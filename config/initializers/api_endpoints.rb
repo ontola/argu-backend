@@ -14,3 +14,8 @@ required_keys = %w[
   Rails.logger.info "Registering #{key} as API endpoint"
   Argu::Redis.lpush(endpoints_key, key, redis_opts: {db: frontend_db})
 end
+
+Argu::Redis.set(
+  [TenantMiddleware::REDIRECTS_KEY, Rails.application.config.origin].join('.'),
+  "#{Rails.application.config.origin}/argu"
+)
