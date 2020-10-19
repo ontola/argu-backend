@@ -14,7 +14,7 @@ module RedirectHelper
 
   def valid_hosts
     [
-      ActsAsTenant.current_tenant&.iri,
+      "https://#{ActsAsTenant.current_tenant&.iri&.host}",
       "https://#{Rails.application.config.host_name}",
       Rails.env.test? ? 'https://127.0.0.1:42000' : nil
     ].compact
