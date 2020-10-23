@@ -8,7 +8,7 @@ class GrantTree
   attr_reader :cached_nodes, :tree_root
 
   def initialize(root)
-    raise ArgumentError.new("Edge expected as root, but got: #{root}") unless root.is_a?(Edge)
+    raise "Edge expected as root, but got: #{root}" unless root.is_a?(Edge)
 
     @tree_root = root
     @cached_nodes = {}

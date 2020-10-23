@@ -40,13 +40,13 @@ RSpec.describe GrantTree, type: :model do
     context 'without root' do
       let(:constructor_args) { nil }
 
-      it { expect { subject }.to raise_error(ArgumentError) }
+      it { expect { subject }.to raise_error('Edge expected as root, but got: ') }
     end
 
     context 'with erroneous root' do
       let(:constructor_args) { '5' }
 
-      it { expect { subject }.to raise_error(ArgumentError) }
+      it { expect { subject }.to raise_error('Edge expected as root, but got: 5') }
     end
   end
 

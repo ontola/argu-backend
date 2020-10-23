@@ -39,7 +39,7 @@ class UserContext
       raise "#{edge.owner_type} #{edge.owner_id} lies outside the tree of root #{tree_root.url}"
     end
 
-    @grant_trees[edge.persisted_edge.root_id] ||= GrantTree.new(edge.persisted_edge.root)
+    @grant_trees[tree_root.uuid] ||= GrantTree.new(tree_root)
   end
 
   def cache_scope?
