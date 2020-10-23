@@ -39,15 +39,19 @@ module SPI
     end
 
     def authorized_resources
-      @authorized_resources ||= params.require(:resources).map do |param|
-        param.permit(:include, :iri)
-      end.map(&method(:timed_authorized_resource))
+      @authorized_resources ||=
+        params
+          .require(:resources)
+          .map { |param| param.permit(:include, :iri) }
+          .map(&method(:timed_authorized_resource))
     end
 
     def print_timings
-      Rails.logger.debug "\n  CPU        system     user+system real        inc   status  iri\n" \
-                           "#{@timings.join("\n")}\n" \
-                           "  User: #{current_user.class}(#{current_user.id})"
+      Rails.logger.debug(
+        "\n  CPU        system     user+system real        inc   status  cache   iri\n" \
+        "#{@timings.join("\n")}\n" \
+        "  User: #{current_user.class}(#{current_user.id})"
+      )
     end
 
     def require_doorkeeper_token?
@@ -152,7 +156,10 @@ module SPI
     def timed_authorized_resource(resource)
       res = nil
       time = Benchmark.measure { res = authorized_resource(resource) }
-      @timings << "#{time.to_s[0..-2]} - #{resource[:include].to_s.ljust(5)}  #{res[:status]} #{resource[:iri]}"
+      unless Rails.env.production?
+        include = resource[:include].to_s.ljust(5)
+        @timings << "#{time.to_s[0..-2]} - #{include}  #{res[:status]}   #{res[:cache]} #{resource[:iri]}"
+      end
       res
     end
 
