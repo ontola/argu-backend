@@ -10,13 +10,12 @@ module Argu
     # Generates an activity string for an activity in the sense of: 'Foo responded to your Bar'
     # @param [string] activity The Activity to generate the activity_string for
     # @param [User] user The User to generate the activity_string for
-    # @param [symbol] render Set to `embedded_link` to embed an anchor link. Set
-    # to `template` to embed handlebars-like template variables. Defaults to
-    # `display_name` which interpolates the display name.
+    # @param [symbol] render Set to `template` to embed handlebars-like template variables.
+    # Defaults to `display_name` which interpolates the display name.
     def initialize(activity, user, render: :display_name)
       @activity = activity
       @user = user
-      @render = render
+      @render = render.to_sym
     end
 
     def to_s # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -50,9 +49,7 @@ module Argu
     # @return [String] Display name of activity.owner, as link or bold text
     def owner_string
       string = @activity.owner.display_name
-      if @render == :embedded_link && @activity.owner_id.positive?
-        "[#{string}](#{dual_profile_url(@activity.owner, only_path: false)})"
-      elsif @render == :template && @activity.owner_id.positive?
+      if @render == :template && @activity.owner_id.positive?
         '{{https://www.w3.org/ns/activitystreams#actor}}'
       else
         string.to_s
@@ -64,10 +61,7 @@ module Argu
       recipient = @activity.recipient_type == 'VoteEvent' ? @activity.recipient&.voteable : @activity.recipient
       return @activity.audit_data.try(:[], 'recipient_name') if recipient.nil?
 
-      case @render
-      when :embedded_link
-        "[#{recipient.display_name}](#{recipient.iri})"
-      when :template
+      if @render == :template
         '{{https://www.w3.org/ns/activitystreams#target}}'
       else
         recipient.display_name
@@ -94,17 +88,16 @@ module Argu
 
     # @return [String] Display name of activity.trackable, as link or bold text
     def subject_string
-      if @render == :embedded_link && @activity.trackable.present?
-        "[#{subject_display_name}](#{@activity.trackable.iri})"
-      elsif @render == :template && @activity.trackable.present?
+      if @render == :template && @activity.trackable.present?
         '{{https://www.w3.org/ns/activitystreams#object}}'
       else
         subject_display_name.to_s
       end
     end
 
-    def sub_action_key
+    def sub_action_key # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       return unless @activity.trackable_type == 'Decision' && @activity.action == 'forwarded'
+      return :to_any if @render == :template
 
       if @activity.trackable.forwarded_user == @user
         :to_you

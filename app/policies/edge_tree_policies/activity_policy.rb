@@ -35,11 +35,12 @@ class ActivityPolicy < EdgeTreePolicy
     # Trackable should be published OR be created by one of the managed profiles OR be placed in a managed forum
     def filter_unpublished_and_unmanaged(scope) # rubocop:disable Metrics/MethodLength
       scope
+        .with(managed_forum_paths)
         .joins(:trackable)
         .joins(
           'LEFT JOIN edges AS ancestors ON ancestors.path @> edges.path AND ancestors.id != edges.id AND '\
-          '(ancestors.is_published = false OR ancestors.trashed_at IS NOT NULL)'
-        ).with(managed_forum_paths)
+          'ancestors.root_id = edges.root_id AND (ancestors.is_published = false OR ancestors.trashed_at IS NOT NULL)'
+        )
         .where(
           '(edges.is_published = true AND ancestors.id IS NULL) OR activities.owner_id IN (:profile_ids) OR '\
           '(SELECT array_agg(path) FROM managed_forum_paths) @> edges.path',

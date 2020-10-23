@@ -11,12 +11,15 @@ class FeedController < AuthorizedController
       policy_scope(authenticated_resource.activities)
         .where('activities.created_at < ?', from_time)
         .order('activities.created_at DESC')
-        .includes(trackable: :root)
         .limit(10)
   end
 
   def authorize_action
     authorize feed_resource!, :feed?
+  end
+
+  def collection_view_includes(_member_includes = {})
+    {member_sequence: {}}
   end
 
   def feed_resource
