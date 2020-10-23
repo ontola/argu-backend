@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_26_175208) do
+ActiveRecord::Schema.define(version: 2020_10_23_122434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2020_08_26_175208) do
     t.uuid "trackable_edge_id"
     t.uuid "recipient_edge_id"
     t.uuid "root_id", null: false
+    t.index ["created_at"], name: "index_activities_on_created_at"
     t.index ["key"], name: "index_activities_on_key", using: :gist
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
     t.index ["recipient_edge_id"], name: "index_activities_on_recipient_edge_id"
@@ -78,7 +79,6 @@ ActiveRecord::Schema.define(version: 2020_08_26_175208) do
   create_table "edges", id: :serial, force: :cascade do |t|
     t.integer "publisher_id", null: false
     t.integer "parent_id"
-    t.integer "owner_id"
     t.string "owner_type"
     t.ltree "path"
     t.datetime "created_at", null: false
@@ -97,12 +97,14 @@ ActiveRecord::Schema.define(version: 2020_08_26_175208) do
     t.integer "creator_id", null: false
     t.boolean "primary"
     t.integer "attachments_count", default: 0, null: false
-    t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
+    t.index ["is_published"], name: "index_edges_on_is_published"
+    t.index ["owner_type"], name: "index_edges_on_owner_type"
     t.index ["parent_id", "creator_id"], name: "index_edges_on_parent_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
     t.index ["path"], name: "index_edges_on_path", using: :gist
     t.index ["root_id", "fragment"], name: "index_edges_on_root_id_and_fragment", unique: true
     t.index ["root_id", "path"], name: "index_edges_on_root_id_and_path"
     t.index ["root_id"], name: "index_edges_on_root_id"
+    t.index ["trashed_at"], name: "index_edges_on_trashed_at"
     t.index ["uuid"], name: "index_edges_on_uuid", unique: true
   end
 
@@ -159,6 +161,8 @@ ActiveRecord::Schema.define(version: 2020_08_26_175208) do
   create_table "grant_sets_permitted_actions", force: :cascade do |t|
     t.integer "grant_set_id", null: false
     t.integer "permitted_action_id", null: false
+    t.index ["grant_set_id"], name: "index_grant_sets_permitted_actions_on_grant_set_id"
+    t.index ["permitted_action_id"], name: "index_grant_sets_permitted_actions_on_permitted_action_id"
   end
 
   create_table "grants", id: :serial, force: :cascade do |t|
@@ -169,6 +173,7 @@ ActiveRecord::Schema.define(version: 2020_08_26_175208) do
     t.integer "grant_set_id"
     t.uuid "edge_id", null: false
     t.index ["edge_id"], name: "index_grants_on_edge_id"
+    t.index ["grant_set_id"], name: "index_grants_on_grant_set_id"
     t.index ["group_id", "edge_id"], name: "index_grants_on_group_id_and_edge_id", unique: true
     t.index ["group_id"], name: "index_grants_on_group_id"
   end
@@ -294,6 +299,9 @@ ActiveRecord::Schema.define(version: 2020_08_26_175208) do
     t.string "resource_type", null: false
     t.string "parent_type", null: false
     t.string "action", null: false
+    t.index ["action"], name: "index_permitted_actions_on_action"
+    t.index ["parent_type"], name: "index_permitted_actions_on_parent_type"
+    t.index ["resource_type"], name: "index_permitted_actions_on_resource_type"
     t.index ["title"], name: "index_permitted_actions_on_title", unique: true
   end
 
@@ -477,6 +485,7 @@ ActiveRecord::Schema.define(version: 2020_08_26_175208) do
     t.integer "attachments_count", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["show_feed"], name: "index_users_on_show_feed"
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 

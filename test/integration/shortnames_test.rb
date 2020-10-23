@@ -171,7 +171,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     attrs = attributes_for(:discussion_shortname, owner: motion)
     attrs.delete(:forum)
     owner = attrs.delete(:owner)
-    attrs[:owner_id] = owner.owner_id
+    attrs[:owner_id] = owner.id
     attrs[:owner_type] = owner.owner_type
     {
       shortname: attrs
