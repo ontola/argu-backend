@@ -77,7 +77,10 @@ module Users
       put user_confirmation_path(confirmation_token: confirmed_user.confirmation_token)
       assert_response :success
       assert_not response.headers['New-Authorization']
-      expect_ontola_action(snackbar: 'Email was already confirmed, try to log in.')
+      expect_ontola_action(
+        redirect: '/argu',
+        snackbar: 'Email was already confirmed, try to log in.'
+      )
     end
 
     test 'guest should put update wrong confirmation' do
@@ -158,7 +161,10 @@ module Users
       assert_response :success
       assert_not response.headers['New-Authorization']
       assert confirmed_user.reload.confirmed?
-      expect_ontola_action(snackbar: 'Email was already confirmed, try to log in.')
+      expect_ontola_action(
+        redirect: '/argu',
+        snackbar: 'Email was already confirmed, try to log in.'
+      )
     end
 
     test 'other_user should not post create confirmation' do

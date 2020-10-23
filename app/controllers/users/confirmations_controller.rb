@@ -70,8 +70,8 @@ module Users
     end
 
     def update_failure
-      respond_with_resource(
-        resource: current_resource,
+      respond_with_redirect(
+        location: after_confirmation_path_for(resource_name, current_resource),
         notice: email_by_token.errors.full_messages.first
       )
     end
