@@ -32,7 +32,14 @@ module Edgeable
       end
 
       def build_property(value, order)
-        instance.properties.build(root: instance.root, edge: instance, predicate: predicate, value: value, order: order)
+        root = instance.is_a?(Page) ? instance.root : ActsAsTenant.current_tenant || instance.root
+        instance.properties.build(
+          root: root,
+          edge: instance,
+          predicate: predicate,
+          value: value,
+          order: order
+        )
       end
 
       def current_value

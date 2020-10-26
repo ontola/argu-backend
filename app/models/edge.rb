@@ -222,7 +222,11 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def iri(opts = {})
-    ActsAsTenant.with_tenant(root || ActsAsTenant.current_tenant) { super }
+    return @iri if @iri && opts.empty?
+
+    iri ||= ActsAsTenant.with_tenant(root || ActsAsTenant.current_tenant) { super }
+    @iri = iri if opts.empty?
+    iri
   end
 
   def iri_template_name
@@ -302,9 +306,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     true
   end
 
-  def root(*args) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def root(*args) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
     return self if root_object? && parent_id.nil? && parent.nil?
     return @root || super if association_cached?(:root)
+    return ActsAsTenant.current_tenant if ActsAsTenant.current_tenant&.uuid == root_id
 
     @root ||= association_cached?(:parent) && parent ? parent.root : association(:root).reader(*args)
   end

@@ -25,7 +25,7 @@ module ActivePublishable
       attr_writer :is_draft
 
       def is_draft
-        @is_draft ||= published_publications.empty?
+        @is_draft ||= new_record? || published_publications.empty?
       end
       alias_method :is_draft?, :is_draft
 

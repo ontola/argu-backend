@@ -65,7 +65,11 @@ class Group < ApplicationRecord
   end
 
   def iri(opts = {})
-    ActsAsTenant.with_tenant(page || ActsAsTenant.current_tenant) { super }
+    return @iri if @iri && opts.empty?
+
+    iri ||= ActsAsTenant.with_tenant(page || ActsAsTenant.current_tenant) { super }
+    @iri = iri if opts.empty?
+    iri
   end
 
   def name_singular

@@ -13,6 +13,7 @@ class Property < ApplicationRecord
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
 
   before_validation proc { |p| p.root_id ||= ActsAsTenant.current_tenant&.uuid || p.edge&.root_id }, on: :create
+  validate :validate_page_root_id
 
   attribute :iri, IRIType.new
 
@@ -50,5 +51,11 @@ class Property < ApplicationRecord
 
   def parse_value(value)
     options[:enum] && options[:enum][value.try(:to_sym)] || value
+  end
+
+  def validate_page_root_id
+    return unless edge.is_a?(Page) && root_id && edge_id && root_id != edge_id
+
+    errors.add(:root_id, 'Wrong root')
   end
 end

@@ -27,7 +27,11 @@ class Follow < ApplicationRecord
   end
 
   def iri(opts = {})
-    ActsAsTenant.with_tenant(followable&.root || ActsAsTenant.current_tenant) { super }
+    return @iri if @iri && opts.empty?
+
+    iri ||= ActsAsTenant.with_tenant(followable&.root || ActsAsTenant.current_tenant) { super }
+    @iri = iri if opts.empty?
+    iri
   end
 
   def created_at; end
