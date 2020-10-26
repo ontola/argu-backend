@@ -58,12 +58,15 @@ module SPI
       false
     end
 
-    def resource_request(iri)
+    def resource_request(iri) # rubocop:disable Metrics/AbcSize
       path = LinkedRails.iri_mapper_class.send(:sanitized_relative, iri.dup, ActsAsTenant.current_tenant)
       fullpath = iri.query.blank? ? iri.path : "#{iri.path}?#{iri.query}"
       env = Rack::MockRequest.env_for(path, resource_request_headers.merge('ORIGINAL_FULLPATH' => fullpath))
       req = ActionDispatch::Request.new(env)
       req.path_info = ActionDispatch::Journey::Router::Utils.normalize_path(req.path_info)
+      req.env['User-Context'] = user_context
+      req.env['Current-User'] = current_user
+      req.env['Doorkeeper-Token'] = doorkeeper_token
 
       req
     end

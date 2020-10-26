@@ -24,6 +24,7 @@ module Argu
 
       def user_context
         @user_context ||=
+          request.env['User-Context'] ||
           UserContext.new(
             doorkeeper_scopes: doorkeeper_scopes,
             profile: current_profile,

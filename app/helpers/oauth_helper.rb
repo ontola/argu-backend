@@ -22,6 +22,14 @@ module OauthHelper
     end
   end
 
+  def current_user
+    request.env['Current-User'] || super
+  end
+
+  def doorkeeper_token
+    request.env['Doorkeeper-Token'] || super
+  end
+
   def doorkeeper_unauthorized_render_options(error: nil)
     @user_context ||= UserContext.new(doorkeeper_scopes: [], profile: nil, user: nil)
 
