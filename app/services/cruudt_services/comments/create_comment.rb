@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class CreateComment < CreateEdge
-  def initialize(parent, attributes: {}, options: {})
-    if attributes.delete(:is_opinion)&.to_s == 'true'
-      attributes[:vote_id] = current_vote(options[:publisher], parent)&.uuid
-    end
-    super
-  end
-
   private
 
   def current_vote(user, parent)

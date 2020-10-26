@@ -11,11 +11,6 @@ class Vote < Edge
 
   property :option, :integer, NS::SCHEMA[:option], default: 3, enum: {no: 0, yes: 1, other: 2, abstain: 3}
   property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
-  OPINION_CLASSES = {
-    yes: 'ProOpinion',
-    other: 'NeutralOpinion',
-    no: 'ConOpinion'
-  }.with_indifferent_access
   attribute :primary, :boolean, default: true
 
   belongs_to :comment, foreign_key_property: :comment_id
@@ -58,10 +53,6 @@ class Vote < Edge
     return super unless store_in_redis?
 
     :vote_iri
-  end
-
-  def opinion_class
-    OPINION_CLASSES[option] || raise("Could not find an OpinionClass for #{option}")
   end
 
   def pinned_at

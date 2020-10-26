@@ -2,7 +2,6 @@
 
 class CommentPolicy < EdgePolicy
   permit_attributes %i[description in_reply_to_id vote_id]
-  permit_attributes %i[is_opinion], new_record: true
 
   def create?
     assert_siblings! if record.try(:parent_comment).present?

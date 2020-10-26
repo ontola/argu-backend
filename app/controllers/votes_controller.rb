@@ -163,7 +163,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       voteable = authenticated_resource.parent.parent
       data.concat(reset_potential_and_favorite_delta(voteable))
       data.concat(reset_potential_and_favorite_delta(voteable.comment_collection))
-      opinion_delta(data, voteable)
     else
       data.concat(reset_vote_action_status(authenticated_resource.parent))
     end
@@ -182,20 +181,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       data.concat(reset_vote_action_status(authenticated_resource.parent))
     end
     data
-  end
-
-  def opinion_delta(data, voteable) # rubocop:disable Metrics/MethodLength
-    [
-      voteable.action(:update_opinion, user_context),
-      voteable.comment_collection.action(:create_opinion, user_context)
-    ].compact.each do |object|
-      data << [
-        object.iri,
-        NS::SCHEMA[:result],
-        authenticated_resource.opinion_class.constantize.iri,
-        delta_iri(:replace)
-      ]
-    end
   end
 
   def replace_vote_event_meta(data)

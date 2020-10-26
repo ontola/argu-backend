@@ -12,13 +12,6 @@ class CollectionPolicy < LinkedRails::CollectionPolicy
     verdict
   end
 
-  def create_opinion?
-    return false unless record.parent.try(:enhanced_with?, Opinionable)
-
-    vote = record.parent.vote_for(user_context.user)
-    vote.present? && vote.comment.nil?
-  end
-
   def expired?
     has_expired_ancestors?
   end

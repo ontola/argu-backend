@@ -6,16 +6,6 @@ class CommentsController < EdgeableController
 
   private
 
-  def create_meta
-    data = super
-    if authenticated_resource.parent.enhanced_with?(Opinionable) && authenticated_resource.vote_id.present?
-      voteable = authenticated_resource.parent
-      data.concat(reset_potential_and_favorite_delta(voteable))
-      data.concat(reset_potential_and_favorite_delta(voteable.comment_collection))
-    end
-    data
-  end
-
   def create_service_parent
     parent = super
     parent = parent.parent if parent.is_a?(Comment)

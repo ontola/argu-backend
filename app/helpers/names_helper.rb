@@ -141,12 +141,6 @@ module NamesHelper
       'comment'
     elsif [item.class, item].include?(Topic)
       'comments'
-    elsif [item.class, item].include?(ProOpinion)
-      'thumbs-up'
-    elsif [item.class, item].include?(ConOpinion)
-      'thumbs-down'
-    elsif [item.class, item].include?(NeutralOpinion)
-      'pause'
     elsif [item.class, item].include?(MediaObject)
       'file'
     elsif [item.class, item].include?(Phase)
