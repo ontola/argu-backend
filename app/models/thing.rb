@@ -5,7 +5,7 @@ class Thing < Edge
 
   has_many :linked_edges, through: :properties
 
-  def action_triples(_user_context)
+  def action_triples
     []
   end
 

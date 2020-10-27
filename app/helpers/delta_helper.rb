@@ -4,10 +4,6 @@ module DeltaHelper
   include LinkedRails::Helpers::DeltaHelper
   include RDF::Serializers::HextupleSerializer
 
-  def reset_potential_and_favorite_delta(object, cntx = user_context)
-    object.potential_and_favorite_triples(cntx)
-  end
-
   def counter_cache_delta(resource)
     return [] if resource.try(:counter_cache_options).blank?
 

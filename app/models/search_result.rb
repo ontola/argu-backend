@@ -12,7 +12,7 @@ class SearchResult < Collection
 
   delegate :aggs, :total_count, :took, to: :association_base
 
-  def action_triples(*_args)
+  def action_triples
     []
   end
 

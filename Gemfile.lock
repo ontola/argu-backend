@@ -36,8 +36,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: adc4d8aa8d8716e02148ceb6839da9bc4dc330fe
-  branch: apex-rs
+  revision: fa2c96cddc85de4f0d44ed9a938607dd308a66e0
+  branch: dexes
   specs:
     linked_rails (0.0.0)
       active_response
@@ -479,7 +479,7 @@ GEM
     rdf-turtle (3.1.0)
       ebnf (~> 1.2)
       rdf (~> 3.1)
-    rdf-vocab (3.1.8)
+    rdf-vocab (3.1.9)
       rdf (~> 3.1, >= 3.1.2)
     rdf-xsd (3.1.0)
       rdf (~> 3.1)
@@ -629,7 +629,7 @@ GEM
     yard (0.9.25)
     yard-activesupport-concern (0.0.1)
       yard (>= 0.8)
-    zeitwerk (2.4.1)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
