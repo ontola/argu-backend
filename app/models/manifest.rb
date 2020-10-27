@@ -72,7 +72,6 @@ class Manifest < VirtualResource
       LinkedRails.iri(path: 'forms/users/registrations').to_s,
       LinkedRails.iri(path: '/u/access_tokens/new').to_s,
       LinkedRails.iri(path: '/users/sign_up').to_s,
-      LinkedRails.iri(path: 'n').to_s,
       LinkedRails.iri(path: 'menus').to_s
     ]
   end
