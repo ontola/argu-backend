@@ -131,7 +131,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 0,
                       'vote_event.reload.children_count(:votes_con)' => 0) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes, type: :paginated, CGI.escape(NS::SCHEMA[:option]) => :no),
+        post collection_iri(vote_event, :votes, type: :paginated, filter: {CGI.escape(NS::SCHEMA[:option]) => :no}),
              headers: argu_headers(accept: :nq)
       end
     end
@@ -319,7 +319,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'vote_event.reload.children_count(:votes_pro)' => 1) do
       Sidekiq::Testing.inline! do
         post(
-          collection_iri(vote_event, :votes, CGI.escape(NS::SCHEMA[:option]) => :yes),
+          collection_iri(vote_event, :votes, filter: {CGI.escape(NS::SCHEMA[:option]) => :yes}),
           headers: argu_headers(accept: :nq)
         )
       end
@@ -546,7 +546,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 1,
                       'vote_event.reload.children_count(:votes_con)' => 1) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes, type: :paginated, CGI.escape(NS::SCHEMA[:option]) => :no),
+        post collection_iri(vote_event, :votes, type: :paginated, filter: {CGI.escape(NS::SCHEMA[:option]) => :no}),
              headers: argu_headers(accept: :nq)
       end
     end

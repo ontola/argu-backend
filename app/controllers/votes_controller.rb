@@ -90,7 +90,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def option_param
-    option = params[:vote].try(:[], :option)
+    option = collection_params[:filter].try(:[], NS::SCHEMA.option)&.first || params[:vote].try(:[], :option)
 
     option.present? && option !~ /\D/ ? Vote.options.key(option.to_i) : option
   end

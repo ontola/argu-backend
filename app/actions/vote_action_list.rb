@@ -6,13 +6,13 @@ class VoteActionList < EdgeActionList
   has_action(
     :create,
     create_options.merge(
-      image: -> { create_image(resource.filter[NS::SCHEMA[:option].to_s]) },
-      label: -> { create_label(resource.filter[NS::SCHEMA[:option].to_s]) },
-      submit_label: -> { create_label(resource.filter[NS::SCHEMA[:option].to_s]) },
-      favorite: -> { resource.filter[NS::SCHEMA[:option].to_s].present? }
+      image: -> { create_image(resource.filter[NS::SCHEMA[:option]]&.first) },
+      label: -> { create_label(resource.filter[NS::SCHEMA[:option]]&.first) },
+      submit_label: -> { create_label(resource.filter[NS::SCHEMA[:option]]&.first) },
+      favorite: -> { resource.filter[NS::SCHEMA[:option]].present? }
     )
   )
-  %i[yes no other].each do |option|
+  %i[yes other no].each do |option|
     has_action(
       :"create_#{option}",
       create_options.merge(
@@ -21,7 +21,7 @@ class VoteActionList < EdgeActionList
         submit_label: -> { create_label(option) },
         favorite: -> { resource.parent.is_a?(VoteEvent) },
         root_relative_iri: lambda do
-          resource.new_child(filter: {NS::SCHEMA[:option].to_s => [option]}).action(:create).iri_path
+          resource.new_child(filter: {NS::SCHEMA[:option] => [option]}).action(:create).iri_path
         end,
         object: -> { resource.new_child(filter: {NS::SCHEMA[:option].to_s => [option]}).build_child },
         url: -> { create_url(option) }
