@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class StatisticsController < ParentableController
-  before_action { fresh_when(last_modified: parent_resource.self_and_descendants.maximum(:updated_at)) }
-
   private
 
   def authorize_action
