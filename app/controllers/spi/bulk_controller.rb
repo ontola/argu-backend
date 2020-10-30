@@ -80,10 +80,12 @@ module SPI
         'HTTP_FORWARDED' => req_headers['HTTP_FORWARDED'],
         'HTTP_HOST' => req_headers['HTTP_HOST'],
         'HTTP_OPERATOR_ARG_GRAPH' => 'true',
+        'HTTP_X_DEVICE_ID' => req_headers['HTTP_X_DEVICE_ID'],
         'HTTP_X_FORWARDED_FOR' => req_headers['HTTP_X_FORWARDED_FOR'],
+        'HTTP_X_FORWARDED_HOST' => req_headers['HTTP_X_FORWARDED_HOST'],
         'HTTP_X_FORWARDED_PROTO' => req_headers['HTTP_X_FORWARDED_PROTO'],
         'HTTP_X_FORWARDED_SSL' => req_headers['HTTP_X_FORWARDED_SSL'],
-        'HTTP_X_DEVICE_ID' => req_headers['HTTP_X_DEVICE_ID'],
+        'HTTP_X_REAL_IP' => req_headers['HTTP_X_REAL_IP'],
         'HTTP_WEBSITE_IRI' => req_headers['HTTP_WEBSITE_IRI']
       }
     end
