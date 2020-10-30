@@ -43,7 +43,7 @@ class Grant < ApplicationRecord
   end
 
   def display_name
-    case edge.owner_type
+    case edge&.owner_type
     when 'Forum'
       edge.display_name
     when 'Page'
