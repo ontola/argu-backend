@@ -34,4 +34,10 @@ class Export < ApplicationRecord
   def schedule_export_job
     ExportWorker.perform_async(id)
   end
+
+  class << self
+    def default_collection_display
+      :table
+    end
+  end
 end

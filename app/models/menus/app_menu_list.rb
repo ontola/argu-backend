@@ -158,7 +158,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       setting_item(
         :custom_menu_items,
         label: I18n.t('custom_menu_items.plural'),
-        href: collection_iri(ActsAsTenant.current_tenant, :custom_menu_items, display: :table)
+        href: collection_iri(ActsAsTenant.current_tenant, :custom_menu_items)
       ),
       setting_item(
         :banners,

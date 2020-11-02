@@ -51,7 +51,7 @@ module Menus
     def export_link
       menu_item(
         :export,
-        href: collection_iri(resource, :exports, display: :table),
+        href: collection_iri(resource, :exports),
         image: 'fa-cloud-download',
         policy: :create_child?,
         policy_arguments: [:exports]

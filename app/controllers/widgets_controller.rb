@@ -9,29 +9,13 @@ class WidgetsController < ServiceController
     show_includes
   end
 
-  def index_collection
-    return super if params[:display]
-
-    @index_collection ||=
-      LinkedRails::Sequence.new(
-        policy_scope(parent_resource.widgets),
-        id: collection_iri(parent_resource, :widgets)
-      )
-  end
-
-  def index_includes_collection
-    return super if params[:display]
-
-    {members: Widget.preview_includes}
-  end
-
   def ld_action(resource:, view:)
     action_resource = resource.try(:new_record?) && (collection_from_parent || root_collection) || resource
     action_resource.action(ld_action_name(view), user_context)
   end
 
   def redirect_location
-    parent_resource.widget_collection.iri(display: :table)
+    parent_resource.widget_collection.iri
   end
 
   def resource_new_params

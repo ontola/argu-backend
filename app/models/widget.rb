@@ -193,6 +193,10 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
       )
     end
 
+    def default_collection_display
+      :table
+    end
+
     def preview_includes
       super + %i[resource_sequence property_shapes]
     end
