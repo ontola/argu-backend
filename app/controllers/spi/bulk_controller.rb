@@ -27,10 +27,35 @@ module SPI
       handle_resource_error(opts, e)
     end
 
+    def request_external_resource(iri)
+      HTTParty.get(
+        iri,
+        headers: {
+          'ACCEPT' => 'application/hex+x-ndjson; charset=utf-8',
+          'ACCEPT_LANGUAGE' => request.env['HTTP_ACCEPT_LANGUAGE'],
+          'AUTHORIZATION' => request.env['HTTP_AUTHORIZATION']
+        }
+      )
+    end
+
     def resource_request(iri)
       req = super
       req.env['User-Context'] = user_context
       req
+    end
+
+    def response_from_external(opts)
+      iri = opts[:iri]
+      include = opts[:include].to_s == 'true'
+      response = request_external_resource(iri)
+
+      resource_response(
+        iri.to_s,
+        body: include ? response.body : nil,
+        cache: :private,
+        language: response_language(response.headers),
+        status: response.code
+      )
     end
 
     def response_from_resource(include, resource)
@@ -44,6 +69,15 @@ module SPI
         language: I18n.locale,
         status: status
       )
+    end
+
+    def response_for_wrong_host(opts)
+      iri = opts[:iri]
+      if ActsAsTenant.current_tenant.allowed_external_sources.any? { |source| iri.start_with?(source) }
+        response_from_external(opts)
+      else
+        resource_response(iri)
+      end
     end
 
     def resource_body(resource)
