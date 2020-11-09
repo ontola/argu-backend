@@ -48,11 +48,40 @@ Rails.application.routes.draw do
     resource :vote, only: %i[destroy show], path: :vote
   end
 
-  constraints(Argu::WhitelistConstraint) do
+  constraints(LinkedRails::Constraints::Whitelist) do
     health_check_routes
   end
 
+  constraints(Argu::NoTenantConstraint) do
+    {
+      q: Question,
+      m: Motion,
+      a: Argument,
+      pro: Argument,
+      con: Argument,
+      posts: BlogPost,
+      c: Comment,
+      group_memberships: GroupMembership
+    }.each do |path, resource|
+      get "#{path}/:id", to: 'redirect#show', defaults: {class: resource}
+    end
+    get 'm/:parent_id/decision/:id', to: 'redirect#show', defaults: {class: Decision}
+    get ':shortname', to: 'redirect#show'
+
+    constraints(LinkedRails::Constraints::Whitelist) do
+      namespace :_public do
+        namespace :spi do
+          get 'find_tenant', to: 'tenant_finder#show'
+          get 'tenants', to: 'tenants#index'
+        end
+      end
+    end
+
+    match '*path', to: 'static_pages#not_found', via: :all
+  end
+
   use_linked_rails(
+    bulk: 'spi/bulk',
     current_user: :actors,
     enum_values: :enum_values,
     forms: :forms,
@@ -131,22 +160,6 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints(Argu::NoTenantConstraint) do
-    {
-      q: Question,
-      m: Motion,
-      a: Argument,
-      pro: Argument,
-      con: Argument,
-      posts: BlogPost,
-      c: Comment,
-      group_memberships: GroupMembership
-    }.each do |path, resource|
-      get "#{path}/:id", to: 'redirect#show', defaults: {class: resource}
-    end
-    get 'm/:parent_id/decision/:id', to: 'redirect#show', defaults: {class: Decision}
-    get ':shortname', to: 'redirect#show'
-  end
   root to: 'pages#show'
 
   # @todo canonical urls of edges should redirect
@@ -177,16 +190,9 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints(Argu::WhitelistConstraint) do
-    namespace :_public do
-      namespace :spi do
-        get 'find_tenant', to: 'tenant_finder#show'
-        get 'tenants', to: 'tenants#index'
-      end
-    end
+  constraints(LinkedRails::Constraints::Whitelist) do
     namespace :spi do
       get 'authorize', to: 'authorize#show'
-      post 'bulk', to: 'bulk#show'
       get 'current_user', to: 'users#current'
       get 'email_addresses', to: 'email_addresses#show'
     end

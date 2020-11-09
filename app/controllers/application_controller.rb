@@ -107,7 +107,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   end
 
   def internal_request?
-    Argu::WhitelistConstraint.matches?(request)
+    LinkedRails::Constraints::Whitelist.matches?(request)
   end
 
   def serializer_params

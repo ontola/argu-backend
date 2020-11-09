@@ -50,7 +50,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails-auth
-  revision: 97e104523b1372d8730b3d390521192219488414
+  revision: 4a7fb8c46cd233506a71c20443ef9ec5357fe586
   specs:
     linked_rails-auth (0.1.0)
       doorkeeper
@@ -592,7 +592,7 @@ GEM
     timers (4.3.0)
     toml (0.2.0)
       parslet (~> 1.8.0)
-    tzinfo (1.2.7)
+    tzinfo (1.2.8)
       thread_safe (~> 0.1)
     tzinfo-data (1.2020.1)
       tzinfo (>= 1.0.0)
@@ -629,7 +629,7 @@ GEM
     yard (0.9.25)
     yard-activesupport-concern (0.0.1)
       yard (>= 0.8)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.1)
 
 PLATFORMS
   ruby

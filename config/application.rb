@@ -10,6 +10,7 @@ require_relative '../lib/argu/redis'
 require_relative '../lib/argu/errors/i18n_error_handler'
 require 'rails/all'
 require 'linked_rails/middleware/linked_data_params'
+require 'linked_rails/constraints/whitelist'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

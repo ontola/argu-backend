@@ -2,6 +2,7 @@
 
 module Users
   class ConfirmationsController < LinkedRails::Auth::ConfirmationsController
+    include Argu::Controller::ErrorHandling
     include OauthHelper
 
     private
@@ -47,10 +48,6 @@ module Users
       @email_by_token ||= EmailAddress.find_first_by_auth_conditions(confirmation_token: original_token)
     end
 
-    def email_by_token!
-      email_by_token || raise(ActiveRecord::RecordNotFound)
-    end
-
     def email_for_user
       email = resource_params[:email]
       return EmailAddress.find_by!(email: email) if current_user.guest?
@@ -60,11 +57,13 @@ module Users
     end
 
     def requested_resource
+      return unless email_by_token&.user
+
       @requested_resource ||=
         LinkedRails.confirmation_class.new(
           current_user: current_user,
           email: email_by_token,
-          user: email_by_token&.user || raise(ActiveRecord::RecordNotFound),
+          user: email_by_token.user,
           token: original_token
         )
     end

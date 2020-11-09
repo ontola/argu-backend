@@ -51,7 +51,7 @@ Rails.application.configure do
   config.ssl_options = {
     hsts: {expires: 0},
     redirect: {
-      exclude: ->(request) { Argu::WhitelistConstraint.matches?(request) }
+      exclude: ->(request) { LinkedRails::Constraints::Whitelist.matches?(request) }
     }
   }
 
