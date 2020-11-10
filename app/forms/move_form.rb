@@ -5,7 +5,7 @@ class MoveForm < ApplicationForm
         max_count: 1,
         sh_in: -> { move_options }
 
-  def move_options
+  def self.move_options
     ActsAsTenant.current_tenant.forums.flat_map { |forum| [forum.iri] + forum.questions.map(&:iri) }
   end
 end

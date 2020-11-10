@@ -37,7 +37,7 @@ GIT
 GIT
   remote: https://github.com/ontola/linked_rails
   revision: adc4d8aa8d8716e02148ceb6839da9bc4dc330fe
-  branch: linked_rails-auth
+  branch: apex-rs
   specs:
     linked_rails (0.0.0)
       active_response
@@ -60,8 +60,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/rdf-serializers
-  revision: 8c7f795432ec2e00c808d253b2637ef650181d8e
-  branch: graph_operator
+  revision: d1e93541b1c6b8a06e028248ed25c98f4f5355a8
+  branch: empty-lists
   specs:
     rdf-serializers (0.0.7)
       fast_jsonapi
@@ -271,7 +271,7 @@ GEM
     elasticsearch-transport (7.7.0)
       faraday (~> 1)
       multi_json
-    erubi (1.9.0)
+    erubi (1.10.0)
     erubis (2.7.0)
     factory_bot (5.2.0)
       activesupport (>= 4.2.0)
@@ -334,7 +334,7 @@ GEM
       with_env (= 1.1.0)
       xml-simple
     link_header (0.0.8)
-    loofah (2.7.0)
+    loofah (2.8.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     ltree_hierarchy (1.0.0)
@@ -456,7 +456,7 @@ GEM
       thor (>= 0.20.3, < 2.0)
     rainbow (3.0.0)
     rake (13.0.1)
-    rdf (3.1.6)
+    rdf (3.1.7)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (3.1.0)
