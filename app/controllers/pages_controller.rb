@@ -21,20 +21,6 @@ class PagesController < EdgeableController
     respond_with_redirect(location: authenticated_resource.iri, reload: true)
   end
 
-  def index_collection
-    @index_collection ||= ::Collection.new(
-      collection_options.merge(
-        association_base: discoverable_pages,
-        association_class: Page,
-        default_type: :paginated
-      )
-    )
-  end
-
-  def discoverable_pages
-    ActsAsTenant.without_tenant { Kaminari.paginate_array(Page.discover.to_a) }
-  end
-
   def new_execute
     authenticated_resource.build_shortname
     authenticated_resource.build_profile

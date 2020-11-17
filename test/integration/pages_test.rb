@@ -38,14 +38,6 @@ class PagesTest < ActionDispatch::IntegrationTest
   ####################################
   # As Guest
   ####################################
-  test 'guest should get index' do
-    sign_in :guest_user
-
-    get collection_iri(nil, :pages, root: other_page)
-    assert_response :success
-    expect_triple(requested_iri, NS::AS[:totalItems], 1)
-  end
-
   test 'guest should not get new' do
     sign_in :guest_user
 
@@ -82,14 +74,6 @@ class PagesTest < ActionDispatch::IntegrationTest
   # As User
   ####################################
   let(:user) { create(:user) }
-
-  test 'user should get index' do
-    sign_in user
-
-    get collection_iri(nil, :pages, root: other_page)
-    assert_response :success
-    expect_triple(requested_iri, NS::AS[:totalItems], 1)
-  end
 
   test 'user should get new' do
     sign_in user
@@ -194,14 +178,6 @@ class PagesTest < ActionDispatch::IntegrationTest
   let(:administrator) { page.publisher }
   let(:argu_administrator) { argu.publisher }
   let(:other_page_administrator) { other_page.publisher }
-
-  test 'administrator should get index' do
-    sign_in administrator
-
-    get collection_iri(nil, :pages, root: other_page)
-    assert_response :success
-    expect_triple(requested_iri, NS::AS[:totalItems], 1)
-  end
 
   test 'administrator should get settings and all tabs' do
     create(:place, address: {country_code: 'nl'})

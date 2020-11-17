@@ -49,8 +49,7 @@ RSpec.describe 'Pages', type: :request do
     subject { create_page }
 
     it_behaves_like 'requests', skip: %i[
-      trash untrash new_unauthorized new_non_existing create_non_existing
-      create_unauthorized index_non_existing index_unauthorized
+      trash untrash new_unauthorized new_non_existing create_non_existing create_unauthorized index
     ]
     context 'user pages' do
       let(:index_path) { "/#{argu.url}#{pages_user_path(authorized_user)}" }

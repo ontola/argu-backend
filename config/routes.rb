@@ -175,7 +175,7 @@ Rails.application.routes.draw do
   # @todo canonical urls of edges should redirect
   resources :edges, only: [:show] do
     %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
-       motions pages questions votes vote_events].map do |edgeable|
+       motions questions votes vote_events].map do |edgeable|
       resources edgeable, only: :index
     end
   end
@@ -208,7 +208,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :pages, path: 'o', only: %i[new create index show] do
+  resources :pages, path: 'o', only: %i[new create show] do
     collection do
       concerns :nested_actionable
     end
