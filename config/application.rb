@@ -29,14 +29,12 @@ module Argu
     config.aws_url = "https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com"
 
     config.autoload_paths += %w[lib]
-    %i[controllers forms models policies serializers].each do |type|
-      config.autoload_paths += %W[#{config.root}/app/#{type}/container_nodes]
-    end
     [:controllers, :forms, :models, 'models/menus', :policies, :serializers].each do |type|
+      config.autoload_paths += %W[#{config.root}/app/#{type}/container_nodes]
+      config.autoload_paths += %W[#{config.root}/app/#{type}/edges]
       config.autoload_paths += %W[#{config.root}/app/#{type}/rivm]
     end
     config.autoload_paths += %W[#{config.root}/app/models/menus]
-    config.autoload_paths += %W[#{config.root}/app/models/menus/container_nodes]
     config.autoload_paths += %W[#{config.root}/app/adapters]
     config.autoload_paths += %W[#{config.root}/app/responders]
     config.autoload_paths += %W[#{config.root}/app/services]

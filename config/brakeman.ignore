@@ -43,10 +43,10 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "3ac9ea35e368865c245e3f620dae363166341f0d0547bc053673636e03152b20",
+      "fingerprint": "8bffbc953891e9d03a05ec7f4f2f8dc5fc3d0bce3775a7f65251803775ef6d3c",
       "check_name": "SQL",
       "message": "Possible SQL injection",
-      "file": "app/policies/edgeable_policies/container_node_policy.rb",
+      "file": "app/policies/edges/container_node_policy.rb",
       "line": 10,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "scope.property_join(:discoverable).with(granted_paths).where(:root_id => grant_tree.tree_root_id).where(\"discoverable_filter.value = true OR #{granted_path_type_filter(:parent_type => \"Page\")}\")",
@@ -61,6 +61,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-01-29 13:30:00 +0100",
+  "updated": "2021-02-01 11:27:43 +0100",
   "brakeman_version": "5.0.0"
 }
