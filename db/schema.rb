@@ -42,16 +42,6 @@ ActiveRecord::Schema.define(version: 2021_02_01_131631) do
     t.index ["trackable_edge_id"], name: "index_activities_on_trackable_edge_id"
   end
 
-  create_table "authentications", id: :serial, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.string "provider", limit: 255, null: false
-    t.string "uid", limit: 255, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id", "uid"], name: "user_id_and_uid", unique: true
-    t.index ["user_id"], name: "user_id"
-  end
-
   create_table "custom_menu_items", force: :cascade do |t|
     t.string "menu_type", null: false
     t.string "resource_type", null: false
@@ -394,15 +384,6 @@ ActiveRecord::Schema.define(version: 2021_02_01_131631) do
     t.integer "follow_type", default: 3, null: false
     t.uuid "publishable_id"
     t.index ["publishable_id"], name: "index_publications_on_publishable_id"
-  end
-
-  create_table "sessions", id: :serial, force: :cascade do |t|
-    t.string "session_id", limit: 255, null: false
-    t.text "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
-    t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
   create_table "settings", id: :serial, force: :cascade do |t|
