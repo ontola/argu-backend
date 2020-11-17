@@ -271,24 +271,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
-  test 'user should post create for motion with default id' do
-    sign_in user
-    motion
-    default_iri = motion.default_vote_event.iri_path(id: 'default')
-    assert default_iri.include?('default')
-    iri = ActsAsTenant.with_tenant(argu) { collection_iri(default_iri, :votes, canonical: true) }
-    assert_difference('Vote.count' => 1, 'Edge.count' => 1) do
-      post iri,
-           params: {
-             vote: {
-               option: :yes
-             }
-           },
-           headers: argu_headers(accept: :json)
-    end
-    assert_response 201
-  end
-
   test 'user should post create upvote for argument json' do
     sign_in user
     argument

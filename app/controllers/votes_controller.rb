@@ -57,10 +57,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     broadcast_vote_counts
   end
 
-  def default_vote_event_id?
-    params[:vote_event_id] == VoteEvent::DEFAULT_ID
-  end
-
   def iri_without_id
     current_vote_iri(parent_resource)
   end
@@ -92,12 +88,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     option = collection_params[:filter].try(:[], NS::SCHEMA.option)&.first || params[:vote].try(:[], :option)
 
     option.present? && option !~ /\D/ ? Vote.options.key(option.to_i) : option
-  end
-
-  def parent_from_params(root = tree_root, opts = params_for_parent)
-    return super unless default_vote_event_id?
-
-    super(root, opts.except(:vote_event_id))&.default_vote_event if parent_resource_key(opts.except(:vote_event_id))
   end
 
   def unmodified?
@@ -145,15 +135,11 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def create_meta # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def create_meta
     data = counter_cache_delta(authenticated_resource)
     if authenticated_resource.parent.is_a?(VoteEvent)
-      if default_vote_event_id?
-        replace_vote_event_meta(data)
-      else
-        vote_collections.each do |collection|
-          meta_replace_collection_count(data, collection)
-        end
+      vote_collections.each do |collection|
+        meta_replace_collection_count(data, collection)
       end
     else
       data.concat(reset_vote_action_status(authenticated_resource.parent))

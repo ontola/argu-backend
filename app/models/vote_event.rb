@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class VoteEvent < Edge
-  DEFAULT_ID = 'default'
   enhance LinkedRails::Enhancements::Actionable
 
   with_collection :votes
