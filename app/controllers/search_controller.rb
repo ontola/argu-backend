@@ -5,7 +5,6 @@ class SearchController < EdgeableController
     groups: Group
   }.freeze
 
-  skip_before_action :check_if_registered, only: :index
   after_action :set_cache_control_public, only: :index, if: :valid_blank_search?
 
   private

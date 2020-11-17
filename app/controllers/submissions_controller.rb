@@ -3,10 +3,6 @@
 class SubmissionsController < EdgeableController
   private
 
-  def check_if_registered?
-    false
-  end
-
   def create_meta
     super + [
       invalidate_resource_delta(current_resource.parent.action(:create_submission))

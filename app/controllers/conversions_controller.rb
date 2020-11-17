@@ -25,10 +25,6 @@ class ConversionsController < ServiceController
     authorize authenticated_resource, :new?
   end
 
-  def check_if_registered?
-    action_name != 'show' && !form_action?
-  end
-
   def create_service_parent
     Conversion.new(edge: parent_resource!)
   end

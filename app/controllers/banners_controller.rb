@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class BannersController < EdgeableController
-  skip_before_action :check_if_registered, only: :index
-
   private
 
   def collection_from_parent_name

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class BlogPostsController < EdgeableController
-  skip_before_action :check_if_registered, only: :index
-
   private
 
   def default_publication_follow_type

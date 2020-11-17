@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class BannerDismissalsController < EdgeableController
-  skip_before_action :check_if_registered
-
   private
 
   def active_response_success_message; end
