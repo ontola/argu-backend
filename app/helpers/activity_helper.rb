@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module ActivityHelper
-  include ProfilesHelper
   include NamesHelper
 
   # Generates an activity string for an activity in the sense of: 'Foo responded to your Bar'

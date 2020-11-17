@@ -2,7 +2,6 @@
 
 module Argu
   class ActivityString
-    include ProfilesHelper
     include ActionView::Helpers
     include ActionDispatch::Routing
     include Rails.application.routes.url_helpers

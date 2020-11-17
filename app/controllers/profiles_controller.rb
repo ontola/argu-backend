@@ -8,7 +8,7 @@ class ProfilesController < AuthorizedController
     active_response_block do
       @authenticated_resource = user_or_redirect
       @profile = @authenticated_resource.profile
-      respond_with_redirect location: redirect_url || dual_profile_url(@profile)
+      respond_with_redirect location: redirect_url || @authenticated_resource.iri.path
     end
   end
 

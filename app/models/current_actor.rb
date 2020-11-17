@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 class CurrentActor
-  include ProfilesHelper
   include LinkedRails::Model
   include ActiveModel::Serialization
   include ActiveModel::Model
   include ApplicationModel
-  include Rails.application.routes.url_helpers
 
   attr_accessor :actor, :user
 
@@ -38,10 +36,6 @@ class CurrentActor
 
   def shortname
     actor&.url
-  end
-
-  def url
-    actor && dual_profile_url(actor, only_path: false)
   end
 
   def user_id
