@@ -1,9 +1,17 @@
 # frozen_string_literal: true
 
 class BannerDismissal < Edge
+  include DeltaHelper
   include RedisResource::Concern
+
   enhance LinkedRails::Enhancements::Creatable
   parentable :banner
+
+  def added_delta
+    [
+      [parent.iri, NS::ONTOLA[:dismissedAt], Time.current, delta_iri(:replace)]
+    ]
+  end
 
   def display_name; end
 

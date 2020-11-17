@@ -12,21 +12,6 @@ class DecisionsController < EdgeableController
     end
   end
 
-  def create_meta
-    data = super
-    data << [
-      authenticated_resource.parent.iri,
-      NS::ARGU[:decision],
-      authenticated_resource.iri,
-      delta_iri(:replace)
-    ]
-    data
-  end
-
-  def index_success_json
-    respond_with_resource(resource: parent_resource!.last_decision)
-  end
-
   def active_response_success_message
     if authenticated_resource.argu_publication.published_at.present?
       parent_key = authenticated_resource.parent.model_name.singular

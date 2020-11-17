@@ -9,6 +9,7 @@ class BannersController < EdgeableController
     :active_banner_collection
   end
 
+  # Overwritten because the super method checks if the resource #is_published?
   def create_meta
     resource_added_delta(authenticated_resource)
   end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ContainerNode < Edge
+  include DeltaHelper
+
   enhance ConfirmedDestroyable
   enhance CoverPhotoable
   enhance Exportable
@@ -57,6 +59,12 @@ class ContainerNode < Edge
   def self.inherited(klass)
     klass.enhance LinkedRails::Enhancements::Creatable
     super
+  end
+
+  def added_delta
+    [
+      invalidate_resource_delta(parent.menu(:navigations))
+    ]
   end
 
   def enforce_hidden_last_name?

@@ -28,6 +28,12 @@ class Decision < Edge
   validates :state, presence: true
   parentable :motion
 
+  def added_delta
+    [
+      [parent.iri, NS::ARGU[:decision], iri, delta_iri(:replace)]
+    ]
+  end
+
   def display_name
     return self[:display_name] if destroyed?
 
