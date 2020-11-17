@@ -27,8 +27,4 @@ class DraftsController < AuthorizedController
   def user_by_id
     @user_by_id = User.find_via_shortname_or_id! params[:id]
   end
-
-  def show_params
-    params.permit(:page)
-  end
 end

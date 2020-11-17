@@ -84,10 +84,6 @@ class ContainerNodesController < EdgeableController
     redirect_to resource.iri
   end
 
-  def show_params
-    params.permit(:page)
-  end
-
   def signals_failure
     controller_classes.map { |klass| :"#{action_name}_#{klass.name.underscore}_failed" }
   end

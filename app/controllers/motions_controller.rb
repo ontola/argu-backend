@@ -19,8 +19,4 @@ class MotionsController < DiscussionsController
     )
     authenticated_resource.current_vote = @vote
   end
-
-  def show_params
-    params.permit(:page, :page_arg_pro, :page_arg_con)
-  end
 end
