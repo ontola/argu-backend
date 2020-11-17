@@ -3,11 +3,6 @@
 class CreateArgument < CreateEdge
   private
 
-  def after_save
-    super
-    resource.upvote(resource.creator.profileable, resource.creator) if @options[:auto_vote]
-  end
-
   def assign_attributes # rubocop:disable Metrics/AbcSize
     super
     klass = resource.pro ? ProArgument : ConArgument

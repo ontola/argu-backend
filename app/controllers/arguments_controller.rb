@@ -36,10 +36,4 @@ class ArgumentsController < EdgeableController
 
     authenticated_resource.parent.iri
   end
-
-  def service_options(opts = {})
-    super(opts.merge(auto_vote:
-                       params.dig(model_name, :auto_vote) == 'true' &&
-                         current_actor.actor == current_user.profile))
-  end
 end
