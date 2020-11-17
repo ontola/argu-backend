@@ -10,7 +10,7 @@ module Discussable
 
     def route_concerns(mapper)
       mapper.concern :discussable do
-        mapper.resources :discussions, only: %i[index new]
+        mapper.resources :discussions, only: %i[index]
       end
     end
   end
