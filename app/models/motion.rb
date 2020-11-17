@@ -9,8 +9,6 @@ class Motion < Discussion
 
   include Edgeable::Content
 
-  attr_accessor :current_vote
-
   alias_attribute :content, :description
   alias_attribute :title, :display_name
 

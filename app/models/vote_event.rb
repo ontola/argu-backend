@@ -46,7 +46,6 @@ class VoteEvent < Edge
   class << self
     def show_includes
       [
-        :current_vote,
         vote_collection: inc_nested_collection
       ]
     end

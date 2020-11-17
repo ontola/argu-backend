@@ -37,7 +37,6 @@ module VoteEventable
       def show_includes
         super + [
           default_vote_event: [
-            :current_vote,
             vote_collection: {
               filter_fields: :options,
               filters: [],
