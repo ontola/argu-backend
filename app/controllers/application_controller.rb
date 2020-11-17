@@ -36,11 +36,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
       name.sub(/Controller$/, '').classify.safe_constantize || controller_name.classify.safe_constantize
   end
 
-  def params
-    @params ||=
-      UNSAFE_METHODS.include?(request.method) && parse_json_api_params?(super) ? json_api_params(super) : super
-  end
-
   def redirect_to(*args)
     args[0] = args[0].iri if args[0].respond_to?(:iri)
     args[0] = args[0].to_s if args[0].is_a?(RDF::URI)
@@ -97,10 +92,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   end
 
   def current_forum; end
-
-  def deserialize_params_options
-    {}
-  end
 
   def include_resources
     response.headers['Include-Resources'] = current_resource.try(:include_resources)&.join(',') if request.head?

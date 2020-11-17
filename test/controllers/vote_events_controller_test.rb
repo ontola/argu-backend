@@ -29,18 +29,6 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_not_included(vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri))
   end
 
-  test 'should get show vote_event of motion with default id' do
-    get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, id: 'default'}
-    assert_response 200
-
-    assert_equal primary_resource['id'], motion.default_vote_event.iri
-    expect_relationship('parent')
-    expect_relationship('creator')
-
-    expect_relationship('vote_collection', size: 1)
-    expect_included(collection_iri(motion.default_vote_event, :votes))
-  end
-
   test 'should get index vote_events of motion' do
     get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
     assert_response 200

@@ -104,10 +104,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     create_service.resource.persisted? && !create_service.resource.option_changed?
   end
 
-  def deserialize_params_options
-    {keys: {side: :option}}
-  end
-
   def destroy_success
     super
     broadcast_vote_counts

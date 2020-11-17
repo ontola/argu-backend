@@ -361,11 +361,8 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'vote_event.reload.children_count(:votes_pro)' => 1) do
       post collection_iri(vote_event, :votes, canonical: true),
            params: {
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :yes
-               }
+             vote: {
+               option: :yes
              }
            },
            headers: argu_headers(accept: :json_api)
@@ -386,11 +383,8 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'closed_vote_event.reload.children_count(:votes_pro)' => 0) do
       post collection_iri(closed_vote_event, :votes, canonical: true),
            params: {
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :yes
-               }
+             vote: {
+               option: :yes
              }
            },
            headers: argu_headers(accept: :json_api)
@@ -456,30 +450,6 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 201
     assert assigns(:create_service).resource.valid?
-  end
-
-  test 'creator should post update json_api' do
-    sign_in creator
-
-    assert_difference('Vote.count' => 1,
-                      'Vote.untrashed.count' => 0,
-                      'vote_event.reload.children_count(:votes_pro)' => -1,
-                      'vote_event.reload.children_count(:votes_con)' => 1) do
-      post collection_iri(vote_event, :votes, canonical: true),
-           params: {
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :no
-               }
-             }
-           },
-           headers: argu_headers(accept: :json_api)
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.no?
   end
 
   test 'creator should not delete destroy vote for motion twice' do

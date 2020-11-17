@@ -12,12 +12,9 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     sign_in create_guest_user
     post collection_iri(motion, :pro_arguments),
          params: {
-           data: {
-             type: 'proArguments',
-             attributes: {
-               pro: true,
-               title: 'Argument title'
-             }
+           pro_argument: {
+             pro: true,
+             title: 'Argument title'
            }
          },
          headers: argu_headers(accept: :json_api)
@@ -36,12 +33,9 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     tenant_from(cairo)
     post collection_iri(cairo, :motions),
          params: {
-           data: {
-             type: 'motions',
-             attributes: {
-               title: 'Motion title',
-               content: 'Motion body'
-             }
+           motion: {
+             title: 'Motion title',
+             content: 'Motion body'
            }
          },
          headers: argu_headers(accept: :json_api)
@@ -58,6 +52,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   test 'user should get 422 with empty body' do
     sign_in user
     post collection_iri(motion, :pro_arguments),
+         params: {},
          headers: argu_headers(accept: :json_api)
 
     assert_response 422
@@ -73,7 +68,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     sign_in user
     post collection_iri(motion, :pro_arguments),
          params: {
-           data: {}
+           pro_argument: {}
          },
          headers: argu_headers(accept: :json_api)
 
@@ -86,38 +81,13 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
                  )
   end
 
-  test 'user should get 400 with missing type' do
-    sign_in user
-    post collection_iri(motion, :pro_arguments),
-         params: {
-           data: {
-             attributes: {
-               pro: true,
-               title: 'Argument title'
-             }
-           }
-         },
-         headers: argu_headers(accept: :json_api)
-
-    assert_response 422
-    assert_equal parsed_body,
-                 'errors' => json_api_errors(
-                   status: 'Unprocessable Entity',
-                   message: 'param is missing or the value is empty: type',
-                   code: 'PARAMETER_MISSING'
-                 )
-  end
-
   test 'user should get 400 with wrong type' do
     sign_in user
     post collection_iri(motion, :pro_arguments),
          params: {
-           data: {
-             type: 'motions',
-             attributes: {
-               pro: true,
-               title: 'Argument title'
-             }
+           motion: {
+             pro: true,
+             title: 'Argument title'
            }
          },
          headers: argu_headers(accept: :json_api)
@@ -126,8 +96,8 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Unprocessable Entity',
-                   message: 'found unpermitted parameter: :type',
-                   code: 'UNPERMITTED_PARAMETERS'
+                   message: 'param is missing or the value is empty: pro_argument',
+                   code: 'PARAMETER_MISSING'
                  )
   end
 
@@ -135,9 +105,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     sign_in user
     post collection_iri(motion, :pro_arguments),
          params: {
-           data: {
-             type: 'proArguments'
-           }
+           pro_argument: {}
          },
          headers: argu_headers(accept: :json_api)
 
@@ -145,7 +113,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Unprocessable Entity',
-                   message: 'param is missing or the value is empty: attributes',
+                   message: 'param is missing or the value is empty: pro_argument',
                    code: 'PARAMETER_MISSING'
                  )
   end
@@ -154,11 +122,8 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     sign_in user
     post collection_iri(freetown, :questions),
          params: {
-           data: {
-             type: 'questions',
-             attributes: {
-               bla: 'bla'
-             }
+           question: {
+             bla: 'bla'
            }
          },
          headers: argu_headers(accept: :json_api)

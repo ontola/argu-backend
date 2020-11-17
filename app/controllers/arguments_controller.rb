@@ -15,10 +15,6 @@ class ArgumentsController < EdgeableController
     parent_resource!
   end
 
-  def deserialize_params_options
-    {keys: {name: :title, text: :content}}
-  end
-
   def collection_from_parent_name
     "#{argument_type}_argument_collection"
   end
