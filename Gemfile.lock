@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 6c0893a74f48fa20d7e7a0dc3cb29d37e977ced4
+  revision: adc4d8aa8d8716e02148ceb6839da9bc4dc330fe
   branch: linked_rails-auth
   specs:
     linked_rails (0.0.0)
