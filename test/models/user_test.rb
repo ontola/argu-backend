@@ -33,20 +33,13 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should validate r' do
-    subject.redirect_url = ''
-    assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.redirect_url = '/users/sign_in'
-    assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.redirect_url = 'https://argu.localtest/users/sign_in'
-    assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.redirect_url = 'https://argu.localtest/users/sign_in?param=blabla'
-    assert subject.valid?, subject.errors.to_a.join(',').to_s
-    subject.redirect_url = 'https://beta.argu.dev/users/sign_in?param=blabla'
-    assert_not subject.valid?
-    subject.redirect_url = 'https://evilwebsite.com/users/sign_in'
-    assert_not subject.valid?
-    subject.redirect_url = 'https://evilwebsite.com/users/sign_in?param=blabla'
-    assert_not subject.valid?
+    assert_update_redirect_url('')
+    assert_update_redirect_url('/users/sign_in')
+    assert_update_redirect_url('https://argu.localtest/users/sign_in')
+    assert_update_redirect_url('https://argu.localtest/users/sign_in?param=blabla')
+    assert_not_update_redirect_url('https://beta.argu.dev/users/sign_in?param=blabla')
+    assert_not_update_redirect_url('https://evilwebsite.com/users/sign_in')
+    assert_not_update_redirect_url('https://evilwebsite.com/users/sign_in?param=blabla')
   end
 
   test 'hide last_name' do
@@ -61,5 +54,19 @@ class UserTest < ActiveSupport::TestCase
     assert_equal subject.reload.hide_last_name, false
     subject.update!(birthday: 18.years.ago)
     assert_equal subject.reload.hide_last_name, true
+  end
+
+  private
+
+  def assert_update_redirect_url(url)
+    subject.update!(redirect_url: url)
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
+    assert_equal subject.reload.redirect_url, url
+  end
+
+  def assert_not_update_redirect_url(url)
+    subject.update!(redirect_url: url)
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
+    assert_nil subject.reload.redirect_url
   end
 end

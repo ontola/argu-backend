@@ -80,6 +80,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_create :skip_confirmation_notification!
   before_create :build_public_group_membership
   validates :about, length: {maximum: 3000}
+  before_save :sanitize_redirect_url
 
   attr_accessor :current_password
 
@@ -103,7 +104,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
               in: I18n.available_locales.map(&:to_s),
               message: '%<value> is not a valid locale'
             }
-  validate :redirect_url, :validate_r
   validate :validate_public_group_membership
   validate :validate_url_uniqueness
 
@@ -407,17 +407,15 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     birthday && (Date.current.year - birthday.year) <= 18
   end
 
+  def sanitize_redirect_url
+    self.redirect_url = nil unless argu_iri_or_relative?(redirect_url)
+  end
+
   def should_broadcast_changes
     keys = previous_changes.keys
     return true if keys.length != LOGIN_ATTRS.length && keys.length != FAILED_LOGIN_ATTRS.length
 
     !(keys & LOGIN_ATTRS == keys || keys & FAILED_LOGIN_ATTRS == keys) # rubocop:disable Style/MultipleComparison
-  end
-
-  def validate_r
-    return if argu_iri_or_relative?(redirect_url)
-
-    errors.add(:redirect_url, "Redirecting to #{redirect_url} is not allowed")
   end
 
   def validate_url_uniqueness
