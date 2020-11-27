@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
 class MediaObjectContentsController < ParentableController
-  def show
-    redirect_to url_for_version || raise(ActiveRecord::RecordNotFound)
+  def active_response_custom_responses(format)
+    format.html do
+      redirect_to url_for_version || raise(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  def show_success_rdf
+    respond_with_resource(
+      resource: nil,
+      meta: [
+        RDF::Statement.new(RDF::URI(request.original_url), NS::OWL.sameAs, RDF::URI(url_for_version))
+      ]
+    )
   end
 
   private

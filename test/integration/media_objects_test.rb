@@ -40,21 +40,47 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
     assert_equal NS::SCHEMA[:ImageObject].to_s, primary_resource['attributes']['type']
   end
 
-  test 'Guest should get redirect original version of image' do
+  test 'Guest should get html redirect original version of image' do
     sign_in :guest_user
 
     get ActsAsTenant.with_tenant(argu) { profile_photo.url_for_version('content') },
-        headers: argu_headers(accept: :json_api)
+        headers: argu_headers(accept: :html)
 
     assert_redirected_to path_with_hostname("/photos/#{profile_photo.id}/profile_photo.png").sub('http:', 'https:')
   end
 
-  test 'Guest should get redirect box version of image' do
+  test 'Guest should get html redirect box version of image' do
     sign_in :guest_user
 
     get ActsAsTenant.with_tenant(argu) { profile_photo.url_for_version('box') },
-        headers: argu_headers(accept: :json_api)
+        headers: argu_headers(accept: :html)
 
     assert_redirected_to path_with_hostname("/photos/#{profile_photo.id}/box_profile_photo.jpg").sub('http:', 'https:')
+  end
+
+  test 'Guest should get rdf redirect original version of image' do
+    sign_in :guest_user
+
+    get ActsAsTenant.with_tenant(argu) { profile_photo.url_for_version('content') }
+    assert_response :success
+
+    expect_triple(
+      requested_iri,
+      NS::OWL.sameAs,
+      RDF::URI(path_with_hostname("/photos/#{profile_photo.id}/profile_photo.png").sub('http:', 'https:'))
+    )
+  end
+
+  test 'Guest should get rdf redirect box version of image' do
+    sign_in :guest_user
+
+    get ActsAsTenant.with_tenant(argu) { profile_photo.url_for_version('box') }
+    assert_response :success
+
+    expect_triple(
+      requested_iri,
+      NS::OWL.sameAs,
+      RDF::URI(path_with_hostname("/photos/#{profile_photo.id}/box_profile_photo.jpg").sub('http:', 'https:'))
+    )
   end
 end
