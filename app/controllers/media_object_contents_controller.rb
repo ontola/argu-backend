@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class MediaObjectContentsController < ParentableController
+  before_action :redirect_to_image, if: :head_request?
+
   def active_response_custom_responses(format)
     format.html do
-      redirect_to url_for_version || raise(ActiveRecord::RecordNotFound)
+      redirect_to_image
     end
   end
 
@@ -20,6 +22,14 @@ class MediaObjectContentsController < ParentableController
 
   def authorize_action
     authorize parent_resource!
+  end
+
+  def head_request?
+    request.head?
+  end
+
+  def redirect_to_image
+    redirect_to(url_for_version || raise(ActiveRecord::RecordNotFound))
   end
 
   def url_for_version # rubocop:disable Metrics/AbcSize
