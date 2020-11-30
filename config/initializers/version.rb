@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-VERSION = '141.0.3' unless defined?(::VERSION)
+VERSION = '141.0.4' unless defined?(::VERSION)
