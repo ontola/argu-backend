@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_23_122434) do
+ActiveRecord::Schema.define(version: 2020_11_30_153922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -370,7 +370,10 @@ ActiveRecord::Schema.define(version: 2020_10_23_122434) do
     t.string "iri"
     t.string "language"
     t.uuid "root_id", null: false
+    t.index ["edge_id", "predicate", "integer"], name: "index_properties_on_edge_id_and_predicate_and_integer"
     t.index ["edge_id"], name: "index_properties_on_edge_id"
+    t.index ["root_id", "edge_id", "linked_edge_id", "predicate", "order"], name: "order_index"
+    t.index ["root_id", "edge_id"], name: "index_properties_on_root_id_and_edge_id"
     t.index ["root_id"], name: "index_properties_on_root_id"
   end
 
