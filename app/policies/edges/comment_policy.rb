@@ -2,6 +2,7 @@
 
 class CommentPolicy < EdgePolicy
   permit_attributes %i[description in_reply_to_id vote_id]
+  permit_attributes %i[pdf_page pdf_position_x pdf_position_y]
 
   def create?
     assert_siblings! if record.try(:parent_comment).present?

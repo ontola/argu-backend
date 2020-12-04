@@ -7,6 +7,9 @@ class Comment < Edge
   include Edgeable::Content
 
   property :in_reply_to_id, :linked_edge_id, NS::ARGU[:inReplyTo], default: nil
+  property :pdf_position_x, :integer, NS::ARGU[:pdfPositionX], default: nil
+  property :pdf_position_y, :integer, NS::ARGU[:pdfPositionY], default: nil
+  property :pdf_page, :integer, NS::ARGU[:pdfPage], default: nil
 
   has_one :vote, primary_key_property: :comment_id, dependent: false
   belongs_to :parent_comment, foreign_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
@@ -27,6 +30,7 @@ class Comment < Edge
   paginates_per 10
   parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :topics,
              :risk, :intervention, :intervention_type, :measure, :measure_type
+  filterable NS::ARGU[:pdfPage] => {values: []}
 
   validates :description, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :creator, presence: true
