@@ -51,11 +51,18 @@ module SPI
 
       resource_response(
         iri.to_s,
-        body: include ? response.body : nil,
+        body: include ? external_body(iri, response.body) : nil,
         cache: :private,
         language: response_language(response.headers),
         status: response.code
       )
+    end
+
+    def external_body(iri, body)
+      blank_nodes = body.scan(/\[\"(\w*)\"/).flatten.uniq
+      replaced_body = blank_nodes.reduce(body) { |result, node| result.gsub(node, "_:#{node}") }
+      replaced_body.gsub!('id.openraadsinformatie.nl', 'id.openbesluitvorming.nl')
+      replaced_body + LinkedRecord.find_or_initialize_by_iri(iri).hnd_json
     end
 
     def response_from_resource(include, resource)

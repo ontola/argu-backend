@@ -31,11 +31,4 @@ class EdgeSerializer < RecordSerializer
   attribute :pinned_at, predicate: NS::ARGU[:pinnedAt]
   attribute :pinned, predicate: NS::ARGU[:pinned], datatype: NS::XSD[:boolean]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
-
-  def self.count_attribute(type, opts = {})
-    attribute "#{type}_count",
-              {predicate: NS::ARGU["#{type.to_s.camelcase(:lower)}Count".to_sym]}.merge(opts) do |object, params|
-      block_given? ? yield(object, params) : object.children_count(type)
-    end
-  end
 end

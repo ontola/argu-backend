@@ -60,6 +60,7 @@ module Argu
         return if opts[:class].blank? || opts[:id].blank?
 
         ActsAsTenant.with_tenant(root) do
+          return linked_record_from_opts(opts) if linked_record_from_opts?(opts)
           return shortnameable_from_opts(opts) if shortnameable_from_opts?(opts)
           return decision_from_opts(opts) if decision_from_opts?(opts)
           return edge_from_opts(opts) if edge_from_opts?(opts)
@@ -111,6 +112,14 @@ module Argu
 
       def decision_from_opts?(opts)
         opts[:class] == Decision
+      end
+
+      def linked_record_from_opts?(opts)
+        opts[:class] == LinkedRecord
+      end
+
+      def linked_record_from_opts(opts)
+        LinkedRecord.find_or_initialize_by_iri(Base64.decode64((opts[:id])))
       end
 
       def opts_from_route(root, iri, method)

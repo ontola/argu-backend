@@ -16,6 +16,7 @@ require 'sidekiq/prometheus/exporter'
 # j:
 # k:
 # l:
+# lr:
 # m: motions
 # n: notifications
 # o: pages (organisations)
@@ -286,6 +287,11 @@ Rails.application.routes.draw do
   end
   resources :motions,
             path: 'm',
+            only: %i[show] do
+    include_route_concerns
+  end
+  resources :linked_records,
+            path: 'lr',
             only: %i[show] do
     include_route_concerns
   end

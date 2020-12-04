@@ -29,7 +29,7 @@ class Comment < Edge
   with_collection :comments, counter_cache_column: nil
   paginates_per 10
   parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :topics,
-             :risk, :intervention, :intervention_type, :measure, :measure_type
+             :risk, :intervention, :intervention_type, :measure, :measure_type, :linked_records
   filterable NS::ARGU[:pdfPage] => {values: []}
 
   validates :description, presence: true, allow_nil: false, length: {in: 4..5000}
