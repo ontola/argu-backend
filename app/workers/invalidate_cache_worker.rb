@@ -11,6 +11,6 @@ class InvalidateCacheWorker
 
     Argu::Cache.invalidate_all
 
-    Argu::Redis.set('argu.cache.version', current_cache_version)
+    Argu::Redis.set('argu.cache.version', current_version)
   end
 end
