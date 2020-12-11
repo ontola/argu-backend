@@ -73,9 +73,11 @@ module Argu
 
       def edge_from_opts(opts)
         if uuid?(opts[:id])
-          Edge.find_by(uuid: opts[:id])
+          opts[:class].find_by(uuid: opts[:id]) ||
+            Edge.find_by(uuid: opts[:id])
         else
-          Edge.find_by(fragment: opts[:id])
+          opts[:class].find_by(fragment: opts[:id]) ||
+            Edge.find_by(fragment: opts[:id])
         end
       end
 
