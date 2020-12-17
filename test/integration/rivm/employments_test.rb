@@ -54,4 +54,17 @@ class EmploymentsTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert intervention.reload.is_published?
   end
+
+  test 'administrator should delete destroy employment moderation' do
+    sign_in administrator
+    intervention
+    assert_difference(
+      'Employment.count' => -1,
+      'Intervention.count' => -1,
+      "Property.where(predicate: '#{NS::RIVM[:employmentId]}').count" => -1
+    ) do
+      delete employment_moderation
+      assert_response :success
+    end
+  end
 end

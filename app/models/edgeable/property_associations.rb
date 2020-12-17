@@ -4,6 +4,17 @@ module Edgeable
   module PropertyAssociations
     extend ActiveSupport::Concern
 
+    def handle_property_association_dependency(record, name, dependency)
+      case dependency
+      when :destroy
+        record.send(name).find_each(&:destroy)
+      when :restrict_with_exception
+        raise ActiveRecord::DeleteRestrictionError.new(name) unless record.send(name).empty?
+      else
+        raise NotImplementedError unless dependency == :nullify
+      end
+    end
+
     module ClassMethods
       def belongs_to(name, scope = nil, **options)
         opts = options.presence || scope
@@ -45,6 +56,14 @@ module Edgeable
           class_name: klass_name,
           dependent: opts[:dependent],
           source: property_association_source(klass_name, opts, property_opts)
+        )
+        property_association_dependency(name, opts[:dependent]) if opts[:dependent]
+      end
+
+      def property_association_dependency(name, dependency)
+        before_destroy(
+          ->(record) { handle_property_association_dependency(record, name, dependency) },
+          prepend: true
         )
       end
 

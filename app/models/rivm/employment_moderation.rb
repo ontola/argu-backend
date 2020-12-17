@@ -8,7 +8,8 @@ class EmploymentModeration < Employment
     NS::SCHEMA[:email],
     NS::SCHEMA.roleName,
     NS::ARGU[:organizationName],
-    NS::ONTOLA[:confirmAction]
+    NS::ONTOLA[:confirmAction],
+    NS::ONTOLA[:destroyAction]
   ]
 
   def employee_email

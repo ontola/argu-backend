@@ -12,4 +12,17 @@ class EmploymentActionList < EdgeActionList
     },
     url: -> { RDF::URI("#{resource.iri}?employment_moderation[validated]=true") }
   )
+  has_action(
+    :destroy,
+    destroy_options.merge(
+      description: lambda {
+        count = resource.submitted_interventions.count
+        if count.positive?
+          I18n.t('actions.employment_moderations.destroy.description.with_count', intervention_count: count)
+        else
+          I18n.t('actions.employment_moderations.destroy.description.none')
+        end
+      }
+    )
+  )
 end

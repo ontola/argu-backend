@@ -4,6 +4,7 @@ class Employment < Edge
   enhance ProfilePhotoable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
+  enhance LinkedRails::Enhancements::Destroyable
 
   property :show_organization_name, :boolean, NS::ARGU[:anonymous], default: true
   property :organization_name, :string, NS::ARGU[:organizationName]
@@ -25,7 +26,10 @@ class Employment < Edge
   }
   property :validated, :boolean, NS::ARGU[:validated], default: false
 
-  has_many :submitted_interventions, primary_key_property: :employment_id, class_name: 'Intervention', dependent: false
+  has_many :submitted_interventions,
+           primary_key_property: :employment_id,
+           class_name: 'Intervention',
+           dependent: :destroy
 
   parentable :page
   validates :organization_name, presence: true, length: {maximum: 110}

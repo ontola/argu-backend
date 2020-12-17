@@ -360,6 +360,11 @@ nl:
       confirm:
         label: "Bevestig"
         submit: "Bevestig"
+      destroy:
+        label: "Afkeuren"
+        description:
+          with_count: "Weet je zeker dat je dit bedrijf wil afkeuren? Hierdoor worden de %{intervention_count} interventies die onder dit bedrijf zijn ingediend verwijderd."
+          none: "Weet je zeker dat je dit bedrijf wil afkeuren?"
     interventions:
       create:
         description: |

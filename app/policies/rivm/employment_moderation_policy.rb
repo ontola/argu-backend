@@ -13,11 +13,19 @@ class EmploymentModerationPolicy < EmploymentPolicy
     end
   end
 
+  def create?
+    false
+  end
+
   def show?
     staff? || administrator?
   end
 
   def update?
     staff? || administrator?
+  end
+
+  def destroy?
+    update?
   end
 end
