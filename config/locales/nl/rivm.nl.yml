@@ -356,6 +356,10 @@ nl:
       employment_id:
         helper_text: "Voeg jouw bedrijf toe als je dat nog niet hebt gedaan."
   actions:
+    employment_moderations:
+      confirm:
+        label: "Bevestig"
+        submit: "Bevestig"
     interventions:
       create:
         description: |

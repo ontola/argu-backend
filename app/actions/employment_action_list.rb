@@ -10,6 +10,6 @@ class EmploymentActionList < EdgeActionList
     root_relative_iri: lambda {
       "/moderation/#{resource.fragment}/actions/confirm"
     },
-    url: -> { RDF::URI("#{resource.iri}?employment[validated]=true") }
+    url: -> { RDF::URI("#{resource.iri}?employment_moderation[validated]=true") }
   )
 end

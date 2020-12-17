@@ -8,6 +8,8 @@ class EmploymentsTest < ActionDispatch::IntegrationTest
   let(:employment) { create(:employment, parent: argu) }
   let(:employment_moderation) { EmploymentModeration.find(employment.id) }
   let(:validated_employment) { create(:employment, parent: argu, validated: true) }
+  let(:intervention_type) { create(:intervention_type, parent: argu) }
+  let(:intervention) { create(:intervention, employment_id: employment_moderation.id, parent: intervention_type) }
 
   test 'user should get employment' do
     sign_in user
@@ -40,5 +42,16 @@ class EmploymentsTest < ActionDispatch::IntegrationTest
     get employment_moderation
     assert_response :success
     expect_triple(nil, NS::SCHEMA[:email], employment.user.email)
+  end
+
+  test 'administrator should confirm employment moderation' do
+    sign_in administrator
+    intervention
+    assert_not intervention.is_published?
+    Sidekiq::Testing.inline! do
+      put employment_moderation, params: {employment_moderation: {validated: true}}
+    end
+    assert_response :success
+    assert intervention.reload.is_published?
   end
 end
