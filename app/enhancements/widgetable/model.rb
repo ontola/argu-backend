@@ -14,7 +14,7 @@ module Widgetable
     end
 
     def widgets_iri
-      collection_iri(self, :widgets)
+      widget_collection.default_view.members_iri
     end
 
     private
