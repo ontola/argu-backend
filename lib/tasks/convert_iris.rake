@@ -15,7 +15,7 @@ namespace :iris do
   def convert_hostname(old)
     return "staging.#{old}" if Rails.application.config.host_name.include?('staging.')
 
-    tld = URI(old).hostname.split('.').last
+    tld = URI("https://#{old}").hostname.split('.').last
     old.sub(".#{tld}", '.localdev')
   end
 
