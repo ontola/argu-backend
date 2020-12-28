@@ -7,6 +7,11 @@ class SurveyForm < ContainerNodeForm
   has_one :default_cover_photo
   has_one :custom_placement
 
+  group :advanced, label: -> { I18n.t('forms.advanced') } do
+    field :pinned
+    field :expires_at
+  end
+
   footer do
     actor_selector
   end
