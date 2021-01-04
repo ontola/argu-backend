@@ -6,9 +6,9 @@ module Searchable
   class << self
     def route_concerns(mapper)
       mapper.concern :searchable do
-        mapper.resources :search,
-                         path: :search,
-                         only: :index
+        mapper.get :search,
+                   to: 'search#index',
+                   on: :collection
       end
     end
   end

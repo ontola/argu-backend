@@ -10,6 +10,7 @@ class InvalidateCacheWorker
     return if current_cache_version >= current_version
 
     Argu::Cache.invalidate_all
+    Page.reindex_with_tenant
 
     Argu::Redis.set('argu.cache.version', current_version)
   end

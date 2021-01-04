@@ -44,14 +44,6 @@ module Edgeable
         Arel::Nodes::NamedFunction.new('COALESCE', [casted, Arel::Nodes::SqlLiteral.new('0')]).send(direction)
       end
 
-      def reindex_with_tenant(async: {wait: true})
-        return if Rails.application.config.disable_searchkick
-
-        ActsAsTenant.without_tenant do
-          Page.find_each { |page| page.reindex_tree(async: async) }
-        end
-      end
-
       def sort_options(collection)
         return [NS::SCHEMA[:dateCreated]] if collection.type == :infinite
 

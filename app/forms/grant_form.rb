@@ -5,12 +5,12 @@ class GrantForm < ApplicationForm
         datatype: NS::XSD[:string],
         max_count: 1,
         input_field: LinkedRails::Form::Field::SelectInput,
-        sh_in: -> { ActsAsTenant.current_tenant.self_and_children.map(&:iri) }
+        sh_in: -> { ActsAsTenant.current_tenant.search_result.iri }
   field :group_id,
         datatype: NS::XSD[:string],
         max_count: 1,
         input_field: LinkedRails::Form::Field::SelectInput,
-        sh_in: -> { [::Group.public.iri].concat(ActsAsTenant.current_tenant.groups.map(&:iri)) }
+        sh_in: -> { ::Group.root_collection.search_result.iri }
   field :grant_set_id,
         datatype: NS::XSD[:string],
         max_count: 1,

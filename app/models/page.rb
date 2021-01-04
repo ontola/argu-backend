@@ -148,6 +148,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     return if Rails.application.config.disable_searchkick
 
     ActsAsTenant.with_tenant(self) { Edge.reindex(async: async) }
+    ActsAsTenant.with_tenant(self) { Group.reindex(async: async) }
   end
 
   def root_object?

@@ -10,6 +10,7 @@ class Group < ApplicationRecord
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Menuable
   enhance Settingable
+  enhance Searchable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Tableable
 
@@ -76,6 +77,10 @@ class Group < ApplicationRecord
     id == Group::PUBLIC_ID ? I18n.t('groups.public.name_singular') : super
   end
 
+  def searchable_should_index?
+    root_id == ActsAsTenant.current_tenant.root_id || id <= 0
+  end
+
   class << self
     def iri
       [super, NS::ORG['Organization']]
@@ -95,6 +100,10 @@ class Group < ApplicationRecord
 
     def show_includes
       [:organization]
+    end
+
+    def sort_options(_collection)
+      [NS::SCHEMA[:name], NS::SCHEMA[:dateCreated]]
     end
   end
 end

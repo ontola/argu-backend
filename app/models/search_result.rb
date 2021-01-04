@@ -8,7 +8,7 @@ class SearchResult < Collection
   include IRITemplateHelper
   include Cacheable
 
-  attr_accessor :q
+  attr_accessor :match, :q
 
   delegate :aggs, :total_count, :took, to: :association_base
 
@@ -21,7 +21,7 @@ class SearchResult < Collection
   end
 
   def filter_options
-    Hash[aggs.map(&method(:filter_option_for_aggregate)).compact]
+    Hash[aggs.map(&method(:filter_option_for_aggregate)).compact] if aggs
   end
 
   def filter_option_for_aggregate(key, value)
@@ -48,11 +48,12 @@ class SearchResult < Collection
   def iri_opts
     opts = super
     opts[:q] = q if q.present?
+    opts[:match] = match if match.present?
     opts
   end
 
   def iri_template_keys
-    super + %i[q]
+    super + %i[match q]
   end
 
   def page_size
@@ -108,6 +109,7 @@ class SearchResult < Collection
     include Enumerable
     attr_accessor :collection
 
+    delegate :default_search_filter, to: :association_class
     delegate :association_class, :page_size, :parent, :q, :sortings, :user_context, :views, to: :collection
     delegate :aggs, :took, :total_count, to: :result
 
@@ -127,51 +129,30 @@ class SearchResult < Collection
       self
     end
 
-    def result # rubocop:disable Metrics/MethodLength
+    def result
       @result ||= association_class.search(
         q,
         aggs: parent.searchable_aggregations,
+        match: match,
         order: sort_values,
         page: views.first.page,
         per_page: page_size,
-        where: {
-          path: allowed_path_expression,
-          published_branch: true
-        }.merge(collection.filter)
+        where: search_filter
       )
     end
 
     def unfiltered_collection
-      @unfiltered_collection ||= new_child(filter: {}, q: q)
+      @unfiltered_collection ||= new_child(filter: {}, match: match, q: q)
     end
 
     private
 
-    def allowed_paths
-      @allowed_paths ||= parent_granted? ? [parent.path] : granted_paths
+    def match
+      :word_middle if collection.match.to_s == 'partial'
     end
 
-    def allowed_path_expression
-      exp = allowed_paths
-              .map { |p| "(#{Regexp.quote(p)}($|\\.[0-9]+)*)" }
-              .join('|')
-      Regexp.new("\\A#{exp}\\z")
-    end
-
-    def granted_paths # rubocop:disable Metrics/AbcSize
-      return [] if user_context.blank?
-
-      @granted_paths ||=
-        user_context
-          .grant_tree
-          .grants_in_scope
-          .select { |g| user_context.user.profile.group_ids.include?(g.group_id) }
-          .map { |g| g.edge.path }
-          .uniq
-    end
-
-    def parent_granted?
-      granted_paths.any? { |p| p == parent.path || parent.path.starts_with?("#{p}.") }
+    def search_filter
+      @search_filter ||= default_search_filter(self).merge(collection.filter)
     end
 
     def sort_key(key)

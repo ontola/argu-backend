@@ -24,7 +24,6 @@ class EdgeSerializer < RecordSerializer
   end
   attribute :is_trashed,
             predicate: NS::ARGU[:trashed],
-            if: ->(obj, _) { obj.is_trashable? },
             datatype: NS::XSD[:boolean]
 
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
