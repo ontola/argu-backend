@@ -46,7 +46,8 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   validates :profile, :last_accepted, :iri_prefix, presence: true
   validates :name, presence: true, length: {minimum: 3, maximum: 75}
 
-  after_save :create_or_update_tenant
+  after_create :tenant_create
+  after_update :tenant_update
   after_create :create_default_groups
   after_create :create_staff_grant
   after_create :create_activity_menu_item
@@ -208,18 +209,20 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     service.commit
   end
 
-  def create_or_update_tenant
-    return tenant.update!(iri_prefix: iri_prefix) if tenant.present?
-
-    create_tenant!(root_id: uuid, iri_prefix: iri_prefix, database_schema: Apartment::Tenant.current)
-  end
-
   def create_staff_grant
     staff_group = Group.find_by(id: Group::STAFF_ID)
     return if staff_group.nil?
 
     grant = Grant.new(grant_set: GrantSet.staff, edge: self, group: staff_group)
     grant.save!(validate: false)
+  end
+
+  def tenant_update
+    tenant.update!(iri_prefix: iri_prefix)
+  end
+
+  def tenant_create
+    create_tenant!(root_id: uuid, iri_prefix: iri_prefix, database_schema: Apartment::Tenant.current)
   end
 
   def update_primary_node_menu_item
