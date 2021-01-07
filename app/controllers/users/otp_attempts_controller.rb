@@ -11,7 +11,7 @@ module Users
     private
 
     def create_success
-      sign_in(current_resource.user)
+      sign_in(current_resource.user, otp_verified: true)
 
       head 200
     end

@@ -32,7 +32,9 @@ module OauthHelper
     doorkeeper_render_error
   end
 
-  def sign_in(resource, *_args)
+  def sign_in(resource, otp_verified: true)
+    raise('2fa not verified') if resource.otp_active? && !otp_verified
+
     super
     current_actor.user = resource
     user_context.user = resource
