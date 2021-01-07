@@ -65,6 +65,12 @@ nl:
       text_primary: "Primaire kleur"
       text_secondary: "Secondaire kleur"
       text_auto: "Automatisch"
+    form:
+      matomo_host:
+        label: "Matomo host"
+        description: "Laat leeg om de standaard host te gebruiken"
+      matomo_site_id:
+        label: "Matomo site id"
   activerecord:
     attributes:
       page:

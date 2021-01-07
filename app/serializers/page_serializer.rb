@@ -16,6 +16,8 @@ class PageSerializer < EdgeSerializer
   attribute :database_schema, predicate: NS::ARGU[:dbSchema], if: method(:service_scope?)
   attribute :styled_headers, predicate: NS::ONTOLA[:styledHeaders]
   attribute :requires_intro, predicate: NS::ONTOLA[:requiresIntro]
+  attribute :matomo_site_id, predicate: NS::ONTOLA[:matomoSiteId]
+  attribute :matomo_host, predicate: NS::ONTOLA[:matomoHost]
 
   belongs_to :primary_container_node, predicate: NS::FOAF[:homepage], unless: method(:service_scope?)
   has_one :profile, predicate: NS::ARGU[:profile]

@@ -22,4 +22,9 @@ class PageForm < ApplicationForm
     field :header_text
     field :styled_headers
   end
+  group :staff,
+        label: -> { I18n.t('forms.staff_only') } do
+    field :matomo_site_id
+    field :matomo_host
+  end
 end

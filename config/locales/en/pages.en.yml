@@ -66,6 +66,12 @@ en:
       text_primary: "Primary color"
       text_secondary: "Secondary color"
       text_auto: "Automatic"
+    form:
+      matomo_host:
+        label: "Matomo host"
+        description: "Leave blank to use the default host"
+      matomo_site_id:
+        label: "Matomo site id"
   activerecord:
     attributes:
       page:
