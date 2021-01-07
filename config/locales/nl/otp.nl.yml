@@ -1,0 +1,30 @@
+nl:
+  otp_attempts:
+    form:
+      otp_attempt:
+        label: "Authenticatiecode"
+        description: 'Deze kun je vinden in de authenticatie-applicatie waarmee je eerder hebt ingelogd.'
+  otp_secrets:
+    type: 'Tweestapsverificatie'
+    form:
+      otp_attempt:
+        label: "Authenticatiecode"
+      provision_image:
+        description: 'Installeer een authenticatie-applicatie en scan deze QR code. [Klik hier](https://argu.co/argu/t/10962) voor meer informatie.'
+  actions:
+    otp_secrets:
+      create:
+        label: 'Tweestapsverificatie'
+        submit: "Doorgaan"
+      destroy:
+        label: 'Tweestapsverificatie uitschakelen'
+        description: "Weet je zeker dat je de 2FA van **%{name}** wil uitschakelen?"
+        submit: "Bevestig"
+        success: "Tweestapsverificatie is uitschakeld"
+  messages:
+    otp_secrets:
+      invalid: "De authenticatiecode is incorrect."
+      not_activated: "Tweestapsverificatie is nog niet ingesteld."
+      already_exists: "Er is al een tweestapsverificatie ingesteld."
+      create:
+        success: "Welkom terug!"

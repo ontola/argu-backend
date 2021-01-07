@@ -115,6 +115,9 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_model_otp (2.1.0)
+      activemodel
+      rotp (~> 5.0.0)
     active_record-postgres-constraints (0.2.2)
       pg
       rails (>= 5.0, <= 7.0)
@@ -220,6 +223,7 @@ GEM
       timers (>= 4.1.1)
     celluloid-supervision (0.20.6)
       timers (>= 4.1.1)
+    chunky_png (1.3.12)
     cocoon (1.2.14)
     coderay (1.1.2)
     concurrent-ruby (1.1.7)
@@ -503,6 +507,12 @@ GEM
       parallel (< 2.0)
       public_suffix (>= 2.0.5, < 5.0)
       rack (>= 1.3.6, < 3.0)
+    rotp (5.0.0)
+      addressable (~> 2.5)
+    rqrcode (1.1.2)
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 0.1)
+    rqrcode_core (0.1.2)
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
     rspec-expectations (3.9.2)
@@ -637,6 +647,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_otp
   active_record-postgres-constraints
   active_record_query_trace
   active_response!
@@ -714,6 +725,7 @@ DEPENDENCIES
   rest-client
   rfc-822
   ros-apartment
+  rqrcode
   rspec-rails
   rspec-retry
   rubocop

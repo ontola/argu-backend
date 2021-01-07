@@ -101,6 +101,15 @@ Rails.application.routes.draw do
     get 'users/wrong_email', to: 'users#wrong_email'
   end
 
+  namespace :users do
+    resource :otp_secrets, only: %i[new create], path: :otp_secrets do
+      get 'delete', action: :delete
+    end
+    resources :otp_secrets, only: %i[], path: :otp_secrets do
+      include_route_concerns
+    end
+    resource :otp_images, only: %i[show], path: :otp_qr
+  end
   resources :users,
             path: 'u',
             only: %i[show edit new create] do

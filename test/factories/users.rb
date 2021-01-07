@@ -118,6 +118,11 @@ FactoryBot.define do
       after(:create) do |user|
         user.primary_email_record.update(confirmed_at: Time.current)
       end
+      factory :two_fa_user do
+        after(:create) do |user|
+          OtpSecret.create!(user: user, active: true)
+        end
+      end
     end
   end
 end

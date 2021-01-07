@@ -52,6 +52,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
            inverse_of: :publisher,
            foreign_key: 'publisher_id',
            dependent: :restrict_with_exception
+  has_one :otp_secret, dependent: :destroy
   accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
 
   # Include default devise modules. Others available are:
@@ -283,6 +284,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       else
         managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)
       end
+  end
+
+  def otp_active?
+    otp_secret&.active?
+  end
+
+  def otp_secret
+    super || OtpSecret.create!(user: self)
   end
 
   def page_collection(options)

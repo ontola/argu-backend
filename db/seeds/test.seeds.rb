@@ -199,4 +199,9 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))
 end
 
+FactorySeeder.create(
+  :two_fa_user,
+  email: '2fa@example.com'
+)
+
 Setting.set('suggested_forums', [freetown.uuid, other_page_forum.uuid].join(','))

@@ -4,6 +4,7 @@ source 'https://rubygems.org/'
 ruby '2.7.0'
 ruby = '2.7.0'
 
+gem 'active_model_otp'
 gem 'active_record-postgres-constraints'
 gem 'active_response', git: 'https://github.com/ontola/active_response', branch: :master
 gem 'acts_as_follower',
@@ -61,6 +62,7 @@ gem 'redis'
 gem 'rest-client'
 gem 'rfc-822'
 gem 'ros-apartment', require: 'apartment'
+gem 'rqrcode'
 gem 'rubyzip'
 gem 'searchkick'
 gem 'sequenced'

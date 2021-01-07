@@ -2,6 +2,7 @@ nl:
   menus:
     copy_successful: "'%{url}' is gekopieerd naar het klembord"
     default:
+      2fa: "Tweestapsverificatie"
       authentication: "Authenticatie"
       facebook: "Facebook"
       twitter: "Twitter"

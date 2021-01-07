@@ -12,6 +12,10 @@ class UserForm < ApplicationForm
     field :url
     field :password
     field :current_password
+    resource :add_two_fa,
+             url: -> { delete_iri('/users/otp_secrets') }
+    resource :remove_two_fa,
+             url: -> { new_iri('/users/otp_secrets') }
   end
 
   group :email_address_section, label: -> { I18n.t('email_addresses.plural') } do

@@ -2,6 +2,7 @@ en:
   menus:
     copy_successful: "Copied '%{url}' to clipboard"
     default:
+      2fa: "Two factor authentication"
       authentication: "Authentication"
       facebook: "Facebook"
       twitter: "Twitter"

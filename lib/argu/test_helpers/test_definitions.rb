@@ -9,8 +9,9 @@ module Argu
 
       # General methods
       def general_new(results: {}, parent: nil)
-        get new_path(send(parent)),
-            params: {format: request_format},
+        parent = send(parent) if parent.is_a?(Symbol)
+
+        get new_path(parent),
             headers: argu_headers
 
         assert_response results[:response]
@@ -29,7 +30,7 @@ module Argu
         assert_difference(Hash[differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }]) do
           post create_path(parent),
                headers: argu_headers,
-               params: {format: request_format, actor_iri: actor_iri, model_sym => attributes}
+               params: {actor_iri: actor_iri, model_sym => attributes}
 
           if Publication.count.positive?
             ActsAsTenant.with_tenant(Publication.last.publishable.root) { reset_publication(Publication.last) }
@@ -43,7 +44,6 @@ module Argu
         record = send(record) if record.is_a?(Symbol)
 
         get record_path(record),
-            params: {format: request_format},
             headers: argu_headers
 
         assert_response results[:response]
@@ -53,7 +53,6 @@ module Argu
         record = send(record) if record.is_a?(Symbol)
 
         get edit_path(record),
-            params: {format: request_format},
             headers: argu_headers
 
         assert_response results[:response]
@@ -69,7 +68,7 @@ module Argu
         assert_difference(Hash[differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }]) do
           patch update_path(record),
                 headers: argu_headers,
-                params: {format: request_format, model_sym => attributes}
+                params: {model_sym => attributes}
         end
 
         assert_response results[:response]
@@ -94,21 +93,30 @@ module Argu
         assert_difference("#{model_class}.trashed.count" => difference,
                           'Activity.count' => difference.abs) do
           delete trash_path(record),
-                 params: {format: request_format},
                  headers: argu_headers
         end
 
         assert_response results[:response]
       end
 
-      def general_destroy(results: {}, record: subject,
-                          differences: [[model_class.to_s, -1],
-                                        ['Activity', 1]])
+      def general_delete(results: {}, record: subject)
+        record = send(record) if record.is_a?(Symbol)
+
+        get delete_path(record),
+            headers: argu_headers
+
+        assert_response results[:response]
+      end
+
+      def general_destroy(
+        results: {},
+        record: subject,
+        differences: [[model_class.to_s, -1], ['Activity', 1]]
+      )
         record = send(record) if record.is_a?(Symbol)
 
         assert_difference(Hash[differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }]) do
           delete destroy_path(record),
-                 params: {format: request_format},
                  headers: argu_headers
         end
 
@@ -153,16 +161,16 @@ module Argu
         record_path(record)
       end
 
+      def delete_path(record)
+        delete_iri(record_path(record)).path
+      end
+
       def destroy_path(record)
-        record.iri(destroy: true).to_s
+        "#{record_path(record)}?destroy=true"
       end
 
       def move_path(record)
         move_iri(record).path
-      end
-
-      def request_format
-        :nq
       end
     end
   end

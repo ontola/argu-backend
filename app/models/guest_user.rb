@@ -44,6 +44,8 @@ class GuestUser < User
     []
   end
 
+  def otp_secret; end
+
   def profile
     @profile ||= GuestProfile.find(COMMUNITY_ID)
     @profile.profileable = self

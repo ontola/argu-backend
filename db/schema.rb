@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_30_153922) do
+ActiveRecord::Schema.define(version: 2021_01_05_125942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -292,6 +292,14 @@ ActiveRecord::Schema.define(version: 2020_11_30_153922) do
     t.boolean "confidential", default: true, null: false
     t.index ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "otp_secrets", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id", null: false
+    t.string "otp_secret_key", null: false
+    t.boolean "active", default: false
   end
 
   create_table "permitted_actions", force: :cascade do |t|
