@@ -3,7 +3,9 @@ en:
     form:
       otp_attempt:
         label: "Authentication code"
-        description: 'You can find this in the authentication-application you used earlier.'
+    properties:
+      otp_attempt:
+        helper_text: 'You can find this in the authentication-application you used earlier.'
   otp_secrets:
     type: 'Two factor authentication'
     form:
@@ -12,6 +14,9 @@ en:
       provision_image:
         description: 'Install a authentication-application and scan this QR code.'
   actions:
+    otp_attempts:
+      create:
+        submit: "Continue"
     otp_secrets:
       create:
         label: 'Two factor authentication'
@@ -28,3 +33,4 @@ en:
       already_exists: "Two factor authentication is already activated."
       create:
         success: "Welcome back!"
+      expired: "The request expired. Please try logging in again."

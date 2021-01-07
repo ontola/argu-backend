@@ -3,7 +3,9 @@ nl:
     form:
       otp_attempt:
         label: "Authenticatiecode"
-        description: 'Deze kun je vinden in de authenticatie-applicatie waarmee je eerder hebt ingelogd.'
+    properties:
+      otp_attempt:
+        helper_text: 'Deze kun je vinden in de authenticatie-applicatie waarmee je eerder hebt ingelogd.'
   otp_secrets:
     type: 'Tweestapsverificatie'
     form:
@@ -12,6 +14,9 @@ nl:
       provision_image:
         description: 'Installeer een authenticatie-applicatie en scan deze QR code. [Klik hier](https://argu.co/argu/t/10962) voor meer informatie.'
   actions:
+    otp_attempts:
+      create:
+        submit: "Doorgaan"
     otp_secrets:
       create:
         label: 'Tweestapsverificatie'
@@ -28,3 +33,4 @@ nl:
       already_exists: "Er is al een tweestapsverificatie ingesteld."
       create:
         success: "Welkom terug!"
+      expired: "Het verzoek is verlopen. Probeer opnieuw in te loggen."

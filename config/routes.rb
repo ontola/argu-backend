@@ -108,6 +108,7 @@ Rails.application.routes.draw do
     resources :otp_secrets, only: %i[], path: :otp_secrets do
       include_route_concerns
     end
+    resource :otp_attempts, only: %i[new create], path: :otp_attempts
     resource :otp_images, only: %i[show], path: :otp_qr
   end
   resources :users,
