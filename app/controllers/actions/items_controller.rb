@@ -23,7 +23,10 @@ module Actions
       return resource unless parent_resource.is_a?(Page) && resource_id == 'redirect'
 
       resource.label = params[:label]
-      resource.target = {id: RDF::URI(params[:location])}
+      resource.target = LinkedRails.entry_point_class.new(
+        parent: resource,
+        url: RDF::URI(params[:location])
+      )
       resource.instance_variable_set(:@iri, RDF::URI(request.original_url))
       resource
     end
