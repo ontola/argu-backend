@@ -8,6 +8,7 @@ class TermsController < ApplicationController
   def create_execute
     current_user.update(accept_terms: true)
     current_user.send_reset_password_token_email if current_user.encrypted_password.blank?
+    true
   end
 
   def create_success
