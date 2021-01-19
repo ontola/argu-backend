@@ -104,6 +104,14 @@ module SPI
       return 404 if resource.nil?
 
       resource_policy.show? ? 200 : 403
+    rescue ActiveRecord::RecordNotFound
+      404
+    rescue Argu::Errors::Unauthorized
+      401
+    rescue Pundit::NotAuthorizedError, Argu::Errors::Forbidden
+      403
+    rescue StandardError
+      500
     end
   end
 end
