@@ -20,3 +20,9 @@ nl:
     form:
       user:
         label: "Gebruiker"
+    formats:
+      xls:
+        overview_title: "Overzicht"
+        path: "Hiërarchie"
+        title: "%{type} title"
+        description: "%{type} description"
