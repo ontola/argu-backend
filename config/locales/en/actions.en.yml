@@ -126,7 +126,7 @@ en:
         submit: "Save"
       setup:
         label: "Welcome!"
-        description: "Set how you will be visible to others on Argu. Most people use their real first and last name. You can change these later on, but your username is fixed and must be unique."
+        description: "Set how you will be visible to others. Most people use their real first and last name. You can change these later on, but your username is fixed and must be unique."
         submit: "Save"
       authentication:
         label: "Authentication"
@@ -140,7 +140,7 @@ en:
     setups:
       update:
         label: "Welcome!"
-        description: "Set how you will be visible to others on Argu. Most people use their real first and last name. You can change these later on, but your username is fixed and must be unique."
+        description: "Set how you will be visible to others. Most people use their real first and last name. You can change these later on, but your username is fixed and must be unique."
         submit: "Save"
     pages:
       create:
