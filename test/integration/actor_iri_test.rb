@@ -13,13 +13,13 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   test 'user should post create as self' do
     sign_in user
 
-    post_motion(true)
+    post_motion(true, user)
   end
 
   test 'user should not post create as page' do
     sign_in user
 
-    post_motion(false, argu.iri)
+    post_motion(true, user, argu.iri)
   end
 
   ####################################
@@ -30,7 +30,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   test 'unconfirmed administrator should not post create as page' do
     sign_in unconfirmed_administrator
 
-    post_motion(false, argu.iri)
+    post_motion(true, unconfirmed_administrator, argu.iri)
   end
 
   ####################################
@@ -41,7 +41,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   test 'administrator should post create as page' do
     sign_in administrator
 
-    post_motion(true, argu.iri)
+    post_motion(true, argu, argu.iri)
   end
 
   ####################################
@@ -52,19 +52,20 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   test 'staff should post create as page' do
     sign_in staff
 
-    post_motion(true, argu.iri)
+    post_motion(true, argu, argu.iri)
   end
 
   private
 
-  def post_motion(should, iri = nil)
+  def post_motion(should, expected_actor = nil, actor = nil)
     assert_difference('Motion.count', should ? 1 : 0) do
       post collection_iri(freetown, :motions),
            params: {
-             actor_iri: iri,
+             actor_iri: actor,
              motion: attributes_for(:motion)
            }
     end
     should ? assert_response(:created) : assert_not_authorized
+    assert_equal(expected_actor.profile, Motion.last.creator) if should
   end
 end

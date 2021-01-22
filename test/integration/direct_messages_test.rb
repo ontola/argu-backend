@@ -36,25 +36,22 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   let(:unconfirmed_email) { create(:email_address, user: administrator, email: 'unconfirmed@argu.co') }
 
   test 'administrator should post create direct_message' do
-    create_email_mock(
-      'direct_message',
-      motion.publisher.email,
-      actor: {
-        display_name: administrator.display_name,
-        iri: resource_iri(administrator, root: argu),
-        thumbnail: administrator.default_profile_photo.thumbnail
-      },
-      body: 'body',
-      email: administrator.email,
-      resource: {iri: motion.iri, display_name: motion.display_name},
-      subject: 'subject'
+    create_direct_message(
+      actor: administrator
     )
+  end
 
-    sign_in administrator
-    post collection_iri(argu, :direct_messages),
-         params: {direct_message: valid_params, actor_iri: resource_iri(administrator, root: argu)}
-    assert_response :created
-    assert_email_sent(skip_sidekiq: true)
+  test 'administrator should post create direct_message with actor' do
+    create_direct_message(
+      actor: argu
+    )
+  end
+
+  test 'administrator should post create direct_message with unpermitted actor' do
+    create_direct_message(
+      actor: user,
+      expected_actor: administrator
+    )
   end
 
   test 'administrator should not post create direct_message with unconfirmed e-mail' do
@@ -92,14 +89,31 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test 'administrator should not post create direct_message with unpermitted actor' do
+  private
+
+  def create_direct_message(actor:, expected_actor: nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    expected_actor ||= actor
+
+    create_email_mock(
+      'direct_message',
+      motion.publisher.email,
+      actor: {
+        display_name: expected_actor.display_name,
+        iri: resource_iri(expected_actor, root: argu),
+        thumbnail: expected_actor.default_profile_photo.thumbnail
+      },
+      body: 'body',
+      email: administrator.email,
+      resource: {iri: motion.iri, display_name: motion.display_name},
+      subject: 'subject'
+    )
+
     sign_in administrator
     post collection_iri(argu, :direct_messages),
-         params: {direct_message: valid_params, actor_iri: resource_iri(user, root: argu)}
-    assert_not_authorized
+         params: {direct_message: valid_params, actor_iri: resource_iri(actor, root: argu)}
+    assert_response :created
+    assert_email_sent(skip_sidekiq: true)
   end
-
-  private
 
   def valid_params
     {
