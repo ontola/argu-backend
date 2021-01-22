@@ -88,7 +88,7 @@ module SPI
 
     private
 
-    def bulk_resources
+    def bulk_resources # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       [
         {include: true, iri: current_actor_iri},
         {include: true, iri: motion1.iri},
@@ -97,7 +97,9 @@ module SPI
         {include: false, iri: holland_motion2.iri},
         {include: true, iri: hidden_vote1.iri},
         {include: false, iri: hidden_vote2.iri},
-        {include: false, iri: 'https://example.com'}
+        {include: false, iri: 'https://example.com'},
+        {include: true, iri: "#{argu.iri}/wrong_iri"},
+        {include: true, iri: "#{argu.iri}/cable"}
       ]
     end
 
@@ -110,7 +112,7 @@ module SPI
       ]
     end
 
-    def bulk_responses(opts = {})
+    def bulk_responses(opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       {
         current_actor_iri => {cache: 'private', status: 200, include: true},
         motion1.iri => {cache: 'public', status: 200, include: true},
@@ -119,7 +121,9 @@ module SPI
         holland_motion2.iri => {cache: 'no-cache', status: 200, include: false},
         hidden_vote1.iri => {cache: 'private', status: 403, include: true},
         hidden_vote2.iri => {cache: 'private', status: 403, include: false},
-        'https://example.com' => {cache: 'private', status: 404, include: false}
+        'https://example.com' => {cache: 'private', status: 404, include: false},
+        "#{argu.iri}/wrong_iri" => {cache: 'private', status: 404, include: true},
+        "#{argu.iri}/cable" => {cache: 'private', status: 404, include: true}
       }.merge(opts)
     end
 
