@@ -56,7 +56,7 @@ module RedisResource
           end
           keys
         else
-          Argu::Redis.exists(key) ? [self] : []
+          Argu::Redis.exists?(key) ? [self] : []
         end
     end
 

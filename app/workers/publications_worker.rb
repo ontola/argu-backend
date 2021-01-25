@@ -22,7 +22,7 @@ class PublicationsWorker
   end
 
   def cancelled?
-    Argu::Redis.exists("cancelled-#{jid}")
+    Argu::Redis.exists?("cancelled-#{jid}")
   end
 
   def publish_delta
@@ -35,7 +35,7 @@ class PublicationsWorker
 
   class << self
     def cancelled?(jid)
-      Argu::Redis.exists("cancelled-#{jid}")
+      Argu::Redis.exists?("cancelled-#{jid}")
     end
 
     def cancel!(jid)

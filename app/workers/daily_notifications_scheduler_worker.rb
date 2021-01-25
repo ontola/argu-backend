@@ -2,9 +2,6 @@
 
 class DailyNotificationsSchedulerWorker < NotificationsSchedulerWorker
   include Sidekiq::Worker
-  include Sidetiq::Schedulable
-
-  recurrence { daily }
 
   def perform
     ActsAsTenant.without_tenant do

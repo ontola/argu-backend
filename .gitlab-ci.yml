@@ -78,7 +78,7 @@ codeQuality:
 spec:
   stage: test
   services:
-    - redis
+    - redis:6
     - postgres:11
     - name: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
       alias: elasticsearch
@@ -90,7 +90,7 @@ spec:
 test:
   stage: test
   services:
-    - redis
+    - redis:6
     - postgres:11
     - name: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
       alias: elasticsearch

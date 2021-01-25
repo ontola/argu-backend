@@ -2,10 +2,7 @@
 
 class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
   include Sidekiq::Worker
-  include Sidetiq::Schedulable
   include UriTemplateHelper
-
-  recurrence { minutely }
 
   def perform
     ActsAsTenant.without_tenant do

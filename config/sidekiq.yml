@@ -5,3 +5,10 @@ production:
   - default
   - searchkick
   - [carrierwave, 2]
+schedule:
+  DirectNotificationsSchedulerWorker:
+    cron: '0 * * * * *'
+  DailyNotificationsSchedulerWorker:
+    cron: '0 0 * * *'
+  WeeklyNotificationsSchedulerWorker:
+    cron: '0 0 * * 0'
