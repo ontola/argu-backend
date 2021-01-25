@@ -70,7 +70,7 @@ module Argu
 
       def expect_errors(iri, errors)
         error_response = expect_triple(iri, NS::LL[:errorResponse], nil).first.object
-        assert_equal expect_triple(error_response, nil, nil).count, errors.count
+        assert_equal expect_triple(error_response, nil, nil).count, errors.count + 2
         errors.each do |key, value|
           expect_triple(error_response, key, value)
         end

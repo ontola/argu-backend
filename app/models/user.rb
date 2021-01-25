@@ -105,7 +105,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
               in: I18n.available_locales.map(&:to_s),
               message: '%<value> is not a valid locale'
             }
-  validate :validate_public_group_membership
   validate :validate_url_uniqueness
 
   auto_strip_attributes :first_name, :last_name, :middle_name, squish: true
@@ -431,10 +430,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     shortname&.errors&.each do |_key, message|
       errors.add(:url, message)
     end
-  end
-
-  def validate_public_group_membership
-    profile&.group_memberships&.where(group_id: Group::PUBLIC_ID)&.present?
+    errors[:'shortname.shortname'].clear
   end
 
   class << self
