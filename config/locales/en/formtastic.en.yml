@@ -75,6 +75,7 @@ en:
       primary_color: "Primary color"
       published_at: "Published"
       require_location: "Location is required"
+      map_question: "Large map"
       current_password: "Current password"
       primary_container_node_id: "Homepage"
       profile_photo: "Profile photo"

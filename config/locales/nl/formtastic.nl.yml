@@ -74,6 +74,7 @@ nl:
       postal_code: "Postcode"
       primary_color: "Primaire kleur"
       require_location: "Locatie is verplicht"
+      map_question: "Grote kaart"
       current_password: "Huidig wachtwoord"
       primary_container_node_id: "Homepage"
       profile_photo: "Profielfoto"

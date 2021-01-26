@@ -18,6 +18,7 @@ class Question < Discussion
 
   custom_grants_for :motions, :create
 
+  property :map_question, :boolean, NS::ARGU[:mapQuestion], default: false
   property :require_location, :boolean, NS::ARGU[:requireLocation], default: false
   property :default_motion_sorting,
            :integer,
@@ -27,5 +28,11 @@ class Question < Discussion
 
   def expired?
     expires_at.present? && expires_at < Time.current
+  end
+
+  def rdf_type
+    return super unless map_question?
+
+    [super, NS::ARGU[:MapQuestion]]
   end
 end
