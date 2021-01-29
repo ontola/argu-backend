@@ -24,7 +24,7 @@ module Policies
         [
           LinkedRails::SHACL::PropertyShape.new(
             path: [NS::SCHEMA[:creator]],
-            sh_in: -> { current_actor_iri }
+            sh_in: -> { actors_iri }
           )
         ]
       end
