@@ -1,13 +1,33 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "2c34e1aa4e0dd3da221d9705170a737e9fabed38e0244c1062d8d6d27152d4a3",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/policies/widget_policy.rb",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "scope.joins(\"JOIN edges ON edges.uuid = widgets.owner_id AND widgets.owner_type = 'Edge'\").with(granted_paths(:show_only => false)).where(\"(#{path_filter}) @> edges.path\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "WidgetPolicy::Scope",
+        "method": "resolve"
+      },
+      "user_input": "path_filter",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
       "warning_type": "Dangerous Send",
       "warning_code": 23,
-      "fingerprint": "20868a477baf2a3f9b02c906e285ac08a75564b20bddcb3b9745205b9c708b5a",
+      "fingerprint": "3204854f68e37044f4e0606417dda8d3dc51921c9044ae466e1e715b5bc62e5b",
       "check_name": "Send",
       "message": "User controlled method execution",
-      "file": "lib/argu/controller/authorization.rb",
-      "line": 29,
+      "file": "service_module/lib/argu/controller/authorization.rb",
+      "line": 27,
       "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
       "code": "policy(record).public_send((params[:action].to_s + \"?\"), *opts)",
       "render_path": null,
@@ -19,8 +39,28 @@
       "user_input": "(params[:action].to_s + \"?\")",
       "confidence": "High",
       "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "3ac9ea35e368865c245e3f620dae363166341f0d0547bc053673636e03152b20",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/policies/edgeable_policies/container_node_policy.rb",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "scope.property_join(:discoverable).with(granted_paths).where(:root_id => grant_tree.tree_root_id).where(\"discoverable_filter.value = true OR #{granted_path_type_filter(:parent_type => \"Page\")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ContainerNodePolicy::Scope",
+        "method": "resolve"
+      },
+      "user_input": "granted_path_type_filter(:parent_type => \"Page\")",
+      "confidence": "Weak",
+      "note": ""
     }
   ],
-  "updated": "2018-11-30 15:43:58 +0100",
-  "brakeman_version": "4.1.1"
+  "updated": "2021-01-29 13:30:00 +0100",
+  "brakeman_version": "5.0.0"
 }
