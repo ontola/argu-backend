@@ -22,6 +22,15 @@ class EdgeableController < ServiceController
       end
   end
 
+  def built_associations(action)
+    action
+      .included_object
+      .class
+      .reflect_on_all_associations
+      .select { |association| association.has_one? && action.included_object.association(association.name).loaded? }
+      .map(&:name)
+  end
+
   def collection_include_map
     JSONAPI::IncludeDirective::Parser.parse_include_args(%i[root shortname])
   end
@@ -40,9 +49,17 @@ class EdgeableController < ServiceController
     'reactions'
   end
 
+  def form_resource_includes(action)
+    includes = super
+    return includes unless action_name == 'new' && action.included_object
+
+    includes = [includes] if includes.is_a?(Hash)
+    includes + built_associations(action)
+  end
+
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
-  def new_resource_from_params # rubocop:disable Metrics/MethodLength
+  def new_resource_from_params
     resource = super
     resource.parent = parent_resource!
     if resource.is_publishable?
@@ -50,10 +67,6 @@ class EdgeableController < ServiceController
         published_at: Time.current,
         follow_type: default_publication_follow_type
       )
-    end
-    if params[:lat] && params[:lon]
-      resource
-        .build_custom_placement(params.permit(:lat, :lon, :zoom_level))
     end
     resource
   end

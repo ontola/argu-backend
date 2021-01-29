@@ -3,6 +3,13 @@
 module ChildHelper
   module_function
 
+  def child_build_location(child, opts) # rubocop:disable Metrics/AbcSize
+    lat = opts[:collection]&.filter.try(:[], NS::SCHEMA[:latitude])&.first
+    lon = opts[:collection]&.filter.try(:[], NS::SCHEMA[:longitude])&.first
+    zoom_level = opts[:collection]&.filter.try(:[], NS::ONTOLA[:zoomLevel])&.first
+    child.build_custom_placement(lat: lat, lon: lon, zoom_level: zoom_level) if lat && lon
+  end
+
   def child_instance(parent, klass, opts = {})
     child = klass.new(child_attrs(parent, klass, opts))
     prepare_edge_child(parent, child, opts) if child.is_a?(Edge)
@@ -67,6 +74,8 @@ module ChildHelper
     child.creator = user_context&.actor if child.respond_to?(:creator=) && !user_context&.actor&.profileable&.guest?
     child.persisted_edge = parent.try(:persisted_edge)
     child.is_published = true
+    child_build_location(child, opts)
+
     grant_tree.cache_node(parent.try(:persisted_edge)) if respond_to?(:grant_tree)
   end
 end
