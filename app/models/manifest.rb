@@ -89,7 +89,7 @@ class Manifest < VirtualResource
   alias scope manifest_scope
 
   def start_url
-    @start_url ||= "#{manifest_scope}/"
+    @start_url ||= manifest_scope
   end
 
   def theme_color
