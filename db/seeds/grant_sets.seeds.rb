@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-GrantSet.new(title: 'spectator').save(validate: false)
-GrantSet.new(title: 'participator').save(validate: false)
-GrantSet.new(title: 'initiator').save(validate: false)
-GrantSet.new(title: 'moderator').save(validate: false)
-GrantSet.new(title: 'administrator').save(validate: false)
-GrantSet.new(title: 'staff').save(validate: false)
+GrantSet::RESERVED_TITLES.each do |title|
+  grant_set = GrantSet.find_or_initialize_by(title: title)
+  grant_set.save!(validate: false)
+  grant_set.grant_sets_permitted_actions.delete_all
+end
 
 all_grant_sets = GrantSet.reserved
 PermittedAction.create_for_grant_sets('Page', 'show', all_grant_sets)
@@ -38,13 +37,13 @@ PermittedAction.create_for_grant_sets('ConArgument', 'create', participator_plus
 PermittedAction.create_for_grant_sets('Comment', 'create', participator_plus)
 PermittedAction.create_for_grant_sets('Vote', 'create', participator_plus)
 
-motion_with_question_create = PermittedAction.create!(
+motion_with_question_create = PermittedAction.find_or_create_by!(
   title: 'motion_with_question_create',
   resource_type: 'Motion',
   parent_type: 'Question',
   action: 'create'
 )
-GrantSet.find_by(title: 'participator').add(motion_with_question_create)
+GrantSet.find_by!(title: 'participator').add(motion_with_question_create)
 
 initiator_plus = GrantSet.reserved(except: %w[spectator participator])
 PermittedAction.create_for_grant_sets('Question', 'create', initiator_plus)
@@ -64,6 +63,7 @@ PermittedAction.create_for_grant_sets('Decision', 'update', moderator_plus)
 PermittedAction.create_for_grant_sets('Question', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('Motion', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('Topic', 'trash', moderator_plus)
+PermittedAction.create_for_grant_sets('Survey', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('ProArgument', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('ConArgument', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('BlogPost', 'trash', moderator_plus)
@@ -76,7 +76,6 @@ PermittedAction.create_for_grant_sets('Forum', 'update', administrator_plus)
 PermittedAction.create_for_grant_sets('Blog', 'update', administrator_plus)
 PermittedAction.create_for_grant_sets('Survey', 'update', administrator_plus)
 PermittedAction.create_for_grant_sets('Survey', 'create', administrator_plus)
-PermittedAction.create_for_grant_sets('Survey', 'trash', administrator_plus)
 PermittedAction.create_for_grant_sets('Dashboard', 'update', administrator_plus)
 PermittedAction.create_for_grant_sets('CreativeWork', 'update', administrator_plus)
 PermittedAction.create_for_grant_sets('CreativeWork', 'trash', administrator_plus)
@@ -116,3 +115,50 @@ PermittedAction.create_for_grant_sets('ProArgument', 'destroy', staff)
 PermittedAction.create_for_grant_sets('ConArgument', 'destroy', staff)
 PermittedAction.create_for_grant_sets('BlogPost', 'destroy', staff)
 PermittedAction.create_for_grant_sets('Comment', 'destroy', staff)
+
+if Apartment::Tenant.current == 'rivm'
+  PermittedAction.create_for_grant_sets('Category', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Risk', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Intervention', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('InterventionType', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Measure', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('MeasureType', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Incident', 'show', all_grant_sets)
+  PermittedAction.create_for_grant_sets('Scenario', 'show', all_grant_sets)
+
+  PermittedAction.create_for_grant_sets('Intervention', 'create', participator_plus)
+  PermittedAction.create_for_grant_sets('Measure', 'create', participator_plus)
+
+  PermittedAction.create_for_grant_sets('InterventionType', 'create', initiator_plus)
+  PermittedAction.create_for_grant_sets('MeasureType', 'create', initiator_plus)
+
+  PermittedAction.create_for_grant_sets('Category', 'create', moderator_plus)
+  PermittedAction.create_for_grant_sets('Category', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Risk', 'create', moderator_plus)
+  PermittedAction.create_for_grant_sets('Risk', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Intervention', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('InterventionType', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Measure', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('MeasureType', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Category', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Risk', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Intervention', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('InterventionType', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Measure', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('MeasureType', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Incident', 'create', moderator_plus)
+  PermittedAction.create_for_grant_sets('Incident', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Incident', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Incident', 'destroy', moderator_plus)
+  PermittedAction.create_for_grant_sets('Scenario', 'create', moderator_plus)
+  PermittedAction.create_for_grant_sets('Scenario', 'update', moderator_plus)
+  PermittedAction.create_for_grant_sets('Scenario', 'trash', moderator_plus)
+  PermittedAction.create_for_grant_sets('Scenario', 'destroy', moderator_plus)
+
+  PermittedAction.create_for_grant_sets('Category', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('Risk', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('Intervention', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('InterventionType', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('Measure', 'destroy', administrator_plus)
+  PermittedAction.create_for_grant_sets('MeasureType', 'destroy', administrator_plus)
+end

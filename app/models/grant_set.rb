@@ -21,7 +21,7 @@ class GrantSet < ApplicationRecord
 
   def add(*new_permitted_actions)
     new_permitted_actions.each do |permitted_action|
-      GrantSetsPermittedAction.create!(permitted_action: permitted_action, grant_set: self)
+      GrantSetsPermittedAction.find_or_create_by!(permitted_action: permitted_action, grant_set: self)
     end
   end
 
