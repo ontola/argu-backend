@@ -12,6 +12,10 @@ class BudgetShop < Discussion
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
 
+  def cart_for(user)
+    @cart ||= Cart.new(shop: self, user: user)
+  end
+
   class << self
     def iri
       [super, NS::ARGU[:Shop]]

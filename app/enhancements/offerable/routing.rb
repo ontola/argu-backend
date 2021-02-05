@@ -10,6 +10,7 @@ module Offerable
 
     def route_concerns(mapper)
       mapper.concern :offerable do
+        mapper.resource :cart, only: %i[show], path: :cart
         mapper.resources :offers, only: %i[index new create] do
           mapper.collection do
             mapper.concerns :nested_actionable
