@@ -3,6 +3,7 @@
 class Phase < Edge
   enhance Attachable
   enhance BlogPostable
+  enhance BudgetShoppable
   enhance Commentable
   enhance Contactable
   enhance Convertible

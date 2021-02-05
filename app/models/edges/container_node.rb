@@ -21,6 +21,7 @@ class ContainerNode < Edge
   enhance CustomActionable
   enhance Surveyable
   enhance Projectable
+  enhance BudgetShoppable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]

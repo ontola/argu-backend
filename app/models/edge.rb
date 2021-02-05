@@ -89,6 +89,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :pro_arguments
   has_many_children :con_arguments
   has_many_children :blog_posts
+  has_many_children :budget_shops
   has_many_children :comments
   has_many_children :container_nodes, dependent: :restrict_with_exception
   has_many_children :creative_works
@@ -102,6 +103,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :measures
   has_many_children :measure_types
   has_many_children :motions
+  has_many_children :offers
   has_many_children :phases
   has_many_children :projects
   has_many_children :questions

@@ -1,0 +1,10 @@
+en:
+  offers:
+    type: "Option"
+    type_new: "New option"
+    plural: "Options"
+    form:
+      product_id:
+        label: "Select an Idea"
+      price:
+        label: "Value"

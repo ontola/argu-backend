@@ -1,0 +1,10 @@
+nl:
+  offers:
+    type: "Optie"
+    type_new: "Nieuwe optie"
+    plural: "Opties"
+    form:
+      product_id:
+        label: "Selecteer een Idee"
+      price:
+        label: "Waarde"

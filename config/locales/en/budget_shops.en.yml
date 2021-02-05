@@ -1,0 +1,10 @@
+en:
+  budget_shops:
+    type: "Budget"
+    type_new: "New budget"
+    plural: "Budgets"
+    form:
+      budget_max:
+        label: "Budget"
+      currency:
+        label: "Unit"
