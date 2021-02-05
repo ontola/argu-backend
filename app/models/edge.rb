@@ -171,7 +171,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   alias_attribute :title, :display_name
 
   acts_as_sequenced scope: :root_id, column: :fragment
-  with_collection :exports
+
   self.default_filters = {NS::ARGU[:trashed] => [false]}
 
   attr_writer :root
