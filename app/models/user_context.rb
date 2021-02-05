@@ -6,7 +6,7 @@ class UserContext
   attr_accessor :user
   attr_reader :actor, :doorkeeper_scopes
 
-  def initialize(doorkeeper_scopes:, profile: nil, user: nil)
+  def initialize(doorkeeper_scopes: Doorkeeper::OAuth::Scopes.from_array([]), profile: nil, user: nil)
     @user = user || GuestUser.new
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes

@@ -1,0 +1,11 @@
+en:
+  cart_details:
+    type: "Selected option"
+    type_new: "Select option"
+    plural: "Selected options"
+  actions:
+    cart_details:
+      create:
+        submit: "Add"
+      destroy:
+        submit: "Remove"

@@ -9,6 +9,8 @@ module Buyable
       property :product_id, :linked_edge_id, NS::SCHEMA.itemOffered
       validates :price, presence: true
       validates :product_id, presence: true
+
+      with_collection :cart_details
     end
   end
 end

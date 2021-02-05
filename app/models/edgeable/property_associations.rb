@@ -18,14 +18,14 @@ module Edgeable
     module ClassMethods
       def belongs_to(name, scope = nil, **options)
         opts = options.presence || scope
-        return super unless opts.key?(:foreign_key_property)
+        return super unless opts&.key?(:foreign_key_property)
 
         property_association(:has_one, opts, name)
       end
 
       def has_one(name, scope = nil, **options)
         opts = options.presence || scope
-        return super unless opts.key?(:primary_key_property)
+        return super unless opts&.key?(:primary_key_property)
 
         property_association(:has_one, opts, name)
       end

@@ -1,0 +1,11 @@
+nl:
+  cart_details:
+    type: "Geselecteerde optie"
+    type_new: "Selecteer optie"
+    plural: "Geselecteerde opties"
+  actions:
+    cart_details:
+      create:
+        submit: "Toevoegen"
+      destroy:
+        submit: "Verwijderen"

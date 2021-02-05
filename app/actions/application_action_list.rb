@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationActionList < LinkedRails::Actions::List
+  extend UriTemplateHelper
   include UriTemplateHelper
 
   def available_actions
