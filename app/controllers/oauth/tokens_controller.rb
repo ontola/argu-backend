@@ -11,7 +11,7 @@ module Oauth
     private
 
     def create_success_effects
-      if otp_activated?
+      if otp_activated? && !strategy.is_a?(Doorkeeper::Request::RefreshToken)
         response.headers['Location'] = otp_form_iri.to_s
         @authorize_response = Doorkeeper::OAuth::TokenResponse.new(Doorkeeper::AccessToken.new)
       else

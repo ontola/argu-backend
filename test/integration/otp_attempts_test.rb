@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'support/oauth_test_helpers'
 
 class OtpAttemptsTest < ActionDispatch::IntegrationTest
+  include OauthTestHelpers
   include JWTHelper
 
   define_freetown
@@ -47,9 +49,21 @@ class OtpAttemptsTest < ActionDispatch::IntegrationTest
   end
 
   # CREATE
-  test 'guest should create otp secret with active otp' do
+  test 'guest should create otp secret with active otp and refresh token' do
     sign_in guest_user
     otp_attempt_create(response: :ok)
+    assert_empty response.body
+    token = response.headers['New-Authorization']
+    refresh_token = Doorkeeper::AccessToken.find_by(token: token).refresh_token
+    sleep 1
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      refresh_access_token(refresh_token)
+    end
+    token_response
+    assert_difference('Doorkeeper::AccessToken.count', 0) do
+      refresh_access_token(refresh_token)
+    end
+    token_response(error_type: 'invalid_grant')
   end
 
   test 'guest should not create otp secret with inactive otp' do
