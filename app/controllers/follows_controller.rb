@@ -2,6 +2,9 @@
 
 class FollowsController < AuthorizedController
   PERMITTED_CLASSES = Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze
+
+  include UriTemplateHelper
+
   skip_before_action :check_if_registered, only: :destroy
   prepend_before_action :set_tenant
 
@@ -62,7 +65,7 @@ class FollowsController < AuthorizedController
     [
       menu_item.iri,
       NS::SCHEMA[:image],
-      RDF::URI("http://fontawesome.io/icon/#{menu_item.image.gsub('fa-', '')}"),
+      font_awesome_iri(menu_item.image),
       delta_iri(:replace)
     ]
   end

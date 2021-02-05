@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Vocabulary < LinkedRails::Vocabulary
+  extend UriTemplateHelper
   extend NamesHelper
   extend SerializationHelper
   include Cacheable
@@ -19,7 +20,7 @@ class Vocabulary < LinkedRails::Vocabulary
       icon = icon_for(klass)
       return if icon.blank?
 
-      @graph << RDF::Statement.new(iri, NS::SCHEMA[:image], RDF::URI("http://fontawesome.io/icon/#{icon}"))
+      @graph << RDF::Statement.new(iri, NS::SCHEMA[:image], font_awesome_iri(icon))
     end
 
     def add_subclasses(iri, klass)

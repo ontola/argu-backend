@@ -2,6 +2,7 @@
 
 class MediaObjectSerializer < RecordSerializer
   extend LinkedRails::Helpers::OntolaActionsHelper
+  extend UriTemplateHelper
   include Parentable::Serializer
 
   attribute :type, predicate: RDF[:type] do |object|
@@ -59,7 +60,7 @@ class MediaObjectSerializer < RecordSerializer
         RDF::Statement.new(action_iri, NS::SCHEMA.target, target_iri),
         RDF::Statement.new(target_iri, RDF[:type], NS::SCHEMA.EntryPoint),
         RDF::Statement.new(target_iri, NS::SCHEMA.name, I18n.t('menus.default.copy')),
-        RDF::Statement.new(target_iri, NS::SCHEMA.image, RDF::URI('http://fontawesome.io/icon/clipboard'))
+        RDF::Statement.new(target_iri, NS::SCHEMA.image, font_awesome_iri('clipboard'))
       ]
     end
   end
