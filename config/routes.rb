@@ -354,18 +354,6 @@ Rails.application.routes.draw do
   resources :measures, path: 'voorbeelden', only: %i[index new create show] do
     include_route_concerns
   end
-  resources :employments, only: %i[index new create show] do
-    include_route_concerns
-    collection do
-      concerns :nested_actionable
-    end
-  end
-  resources :employment_moderations, path: 'moderation', only: %i[index show new] do
-    include_route_concerns
-    collection do
-      concerns :nested_actionable
-    end
-  end
 
   %i[blogs forums open_data_portals dashboards].each do |container_node|
     resources container_node, only: %i[index new create]

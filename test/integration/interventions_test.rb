@@ -25,8 +25,6 @@ class InterventionsTest < ActionDispatch::IntegrationTest
     )
   end
   let(:initiator) { create_initiator(freetown) }
-  let(:employment) { create(:employment, parent: argu) }
-  let(:validated_employment) { create(:employment, parent: argu, validated: true) }
   let(:intervention_type) { create(:intervention_type, parent: argu) }
 
   test 'initiator should post create draft intervention' do
@@ -38,12 +36,6 @@ class InterventionsTest < ActionDispatch::IntegrationTest
       attributes: intervention_attributes(argu_publication_attributes: {draft: true}),
       differences: [['Intervention', 1], ['Intervention.published', 0], ['Activity', 1]]
     )
-
-    Sidekiq::Testing.inline! do
-      assert_difference('Intervention.published.count' => 0, 'Activity.count' => 0) do
-        employment.update(validated: true)
-      end
-    end
   end
 
   test 'initiator should post create intervention comment allowed' do
@@ -53,14 +45,8 @@ class InterventionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: :created},
       parent: :argu,
       attributes: intervention_attributes,
-      differences: [['Intervention', 1], ['Intervention.published', 0], ['Activity', 1], ['GrantReset', 0]]
+      differences: [['Intervention', 1], ['Intervention.published', 1], ['Activity', 2], ['GrantReset', 0]]
     )
-
-    Sidekiq::Testing.inline! do
-      assert_difference('Intervention.published.count' => 1, 'Activity.count' => 1) do
-        employment.update(validated: true)
-      end
-    end
   end
 
   test 'initiator should post create intervention comment not allowed' do
@@ -70,17 +56,17 @@ class InterventionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: :created},
       parent: :argu,
       attributes: intervention_attributes(comments_allowed: :comments_not_allowed),
-      differences: [['Intervention', 1], ['Intervention.published', 0], ['Activity', 1], ['GrantReset', 1]]
+      differences: [['Intervention', 1], ['Intervention.published', 1], ['Activity', 2], ['GrantReset', 1]]
     )
   end
 
-  test 'initiator should post create intervention validated employment' do
+  test 'initiator should post create intervention' do
     sign_in initiator
 
     general_create(
       results: {should: true, response: :created},
       parent: :argu,
-      attributes: intervention_attributes(employment_id: validated_employment.id),
+      attributes: intervention_attributes,
       differences: [['Intervention', 1], ['Intervention.published', 1], ['Activity', 2]]
     )
   end
@@ -90,7 +76,6 @@ class InterventionsTest < ActionDispatch::IntegrationTest
   def intervention_attributes(opts = {}) # rubocop:disable Metrics/MethodLength
     {
       parent_id: intervention_type.id,
-      employment_id: employment.id,
       display_name: 'Name',
       description: 'Description',
       goal: 'Goal',

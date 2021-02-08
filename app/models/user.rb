@@ -40,7 +40,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :topics, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :votes, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
-  has_many :employments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :uploaded_media_objects,
            class_name: 'MediaObject',
            inverse_of: :publisher,

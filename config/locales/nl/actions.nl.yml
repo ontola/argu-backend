@@ -160,6 +160,3 @@ nl:
         label: 'Account vergrendeld?'
         description: 'Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je je account kunt ontgrendelen.'
         submit: "Verstuur"
-    employments:
-      confirm:
-        submit: "Bevestig"

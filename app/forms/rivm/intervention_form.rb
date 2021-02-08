@@ -5,12 +5,11 @@ class InterventionForm < ApplicationForm
   group :intervention_description, label: -> { I18n.t('forms.intervention_description.label') } do
     field :display_name
     field :description, datatype: NS::FHIR[:markdown]
-    field :employment_id,
-          min_count: 1,
-          sh_in: lambda {
-            iri_from_template(:employments_iri, page_size: 100)
-          },
-          datatype: NS::XSD[:string]
+    field :organization_name
+    field :show_organization_name
+    has_one :default_profile_photo
+    field :industry
+    field :job_title
     field :parent_id,
           min_count: 1,
           sh_in: lambda {

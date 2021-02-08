@@ -160,6 +160,3 @@ en:
         label: 'Account locked?'
         description: "Enter your email address and you'll receive a link to unlock your account."
         submit: "Send"
-    employments:
-      confirm:
-        submit: "Confirm"

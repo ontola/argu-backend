@@ -25,5 +25,9 @@ FactoryBot.define do
     comments_allowed { :comments_are_allowed }
     contact_allowed { :contact_is_allowed }
     target_audience { [:operational_employees] }
+    show_organization_name { true }
+    organization_name { 'Business & Co' }
+    job_title { 'Employee' }
+    industry { :argiculutre }
   end
 end
