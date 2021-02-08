@@ -9,6 +9,10 @@ class Cart < VirtualResource
 
   delegate :budget_max, :currency, to: :shop
 
+  def budget_exceeded?
+    total_value > budget_max
+  end
+
   def cart_details
     @cart_details ||=
       CartDetail.where_with_redis(

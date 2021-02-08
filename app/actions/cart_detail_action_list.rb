@@ -15,7 +15,8 @@ class CartDetailActionList < EdgeActionList
       collection: true,
       image: font_awesome_iri('close'),
       policy_resource: -> { resource.parent.cart_detail_for(user_context.user) },
-      predicate: NS::ONTOLA[:removeFromCart]
+      predicate: NS::ONTOLA[:removeFromCart],
+      type: -> { [RDF::Vocab::SCHEMA.Action, NS::ONTOLA["Destroy::#{result_class}"], NS::ONTOLA[:DestroyAction]] }
     )
   )
 end

@@ -6,6 +6,7 @@ module Offerable
 
     included do
       with_collection :offers, predicate: NS::ARGU[:offers]
+      with_collection :orders, predicate: NS::ARGU[:orders]
     end
   end
 end

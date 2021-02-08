@@ -13,7 +13,7 @@ class BudgetShop < Discussion
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
 
   def cart_for(user)
-    @cart ||= Cart.new(shop: self, user: user)
+    Cart.new(shop: self, user: user)
   end
 
   class << self

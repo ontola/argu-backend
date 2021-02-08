@@ -170,7 +170,7 @@ Rails.application.routes.draw do
   # @todo canonical urls of edges should redirect
   resources :edges, only: [:show] do
     %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
-       motions questions votes vote_events budget_shops offers].map do |edgeable|
+       motions questions votes vote_events budget_shops offers orders].map do |edgeable|
       resources edgeable, only: :index
     end
   end
@@ -299,6 +299,9 @@ Rails.application.routes.draw do
     include_route_concerns
   end
   resources :offers, only: %i[show] do
+    include_route_concerns
+  end
+  resources :orders, only: %i[show] do
     include_route_concerns
   end
   resources :placements, only: :show

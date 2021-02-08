@@ -22,7 +22,10 @@ module ChildOperations
   private
 
   def authorize_child_operation(method, klass, opts = {})
-    Pundit.policy(context, child_instance(record, klass, opts)).send(method) || false
+    policy = Pundit.policy(context, child_instance(record, klass, opts))
+    verdict = policy.send(method) || false
+    @message = policy.try(:message)
+    verdict
   end
 
   # Initialises a child of the type {raw_klass} with the given {attrs} and checks

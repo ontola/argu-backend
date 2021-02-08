@@ -38,6 +38,9 @@ PermittedAction.create_for_grant_sets('ProArgument', 'create', participator_plus
 PermittedAction.create_for_grant_sets('ConArgument', 'create', participator_plus)
 PermittedAction.create_for_grant_sets('Comment', 'create', participator_plus)
 PermittedAction.create_for_grant_sets('Vote', 'create', participator_plus)
+PermittedAction.create_for_grant_sets('CartDetail', 'create', participator_plus)
+PermittedAction.create_for_grant_sets('CartDetail', 'destroy', participator_plus)
+PermittedAction.create_for_grant_sets('Order', 'create', participator_plus)
 
 motion_with_question_create = PermittedAction.find_or_create_by!(
   title: 'motion_with_question_create',

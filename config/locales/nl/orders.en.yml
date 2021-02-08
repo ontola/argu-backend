@@ -1,0 +1,14 @@
+en:
+  orders:
+    type: "Order"
+    type_new: "new order"
+    plural: "Orders"
+  actions:
+    orders:
+      create:
+        label: "Finish"
+        submit_label: "Finish"
+        errors:
+          budget_exceeded: "The budget is exceeded"
+          cart_empty: "No items selected yet"
+          submitted: "You already submitted a budget"

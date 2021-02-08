@@ -1,0 +1,14 @@
+nl:
+  orders:
+    type: "Bestelling"
+    type_new: "Nieuwe bestelling"
+    plural: "Bestellingen"
+  actions:
+    orders:
+      create:
+        label: "Afronden"
+        submit_label: "Afronden"
+        errors:
+          budget_exceeded: "Het budget is overschreden"
+          cart_empty: "Nog geen items geselecteerd"
+          submitted: "Je hebt al een budget ingediend"
