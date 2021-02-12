@@ -30,7 +30,7 @@ module Edgeable
 
       parent.reload_children_counts
       counter_cache_names.each do |counter_cache_name|
-        parent.children_counts[counter_cache_name] = parent.children_count(counter_cache_name) - 1
+        parent.children_counts[counter_cache_name.to_s] = parent.children_count(counter_cache_name) - 1
       end
       parent.save(touch: false)
     end
@@ -40,7 +40,7 @@ module Edgeable
 
       parent.reload_children_counts
       counter_cache_names.each do |counter_cache_name|
-        parent.children_counts[counter_cache_name] = parent.children_count(counter_cache_name) + 1
+        parent.children_counts[counter_cache_name.to_s] = parent.children_count(counter_cache_name) + 1
       end
       parent.save(touch: false)
     end
@@ -107,8 +107,8 @@ module Edgeable
               right: count
             }
             edge = Edge.find(model.id)
-            edge.children_counts[cache_name] = count
-            edge.save(touch: false)
+            edge.children_counts[cache_name.to_s] = count
+            edge.save!(touch: false)
           end
           start += batch_size
         end
