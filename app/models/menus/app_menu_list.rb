@@ -86,7 +86,9 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       policy: :create_child?,
       policy_arguments: %i[forums],
       policy_resource: ActsAsTenant.current_tenant,
-      href: RDF::DynamicURI(path_with_hostname(expand_uri_template(:new_container_node_iri)))
+      href: RDF::DynamicURI(
+        path_with_hostname(expand_uri_template(:new_container_node_iri, title: I18n.t('container_nodes.type_new')))
+      )
     )
   end
 

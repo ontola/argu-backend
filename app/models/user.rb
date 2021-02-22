@@ -298,8 +298,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
         association_base: favorite_pages,
         association_class: Page,
         default_type: :paginated,
-        parent: self,
-        title: I18n.t('pages.my_pages')
+        parent: self
       )
     )
   end

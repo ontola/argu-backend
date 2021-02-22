@@ -20,8 +20,7 @@ class ContainerNodesController < EdgeableController
         association_class: ::Actions::Item,
         default_display: :grid,
         default_type: :paginated,
-        parent_uri_template: :new_container_node_iri,
-        title: I18n.t('container_nodes.type_new')
+        parent_uri_template: :new_container_node_iri
       )
     )
   end
