@@ -21,26 +21,6 @@
       "note": ""
     },
     {
-      "warning_type": "Dangerous Send",
-      "warning_code": 23,
-      "fingerprint": "3204854f68e37044f4e0606417dda8d3dc51921c9044ae466e1e715b5bc62e5b",
-      "check_name": "Send",
-      "message": "User controlled method execution",
-      "file": "service_module/lib/argu/controller/authorization.rb",
-      "line": 27,
-      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
-      "code": "policy(record).public_send((params[:action].to_s + \"?\"), *opts)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Argu::Controller::Authorization",
-        "method": "authorize"
-      },
-      "user_input": "(params[:action].to_s + \"?\")",
-      "confidence": "High",
-      "note": ""
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "8bffbc953891e9d03a05ec7f4f2f8dc5fc3d0bce3775a7f65251803775ef6d3c",
@@ -61,6 +41,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-02-01 11:27:43 +0100",
+  "updated": "2021-02-22 09:46:04 +0100",
   "brakeman_version": "5.0.0"
 }
