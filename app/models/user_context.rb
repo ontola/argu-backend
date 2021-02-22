@@ -36,7 +36,7 @@ class UserContext
     return unless edge&.persisted_edge&.present?
     raise 'No root is present' if tree_root.nil?
     unless edge.persisted_edge.root_id == tree_root.uuid
-      raise "#{edge.owner_type} #{edge.owner_id} lies outside the tree of root #{tree_root.url}"
+      raise "#{edge.owner_type} #{edge.uuid} lies outside the tree of root #{tree_root.url}"
     end
 
     @grant_trees[tree_root.uuid] ||= GrantTree.new(tree_root)
