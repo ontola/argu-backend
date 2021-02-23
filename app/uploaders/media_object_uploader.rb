@@ -35,10 +35,10 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     quality: 75
   }.freeze
   IMAGE_VERSIONS = {
-    icon: {if: :is_image?, w: 64, h: 64, strategy: :resize_to_fill, conversion_opts: {quant_table: 0, quality: 90}},
-    avatar: {if: :is_image?, w: 256, h: 256, strategy: :resize_to_fill},
-    box: {if: :is_image?, w: 568, h: 400, strategy: :resize_to_limit},
-    cover: {if: :cover_photo?, w: 1500, h: 2000, strategy: :resize_to_limit, conversion_opts: {quality: 100}}
+    icon: {w: 64, h: 64, strategy: :resize_to_fill, conversion_opts: {quant_table: 0, quality: 90}},
+    avatar: {w: 256, h: 256, strategy: :resize_to_fill},
+    box: {w: 568, h: 400, strategy: :resize_to_limit},
+    cover: {w: 1500, h: 2000, strategy: :resize_to_limit, conversion_opts: {quality: 100}}
   }.freeze
   IMAGE_VERSIONS.each do |type, opts|
     version type, if: opts[:if] do
@@ -88,12 +88,6 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
 
   def extension
     filename&.split('.')&.last
-  end
-
-  def is_image?(_file = nil)
-    return true if profile_photo? || cover_photo?
-
-    content_type&.split('/')&.first == 'image'
   end
 
   def profile_photo?(_file = nil)
