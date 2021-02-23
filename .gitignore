@@ -15,6 +15,7 @@
 /.idea
 spec/argu.txt
 .yardoc
+db/argu.dump
 
 # Ignore secrets
 secrets.yml

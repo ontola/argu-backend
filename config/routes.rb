@@ -73,6 +73,10 @@ Rails.application.routes.draw do
         namespace :spi do
           get 'find_tenant', to: 'tenant_finder#show'
           get 'tenants', to: 'tenants#index'
+          post 'tests/suite/start', to: 'tests#suite_start'
+          post 'tests/suite/stop', to: 'tests#suite_stop'
+          post 'tests/single/start', to: 'tests#single_start'
+          post 'tests/single/stop', to: 'tests#single_stop'
         end
       end
     end

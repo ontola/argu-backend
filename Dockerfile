@@ -41,7 +41,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.11/community" >> /etc/apk/repo
     apk del --purge .build-dependencies && \
     rm -rf /var/cache/apk/*
 
-RUN apk --update --no-cache add curl openssh-client postgresql-dev libffi-dev libxml2-dev libxslt-dev libwebp-dev
+RUN apk --update --no-cache add curl openssh-client postgresql-dev postgresql-client libffi-dev libxml2-dev libxslt-dev libwebp-dev
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
