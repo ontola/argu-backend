@@ -7,6 +7,6 @@ class DocumentsController < ApplicationController
   private
 
   def current_resource
-    @current_resource = Document.find_by!(name: params[:name])
+    @current_resource = Document.find_by(name: params[:name])
   end
 end

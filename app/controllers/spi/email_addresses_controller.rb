@@ -9,7 +9,7 @@ module SPI
     private
 
     def current_resource
-      @current_resource ||= EmailAddress.find_by!(email: params[:email])
+      @current_resource ||= EmailAddress.find_by(email: params[:email])
     end
   end
 end
