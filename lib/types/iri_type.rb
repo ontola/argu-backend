@@ -6,7 +6,7 @@ class IRIType < ActiveRecord::Type::Value
   end
 
   def cast(value)
-    RDF::URI(value)
+    RDF::URI(value) if value
   end
 
   def serialize(value)
