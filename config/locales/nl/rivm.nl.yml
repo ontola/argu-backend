@@ -308,7 +308,7 @@ nl:
         security_improvement_reason: "Waarom denkt u dat de interventie de veiligheid wel of niet verbeterd heeft? Waaraan is dit merkbaar?"
         business_section: "Is de interventie gericht op het gehele bedrijf of op een deel van het bedrijf zoals een afdeling, regio, land of vestiging?"
         business_section_employees: "Hoeveel medewerkers zijn er ongeveer werkzaam in het land, de regio, vestiging of afdeling van het bedrijf?"
-        comments_allowed: "Wilt u openbaar commentaar op uw interventie mogelijk maken?"
+        comments_allowed: "Wilt u reacties op uw interventie toestaan?"
         contact_allowed: "Mogen mensen contact met u opnemen over de interventie?"
         organization_name: "Wat is de naam van het bedrijf waar de interventie is uitgevoerd?"
         show_organization_name: "De bedrijfsnaam mag getoond worden"
@@ -316,7 +316,7 @@ nl:
         industry: "In welke sector is dit bedrijf actief?"
         default_profile_photo: "Bedrijfslogo"
       measure:
-        comments_allowed: "Wilt u openbaar commentaar op uw interventie mogelijk maken?"
+        comments_allowed: "Wilt u reacties op uw interventie toestaan?"
         parent_id: "Onder welke op deze website beschreven maatregelen is dit voorbeeld in te delen?"
   properties:
     interventions:
