@@ -12,7 +12,7 @@ module MeasureTypeable
 
       with_collection :measure_types,
                       association: :measure_type_examples,
-                      title: ->(r) { I18n.t('measure_types.collection_for', parent: r.display_name.downcase) }
+                      default_title: ->(r) { I18n.t('measure_types.collection_for', parent: r.display_name.downcase) }
     end
   end
 end

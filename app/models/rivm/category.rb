@@ -34,7 +34,7 @@ class Category < Edge
     end
 
     def root_collection_opts
-      super.merge(title: ->(_r) { I18n.t('measure_types.plural') })
+      super.merge(default_title: ->(_r) { I18n.t('measure_types.plural') })
     end
   end
 end

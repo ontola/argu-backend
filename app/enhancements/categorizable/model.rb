@@ -11,7 +11,7 @@ module Categorizable
 
       with_collection :categories,
                       association: :category,
-                      title: ->(_r) { I18n.t('categories.type') }
+                      default_title: ->(_r) { I18n.t('categories.type') }
     end
 
     def category_id=(value)
