@@ -112,18 +112,23 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
     end).flatten
   end
 
-  def overview_item(sheet, record) # rubocop:disable Metrics/AbcSize
+  def overview_item(sheet, record)
     hierarchy_depth = HIERARCHY.index(record.class_name.to_sym)
+
+    overview_item_row(sheet, record, hierarchy_depth) if hierarchy_depth.present?
+
+    HIERARCHY[(hierarchy_depth || -1) + 1..-1].reverse.each do |child_type|
+      (record.try(child_type) || []).each { |child| overview_item(sheet, child) }
+    end
+  end
+
+  def overview_item_row(sheet, record, hierarchy_depth)
     data = [record.display_name, record.description]
     indent = hierarchy_depth * data.length
 
     sheet << overview_prefix_columns(record) + Array.new(indent) + data
     sheet.last_row.default_format = Spreadsheet::Format.new(text_wrap: true)
     sheet.last_row.outline_level = hierarchy_depth
-
-    HIERARCHY[hierarchy_depth + 1..-1].reverse.each do |child_type|
-      (record.try(child_type) || []).each { |child| overview_item(sheet, child) }
-    end
   end
 
   def overview_prefix_titles
