@@ -11,7 +11,7 @@ module Users
     end
 
     def after_resetting_password_path_for(resource)
-      return iri_from_template(:user_sign_in).path if resource.setup_finished?
+      return iri_from_template(:user_sign_in).path if current_user.guest? || resource.setup_finished?
 
       iri_from_template(:setup_iri)
     end
