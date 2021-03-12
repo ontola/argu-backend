@@ -40,7 +40,7 @@ module Users
     end
 
     def update_success
-      respond_with_resource(resource: current_actor)
+      respond_with_resource(resource: current_actor, location: ActsAsTenant.current_tenant.iri.to_s)
     end
 
     def update_success_location
