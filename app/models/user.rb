@@ -338,6 +338,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     [first_name, middle_name, (!hide_last_name && last_name).presence].compact.join(' ').presence
   end
 
+  def requires_2fa?
+    profile.groups.where(require_2fa: true).any?
+  end
+
   def reserved?
     id <= 0
   end

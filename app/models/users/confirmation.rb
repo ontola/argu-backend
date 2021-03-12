@@ -17,6 +17,10 @@ module Users
     end
 
     class << self
+      def iri_value
+        name.demodulize
+      end
+
       def form_class
         LinkedRails::Auth::ConfirmationForm
       end

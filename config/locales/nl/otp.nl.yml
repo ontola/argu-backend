@@ -11,6 +11,7 @@ nl:
     form:
       otp_attempt:
         label: "Authenticatiecode"
+    properties:
       provision_image:
         description: 'Installeer een authenticatie-applicatie en scan deze QR code. [Klik hier](https://argu.co/argu/t/10962) voor meer informatie.'
   actions:

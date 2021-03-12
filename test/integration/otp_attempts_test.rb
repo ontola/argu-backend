@@ -109,13 +109,13 @@ class OtpAttemptsTest < ActionDispatch::IntegrationTest
   private
 
   def create_path(*_args)
-    uri = URI('/argu/users/otp_attempts')
+    uri = URI('/argu/u/otp_attempts')
     uri.query = {session: @session}.to_param if @session.present?
     uri.to_s
   end
 
   def new_path(*_args)
-    uri = URI('/argu/users/otp_attempts/new')
+    uri = URI('/argu/u/otp_attempts/new')
     uri.query = {session: @session}.to_param if @session.present?
     uri.to_s
   end
@@ -131,7 +131,7 @@ class OtpAttemptsTest < ActionDispatch::IntegrationTest
   )
     otp_attempt ||= session_user.otp_secret.otp_code(time: otp_time)
 
-    @session = session || sign_payload(user_id: session_user.id, exp: session_exp.to_i)
+    @session = session || sign_payload({user_id: session_user.id, exp: session_exp.to_i}, 'HS512')
     general_create(
       attributes: {otp_attempt: otp_attempt},
       results: {response: response}
@@ -145,7 +145,7 @@ class OtpAttemptsTest < ActionDispatch::IntegrationTest
     session_user: two_fa_user,
     session_exp: 10.minutes.from_now
   )
-    @session = session || sign_payload(user_id: session_user.id, exp: session_exp.to_i)
+    @session = session || sign_payload({user_id: session_user.id, exp: session_exp.to_i}, 'HS512')
     general_new(results: {response: response})
   end
 end

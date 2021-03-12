@@ -123,6 +123,7 @@ en:
       group:
         name: "Name"
         name_singular: "Name singular"
+        require_2fa: "Force two factor authentication"
       group_membership:
         user: 'Member'
       shortname:

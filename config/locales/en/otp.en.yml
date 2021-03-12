@@ -11,6 +11,7 @@ en:
     form:
       otp_attempt:
         label: "Authentication code"
+    properties:
       provision_image:
         description: 'Install a authentication-application and scan this QR code.'
   actions:

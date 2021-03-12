@@ -172,7 +172,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
           }
     end
     assert_response :success
-    assert_equal response.header['Location'], iri_from_template(:setup_iri, root: argu)
+    assert_equal response.header['Location'], iri_from_template(:user_sign_in, root: argu).path
     assert_not User.last.encrypted_password == ''
     assert_email_sent(skip_sidekiq: true)
   end

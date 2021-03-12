@@ -123,6 +123,7 @@ nl:
       group:
         name: "Naam"
         name_singular: "Naam enkelvoud"
+        require_2fa: "Verplicht tweestapsverificatie"
       group_membership:
         user: 'Lid'
       shortname:

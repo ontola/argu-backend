@@ -7,7 +7,7 @@ class GroupPolicy < EdgeTreePolicy
     end
   end
 
-  permit_attributes %i[name display_name name_singular]
+  permit_attributes %i[name display_name name_singular require_2fa]
   permit_nested_attributes %i[grants]
 
   def is_member?

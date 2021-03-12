@@ -14,7 +14,7 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   # NEW
   test 'guest should not get new otp secret' do
     sign_in guest_user
-    otp_secret_new(response: :forbidden)
+    otp_secret_new(response: :not_found)
   end
 
   test 'user should get new otp secret' do
@@ -32,7 +32,7 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   # CREATE
   test 'guest should not create otp secret' do
     sign_in guest_user
-    otp_secret_create(should: false, response: :unauthorized)
+    otp_secret_create(should: false, response: :not_found)
   end
 
   test 'user should create otp secret' do
@@ -81,12 +81,13 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   # DELETE
   test 'guest should not get delete otp secret' do
     sign_in guest_user
-    otp_secret_delete(response: :forbidden)
+    otp_secret_delete(response: :success)
+    assert_disabled_form(error: 'Two factor authentication is not yet activated.')
   end
 
   test 'user should get delete otp secret' do
     sign_in user
-    otp_secret_delete(response: :ok)
+    otp_secret_delete(response: :success)
     assert_disabled_form(error: 'Two factor authentication is not yet activated.')
   end
 
@@ -116,7 +117,7 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   # DESTROY
   test 'guest should not destroy otp secret' do
     sign_in guest_user
-    otp_secret_destroy(response: :unauthorized, should: false)
+    otp_secret_destroy(response: :forbidden, should: false)
   end
 
   test 'user should not destroy otp secret' do
@@ -147,11 +148,11 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   private
 
   def create_path(_parent)
-    '/argu/users/otp_secrets'
+    '/argu/u/otp_secrets'
   end
 
   def new_path(*_args)
-    '/argu/users/otp_secrets/new'
+    '/argu/u/otp_secrets/new'
   end
 
   def otp_secret_create(

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_01_131631) do
+ActiveRecord::Schema.define(version: 2021_03_15_134802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 2021_02_01_131631) do
     t.string "name_singular", null: false
     t.boolean "deletable", default: true
     t.uuid "root_id", null: false
+    t.boolean "require_2fa", default: false
     t.index ["root_id", "name"], name: "index_groups_on_root_id_and_name", unique: true
     t.index ["root_id", "name_singular"], name: "index_groups_on_root_id_and_name_singular", unique: true
     t.index ["root_id"], name: "index_groups_on_root_id"

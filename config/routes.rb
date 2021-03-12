@@ -90,10 +90,12 @@ Rails.application.routes.draw do
   )
   use_linked_rails_auth(
     applications: 'oauth/applications',
-    tokens: 'oauth/tokens',
-    registrations: 'users/registrations',
+    confirmations: 'users/confirmations',
+    otp_attempts: 'users/otp_attempts',
+    otp_secrets: 'users/otp_secrets',
     passwords: 'users/passwords',
-    confirmations: 'users/confirmations'
+    registrations: 'users/registrations',
+    tokens: 'oauth/tokens'
   )
 
   as :user do
@@ -101,16 +103,6 @@ Rails.application.routes.draw do
     get 'users/wrong_email', to: 'users#wrong_email'
   end
 
-  namespace :users do
-    resource :otp_secrets, only: %i[new create], path: :otp_secrets do
-      get 'delete', action: :delete
-    end
-    resources :otp_secrets, only: %i[], path: :otp_secrets do
-      include_route_concerns
-    end
-    resource :otp_attempts, only: %i[new create], path: :otp_attempts
-    resource :otp_images, only: %i[show], path: :otp_qr
-  end
   resources :users,
             path: 'u',
             only: %i[show edit new create] do

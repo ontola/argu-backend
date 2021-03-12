@@ -10,25 +10,13 @@ module Oauth
 
     private
 
-    def create_success_effects
-      if otp_activated? && !strategy.is_a?(Doorkeeper::Request::RefreshToken)
-        response.headers['Location'] = otp_form_iri.to_s
-        @authorize_response = Doorkeeper::OAuth::TokenResponse.new(Doorkeeper::AccessToken.new)
-      else
-        super
-
-        process_previous_token(authorize_response)
-      end
+    def handle_new_token
+      super
+      process_previous_token(authorize_response)
     end
 
-    def otp_activated?
-      OtpSecret.exists?(user_id: authorize_response.token.resource_owner_id, active: true)
-    end
-
-    def otp_form_iri
-      session = sign_payload(user_id: authorize_response.token.resource_owner_id, exp: 10.minutes.from_now.to_i)
-
-      new_iri('users/otp_attempts', nil, query: {session: session})
+    def otp_setup_required?
+      User.find_by(id: authorize_response.token.resource_owner_id)&.requires_2fa?
     end
 
     def process_previous_token(res)
@@ -39,6 +27,14 @@ module Oauth
         User.find(res.token.resource_owner_id),
         redirect_url_param
       )
+    end
+
+    def redirect_to_otp_secret
+      add_exec_action_header(
+        headers,
+        ontola_snackbar_action('2fa is verplicht')
+      )
+      super
     end
 
     def token_with_errors(exception)

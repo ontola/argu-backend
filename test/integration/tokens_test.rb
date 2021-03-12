@@ -204,9 +204,9 @@ class TokensTest < ActionDispatch::IntegrationTest
       )
     end
     location_segments = response.headers['Location'].split('=')
-    assert_equal(location_segments[0], 'http://argu.localtest/argu/users/otp_attempts/new?session')
+    assert_equal(location_segments[0], 'http://argu.localtest/argu/u/otp_attempts/new?session')
     session = decode_token(location_segments[1])
-    assert_equal(session.keys, %w[user_id exp])
+    assert_equal(session.keys.sort, %w[exp redirect_uri user_id])
     assert_equal(session['user_id'].to_i, two_fa_user.id)
     assert(session['exp'].to_i <= 10.minutes.from_now.to_i)
   end
