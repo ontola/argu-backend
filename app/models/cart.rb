@@ -4,8 +4,12 @@ class Cart < VirtualResource
   include Parentable
   include IRITemplateHelper
   attr_accessor :shop, :user
+
   parentable :shop
   alias edgeable_record shop
+  alias id iri_path
+
+  with_collection :cart_details
 
   delegate :budget_max, :currency, to: :shop
 

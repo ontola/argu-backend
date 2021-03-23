@@ -21,26 +21,13 @@ module RedisResource
       )
     end
 
-    def persist(user) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def persist(user) # rubocop:disable Metrics/AbcSize
       if Edge.where(publisher: user, owner_type: resource.class.name, parent_id: resource.parent_id).any?
         Argu::Redis.delete(key.key)
         return
       end
-      service = "Create#{resource.class.name}".constantize.new(
-        resource.parent,
-        attributes: resource.attributes.except('publisher_id', 'creator_id'),
-        options: {
-          creator: user.profile,
-          publisher: user
-        }
-      )
+      service = create_service(user)
       service.resource.id = resource.id
-      service.on("create_#{resource.class.name.underscore}_failed") do |resource|
-        raise StandardError.new(resource.errors.full_messages.join('\n'))
-      end
-      service.on("create_#{resource.class.name.underscore}_successful") do
-        Argu::Redis.delete(key.key)
-      end
       service.commit
     end
 
@@ -54,11 +41,35 @@ module RedisResource
 
     private
 
+    def create_service(user) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      create_service = service_class.new(
+        resource.parent,
+        attributes: resource.attributes.with_indifferent_access.except('publisher_id', 'creator_id'),
+        options: {
+          creator: user.profile,
+          publisher: user
+        }
+      )
+
+      create_service.on("create_#{resource.class.name.underscore}_failed") do |resource|
+        raise StandardError.new(resource.errors.full_messages.join('\n'))
+      end
+      create_service.on("create_#{resource.class.name.underscore}_successful") do
+        Argu::Redis.delete(key.key)
+      end
+
+      create_service
+    end
+
     def remove_from_redis
       raise ActiveRecord::RecordNotFound if key.blank?
       raise "Cannot destroy a key with wildcards: #{key.key}" if key.has_wildcards?
 
       Argu::Redis.delete(key.key)
+    end
+
+    def service_class
+      "Create#{resource.class.name}".safe_constantize || CreateEdge
     end
 
     def store_in_redis

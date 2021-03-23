@@ -2,10 +2,10 @@
 
 class OrderPolicy < EdgePolicy
   def show?
-    is_creator?
+    new_record? || is_creator?
   end
 
-  def create? # rubocop:disable Metrics/AbcSize
+  def create?
     cart = record.parent.cart_for(user)
 
     return forbid_with_message(I18n.t('actions.orders.create.errors.submitted')) if cart.submitted?

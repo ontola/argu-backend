@@ -8,9 +8,11 @@ module Offerable
       [Offer, Order]
     end
 
-    def route_concerns(mapper)
+    def route_concerns(mapper) # rubocop:disable Metrics/MethodLength
       mapper.concern :offerable do
-        mapper.resource :cart, only: %i[show], path: :cart
+        mapper.resource :cart, only: %i[show], path: :cart do
+          mapper.resources :cart_details, only: %i[index new]
+        end
         mapper.resources :orders, only: %i[new create] do
           mapper.collection do
             mapper.concerns :nested_actionable

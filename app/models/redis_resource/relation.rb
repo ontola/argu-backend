@@ -36,6 +36,10 @@ module RedisResource
       super
     end
 
+    def page(num = 1)
+      Kaminari::PaginatableArray.new(redis_resources).page(num)
+    end
+
     # Store the resources matching the current filters in postgres
     def persist(user)
       redis_resources.each { |record| record.persist(user) }

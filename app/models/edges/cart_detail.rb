@@ -5,6 +5,7 @@ class CartDetail < Edge
   include RedisResource::Concern
 
   enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Indexable
 
   attribute :shop_id
   parentable :budget_shop, :offer
@@ -16,7 +17,10 @@ class CartDetail < Edge
   end
 
   def iri_opts
-    super.merge(parent_iri: parent_iri_path)
+    super.merge(
+      parent_iri: split_iri_segments(ancestor(:budget_shop)&.cart_for(publisher)&.iri_path),
+      uuid: uuid
+    )
   end
 
   def added_delta
@@ -65,6 +69,10 @@ class CartDetail < Edge
   class << self
     def store_in_redis?(_opts = {})
       true
+    end
+
+    def sort_options(_collection)
+      []
     end
   end
 end

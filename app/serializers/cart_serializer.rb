@@ -7,4 +7,5 @@ class CartSerializer < BaseSerializer
   attribute :create_offer_iri, predicate: NS::ARGU[:checkoutAction] do |object|
     object.shop.order_collection.action(:create).iri
   end
+  with_collection :cart_details, predicate: NS::ARGU[:cartDetails]
 end
