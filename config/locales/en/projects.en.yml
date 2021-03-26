@@ -11,3 +11,6 @@ en:
         name: "Collect ideas"
       survey:
         name: "Survey"
+    form:
+      current_phase_id:
+        label: "Current phase"

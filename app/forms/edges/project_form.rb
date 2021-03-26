@@ -3,6 +3,11 @@
 class ProjectForm < ContainerNodeForm
   field :display_name
   field :description, datatype: NS::FHIR[:markdown]
+  field :current_phase_id,
+        datatype: NS::XSD[:string],
+        max_count: 1,
+        input_field: LinkedRails::Form::Field::SelectInput,
+        sh_in_prop: NS::ARGU[:phases]
   has_one :default_cover_photo
   has_many :attachments
   has_one :custom_placement

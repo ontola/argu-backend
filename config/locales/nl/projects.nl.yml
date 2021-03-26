@@ -11,3 +11,6 @@ nl:
         name: "Ideeën verzamelen"
       survey:
         name: "Enquête"
+    form:
+      current_phase_id:
+        label: "Huidige fase"
