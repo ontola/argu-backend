@@ -91,6 +91,7 @@ en:
       title: "Title"
       time_zone: "Time zone"
       updated_at: "Updated at"
+      upvote_only: "Upvote ideeën"
       url: "Url"
       username: "Username"
       visibility: "Visibility"

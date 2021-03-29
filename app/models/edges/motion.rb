@@ -34,6 +34,10 @@ class Motion < Discussion
     parent.owner_type == 'Question' && parent.require_location
   end
 
+  def upvote_only?
+    parent.owner_type == 'Question' && parent.upvote_only?
+  end
+
   class << self
     def edge_includes_for_index(full = false)
       includes = super().deep_merge(default_vote_event: {}, last_published_decision: :properties)

@@ -8,7 +8,7 @@ class VoteEvent < Edge
   counter_cache true
   parentable :motion
   property :starts_at, :datetime, NS::SCHEMA[:startDate]
-  property :upvote_only, :boolean, NS::ARGU[:upvoteOnly]
+  delegate :upvote_only?, to: :parent
 
   def con_count
     children_count(:votes_con)

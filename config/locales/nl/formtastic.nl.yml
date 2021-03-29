@@ -91,6 +91,7 @@ nl:
       title: "Titel"
       time_zone: "Tijdzone"
       updated_at: "Aangepast op"
+      upvote_only: "Upvote ideeën"
       url: "Url"
       username: "Gebruikersnaam"
       visibility: "Zichtbaarheid"

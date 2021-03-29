@@ -2,6 +2,7 @@
 
 class QuestionSerializer < DiscussionSerializer
   attribute :require_location, predicate: NS::ARGU[:requireLocation]
+  attribute :upvote_only, predicate: NS::ARGU[:upvoteOnly]
   attribute :map_question, predicate: NS::ARGU[:mapQuestion]
   count_attribute :motions
 
