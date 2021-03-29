@@ -2,12 +2,11 @@
 
 class Vote < Edge
   enhance LinkedRails::Enhancements::Creatable
-  enhance LinkedRails::Enhancements::Destroyable
+  enhance Trashable
   enhance Loggable
   enhance LinkedRails::Enhancements::Updatable
 
   include RedisResource::Concern
-  include Trashable::Model
 
   property :option, :integer, NS::SCHEMA[:option], default: 3, enum: {no: 0, yes: 1, other: 2, abstain: 3}
   property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
@@ -36,6 +35,10 @@ class Vote < Edge
 
   validates :creator, :option, presence: true
 
+  def anonymous_iri?
+    super && !store_in_redis?
+  end
+
   def cacheable?
     false
   end
@@ -62,8 +65,6 @@ class Vote < Edge
   def searchable_should_index?
     false
   end
-
-  delegate :is_trashed?, :trashed_at, to: :parent, allow_nil: true
 
   private
 

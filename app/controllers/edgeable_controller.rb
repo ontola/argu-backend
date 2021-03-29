@@ -32,7 +32,7 @@ class EdgeableController < ServiceController
   end
 
   def check_if_registered?
-    return !create_as_guest? if %(create destroy).include?(action_name)
+    return !create_as_guest? if %(create destroy trash).include?(action_name)
 
     super && action_name != 'index'
   end

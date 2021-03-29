@@ -45,7 +45,9 @@ Rails.application.routes.draw do
         concerns :nested_actionable
       end
     end
-    resource :vote, only: %i[destroy show], path: :vote
+    resource :vote, only: %i[destroy show], path: :vote do
+      include_route_concerns(klass: Vote)
+    end
   end
 
   constraints(LinkedRails::Constraints::Whitelist) do

@@ -17,6 +17,7 @@ nl:
     alerts:
       success: "Bedankt voor je stem!"
       failed: "Er is iets fout gegaan, probeer het opnieuw."
+      trashed: "Stem succesvol verwijderd"
     type: "Stem"
     instance_type:
       pro: "Voor"

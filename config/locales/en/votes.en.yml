@@ -17,6 +17,7 @@ en:
     alerts:
       success: "Thanks for your vote!"
       failed: "Something went wrong, please try again."
+      trashed: "Vote deleted successfully"
     type: "Vote"
     instance_type:
       pro: "Agree"

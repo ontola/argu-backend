@@ -19,9 +19,25 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def active_response_success_message
-    return super unless action_name == 'create'
+    case action_name
+    when 'create'
+      I18n.t('votes.alerts.success')
+    when 'trash'
+      I18n.t('votes.alerts.trashed')
+    else
+      super
+    end
+  end
 
-    I18n.t('votes.alerts.success')
+  def after_login_location
+    expand_uri_template(
+      :new_vote,
+      voteable_path: parent_resource!.iri.path.split('/').select(&:present?),
+      confirm: true,
+      redirect_url: params[:redirect_url],
+      'vote%5Bfor%5D' => option_param,
+      with_hostname: true
+    )
   end
 
   def authorize_action
@@ -32,9 +48,32 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def broadcast_vote_counts
-    return unless %w[create destroy].include?(action_name)
-
     RootChannel.broadcast_to(tree_root, hex_delta(counter_cache_delta(authenticated_resource)))
+  end
+
+  def create_meta
+    data = super
+    data << invalidate_trash_action
+    data << same_as_statement
+    data
+  end
+
+  def create_success
+    super
+    broadcast_vote_counts
+  end
+
+  def destroy_meta
+    data = super
+    data.push(
+      [current_vote_iri(authenticated_resource.parent), NS::SCHEMA.option, NS::ARGU[:abstain], delta_iri(:replace)]
+    )
+    data
+  end
+
+  def destroy_success
+    super
+    broadcast_vote_counts
   end
 
   def execute_action # rubocop:disable Metrics/MethodLength
@@ -52,51 +91,14 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def create_success
-    super
-    broadcast_vote_counts
-  end
-
   def iri_without_id
     current_vote_iri(parent_resource)
-  end
-
-  def requested_resource
-    return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
-
-    @requested_resource ||=
-      Vote
-        .where_with_redis(creator: current_profile, root_id: tree_root_id)
-        .find_by(parent: parent_resource, primary: true) || abstain_vote
-  end
-
-  def same_as_statement
-    [
-      iri_without_id,
-      NS::OWL.sameAs,
-      current_resource.iri
-    ]
-  end
-
-  def show_meta
-    meta = super
-    meta << same_as_statement if params[:id].nil?
-    meta
   end
 
   def option_param
     option = collection_params[:filter].try(:[], NS::SCHEMA.option)&.first || params[:vote].try(:[], :option)
 
     option.present? && option !~ /\D/ ? Vote.options.key(option.to_i) : option
-  end
-
-  def unmodified?
-    create_service.resource.persisted? && !create_service.resource.option_changed?
-  end
-
-  def destroy_success
-    super
-    broadcast_vote_counts
   end
 
   def permit_params
@@ -117,15 +119,13 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def after_login_location
-    expand_uri_template(
-      :new_vote,
-      voteable_path: parent_resource!.iri.path.split('/').select(&:present?),
-      confirm: true,
-      redirect_url: params[:redirect_url],
-      'vote%5Bfor%5D' => option_param,
-      with_hostname: true
-    )
+  def requested_resource
+    return super unless %w[show destroy bin trash].include?(params[:action]) && params[:id].nil?
+
+    @requested_resource ||=
+      Vote
+        .where_with_redis(creator: current_profile, root_id: tree_root_id)
+        .find_by(parent: parent_resource, primary: true) || abstain_vote
   end
 
   def resource_new_params
@@ -135,52 +135,37 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def create_meta
-    data = counter_cache_delta(authenticated_resource)
-    if authenticated_resource.parent.is_a?(VoteEvent)
-      vote_collections.each do |collection|
-        meta_replace_collection_count(data, collection)
-      end
-    else
-      data.concat(reset_vote_action_status(authenticated_resource.parent))
-    end
-    data << same_as_statement
-    data
+  def invalidate_trash_action
+    [
+      current_resource.action(:trash).iri,
+      NS::SP[:Variable],
+      NS::SP[:Variable],
+      delta_iri(:invalidate)
+    ]
   end
 
-  def destroy_meta
-    data = super
-    data.push(
-      [current_vote_iri(authenticated_resource.parent), NS::SCHEMA.option, NS::ARGU[:abstain], delta_iri(:replace)]
-    )
-    if authenticated_resource.parent.is_a?(Argument)
-      data.concat(reset_vote_action_status(authenticated_resource.parent))
-    end
-    data
+  def same_as_statement
+    [
+      iri_without_id,
+      NS::OWL.sameAs,
+      current_resource.iri
+    ]
   end
 
-  def replace_vote_event_meta(data)
-    iri = parent_resource.iri
-
-    data.push(
-      [
-        iri,
-        NS::ARGU[:voteableVoteEvent],
-        parent_resource.iri,
-        delta_iri(:replace)
-      ]
-    )
+  def show_meta
+    meta = super
+    meta << same_as_statement if params[:id].nil?
+    meta
   end
 
-  def reset_vote_action_status(argument)
-    %i[create_vote destroy_vote].map do |tag|
-      action = argument.action(tag, user_context)
-      [action.iri, NS::SCHEMA[:actionStatus], action.action_status, delta_iri(:replace)]
-    end
+  def trash_success
+    super
+    broadcast_vote_counts
   end
 
-  def vote_collections
-    unfiltered = index_collection.unfiltered
-    [unfiltered] + %i[no yes other].map { |side| unfiltered.new_child(filter: {option: [side]}) }
+  alias trash_meta destroy_meta
+
+  def unmodified?
+    create_service.resource.persisted? && !create_service.resource.option_changed?
   end
 end

@@ -136,31 +136,6 @@ class VotesTest < ActionDispatch::IntegrationTest
       end
     end
 
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context), root: argu),
-      NS::AS[:totalItems],
-      1,
-      NS::ONTOLA[:replace]
-    )
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[yes]}), root: argu),
-      NS::AS[:totalItems],
-      1,
-      NS::ONTOLA[:replace]
-    )
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[other]}), root: argu),
-      NS::AS[:totalItems],
-      0,
-      NS::ONTOLA[:replace]
-    )
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[no]}), root: argu),
-      NS::AS[:totalItems],
-      0,
-      NS::ONTOLA[:replace]
-    )
-
     assert_response 201
   end
 
@@ -307,31 +282,6 @@ class VotesTest < ActionDispatch::IntegrationTest
       end
     end
 
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context), root: argu),
-      NS::AS[:totalItems],
-      2,
-      NS::ONTOLA[:replace]
-    )
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[yes]}), root: argu),
-      NS::AS[:totalItems],
-      2,
-      NS::ONTOLA[:replace]
-    )
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[other]}), root: argu),
-      NS::AS[:totalItems],
-      0,
-      NS::ONTOLA[:replace]
-    )
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[no]}), root: argu),
-      NS::AS[:totalItems],
-      0,
-      NS::ONTOLA[:replace]
-    )
-
     assert_response 201
   end
 
@@ -437,39 +387,43 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should not delete destroy vote for motion twice' do
     sign_in creator
 
-    assert_difference('Vote.count' => -1,
-                      'Edge.count' => -1,
+    assert_difference('Vote.count' => 0,
+                      'Vote.active.count' => -1,
+                      'Edge.count' => 0,
                       'vote_event.reload.children_count(:votes_pro)' => -1) do
       delete vote, headers: argu_headers(accept: :json)
     end
 
     assert_difference('Vote.count' => 0,
+                      'Edge.active.count' => 0,
                       'Edge.count' => 0,
                       'vote_event.reload.children_count(:votes_pro)' => 0) do
       delete vote, headers: argu_headers(accept: :json)
     end
 
-    assert_response 404
+    assert_response 204
   end
 
   test 'creator should delete destroy vote for argument' do
     sign_in creator
 
-    assert_difference('Vote.count' => -1,
-                      'Edge.count' => -1,
+    assert_difference('Vote.count' => 0,
+                      'Vote.active.count' => -1,
+                      'Edge.count' => 0,
                       'argument.reload.children_count(:votes_pro)' => -1) do
       delete argument_vote, headers: argu_headers(accept: :json)
     end
 
-    assert_response 204
+    assert_response 200
   end
 
   test 'creator should delete destroy vote for argument new fe' do
     sign_in creator
     vote_iri = ActsAsTenant.with_tenant(argu) { current_vote_iri(argument) }
 
-    assert_difference('Vote.count' => -1,
-                      'Edge.count' => -1,
+    assert_difference('Vote.count' => 0,
+                      'Vote.active.count' => -1,
+                      'Edge.count' => 0,
                       'argument.reload.children_count(:votes_pro)' => -1) do
       delete argument_vote.iri.path, headers: argu_headers(accept: :nq)
     end
@@ -481,8 +435,9 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should delete destroy vote for argument n3' do
     sign_in creator
 
-    assert_difference('Vote.count' => -1,
-                      'Edge.count' => -1,
+    assert_difference('Vote.count' => 0,
+                      'Vote.active.count' => -1,
+                      'Edge.count' => 0,
                       'argument.reload.children_count(:votes_pro)' => -1) do
       delete argument_vote.iri.path, headers: argu_headers(accept: :n3)
     end
@@ -502,31 +457,6 @@ class VotesTest < ActionDispatch::IntegrationTest
              headers: argu_headers(accept: :nq)
       end
     end
-
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context), root: argu),
-      NS::AS[:totalItems],
-      2,
-      NS::ONTOLA[:replace]
-    )
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[yes]}), root: argu),
-      NS::AS[:totalItems],
-      1,
-      NS::ONTOLA[:replace]
-    )
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[other]}), root: argu),
-      NS::AS[:totalItems],
-      0,
-      NS::ONTOLA[:replace]
-    )
-    expect_triple(
-      resource_iri(vote_event.vote_collection(user_context: context, filter: {option: %i[no]}), root: argu),
-      NS::AS[:totalItems],
-      1,
-      NS::ONTOLA[:replace]
-    )
 
     assert_response 201
   end

@@ -18,6 +18,10 @@ class VotePolicy < EdgePolicy
     (has_grant?(:show) && (record.publisher.show_feed? || is_creator?)) || staff? || service?
   end
 
+  def trash?
+    is_creator?
+  end
+
   private
 
   def is_creator?

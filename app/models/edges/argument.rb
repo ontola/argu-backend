@@ -9,6 +9,7 @@ class Argument < Edge
   enhance Contactable
   enhance Feedable
   enhance Statable
+  enhance Votable
 
   include VotesHelper
 
@@ -20,7 +21,6 @@ class Argument < Edge
   counter_cache true
   paginates_per 5
   parentable :motion
-  with_collection :votes
 
   attr_reader :pro
 
@@ -33,6 +33,10 @@ class Argument < Edge
   def pro=(value)
     value = false if %w[con false].include?(value)
     @pro = value.to_s == 'pro' || value
+  end
+
+  def upvote_only?
+    true
   end
 
   def upvote(user, profile) # rubocop:disable Metrics/MethodLength

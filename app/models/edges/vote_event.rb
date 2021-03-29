@@ -2,8 +2,7 @@
 
 class VoteEvent < Edge
   enhance LinkedRails::Enhancements::Actionable
-
-  with_collection :votes
+  enhance Votable
 
   counter_cache true
   parentable :motion

@@ -29,6 +29,12 @@ module RedisResource
       self.class.store_in_redis?(attributes.merge(creator: creator).merge(opts))
     end
 
+    def trash
+      return super unless store_in_redis?
+
+      destroy
+    end
+
     private
 
     def remove_from_redis
