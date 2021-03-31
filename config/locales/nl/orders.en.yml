@@ -8,6 +8,7 @@ en:
       create:
         label: "Finish"
         submit_label: "Finish"
+        success: "Your budget is submitted!"
         errors:
           budget_exceeded: "The budget is exceeded"
           cart_empty: "No items selected yet"

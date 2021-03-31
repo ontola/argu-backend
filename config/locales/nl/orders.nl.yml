@@ -8,6 +8,7 @@ nl:
       create:
         label: "Afronden"
         submit_label: "Afronden"
+        success: "Je budget is ingediend!"
         errors:
           budget_exceeded: "Het budget is overschreden"
           cart_empty: "Nog geen items geselecteerd"
