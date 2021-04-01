@@ -24,6 +24,7 @@ en:
       confirmation_string: "Confirmation"
       content: "Content"
       country_code: "Country"
+      coupon_count: "Coupon count"
       cover_photo_attribution: "Copyright"
       cover_photo: "Cover photo"
       cover_photo_add: "Add image"

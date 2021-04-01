@@ -1,0 +1,5 @@
+nl:
+  coupon_badges:
+    type: "Coupons"
+    type_new: "Nieuwe coupons"
+    plural: "Coupons"

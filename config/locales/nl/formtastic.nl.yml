@@ -24,6 +24,7 @@ nl:
       confirmation_string: "Bevestiging"
       content: "Inhoud"
       country_code: "Land"
+      coupon_count: "Aantal coupons"
       cover_photo_attribution: "Auteursrechten"
       cover_photo: "Omslagfoto"
       cover_photo_add: "Afbeelding toevoegen"

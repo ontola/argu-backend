@@ -2,6 +2,7 @@
 
 class BudgetShop < Discussion
   enhance Offerable
+  enhance Couponable
 
   include Edgeable::Content
 
