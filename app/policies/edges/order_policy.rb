@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class OrderPolicy < EdgePolicy
+  permit_attributes %i[coupon]
+
   def show?
     new_record? || is_creator?
   end

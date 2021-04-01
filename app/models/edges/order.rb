@@ -5,6 +5,11 @@ class Order < Edge
   parentable :budget_shop
   after_commit :clear_cart!
 
+  property :coupon, :string, NS::ARGU[:coupon]
+  validates :coupon, presence: true
+  validate :validate_coupon
+  after_create :invalidate_token
+
   def cart
     @cart ||= parent.cart_for(publisher)
   end
@@ -26,7 +31,25 @@ class Order < Edge
     cart.cart_details.each(&:destroy)
   end
 
+  def coupon_badge
+    @coupon_badge ||= parent.coupon_badges.find_by(coupons: coupon)
+  end
+
   def create_as_guest?
     true
+  end
+
+  def invalidate_token
+    Property.find_by!(
+      edge: coupon_badge,
+      predicate: NS::ARGU[:coupons].to_s,
+      string: coupon
+    ).update!(predicate: NS::ARGU[:usedCoupons].to_s)
+  end
+
+  def validate_coupon
+    return if coupon_badge.present?
+
+    errors.add(:coupon, I18n.t('orders.errors.coupon.invalid'))
   end
 end

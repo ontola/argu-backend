@@ -14,7 +14,8 @@ class CouponBadge < Edge
   before_create :generate_tokens
 
   property :display_name, :string, NS::SCHEMA[:name]
-  property :coupons, :string, NS::ARGU[:coupon], array: true
+  property :coupons, :string, NS::ARGU[:coupons], array: true
+  property :used_coupons, :string, NS::ARGU[:usedCoupons], array: true
   property :coupon_count, :integer, NS::ARGU[:couponCount], default: 0
 
   private

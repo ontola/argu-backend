@@ -3,6 +3,9 @@ en:
     type: "Order"
     type_new: "new order"
     plural: "Orders"
+    errors:
+      coupon:
+        invalid: "Coupon is not valid"
   actions:
     orders:
       create:

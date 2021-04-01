@@ -7,10 +7,6 @@ class OrdersController < EdgeableController
     I18n.t('actions.orders.create.success')
   end
 
-  def permit_params
-    {}
-  end
-
   def redirect_location
     current_resource.parent.iri
   end

@@ -3,6 +3,9 @@ nl:
     type: "Bestelling"
     type_new: "Nieuwe bestelling"
     plural: "Bestellingen"
+    errors:
+      coupon:
+        invalid: "Coupon is niet geldig"
   actions:
     orders:
       create:
