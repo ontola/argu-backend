@@ -21,6 +21,9 @@ class UserMenuList < ApplicationMenuList
         menu_item(:settings, label: I18n.t('menus.default.settings'), href: edit_iri(resource))
       ]
     end
+    if user.is_staff?
+      items << menu_item(:destroy, href: delete_iri(resource), label: I18n.t('users.settings.menu.destroy'))
+    end
     items
   end
 end

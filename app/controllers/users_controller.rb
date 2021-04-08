@@ -22,13 +22,23 @@ class UsersController < AuthorizedController
     ]
   end
 
+  def current_user?
+    current_resource == current_user
+  end
+
+  def delete_meta
+    return [] unless current_user?
+
+    [
+      RDF::Statement.new(delete_iri('users'), NS::OWL.sameAs, delete_iri(current_resource))
+    ]
+  end
+
   def delete_success
     respond_with_resource(
       include: action_form_includes,
-      resource: current_user.action(:destroy, user_context),
-      meta: [
-        RDF::Statement.new(delete_iri('users'), NS::OWL.sameAs, delete_iri(current_user))
-      ]
+      resource: current_resource.action(:destroy, user_context),
+      meta: delete_meta
     )
   end
 
@@ -38,7 +48,7 @@ class UsersController < AuthorizedController
     end
     return false if current_resource.errors.present? || !ActsAsTenant.without_tenant { super }
 
-    if current_resource == current_user
+    if current_user?
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     end
     true
