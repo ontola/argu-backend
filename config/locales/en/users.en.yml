@@ -55,6 +55,9 @@ en:
       direct_created_email: 'Immediately'
       daily_created_email: 'Daily'
       weekly_created_email: 'Weekly'
+    destroy_strategy:
+      expropriate_on_destroy: "Anonymize content"
+      remove_on_destroy: "Remove content"
     cap_reached: "We're full"
     cap_reached_body: "Thank you for your interest in Argu. Because of the overwhelming amount of signups we've reached our maximum capacity. Signups will resume when we've increased our capacity."
     authentications:

@@ -9,8 +9,17 @@ module ConfirmedDestroyable
 
       attr_accessor :confirmation_string
 
-      validates :confirmation_string,
-                format: {with: ->(_r) { /\A#{I18n.t('destroy_confirm_string')}\z/ }, on: :destroy}
+      before_destroy :validate_confirmation_string
+
+      private
+
+      def validate_confirmation_string
+        return if confirmation_string.present? && confirmation_string == I18n.t('destroy_confirm_string')
+
+        errors.add(:confirmation_string, I18n.t('destroy_confirm_error'))
+
+        throw(:abort)
+      end
     end
 
     module ClassMethods

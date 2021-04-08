@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserSerializer < RecordSerializer
+class UserSerializer < RecordSerializer # rubocop:disable Metrics/ClassLength
   extend LanguageHelper
   extend UriTemplateHelper
 
@@ -12,6 +12,9 @@ class UserSerializer < RecordSerializer
     object == opts[:scope]&.user
   end
 
+  attribute :granted_sets, predicate: NS::ARGU[:grantedSets], unless: method(:system_scope?) do
+    RDF::URI("#{ActsAsTenant.current_tenant.iri}/grant_sets")
+  end
   attribute :accept_terms, predicate: NS::ARGU[:acceptTerms], datatype: NS::XSD[:boolean]
   attribute :display_name, predicate: NS::SCHEMA[:name]
   attribute :name, predicate: NS::FOAF[:name]
@@ -53,6 +56,9 @@ class UserSerializer < RecordSerializer
   attribute :redirect_url, predicate: NS::ONTOLA[:redirectUrl], datatype: NS::XSD[:string]
   statements :same_as_canonical
 
+  enum :destroy_strategy,
+       predicate: NS::ARGU[:destroyStrategy],
+       datatype: NS::XSD[:string]
   enum :reactions_email,
        predicate: NS::ARGU[:reactionsEmails],
        if: method(:self?),

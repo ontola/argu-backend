@@ -104,6 +104,14 @@ class RestrictivePolicy
     'general'
   end
 
+  def has_grant_set?(grant_set)
+    user.profile.groups
+      .joins(grants: :grant_set)
+      .where(grants: {edge: ActsAsTenant.current_tenant})
+      .pluck('grant_sets.title')
+      .include?(grant_set.to_s)
+  end
+
   private
 
   def add_array_attributes(array, *attrs)

@@ -269,8 +269,25 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_difference('User.count' => 0) do
       delete resource_iri(user, root: argu),
              params: {
-               user: {}
+               user: {
+                 confirmation_string: ''
+               }
              }
+      assert_response :unprocessable_entity
+    end
+  end
+
+  test 'user should not delete destroy with wrong confirmation' do
+    sign_in user
+
+    assert_difference('User.count' => 0) do
+      delete resource_iri(user, root: argu),
+             params: {
+               user: {
+                 confirmation_string: 'wrong'
+               }
+             }
+      assert_response :unprocessable_entity
     end
   end
 
@@ -340,13 +357,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'user should delete destroy with content' do
-    motion = create :motion, publisher: user, creator: user.profile, parent: freetown
-    create :vote, publisher: user, creator: user.profile, parent: motion.default_vote_event
-    create :question, publisher: user, creator: user.profile, parent: freetown
-    create :pro_argument, parent: Motion.last, publisher: user, creator: user.profile
-    create :motion, publisher: user, creator: user.profile, parent: cairo
-    motion.build_custom_placement(publisher: user, creator: user.profile, place: place).save
+  test 'user should delete destroy and expropriate content' do
+    create_content_for(user)
 
     sign_in user
 
@@ -364,6 +376,26 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+  end
+
+  test 'staff should delete destroy and destroy content' do
+    create_content_for(user)
+
+    sign_in staff
+
+    assert_difference(
+      'User.count' => -1,
+      'Edge.count' => - user.votes.count - 6
+    ) do
+      delete resource_iri(user, root: argu),
+             params: {
+               user: {
+                 confirmation_string: 'remove',
+                 destroy_strategy: :remove_on_destroy
+               }
+             }
+      assert_response :success
+    end
   end
 
   test 'user should delete destroy with content published by page' do
@@ -461,6 +493,15 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   private
+
+  def create_content_for(user) # rubocop:disable Metrics/AbcSize
+    motion = create(:motion, publisher: user, creator: user.profile, parent: freetown)
+    create(:vote, publisher: user, creator: user.profile, parent: motion.default_vote_event)
+    create(:question, publisher: user, creator: user.profile, parent: freetown)
+    create(:pro_argument, parent: Motion.last, publisher: user, creator: user.profile)
+    create(:motion, publisher: user, creator: user.profile, parent: cairo)
+    motion.build_custom_placement(publisher: user, creator: user.profile, place: place).save
+  end
 
   def create_user(redirect_url: nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     yield if block_given?

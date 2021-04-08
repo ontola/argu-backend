@@ -103,6 +103,7 @@ en:
   untrash_confirmation: "This item will be visible again in public discussion."
   destroy_confirmation: "This object and all related data will be permanently removed. This cannot be undone."
   destroy_confirm_string: 'remove'
+  destroy_confirm_error: 'type "remove"'
   not_allowed: "Action not allowed."
   error: "Error"
   error_prohibited: " whilst saving:"

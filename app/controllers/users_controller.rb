@@ -42,11 +42,10 @@ class UsersController < AuthorizedController
     )
   end
 
-  def destroy_execute # rubocop:disable Metrics/AbcSize
-    unless params[:user].try(:[], :confirmation_string) == I18n.t('users_cancel_string')
-      current_resource.errors.add(:confirmation_string, I18n.t('errors.messages.should_match'))
-    end
-    return false if current_resource.errors.present? || !ActsAsTenant.without_tenant { super }
+  def destroy_execute
+    current_resource.assign_attributes(permit_params)
+
+    return false unless ActsAsTenant.without_tenant { super }
 
     if current_user?
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)

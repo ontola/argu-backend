@@ -21,7 +21,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Uuidable
   include CacheableIri
 
-  before_destroy :expropriate_dependencies
+  before_destroy :handle_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
   has_many :exports, dependent: :destroy
@@ -84,6 +84,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   attr_accessor :current_password
 
+  attribute :destroy_strategy, default: :expropriate_on_destroy
+
+  enum destroy_strategy: {
+    expropriate_on_destroy: 0,
+    remove_on_destroy: 1
+  }, _scopes: false
   enum reactions_email: {
     never_reactions_email: 0,
     weekly_reactions_email: 1,
@@ -402,15 +408,29 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.hide_last_name = true if minor?
   end
 
+  def dependent_associations
+    (Edge.descendants.map(&:to_s).map(&:tableize) + %w[uploaded_media_objects content_placements])
+  end
+
+  def destroy_dependencies
+    dependent_associations.each do |association|
+      try(association)&.destroy_all
+    end
+  end
+
+  def handle_dependencies
+    remove_on_destroy? ? destroy_dependencies : expropriate_dependencies
+
+    email_addresses.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+  end
+
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    (Edge.descendants.map(&:to_s).map(&:tableize) + %w[uploaded_media_objects content_placements])
-      .each do |association|
+    dependent_associations.each do |association|
       try(association)
         &.model
         &.expropriate(try(association))
     end
-    email_addresses.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def minor?
