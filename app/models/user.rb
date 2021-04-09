@@ -199,25 +199,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Creates a new {Follow} or updates an existing one, except when a higher follow or a never follow is present.
   # Follows the ancestors if #ancestor_type is given.
-  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
   def follow(followable, type = :reactions, ancestor_type = nil)
     return if self == followable || !accepted_terms?
 
-    if type.present?
-      follow = follows.find_or_initialize_by(followable_id: followable.uuid,
-                                             followable_type: 'Edge')
-      if follow.new_record? || (!follow.never? && Follow.follow_types[type] > Follow.follow_types[follow.follow_type])
-        follow.update!(follow_type: type)
-      end
-    end
-    if ancestor_type.present?
-      followable.ancestors.where(owner_type: self.class.followable_classes).find_each do |ancestor|
-        follow(ancestor, ancestor_type)
-      end
-    end
+    follow_resource(followable, type) if type.present?
+    follow_ancestors(followable, ancestor_type) if ancestor_type.present?
+
     true
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 
   # The Follow for the followable by this User
   # @param [Edge] followable The Edge to find the Follow for
@@ -418,12 +407,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def handle_dependencies
-    remove_on_destroy? ? destroy_dependencies : expropriate_dependencies
-
-    email_addresses.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
-  end
-
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
     dependent_associations.each do |association|
@@ -431,6 +414,30 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
         &.model
         &.expropriate(try(association))
     end
+  end
+
+  def follow_ancestors(followable, ancestor_type)
+    followable.ancestors.where(owner_type: self.class.followable_classes).find_each do |ancestor|
+      follow(ancestor, ancestor_type)
+    end
+  end
+
+  def follow_resource(followable, follow_type)
+    follow = follows.find_or_initialize_by(
+      followable_id: followable.uuid,
+      followable_type: 'Edge'
+    )
+    lower = Follow.follow_types[follow_type] <= Follow.follow_types[follow.follow_type]
+
+    return if follow.persisted? && (follow.never? || lower)
+
+    follow.update!(follow_type: follow_type)
+  end
+
+  def handle_dependencies
+    remove_on_destroy? ? destroy_dependencies : expropriate_dependencies
+
+    email_addresses.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def minor?
