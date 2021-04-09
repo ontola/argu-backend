@@ -12,6 +12,11 @@ class BudgetShop < Discussion
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
+  validates :currency, inclusion: Money::Currency.table.keys.map { |cur| cur.to_s.upcase }
+
+  def budget_max
+    Money.from_amount(super, currency)
+  end
 
   def cart_for(user)
     Cart.new(shop: self, user: user)
