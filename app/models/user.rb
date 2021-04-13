@@ -334,7 +334,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def requires_2fa?
-    profile.groups.where(require_2fa: true).any?
+    profile.groups.where(require_2fa: true).any? if profile
   end
 
   def reserved?
