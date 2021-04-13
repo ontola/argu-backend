@@ -13,7 +13,7 @@ class UserSerializer < RecordSerializer # rubocop:disable Metrics/ClassLength
   end
 
   attribute :granted_sets, predicate: NS::ARGU[:grantedSets], unless: method(:system_scope?) do
-    RDF::URI("#{ActsAsTenant.current_tenant.iri}/grant_sets")
+    RDF::URI("#{ActsAsTenant.current_tenant.iri}/grant_sets") if ActsAsTenant.current_tenant
   end
   attribute :accept_terms, predicate: NS::ARGU[:acceptTerms], datatype: NS::XSD[:boolean]
   attribute :display_name, predicate: NS::SCHEMA[:name]

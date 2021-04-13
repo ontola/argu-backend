@@ -2,6 +2,9 @@
 
 module Request
   class ConfirmedDestroyRequestForm < ApplicationForm
-    field :confirmation_string, path: NS::ARGU[:confirmationString], datatype: NS::XSD[:string]
+    field :confirmation_string,
+          path: NS::ARGU[:confirmationString],
+          datatype: NS::XSD[:string],
+          min_count: 1
   end
 end

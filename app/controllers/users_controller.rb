@@ -45,12 +45,15 @@ class UsersController < AuthorizedController
   def destroy_execute
     current_resource.assign_attributes(permit_params)
 
-    return false unless ActsAsTenant.without_tenant { super }
+    ActsAsTenant.without_tenant { super }
+  end
 
+  def destroy_success
     if current_user?
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     end
-    true
+
+    super
   end
 
   def requested_resource
