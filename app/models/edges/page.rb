@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Page < Edge # rubocop:disable Metrics/ClassLength
+  ARGU_URL = 'argu'
+
   has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid, foreign_key: :root_id
 
   enhance Attachable
@@ -240,7 +242,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   class << self
     def argu
-      find_via_shortname('argu')
+      find_via_shortname(ARGU_URL)
     end
 
     def menu_class

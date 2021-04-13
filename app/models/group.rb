@@ -51,6 +51,12 @@ class Group < ApplicationRecord
   parentable :page
   alias edgeable_record parent
 
+  def action_triples
+    return super if id.positive? || ActsAsTenant.current_tenant.url == Page::ARGU_URL
+
+    []
+  end
+
   def as_json(options = {})
     super(options.merge(except: %i[created_at updated_at]))
   end
