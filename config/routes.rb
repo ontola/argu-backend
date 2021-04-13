@@ -36,7 +36,7 @@ require 'sidekiq/prometheus/exporter'
 Rails.application.routes.draw do
   concern :nested_actionable do
     namespace :actions do
-      resources :items, path: '', only: %i[index show], collection: @scope.parent.try(:[], :controller)
+      resources :items, path: '', only: %i[show], collection: @scope.parent.try(:[], :controller)
     end
   end
 
