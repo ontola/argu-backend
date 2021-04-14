@@ -96,7 +96,14 @@ class SearchResult < Collection
       filters
         .detect { |filter| filter.key == NS::RDFV.type }
         &.value
-        &.map { |type| association_class.descendants.detect { |klass| klass.iri.to_s == type } }
+        &.map { |iri| class_by_iri(iri) }
+  end
+
+  def class_by_iri(iri)
+    association_class.descendants.detect do |klass|
+      iris = klass.iri.is_a?(Array) ? klass.iri : [klass.iri]
+      iris.any? { |klass_iri| klass_iri.to_s == iri }
+    end
   end
 
   class << self

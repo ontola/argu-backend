@@ -3,9 +3,14 @@
 class MoveForm < ApplicationForm
   field :new_parent_id,
         max_count: 1,
-        sh_in: -> { move_options }
-
-  def self.move_options
-    ActsAsTenant.current_tenant.forums.flat_map { |forum| [forum.iri] + forum.questions.map(&:iri) }
-  end
+        sh_in: lambda {
+          ActsAsTenant.current_tenant.search_result(
+            filter: {
+              NS::RDFV.type => [
+                NS::ARGU[:ContainerNode],
+                Question.iri
+              ]
+            }
+          ).iri
+        }
 end
