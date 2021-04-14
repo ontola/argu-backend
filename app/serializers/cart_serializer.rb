@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class CartSerializer < BaseSerializer
-  attribute :budget_max, predicate: NS::ARGU[:budgetMax]
-  attribute :total_value, predicate: NS::SCHEMA.totalPaymentDue
+  money_attribute :budget_max, predicate: NS::ARGU[:budgetMax]
+  money_attribute :total_value, predicate: NS::SCHEMA.totalPaymentDue
   attribute :currency, predicate: NS::SCHEMA.priceCurrency
   attribute :submitted, predicate: NS::ARGU[:submitted]
   attribute :create_offer_iri, predicate: NS::ARGU[:checkoutAction] do |object|

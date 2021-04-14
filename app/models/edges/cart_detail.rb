@@ -44,7 +44,7 @@ class CartDetail < Edge
     [
       reset_action_error(order_action),
       reset_action_status(order_action),
-      [cart.iri, NS::SCHEMA.totalPaymentDue, cart.total_value, delta_iri(:replace)]
+      [cart.iri, NS::SCHEMA.totalPaymentDue, cart.total_value&.cents, delta_iri(:replace)]
     ]
   end
 

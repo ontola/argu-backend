@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require 'input_fields/money_input'
+
 class BudgetShopForm < ApplicationForm
   visibility_text
 
   field :display_name
   field :description, datatype: NS::FHIR[:markdown]
-  field :budget_max
+  field :budget_max, input_field: MoneyInput
   has_one :default_cover_photo
   has_many :attachments
   has_one :custom_placement

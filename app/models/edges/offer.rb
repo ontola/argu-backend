@@ -31,7 +31,7 @@ class Offer < Edge
     def sort_options(collection)
       return super if collection.type == :infinite
 
-      [NS::SCHEMA.price, NS::SCHEMA.dateCreated]
+      [NS::ARGU[:price], NS::SCHEMA.dateCreated]
     end
   end
 end

@@ -15,7 +15,7 @@ class BudgetShop < Discussion
   validates :currency, inclusion: Money::Currency.table.keys.map { |cur| cur.to_s.upcase }
 
   def budget_max
-    Money.from_amount(super, currency) if super
+    Money.new(super, currency) if super
   end
 
   def cart_for(user)

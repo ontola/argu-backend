@@ -35,7 +35,7 @@ class Cart < VirtualResource
   alias submitted? submitted
 
   def total_value
-    @total_value ||= cart_details_values.map { |value| Money.from_amount(value, currency) }.sum
+    @total_value ||= Money.new(cart_details_values.map { |value| Money.new(value, currency) }.sum, currency)
   end
 
   private
@@ -45,7 +45,7 @@ class Cart < VirtualResource
       .joins(:edge)
       .where(
         edges: {id: cart_details.map(&:parent_id)},
-        predicate: NS::SCHEMA.price.to_s
+        predicate: NS::ARGU[:price].to_s
       )
       .pluck(:integer)
   end
