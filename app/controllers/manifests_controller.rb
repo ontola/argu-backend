@@ -10,6 +10,8 @@ class ManifestsController < ApplicationController
 
   private
 
+  def current_resource; end
+
   def doorkeeper_render_error; end
 
   def valid_token?

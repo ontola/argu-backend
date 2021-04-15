@@ -95,6 +95,8 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   def include_resources
     response.headers['Include-Resources'] = current_resource.try(:include_resources)&.join(',') if request.head?
+  rescue StandardError => e
+    Bugsnag.notify(e)
   end
 
   def internal_request?
