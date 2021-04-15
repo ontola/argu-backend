@@ -6,7 +6,7 @@ class OfferForm < ApplicationForm
   field :product_id,
         datatype: NS::XSD[:string],
         sh_in: -> { ActsAsTenant.current_tenant.search_result(filter: {NS::RDFV.type => [Motion.iri]}).iri }
-  field :price
+  field :price, input_field: MoneyInput
 
   footer do
     actor_selector
