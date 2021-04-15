@@ -23,7 +23,8 @@ module SettingsHelper
       members: 'users',
       invite: 'user-plus',
       bearer_invite: 'link',
-      email_invite: 'send'
+      email_invite: 'send',
+      vocabularies: 'tags'
     }
   end
 

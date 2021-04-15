@@ -112,7 +112,7 @@ en:
       create:
         label: "Sign in or register"
         submit: "Confirm"
-    terms:
+    policy_agreements:
       create:
         submit: "Accept"
     users:

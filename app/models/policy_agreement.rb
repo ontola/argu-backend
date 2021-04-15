@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Term < VirtualResource
+class PolicyAgreement < VirtualResource
   include LinkedRails::Model
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable

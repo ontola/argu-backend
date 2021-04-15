@@ -68,6 +68,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   with_collection :risks
   with_collection :intervention_types
   with_collection :measure_types
+  with_collection :vocabularies
 
   parentable :user
   placeable :custom

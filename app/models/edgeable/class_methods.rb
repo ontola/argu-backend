@@ -68,6 +68,10 @@ module Edgeable
                  through: through
       end
 
+      def term_property(key, predicate, opts)
+        property key, :linked_edge_id, predicate, opts.merge(association_class: 'Term')
+      end
+
       def with_collection(name, options = {})
         klass = options[:association_class] || name.to_s.classify.constantize
         options[:association] ||= "active_#{name}" if klass < Edge

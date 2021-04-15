@@ -1,0 +1,9 @@
+en:
+  vocabularies:
+    type: "Vocabulary"
+    type_new: "New vocabulary"
+    plural: "Vocabularies"
+  formtastic:
+    labels:
+      vocabulary:
+        tagged_label: "Label for tagged items"

@@ -112,7 +112,7 @@ nl:
       create:
         label: "Inloggen of registeren"
         submit: "Bevestig"
-    terms:
+    policy_agreements:
       create:
         submit: "Accepteer"
     users:

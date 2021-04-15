@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TermsController < ApplicationController
+class PolicyAgreementsController < ApplicationController
   active_response :new, :create
 
   private

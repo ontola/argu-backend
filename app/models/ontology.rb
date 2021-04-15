@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Vocabulary < LinkedRails::Vocabulary
+class Ontology < LinkedRails::Vocabulary
   extend UriTemplateHelper
   extend NamesHelper
   extend SerializationHelper

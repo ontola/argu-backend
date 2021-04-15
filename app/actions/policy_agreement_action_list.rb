@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TermActionList < ApplicationActionList
+class PolicyAgreementActionList < ApplicationActionList
   has_action(
     :create,
     create_options.merge(

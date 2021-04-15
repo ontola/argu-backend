@@ -89,7 +89,7 @@ Rails.application.routes.draw do
     enum_values: :enum_values,
     forms: :forms,
     manifests: :manifests,
-    vocabularies: :vocabularies
+    vocabularies: :ontologies
   )
   use_linked_rails_auth(
     applications: 'oauth/applications',
@@ -137,7 +137,7 @@ Rails.application.routes.draw do
 
   get :feed, controller: :feed, action: :index
 
-  resources :terms, only: %i[new create]
+  resources :policy_agreements, only: %i[new create]
 
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
@@ -313,6 +313,12 @@ Rails.application.routes.draw do
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post :index, action: :index, on: :collection
   end
+  resources :projects, only: %i[show] do
+    include_route_concerns
+  end
+  resources :phases, only: %i[show] do
+    include_route_concerns
+  end
   resources :questions,
             path: 'q' do
     include_route_concerns
@@ -323,18 +329,24 @@ Rails.application.routes.draw do
       include_route_concerns
     end
   end
-  resources :projects, only: %i[show] do
-    include_route_concerns
-  end
-  resources :phases, only: %i[show] do
-    include_route_concerns
-  end
   resources :shortnames, only: %i[show new create index] do
     include_route_concerns
 
     collection do
       concerns :nested_actionable
     end
+  end
+  resources :vocabularies, path: :vocab, only: %i[show new create index] do
+    include_route_concerns
+
+    resources :terms, only: %i[new create index] do
+      include_route_concerns
+    end
+  end
+  resources :terms, only: %i[show] do
+    include_route_concerns
+
+    resources :edges, only: %i[index]
   end
   resources :topics,
             path: 't',
