@@ -12,5 +12,6 @@ class MediaObjectForm < ApplicationForm
 
   hidden do
     field :content_type, sh_in: -> { MediaObject.content_type_white_list }
+    field :filename
   end
 end

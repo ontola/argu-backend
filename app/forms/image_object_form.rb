@@ -6,5 +6,6 @@ class ImageObjectForm < ApplicationForm
   hidden do
     field :content_type, sh_in: -> { MediaObjectUploader::IMAGE_TYPES }
     field :position_y
+    field :filename
   end
 end

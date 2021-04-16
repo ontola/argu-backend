@@ -8,7 +8,7 @@ class MediaObjectPolicy < EdgeTreePolicy
   end
 
   permit_attributes %i[used_as content_source]
-  permit_attributes %i[content content_type position_y remote_content_url remove_content]
+  permit_attributes %i[content content_type position_y remote_content_url remove_content filename]
 
   def initialize(context, record)
     @context = context
