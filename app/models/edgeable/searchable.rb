@@ -79,6 +79,8 @@ module Edgeable
         ActsAsTenant.without_tenant do
           Page.find_each { |page| page.reindex_tree(async: async) }
         end
+      rescue StandardError => e
+        Bugsnag.notify(e)
       end
 
       def searchable_aggregations
