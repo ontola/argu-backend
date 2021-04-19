@@ -159,7 +159,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
       current_user.update(accept_terms: true)
       current_user.send_reset_password_token_email if current_user.encrypted_password.blank?
     else
-      action = new_iri(expand_uri_template(:terms_iri), nil)
+      action = new_iri(expand_uri_template(:policy_agreements_iri), nil)
       add_exec_action_header(response.headers, ontola_dialog_action(action))
       head 449
     end

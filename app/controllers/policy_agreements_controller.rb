@@ -16,6 +16,6 @@ class PolicyAgreementsController < ApplicationController
   end
 
   def current_resource
-    @current_resource ||= Term.new
+    @current_resource ||= PolicyAgreement.new
   end
 end
