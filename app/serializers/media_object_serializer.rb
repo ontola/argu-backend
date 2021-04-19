@@ -25,7 +25,9 @@ class MediaObjectSerializer < RecordSerializer
   attribute :created_at, predicate: NS::SCHEMA[:uploadDate]
   attribute :description, predicate: NS::SCHEMA[:caption]
   attribute :embed_url, predicate: NS::SCHEMA[:embedUrl]
-  attribute :filename, predicate: NS::DBO[:filename]
+  attribute :filename, predicate: NS::DBO[:filename] do |object|
+    object.filename || object.content_uid
+  end
   attribute :remote_content_url,
             predicate: NS::ARGU[:remoteContentUrl],
             datatype: NS::XSD[:string], &:remote_url
