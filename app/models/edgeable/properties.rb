@@ -1,11 +1,20 @@
 # frozen_string_literal: true
 
+require 'types/iri_type'
+
 module Edgeable
   module Properties
     extend ActiveSupport::Concern
 
     included do
-      has_many :properties, primary_key: :uuid, autosave: true, dependent: :destroy
+      has_many :properties,
+               primary_key: :uuid,
+               autosave: true,
+               dependent: :destroy
+      has_many :linked_properties,
+               class_name: 'Property',
+               primary_key: :linked_edge_id,
+               dependent: :destroy
 
       attr_accessor :properties_preloaded
       attr_accessor :property_managers
@@ -76,9 +85,25 @@ module Edgeable
 
       private
 
-      def define_property_setter(name)
+      def define_property_association(name, opts)
+        method = opts[:array] ? :has_many : :has_one
+        send(
+          method,
+          opts[:association],
+          foreign_key_property: name,
+          class_name: opts[:association_class] || opts[:association].to_s.classify,
+          dependent: false
+        )
+      end
+
+      def define_property_setter(name, association)
         define_method "#{name}=" do |value|
-          super(assign_property(name, value))
+          if association
+            send("#{name}_will_change!")
+            super(value)
+          else
+            super(assign_property(name, value))
+          end
         end
       end
 
@@ -88,7 +113,7 @@ module Edgeable
         self.defined_properties = superclass.try(:defined_properties)&.dup || []
       end
 
-      def property(name, type, predicate, opts = {})
+      def property(name, type, predicate, opts = {}) # rubocop:disable Metrics/AbcSize
         initialize_defined_properties
         defined_properties << {name: name, type: type, predicate: predicate}.merge(opts)
 
@@ -97,15 +122,19 @@ module Edgeable
 
         attribute name, property_type(type), **attr_opts
 
+        define_property_association(name, opts) if opts[:association]
+
         enum name => opts[:enum] if opts[:enum].present?
 
-        define_property_setter(name)
+        define_property_setter(name, opts[:association])
       end
 
       def property_type(type)
         case type
         when :linked_edge_id
           :uuid
+        when :iri
+          IRIType.new
         else
           type
         end

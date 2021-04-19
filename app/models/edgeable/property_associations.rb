@@ -85,6 +85,8 @@ module Edgeable
       def property_association_property_opts(klass_name, opts)
         klass = opts.key?(:foreign_key_property) ? self : klass_name.constantize
         property = opts[:foreign_key_property] || opts[:primary_key_property]
+        return if property.nil?
+
         property_opts = klass.send(:property_options, name: property)
         raise "Options for #{property} not found" if property_opts.nil?
 
@@ -100,6 +102,8 @@ module Edgeable
       end
 
       def property_association_scope(property_opts)
+        return -> { order(order: :asc) } if property_opts.nil?
+
         -> { order(order: :asc).where(predicate: property_opts[:predicate].to_s) }
       end
 
