@@ -275,6 +275,17 @@ en:
     comments_allowed:
       comments_are_allowed: "Ja"
       comments_not_allowed: "Nee"
+    properties:
+      attachment_published_at:
+        label: "Publicatiedatum bijlage(s)"
+      measure_owner:
+        label: "Eigenaar"
+      contact_info:
+        label: "Contactinformatie"
+      more_info:
+        label: "Meer informatie"
+      second_opinion_by:
+        label: "Second opinion"
   formtastic:
     labels:
       example_of_id: "Beschermt tegen"
@@ -318,6 +329,21 @@ en:
       measure:
         comments_allowed: "Wilt u reacties op uw interventie toestaan?"
         parent_id: "Onder welke op deze website beschreven maatregelen is dit voorbeeld in te delen?"
+        second_opinion: "Dit voorbeeld is door een andere organisatie gecontroleerd"
+        second_opinion_by: "Door welke organisatie?"
+        phase_ids: "Fases"
+        category_ids: "Categorieën"
+        attachment_published_at: "Publicatiedatum bijlage(s)"
+        measure_owner: "Eigenaar"
+        contact_info: "Contactinformatie"
+        more_info: "Meer informatie"
+    hints:
+      measure:
+        category_ids: "Selecteer de categorieën"
+        description: "Beschrijf het voorbeeld, of geef een samenvatting van de toegevoegde pdf."
+        display_name: "Voeg hier de titel in van het voorbeeld?"
+        phase_ids: "Selecteer de fase waar dit voorbeeld onder valt."
+        second_opinion_by: "Voer een organisatie naam in"
   properties:
     interventions:
       description:

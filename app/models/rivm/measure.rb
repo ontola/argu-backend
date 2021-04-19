@@ -8,19 +8,30 @@ class Measure < Edge
   enhance Statable
   enhance GrantResettable
   enhance ActivePublishable
+  enhance Placeable
 
-  parentable :measure_type
-  counter_cache true
+  parentable :page
+
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
   validates :comments_allowed, presence: true
-  validate :validate_parent_type
   before_save :sync_comments_allowed
+
+  counter_cache true
+  placeable :custom
 
   property :comments_allowed, :integer, NS::RIVM[:commentsAllowed], enum: {
     comments_are_allowed: 1,
     comments_not_allowed: 2
   }
+  term_property :phase_ids, NS::RIVM[:phases], array: true, association: :phases
+  term_property :category_ids, NS::RIVM[:categories], array: true, association: :categories
+  property :second_opinion, :boolean, NS::RIVM[:secondOpinion]
+  property :second_opinion_by, :string, NS::RIVM[:secondOpinionBy]
+  property :attachment_published_at, :datetime, NS::RIVM[:attachmentPublicationDate]
+  property :measure_owner, :string, NS::RIVM[:measureOwner]
+  property :contact_info, :string, NS::RIVM[:contactInfo]
+  property :more_info, :string, NS::RIVM[:moreInfo]
 
   private
 
@@ -31,10 +42,6 @@ class Measure < Edge
     else
       self.grant_resets_attributes = [action: 'create', resource_type: 'Comment'] unless current_reset
     end
-  end
-
-  def validate_parent_type
-    errors.add(:parent_id, "Invalid parent (#{parent.class})") unless parent.is_a?(MeasureType)
   end
 
   class << self

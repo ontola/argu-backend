@@ -3,15 +3,17 @@
 class MeasureForm < ApplicationForm
   field :display_name
   field :description, datatype: NS::FHIR[:markdown]
-  field :parent_id,
-        min_count: 1,
-        sh_in: lambda {
-          iri_from_template(:measure_types_collection_iri, page: 1, page_size: 100, fragment: :members)
-        },
-        datatype: NS::XSD[:string],
-        input_field: LinkedRails::Form::Field::SelectInput
-  field :comments_allowed
+  field :second_opinion
+  field :second_opinion_by, min_count: 1
+  term_field :phase_ids, :fases, max_count: 999
+  term_field :category_ids, :categorieen, max_count: 999
+  has_one :custom_placement
   has_many :attachments
+  field :attachment_published_at, min_count: 1
+  field :measure_owner, min_count: 1
+  field :contact_info
+  field :more_info
+  field :comments_allowed
 
   hidden do
     field :is_draft
