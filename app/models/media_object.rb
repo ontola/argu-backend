@@ -135,7 +135,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   private
 
   def set_file_name
-    new_filename = video_info.&title || content&.file.try(:original_filename)
+    new_filename = video_info&.title || content&.file.try(:original_filename)
 
     self.filename = new_filename if new_filename
   end
