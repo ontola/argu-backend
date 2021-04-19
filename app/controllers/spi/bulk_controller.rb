@@ -62,7 +62,7 @@ module SPI
       blank_nodes = body.scan(/\[\"(\w*)\"/).flatten.uniq
       replaced_body = blank_nodes.reduce(body) { |result, node| result.gsub(node, "_:#{node}") }
       replaced_body.gsub!('id.openraadsinformatie.nl', 'id.openbesluitvorming.nl')
-      replaced_body + LinkedRecord.find_or_initialize_by_iri(iri).hnd_json
+      [LinkedRecord.find_or_initialize_by_iri(iri).hnd_json, replaced_body].join("\n")
     end
 
     def response_from_resource(include, resource)
