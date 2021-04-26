@@ -271,7 +271,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'staff should put update motion remove latlon' do
     sign_in staff
     forum_with_placement
-    orignial_placement_iri = resource_iri(forum_with_placement.custom_placement)
 
     assert_difference('Motion.count' => 0, 'Placement.count' => -1, 'Place.count' => 0) do
       put forum_with_placement,
@@ -288,7 +287,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     expect_triple(
       forum_with_placement.iri,
       NS::SCHEMA.location,
-      orignial_placement_iri,
+      NS::SP[:Variable],
       NS::ONTOLA[:remove]
     )
   end
