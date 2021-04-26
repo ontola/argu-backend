@@ -113,7 +113,6 @@ en:
         bio_long: "More information"
         scope: "Form"
         naam: "Forum name"
-        public_grant: "Everybody may"
         discoverable: "List in overviews"
         shortname: "URL"
       blog:

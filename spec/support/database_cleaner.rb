@@ -14,7 +14,9 @@ RSpec.configure do |config|
     extend Argu::TestHelpers::TestHelperMethods::InstanceMethods
 
     load(Dir[Rails.root.join('db/seeds/test.seeds.rb')][0])
-    Forum.find_via_shortname('freetown').update(public_grant: :spectator)
+    forum = Forum.find_via_shortname('freetown')
+    forum.initial_public_grant = :spectator
+    forum.send(:create_default_grant)
   end
 
   config.before do

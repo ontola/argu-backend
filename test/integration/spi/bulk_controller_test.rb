@@ -5,7 +5,7 @@ require 'test_helper'
 module SPI
   class BulkControllerTest < ActionDispatch::IntegrationTest
     define_page
-    let(:freetown) { create(:forum, parent: argu, public_grant: 'initiator', url: 'freetown', locale: :nl) }
+    let(:freetown) { create(:forum, parent: argu, initial_public_grant: 'initiator', url: 'freetown', locale: :nl) }
     let(:holland) { create(:forum, parent: argu, url: 'holland', locale: :nl) }
     let(:guest_user) { create_guest_user }
     let(:motion1) { create(:motion, parent: freetown) }
@@ -23,7 +23,7 @@ module SPI
     let(:demogemeente_forum) do
       create(:forum,
              parent: demogemeente,
-             public_grant: 'initiator',
+             initial_public_grant: 'initiator',
              url: 'demogemeente',
              locale: :nl)
     end

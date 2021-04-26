@@ -21,7 +21,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
     create_forum(
       :with_follower,
       parent: argu,
-      public_grant: 'initiator'
+      initial_public_grant: 'initiator'
     )
   end
   let(:initiator) { create_initiator(freetown) }

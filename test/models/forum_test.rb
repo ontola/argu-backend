@@ -26,17 +26,6 @@ class ForumTest < ActiveSupport::TestCase
     assert forum.default_decision_group.grants.administrator.present?
   end
 
-  test 'should reset public grant' do
-    ActsAsTenant.current_tenant = subject.root
-    assert_equal subject.grants.where(group_id: -1).count, 1
-    subject.update(public_grant: 'none')
-    assert_equal subject.grants.where(group_id: -1).count, 0
-
-    assert_equal cairo.grants.where(group_id: -1).count, 0
-    cairo.update(public_grant: 'participator')
-    assert_equal cairo.grants.where(group_id: -1).count, 1
-  end
-
   test 'display_name should work' do
     assert_equal subject.name, subject.display_name
   end

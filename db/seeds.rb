@@ -50,7 +50,7 @@ if current_tenant == 'argu'
 
     forum = Forum.new(
       name: 'Nederland',
-      public_grant: 'participator',
+      initial_public_grant: 'participator',
       root_id: ActsAsTenant.current_tenant.root_id,
       url: 'nederland',
       creator: User.find_via_shortname!('staff_account').profile,

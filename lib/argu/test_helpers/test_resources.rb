@@ -49,7 +49,7 @@ module Argu
               {
                 url: name,
                 parent: argu,
-                public_grant: 'initiator'
+                initial_public_grant: 'initiator'
               }.merge(attributes)
             )
           end
@@ -105,7 +105,7 @@ module Argu
               :populated_forum,
               {
                 url: name,
-                public_grant: 'initiator'
+                initial_public_grant: 'initiator'
               }.merge(attributes)
             )
           end
@@ -117,7 +117,7 @@ module Argu
               :populated_forum,
               {
                 url: name,
-                public_grant: 'spectator'
+                initial_public_grant: 'spectator'
               }.merge(attributes)
             )
           end

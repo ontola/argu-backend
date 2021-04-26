@@ -113,7 +113,6 @@ nl:
         bio_long: "Meer informatie"
         scope: "Vorm"
         naam: "Naam van forum"
-        public_grant: "Gebruikers zonder groep mogen"
         discoverable: "Toon in overzichten"
         shortname: "URL"
       blog:

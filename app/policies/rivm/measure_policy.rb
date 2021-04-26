@@ -7,15 +7,7 @@ class MeasurePolicy < EdgePolicy
   permit_array_attributes %i[phase_ids category_ids]
 
   def create?
-    return true if record.parent.is_a?(Page) || record.parent.nil?
-
-    super
-  end
-
-  def show?
-    return true if record.parent.is_a?(Page) || record.parent.nil?
-
-    super
+    true
   end
 
   def trash?

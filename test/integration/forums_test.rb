@@ -237,8 +237,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
         forum: {
           name: 'New forum',
           locale: 'en-GB',
-          url: 'new_forum',
-          public_grant: :participator
+          url: 'new_forum'
         }
       }, headers: argu_headers(accept: :json_api)
     end

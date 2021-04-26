@@ -7,7 +7,7 @@ class InterventionType < Edge
   enhance Feedable
   enhance Statable
   enhance Interventionable
-  enhance PublicGrantable
+  enhance RootGrantable
   enhance LinkedRails::Enhancements::Tableable
 
   parentable :page
@@ -18,10 +18,6 @@ class InterventionType < Edge
   self.default_sortings = [{key: NS::ARGU[:interventionsCount], direction: :desc}]
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
-
-  def default_public_grant
-    :participator
-  end
 
   def one_off_costs_score
     average_score(NS::RIVM[:oneOffCosts])
@@ -42,6 +38,10 @@ class InterventionType < Edge
   end
 
   class << self
+    def default_public_grant
+      :participator
+    end
+
     def iri_namespace
       NS::RIVM
     end

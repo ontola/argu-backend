@@ -6,11 +6,13 @@ RSpec.describe 'Votes', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
   before do
-    freetown.update(public_grant: :participator)
+    freetown.initial_public_grant = :participator
+    freetown.send(:create_default_grant)
   end
 
   let(:before_unauthorized_create) do
-    freetown.update(public_grant: :spectator)
+    freetown.initial_public_grant = :spectator
+    freetown.send(:create_default_grant)
   end
 
   let(:trash_differences) { {'Vote.active.count' => -1} }

@@ -56,7 +56,7 @@ freetown = ActsAsTenant.with_tenant(page) do
     url: 'freetown',
     name: 'Freetown',
     parent: page,
-    public_grant: 'initiator'
+    initial_public_grant: 'initiator'
   )
 end
 page.update(primary_container_node_id: freetown.uuid)
@@ -66,8 +66,7 @@ holland = ActsAsTenant.with_tenant(page) do
     parent: page,
     url: 'holland',
     name: 'Holland',
-    discoverable: false,
-    public_grant: 'none'
+    discoverable: false
   )
 end
 
@@ -87,7 +86,7 @@ other_page_forum = ActsAsTenant.with_tenant(other_page) do
     parent: other_page,
     url: 'other_page_forum',
     name: 'Other page forum',
-    public_grant: 'participator'
+    initial_public_grant: 'participator'
   )
 end
 ActsAsTenant.with_tenant(other_page) do
@@ -95,7 +94,7 @@ ActsAsTenant.with_tenant(other_page) do
     parent: other_page,
     url: 'other_page_forum2',
     name: 'Other page forum2',
-    public_grant: 'spectator'
+    initial_public_grant: 'spectator'
   )
 end
 

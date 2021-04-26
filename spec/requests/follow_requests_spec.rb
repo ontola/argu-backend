@@ -26,7 +26,7 @@ RSpec.describe 'Follows', type: :request do
   end
   let(:unauthorized_user) do
     freetown.grants.destroy_all
-    create_forum(public_grant: 'participator', parent: create(:page))
+    create_forum(initial_public_grant: 'participator', parent: create(:page))
     create(:user)
   end
   let(:expect_delete_destroy_unauthorized_json_api) { expect_delete_destroy_json_api }

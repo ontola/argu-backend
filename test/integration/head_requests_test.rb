@@ -6,7 +6,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
   let(:demogemeente) { create(:page, url: 'demogemeente', iri_prefix: 'demogemeente.nl') }
-  let(:demogemeente_forum) { create_forum(parent: demogemeente, url: 'forum', public_grant: 'initiator') }
+  let(:demogemeente_forum) { create_forum(parent: demogemeente, url: 'forum', initial_public_grant: 'initiator') }
   let(:freetown_motion) { create(:motion, parent: freetown) }
   let(:pro_argument) { create(:pro_argument, parent: freetown_motion) }
   let(:cairo_motion) { create(:motion, parent: cairo) }

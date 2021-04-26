@@ -9,6 +9,7 @@ class Measure < Edge
   enhance GrantResettable
   enhance ActivePublishable
   enhance Placeable
+  enhance RootGrantable
 
   parentable :page
 
@@ -45,6 +46,10 @@ class Measure < Edge
   end
 
   class << self
+    def default_public_grant
+      :participator
+    end
+
     def iri_namespace
       NS::RIVM
     end

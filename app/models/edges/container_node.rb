@@ -12,7 +12,7 @@ class ContainerNode < Edge
   enhance Placeable
   enhance ChildrenPlaceable
   enhance ProfilePhotoable
-  enhance PublicGrantable
+  enhance RootGrantable
   enhance LinkedRails::Enhancements::Updatable
   enhance Widgetable
   enhance Statable

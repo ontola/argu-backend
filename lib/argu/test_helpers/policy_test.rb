@@ -86,7 +86,7 @@ module Argu
         when :participator
           self.public_grants = :participator
         when :non_member, :member
-          self.public_grants = :none
+          self.public_grants = nil
         else
           self.public_grants = :initiator
         end
@@ -94,8 +94,8 @@ module Argu
 
       def public_grants=(grant_set)
         [freetown, expired_freetown].each do |record|
-          record.public_grant = grant_set
-          record.send(:reset_public_grant)
+          record.initial_public_grant = grant_set
+          record.send(:create_default_grant)
         end
       end
 
