@@ -16,13 +16,15 @@ class Term < Edge
     NS::ONTOLA[:updateAction],
     NS::ONTOLA[:destroyAction]
   ]
-  has_many :edges,
+  has_many :taggings,
            primary_key_property: nil,
            class_name: 'Edge',
            dependent: false
-  with_collection :edges,
+  with_collection :taggings,
                   association_class: Edge,
-                  default_title: ->(r) { r.tagged_label || I18n.t('terms.tagged_items') }
+                  default_title: ->(r) { r.tagged_label || I18n.t('terms.tagged_items') },
+                  parent_uri_template: :taggings_collection_iri,
+                  parent_uri_template_canonical: :taggings_collection_canonical
 
   parentable :vocabulary
 

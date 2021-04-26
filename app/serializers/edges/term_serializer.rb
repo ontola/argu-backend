@@ -3,5 +3,5 @@
 class TermSerializer < EdgeSerializer
   attribute :description, predicate: NS::SCHEMA[:text]
 
-  with_collection :edges, predicate: NS::ARGU[:taggings]
+  with_collection :taggings, predicate: NS::ARGU[:taggings]
 end

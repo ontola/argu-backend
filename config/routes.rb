@@ -346,7 +346,7 @@ Rails.application.routes.draw do
   resources :terms, only: %i[show] do
     include_route_concerns
 
-    resources :edges, only: %i[index]
+    resources :taggings, only: %i[index]
   end
   resources :topics,
             path: 't',
