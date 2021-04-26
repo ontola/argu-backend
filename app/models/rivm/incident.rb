@@ -11,7 +11,6 @@ class Incident < Edge
     NS::ARGU[:scenariosCount]
   ]
 
-  parentable :risk
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
 

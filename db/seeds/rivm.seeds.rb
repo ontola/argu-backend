@@ -12,14 +12,6 @@ Apartment::Tenant.switch('rivm') do
       menu_type: :navigations,
       resource: Page.first,
       order: 0,
-      label: 'risks.plural',
-      label_translation: true,
-      href: Risk.root_collection.iri
-    )
-    CustomMenuItem.create!(
-      menu_type: :navigations,
-      resource: Page.first,
-      order: 0,
       label: 'intervention_types.plural',
       label_translation: true,
       href: InterventionType.root_collection.iri

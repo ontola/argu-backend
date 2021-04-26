@@ -50,7 +50,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   alias edgeable_record about
 
   parentable :container_node, :question, :motion, :profile, :blog_post, :topic,
-             :risk, :intervention, :intervention_type, :measure, :measure_type, :page
+             :intervention, :intervention_type, :measure, :page
   alias_attribute :display_name, :title
 
   # Hands over publication of a collection to the Community profile

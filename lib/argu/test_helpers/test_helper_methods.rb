@@ -14,7 +14,7 @@ module Argu
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i[
           argument pro_argument con_argument blog_post comment forum group_membership motion export
-          group question vote decision grant vote_event page topic risk intervention intervention_type
+          group question vote decision grant vote_event page topic intervention intervention_type
           measure banner vocabulary term
         ].freeze
 

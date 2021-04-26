@@ -363,13 +363,10 @@ Rails.application.routes.draw do
     include_route_concerns
   end
 
-  {risks: 'gevaren', intervention_types: 'interventie_types', measure_types: 'measure_types',
-   categories: 'categories', incidents: 'incidents', scenarios: 'scenarios'}.each do |key, value|
-    resources key, path: value, only: %i[index new create show] do
-      include_route_concerns
-      collection do
-        concerns :nested_actionable
-      end
+  resources :intervention_types, path: 'interventie_types', only: %i[index new create show] do
+    include_route_concerns
+    collection do
+      concerns :nested_actionable
     end
   end
   resources :interventions, path: 'interventies', only: %i[index new create show] do

@@ -65,9 +65,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   with_collection :open_data_portals
   with_collection :groups
   with_collection :shortnames, association: :descendant_shortnames
-  with_collection :risks
   with_collection :intervention_types
-  with_collection :measure_types
   with_collection :vocabularies
 
   parentable :user
