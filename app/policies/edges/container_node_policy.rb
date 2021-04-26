@@ -12,7 +12,6 @@ class ContainerNodePolicy < EdgePolicy
   end
 
   permit_attributes %i[display_name bio locale]
-  permit_nested_attributes %i[grants]
 
   def create?
     ContainerNode.descendants.detect { |klass| has_grant?(:create, klass.name) }

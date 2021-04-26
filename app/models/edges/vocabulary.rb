@@ -8,6 +8,7 @@ class Vocabulary < Edge
   enhance LinkedRails::Enhancements::Tableable
   enhance CoverPhotoable
   enhance Attachable
+  enhance RootGrantable
   include Shortnameable
 
   property :display_name, :string, NS::SCHEMA[:name]

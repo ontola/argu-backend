@@ -32,6 +32,8 @@ PermittedAction.create_for_grant_sets('Project', 'show', all_grant_sets)
 PermittedAction.create_for_grant_sets('BudgetShop', 'show', all_grant_sets)
 PermittedAction.create_for_grant_sets('Offer', 'show', all_grant_sets)
 PermittedAction.create_for_grant_sets('Banner', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Vocabulary', 'show', all_grant_sets)
+PermittedAction.create_for_grant_sets('Term', 'show', all_grant_sets)
 
 participator_plus = GrantSet.reserved(except: %w[spectator])
 PermittedAction.create_for_grant_sets('ProArgument', 'create', participator_plus)

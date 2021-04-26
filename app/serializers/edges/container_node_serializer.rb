@@ -9,8 +9,6 @@ class ContainerNodeSerializer < EdgeSerializer
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
   attribute :hide_header, predicate: NS::ONTOLA[:hideHeader]
 
-  with_collection :grants, predicate: NS::ARGU[:grants]
-
   enum :locale,
        type: NS::SCHEMA[:Thing],
        predicate: NS::ARGU[:locale],

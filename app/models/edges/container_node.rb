@@ -22,6 +22,7 @@ class ContainerNode < Edge
   enhance Surveyable
   enhance Projectable
   enhance BudgetShoppable
+  enhance RootGrantable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]
@@ -31,7 +32,6 @@ class ContainerNode < Edge
   property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
   property :show_header, :boolean, NS::ARGU[:showHeader], default: true
 
-  with_collection :grants
   with_columns settings: [
     NS::SCHEMA[:name],
     NS::ARGU[:followsCount],
@@ -47,8 +47,6 @@ class ContainerNode < Edge
   alias_attribute :description, :bio
   alias_attribute :name, :display_name
   alias_attribute :description, :bio
-
-  accepts_nested_attributes_for :grants, reject_if: :all_blank, allow_destroy: true
 
   auto_strip_attributes :name, :cover_photo_attribution, squish: true
   auto_strip_attributes :bio, nullify: false
