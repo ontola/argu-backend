@@ -16,7 +16,6 @@ require 'sidekiq/prometheus/exporter'
 # j:
 # k:
 # l:
-# lr:
 # m: motions
 # n: notifications
 # o: pages (organisations)
@@ -24,6 +23,7 @@ require 'sidekiq/prometheus/exporter'
 # posts: blog posts
 # q: questions
 # r:
+# resource:
 # s: [RESERVED for search]
 # t: topics
 # u: users
@@ -296,9 +296,9 @@ Rails.application.routes.draw do
             only: %i[show] do
     include_route_concerns
   end
-  resources :linked_records,
-            path: 'lr',
-            only: %i[show] do
+  resource :linked_records,
+           path: 'resource',
+           only: %i[show] do
     include_route_concerns
   end
   resources :offers, only: %i[show] do

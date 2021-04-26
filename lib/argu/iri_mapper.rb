@@ -119,7 +119,7 @@ module Argu
       end
 
       def linked_record_from_opts(opts)
-        LinkedRecord.find_or_initialize_by_iri(Base64.decode64((opts[:id])))
+        LinkedRecord.find_or_initialize_by_iri(opts[:iri])
       end
 
       def opts_from_route(root, iri, method)

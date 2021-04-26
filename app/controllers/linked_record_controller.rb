@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class LinkedRecordsController < EdgeableController
-  def resource_by_id
-    @resource_by_id ||= LinkedRecord.find_or_initialize_by_iri(Base64.decode64(params[:id]))
+  def requested_resource
+    @requested_resource ||= LinkedRecord.find_or_initialize_by_iri(
+      params[:iri],
+      request.env['HTTP_AUTHORIZATION'],
+      request.env['HTTP_ACCEPT_LANGUAGE']
+    )
   end
 end

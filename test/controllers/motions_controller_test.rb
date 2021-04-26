@@ -65,7 +65,7 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('part_of')
 
     default_view = expect_default_view
-    current_time = CGI.parse(default_view['id'])['before[]'].second.split('=').last
+    current_time = CGI.parse(default_view['id'])['before[]'].first.split('=').last
     expect_included(
       collection_iri(
         holland,

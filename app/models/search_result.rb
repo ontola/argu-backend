@@ -52,10 +52,6 @@ class SearchResult < Collection
     opts
   end
 
-  def iri_template_keys
-    super + %i[match q]
-  end
-
   def page_size
     @page_size&.to_i || 15
   end
@@ -122,6 +118,10 @@ class SearchResult < Collection
 
     def initialize(collection)
       self.collection = collection
+    end
+
+    def iri_template_keys
+      @iri_template_keys ||= super + %i[match q]
     end
 
     def each(&block)

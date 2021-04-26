@@ -12,7 +12,13 @@ module NestedResourceHelper
   end
 
   def parent_resource
-    @parent_resource ||= parent_from_params(tree_root, params_for_parent)
+    @parent_resource ||= linked_record_parent || parent_from_params(tree_root, params_for_parent)
+  end
+
+  def linked_record_parent
+    return unless request.path.start_with?('/resource/')
+
+    LinkedRecord.find_or_initialize_by_iri(params_for_parent[:iri])
   end
 
   def parent_resource!

@@ -27,42 +27,10 @@ module SPI
       handle_resource_error(opts, e)
     end
 
-    def request_external_resource(iri)
-      HTTParty.get(
-        iri,
-        headers: {
-          'ACCEPT' => 'application/hex+x-ndjson; charset=utf-8',
-          'ACCEPT_LANGUAGE' => request.env['HTTP_ACCEPT_LANGUAGE'],
-          'AUTHORIZATION' => request.env['HTTP_AUTHORIZATION']
-        }
-      )
-    end
-
     def resource_request(iri)
       req = super
       req.env['User-Context'] = user_context
       req
-    end
-
-    def response_from_external(opts)
-      iri = opts[:iri]
-      include = opts[:include].to_s == 'true'
-      response = request_external_resource(iri)
-
-      resource_response(
-        iri.to_s,
-        body: include ? external_body(iri, response.body) : nil,
-        cache: :private,
-        language: response_language(response.headers),
-        status: response.code
-      )
-    end
-
-    def external_body(iri, body)
-      blank_nodes = body.scan(/\[\"(\w*)\"/).flatten.uniq
-      replaced_body = blank_nodes.reduce(body) { |result, node| result.gsub(node, "_:#{node}") }
-      replaced_body.gsub!('id.openraadsinformatie.nl', 'id.openbesluitvorming.nl')
-      [LinkedRecord.find_or_initialize_by_iri(iri).hnd_json, replaced_body].join("\n")
     end
 
     def response_from_resource(include, resource)
@@ -81,7 +49,11 @@ module SPI
     def response_for_wrong_host(opts)
       iri = opts[:iri]
       if ActsAsTenant.current_tenant.allowed_external_sources.any? { |source| iri.start_with?(source) }
-        response_from_external(opts)
+        include = opts[:include].to_s == 'true'
+
+        response_from_request(include, LinkedRecord.find_or_initialize_by_iri(opts[:iri]).iri).merge(
+          iri: opts[:iri]
+        )
       else
         resource_response(iri)
       end
