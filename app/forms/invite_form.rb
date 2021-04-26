@@ -7,8 +7,8 @@ class InviteForm < ApplicationForm
 
   field :addresses,
         input_field: MultipleEmailInput,
-        max_length: 5000,
-        pattern: /\A(#{RegexHelper::SINGLE_EMAIL.source},?\s?)+\z/
+        max_count: 5000,
+        pattern: /(#{RegexHelper::SINGLE_EMAIL.source},?\s?)+/
   field :message, max_length: 5000
   field :group_id, sh_in: -> { collection_iri(nil, :groups) }
   field :redirect_url
