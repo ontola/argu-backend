@@ -23,6 +23,7 @@ class Term < Edge
   with_collection :taggings,
                   association_class: Edge,
                   default_title: ->(r) { r.tagged_label || I18n.t('terms.tagged_items') },
+                  default_display: :grid,
                   parent_uri_template: :taggings_collection_iri,
                   parent_uri_template_canonical: :taggings_collection_canonical
 
