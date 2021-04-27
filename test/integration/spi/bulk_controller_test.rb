@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'support/thread_helper'
 
 module SPI
   class BulkControllerTest < ActionDispatch::IntegrationTest
+    include ThreadHelper
+
     define_page
     let(:freetown) { create(:forum, parent: argu, initial_public_grant: 'initiator', url: 'freetown', locale: :nl) }
     let(:holland) { create(:forum, parent: argu, url: 'holland', locale: :nl) }
@@ -141,7 +144,10 @@ module SPI
       domain = page.iri_prefix.split('/')
       host! domain[0]
       tenant_prefix = domain[1].present? ? "/#{domain[1]}" : ''
-      post "#{tenant_prefix}#{spi_bulk_path}", params: {resources: resources}
+
+      thread_stub(->(*args) { args.first == 'argu' }) do
+        post "#{tenant_prefix}#{spi_bulk_path}", params: {resources: resources}
+      end
 
       assert_response 200
 

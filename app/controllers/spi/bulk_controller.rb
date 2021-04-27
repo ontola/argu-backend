@@ -8,6 +8,10 @@ module SPI
 
     private
 
+    def authorized_resources
+      super.map(&:join).map(&:value)
+    end
+
     def handle_resource_error(_opts, error)
       Bugsnag.notify(error)
 
@@ -23,8 +27,6 @@ module SPI
       return super unless resource.try(:cacheable?)
 
       response_from_resource(include, resource)
-    rescue StandardError => e
-      handle_resource_error(opts, e)
     end
 
     def resource_request(iri)
@@ -91,6 +93,26 @@ module SPI
       403
     rescue StandardError
       500
+    end
+
+    def threaded_authorized_resource(resource) # rubocop:disable Metrics/MethodLength
+      Thread.new(Apartment::Tenant.current, ActsAsTenant.current_tenant) do |apartment, tenant|
+        ActiveRecord::Base.connection_pool.with_connection do
+          Apartment::Tenant.switch(apartment) do
+            ActsAsTenant.with_tenant(tenant) do
+              yield
+            end
+          end
+        end
+      rescue StandardError => e
+        handle_resource_error(resource, e)
+      end
+    end
+
+    def timed_authorized_resource(resource)
+      threaded_authorized_resource(resource) do
+        super
+      end
     end
   end
 end

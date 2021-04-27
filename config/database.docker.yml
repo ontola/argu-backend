@@ -8,6 +8,7 @@ development: &default
   host: <%= ENV['POSTGRESQL_ADDRESS'] %>
   port: <%= ENV['POSTGRESQL_PORT'] %>
   schema_search_path: 'public,shared_extensions'
+  checkout_timeout: 10
 test:
   <<: *default
   database: argu_test
