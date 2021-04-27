@@ -29,8 +29,8 @@ class ApplicationForm < LinkedRails::Form
     def term_field(key, url, **opts)
       field key, {
         datatype: NS::XSD[:string],
-        sh_in: -> { collection_iri(Vocabulary.new(url: url).root_relative_iri, :terms) }
-      }.merge(**opts)
+        sh_in: -> { collection_iri(Vocabulary.new(url: url).root_relative_iri, :terms, opts[:sh_in_opts]) }
+      }.merge(**opts.except(:sh_in_opts))
     end
 
     def visibility_text
