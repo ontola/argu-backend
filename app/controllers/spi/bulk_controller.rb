@@ -9,6 +9,10 @@ module SPI
     private
 
     def authorized_resources
+      grant_tree = user_context.grant_tree_for(ActsAsTenant.current_tenant)
+      grant_tree.grants_in_scope
+      grant_tree.grant_resets_in_scope
+
       super.map(&:join).map(&:value)
     end
 
