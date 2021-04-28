@@ -23,13 +23,19 @@ class TenantFinder
   end
 
   def tenant
-    tenant = ActsAsTenant.without_tenant { tenant_by_prefix || tenant_by_uuid || tenant_by_shortname }
+    tenant = same_tenant? ? ActsAsTenant.current_tenant.tenant : find_tenant
     return if tenant.blank?
 
     Apartment::Tenant.switch(tenant.database_schema) { tenant.page }
   end
 
   private
+
+  def find_tenant
+    ActsAsTenant.without_tenant do
+      tenant_by_prefix || tenant_by_uuid || tenant_by_shortname
+    end
+  end
 
   def host_with_port
     @host_with_port ||= [0, 80, 443].include?(@port.to_i) ? @host : [@host, @port].join(':')
@@ -41,6 +47,12 @@ class TenantFinder
 
   def matching_iris
     [host_with_port, uri_with_suffix]
+  end
+
+  def same_tenant?
+    ActsAsTenant.current_tenant && matching_iris.any? do |iri|
+      iri.start_with?(ActsAsTenant.current_tenant&.iri_prefix)
+    end
   end
 
   def tenant_by_prefix
