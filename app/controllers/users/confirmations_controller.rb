@@ -2,9 +2,6 @@
 
 module Users
   class ConfirmationsController < LinkedRails::Auth::ConfirmationsController
-    include Argu::Controller::ErrorHandling
-    include OauthHelper
-
     private
 
     def after_confirmation_path_for(_resource_name, resource)

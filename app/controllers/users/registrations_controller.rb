@@ -4,7 +4,6 @@ module Users
   class RegistrationsController < LinkedRails::Auth::RegistrationsController
     include Argu::Controller::Authorization
     include RedisResourcesHelper
-    include OauthHelper
 
     private
 

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class HeadMiddleware
-  include Argu::Controller::Authentication
+  include LinkedRails::Auth::AuthHelper
+  include OauthHelper
   attr_reader :headers, :request
 
   def initialize(app)

@@ -2,8 +2,6 @@
 
 module Users
   class PasswordsController < LinkedRails::Auth::PasswordsController
-    include OauthHelper
-
     private
 
     def after_sending_reset_password_instructions_path_for(_resource_name)

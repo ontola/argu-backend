@@ -6,8 +6,8 @@ module SPI
     include Argu::Controller::ErrorHandling
     include Argu::Controller::ErrorHandling::BadCredentials
     include JsonAPIHelper
+    include Argu::Controller::Authentication
     include Argu::Controller::Authorization
-    include OauthHelper
 
     def user_context
       @user_context ||=

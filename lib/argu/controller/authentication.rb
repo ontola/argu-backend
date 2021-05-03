@@ -6,12 +6,8 @@ module Argu
       extend ActiveSupport::Concern
 
       included do
+        include LinkedRails::Auth::Controller
         include OauthHelper
-      end
-
-      # @return [Profile] The {Profile} of the {User}
-      def current_profile
-        current_user.profile
       end
 
       def skip_verify_policy_authorized(sure = false)
@@ -20,16 +16,6 @@ module Argu
 
       def skip_verify_policy_scoped(sure = false)
         @_pundit_policy_scoped = true if sure
-      end
-
-      def user_context
-        @user_context ||=
-          request.env['User-Context'] ||
-          UserContext.new(
-            doorkeeper_scopes: doorkeeper_scopes,
-            profile: current_profile,
-            user: current_user
-          )
       end
     end
   end

@@ -5,7 +5,7 @@ module Oauth
   class ApplicationsController < Doorkeeper::ApplicationsController
     include LinkedRails::Controller::ErrorHandling
     include Argu::Controller::ErrorHandling
-    include OauthHelper
+    include Argu::Controller::Authentication
 
     def index
       @applications = Doorkeeper::Application.all

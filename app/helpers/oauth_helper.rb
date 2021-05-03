@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module OauthHelper
-  include LinkedRails::Auth::AuthHelper
   include LanguageHelper
 
   private
@@ -20,6 +19,11 @@ module OauthHelper
     else
       user.profile
     end
+  end
+
+  # @return [Profile] The {Profile} of the {User}
+  def current_profile
+    current_user.profile
   end
 
   def doorkeeper_unauthorized_render_options(error: nil)
@@ -46,5 +50,15 @@ module OauthHelper
 
   def service_token?
     doorkeeper_scopes.include?('service')
+  end
+
+  def user_context
+    @user_context ||=
+      request.env['User-Context'] ||
+      UserContext.new(
+        doorkeeper_scopes: doorkeeper_scopes,
+        profile: current_profile,
+        user: current_user
+      )
   end
 end

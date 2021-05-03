@@ -200,7 +200,7 @@ Doorkeeper::JWT.configure do
   # Specify encryption type. Supports any algorithim in
   # https://github.com/progrium/ruby-jwt
   # defaults to nil
-  encryption_method :hs512
+  encryption_method Rails.application.config.jwt_encryption_method
 end
 
 module Doorkeeper
