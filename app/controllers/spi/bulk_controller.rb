@@ -80,6 +80,7 @@ module SPI
 
     def resource_cache_control(status, resource_policy)
       return :private unless status == 200
+      return 'no-cache' if resource_policy.has_unpublished_ancestors?
       return 'no-cache' unless resource_policy.try(:granted_group_ids, :show)&.include?(Group::PUBLIC_ID)
 
       :public
