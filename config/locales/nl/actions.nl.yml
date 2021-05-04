@@ -53,7 +53,7 @@ nl:
         description: "Dit object zal weer zichtbaar zijn in de publieke discussie."
         submit: "Plaats terug"
       send_confirmation:
-        submit: "Verzend bevestigingslink opnieuw"
+        submit: "Verzend opnieuw"
       make_primary:
         submit: "Maak primair e-mail adres"
     access_tokens:

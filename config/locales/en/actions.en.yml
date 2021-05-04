@@ -53,7 +53,7 @@ en:
         description: "This item will be visible again in public discussion."
         submit: "Restore"
       send_confirmation:
-        submit: "Send confirmation link again"
+        submit: "Send again"
       make_primary:
         submit: "Make primary email address"
     access_tokens:

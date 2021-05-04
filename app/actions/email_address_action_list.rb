@@ -4,7 +4,6 @@ class EmailAddressActionList < ApplicationActionList
   has_action(
     :send_confirmation,
     completed: -> { resource.confirmed? },
-    type: NS::ARGU[:SendConfirmationAction],
     policy: :confirm?,
     image: 'fa-send',
     url: lambda {
@@ -12,16 +11,17 @@ class EmailAddressActionList < ApplicationActionList
         expand_uri_template(:confirmations_iri, 'user%5Bemail%5D': resource.email, with_hostname: true)
       )
     },
-    http_method: :post
+    http_method: :post,
+    type: NS::ONTOLA[:InlineAction]
   )
 
   has_action(
     :make_primary,
     completed: -> { resource.primary? },
-    type: NS::ARGU[:MakePrimaryAction],
     policy: :make_primary?,
     image: 'fa-circle-o',
     url: -> { resource.iri('email_address%5Bprimary%5D': true) },
-    http_method: :put
+    http_method: :put,
+    type: NS::ONTOLA[:InlineAction]
   )
 end

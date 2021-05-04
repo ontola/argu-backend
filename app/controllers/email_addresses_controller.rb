@@ -31,16 +31,25 @@ class EmailAddressesController < ParentableController
     meta
   end
 
-  def primary_change_meta # rubocop:disable Metrics/MethodLength
+  def primary_change_meta # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     current_user
       .email_addresses
-      .map do |e|
-      action = e.action(:make_primary, user_context)
+      .flat_map do |e|
+      primary_action = e.action(:make_primary, user_context)
+      delete_action = e.action(:destroy, user_context)
       [
-        action.iri,
-        NS::SCHEMA[:actionStatus],
-        action.action_status,
-        delta_iri(:replace)
+        RDF::Statement.new(
+          primary_action.iri,
+          NS::SCHEMA[:actionStatus],
+          primary_action.action_status,
+          graph_name: delta_iri(:replace)
+        ),
+        RDF::Statement.new(
+          delete_action.iri,
+          NS::SCHEMA[:actionStatus],
+          delete_action.action_status,
+          graph_name: delta_iri(:replace)
+        )
       ]
     end
   end
