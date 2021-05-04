@@ -27,7 +27,7 @@ class NotificationListener
 
   def create_notifications_for(activity) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
     recipients = FollowersCollector.new(activity: activity).call.to_a
-    if activity.trackable_type == 'Comment' && activity.trackable.in_reply_to_id
+    if activity.trackable_type == 'Comment' && activity.trackable.parent_comment_id
       recipients.concat(
         FollowersCollector.new(activity: activity, resource: activity.trackable.reload.parent_comment).call.to_a
       )

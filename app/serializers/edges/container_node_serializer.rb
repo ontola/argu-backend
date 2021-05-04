@@ -3,8 +3,6 @@
 class ContainerNodeSerializer < EdgeSerializer
   has_one :parent, predicate: NS::SCHEMA[:isPartOf], &:parent
 
-  attribute :bio, predicate: NS::SCHEMA[:description]
-  attribute :bio_long, predicate: NS::SCHEMA[:text]
   attribute :language, predicate: NS::SCHEMA[:language], datatype: NS::XSD[:string]
   attribute :follows_count, predicate: NS::ARGU[:followsCount]
   attribute :hide_header, predicate: NS::ONTOLA[:hideHeader]

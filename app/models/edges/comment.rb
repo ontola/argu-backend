@@ -6,17 +6,17 @@ class Comment < Edge
 
   include Edgeable::Content
 
-  property :in_reply_to_id, :linked_edge_id, NS::ARGU[:inReplyTo], default: nil
+  property :parent_comment_id, :linked_edge_id, NS::ARGU[:inReplyTo], default: nil
   property :pdf_position_x, :integer, NS::ARGU[:pdfPositionX], default: nil
   property :pdf_position_y, :integer, NS::ARGU[:pdfPositionY], default: nil
   property :pdf_page, :integer, NS::ARGU[:pdfPage], default: nil
 
   has_one :vote, primary_key_property: :comment_id, dependent: false
-  belongs_to :parent_comment, foreign_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
-  has_many :comments, primary_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
+  belongs_to :parent_comment, foreign_key_property: :parent_comment_id, class_name: 'Comment', dependent: false
+  has_many :comments, primary_key_property: :parent_comment_id, class_name: 'Comment', dependent: false
   has_many :active_comments,
            -> { active },
-           primary_key_property: :in_reply_to_id,
+           primary_key_property: :parent_comment_id,
            class_name: 'Comment',
            dependent: false,
            inverse_of: :parent_comment
@@ -25,7 +25,7 @@ class Comment < Edge
   after_commit :set_vote, on: :create
   after_trash :unlink_vote
 
-  counter_cache comments: {}, threads: {in_reply_to_id: nil}
+  counter_cache comments: {}, threads: {parent_comment_id: nil}
   with_collection :comments, counter_cache_column: nil
   paginates_per 10
   parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :topics,

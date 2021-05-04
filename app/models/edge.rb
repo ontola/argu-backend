@@ -116,7 +116,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :vote_events
   has_many_children :votes
   has_many :threads,
-           -> { where(in_reply_to_id: nil).includes(:properties).order('edges.created_at ASC') },
+           -> { where(parent_comment_id: nil).includes(:properties).order('edges.created_at ASC') },
            class_name: 'Comment',
            foreign_key: :parent_id,
            inverse_of: :parent

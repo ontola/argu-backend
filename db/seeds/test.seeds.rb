@@ -141,7 +141,7 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   argument = FactorySeeder.create(:pro_argument, parent: motion)
   FactorySeeder.create(:vote, parent: argument)
   comment = FactorySeeder.create(:comment, parent: argument)
-  FactorySeeder.create(:comment, parent: argument, in_reply_to_id: comment.uuid)
+  FactorySeeder.create(:comment, parent: argument, parent_comment_id: comment.uuid)
   FactorySeeder.create(:blog_post, parent: motion)
   blog_post =
     FactorySeeder.create(:blog_post, parent: question)

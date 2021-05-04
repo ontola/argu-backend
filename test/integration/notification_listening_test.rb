@@ -179,7 +179,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     assert_difference('Comment.count' => 1, 'Notification.count' => 3) do
       Sidekiq::Testing.inline! do
         post collection_iri(argument, :comments),
-             params: {comment: attributes_for(:comment).merge(in_reply_to_id: comment.uuid)}
+             params: {comment: attributes_for(:comment).merge(parent_comment_id: comment.uuid)}
       end
     end
     assert_equal Notification.last.notification_type, 'reaction'

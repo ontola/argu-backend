@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class VoteEventSerializer < EdgeSerializer
-  attribute :starts_at, predicate: NS::SCHEMA[:startDate]
   attribute :expires_at, predicate: NS::SCHEMA[:endDate]
   attribute :option_counts, unless: method(:export_scope?) do |object|
     {

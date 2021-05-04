@@ -12,6 +12,8 @@ module Buyable
 
       with_collection :cart_details
 
+      delegate :currency, to: :parent
+
       def price
         Money.new(super, currency) if super
       end

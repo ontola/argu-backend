@@ -9,7 +9,6 @@ class Offer < Edge
   parentable :budget_shop
 
   delegate :display_name, :description, :default_cover_photo, to: :product, allow_nil: true
-  delegate :currency, to: :parent
 
   belongs_to :product, foreign_key_property: :product_id, class_name: 'Edge', dependent: false
 

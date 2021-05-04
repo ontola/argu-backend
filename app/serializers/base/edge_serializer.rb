@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class EdgeSerializer < RecordSerializer
+  include Edgeable::Properties::Serializer
+
   has_one :parent, predicate: NS::SCHEMA[:isPartOf] do |object, opts|
     if object.parent.is_a?(Page) && object.parent_collections(opts[:scope]).count == 1
       object.parent_collections(opts[:scope]).first

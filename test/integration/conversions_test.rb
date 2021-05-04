@@ -34,7 +34,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     create(:blog_post, parent: question)
   end
   let(:question_comment) { create(:comment, parent: question) }
-  let(:question_nested_comment) { create(:comment, parent: question, in_reply_to_id: question_comment.uuid) }
+  let(:question_nested_comment) { create(:comment, parent: question, parent_comment_id: question_comment.uuid) }
   let(:motion_content) do
     motion_blog_post
     motion_nested_comment
@@ -46,10 +46,10 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     create(:blog_post, parent: motion)
   end
   let(:motion_comment) { create(:comment, parent: motion) }
-  let(:motion_nested_comment) { create(:comment, parent: motion, in_reply_to_id: motion_comment.uuid) }
+  let(:motion_nested_comment) { create(:comment, parent: motion, parent_comment_id: motion_comment.uuid) }
   let(:argument_comment) { create(:comment, parent: motion.arguments.first) }
   let(:argument_nested_comment) do
-    create(:comment, parent: motion.arguments.first, in_reply_to_id: argument_comment.uuid)
+    create(:comment, parent: motion.arguments.first, parent_comment_id: argument_comment.uuid)
   end
 
   ####################################

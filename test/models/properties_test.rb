@@ -9,8 +9,8 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
   let(:motion) { create(:motion, parent: freetown) }
   let(:comment) { create(:comment, parent: motion) }
   let(:parent_comment) { create(:comment, parent: motion) }
-  let(:reply1) { create(:comment, parent: motion, in_reply_to_id: parent_comment.uuid) }
-  let(:reply2) { create(:comment, parent: motion, in_reply_to_id: parent_comment.uuid) }
+  let(:reply1) { create(:comment, parent: motion, parent_comment_id: parent_comment.uuid) }
+  let(:reply2) { create(:comment, parent: motion, parent_comment_id: parent_comment.uuid) }
   let(:intervention_type) { create(:intervention_type, parent: argu) }
   let(:intervention) { create(:intervention, parent: intervention_type) }
   let(:measure) { create(:measure, parent: argu) }
@@ -94,7 +94,7 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
   end
 
   test 'property has_one assignment by id' do
-    comment.in_reply_to_id = parent_comment.uuid
+    comment.parent_comment_id = parent_comment.uuid
     comment.save
     assert_equal parent_comment, comment.reload.parent_comment
   end

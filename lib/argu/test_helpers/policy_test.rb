@@ -57,7 +57,7 @@ module Argu
         end
         let("#{prefix}nested_comment") do
           parent = send("#{prefix}pro_argument")
-          create(:comment, parent: parent, in_reply_to_id: send("#{prefix}comment").uuid, publisher: creator)
+          create(:comment, parent: parent, parent_comment_id: send("#{prefix}comment").uuid, publisher: creator)
         end
         let("#{prefix}blog_post") do
           parent = send("#{prefix}question")
