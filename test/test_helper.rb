@@ -13,7 +13,6 @@ require 'sidekiq/testing'
 require 'minitest/pride'
 require 'minitest/reporters'
 require 'webmock/minitest'
-require 'minitest/reporters'
 require 'rspec/matchers'
 require 'rspec/expectations'
 
@@ -25,7 +24,7 @@ Sidekiq::Testing.server_middleware do |chain|
   chain.add ActsAsTenant::Sidekiq::Server
 end
 
-Minitest::Reporters.use!
+Minitest::Reporters.use! unless ENV['RM_INFO']
 
 DatabaseCleaner.strategy = :transaction
 WebMock.disable_net_connect!(
@@ -38,7 +37,7 @@ module TestHelper
   include RSpec::Expectations
   include RSpec::Matchers
   Sidekiq::Testing.fake!
-  MiniTest::Reporters.use!
+  Minitest::Reporters.use! unless ENV['RM_INFO']
 
   MiniTest.after_run { FileUtils.rm_rf(Rails.root.join('public/photos/[^.]*')) }
 end
