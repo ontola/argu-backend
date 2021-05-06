@@ -71,7 +71,7 @@ RSpec.describe "Iri's", type: :model do
 
   context 'with root' do
     let(:id) { subject.fragment }
-    let(:url) { url_for([subject.class_name.singularize, id: id, protocol: :http]) }
+    let(:url) { url_for([subject.class_name.singularize.to_sym, id: id, protocol: :http]) }
 
     context 'Forum' do
       subject { freetown }
