@@ -35,13 +35,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
            foreign_key: :root_id,
            primary_key: :uuid
 
-  scope :discover, lambda {
-    joins(children: %i[properties grants])
-      .where(grants: {group_id: Group::PUBLIC_ID}, properties: {predicate: NS::ARGU[:discoverable].to_s, boolean: true})
-      .order(follows_count: :desc)
-      .distinct
-  }
-
   delegate :database_schema, to: :tenant, allow_nil: true
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
