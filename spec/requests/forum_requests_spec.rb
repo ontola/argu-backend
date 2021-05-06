@@ -19,8 +19,8 @@ RSpec.describe 'Forums', type: :request do
 
   let(:update_differences) { {'Forum.count' => 0} }
   let(:destroy_differences) { {'Forum.count' => -1} }
-  let(:expect_get_new_guest_serializer) { expect_unauthorized }
-  let(:expect_get_new_unauthorized_serializer) { expect_unauthorized }
+  # let(:expect_get_new_guest_serializer) { expect_unauthorized }
+  # let(:expect_get_new_unauthorized_serializer) { expect_unauthorized }
 
   def self.new_formats
     (RDF_CONTENT_TYPES - %i[ttl n3]).shuffle[1..2]

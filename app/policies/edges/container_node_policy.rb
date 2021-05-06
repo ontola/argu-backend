@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 
 class ContainerNodePolicy < EdgePolicy
-  class Scope < Scope
-    def resolve
-      scope
-        .property_join(:discoverable)
-        .with(granted_paths)
-        .where(root_id: grant_tree.tree_root_id)
-        .where("discoverable_filter.value = true OR #{granted_path_type_filter(parent_type: 'Page')}")
-    end
-  end
-
   permit_attributes %i[display_name bio locale]
 
   def create?

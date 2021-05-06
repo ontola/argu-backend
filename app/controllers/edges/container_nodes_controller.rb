@@ -2,7 +2,6 @@
 
 class ContainerNodesController < EdgeableController
   prepend_before_action :redirect_generic_shortnames, only: :show
-  skip_before_action :authorize_action, only: %i[index]
   active_response :new
 
   def show
@@ -33,7 +32,7 @@ class ContainerNodesController < EdgeableController
   end
 
   def authorize_action
-    authorize authenticated_resource, :list?
+    authorize(authenticated_resource, :list?) unless action_name == 'index'
 
     super
   end
