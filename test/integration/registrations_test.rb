@@ -144,7 +144,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     Sidekiq::Testing.inline! do
       assert_difference('User.count' => 1,
-                        'Vote.count' => 3,
+                        'Vote.published.count' => 3,
                         'Argu::Redis.keys("temporary*").count' => -3,
                         'EmailAddress.where(confirmed_at: nil).count' => 1) do
         post user_registration_path,
@@ -197,7 +197,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     Sidekiq::Testing.inline! do
       assert_difference('User.count' => 1,
-                        'Vote.count' => 3,
+                        'Vote.published.count' => 3,
                         'Argu::Redis.keys("temporary*").count' => -3,
                         'Notification.confirmation_reminder.count' => 1) do
         post user_registration_path,

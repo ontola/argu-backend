@@ -44,7 +44,7 @@ module RedisResource
     def create_service(user) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       create_service = service_class.new(
         resource.parent,
-        attributes: resource.attributes.with_indifferent_access.except('publisher_id', 'creator_id'),
+        attributes: resource.attributes.with_indifferent_access.except('publisher_id', 'creator_id', 'is_published'),
         options: {
           creator: user.profile,
           publisher: user
