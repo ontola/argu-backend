@@ -3,6 +3,8 @@
 class ActiveBannerPolicy < BannerPolicy
   class Scope < Scope
     def resolve # rubocop:disable Metrics/AbcSize
+      return scope.none if user.nil?
+
       audience = [Banner.audiences[:everyone]]
       audience << Banner.audiences[:guests] if user.guest?
       audience << Banner.audiences[:users] unless user.guest?

@@ -3,6 +3,8 @@
 class PlacementPolicy < RestrictivePolicy
   class Scope < EdgeTreePolicy::Scope
     def resolve
+      return scope.none if user.nil?
+
       scope
         .joins('INNER JOIN edges AS parents_edges ON parents_edges.id = edges.parent_id')
         .where('edges.id IS NULL OR (edges.is_published = true AND edges.trashed_at IS NULL)')

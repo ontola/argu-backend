@@ -13,8 +13,8 @@ class RestrictivePolicy
       @scope = scope
     end
 
-    delegate :user, to: :context
-    delegate :actor, to: :context
+    delegate :user, to: :context, allow_nil: true
+    delegate :actor, to: :context, allow_nil: true
     delegate :export_scope?, :service_scope?, :system_scope?,
              to: :scope,
              allow_nil: true

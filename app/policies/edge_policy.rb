@@ -7,6 +7,8 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     end
 
     def resolve
+      return scope.none if user.nil?
+
       scope
         .active
         .joins(:parent)

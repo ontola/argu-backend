@@ -3,6 +3,8 @@
 class CustomMenuItemPolicy < EdgeTreePolicy
   class Scope < Scope
     def resolve
+      return scope.none if user.nil?
+
       @scope.select(&method(:allowed_menu_item))
     end
 

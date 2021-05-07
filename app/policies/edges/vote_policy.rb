@@ -3,6 +3,8 @@
 class VotePolicy < EdgePolicy
   class Scope < EdgePolicy::Scope
     def resolve
+      return scope.none if user.nil?
+
       super
         .joins(:publisher, parent: :parent)
         .where('users.show_feed = true OR users.id = ?', user.guest? ? nil : user.id)

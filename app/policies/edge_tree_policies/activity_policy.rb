@@ -3,6 +3,8 @@
 class ActivityPolicy < EdgeTreePolicy
   class Scope < EdgeTreePolicy::Scope
     def resolve
+      return scope.none if user.nil?
+
       @scope = @scope.where(root_id: grant_tree.tree_root_id) if grant_tree&.tree_root_id&.present?
       return @scope if staff?
 
