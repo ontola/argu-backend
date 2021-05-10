@@ -14,7 +14,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   private
 
   def add_errors_tab(notification)
-    return if authenticated_resource&.errors.blank?
+    return if authenticated_resource!&.errors.blank?
 
     notification.add_tab(:errors, authenticated_resource.errors.to_h)
   end

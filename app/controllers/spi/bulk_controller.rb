@@ -17,7 +17,9 @@ module SPI
     end
 
     def handle_resource_error(_opts, error)
-      Bugsnag.notify(error)
+      Bugsnag.notify(error) do |report|
+        Bugsnag.configuration.middleware.run(report)
+      end
 
       super
     end
@@ -36,6 +38,7 @@ module SPI
     def resource_request(iri)
       req = super
       req.env['User-Context'] = user_context
+      Bugsnag.configuration.set_request_data(:rack_env, req.env)
       req
     end
 
