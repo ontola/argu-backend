@@ -18,6 +18,8 @@ class MenusController < LinkedRails::MenusController
   def current_forum; end
 
   def custom_menu
+    return if menu_list.blank?
+
     @custom_menu ||= LinkedRails.menus_item_class.new(
       menus: menu_list.custom_menu_items(menu_tag, parent_resource),
       parent: menu_list,
