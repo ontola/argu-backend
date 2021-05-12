@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'input_fields/money_input'
-
 class BudgetShopForm < ApplicationForm
   visibility_text
 

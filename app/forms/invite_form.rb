@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'input_fields/multiple_email_input'
-
 class InviteForm < ApplicationForm
   include RegexHelper
 

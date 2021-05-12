@@ -29,7 +29,7 @@ module Argu
     config.aws_url = "https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com"
     config.jwt_encryption_method = :hs512
 
-    config.autoload_paths += %w[lib]
+    config.autoload_paths += %w[lib lib/input_fields]
     [:controllers, :forms, :models, 'models/menus', :policies, :serializers].each do |type|
       config.autoload_paths += %W[#{config.root}/app/#{type}/container_nodes]
       config.autoload_paths += %W[#{config.root}/app/#{type}/edges]
