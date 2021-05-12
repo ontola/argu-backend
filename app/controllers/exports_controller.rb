@@ -3,7 +3,7 @@
 require 'zip'
 
 class ExportsController < ServiceController
-  skip_before_action :redirect_edge_parent_requests
+  skip_before_action :redirect_index_requests
 
   private
 

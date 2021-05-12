@@ -6,7 +6,7 @@
 # Subclassed models are assumed to have `Parentable` included.
 class ParentableController < AuthorizedController
   include UriTemplateHelper
-  prepend_before_action :redirect_edge_parent_requests, only: :index
+  prepend_before_action :redirect_index_requests, only: :index
 
   private
 
@@ -24,14 +24,12 @@ class ParentableController < AuthorizedController
     @parent_resource ||= resource_by_id_parent || super
   end
 
-  def redirect_edge_parent_requests
-    return unless parent_resource == Edge
+  def redirect_index_requests
+    return unless parent_resource.is_a?(Edge) && index_collection_or_view.is_a?(Collection) && params[:format].blank?
 
-    path = expand_uri_template(
-      "#{controller_name}_collection_iri",
-      parent_iri: split_iri_segments(parent_resource.iri)
-    )
-    redirect_to request.original_url.gsub(URI(request.original_url).path, path)
+    correct_url = index_collection_or_view.iri.to_s
+
+    redirect_to(correct_url) if correct_url != request.original_url
   end
 
   def resource_by_id_parent

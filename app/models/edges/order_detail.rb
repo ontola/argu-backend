@@ -7,6 +7,8 @@ class OrderDetail < Edge
   belongs_to :offer, foreign_key_property: :offer_id, class_name: 'Edge', dependent: false
   after_create :follow_product
 
+  def display_name; end
+
   private
 
   def follow_product

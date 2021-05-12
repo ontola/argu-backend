@@ -147,6 +147,8 @@ module NamesHelper
       'calendar-o'
     elsif [item.class, item].include?(Project)
       'rocket'
+    elsif [item.class, item].include?(BudgetShop)
+      'shopping-cart'
     elsif [item.class, item].include?(Survey)
       'list-ul'
     end
