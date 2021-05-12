@@ -279,8 +279,6 @@ Rails.application.routes.draw do
       end
     end
     include_route_concerns
-    get :settings, on: :member
-    get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
     resources :grants, only: %i[index new create] do
       collection do
         concerns :nested_actionable
