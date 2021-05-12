@@ -37,8 +37,6 @@ class Comment < Edge
 
   attr_accessor :is_processed, :vote_id
 
-  def display_name; end
-
   def deleted?
     body.blank? || body == '[DELETED]'
   end

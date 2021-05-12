@@ -14,8 +14,6 @@ class Order < Edge
     @cart ||= parent.cart_for(publisher)
   end
 
-  def display_name; end
-
   def added_delta # rubocop:disable Metrics/AbcSize
     [
       [cart.iri, NS::SP[:Variable], NS::SP[:Variable], delta_iri(:invalidate)],

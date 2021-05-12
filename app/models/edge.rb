@@ -194,6 +194,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     children_counts[association.to_s].to_i || 0
   end
 
+  def display_name
+    attributes['display_name']
+  end
+
   def expired?
     expires_at? && expires_at < Time.current
   end

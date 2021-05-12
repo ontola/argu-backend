@@ -26,8 +26,6 @@ class LinkedRecord < Edge
     {iri: external_iri}
   end
 
-  def display_name; end
-
   def rdf_type; end
 
   private

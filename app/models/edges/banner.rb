@@ -26,8 +26,6 @@ class Banner < Edge
 
   parentable :page
 
-  def display_name; end
-
   def parent_collections_for(parent, user_context)
     parent
       .collections
