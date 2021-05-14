@@ -10,7 +10,8 @@ module VoteEventable
 
     def route_concerns(mapper)
       mapper.concern :vote_eventable do
-        mapper.resources :vote_events, only: %i[index show], concerns: %i[votable] do
+        # @deprecated Stop using nested routes. After one deploy, we can remove everything except the index
+        mapper.resources :vote_events, only: %i[index show] do
           mapper.include_route_concerns
         end
       end

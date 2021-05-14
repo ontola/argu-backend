@@ -40,17 +40,6 @@ Rails.application.routes.draw do
     end
   end
 
-  concern :votable do
-    resources :votes, only: %i[new create index] do
-      collection do
-        concerns :nested_actionable
-      end
-    end
-    resource :vote, only: %i[destroy show], path: :vote do
-      include_route_concerns(klass: Vote)
-    end
-  end
-
   constraints(LinkedRails::Constraints::Whitelist) do
     health_check_routes
   end
@@ -221,8 +210,7 @@ Rails.application.routes.draw do
   %i[pro_arguments con_arguments].each do |model|
     resources model,
               path: model == :pro_arguments ? 'pro' : 'con',
-              only: %i[show],
-              concerns: %i[votable] do
+              only: %i[show] do
       include_route_concerns
     end
   end
@@ -307,10 +295,7 @@ Rails.application.routes.draw do
   end
   resources :placements, only: :show
   resources :publications, only: :show
-  resources :profiles, only: %i[index update show edit] do
-    # This is to make requests POST if the user has an 'r' (which nearly all use POST)
-    post :index, action: :index, on: :collection
-  end
+  resources :profiles, only: %i[index update show edit]
   resources :projects, only: %i[show] do
     include_route_concerns
   end
@@ -354,7 +339,10 @@ Rails.application.routes.draw do
   resources :users, path: 'u', only: %i[] do
     get :feed, controller: 'users/feed', action: :index
   end
-  resources :votes, only: %i[show], as: :vote do
+  resources :vote_events, only: %i[show] do
+    include_route_concerns
+  end
+  resources :votes, only: %i[show] do
     include_route_concerns
   end
   resources :widgets, only: %i[show new create] do
@@ -386,9 +374,6 @@ Rails.application.routes.draw do
             only: %i[show],
             path: '' do
     include_route_concerns(klass: ContainerNode.descendants)
-    resources :motions, path: :m, only: [] do
-      get :search, to: 'motions#search', on: :collection
-    end
   end
 
   mount Sidekiq::Prometheus::Exporter => '/d/sidekiq'

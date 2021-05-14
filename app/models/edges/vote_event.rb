@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class VoteEvent < Edge
-  enhance LinkedRails::Enhancements::Actionable
   enhance Votable
 
   counter_cache true
@@ -18,7 +17,7 @@ class VoteEvent < Edge
   end
 
   def iri_opts
-    super.merge(id: to_param, parent_iri: parent_iri_path)
+    super.merge(id: to_param)
   end
 
   def neutral_count

@@ -104,16 +104,6 @@ RSpec.describe "Iri's", type: :model do
       it_behaves_like 'iri matches route'
     end
 
-    context 'VoteEvent' do
-      subject { vote_event }
-
-      let(:url) do
-        motion_vote_event_url(subject.voteable.fragment, subject.fragment, protocol: :http)
-      end
-
-      it_behaves_like 'iri matches route'
-    end
-
     context 'Vote' do
       subject { vote }
 

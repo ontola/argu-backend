@@ -7,13 +7,13 @@ module Trashable
     def route_concerns(mapper)
       mapper.concern :trashable do
         mapper.member do
-          mapper.get :delete, action: :delete, as: :delete
-          mapper.delete '', action: :destroy, as: :destroy, constraints: Argu::DestroyConstraint
+          mapper.get :delete, action: :delete
+          mapper.delete '', action: :destroy, constraints: Argu::DestroyConstraint
 
-          mapper.get :trash, action: :bin, as: :trash
+          mapper.get :trash, action: :bin
           mapper.delete '', action: :trash
 
-          mapper.get :untrash, action: :unbin, as: :untrash
+          mapper.get :untrash, action: :unbin
           mapper.put :untrash, action: :untrash
         end
       end
