@@ -6,6 +6,7 @@ module Bannerable
 
     included do
       with_collection :banners, predicate: NS::ONTOLA[:banners]
+      with_collection :banner_managements, predicate: NS::ONTOLA[:bannersManagement]
     end
   end
 end

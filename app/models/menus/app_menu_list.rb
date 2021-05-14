@@ -165,7 +165,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       setting_item(
         :banners,
         label: I18n.t('banners.plural'),
-        href: collection_iri(ActsAsTenant.current_tenant, :banners, display: :table)
+        href: collection_iri(ActsAsTenant.current_tenant, :banner_managements)
       ),
       setting_item(
         :vocabularies,

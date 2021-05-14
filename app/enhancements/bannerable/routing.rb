@@ -11,6 +11,7 @@ module Bannerable
     def route_concerns(mapper)
       mapper.concern :bannerable do
         mapper.resources :banners, only: %i[index new create]
+        mapper.resources :banner_managements, only: %i[index new]
       end
     end
   end

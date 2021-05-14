@@ -50,7 +50,7 @@ class BannerDismissalsTest < ActionDispatch::IntegrationTest
   def scoped_banners(user)
     ActsAsTenant.with_tenant(argu) do
       scopes = user.guest? ? [:guest] : [:user]
-      Pundit.policy_scope(UserContext.new(user: user, doorkeeper_scopes: scopes), ActiveBanner.all)
+      Pundit.policy_scope(UserContext.new(user: user, doorkeeper_scopes: scopes), Banner.all)
     end
   end
 end
