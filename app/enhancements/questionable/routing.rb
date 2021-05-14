@@ -10,11 +10,7 @@ module Questionable
 
     def route_concerns(mapper)
       mapper.concern :questionable do
-        mapper.resources :questions, path: 'q', only: %i[index new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :questions, path: 'q', only: %i[index new create]
       end
     end
   end

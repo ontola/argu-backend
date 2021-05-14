@@ -10,11 +10,7 @@ module Dismissable
 
     def route_concerns(mapper)
       mapper.concern :dismissable do
-        mapper.resources :banner_dismissals, only: %i[new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :banner_dismissals, only: %i[new create]
       end
     end
   end

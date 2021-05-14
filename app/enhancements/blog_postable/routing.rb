@@ -10,11 +10,7 @@ module BlogPostable
 
     def route_concerns(mapper)
       mapper.concern :blog_postable do
-        mapper.resources :blog_posts, only: %i[index new create], path: 'posts' do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :blog_posts, only: %i[index new create], path: 'posts'
       end
     end
   end

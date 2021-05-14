@@ -10,11 +10,7 @@ module Measureable
 
     def route_concerns(mapper)
       mapper.concern :measureable do
-        mapper.resources :measures, path: 'voorbeelden', only: %i[new index create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :measures, path: 'voorbeelden', only: %i[new index create]
       end
     end
   end

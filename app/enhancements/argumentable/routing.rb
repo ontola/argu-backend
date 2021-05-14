@@ -8,18 +8,10 @@ module Argumentable
       [Argument]
     end
 
-    def route_concerns(mapper) # rubocop:disable Metrics/MethodLength
+    def route_concerns(mapper)
       mapper.concern :argumentable do
-        mapper.resources :pro_arguments, only: %i[new create index], path: 'pros', defaults: {pro: 'pro'} do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
-        mapper.resources :con_arguments, only: %i[new create index], path: 'cons', defaults: {pro: 'con'} do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :pro_arguments, only: %i[new create index], path: 'pros', defaults: {pro: 'pro'}
+        mapper.resources :con_arguments, only: %i[new create index], path: 'cons', defaults: {pro: 'con'}
       end
     end
   end

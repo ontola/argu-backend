@@ -10,11 +10,7 @@ module CreativeWorkable
 
     def route_concerns(mapper)
       mapper.concern :creative_workable do
-        mapper.resources :creative_works, only: %i[index new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :creative_works, only: %i[index new create]
       end
     end
   end

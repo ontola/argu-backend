@@ -10,11 +10,7 @@ module Motionable
 
     def route_concerns(mapper)
       mapper.concern :motionable do
-        mapper.resources :motions, path: 'm', only: %i[index new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :motions, path: 'm', only: %i[index new create]
       end
     end
   end

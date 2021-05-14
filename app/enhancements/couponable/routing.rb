@@ -10,11 +10,7 @@ module Couponable
 
     def route_concerns(mapper)
       mapper.concern :couponable do
-        mapper.resources :coupon_badges, only: %i[index new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :coupon_badges, only: %i[index new create]
       end
     end
   end

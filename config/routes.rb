@@ -34,12 +34,6 @@ require 'sidekiq/prometheus/exporter'
 # z:
 
 Rails.application.routes.draw do
-  concern :nested_actionable do
-    namespace :actions do
-      resources :items, path: '', only: %i[show], collection: @scope.parent.try(:[], :controller)
-    end
-  end
-
   constraints(LinkedRails::Constraints::Whitelist) do
     health_check_routes
   end
@@ -104,11 +98,7 @@ Rails.application.routes.draw do
     put :setup, to: 'users/setup#update', on: :collection
 
     get :pages, to: 'users/pages#index', on: :member, path: :o
-    resources :pages, only: %i[], path: :o do
-      collection do
-        concerns :nested_actionable
-      end
-    end
+    resources :pages, only: %i[], path: :o
     get :drafts, to: 'drafts#index', on: :member
 
     get 'language', to: 'users/languages#edit', on: :collection, as: :edit_language
@@ -149,9 +139,6 @@ Rails.application.routes.draw do
             path: 'n' do
     patch :read, on: :collection
     include_route_concerns
-    collection do
-      concerns :nested_actionable
-    end
   end
 
   root to: 'pages#show'
@@ -192,11 +179,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :pages, path: 'o', only: %i[new create show] do
-    collection do
-      concerns :nested_actionable
-    end
-  end
+  resources :pages, path: 'o', only: %i[new create show]
   get :settings, to: 'pages#settings'
   get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
 
@@ -227,11 +210,7 @@ Rails.application.routes.draw do
   end
   resources :comments, only: %i[show], path: 'c' do
     include_route_concerns
-    resources :comments, only: %i[index new create], path: 'c' do
-      collection do
-        concerns :nested_actionable
-      end
-    end
+    resources :comments, only: %i[index new create], path: 'c'
   end
   resources :comments, only: %i[show]
   resources :creative_works, only: %i[show new create] do
@@ -261,20 +240,9 @@ Rails.application.routes.draw do
     post :index, action: :index, on: :collection
   end
   resources :groups, path: 'g', only: %i[show create new index] do
-    collection do
-      concerns :nested_actionable
-    end
-    resources :group_memberships, only: %i[new create index] do
-      collection do
-        concerns :nested_actionable
-      end
-    end
+    resources :group_memberships, only: %i[new create index]
     include_route_concerns
-    resources :grants, only: %i[index new create] do
-      collection do
-        concerns :nested_actionable
-      end
-    end
+    resources :grants, only: %i[index new create]
   end
   resources :media_objects, only: :show do
     include_route_concerns
@@ -317,10 +285,6 @@ Rails.application.routes.draw do
   end
   resources :shortnames, only: %i[show new create index] do
     include_route_concerns
-
-    collection do
-      concerns :nested_actionable
-    end
   end
   resources :vocabularies, path: :vocab, only: %i[show new create index] do
     include_route_concerns
@@ -354,9 +318,6 @@ Rails.application.routes.draw do
 
   resources :intervention_types, path: 'interventie_types', only: %i[index new create show] do
     include_route_concerns
-    collection do
-      concerns :nested_actionable
-    end
   end
   resources :interventions, path: 'interventies', only: %i[index new create show] do
     include_route_concerns
@@ -368,11 +329,7 @@ Rails.application.routes.draw do
   %i[blogs forums open_data_portals dashboards].each do |container_node|
     resources container_node, only: %i[index new create]
   end
-  resources :container_nodes, only: %i[index new] do
-    collection do
-      concerns :nested_actionable
-    end
-  end
+  resources :container_nodes, only: %i[index new]
   resources :container_nodes,
             only: %i[show],
             path: '' do

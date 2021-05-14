@@ -10,11 +10,7 @@ module BudgetShoppable
 
     def route_concerns(mapper)
       mapper.concern :budget_shoppable do
-        mapper.resources :budget_shops, only: %i[index new create], path: :budgets do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :budget_shops, only: %i[index new create], path: :budgets
       end
     end
   end

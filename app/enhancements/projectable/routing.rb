@@ -10,11 +10,7 @@ module Projectable
 
     def route_concerns(mapper)
       mapper.concern :projectable do
-        mapper.resources :projects, only: %i[index new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :projects, only: %i[index new create]
       end
     end
   end

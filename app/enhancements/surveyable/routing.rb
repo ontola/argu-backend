@@ -10,11 +10,7 @@ module Surveyable
 
     def route_concerns(mapper)
       mapper.concern :surveyable do
-        mapper.resources :surveys, only: %i[index new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :surveys, only: %i[index new create]
       end
     end
   end

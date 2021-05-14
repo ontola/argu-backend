@@ -10,11 +10,7 @@ module CustomActionable
 
     def route_concerns(mapper)
       mapper.concern :custom_actionable do
-        mapper.resources :custom_actions, only: %i[index new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :custom_actions, only: %i[index new create]
       end
     end
   end

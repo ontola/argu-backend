@@ -10,11 +10,7 @@ module Widgetable
 
     def route_concerns(mapper)
       mapper.concern :widgetable do
-        mapper.resources :widgets, only: %i[index new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :widgets, only: %i[index new create]
       end
     end
   end

@@ -10,11 +10,7 @@ module Phaseable
 
     def route_concerns(mapper)
       mapper.concern :phaseable do
-        mapper.resources :phases, only: %i[index new create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :phases, only: %i[index new create]
       end
     end
   end

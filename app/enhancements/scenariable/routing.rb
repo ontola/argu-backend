@@ -10,11 +10,7 @@ module Scenariable
 
     def route_concerns(mapper)
       mapper.concern :scenariable do
-        mapper.resources :scenarios, only: %i[new index create] do
-          mapper.collection do
-            mapper.concerns :nested_actionable
-          end
-        end
+        mapper.resources :scenarios, only: %i[new index create]
       end
     end
   end

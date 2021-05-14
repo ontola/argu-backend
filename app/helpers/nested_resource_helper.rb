@@ -102,17 +102,6 @@ module NestedResourceHelper
     parent_collection(resource, opts)
   end
 
-  def parent_collection(resource, opts)
-    collection_class = opts[:collection].classify.constantize
-    collection_opts = collection_params(opts, collection_class)
-
-    if resource.present?
-      resource.send("#{opts[:collection].to_s.singularize}_collection", collection_opts)
-    else
-      collection_class.try(:root_collection, collection_opts)
-    end
-  end
-
   # Extracts the parent resource param from the url to get to its value
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
   # @return [Symbol] The resource param
