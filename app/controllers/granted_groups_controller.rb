@@ -9,11 +9,10 @@ class GrantedGroupsController < AuthorizedController
     authorize parent_resource!, :show?
   end
 
-  def index_collection
-    @index_collection ||=
-      LinkedRails::Sequence.new(
-        user_context.grant_tree.granted_groups(parent_resource!.persisted_edge),
-        id: index_iri
-      )
+  def index_association
+    skip_verify_policy_scoped(true)
+
+    @index_association ||=
+      user_context.grant_tree.granted_groups(parent_resource!.persisted_edge)
   end
 end

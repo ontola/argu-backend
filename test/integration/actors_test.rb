@@ -23,7 +23,7 @@ class ActorsTest < ActionDispatch::IntegrationTest
     assert_response 200
     expect_triple(user_iri, RDF.type, nil)
     refute_triple(page_iri, RDF.type, nil)
-    expect_triple(LinkedRails.iri(path: actors_path), RDF.first, user_iri)
+    expect_triple(LinkedRails.iri(path: actors_path), RDF[:_0], user_iri)
   end
 
   test 'administrator should get get actors' do
@@ -34,7 +34,7 @@ class ActorsTest < ActionDispatch::IntegrationTest
     assert_response 200
     expect_triple(user_iri(administrator), RDF.type, nil)
     expect_triple(page_iri, RDF.type, nil)
-    expect_triple(LinkedRails.iri(path: actors_path), RDF.first, user_iri(administrator))
+    expect_triple(LinkedRails.iri(path: actors_path), RDF[:_0], user_iri(administrator))
   end
 
   private

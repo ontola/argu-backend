@@ -48,8 +48,7 @@ module Users
       sign_in administrator
 
       get collection_iri(user, :pages, root: other_page)
-      assert_response :success
-      assert_not_includes(response.body, requested_iri)
+      assert_response :forbidden
     end
   end
 end

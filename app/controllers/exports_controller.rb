@@ -24,10 +24,6 @@ class ExportsController < ServiceController
     authorize parent_resource!, :index_children?, controller_name, user_context: user_context
   end
 
-  def index_collection
-    parent_resource!.export_collection(collection_options)
-  end
-
   def permit_params
     {}
   end

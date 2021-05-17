@@ -34,7 +34,9 @@ module ActiveResponseHelper
   end
 
   def index_association
-    @index_association ||= policy_scope(super)
+    return @index_association if instance_variables.include?(:@index_association)
+
+    @index_association = super ? policy_scope(super) : nil
   end
 
   def index_success_options_json_api

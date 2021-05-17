@@ -14,15 +14,10 @@ class GrantSetsController < AuthorizedController
       end
   end
 
-  def index_collection
-    @index_collection ||=
-      LinkedRails::Sequence.new(
-        user_context.grant_tree.grant_sets(parent_resource!.persisted_edge, group_ids: current_profile.group_ids),
-        id: index_iri
-      )
-  end
+  def index_association
+    skip_verify_policy_scoped(true)
 
-  def index_includes_collection
-    {}
+    @index_association ||=
+      user_context.grant_tree.grant_sets(parent_resource!.persisted_edge, group_ids: current_profile.group_ids)
   end
 end

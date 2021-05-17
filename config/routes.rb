@@ -97,7 +97,7 @@ Rails.application.routes.draw do
     get :setup, to: 'users/setup#edit', on: :collection
     put :setup, to: 'users/setup#update', on: :collection
 
-    get :pages, to: 'users/pages#index', on: :member, path: :o
+    get :pages, to: 'users/pages#index', path: :o
     resources :pages, only: %i[], path: :o
 
     get 'language', to: 'users/languages#edit', on: :collection, as: :edit_language

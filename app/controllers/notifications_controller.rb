@@ -28,35 +28,15 @@ class NotificationsController < AuthorizedController
     authorize Notification, :read?
   end
 
-  def index_collection
-    @index_collection ||= ::Collection.new(
-      collection_options.merge(
-        association_class: Notification,
-        default_type: :infinite,
-        parent: nil
+  def index_meta
+    [
+      RDF::Statement.new(
+        index_collection.iri,
+        NS::ARGU[:unreadCount],
+        unread_notification_count,
+        graph_name: delta_iri(:replace)
       )
-    )
-  end
-
-  def index_meta # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    m = []
-    m <<
-      if index_collection.is_a?(CollectionView)
-        [
-          index_collection.collection.iri,
-          NS::AS[:page],
-          index_collection.iri,
-          delta_iri(:replace)
-        ]
-      else
-        [
-          index_collection.iri,
-          NS::ARGU[:unreadCount],
-          unread_notification_count,
-          delta_iri(:replace)
-        ]
-      end
-    m
+    ]
   end
 
   def permit_params
