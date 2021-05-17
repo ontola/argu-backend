@@ -50,8 +50,12 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
     label_translation ? I18n.t(super) : super
   end
 
+  def menus_present?
+    @menus_present ||= custom_menu_items.any?
+  end
+
   def menu_sequence
-    return if custom_menu_items.nil?
+    return unless menus_present?
 
     @menu_sequence ||=
       LinkedRails::Sequence.new(

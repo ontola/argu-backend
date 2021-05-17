@@ -28,7 +28,7 @@ class CustomMenuItemSerializer < MenuItemSerializer
           polymorphic: true
 
   def self.menus_present?(object, _params)
-    object.custom_menu_items.any?
+    object.menus_present?
   end
 
   def self.parent_menu?(object, _params)
