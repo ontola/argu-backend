@@ -51,13 +51,13 @@ Rails.application.routes.draw do
       a: Argument,
       pro: Argument,
       con: Argument,
+      decision: Decision,
       posts: BlogPost,
       c: Comment,
       group_memberships: GroupMembership
     }.each do |path, resource|
       get "#{path}/:id", to: 'redirect#show', defaults: {class: resource}
     end
-    get 'm/:parent_id/decision/:id', to: 'redirect#show', defaults: {class: Decision}
     get ':shortname', to: 'redirect#show'
 
     constraints(LinkedRails::Constraints::Whitelist) do
@@ -244,6 +244,9 @@ Rails.application.routes.draw do
     include_route_concerns
   end
   resources :custom_menu_items, only: %i[index show new create] do
+    include_route_concerns
+  end
+  resources :decisions, only: %i[show] do
     include_route_concerns
   end
   resources :direct_messages, path: :dm, only: [:create]

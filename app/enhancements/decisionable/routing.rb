@@ -10,9 +10,8 @@ module Decisionable
 
     def route_concerns(mapper)
       mapper.concern :decisionable do
-        mapper.resources :decisions, path: 'decision', only: %i[show new create index], concerns: %i[menuable] do
+        mapper.resources :decisions, only: %i[new create index] do
           mapper.include_route_concerns
-          mapper.get :log, action: :log
         end
       end
     end

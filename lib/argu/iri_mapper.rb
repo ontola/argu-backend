@@ -62,7 +62,6 @@ module Argu
         ActsAsTenant.with_tenant(root) do
           return linked_record_from_opts(opts) if linked_record_from_opts?(opts)
           return shortnameable_from_opts(opts) if shortnameable_from_opts?(opts)
-          return decision_from_opts(opts) if decision_from_opts?(opts)
           return edge_from_opts(opts) if edge_from_opts?(opts)
 
           resource_by_id_from_opts(opts)
@@ -98,20 +97,6 @@ module Argu
         match = uri_template(:edges_iri).match(URI(iri).path).try(:[], 1)
 
         match if uuid?(match)
-      end
-
-      def decision_from_opts(opts)
-        return unless opts[:class] == Decision
-
-        Decision
-          .joins(:parent)
-          .where('parents_edges.root_id = edges.root_id')
-          .where(parents_edges: {fragment: opts[parent_resource_key(opts)]})
-          .find_by(step: opts[:id])
-      end
-
-      def decision_from_opts?(opts)
-        opts[:class] == Decision
       end
 
       def linked_record_from_opts?(opts)

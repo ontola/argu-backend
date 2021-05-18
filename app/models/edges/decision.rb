@@ -12,7 +12,6 @@ class Decision < Edge
   property :forwarded_group_id, :integer, NS::ARGU[:forwardedGroup]
   property :forwarded_user_id, :integer, NS::ARGU[:forwardedUser]
   property :state, :integer, NS::ARGU[:state], default: 0, enum: {pending: 0, approved: 1, rejected: 2, forwarded: 3}
-  property :step, :integer, NS::ARGU[:step]
 
   belongs_to :forwarded_group, class_name: 'Group', foreign_key_property: :forwarded_group_id
   belongs_to :forwarded_user, class_name: 'User', foreign_key_property: :forwarded_user_id
@@ -38,14 +37,6 @@ class Decision < Edge
     return self[:display_name] if destroyed?
 
     self[:display_name] = I18n.t("decisions.#{parent.model_name.i18n_key}.#{state}")
-  end
-
-  def iri_opts
-    {parent_iri: parent_iri_path, id: step}
-  end
-
-  def to_param
-    step.to_s
   end
 
   private
