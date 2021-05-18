@@ -28,10 +28,14 @@ class IriHelperTest < ActiveSupport::TestCase
   end
 
   test 'should not find forum by non existing iri' do
+    ActsAsTenant.current_tenant = argu
+
     assert_not LinkedRails.resource_from_iri(argu_url('/non_existent')).present?
   end
 
   test 'should not find forum by non existing iri bang' do
+    ActsAsTenant.current_tenant = argu
+
     assert_raises ActiveRecord::RecordNotFound do
       LinkedRails.resource_from_iri!(argu_url('/non_existent'))
     end
@@ -46,6 +50,8 @@ class IriHelperTest < ActiveSupport::TestCase
   end
 
   test 'should find forum of example.com' do
+    ActsAsTenant.current_tenant = example_page
+
     resource_from_path(example, '/example')
     assert_equal example, LinkedRails.resource_from_iri!('https://example.com/example')
   end
@@ -57,6 +63,8 @@ class IriHelperTest < ActiveSupport::TestCase
   end
 
   def resource_from_path(resource, path)
-    assert_equal(LinkedRails.resource_from_iri("#{resource.root.iri}#{path}"), resource)
+    ActsAsTenant.with_tenant(resource.root) do
+      assert_equal(LinkedRails.resource_from_iri("#{resource.root.iri}#{path}"), resource)
+    end
   end
 end

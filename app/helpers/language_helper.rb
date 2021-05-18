@@ -21,9 +21,12 @@ module LanguageHelper
       .compatible_language_from(I18n.available_locales)
   end
 
-  def language_from_r # rubocop:disable Metrics/AbcSize
-    resource = LinkedRails.resource_from_iri(path_to_url(params[:redirect_url])) if params[:redirect_url].present?
-    return if resource.nil? || !resource.is_a?(Edge) || resource.ancestor(:forum).nil?
+  def language_from_r
+    redirect_url = params[:redirect_url]
+    return if redirect_url.blank?
+
+    resource = LinkedRails.resource_from_iri(path_to_url(redirect_url))
+    return if !resource.is_a?(Edge) || resource.ancestor(:forum).nil?
 
     language = resource.ancestor(:forum).language
     I18n.available_locales.include?(language) ? language : :en

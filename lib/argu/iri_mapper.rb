@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Argu
-  class IRIMapper # rubocop:disable Metrics/ClassLength
+  class IRIMapper
     extend NestedResourceHelper
     extend RedirectHelper
     extend UriTemplateHelper
@@ -19,16 +19,15 @@ module Argu
       # @example Nil IRI
       #   iri = nil
       #   opts_from_iri # => {}
-      def opts_from_iri(original_iri, root = nil, method: 'GET')
+      def opts_from_iri(original_iri, method: 'GET')
+        return {} if ActsAsTenant.current_tenant.nil?
+
         iri = URI(original_iri)
 
         edge_uuid = edge_uuid_from_iri(iri)
         return edge_opts(edge_uuid) if edge_uuid
 
-        root ||= TenantFinder.from_url(iri)
-        return {} if root.blank?
-
-        opts = opts_from_route(root, iri, method)
+        opts = opts_from_route(iri, method)
         return {} if opts[:controller].blank?
 
         opts
@@ -38,14 +37,13 @@ module Argu
 
       # Converts an Argu URI into a resource
       # @return [ApplicationRecord, nil] The resource corresponding to the iri, or nil if the IRI is not found
-      def resource_from_iri(original_iri, root = nil)
+      def resource_from_iri(original_iri)
         iri = URI(original_iri)
         raise "A full url is expected. #{iri} is given." if iri.blank? || relative_path?(iri)
 
-        root ||= TenantFinder.from_url(iri)
-        opts = opts_from_iri(iri, root)
+        opts = opts_from_iri(iri)
 
-        resource_from_opts(root, opts) if resource_action?(opts[:action])
+        resource_from_opts(opts) if resource_action?(opts[:action])
       end
 
       def resource_from_iri!(iri)
@@ -53,19 +51,17 @@ module Argu
       end
 
       # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      def resource_from_opts(root, opts)
-        return root if opts[:type] == 'page' && opts[:action] == 'show' && opts[:id].blank?
+      def resource_from_opts(opts)
+        return ActsAsTenant.current_tenant if opts[:type] == 'page' && opts[:action] == 'show' && opts[:id].blank?
 
         opts[:class] ||= ApplicationRecord.descendants.detect { |m| m.to_s == opts[:type].classify } if opts[:type]
         return if opts[:class].blank? || opts[:id].blank?
 
-        ActsAsTenant.with_tenant(root) do
-          return linked_record_from_opts(opts) if linked_record_from_opts?(opts)
-          return shortnameable_from_opts(opts) if shortnameable_from_opts?(opts)
-          return edge_from_opts(opts) if edge_from_opts?(opts)
+        return linked_record_from_opts(opts) if linked_record_from_opts?(opts)
+        return shortnameable_from_opts(opts) if shortnameable_from_opts?(opts)
+        return edge_from_opts(opts) if edge_from_opts?(opts)
 
-          resource_by_id_from_opts(opts)
-        end
+        resource_by_id_from_opts(opts)
       end
       # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
@@ -107,10 +103,8 @@ module Argu
         LinkedRecord.find_or_initialize_by_iri(opts[:iri])
       end
 
-      def opts_from_route(root, iri, method)
-        opts = ActsAsTenant.with_tenant(root) do
-          Rails.application.routes.recognize_path(sanitized_path(iri, root), method: method)
-        end
+      def opts_from_route(iri, method)
+        opts = Rails.application.routes.recognize_path(sanitized_path(iri), method: method)
         opts[:type] = opts[:controller]&.singularize
         opts
       end
@@ -123,20 +117,11 @@ module Argu
         opts[:class].try(:find_by, id: opts[:id])
       end
 
-      def sanitized_path(iri, root)
+      def sanitized_path(iri)
         iri.path = "#{iri.path}/" unless iri.path.ends_with?('/')
-
-        URI(root.iri.path.present? ? iri.to_s.split("#{root.iri.path}/").last : iri).path
+        tenant_path = ActsAsTenant.current_tenant.iri.path
+        URI(tenant_path.present? ? iri.to_s.split("#{tenant_path}/").last : iri).path
       end
-
-      # rubocop:disable Metrics/AbcSize
-      def sanitized_relative(iri, root)
-        iri.path = "#{iri.path}/" unless iri.path&.ends_with?('/')
-        uri = URI(root.iri.path.present? ? iri.to_s.split("#{root.iri.path}/").last : iri)
-
-        [uri.path, uri.query].compact.join('?')
-      end
-      # rubocop:enable Metrics/AbcSize
 
       def shortnameable_from_opts(opts)
         Shortname.find_resource(opts[:id], ActsAsTenant.current_tenant&.uuid) ||

@@ -12,7 +12,7 @@ module NestedResourceHelper
   end
 
   def parent_resource
-    @parent_resource ||= linked_record_parent || parent_from_params(tree_root, params_for_parent)
+    @parent_resource ||= linked_record_parent || parent_from_params(params_for_parent)
   end
 
   def linked_record_parent
@@ -40,11 +40,8 @@ module NestedResourceHelper
   # Extracts a parent resource from an Argu URI
   # @return [ApplicationRecord, nil] The parent resource corresponding to the iri, or nil if no parent is found
   def parent_from_iri(iri)
-    root = TenantFinder.from_url(iri)
-    return nil if root.blank?
-
-    route_opts = Rails.application.routes.recognize_path(DynamicUriHelper.rewrite(iri, root))
-    parent_from_params(root, route_opts) if parent_resource_key(route_opts)
+    route_opts = Rails.application.routes.recognize_path(DynamicUriHelper.rewrite(iri))
+    parent_from_params(route_opts) if parent_resource_key(route_opts)
   rescue ActionController::RoutingError
     nil
   end
@@ -53,13 +50,13 @@ module NestedResourceHelper
   # @note This method knows {Shortnameable}
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
   # @return [ApplicationRecord, nil] A resource model if found
-  def parent_from_params(root = tree_root, opts = params_for_parent)
-    return root if parent_resource_param(opts).blank? && opts[:collection].blank?
+  def parent_from_params(opts = params_for_parent)
+    return ActsAsTenant.current_tenant if parent_resource_param(opts).blank? && opts[:collection].blank?
 
     opts = opts.dup
     opts[:class] = parent_resource_class(opts)
     opts[:id] = opts.delete(parent_resource_param(opts))
-    parent_resource_or_collection(root, opts)
+    parent_resource_or_collection(opts)
   end
 
   # Extracts the resource id from a params hash
@@ -95,8 +92,9 @@ module NestedResourceHelper
     ApplicationRecord.descendants.detect { |m| m.to_s == parent_resource_type(opts)&.classify }
   end
 
-  def parent_resource_or_collection(root, opts)
-    resource = LinkedRails.resource_from_opts(root, opts.merge(type: controller_name))
+  def parent_resource_or_collection(raw_opts)
+    opts = raw_opts.merge(type: controller_name)
+    resource = LinkedRails.resource_from_opts(opts)
     return resource if opts[:collection].blank?
 
     parent_collection(resource, opts)

@@ -100,7 +100,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   def resource_from_params
     @resource_from_params ||=
-      LinkedRails.resource_from_opts(ActsAsTenant.current_tenant, params.merge(class: controller_class))
+      LinkedRails.resource_from_opts(params.merge(class: controller_class))
   end
 
   # Searches the current primary resource by its id
