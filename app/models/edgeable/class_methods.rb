@@ -14,6 +14,10 @@ module Edgeable
         Edge
       end
 
+      def collection_include_map
+        JSONAPI::IncludeDirective::Parser.parse_include_args(%i[root shortname])
+      end
+
       def edge_includes_for_index
         {
           published_publications: {},

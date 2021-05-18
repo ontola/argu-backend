@@ -70,10 +70,6 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     action_name != 'show' && !form_action?
   end
 
-  def collection_include_map
-    JSONAPI::IncludeDirective::Parser.parse_include_args([:root] + [show_includes])
-  end
-
   def current_forum; end
 
   def form_action?
