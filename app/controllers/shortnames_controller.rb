@@ -46,15 +46,6 @@ class ShortnamesController < ParentableController
     settings_iri(authenticated_resource.root, tab: 'shortnames')
   end
 
-  def tab
-    case action_name
-    when 'create', 'new'
-      :new
-    when 'edit', 'update'
-      :edit
-    end
-  end
-
   def unscoped_param
     params[:shortname].try(:[], :unscoped)&.presence if current_user.is_staff?
   end

@@ -45,14 +45,6 @@ class ContainerNodesController < EdgeableController
     requested_resource
   end
 
-  def forum_grants
-    @forum_grants ||=
-      Grant
-        .custom
-        .where(edge_id: [authenticated_resource.uuid, authenticated_resource.parent.uuid])
-        .includes(group: {group_memberships: {member: :profileable}})
-  end
-
   def model_name
     controller_classes.map { |klass| klass.name.underscore }.detect { |k| params.key?(k) }
   end
@@ -82,16 +74,6 @@ class ContainerNodesController < EdgeableController
 
   def signals_success
     controller_classes.map { |klass| :"#{action_name}_#{klass.name.underscore}_successful" }
-  end
-
-  def tab!
-    # rubocop:disable Naming/MemoizedInstanceVariableName
-    @verified_tab ||= policy(requested_resource || Forum).verify_tab(tab)
-    # rubocop:enable Naming/MemoizedInstanceVariableName
-  end
-
-  def tab
-    @tab ||= params[:tab] || params[:forum].try(:[], :tab) || policy(authenticated_resource).default_tab
   end
 
   def update_success

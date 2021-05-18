@@ -21,14 +21,4 @@ class GroupsController < ServiceController
       page: parent_resource!
     )
   end
-
-  def tab
-    @tab ||= params[:tab] || params[:group].try(:[], :tab) || policy(authenticated_resource).default_tab
-  end
-
-  def tab!
-    # rubocop:disable Naming/MemoizedInstanceVariableName
-    @verified_tab ||= policy(requested_resource || Group).verify_tab(tab)
-    # rubocop:enable Naming/MemoizedInstanceVariableName
-  end
 end

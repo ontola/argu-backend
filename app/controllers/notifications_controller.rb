@@ -8,15 +8,6 @@ class NotificationsController < AuthorizedController
 
   after_action :update_viewed_time
 
-  def show
-    respond_to do |format|
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { render type => authenticated_resource, include: :operation }
-      end
-      format.all { redirect_to authenticated_resource.activity.trackable.iri }
-    end
-  end
-
   def read
     # rubocop:disable Rails/SkipsModelValidations
     if policy_scope(Notification)
