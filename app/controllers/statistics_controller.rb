@@ -10,11 +10,11 @@ class StatisticsController < ParentableController
   end
 
   def observation_dimensions
-    @observation_dimensions ||= {NS::SCHEMA[:about] => parent_resource.iri}
+    @observation_dimensions ||= {NS::SCHEMA[:about] => parent_from_params.iri}
   end
 
   def observation_measures
-    @observation_measures ||= build_observation_measures(parent_resource)
+    @observation_measures ||= build_observation_measures(parent_from_params)
   end
 
   def requested_resource # rubocop:disable Metrics/MethodLength
@@ -28,11 +28,11 @@ class StatisticsController < ParentableController
           dimensions: observation_dimensions,
           measures: observation_measures
         ],
-        parent: parent_resource
+        parent: parent_from_params
       )
   end
 
-  def resource_by_id_parent; end
+  def requested_resource_parent; end
 
   def show_includes
     [:observations, data_structure: %i[measures dimensions]]

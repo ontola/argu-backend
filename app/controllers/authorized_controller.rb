@@ -98,15 +98,11 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     user_context.tree_root_id.nil? && resource.is_a?(Edge) ? NoRootPolicy.new(user_context, resource) : super
   end
 
-  def resource_from_params
-    @resource_from_params ||=
-      LinkedRails.resource_from_opts(params.merge(class: controller_class))
-  end
-
   # Searches the current primary resource by its id
   # @return [ActiveRecord::Base, nil] The resource by its id
   def requested_resource
-    resource_from_params
+    @requested_resource ||=
+      LinkedRails.resource_from_opts(params.merge(class: controller_class))
   end
 
   # Searches the current primary resource by its id, raises if the record cannot be found

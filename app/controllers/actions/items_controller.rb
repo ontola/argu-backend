@@ -33,10 +33,6 @@ module Actions
       parent_resource.is_a?(Page) && resource_id == 'redirect'
     end
 
-    def resource_by_id_parent; end
-
-    def resource_from_params
-      requested_resource
-    end
+    def requested_resource_parent; end
   end
 end

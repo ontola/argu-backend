@@ -38,6 +38,6 @@ class CartDetailsController < EdgeableController
   end
 
   def requested_resource
-    parent_resource.try(:cart_detail_for, current_user)
+    parent_from_params.try(:cart_detail_for, current_user)
   end
 end

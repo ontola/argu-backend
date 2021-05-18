@@ -10,7 +10,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     return unless action_name == 'show'
 
     vote = Vote.new(
-      parent: parent_resource,
+      parent: parent_from_params,
       publisher: current_user,
       creator: current_profile
     )
@@ -92,7 +92,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def iri_without_id
-    current_vote_iri(parent_resource)
+    current_vote_iri(parent_from_params)
   end
 
   def option_param
@@ -125,7 +125,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     @requested_resource ||=
       Vote
         .where_with_redis(creator: current_profile, root_id: tree_root_id)
-        .find_by(parent: parent_resource, primary: true) || abstain_vote
+        .find_by(parent: parent_from_params, primary: true) || abstain_vote
   end
 
   def resource_new_params

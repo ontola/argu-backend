@@ -3,13 +3,13 @@
 class RedirectController < ApplicationController
   def show
     ActsAsTenant.without_tenant do
-      redirect_to(resource_by_shortname || resource_from_params || raise(ActiveRecord::RecordNotFound))
+      redirect_to(resource_by_shortname || requested_resource || raise(ActiveRecord::RecordNotFound))
     end
   end
 
   private
 
-  def resource_from_params
+  def requested_resource
     LinkedRails.resource_from_opts(params)
   end
 

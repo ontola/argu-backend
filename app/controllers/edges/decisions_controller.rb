@@ -31,7 +31,7 @@ class DecisionsController < EdgeableController
     authenticated_resource.parent.iri
   end
 
-  def resource_by_id_parent; end
+  def requested_resource_parent; end
 
   def resource_new_params
     super.merge(

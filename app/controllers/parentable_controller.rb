@@ -21,7 +21,7 @@ class ParentableController < AuthorizedController
   end
 
   def parent_resource
-    @parent_resource ||= resource_by_id_parent || super
+    @parent_resource ||= requested_resource_parent || super
   end
 
   def redirect_index_requests
@@ -32,8 +32,8 @@ class ParentableController < AuthorizedController
     redirect_to(correct_url) if correct_url != request.original_url
   end
 
-  def resource_by_id_parent
-    resource_from_params&.parent
+  def requested_resource_parent
+    requested_resource&.parent
   end
 
   def resource_new_params

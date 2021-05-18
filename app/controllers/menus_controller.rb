@@ -8,8 +8,8 @@ class MenusController < LinkedRails::MenusController
 
   def authorize_action
     skip_verify_policy_scoped(true)
-    if parent_resource.present?
-      authorize parent_resource, :show?
+    if requested_resource&.resource&.present?
+      authorize requested_resource.resource, :show?
     else
       skip_verify_policy_authorized(true)
     end
@@ -21,9 +21,9 @@ class MenusController < LinkedRails::MenusController
     return if menu_list.blank?
 
     @custom_menu ||= LinkedRails.menus_item_class.new(
-      menus: menu_list.custom_menu_items(menu_tag, parent_resource),
+      menus: menu_list.custom_menu_items(menu_tag, parent_from_params),
       parent: menu_list,
-      resource: parent_resource,
+      resource: parent_from_params,
       tag: menu_tag
     )
   end
