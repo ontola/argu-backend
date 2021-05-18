@@ -3,6 +3,7 @@
 class Placement < ApplicationRecord
   include DelegatedAttributes
   include Parentable
+  enhance LinkedRails::Enhancements::Indexable
 
   belongs_to :forum, primary_key: :uuid
   belongs_to :place, autosave: true
@@ -94,6 +95,10 @@ class Placement < ApplicationRecord
     # Hands over ownership of a collection to the Community user
     def expropriate(collection)
       collection.update_all(publisher_id: User::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
+    end
+
+    def default_per_page
+      100
     end
 
     def preview_includes
