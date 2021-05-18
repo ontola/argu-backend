@@ -18,10 +18,8 @@ module Actions
 
     def current_forum; end
 
-    def requested_resource
-      resource = super
-      return resource unless parent_resource.is_a?(Page) && resource_id == 'redirect'
-
+    def redirect_action # rubocop:disable Metrics/AbcSize
+      resource = parent_resource&.action(params[:id]&.to_sym, user_context)
       resource.label = params[:label]
       resource.target = LinkedRails.entry_point_class.new(
         parent: resource,
@@ -29,6 +27,10 @@ module Actions
       )
       resource.instance_variable_set(:@iri, RDF::URI(request.original_url))
       resource
+    end
+
+    def redirect_action?
+      parent_resource.is_a?(Page) && resource_id == 'redirect'
     end
 
     def resource_by_id_parent; end
