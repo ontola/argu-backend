@@ -16,8 +16,6 @@ module Actions
       end
     end
 
-    def current_forum; end
-
     def redirect_action # rubocop:disable Metrics/AbcSize
       resource = parent_resource&.action(params[:id]&.to_sym, user_context)
       resource.label = params[:label]

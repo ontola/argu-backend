@@ -35,10 +35,6 @@ class ConversionsController < ServiceController
     opts
   end
 
-  def current_forum
-    @current_forum ||= requested_resource&.ancestor(:forum)
-  end
-
   def requested_resource; end
 
   def redirect_location

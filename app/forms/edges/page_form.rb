@@ -7,6 +7,7 @@ class PageForm < ApplicationForm
         datatype: NS::XSD[:string],
         max_count: 1,
         sh_in: -> { collection_iri(nil, :container_nodes) }
+  field :locale
   field :accepted_terms
   resource :delete_button, url: -> { delete_iri(ActsAsTenant.current_tenant) }
 

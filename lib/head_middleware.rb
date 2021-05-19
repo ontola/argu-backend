@@ -39,8 +39,6 @@ class HeadMiddleware
     }
   end
 
-  def language_from_r; end
-
   def resource_from_request
     return unless ActsAsTenant.current_tenant
 

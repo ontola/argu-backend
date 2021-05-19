@@ -16,10 +16,6 @@ class ParentableController < AuthorizedController
     authorize parent_resource!, :index_children?, controller_name, user_context: user_context
   end
 
-  def current_forum
-    @current_forum ||= parent_resource&.ancestor(:forum)
-  end
-
   def parent_resource
     @parent_resource ||= requested_resource_parent || super
   end

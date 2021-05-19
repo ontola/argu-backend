@@ -11,10 +11,6 @@ class MediaObjectsController < ParentableController
     authorize parent_resource!, :index_children?, controller_name, user_context: user_context
   end
 
-  def current_forum
-    @current_forum ||= parent_resource.try(:ancestor, :forum)
-  end
-
   def collection_from_parent_name
     return super if params[:used_as].blank?
 

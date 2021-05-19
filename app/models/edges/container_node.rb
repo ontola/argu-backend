@@ -82,10 +82,6 @@ class ContainerNode < Edge
     :container_nodes_iri
   end
 
-  def language
-    locale.split('-').first.to_sym
-  end
-
   private
 
   def create_menu_item?

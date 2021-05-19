@@ -10,26 +10,13 @@ module LanguageHelper
   end
 
   def language_for_guest
-    language_from_edge_tree || language_from_r || language_from_root || language_from_header || I18n.locale.to_s
+    language_from_root || I18n.locale.to_s
   end
-
-  def language_from_edge_tree; end
 
   def language_from_header
     HttpAcceptLanguage::Parser
       .new(request.headers['HTTP_ACCEPT_LANGUAGE'])
       .compatible_language_from(I18n.available_locales)
-  end
-
-  def language_from_r
-    redirect_url = params[:redirect_url]
-    return if redirect_url.blank?
-
-    resource = LinkedRails.resource_from_iri(path_to_url(redirect_url))
-    return if !resource.is_a?(Edge) || resource.ancestor(:forum).nil?
-
-    language = resource.ancestor(:forum).language
-    I18n.available_locales.include?(language) ? language : :en
   end
 
   def language_from_root

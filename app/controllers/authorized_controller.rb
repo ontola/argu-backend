@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AuthorizedController < ApplicationController # rubocop:disable Metrics/ClassLength
+class AuthorizedController < ApplicationController
   before_action :check_if_registered, if: :check_if_registered?
   include Argu::Controller::Authorization
 
@@ -70,16 +70,8 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     action_name != 'show' && !form_action?
   end
 
-  def current_forum; end
-
   def form_action?
     %w[new edit delete bin unbin shift settings].include?(action_name)
-  end
-
-  def language_from_edge_tree
-    return if current_forum.blank?
-
-    I18n.available_locales.include?(current_forum.language) ? current_forum.language : :en
   end
 
   # Instantiates a new record of the current controller type initialized with {resource_new_params}

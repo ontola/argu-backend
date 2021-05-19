@@ -41,10 +41,6 @@ class ContainerNodesController < EdgeableController
     ([ContainerNode] + ContainerNode.descendants)
   end
 
-  def current_forum
-    requested_resource
-  end
-
   def model_name
     controller_classes.map { |klass| klass.name.underscore }.detect { |k| params.key?(k) }
   end

@@ -15,8 +15,6 @@ class MenusController < LinkedRails::MenusController
     end
   end
 
-  def current_forum; end
-
   def custom_menu
     return if menu_list.blank?
 

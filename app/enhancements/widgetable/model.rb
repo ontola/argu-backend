@@ -22,7 +22,7 @@ module Widgetable
     def create_default_widgets
       return unless default_widgets.is_a?(Array)
 
-      I18n.with_locale(language) do
+      I18n.with_locale(root.language) do
         ActsAsTenant.with_tenant(root) do
           default_widgets.each do |widget|
             Widget.send("create_#{widget}", self)
