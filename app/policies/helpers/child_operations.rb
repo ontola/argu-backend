@@ -32,8 +32,7 @@ module ChildOperations
   #   its policy for `{method}?`
   # @return [Boolean] Whether the action is allowed. Returns a cached value when
   #   the combination {method} {klass} is already evaluated.
-  def child_operation(method, raw_klass, opts = {})
-    klass = raw_klass.to_s.classify.constantize
+  def child_operation(method, klass, opts = {})
     cache_key = "#{method}_child_for_#{klass}?".to_sym
     c = check_action(cache_key)
     return c unless c.nil?

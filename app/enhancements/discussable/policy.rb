@@ -5,7 +5,7 @@ module Discussable
     extend ActiveSupport::Concern
 
     def index_children?(raw_klass, opts = {})
-      return show? if raw_klass.to_sym == :discussions
+      return show? if raw_klass == Discussion
 
       super
     end

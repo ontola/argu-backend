@@ -13,7 +13,7 @@ class ParentableController < AuthorizedController
   def authorize_action
     return super unless action_name == 'index'
 
-    authorize parent_resource!, :index_children?, controller_name, user_context: user_context
+    authorize parent_resource!, :index_children?, controller_class, user_context: user_context
   end
 
   def parent_resource

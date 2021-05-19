@@ -84,7 +84,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       :new_component,
       image: 'fa-plus',
       policy: :create_child?,
-      policy_arguments: %i[forums],
+      policy_arguments: [Forum],
       policy_resource: ActsAsTenant.current_tenant,
       href: RDF::DynamicURI(
         path_with_hostname(expand_uri_template(:new_container_node_iri, title: I18n.t('container_nodes.type_new')))

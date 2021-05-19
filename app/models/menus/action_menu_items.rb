@@ -35,7 +35,7 @@ module Menus
         image: 'fa-bullhorn',
         href: new_iri(resource, :blog_posts),
         policy: :create_child?,
-        policy_arguments: %i[blog_posts]
+        policy_arguments: [BlogPost]
       )
     end
 
@@ -54,7 +54,7 @@ module Menus
         href: collection_iri(resource, :exports),
         image: 'fa-cloud-download',
         policy: :create_child?,
-        policy_arguments: [:exports]
+        policy_arguments: [Export]
       )
     end
 

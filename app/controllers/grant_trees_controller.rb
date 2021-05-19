@@ -4,7 +4,7 @@ class GrantTreesController < AuthorizedController
   private
 
   def authorize_action
-    authorize parent_resource!, :index_children?, :grants, user_context: user_context
+    authorize parent_resource!, :index_children?, Grant, user_context: user_context
   end
 
   def show_includes

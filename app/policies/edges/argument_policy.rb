@@ -10,7 +10,7 @@ class ArgumentPolicy < EdgePolicy
   permit_attributes %i[display_name description pro]
 
   def up_vote?
-    upvote_for(record, user.profile).blank? && child_policy('Vote').create?
+    upvote_for(record, user.profile).blank? && child_policy(Vote).create?
   end
 
   def down_vote?

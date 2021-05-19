@@ -38,7 +38,7 @@ class PagePolicy < EdgePolicy
   end
 
   def index_children?(raw_klass, opts = {})
-    return show? if %i[interventions measures].include?(raw_klass.to_sym)
+    return show? if [Intervention, Measure].include?(raw_klass)
 
     super
   end
