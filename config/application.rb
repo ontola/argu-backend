@@ -30,7 +30,7 @@ module Argu
     config.jwt_encryption_method = :hs512
 
     config.autoload_paths += %w[lib lib/input_fields]
-    [:controllers, :forms, :models, 'models/menus', :policies, :serializers].each do |type|
+    [:controllers, :forms, :menus, :models, 'models/menus', :policies, :serializers].each do |type|
       config.autoload_paths += %W[#{config.root}/app/#{type}/container_nodes]
       config.autoload_paths += %W[#{config.root}/app/#{type}/edges]
       config.autoload_paths += %W[#{config.root}/app/#{type}/rivm]

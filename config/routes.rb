@@ -103,8 +103,8 @@ Rails.application.routes.draw do
     get 'language', to: 'users/languages#edit', on: :collection, as: :edit_language
     put 'language/:locale', to: 'users/languages#update', on: :collection, as: :language
     put 'language', to: 'users/languages#update', on: :collection
-    get 'profile', to: 'menus#show', id: 'profile'
-    get 'profile/menus', to: 'sub_menus#index', menu_id: 'profile'
+    get 'profile', to: 'menus/lists#show', id: 'profile'
+    get 'profile/menus', to: 'menus/items#index', list_id: 'profile'
 
     include_route_concerns
   end
@@ -180,7 +180,7 @@ Rails.application.routes.draw do
 
   resources :pages, path: 'o', only: %i[new create show]
   get :settings, to: 'pages#settings'
-  get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
+  get 'settings/menus', to: 'menus/items#index', list_id: 'settings'
 
   resource :pages, path: '' do
     include_route_concerns(klass: Page)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CustomMenuItemSerializer < MenuItemSerializer
+class CustomMenuItemSerializer < Menus::ItemSerializer
   attribute :action, predicate: NS::ONTOLA[:action] do
     nil
   end

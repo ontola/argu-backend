@@ -7,7 +7,7 @@ module Settingable
     def route_concerns(mapper)
       mapper.concern :settingable do
         mapper.get :settings, on: :member
-        mapper.get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
+        mapper.get 'settings/menus', to: 'menus/items#index', list_id: 'settings'
       end
     end
   end
