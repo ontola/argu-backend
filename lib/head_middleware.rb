@@ -42,7 +42,7 @@ class HeadMiddleware
   def resource_from_request
     return unless ActsAsTenant.current_tenant
 
-    LinkedRails.resource_from_iri(request.original_url)
+    LinkedRails.iri_mapper.resource_from_iri(request.original_url)
   end
 
   def prepare_request(env)

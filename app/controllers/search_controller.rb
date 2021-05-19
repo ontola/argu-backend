@@ -22,10 +22,10 @@ class SearchController < EdgeableController
     )
   end
 
-  def search_resource
+  def search_resource # rubocop:disable Metrics/AbcSize
     uri = URI(request.original_url)
     uri.path = uri.path.split('.').first.chomp('/').chomp('/search')
-    route_opts = LinkedRails.opts_from_iri(uri)
+    route_opts = LinkedRails.iri_mapper.opts_from_iri(uri)
     klass = ASSOCIATIONS[route_opts[:controller]&.to_sym]
     klass&.root_collection || parent_resource
   end

@@ -15,7 +15,7 @@ module OauthHelper
 
   def current_actor_profile(user) # rubocop:disable Metrics/AbcSize
     if request.parameters[:actor_iri].present? && !request.parameters[:actor_iri].try(:literal?)
-      LinkedRails.resource_from_iri!(request.parameters[:actor_iri]).profile
+      LinkedRails.iri_mapper.resource_from_iri!(request.parameters[:actor_iri]).profile
     else
       user.profile
     end

@@ -94,7 +94,7 @@ class AuthorizedController < ApplicationController
   # @return [ActiveRecord::Base, nil] The resource by its id
   def requested_resource
     @requested_resource ||=
-      LinkedRails.resource_from_opts(params.merge(class: controller_class))
+      LinkedRails.iri_mapper.resource_from_opts(params.merge(class: controller_class))
   end
 
   # Searches the current primary resource by its id, raises if the record cannot be found

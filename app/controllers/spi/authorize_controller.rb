@@ -24,7 +24,7 @@ module SPI
       case params[:resource_type]
       when 'CurrentActor'
         profile = if (/[a-zA-Z]/i =~ params[:resource_id].to_s).present?
-                    LinkedRails.resource_from_iri(params[:resource_id])&.profile
+                    LinkedRails.iri_mapper.resource_from_iri(params[:resource_id])&.profile
                   else
                     Profile.find_by(id: params[:resource_id])
                   end
@@ -44,7 +44,7 @@ module SPI
 
     def resource_from_iri_param
       ActsAsTenant.with_tenant(TenantFinder.from_url(params[:resource_iri].to_s)) do
-        LinkedRails.resource_from_iri(path_to_url(resource_iri_param))
+        LinkedRails.iri_mapper.resource_from_iri(path_to_url(resource_iri_param))
       end
     end
 

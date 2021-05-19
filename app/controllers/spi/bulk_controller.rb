@@ -28,7 +28,7 @@ module SPI
       return super if wrong_host?(opts[:iri])
 
       include = opts[:include].to_s == 'true'
-      resource = LinkedRails.resource_from_iri(path_to_url(opts[:iri]))
+      resource = LinkedRails.iri_mapper.resource_from_iri(path_to_url(opts[:iri]))
 
       return super unless resource.try(:cacheable?)
 

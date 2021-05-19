@@ -10,7 +10,7 @@ class RedirectController < ApplicationController
   private
 
   def requested_resource
-    LinkedRails.resource_from_opts(params)
+    LinkedRails.iri_mapper.resource_from_opts(params)
   end
 
   def resource_by_shortname

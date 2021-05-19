@@ -60,7 +60,7 @@ class DirectMessage
   end
 
   def resource
-    @resource ||= LinkedRails.resource_from_iri(@resource_iri)
+    @resource ||= LinkedRails.iri_mapper.resource_from_iri(@resource_iri)
   end
 
   def send_email! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

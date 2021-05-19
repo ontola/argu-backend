@@ -27,7 +27,7 @@ class DirectMessagesController < ParentableController
   def parent_resource
     return super if parent_resource_param(params)
 
-    @parent_resource ||= LinkedRails.resource_from_iri(params[:direct_message].try(:[], :resource_iri))
+    @parent_resource ||= LinkedRails.iri_mapper.resource_from_iri(params[:direct_message].try(:[], :resource_iri))
   end
 
   def requested_resource; end

@@ -70,7 +70,7 @@ module NestedResourceHelper
   #   parent_id_from_params # => '1'
   def parent_id_from_params(opts = params)
     if resource_params[:parent].present?
-      LinkedRails.opts_from_iri(resource_params[:parent])[:id]
+      LinkedRails.iri_mapper.opts_from_iri(resource_params[:parent])[:id]
     else
       opts[parent_resource_param(opts)]
     end
@@ -94,7 +94,7 @@ module NestedResourceHelper
 
   def parent_resource_or_collection(raw_opts)
     opts = raw_opts.merge(type: controller_name)
-    resource = LinkedRails.resource_from_opts(opts)
+    resource = LinkedRails.iri_mapper.resource_from_opts(opts)
     return resource if opts[:collection].blank?
 
     parent_collection(resource, opts)
@@ -119,7 +119,7 @@ module NestedResourceHelper
   #   parent_resource_type # => 'motion'
   def parent_resource_type(opts = params)
     if resource_params[:parent].present?
-      LinkedRails.opts_from_iri(resource_params[:parent])[:type]
+      LinkedRails.iri_mapper.opts_from_iri(resource_params[:parent])[:type]
     else
       key = parent_resource_key(opts)
       key[0..-4] if key
