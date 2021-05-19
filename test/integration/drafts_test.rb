@@ -33,7 +33,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
   test 'guest should not get index' do
     sign_in :guest_user
 
-    get "/#{argu.url}#{drafts_user_path(user)}"
+    get drafts_iri
     assert_not_a_user
   end
 
@@ -42,18 +42,12 @@ class DraftsTest < ActionDispatch::IntegrationTest
   ####################################
   let(:other_user) { create(:user) }
 
-  test 'user should not get index other' do
-    sign_in other_user
-    get "/#{argu.url}#{drafts_user_path(user)}"
-    assert_not_authorized
-  end
-
   test 'user should get index' do
     sign_in user
-    get "/#{argu.url}#{drafts_user_path(user)}"
+    get drafts_iri
     assert 200
-    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
-    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:name], 'My drafts', NS::ONTOLA[:replace])
+    expect_triple(drafts_iri, NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
+    expect_triple(drafts_iri, NS::AS[:name], 'My drafts', NS::ONTOLA[:replace])
   end
 
   test 'user should publish draft with draft=false' do
@@ -117,9 +111,9 @@ class DraftsTest < ActionDispatch::IntegrationTest
     create(:group_membership, parent: group, shortname: user.url)
     create(:grant, edge: argu, group: group, grant_set: GrantSet.administrator)
     sign_in user
-    get "/#{argu.url}#{drafts_user_path(user)}"
+    get drafts_iri
     assert 200
-    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 2, NS::ONTOLA[:replace])
+    expect_triple(drafts_iri, NS::AS[:totalItems], 2, NS::ONTOLA[:replace])
   end
 
   ####################################
@@ -129,8 +123,14 @@ class DraftsTest < ActionDispatch::IntegrationTest
 
   test 'staff should get index' do
     sign_in staff
-    get "/#{argu.url}#{drafts_user_path(user)}"
+    get drafts_iri
     assert 200
-    expect_triple(collection_iri(user, :drafts, root: argu), NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
+    expect_triple(drafts_iri, NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
+  end
+
+  private
+
+  def drafts_iri
+    ActsAsTenant.with_tenant(argu) { super }
   end
 end

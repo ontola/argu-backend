@@ -27,6 +27,9 @@ class EdgeSerializer < RecordSerializer
   attribute :is_trashed,
             predicate: NS::ARGU[:trashed],
             datatype: NS::XSD[:boolean]
+  attribute :is_draft,
+            predicate: NS::ARGU[:isDraft],
+            datatype: NS::XSD[:boolean]
 
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
   attribute :last_activity_at, predicate: NS::ARGU[:lastActivityAt]

@@ -32,6 +32,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
         value ? scope.where.not(trashed_at: nil) : scope.where(trashed_at: nil)
       },
       values: [true, false]
+    },
+    NS::ARGU[:isDraft] => {
+      filter: ->(scope, value) { scope.where(is_published: !value) },
+      values: [true, false]
     }
   )
 
@@ -152,7 +156,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :untrashed, -> { where('edges.trashed_at IS NULL') }
   scope :expired, -> { where('edges.expires_at <= statement_timestamp()') }
   scope :active, -> { published.untrashed }
-  scope :draft, -> { unpublished.untrashed }
   scope :search_import, -> { published }
 
   validates :parent, presence: true, unless: :root_object?
@@ -173,7 +176,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   acts_as_sequenced scope: :root_id, column: :fragment
 
-  self.default_filters = {NS::ARGU[:trashed] => [false]}
+  self.default_filters = {
+    NS::ARGU[:trashed] => [false],
+    NS::ARGU[:isDraft] => [false]
+  }
 
   attr_writer :root
 
@@ -251,6 +257,11 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def is_child_of?(edge)
     ancestor_ids.include?(edge.id)
   end
+
+  def is_draft?
+    new_record?
+  end
+  alias is_draft is_draft?
 
   def is_trashed?
     @is_trashed ||= trashed_at ? trashed_at <= Time.current : false

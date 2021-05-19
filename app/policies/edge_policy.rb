@@ -6,11 +6,11 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
       self.class.name.split('Policy')[0]
     end
 
-    def resolve
+    def resolve # rubocop:disable Metrics/AbcSize
       return scope.none if user.nil?
 
       scope
-        .active
+        .where(active_or_creator)
         .joins(:parent)
         .with(granted_paths)
         .where(root_id: grant_tree.tree_root_id)

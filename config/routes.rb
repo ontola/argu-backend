@@ -99,7 +99,6 @@ Rails.application.routes.draw do
 
     get :pages, to: 'users/pages#index', on: :member, path: :o
     resources :pages, only: %i[], path: :o
-    get :drafts, to: 'drafts#index', on: :member
 
     get 'language', to: 'users/languages#edit', on: :collection, as: :edit_language
     put 'language/:locale', to: 'users/languages#update', on: :collection, as: :language
@@ -144,7 +143,7 @@ Rails.application.routes.draw do
   root to: 'pages#show'
 
   # @todo canonical urls of edges should redirect
-  resources :edges, only: [:show] do
+  resources :edges, only: %i[show index] do
     %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
        motions questions votes vote_events budget_shops offers orders coupon_badges].map do |edgeable|
       resources edgeable, only: :index

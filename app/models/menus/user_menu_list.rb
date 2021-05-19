@@ -16,7 +16,7 @@ class UserMenuList < ApplicationMenuList
     if resource == user
       items.concat [
         menu_item(:notifications, href: Notification.root_collection.iri),
-        menu_item(:drafts, label: I18n.t('users.drafts.title'), href: RDF::DynamicURI(drafts_user_url(resource))),
+        menu_item(:drafts, label: I18n.t('users.drafts.title'), href: drafts_iri),
         menu_item(:profile, label: I18n.t('menus.default.profile'), href: resource.action(:profile).iri),
         menu_item(:settings, label: I18n.t('menus.default.settings'), href: edit_iri(resource))
       ]
