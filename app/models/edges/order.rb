@@ -33,10 +33,6 @@ class Order < Edge
     @coupon_badge ||= parent.coupon_badges.find_by(coupons: coupon)
   end
 
-  def create_as_guest?
-    true
-  end
-
   def invalidate_token
     Property.find_by!(
       edge: coupon_badge,
@@ -49,5 +45,11 @@ class Order < Edge
     return if coupon_badge.present?
 
     errors.add(:coupon, I18n.t('orders.errors.coupon.invalid'))
+  end
+
+  class << self
+    def interact_as_guest?
+      true
+    end
   end
 end

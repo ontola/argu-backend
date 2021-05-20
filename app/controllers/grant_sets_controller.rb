@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class GrantSetsController < AuthorizedController
-  skip_before_action :check_if_registered, only: :index
-
   private
 
   def requested_resource

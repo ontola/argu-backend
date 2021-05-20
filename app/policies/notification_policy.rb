@@ -6,7 +6,7 @@ class NotificationPolicy < RestrictivePolicy
       if user && !user.guest?
         scope.where(user_id: user.id)
       else
-        scope.where(false)
+        scope.none
       end
     end
   end

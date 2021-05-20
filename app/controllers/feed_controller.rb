@@ -2,7 +2,6 @@
 
 class FeedController < AuthorizedController
   include VotesHelper
-  skip_before_action :check_if_registered, only: %i[index]
 
   private
 

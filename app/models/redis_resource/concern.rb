@@ -46,6 +46,10 @@ module RedisResource
     end
 
     class_methods do
+      def interact_as_guest?
+        true
+      end
+
       # Selects either persisted or transient record, based on the attributes.
       # @param [Hash] attributes Filter options for the owners of the edge akin to activerecords' `where`.
       # @see #store_in_redis?(attributes).

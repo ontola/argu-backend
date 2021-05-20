@@ -2,6 +2,7 @@
 
 module SPI
   class SPIController < ActionController::API
+    include LinkedRails::Controller::Authorization
     include LinkedRails::Controller::ErrorHandling
     include Argu::Controller::ErrorHandling
     include Argu::Controller::ErrorHandling::BadCredentials

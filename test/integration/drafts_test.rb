@@ -34,7 +34,9 @@ class DraftsTest < ActionDispatch::IntegrationTest
     sign_in :guest_user
 
     get drafts_iri
-    assert_not_a_user
+    assert 200
+    expect_triple(drafts_iri, NS::AS[:totalItems], 0, NS::ONTOLA[:replace])
+    expect_triple(drafts_iri, NS::AS[:name], 'My drafts', NS::ONTOLA[:replace])
   end
 
   ####################################

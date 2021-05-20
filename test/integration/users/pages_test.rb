@@ -15,7 +15,7 @@ module Users
 
       get collection_iri(user, :pages, root: other_page)
 
-      assert_not_a_user
+      assert_not_authorized
     end
 
     ####################################

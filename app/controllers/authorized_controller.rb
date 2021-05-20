@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AuthorizedController < ApplicationController
+class AuthorizedController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :check_if_registered, if: :check_if_registered?
   include Argu::Controller::Authorization
 
@@ -67,7 +67,13 @@ class AuthorizedController < ApplicationController
   end
 
   def check_if_registered?
-    action_name != 'show' && !form_action?
+    return false if SAFE_METHODS.include?(request.method)
+
+    !interact_as_guest?
+  end
+
+  def interact_as_guest?
+    controller_class.try(:interact_as_guest?)
   end
 
   def form_action?

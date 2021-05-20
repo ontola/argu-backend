@@ -12,7 +12,9 @@ class ActorsTest < ActionDispatch::IntegrationTest
 
     get actors_path, headers: argu_headers(accept: :nq)
 
-    assert_response 401
+    assert_response 200
+
+    refute_triple(LinkedRails.iri(path: actors_path), RDF[:_0], nil)
   end
 
   test 'user should get get actors' do

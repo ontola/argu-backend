@@ -5,6 +5,12 @@ class ActorsController < ParentableController
 
   private
 
+  def available_actors
+    return [] if current_user.guest?
+
+    [current_user] + current_user.managed_pages.includes(:default_cover_photo, :shortname, :default_profile_photo)
+  end
+
   def current_resource
     current_actor
   end
@@ -12,9 +18,7 @@ class ActorsController < ParentableController
   def index_association
     skip_verify_policy_scoped(true)
 
-    @index_association ||=
-      [current_user] +
-      current_user.managed_pages.includes(:default_cover_photo, :shortname, :default_profile_photo)
+    @index_association ||= available_actors
   end
 
   def preview_includes

@@ -2,8 +2,6 @@
 
 module Users
   class OtpSecretsController < LinkedRails::Auth::OtpSecretsController
-    skip_before_action :check_if_registered
-
     private
 
     def authenticated_resource

@@ -2,7 +2,6 @@
 
 module Menus
   class ItemsController < LinkedRails::Menus::ItemsController
-    skip_before_action :check_if_registered
     before_action :authorize_action
 
     private

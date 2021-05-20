@@ -16,4 +16,10 @@ class Submission < Edge
       invalidate_resource_delta(parent.action(:create_submission))
     ]
   end
+
+  class << self
+    def interact_as_guest?
+      true
+    end
+  end
 end

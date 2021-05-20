@@ -14,11 +14,15 @@ class NotificationsControllerTest < ActionController::TestCase
   ####################################
 
   test 'guest should not get index' do
+    followed_content(unconfirmed)
     sign_in :guest_user
 
     get :index, format: :nq
 
-    assert_not_a_user
+    assert_response 200
+
+    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
+    expect_triple(view, NS::AS[:totalItems], 0)
   end
 
   ####################################

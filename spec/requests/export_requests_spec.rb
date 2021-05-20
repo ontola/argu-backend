@@ -14,7 +14,7 @@ RSpec.describe 'Exports', type: :request do
   let(:destroy_failed_path) { parent_path }
   let(:create_differences) { {'Export.count' => 1} }
   let(:destroy_differences) { {'Export.count' => -1} }
-  let(:expect_get_index_guest_serializer) { expect_not_a_user }
+  let(:expect_get_index_guest_serializer) { expect_unauthorized }
   let(:non_existing_id) { SecureRandom.uuid }
 
   context 'with forum parent' do

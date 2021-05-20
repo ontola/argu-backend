@@ -117,7 +117,7 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   # DESTROY
   test 'guest should not destroy otp secret' do
     sign_in guest_user
-    otp_secret_destroy(response: :forbidden, should: false)
+    otp_secret_destroy(response: :unauthorized, should: false)
   end
 
   test 'user should not destroy otp secret' do

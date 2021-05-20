@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class WidgetsController < ServiceController
-  skip_before_action :check_if_registered, only: :index
-
   private
 
   def create_includes

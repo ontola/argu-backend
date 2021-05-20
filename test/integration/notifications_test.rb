@@ -26,7 +26,11 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     argument
     sign_in :guest_user
     get collection_iri(argu, :notifications)
-    assert_response 401
+    assert_response 200
+    ActsAsTenant.with_tenant(argu) do
+      view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
+      expect_triple(view, NS::AS[:totalItems], 0)
+    end
   end
 
   test 'guest should not mark as read' do

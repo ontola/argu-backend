@@ -31,18 +31,8 @@ class EdgeableController < ServiceController
       .map(&:name)
   end
 
-  def check_if_registered?
-    return !create_as_guest? if %(create destroy trash).include?(action_name)
-
-    super && action_name != 'index'
-  end
-
   def collection_view_includes(_member_includes = {})
     {member_sequence: {}}
-  end
-
-  def create_as_guest?
-    controller_class.include?(RedisResource::Concern) || controller_class == Submission
   end
 
   def create_meta
