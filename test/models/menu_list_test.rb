@@ -10,14 +10,12 @@ class MenuListTest < ActiveSupport::TestCase
   let(:user) { create(:user) }
   let(:user_context) do
     UserContext.new(
-      doorkeeper_scopes: {},
       profile: user.profile,
       user: user
     )
   end
   let(:other_page_context) do
     UserContext.new(
-      doorkeeper_scopes: {},
       profile: user.profile,
       user: user
     )
@@ -26,7 +24,6 @@ class MenuListTest < ActiveSupport::TestCase
   let(:administrator) { create_administrator(argu) }
   let(:administrator_context) do
     UserContext.new(
-      doorkeeper_scopes: {},
       profile: administrator.profile,
       user: administrator
     )

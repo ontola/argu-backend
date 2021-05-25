@@ -6,7 +6,7 @@ RSpec.describe SearchResult, type: :model do
   define_spec_objects
   let(:parent) { argu }
   let(:q) { 'motion' }
-  let(:user_context) { UserContext.new(user: user, profile: user.profile, doorkeeper_scopes: {}) }
+  let(:user_context) { UserContext.new(user: user, profile: user.profile) }
   let(:user) { create(:user) }
 
   before do

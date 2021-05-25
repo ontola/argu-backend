@@ -74,9 +74,7 @@ module Argu
           .name
           .gsub('Test', '')
           .constantize
-          .new(UserContext.new(doorkeeper_scopes: {},
-                               profile: user.profile,
-                               user: user), subject)
+          .new(UserContext.new(profile: user.profile, user: user), subject)
       end
 
       def reset_grants(user_type)

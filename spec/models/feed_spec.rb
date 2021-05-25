@@ -11,7 +11,7 @@ RSpec.describe Feed, type: :model do
   let(:user) { create(:user) }
   let(:scoped_activities) do
     ActivityPolicy::Scope.new(
-      UserContext.new(doorkeeper_scopes: {}, profile: user.profile, user: user),
+      UserContext.new(profile: user.profile, user: user),
       subject.activities
     ).resolve
   end

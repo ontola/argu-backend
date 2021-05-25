@@ -28,7 +28,7 @@ class MenusTest < ActionDispatch::IntegrationTest
   end
   let!(:settings) { Setting.set('suggested_forums', [freetown.uuid, SecureRandom.uuid].join(',')) }
   let(:user) { create(:user) }
-  let(:user_context) { UserContext.new(user: user, profile: user.profile, doorkeeper_scopes: {}) }
+  let(:user_context) { UserContext.new(user: user, profile: user.profile) }
 
   ####################################
   # As Guest

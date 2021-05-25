@@ -191,7 +191,7 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
   end
 
   def scope
-    @scope ||= UserContext.new(user: export.user, doorkeeper_scopes: %w[export])
+    @scope ||= UserContext.new(user: export.user, doorkeeper_token: Doorkeeper::AccessToken.new(scopes: %w[export]))
   end
 
   def serializer_for(record)

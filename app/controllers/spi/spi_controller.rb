@@ -13,7 +13,7 @@ module SPI
     def user_context
       @user_context ||=
         UserContext.new(
-          doorkeeper_scopes: doorkeeper_scopes,
+          doorkeeper_token: doorkeeper_token,
           profile: current_user.profile,
           user: current_user
         )

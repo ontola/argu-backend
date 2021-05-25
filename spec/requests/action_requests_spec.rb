@@ -16,14 +16,7 @@ RSpec.describe 'Actions', type: :request do
 
   context 'for notification read' do
     subject do
-      NotificationActionList.new(
-        resource: notification,
-        user_context: UserContext.new(
-          doorkeeper_scopes: 'user',
-          user: authorized_user,
-          profile: authorized_user.profile
-        )
-      ).action(:read)
+      NotificationActionList.new(resource: notification).action(:read)
     end
 
     let(:notification) { Notification.first }

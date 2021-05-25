@@ -73,7 +73,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
   let(:creator) { create(:user) }
   let(:profile_hidden_votes) { create(:user, show_feed: false).profile }
-  let(:context) { UserContext.new(doorkeeper_scopes: 'test') }
+  let(:context) { UserContext.new }
 
   ####################################
   # as Guest

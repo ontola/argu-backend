@@ -27,7 +27,7 @@ module OauthHelper
   end
 
   def doorkeeper_unauthorized_render_options(error: nil)
-    @user_context ||= UserContext.new(doorkeeper_scopes: [], profile: nil, user: nil)
+    @user_context ||= UserContext.new(profile: nil, user: nil)
 
     super
   end
@@ -56,7 +56,7 @@ module OauthHelper
     @user_context ||=
       request.env['User-Context'] ||
       UserContext.new(
-        doorkeeper_scopes: doorkeeper_scopes,
+        doorkeeper_token: doorkeeper_token,
         profile: current_profile,
         user: current_user
       )

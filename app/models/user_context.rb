@@ -3,13 +3,13 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  attr_accessor :user
-  attr_reader :actor, :doorkeeper_scopes
+  attr_accessor :doorkeeper_token, :user
+  attr_reader :actor
 
-  def initialize(doorkeeper_scopes: Doorkeeper::OAuth::Scopes.from_array([]), profile: nil, user: nil)
+  def initialize(doorkeeper_token: nil, profile: nil, user: nil)
+    @doorkeeper_token = doorkeeper_token
     @user = user || GuestUser.new
     @actor = profile
-    @doorkeeper_scopes = doorkeeper_scopes
     @lookup_map = {}
     @grant_trees = {}
   end
@@ -22,10 +22,31 @@ class UserContext
     val
   end
 
+  def cache_scope?
+    doorkeeper_scopes&.include? 'cache'
+  end
+
   def check_key(ident, key)
     return if ident.nil?
 
     @lookup_map.dig(ident, key)
+  end
+
+  def doorkeeper_scopes
+    doorkeeper_token&.scopes
+  end
+
+  def doorkeeper_token_payload
+    @doorkeeper_token_payload ||= JWT.decode(
+      doorkeeper_token.token,
+      Doorkeeper::JWT.configuration.secret_key,
+      true,
+      algorithms: [Doorkeeper::JWT.configuration.encryption_method.to_s.upcase]
+    )[0]
+  end
+
+  def export_scope?
+    doorkeeper_scopes&.include? 'export'
   end
 
   def grant_tree
@@ -42,12 +63,8 @@ class UserContext
     @grant_trees[tree_root.uuid] ||= GrantTree.new(tree_root)
   end
 
-  def cache_scope?
-    doorkeeper_scopes&.include? 'cache'
-  end
-
-  def export_scope?
-    doorkeeper_scopes&.include? 'export'
+  def language
+    @language ||= doorkeeper_token_payload['user']['language']
   end
 
   def service_scope?
