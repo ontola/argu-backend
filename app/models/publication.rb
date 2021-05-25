@@ -77,4 +77,10 @@ class Publication < ApplicationRecord
 
     self.job_id = PublicationsWorker.perform_at(published_at, publishable.uuid)
   end
+
+  class << self
+    def attributes_for_new(opts)
+      super.merge(publishable: opts[:parent])
+    end
+  end
 end

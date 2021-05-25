@@ -21,21 +21,9 @@ class DecisionsController < EdgeableController
     end
   end
 
-  def new_resource_from_params
-    decision = parent_resource!.decisions.unpublished.where(publisher: current_user).first
-    decision = super if decision.nil?
-    decision
-  end
-
   def redirect_location
     authenticated_resource.parent.iri
   end
 
   def requested_resource_parent; end
-
-  def resource_new_params
-    super.merge(
-      state: params[:state]
-    )
-  end
 end

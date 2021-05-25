@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AuthorizedController < ApplicationController # rubocop:disable Metrics/ClassLength
+class AuthorizedController < ApplicationController
   before_action :check_if_registered, if: :check_if_registered?
   include Argu::Controller::Authorization
 
@@ -53,7 +53,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     @authenticated_resource ||=
       case action_name
       when 'create', 'new'
-        new_resource_from_params
+        new_resource
       else
         requested_resource
       end
@@ -80,16 +80,10 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     %w[new edit delete bin unbin shift settings].include?(action_name)
   end
 
-  # Instantiates a new record of the current controller type initialized with {resource_new_params}
-  # @return [ActiveRecord::Base] A fresh model instance
-  def new_resource_from_params
-    controller_class.new(**resource_new_params)
-  end
-
   def permit_params
     params
       .require(model_name)
-      .permit(*policy(requested_resource || new_resource_from_params).permitted_attributes)
+      .permit(*policy(requested_resource || new_resource).permitted_attributes)
   end
 
   def policy(resource)
@@ -108,12 +102,6 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   # @raise [ActiveRecord::RecordNotFound]
   def requested_resource!
     requested_resource || raise(ActiveRecord::RecordNotFound)
-  end
-
-  # Used in {authenticated_resource!} to build a new object.
-  # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
-  def resource_new_params
-    {}
   end
 
   def resource_id

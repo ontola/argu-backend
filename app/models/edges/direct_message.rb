@@ -81,4 +81,16 @@ class DirectMessage
       subject: subject
     )
   end
+
+  class << self
+    def attributes_for_new(opts)
+      user = opts[:user_context]&.user
+      confirmed_email_addresses = user&.email_addresses&.confirmed || []
+      {
+        actor: user&.iri,
+        email_address_id: confirmed_email_addresses.any? ? user.primary_email_record.iri : nil,
+        resource: opts[:parent]
+      }
+    end
+  end
 end

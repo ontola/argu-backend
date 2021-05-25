@@ -17,12 +17,6 @@ class CartDetailsController < EdgeableController
     {member_sequence: {members: member_includes}}
   end
 
-  def new_resource_from_params
-    return super unless parent_resource!.is_a?(Cart)
-
-    controller_class.new(parent: parent_resource!.parent)
-  end
-
   def parent_resource
     return super unless super.is_a?(BudgetShop)
 
@@ -31,10 +25,6 @@ class CartDetailsController < EdgeableController
 
   def permit_params
     {}
-  end
-
-  def resource_new_params
-    super.merge(shop_id: parent_resource.parent.id)
   end
 
   def requested_resource

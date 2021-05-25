@@ -45,4 +45,23 @@ class Follow < ApplicationRecord
   def terms_accepted
     errors.add(:follower, 'Terms not accepted') if follower.last_accepted.nil?
   end
+
+  class << self
+    def build_new(opts)
+      user = opts[:user_context]&.user
+      followable = Edge.find_by(uuid: find_params[:gid])
+      return if followable.nil? || permitted_classes.detect { |klass| followable.is_a?(klass) }.nil?
+
+      user.follows.find_or_initialize_by(
+        followable_id: followable.uuid,
+        followable_type: 'Edge'
+      )
+    end
+
+    private
+
+    def permitted_classes
+      @permitted_classes ||= Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze
+    end
+  end
 end

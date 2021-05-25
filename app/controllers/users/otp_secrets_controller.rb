@@ -8,10 +8,6 @@ module Users
       current_resource
     end
 
-    def resource_new_params
-      {}
-    end
-
     def same_as_statement
       RDF::Statement.new(
         LinkedRails.iri(path: '/u/otp_secrets/delete'),

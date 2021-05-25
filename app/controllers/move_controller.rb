@@ -18,8 +18,4 @@ class MoveController < ServiceController
     add_exec_action_header(headers, ontola_redirect_action(authenticated_resource.edge.iri, reload: true))
     super
   end
-
-  def resource_new_params
-    {edge: parent_resource!}
-  end
 end

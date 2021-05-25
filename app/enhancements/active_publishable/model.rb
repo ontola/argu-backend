@@ -50,6 +50,15 @@ module ActivePublishable
     end
 
     module ClassMethods
+      def build_new(opts)
+        resource = super
+        resource.build_argu_publication(
+          published_at: Time.current,
+          follow_type: 'reactions'
+        )
+        resource
+      end
+
       def includes_for_serializer
         super.merge(argu_publication: {}, published_publications: {})
       end

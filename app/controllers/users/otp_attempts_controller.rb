@@ -6,10 +6,6 @@ module Users
 
     private
 
-    def new_resource_from_params
-      new_resource
-    end
-
     def handle_expired_session
       @user_id_from_session = User::COMMUNITY_ID
 

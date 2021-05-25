@@ -26,14 +26,6 @@ class PagesController < EdgeableController
     authenticated_resource.build_profile
   end
 
-  def new_resource_from_params
-    Page.new(
-      creator: service_creator,
-      publisher: service_publisher,
-      is_published: true
-    )
-  end
-
   def permit_params
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
 

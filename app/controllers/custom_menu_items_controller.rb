@@ -11,13 +11,6 @@ class CustomMenuItemsController < ParentableController
     settings_iri(parent_resource, tab: :custom_menu_items)
   end
 
-  def resource_new_params
-    {
-      menu_type: :navigations,
-      resource: parent_resource!
-    }
-  end
-
   def update_meta
     create_meta
   end

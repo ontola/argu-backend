@@ -10,8 +10,28 @@ module Edgeable
         collection.update_all(creator_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
       end
 
+      def attributes_for_new(opts)
+        attrs = {
+          owner_type: name,
+          parent: opts[:parent],
+          persisted_edge: opts[:parent].try(:persisted_edge),
+          is_published: true
+        }
+        user_context = opts[:user_context]
+        attrs[:publisher] = user_context&.user || User.new(show_feed: true)
+        attrs[:creator] = user_context&.actor unless user_context&.actor&.profileable&.guest?
+        attrs
+      end
+
       def base_class
         Edge
+      end
+
+      def build_new(opts)
+        record = super
+        grant_tree = opts[:user_context]&.grant_tree
+        grant_tree&.cache_node(record.parent.try(:persisted_edge)) if record.parent.try(:persisted_edge)
+        record
       end
 
       def collection_include_map

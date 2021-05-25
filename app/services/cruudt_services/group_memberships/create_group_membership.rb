@@ -2,7 +2,7 @@
 
 class CreateGroupMembership < CreateService
   def initialize(group, attributes: {}, options: {})
-    @resource = GroupMembership.new(group: group)
+    @resource = group.build_child(GroupMembership)
     attributes = HashWithIndifferentAccess.new(attributes)
     attributes[:member] = if attributes['shortname'].present?
                             Shortname.find_resource(attributes.delete('shortname')).profile

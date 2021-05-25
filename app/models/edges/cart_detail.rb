@@ -67,6 +67,13 @@ class CartDetail < Edge
   end
 
   class << self
+    def attributes_for_new(opts)
+      super.merge(
+        parent: opts[:parent].is_a?(Cart) ? opts[:parent].parent : opts[:parent],
+        shop_id: opts[:parent]&.parent&.id
+      )
+    end
+
     def default_filters
       {}
     end

@@ -116,6 +116,13 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
+    def attributes_for_new(opts)
+      {
+        menu_type: :navigations,
+        resource: opts[:parent]
+      }
+    end
+
     def default_collection_display
       :table
     end

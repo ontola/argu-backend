@@ -26,6 +26,15 @@ module Placeable
     end
 
     module ClassMethods
+      def build_new(opts)
+        child = super
+        lat = attribute_from_filter(opts[:filter], NS::SCHEMA[:latitude])
+        lon = attribute_from_filter(opts[:filter], NS::SCHEMA[:longitude])
+        zoom_level = attribute_from_filter(opts[:filter], NS::ONTOLA[:zoomLevel])
+        child.build_custom_placement(lat: lat, lon: lon, zoom_level: zoom_level) if lat && lon
+        child
+      end
+
       def define_placement_associations(type)
         class_name = type == :home ? 'HomePlacement' : 'Placement'
         has_one "#{type}_placement".to_sym,

@@ -89,6 +89,12 @@ class GroupMembership < ApplicationRecord
       # rubocop:enable Rails/SkipsModelValidations
     end
 
+    def attributes_for_new(opts)
+      attrs = super
+      attrs[:group] = opts[:parent]
+      attrs
+    end
+
     def includes_for_serializer
       [user: {}, group: {}]
     end

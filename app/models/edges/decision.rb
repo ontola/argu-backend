@@ -63,5 +63,11 @@ class Decision < Edge
     def actioned_keys
       states.keys[1..]
     end
+
+    def attributes_for_new(_opts)
+      super.merge(
+        state: 'forwarded'
+      )
+    end
   end
 end

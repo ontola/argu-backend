@@ -105,6 +105,12 @@ class ContainerNode < Edge
   end
 
   class << self
+    def attributes_for_new(opts)
+      attrs = super
+      attrs[:locale] = ActsAsTenant.current_tenant.locale
+      attrs
+    end
+
     def iri
       [super, NS::ARGU[:ContainerNode]]
     end

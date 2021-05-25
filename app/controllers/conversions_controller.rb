@@ -3,7 +3,6 @@
 class ConversionsController < ServiceController
   active_response :new, :create
 
-  include ConvertibleHelper
   before_action :verify_convertible_edge
 
   private
@@ -14,7 +13,7 @@ class ConversionsController < ServiceController
       when 'create'
         create_service.resource
       when 'new'
-        new_resource_from_params
+        new_resource
       end
   end
 
@@ -39,13 +38,6 @@ class ConversionsController < ServiceController
 
   def redirect_location
     authenticated_resource.is_a?(Edge) ? authenticated_resource.iri : authenticated_resource.edge.iri
-  end
-
-  def resource_new_params
-    {
-      edge: parent_resource!,
-      klass: convertible_class_names(parent_resource!)&.first
-    }
   end
 
   def service_options(options = {})

@@ -29,17 +29,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def after_login_location
-    expand_uri_template(
-      :new_vote,
-      voteable_path: parent_resource!.iri.path.split('/').select(&:present?),
-      confirm: true,
-      redirect_url: params[:redirect_url],
-      'vote%5Bfor%5D' => option_param,
-      with_hostname: true
-    )
-  end
-
   def authorize_action
     return super unless action_name == 'create'
 
@@ -95,12 +84,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     current_vote_iri(parent_from_params)
   end
 
-  def option_param
-    option = collection_params[:filter].try(:[], NS::SCHEMA.option)&.first || params[:vote].try(:[], :option)
-
-    option.present? && option !~ /\D/ ? Vote.options.key(option.to_i) : option
-  end
-
   def permit_params
     return super if params[:vote].present?
 
@@ -126,13 +109,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       Vote
         .where_with_redis(creator: current_profile, root_id: tree_root_id)
         .find_by(parent: parent_from_params, primary: true) || abstain_vote
-  end
-
-  def resource_new_params
-    super.merge(
-      option: option_param,
-      primary: true
-    )
   end
 
   def invalidate_trash_action

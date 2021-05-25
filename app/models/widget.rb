@@ -95,6 +95,16 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
+    def attributes_for_new(opts)
+      action = PermittedAction.find_by!(resource_type: opts[:parent].owner_type, action: :show) if opts[:parent]
+
+      super.merge(
+        owner: opts[:parent],
+        permitted_action: action,
+        widget_type: :custom
+      )
+    end
+
     def iri
       NS::ONTOLA[:Widget]
     end

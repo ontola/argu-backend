@@ -87,6 +87,15 @@ class Comment < Edge
   end
 
   class << self
+    def attributes_for_new(opts)
+      attrs = super
+      attrs[:parent_comment_id] = opts[:parent].uuid if opts[:parent].is_a?(Comment)
+      attrs[:pdf_page] = attribute_from_filter(opts[:filter], NS::ARGU[:pdfPage])
+      attrs[:pdf_position_x] = attribute_from_filter(opts[:filter], NS::ARGU[:pdfPositionX])
+      attrs[:pdf_position_y] = attribute_from_filter(opts[:filter], NS::ARGU[:pdfPositionY])
+      attrs
+    end
+
     def includes_for_serializer
       super.merge(comments: {}, vote: {})
     end

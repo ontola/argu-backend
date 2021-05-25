@@ -41,10 +41,6 @@ class EdgeableController < ServiceController
     resource_added_delta(authenticated_resource)
   end
 
-  def default_publication_follow_type
-    'reactions'
-  end
-
   def form_resource_includes(action)
     includes = super
     return includes unless action_name == 'new' && action.included_object
@@ -55,24 +51,6 @@ class EdgeableController < ServiceController
 
   def guest_creator?
     current_user.guest? && !controller_class.include?(RedisResource::Concern)
-  end
-
-  # Instantiates a new record of the current controller type initialized with {resource_new_params}
-  # @return [ActiveRecord::Base] A fresh model instance
-  def new_resource_from_params
-    resource = super
-    resource.parent = parent_resource!
-    if resource.is_publishable?
-      resource.build_argu_publication(
-        published_at: Time.current,
-        follow_type: default_publication_follow_type
-      )
-    end
-    resource
-  end
-
-  def resource_new_params
-    super.merge(owner_type: controller_name.classify)
   end
 
   def service_creator

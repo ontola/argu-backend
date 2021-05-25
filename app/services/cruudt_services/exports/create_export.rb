@@ -2,7 +2,7 @@
 
 class CreateExport < CreateService
   def initialize(resource, attributes: {}, options: {})
-    @resource = resource.exports.new
+    @resource = resource.build_child(Export)
     super
   end
 end

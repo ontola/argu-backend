@@ -15,14 +15,6 @@ class GrantsController < ServiceController
     settings_iri(authenticated_resource.root, tab: :groups)
   end
 
-  def resource_new_params
-    HashWithIndifferentAccess.new(
-      edge_id: params[:edge_id] || (parent_resource.is_a?(Edge) ? parent_resource!.uuid : nil),
-      group_id: params[:group_id],
-      grant_set: GrantSet.participator
-    )
-  end
-
   def service_options
     super.except(:publisher, :creator)
   end

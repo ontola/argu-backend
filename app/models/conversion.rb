@@ -36,4 +36,19 @@ class Conversion < VirtualResource
     edge.convert_to(klass)
   end
   alias save! save
+
+  class << self
+    def attributes_for_new(opts)
+      {
+        edge: opts[:parent],
+        klass: convertible_class_names(opts[:parent])&.first
+      }
+    end
+
+    private
+
+    def convertible_class_names(record)
+      record.convertible_classes.keys.map(&:to_s) if record.is_convertible?
+    end
+  end
 end

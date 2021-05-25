@@ -95,6 +95,14 @@ class Vote < Edge
       collection.destroy_all
     end
 
+    def attributes_for_new(opts)
+      attrs = super
+      option = attribute_from_filter(opts[:filter], NS::SCHEMA.option)
+      attrs[:option] = option.present? && option !~ /\D/ ? Vote.options.key(option.to_i) : option
+      attrs[:primary] = true
+      attrs
+    end
+
     def includes_for_serializer
       super.merge(publisher: {}, comment: :properties)
     end

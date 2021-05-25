@@ -19,12 +19,6 @@ class EmailAddressesController < ParentableController
     current_user.menu(:profile).iri(fragment: :settings)
   end
 
-  def resource_new_params
-    {
-      user: current_user
-    }
-  end
-
   def update_meta
     meta = super
     meta.concat(primary_change_meta) if current_resource.previous_changes.key?(:primary)

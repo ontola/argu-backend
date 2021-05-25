@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module ChildOperations
-  include ChildHelper
-
   # Checks whether creating a child of a given class is allowed
   # Initialises a child with the given attributes and checks its policy for new?
   # @param raw_klass [Symbol] the class of the child
@@ -26,6 +24,10 @@ module ChildOperations
     verdict = policy.send(method) || false
     @message = policy.try(:message)
     verdict
+  end
+
+  def child_instance(parent, klass, opts)
+    parent.build_child(klass, opts)
   end
 
   # Initialises a child of the type {raw_klass} with the given {attrs} and checks

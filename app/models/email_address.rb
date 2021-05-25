@@ -117,6 +117,10 @@ class EmailAddress < ApplicationRecord
   end
 
   class << self
+    def attributes_for_new(opts)
+      {user: opts[:user_context]&.user}
+    end
+
     def input_select_property
       NS::SCHEMA[:email]
     end

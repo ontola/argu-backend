@@ -57,4 +57,12 @@ class Move < VirtualResource
   def find_parent(id)
     uuid?(id) ? Edge.find_by!(uuid: id) : LinkedRails.iri_mapper.resource_from_iri!(id)
   end
+
+  class << self
+    def attributes_for_new(opts)
+      {
+        edge: opts[:parent]
+      }
+    end
+  end
 end

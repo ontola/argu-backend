@@ -36,6 +36,13 @@ class Export < ApplicationRecord
   end
 
   class << self
+    def attributes_for_new(opts)
+      {
+        edge: opts[:parent],
+        user: opts[:user_context]&.user
+      }
+    end
+
     def default_collection_display
       :table
     end

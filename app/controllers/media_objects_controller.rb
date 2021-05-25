@@ -14,11 +14,4 @@ class MediaObjectsController < ParentableController
 
     "#{params[:used_as]}_collection"
   end
-
-  def resource_new_params
-    {
-      about: parent_resource,
-      used_as: params[:used_as]
-    }
-  end
 end

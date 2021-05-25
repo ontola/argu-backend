@@ -3,10 +3,6 @@
 class DirectMessagesController < ParentableController
   private
 
-  def confirmed_email_addresses
-    current_user.email_addresses.confirmed
-  end
-
   def create_execute # rubocop:disable Metrics/AbcSize
     authenticated_resource.assign_attributes(permit_params)
     authenticated_resource.actor = current_actor.actor
@@ -34,14 +30,6 @@ class DirectMessagesController < ParentableController
 
   def redirect_location
     authenticated_resource.resource.iri
-  end
-
-  def resource_new_params
-    {
-      actor: current_profile.iri,
-      email_address_id: confirmed_email_addresses.any? ? current_user.primary_email_record.iri : nil,
-      resource: parent_resource
-    }
   end
 
   def active_response_success_message

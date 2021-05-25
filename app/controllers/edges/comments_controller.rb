@@ -20,13 +20,4 @@ class CommentsController < EdgeableController
   def destroy_success_location
     authenticated_resource.parent.iri
   end
-
-  def resource_new_params # rubocop:disable Metrics/AbcSize
-    new_params = super
-    new_params[:parent_comment_id] = parent_resource.uuid if parent_resource.is_a?(Comment)
-    new_params[:pdf_page] = collection_params['filter'][NS::ARGU[:pdfPage]]&.first
-    new_params[:pdf_position_x] = collection_params['filter'][NS::ARGU[:pdfPositionX]]&.first
-    new_params[:pdf_position_y] = collection_params['filter'][NS::ARGU[:pdfPositionY]]&.first
-    new_params
-  end
 end

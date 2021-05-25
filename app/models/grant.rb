@@ -72,4 +72,19 @@ class Grant < ApplicationRecord
   def page
     parent.root
   end
+
+  class << self
+    def attributes_for_new(opts)
+      attrs = super.merge(
+        grant_set: GrantSet.participator
+      )
+      parent = opts[:parent]
+      if parent.is_a?(Group)
+        attrs[:group] = parent
+      else
+        attrs[:edge] = parent
+      end
+      attrs
+    end
+  end
 end

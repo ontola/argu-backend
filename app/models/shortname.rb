@@ -115,6 +115,14 @@ class Shortname < ApplicationRecord
   end
 
   class << self
+    def attributes_for_new(opts)
+      {
+        primary: false,
+        owner: opts[:parent],
+        root_id: ActsAsTenant.current_tenant
+      }
+    end
+
     def includes_for_serializer
       [owner: {}]
     end

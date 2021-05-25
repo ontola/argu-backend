@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class FollowsController < AuthorizedController
-  PERMITTED_CLASSES = Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze
-
   include UriTemplateHelper
 
   skip_before_action :check_if_registered, only: :destroy
@@ -68,22 +66,6 @@ class FollowsController < AuthorizedController
       font_awesome_iri(menu_item.image),
       delta_iri(:replace)
     ]
-  end
-
-  def new_resource_from_params # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    return @authenticated_resource if instance_variable_defined?(:@authenticated_resource)
-
-    followable = Edge.find_by(uuid: find_params[:gid])
-    if followable.nil? || PERMITTED_CLASSES.detect { |klass| followable.is_a?(klass) }.nil?
-      return @authenticated_resource = nil
-    end
-
-    @authenticated_resource = current_user.follows.find_or_initialize_by(
-      followable_id: followable.uuid,
-      followable_type: 'Edge'
-    )
-    @authenticated_resource.follow_type = action_name == 'create' ? find_params[:follow_type] || :reactions : :never
-    @authenticated_resource
   end
 
   def permit_params

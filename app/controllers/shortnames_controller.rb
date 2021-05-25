@@ -34,14 +34,6 @@ class ShortnamesController < ParentableController
     super.except(:destination)
   end
 
-  def resource_new_params
-    HashWithIndifferentAccess.new(
-      primary: false,
-      owner: parent_resource!,
-      root_id: parent_resource.root_id
-    )
-  end
-
   def redirect_location
     settings_iri(authenticated_resource.root, tab: 'shortnames')
   end

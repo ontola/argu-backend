@@ -31,8 +31,4 @@ class ExportsController < ServiceController
   def redirect_location
     export_iri(authenticated_resource.edge)
   end
-
-  def resource_new_params
-    {user: current_user, edge: parent_resource!}
-  end
 end

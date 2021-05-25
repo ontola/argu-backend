@@ -34,4 +34,18 @@ class Invite < VirtualResource
   def iri_opts
     {parent_iri: split_iri_segments(edge&.iri_path)}
   end
+
+  class << self
+    def attributes_for_new(opts)
+      attrs = {
+        edge: opts[:parent],
+        message: I18n.t('tokens.discussion.default_message', resource: opts[:parent].display_name),
+        redirect_url: opts[:parent].iri.to_s,
+        root_id: ActsAsTenant.current_tenant,
+        send_mail: true
+      }
+      attrs[:creator] = opts[:user_context]&.user&.iri
+      attrs
+    end
+  end
 end

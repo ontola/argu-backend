@@ -37,13 +37,7 @@ class GroupMembershipsController < ServiceController
   end
 
   def permit_params
-    params.permit(*policy(requested_resource || new_resource_from_params).permitted_attributes)
-  end
-
-  def resource_new_params
-    {
-      group: parent_resource!
-    }
+    params.permit(*policy(requested_resource || new_resource).permitted_attributes)
   end
 
   def redirect_param

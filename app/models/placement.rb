@@ -92,6 +92,10 @@ class Placement < ApplicationRecord
       collection.update_all(creator_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
     end
 
+    def attributes_for_new(opts)
+      super.merge(placeable: opts[:parent])
+    end
+
     # Hands over ownership of a collection to the Community user
     def expropriate(collection)
       collection.update_all(publisher_id: User::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations

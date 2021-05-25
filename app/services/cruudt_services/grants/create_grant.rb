@@ -2,7 +2,7 @@
 
 class CreateGrant < CreateService
   def initialize(parent, attributes: {}, options: {})
-    @resource = Grant.new
+    @resource = Grant.build_new
     super
   end
 

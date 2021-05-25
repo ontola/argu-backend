@@ -2,7 +2,7 @@
 
 class CreateWidget < CreateService
   def initialize(parent, attributes: {}, options: {})
-    @resource = Widget.new(owner: parent)
+    @resource = parent.build_child(Widget)
     super
   end
 end

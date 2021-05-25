@@ -9,10 +9,6 @@ class ApplicationRecord < ActiveRecord::Base
 
   self.abstract_class = true
 
-  def build_child(klass, opts = {})
-    ChildHelper.child_instance(self, klass, opts)
-  end
-
   class << self
     def collection_include_map
       JSONAPI::IncludeDirective::Parser.parse_include_args([:root] + [show_includes])

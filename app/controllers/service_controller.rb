@@ -40,7 +40,7 @@ class ServiceController < ParentableController
   def create_service
     @create_service ||= service_klass.new(
       create_service_parent,
-      attributes: resource_new_params.merge(permit_params.to_h).with_indifferent_access,
+      attributes: permit_params.to_h.with_indifferent_access,
       options: service_options
     )
   end
@@ -67,13 +67,6 @@ class ServiceController < ParentableController
     action_service.on(*signals_success, &method(:active_response_handle_success))
     action_service.on(*signals_failure, &method(:active_response_handle_failure))
     action_service.commit
-  end
-
-  def resource_new_params
-    HashWithIndifferentAccess.new(
-      creator: service_creator,
-      publisher: service_publisher
-    )
   end
 
   def service_creator

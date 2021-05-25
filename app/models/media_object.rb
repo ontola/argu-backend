@@ -171,6 +171,12 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
+    def attributes_for_new(opts)
+      super.merge(
+        about: opts[:parent]
+      )
+    end
+
     def content_type_white_list
       MediaObjectUploader::ARCHIVE_TYPES +
         MediaObjectUploader::DOCUMENT_TYPES +

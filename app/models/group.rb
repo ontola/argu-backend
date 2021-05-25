@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Group < ApplicationRecord
+class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
   PUBLIC_ID = -1
   STAFF_ID = -2
 
@@ -88,6 +88,21 @@ class Group < ApplicationRecord
   end
 
   class << self
+    def attributes_for_new(opts)
+      attrs = super
+      attrs[:page] = ActsAsTenant.current_tenant
+      attrs
+    end
+
+    def build_new(opts)
+      resource = super
+      resource.grants.build(
+        edge: opts[:parent],
+        grant_set: GrantSet.participator
+      )
+      resource
+    end
+
     def iri
       [super, NS::ORG['Organization']]
     end
