@@ -120,13 +120,6 @@ Rails.application.routes.draw do
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
 
-  # @deprecated Please use info_controller. Kept for cached searches etc. do
-  get '/about', to: redirect('/i/about')
-  get '/product', to: redirect('/i/product')
-  get '/team', to: redirect('/i/team')
-  get '/governments', to: redirect('/i/governments')
-  # end
-
   get '/values', to: 'documents#show', name: 'values'
   get '/policy', to: 'documents#show', name: 'policy'
   get '/privacy', to: 'documents#show', name: 'privacy'
