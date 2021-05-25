@@ -31,23 +31,19 @@ class ShortnamesController < ParentableController
   end
 
   def permit_params
-    super.except(:destination, :unscoped)
+    super.except(:destination)
   end
 
   def resource_new_params
     HashWithIndifferentAccess.new(
       primary: false,
       owner: parent_resource!,
-      root_id: unscoped_param ? nil : parent_resource.root_id
+      root_id: parent_resource.root_id
     )
   end
 
   def redirect_location
     settings_iri(authenticated_resource.root, tab: 'shortnames')
-  end
-
-  def unscoped_param
-    params[:shortname].try(:[], :unscoped)&.presence if current_user.is_staff?
   end
 
   def unscoped_shortnames

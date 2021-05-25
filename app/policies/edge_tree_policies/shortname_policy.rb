@@ -2,7 +2,6 @@
 
 class ShortnamePolicy < EdgeTreePolicy
   permit_attributes %i[shortname destination]
-  permit_attributes %i[unscoped], grant_sets: %i[staff]
 
   delegate :show?, to: :edgeable_policy
 

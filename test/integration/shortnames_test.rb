@@ -103,13 +103,6 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     assert_equal Shortname.last.root_id, argu.uuid
   end
 
-  test 'administrator should not post create unscoped' do
-    sign_in administrator
-    general_create(attrs: {shortname: {shortname: 'short1', destination: "m/#{motion.fragment}", unscoped: true}})
-    assert_equal Shortname.last.owner, motion
-    assert_equal Shortname.last.root_id, argu.uuid
-  end
-
   test 'administrator should delete destroy' do
     subject
     sign_in administrator
@@ -121,11 +114,11 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   ####################################
   let(:staff) { create(:user, :staff) }
 
-  test 'staff should post create unscoped' do
+  test 'staff should post create' do
     sign_in staff
-    general_create(attrs: {shortname: {shortname: 'short1', destination: "m/#{motion.fragment}", unscoped: true}})
+    general_create(attrs: {shortname: {shortname: 'short1', destination: "m/#{motion.fragment}"}})
     assert_equal Shortname.last.owner, motion
-    assert_nil Shortname.last.root_id
+    assert_equal Shortname.last.root_id, argu.uuid
   end
 
   private
