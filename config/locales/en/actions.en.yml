@@ -19,6 +19,7 @@ en:
       href:
         label: "URL"
   actions:
+    plural: "Actions"
     status:
       CompletedActionStatus: "This action is already completed"
       ExpiredActionStatus: "This action is no longer available"

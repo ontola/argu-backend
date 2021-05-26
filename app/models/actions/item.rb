@@ -9,13 +9,5 @@ module Actions
 
       resource_policy.message || super
     end
-
-    def iri(opts = {})
-      return @iri if @iri && opts.empty?
-
-      iri ||= ActsAsTenant.with_tenant(resource.try(:root) || ActsAsTenant.current_tenant) { super }
-      @iri = iri if opts.empty?
-      iri
-    end
   end
 end

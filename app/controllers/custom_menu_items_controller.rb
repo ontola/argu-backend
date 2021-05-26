@@ -3,10 +3,6 @@
 class CustomMenuItemsController < ParentableController
   private
 
-  def parent_resource
-    ActsAsTenant.current_tenant
-  end
-
   def redirect_location
     settings_iri(parent_resource, tab: :custom_menu_items)
   end

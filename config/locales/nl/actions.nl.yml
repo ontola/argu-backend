@@ -19,6 +19,7 @@ nl:
       href:
         label: "URL"
   actions:
+    plural: "Acties"
     status:
       CompletedActionStatus: "Deze actie is al uitgevoerd"
       ExpiredActionStatus: "Deze actie is niet langer beschikbaar"
