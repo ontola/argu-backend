@@ -98,9 +98,9 @@ module Argu
       # Adds 3 comments (1 trashed) to the resource
       def with_comments
         3.times do
-          service = CreateComment
+          service = CreateEdge
                       .new(@resource,
-                           attributes: attributes_for(:comment),
+                           attributes: attributes_for(:comment).merge(owner_type: 'Comment'),
                            options: service_options)
           service.commit
           reset_publication(service.resource.publications.last)
@@ -174,9 +174,9 @@ module Argu
       end
 
       def create_comment_for_vote(vote)
-        service = CreateComment.new(
+        service = CreateEdge.new(
           vote.voteable,
-          attributes: {content: 'opinion'},
+          attributes: {content: 'opinion', owner_type: 'Comment'},
           options: {creator: vote.creator, publisher: vote.publisher}
         )
         service.commit

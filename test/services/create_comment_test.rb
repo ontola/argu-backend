@@ -11,7 +11,7 @@ class CreateCommentTest < ActiveSupport::TestCase
            parent: motion)
   end
   let(:comment_attributes) do
-    attributes_for(:comment)
+    attributes_for(:comment).merge(owner_type: 'Comment')
   end
   let(:comment_options) do
     {
@@ -22,7 +22,7 @@ class CreateCommentTest < ActiveSupport::TestCase
 
   test 'it creates a comment' do
     ActsAsTenant.current_tenant = argu
-    c = CreateComment.new(
+    c = CreateEdge.new(
       commentable,
       attributes: comment_attributes,
       options: comment_options
