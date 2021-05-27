@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Setup < VirtualResource
-  include LinkedRails::Model
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Updatable
   attr_accessor :user

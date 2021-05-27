@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
-class CurrentActor
-  include LinkedRails::Model
-  include ActiveModel::Serialization
-  include ActiveModel::Model
-  include ApplicationModel
-
+class CurrentActor < VirtualResource
   attr_accessor :actor, :user
 
   delegate :display_name, to: :actor, allow_nil: true

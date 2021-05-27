@@ -36,6 +36,7 @@ module Argu
       config.autoload_paths += %W[#{config.root}/app/#{type}/rivm]
     end
     config.autoload_paths += %W[#{config.root}/app/models/menus]
+    config.autoload_paths += %W[#{config.root}/app/models/virtual]
     config.autoload_paths += %W[#{config.root}/app/adapters]
     config.autoload_paths += %W[#{config.root}/app/responders]
     config.autoload_paths += %W[#{config.root}/app/services]

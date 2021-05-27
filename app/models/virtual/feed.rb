@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Feed
+class Feed < VirtualResource
   PUBLISH_KEYS = %w[question.publish motion.publish topic.publish argument.publish pro_argument.publish
                     con_argument.publish blog_post.publish decision.approved decision.rejected comment.publish
                     intervention.publish measure.publish].freeze
@@ -8,8 +8,6 @@ class Feed
                   blog_post.trash decision.trash comment.trash intervention.trash measure.trash].freeze
   RELEVANT_KEYS = PUBLISH_KEYS + TRASH_KEYS
 
-  include ActiveModel::Model
-  include LinkedRails::Model
   attr_accessor :parent, :relevant_only, :root_id
 
   with_collection :activities,

@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-class DirectMessage
-  include ActiveModel::Model
-  include LinkedRails::Model
-  include ApplicationModel
+class DirectMessage < VirtualResource
   include Parentable
 
   parentable :resource
@@ -49,10 +46,6 @@ class DirectMessage
 
   def email_address_id
     email_address&.iri
-  end
-
-  def new_record?
-    true
   end
 
   def resource_iri
