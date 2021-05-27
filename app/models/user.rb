@@ -76,6 +76,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   LOGIN_ATTRS = %w[updated_at failed_attempts].freeze
   FAILED_LOGIN_ATTRS = %w[current_sign_in_at last_sign_in_at sign_in_count updated_at].freeze
 
+  after_create :create_keycloak_user
+  after_update :update_keycloak_user
   before_save :adjust_birthday, if: :birthday_changed?
   before_create :skip_confirmation_notification!
   before_create :build_public_group_membership
@@ -120,6 +122,90 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     else
       joins(:shortname).find_by('lower(shortnames.shortname) = ?', warden_conditions[:email].downcase)
     end
+  end
+
+  def keycloak_access_token
+    token_res = HTTParty.post(
+      "http://localhost:8080/auth/realms/master/protocol/openid-connect/token",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: URI.encode_www_form({
+                                  grant_type: 'client_credentials',
+                                  client_id: 'admin-cli',
+                                  client_secret: 'SECRET',
+                                })
+    )
+
+    token_res.parsed_response['access_token']
+  end
+
+  def create_keycloak_user
+    res = HTTParty.post(
+      "http://localhost:8080/auth/admin/realms/#{ActsAsTenant.current_tenant.database_schema}/users",
+      headers: {
+        Authorization: "Bearer #{keycloak_access_token}",
+        'Content-Type': 'application/json',
+      },
+      body: {
+        id: self.uuid,
+        email: self.email,
+        username: self.id,
+        firstName: self.first_name,
+        lastName: self.last_name,
+        attributes: {
+          finished_intro: self.finished_intro,
+          birthday: self.birthday,
+          last_accepted: self.last_accepted,
+          has_analytics: self.has_analytics,
+          gender: self.gender,
+          hometown: self.hometown,
+          time_zone: self.time_zone,
+          language: self.language,
+          country: self.country,
+          hide_last_name: self.hide_last_name,
+          is_public: self.is_public,
+          show_feed: self.show_feed,
+          about: self.about,
+        }
+      }.to_json,
+    )
+
+    keycloak_user_id = res.headers['Location'].split('/users/').last
+
+    self.update_attribute(:uuid, keycloak_user_id)
+  end
+
+  def update_keycloak_user
+    res = HTTParty.put(
+      "http://localhost:8080/auth/admin/realms/#{ActsAsTenant.current_tenant.database_schema}/users/#{self.uuid}",
+      headers: {
+        Authorization: "Bearer #{keycloak_access_token}",
+        'Content-Type': 'application/json',
+      },
+      body: {
+        email: self.email,
+        username: self.id,
+        firstName: self.first_name,
+        lastName: self.last_name,
+        attributes: {
+          finished_intro: self.finished_intro,
+          birthday: self.birthday,
+          last_accepted: self.last_accepted,
+          has_analytics: self.has_analytics,
+          gender: self.gender,
+          hometown: self.hometown,
+          time_zone: self.time_zone,
+          language: self.language,
+          country: self.country,
+          hide_last_name: self.hide_last_name,
+          is_public: self.is_public,
+          show_feed: self.show_feed,
+          about: self.about,
+        }
+      }.to_json,
+    )
+    puts res
   end
 
   def accept_terms
