@@ -4,7 +4,7 @@ class MoveForm < ApplicationForm
   field :new_parent_id,
         max_count: 1,
         sh_in: lambda {
-          ActsAsTenant.current_tenant.search_result(
+          ActsAsTenant.current_tenant.search_result_collection(
             filter: {
               NS::RDFV.type => [
                 NS::ARGU[:ContainerNode],

@@ -6,6 +6,11 @@ module Edgeable
 
     included do
       enhance ::Searchable
+
+      with_collection :search_results,
+                      association_class: Edge,
+                      collection_class: SearchResult::Collection
+
       include InstanceOverwrites
       extend ClassOverwrites
     end
@@ -19,57 +24,46 @@ module Edgeable
         data
       end
 
-      def search_result(opts = {})
-        SearchResult.new(
-          opts.merge(
-            parent: self,
-            association_class: Edge,
-            parent_uri_template: :search_results_iri,
-            parent_uri_template_canonical: :search_results_iri
-          )
-        )
-      end
-
       def searchable_should_index?
         super && is_published?
       end
     end
 
     module ClassOverwrites
-      def allowed_paths(search_result)
-        paths = granted_paths(search_result)
+      def allowed_paths(query)
+        paths = granted_paths(query)
 
-        parent_granted?(search_result, paths) ? [search_result.parent.path] : paths
+        parent_granted?(query, paths) ? [query.edge_path] : paths
       end
 
-      def allowed_path_expression(search_result)
-        exp = allowed_paths(search_result)
+      def allowed_path_expression(query)
+        exp = allowed_paths(query)
                 .map { |p| "(#{Regexp.quote(p)}($|\\.[0-9]+)*)" }
                 .join('|')
         Regexp.new("\\A#{exp}\\z")
       end
 
-      def default_search_filter(search_result)
+      def default_search_filter(query)
         filter = {}
-        filter[:path] = allowed_path_expression(search_result)
+        filter[:path] = allowed_path_expression(query)
         filter[:published_branch] = true
         filter
       end
 
-      def granted_paths(search_result) # rubocop:disable Metrics/AbcSize
-        return [] if search_result.user_context.blank?
+      def granted_paths(query) # rubocop:disable Metrics/AbcSize
+        return [] if query.user_context.blank?
 
-        search_result.user_context
+        query.user_context
           .grant_tree
           .grants_in_scope
-          .select { |g| search_result.user_context.user.profile.group_ids.include?(g.group_id) }
+          .select { |g| query.user_context.user.profile.group_ids.include?(g.group_id) }
           .map { |g| g.edge.path }
           .uniq
       end
 
-      def parent_granted?(search_result, paths)
+      def parent_granted?(query, paths)
         paths.any? do |p|
-          p == search_result.parent.path || search_result.parent.path.starts_with?("#{p}.")
+          p == query.edge_path || query.edge_path.starts_with?("#{p}.")
         end
       end
 

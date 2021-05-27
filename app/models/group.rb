@@ -33,6 +33,10 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   with_collection :grants
   with_collection :group_memberships
+  with_collection :search_results,
+                  association_class: Group,
+                  collection_class: SearchResult::Collection
+
   with_columns settings: [
     NS::SCHEMA[:name],
     NS::ORG[:hasMember],

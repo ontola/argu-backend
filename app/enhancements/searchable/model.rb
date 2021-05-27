@@ -65,7 +65,7 @@ module Searchable
     end
 
     module ClassMethods
-      def default_search_filter(_search_result)
+      def default_search_filter(_query)
         {}
       end
 
