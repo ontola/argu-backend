@@ -7,7 +7,7 @@ module MarkAsImportant
     included do
       permit_attributes %i[mark_as_important],
                         grant_sets: %i[moderator administrator staff],
-                        has_values: {mark_as_important: false}
+                        has_values: {mark_as_important?: false}
       permit_attributes %i[mark_as_important],
                         grant_sets: %i[moderator administrator staff],
                         has_properties: {published_at: false}

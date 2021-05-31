@@ -13,5 +13,6 @@ module MarkAsImportant
     def mark_as_important
       argu_publication&.persisted? && argu_publication&.follow_type&.to_s == 'news'
     end
+    alias mark_as_important? mark_as_important
   end
 end
