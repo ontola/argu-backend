@@ -7,12 +7,10 @@ class CustomActionsController < EdgeableController
     authenticated_resource.parent.iri
   end
 
-  def show_includes
-    %i[target]
-  end
-
   def update_success
-    add_exec_action_header(response.headers, ontola_redirect_action(redirect_location))
-    respond_with_resource(resource: current_resource, meta: update_meta, include: show_includes)
+    respond_with_resource(
+      resource: current_resource,
+      include: show_includes
+    )
   end
 end

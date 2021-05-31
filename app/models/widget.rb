@@ -138,11 +138,8 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         publisher: User.service,
         parent: owner,
         href: new_iri(owner, :motions),
-        label_translation: true,
         label: 'motions.call_to_action.title',
-        description_translation: true,
         description: 'motions.call_to_action.body',
-        submit_label_translation: true,
         submit_label: 'motions.type_new'
       )
 
@@ -162,11 +159,8 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         publisher: User.service,
         parent: owner,
         href: new_iri(owner, :questions),
-        label_translation: true,
         label: 'questions.call_to_action.title',
-        description_translation: true,
         description: 'questions.call_to_action.body',
-        submit_label_translation: true,
         submit_label: 'questions.type_new'
       )
 
@@ -186,11 +180,8 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         publisher: User.service,
         parent: owner,
         href: new_iri(owner, :topics),
-        label_translation: true,
         label: 'topics.call_to_action.title',
-        description_translation: true,
         description: 'topics.call_to_action.body',
-        submit_label_translation: true,
         submit_label: 'topics.type_new'
       )
 

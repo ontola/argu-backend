@@ -6,8 +6,6 @@ nl:
     form:
       raw_label:
         label: "Label"
-      label_translation:
-        label: "Gebruik vertaling"
       raw_href:
         label: "URL"
       raw_image:

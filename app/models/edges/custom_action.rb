@@ -5,13 +5,11 @@ class CustomAction < Edge
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Destroyable
   enhance LinkedRails::Enhancements::Menuable
+  include TranslatableProperties
 
   property :label, :string, NS::SCHEMA.name
-  property :label_translation, :boolean, NS::ARGU[:labelTranslation], default: false
   property :description, :text, NS::SCHEMA.text
-  property :description_translation, :boolean, NS::ARGU[:descriptionTranslation], default: false
   property :submit_label, :string, NS::ARGU[:submitLabel]
-  property :submit_label_translation, :boolean, NS::ARGU[:submitLabelTranslation], default: false
   property :href, :text, NS::SCHEMA.url
 
   parentable :container_node
@@ -21,11 +19,11 @@ class CustomAction < Edge
   end
 
   def description
-    description_translation ? LinkedRails.translations(-> { I18n.t(super) }) : super
+    translate_property(super)
   end
 
   def display_name
-    label_translation ? LinkedRails.translations(-> { I18n.t(label) }) : label
+    translate_property(label)
   end
 
   def form; end
@@ -53,7 +51,7 @@ class CustomAction < Edge
   end
 
   def submit_label
-    submit_label_translation ? LinkedRails.translations(-> { I18n.t(super) }) : super
+    translate_property(super)
   end
 
   def target
@@ -65,10 +63,6 @@ class CustomAction < Edge
   end
 
   class << self
-    def iri
-      NS::SCHEMA.Action
-    end
-
     def preview_includes
       %i[target]
     end

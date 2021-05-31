@@ -10,7 +10,6 @@ class MenusTest < ActionDispatch::IntegrationTest
       resource_type: 'Edge',
       resource_id: argu.uuid,
       label: 'Custom label',
-      label_translation: false,
       href: 'https://argu.localdev/i/about',
       image: 'fa-info'
     )

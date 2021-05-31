@@ -7,6 +7,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Destroyable
   enhance LinkedRails::Enhancements::Tableable
+  include TranslatableProperties
 
   with_columns default: [
     NS::SCHEMA[:name],
@@ -47,7 +48,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def label
     return edge.display_name if attribute_in_database(:label).blank? && edge.present?
 
-    label_translation ? I18n.t(super) : super
+    translate_property(super)
   end
 
   def menus_present?

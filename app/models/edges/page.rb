@@ -175,7 +175,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     CustomMenuItem.navigations.create(
       href: feeds_iri(self),
       label: 'menus.default.activity',
-      label_translation: true,
       order: 100,
       resource: self
     )

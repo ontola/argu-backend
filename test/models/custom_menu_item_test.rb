@@ -11,7 +11,6 @@ class CustomMenuItemTest < ActiveSupport::TestCase
       resource_id: argu.uuid,
       order: 0,
       label: 'Custom label',
-      label_translation: false,
       href: 'https://argu.localdev/i/about',
       image: 'fa-info'
     )
@@ -23,14 +22,14 @@ class CustomMenuItemTest < ActiveSupport::TestCase
       resource_id: argu.uuid,
       order: 0,
       label: 'about.team',
-      label_translation: true,
       href: 'https://argu.localdev/i/about',
       image: 'fa-info'
     )
   end
 
   test 'team menu item translation' do
-    assert_equal team_menu_item.label, 'Our team'
+    match = team_menu_item.label.detect { |label| label.to_s == 'Our team' }
+    assert match
   end
 
   test 'custom menu item translation' do

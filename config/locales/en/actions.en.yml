@@ -6,16 +6,10 @@ en:
     form:
       raw_label:
         label: "Label"
-      label_translation:
-        label: "Use translation"
       raw_description:
         label: "Description"
-      description_translation:
-        label: "Use translation"
       raw_submit_label:
         label: "Button text"
-      submit_label_translation:
-        label: "Use translation"
       href:
         label: "URL"
   actions:

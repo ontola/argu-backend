@@ -36,7 +36,6 @@ class MenuListTest < ActiveSupport::TestCase
       resource_id: argu.uuid,
       order: 0,
       label: 'Custom label',
-      label_translation: false,
       href: 'https://argu.localdev/i/about',
       image: 'fa-info'
     )

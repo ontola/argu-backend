@@ -17,7 +17,6 @@ class CustomMenuItemSerializer < Menus::ItemSerializer
   attribute :raw_href, predicate: NS::ARGU[:rawHref], datatype: NS::XSD[:string] do |object|
     object.attribute_in_database(:href)
   end
-  attribute :label_translation, predicate: NS::ARGU[:labelTranslation]
   has_one :parent,
           predicate: NS::ONTOLA[:parentMenu],
           if: ->(o, p) { parent_menu?(o, p) },
