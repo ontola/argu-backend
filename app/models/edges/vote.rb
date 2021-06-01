@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class Vote < Edge
+  extend UriTemplateHelper
+  include RedisResource::Concern
+
   enhance LinkedRails::Enhancements::Creatable
   enhance Trashable
   enhance Loggable
   enhance LinkedRails::Enhancements::Updatable
-
-  include RedisResource::Concern
+  enhance Singularable
 
   property :option, :integer, NS::SCHEMA[:option], default: 3, enum: {no: 0, yes: 1, other: 2, abstain: 3}
   property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
@@ -35,10 +37,6 @@ class Vote < Edge
 
   validates :creator, :option, presence: true
 
-  def anonymous_iri?
-    super && !store_in_redis?
-  end
-
   def cacheable?
     false
   end
@@ -46,10 +44,6 @@ class Vote < Edge
   # Needed for ActivityListener#audit_data
   def display_name
     "#{option} vote for #{parent.display_name}"
-  end
-
-  def iri_opts
-    super.merge(parent_iri: parent_iri_path)
   end
 
   def iri_template_name
@@ -91,6 +85,15 @@ class Vote < Edge
   end
 
   class << self
+    def abstain_vote(parent, user_context)
+      new(
+        is_published: true,
+        parent: parent,
+        publisher: user_context&.user,
+        creator: user_context&.actor
+      )
+    end
+
     def anonymize(collection)
       collection.destroy_all
     end
@@ -103,8 +106,27 @@ class Vote < Edge
       attrs
     end
 
+    def current_vote(parent, user_context)
+      return nil if user_context.nil?
+
+      Vote
+        .where_with_redis(creator: user_context.actor, root_id: ActsAsTenant.current_tenant.uuid)
+        .find_by(parent: parent, primary: true)
+    end
+
     def includes_for_serializer
       super.merge(publisher: {}, comment: :properties)
+    end
+
+    def singular_iri_template
+      uri_template(:vote_iri)
+    end
+
+    def singular_resource(params, user_context)
+      parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
+      return unless parent.enhanced_with?(Votable)
+
+      current_vote(parent, user_context) || abstain_vote(parent, user_context)
     end
   end
 end

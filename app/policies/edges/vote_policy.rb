@@ -21,7 +21,7 @@ class VotePolicy < EdgePolicy
   end
 
   def trash?
-    is_creator?
+    super && is_creator?
   end
 
   private

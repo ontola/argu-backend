@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Cart < VirtualResource
+  extend UriTemplateHelper
+
+  enhance Singularable
   include Parentable
   include IRITemplateHelper
   attr_accessor :shop, :user
@@ -25,8 +28,14 @@ class Cart < VirtualResource
       )
   end
 
-  def iri_opts
-    super.merge(parent_iri: parent_iri_path)
+  def iri
+    singular_iri
+  end
+
+  def singular_iri_opts
+    {
+      parent_iri: parent_iri_path
+    }
   end
 
   def total_value
@@ -43,5 +52,20 @@ class Cart < VirtualResource
         predicate: NS::ARGU[:price].to_s
       )
       .pluck(:integer)
+  end
+
+  class << self
+    def singular_iri_template
+      uri_template(:carts_iri)
+    end
+
+    def singular_resource(params, user_context)
+      parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
+
+      Cart.new(
+        shop: parent,
+        user: user_context.user
+      )
+    end
   end
 end

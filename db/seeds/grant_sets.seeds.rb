@@ -40,6 +40,7 @@ PermittedAction.create_for_grant_sets('ProArgument', 'create', participator_plus
 PermittedAction.create_for_grant_sets('ConArgument', 'create', participator_plus)
 PermittedAction.create_for_grant_sets('Comment', 'create', participator_plus)
 PermittedAction.create_for_grant_sets('Vote', 'create', participator_plus)
+PermittedAction.create_for_grant_sets('Vote', 'trash', participator_plus)
 PermittedAction.create_for_grant_sets('CartDetail', 'show', participator_plus)
 PermittedAction.create_for_grant_sets('CartDetail', 'create', participator_plus)
 PermittedAction.create_for_grant_sets('CartDetail', 'destroy', participator_plus)

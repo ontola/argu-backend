@@ -14,6 +14,9 @@ RSpec.describe 'Votes', type: :request do
     freetown.initial_public_grant = :spectator
     freetown.send(:create_default_grant)
   end
+  let(:before_unauthorized_trash) do
+    before_unauthorized_create
+  end
 
   let(:trash_differences) { {'Vote.active.count' => -1} }
   let(:update_differences) { {'Vote.count' => 0} }
@@ -30,7 +33,6 @@ RSpec.describe 'Votes', type: :request do
     let(:show_path) { show_by_parent_path }
     let(:expect_delete_trash_guest_json_api) { expect(response.code).to eq('204') }
     let(:expect_delete_trash_guest_serializer) { expect(response.code).to eq('200') }
-    let(:expect_delete_trash_unauthorized_serializer) { expect_not_found }
     it_behaves_like 'get show', opts
     it_behaves_like 'delete trash', opts
   end

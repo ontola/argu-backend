@@ -15,6 +15,7 @@ RSpec.shared_examples_for 'delete trash' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:trash_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
+          before_unauthorized_create
           sign_in(unauthorized_user)
           assert_difference(no_differences) do
             delete trash_path, headers: request_headers(format)

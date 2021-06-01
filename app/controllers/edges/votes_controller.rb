@@ -1,22 +1,9 @@
 # frozen_string_literal: true
 
-class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
-  include UriTemplateHelper
+class VotesController < EdgeableController
   skip_before_action :verify_setup
 
   private
-
-  def abstain_vote
-    return unless action_name == 'show'
-
-    vote = Vote.new(
-      parent: parent_from_params,
-      publisher: current_user,
-      creator: current_profile
-    )
-    vote.instance_variable_set(:@iri, iri_without_id)
-    vote
-  end
 
   def active_response_success_message
     case action_name
@@ -43,7 +30,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def create_meta
     data = super
     data << invalidate_trash_action
-    data << same_as_statement
     data
   end
 
@@ -52,12 +38,8 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     broadcast_vote_counts
   end
 
-  def destroy_meta
-    data = super
-    data.push(
-      [current_vote_iri(authenticated_resource.parent), NS::SCHEMA.option, NS::ARGU[:abstain], delta_iri(:replace)]
-    )
-    data
+  def remove_same_as_delta
+    [current_vote_iri(authenticated_resource.parent), NS::SCHEMA.option, NS::ARGU[:abstain], delta_iri(:replace)]
   end
 
   def destroy_success
@@ -65,23 +47,11 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     broadcast_vote_counts
   end
 
-  def execute_action # rubocop:disable Metrics/MethodLength
+  def execute_action
     return super unless action_name == 'create'
     return super unless unmodified?
 
-    respond_to do |format|
-      format.json do
-        head 304
-      end
-      format.json_api { head 304 }
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { head 304 }
-      end
-    end
-  end
-
-  def iri_without_id
-    current_vote_iri(parent_from_params)
+    head 304
   end
 
   def permit_params
@@ -102,15 +72,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def requested_resource
-    return super unless %w[show destroy bin trash].include?(params[:action]) && params[:id].nil?
-
-    @requested_resource ||=
-      Vote
-        .where_with_redis(creator: current_profile, root_id: tree_root_id)
-        .find_by(parent: parent_from_params, primary: true) || abstain_vote
-  end
-
   def invalidate_trash_action
     [
       current_resource.action(:trash).iri,
@@ -118,20 +79,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       NS::SP[:Variable],
       delta_iri(:invalidate)
     ]
-  end
-
-  def same_as_statement
-    [
-      iri_without_id,
-      NS::OWL.sameAs,
-      current_resource.iri
-    ]
-  end
-
-  def show_meta
-    meta = super
-    meta << same_as_statement if params[:id].nil?
-    meta
   end
 
   def trash_success
