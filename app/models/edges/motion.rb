@@ -11,7 +11,11 @@ class Motion < Discussion
   alias_attribute :content, :description
   alias_attribute :title, :display_name
 
-  convertible questions: %i[activities media_objects], comments: %i[activities]
+  convertible(
+    questions: %i[activities media_objects],
+    topics: %i[activities media_objects],
+    comments: %i[activities]
+  )
   paginates_per 10
   parentable :question, :container_node, :phase
 
@@ -54,6 +58,10 @@ class Motion < Discussion
       return super unless predicate == NS::ARGU[:votesProCount]
 
       Edge.order_child_count_sql(:votes_pro, as: 'default_vote_events_edges', direction: direction)
+    end
+
+    def route_key
+      :m
     end
 
     def sort_options(collection)

@@ -3,8 +3,6 @@
 require 'zip'
 
 class ExportsController < ServiceController
-  skip_before_action :redirect_index_requests
-
   private
 
   def authenticated_tree
@@ -24,8 +22,8 @@ class ExportsController < ServiceController
     authorize parent_resource!, :index_children?, controller_class, user_context: user_context
   end
 
-  def permit_params
-    {}
+  def allow_empty_params?
+    true
   end
 
   def redirect_location

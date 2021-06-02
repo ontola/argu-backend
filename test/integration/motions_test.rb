@@ -92,6 +92,29 @@ class MotionsTest < ActionDispatch::IntegrationTest
     assert_equal 1, Motion.last.placements.first.zoom_level
   end
 
+  test 'initiator should post create motion with latlon from filter' do
+    sign_in initiator
+
+    filter = {
+      CGI.escape(NS::SCHEMA[:latitude]) => 1,
+      CGI.escape(NS::SCHEMA[:longitude]) => 1,
+      CGI.escape(NS::ONTOLA[:zoomLevel]) => 1
+    }
+    Thread.current[:mock_searchkick] = false
+    assert_difference('Motion.count' => 1, 'Placement.count' => 1, 'Place.count' => 1, 'Activity.count' => 1) do
+      post collection_iri(freetown, :motions, type: :paginated, filter: filter),
+           headers: argu_headers(accept: :nq),
+           params: {motion: default_create_attributes}
+
+      assert_response(:created)
+    end
+    Thread.current[:mock_searchkick] = true
+
+    assert_equal 1, Motion.last.placements.first.lat
+    assert_equal 1, Motion.last.placements.first.lon
+    assert_equal 1, Motion.last.placements.first.zoom_level
+  end
+
   test 'initiator should not post create motion without latlon in question requiring location' do
     sign_in initiator
 

@@ -18,14 +18,12 @@ class OtpAttemptsTest < ActionDispatch::IntegrationTest
   # NEW
   test 'guest should get new otp secret with active otp' do
     sign_in guest_user
-    otp_attempt_new(response: :ok)
-    assert_enabled_form
+    otp_attempt_new(should: true)
   end
 
   test 'guest should get new otp secret with inactive otp' do
     sign_in guest_user
-    otp_attempt_new(response: :ok, session_user: user)
-    assert_disabled_form
+    otp_attempt_new(session_user: user)
   end
 
   test 'guest should not get new otp secret with expired session' do
@@ -109,13 +107,13 @@ class OtpAttemptsTest < ActionDispatch::IntegrationTest
   private
 
   def create_path(*_args)
-    uri = URI('/argu/u/otp_attempts')
+    uri = URI('/argu/u/otp_attempt')
     uri.query = {session: @session}.to_param if @session.present?
     uri.to_s
   end
 
   def new_path(*_args)
-    uri = URI('/argu/u/otp_attempts/new')
+    uri = URI('/argu/u/otp_attempt/new')
     uri.query = {session: @session}.to_param if @session.present?
     uri.to_s
   end
@@ -140,12 +138,13 @@ class OtpAttemptsTest < ActionDispatch::IntegrationTest
   # rubocop:enable Metrics/ParameterLists
 
   def otp_attempt_new(
-    response: :ok,
+    response: nil,
     session: nil,
     session_user: two_fa_user,
-    session_exp: 10.minutes.from_now
+    session_exp: 10.minutes.from_now,
+    should: false
   )
     @session = session || sign_payload({user_id: session_user.id, exp: session_exp.to_i}, 'HS512')
-    general_new(results: {response: response})
+    general_new(results: {response: response, should: should})
   end
 end

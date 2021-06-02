@@ -2,13 +2,9 @@
 
 module Users
   class LanguagesController < ApplicationController
-    active_response :edit, :update
+    active_response :update
 
     private
-
-    def ld_action(_opts = {})
-      current_user.action(:language, user_context)
-    end
 
     def locale_param
       (params.permit(:locale)[:locale] || params.require(:user).require(:language)).to_sym

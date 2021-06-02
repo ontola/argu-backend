@@ -30,6 +30,8 @@ class CreateEdge < CreateService
 
   # @param [Edge, Integer] parent The instance or id of the parent edge of the new child
   def initialize_edge(parent, attributes)
+    return parent if parent.try(:singular_resource)
+
     klass = resource_klass(attributes)
     edge = parent.build_child(klass, user_context: user_context)
     edge.created_at = attributes.with_indifferent_access[:created_at]

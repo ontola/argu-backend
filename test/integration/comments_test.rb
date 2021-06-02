@@ -34,8 +34,31 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert_response 201
 
     assert_equal Comment.last.parent_comment, subject
+    assert_equal Comment.last.parent, argument
   end
 
+  test 'user should post create comment with latlon from filter' do
+    sign_in initiator
+
+    filter = {
+      CGI.escape(NS::ARGU[:pdfPositionX]) => 1,
+      CGI.escape(NS::ARGU[:pdfPositionY]) => 2,
+      CGI.escape(NS::ARGU[:pdfPage]) => 3
+    }
+    motion
+
+    assert_difference('Comment.count' => 1, 'Activity.count' => 1) do
+      post collection_iri(motion, :comments, type: :paginated, filter: filter),
+           headers: argu_headers(accept: :nq),
+           params: {comment: default_create_attributes}
+
+      assert_response(:created)
+    end
+
+    assert_equal 1, Comment.last.pdf_position_x
+    assert_equal 2, Comment.last.pdf_position_y
+    assert_equal 3, Comment.last.pdf_page
+  end
   ####################################
   # As creator
   ####################################

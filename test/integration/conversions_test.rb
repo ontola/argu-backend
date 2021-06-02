@@ -73,7 +73,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
       post conversions_iri(record),
            params: {
              conversion: {
-               klass: 'questions'
+               klass_iri: Question.iri
              }
            }
     end
@@ -83,7 +83,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     argument_comment.reload
     argument_nested_comment.reload
 
-    assert_response :created
+    assert_response :success
     assert_equal response.headers['Location'], record.iri
 
     assert Motion.where(id: record.id).empty?
@@ -114,13 +114,13 @@ class ConversionsTest < ActionDispatch::IntegrationTest
       post conversions_iri(record),
            params: {
              conversion: {
-               klass: 'questions'
+               klass_iri: Question.iri
              }
            }
     end
 
     record = Edge.find_by!(uuid: record.uuid)
-    assert_response :created
+    assert_response :success
     assert_equal response.headers['Location'], record.iri
 
     assert Motion.where(id: question_motion.id).empty?
@@ -139,14 +139,14 @@ class ConversionsTest < ActionDispatch::IntegrationTest
       post conversions_iri(record),
            params: {
              conversion: {
-               klass: 'motions'
+               klass_iri: Motion.iri
              }
            }
     end
 
     record = Edge.find_by!(uuid: record.uuid)
 
-    assert_response :created
+    assert_response :success
     assert_equal response.headers['Location'], record.iri
 
     assert Question.where(id: record.id).empty?

@@ -20,21 +20,19 @@ class MediaObjectsControllerTest < ActionController::TestCase
   # Index for Motion
   ####################################
   test 'should get index media_objects of motion' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, used_as: :attachment}
+    get :index, params: {format: :json_api, parent_iri: parent_iri_for(motion), used_as: :attachment}
     assert_response 200
 
     expect_relationship('part_of')
 
     expect_default_view
     expect_included(collection_iri(motion, :attachments, page: 1))
-    expect_included(motion.media_objects.where(used_as: :attachment).map(&:iri))
   end
 
   test 'should get index media_objects of motion page 1' do
     get :index, params: {
       format: :json_api,
-      root_id: argu.url,
-      motion_id: motion.fragment,
+      parent_iri: parent_iri_for(motion),
       used_as: :attachment,
       type: 'paginated',
       page: 1
@@ -44,6 +42,5 @@ class MediaObjectsControllerTest < ActionController::TestCase
     expect_relationship('collection')
 
     expect_view_members(primary_resource, motion.media_objects.where(used_as: :attachment).count)
-    expect_included(motion.media_objects.where(used_as: :attachment).map(&:iri))
   end
 end

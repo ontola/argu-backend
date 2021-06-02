@@ -31,16 +31,12 @@ class NotificationsController < AuthorizedController
   def index_meta
     [
       RDF::Statement.new(
-        index_collection.iri,
+        Notification.root_collection.iri,
         NS::ARGU[:unreadCount],
         unread_notification_count,
         graph_name: delta_iri(:replace)
       )
     ]
-  end
-
-  def permit_params
-    params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
   end
 
   def update_execute
@@ -54,7 +50,7 @@ class NotificationsController < AuthorizedController
   end
 
   def update_success_rdf
-    respond_with_resource(resource: authenticated_resource, include: show_includes, meta: index_meta)
+    respond_with_resource(resource: authenticated_resource, include: show_includes, meta: update_meta)
   end
 
   def update_failure

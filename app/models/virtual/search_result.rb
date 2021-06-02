@@ -2,8 +2,8 @@
 
 class SearchResult < VirtualResource
   class << self
-    def root_collection?
-      true
+    def parent_from_params(params, user_context)
+      super(params.except(:page, :before), user_context)
     end
 
     def root_collection_class

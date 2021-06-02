@@ -55,6 +55,10 @@ class InterventionType < Edge
       30
     end
 
+    def route_key
+      :interventie_types
+    end
+
     def sort_options(collection)
       return super if collection.type == :infinite
 

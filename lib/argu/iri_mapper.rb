@@ -1,135 +1,27 @@
 # frozen_string_literal: true
 
 module Argu
-  class IRIMapper
-    extend NestedResourceHelper
-    extend RedirectHelper
-    extend UriTemplateHelper
-    extend UUIDHelper
-
+  class IRIMapper < LinkedRails::IRIMapper
     class << self
-      # Converts an Argu URI into a hash containing the type and id of the resource
-      # @return [Hash] The id and type of the resource, or nil if the IRI is not found
-      # @example Valid IRI
-      #   iri = 'https://argu.co/m/1'
-      #   opts_from_iri # => {type: 'motions', id: '1'}
-      # @example Invalid IRI
-      #   iri = 'https://example.com/m/1'
-      #   opts_from_iri # => {}
-      # @example Nil IRI
-      #   iri = nil
-      #   opts_from_iri # => {}
-      def opts_from_iri(original_iri, method: 'GET')
-        return {} if ActsAsTenant.current_tenant.nil?
+      def parent_from_params(params, user_context)
+        return ActsAsTenant.current_tenant unless params.key?(:parent_iri)
 
-        iri = URI(original_iri)
+        super
+      end
 
-        edge_uuid = edge_uuid_from_iri(iri)
-        return edge_opts(edge_uuid) if edge_uuid
+      def opts_from_iri(iri, method: 'GET')
+        query = Rack::Utils.parse_nested_query(URI(iri.to_s).query)
+        params = Rails.application.routes.recognize_path(sanitized_path(RDF::URI(iri.to_s)), method: method)
 
-        opts = opts_from_route(iri, method)
-        return {} if opts[:controller].blank?
-
-        opts
+        route_params_to_opts(params.merge(query))
       rescue ActionController::RoutingError
-        {}
-      end
-
-      # Converts an Argu URI into a resource
-      # @return [ApplicationRecord, nil] The resource corresponding to the iri, or nil if the IRI is not found
-      def resource_from_iri(original_iri)
-        iri = URI(original_iri)
-        raise "A full url is expected. #{iri} is given." if iri.blank? || relative_path?(iri)
-
-        opts = opts_from_iri(iri)
-
-        resource_from_opts(opts) if resource_action?(opts[:action])
-      end
-
-      def resource_from_iri!(iri)
-        resource_from_iri(iri) || raise(ActiveRecord::RecordNotFound)
-      end
-
-      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      def resource_from_opts(opts)
-        return ActsAsTenant.current_tenant if opts[:type] == 'page' && opts[:action] == 'show' && opts[:id].blank?
-
-        opts[:class] ||= ApplicationRecord.descendants.detect { |m| m.to_s == opts[:type].classify } if opts[:type]
-        return if opts[:class].blank? || opts[:id].blank?
-
-        return linked_record_from_opts(opts) if linked_record_from_opts?(opts)
-        return shortnameable_from_opts(opts) if shortnameable_from_opts?(opts)
-        return edge_from_opts(opts) if edge_from_opts?(opts)
-
-        resource_by_id_from_opts(opts)
-      end
-      # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-
-      private
-
-      def edge_from_opts(opts)
-        if uuid?(opts[:id])
-          opts[:class].find_by(uuid: opts[:id]) ||
-            Edge.find_by(uuid: opts[:id])
-        else
-          opts[:class].find_by(fragment: opts[:id]) ||
-            Edge.find_by(fragment: opts[:id])
-        end
-      end
-
-      def edge_from_opts?(opts)
-        opts[:class] <= Edge
-      end
-
-      def edge_opts(uuid)
-        {
-          action: 'show',
-          type: 'edge',
-          id: uuid
-        }
-      end
-
-      def edge_uuid_from_iri(iri)
-        match = uri_template(:edges_iri).match(URI(iri).path).try(:[], 1)
-
-        match if uuid?(match)
-      end
-
-      def linked_record_from_opts?(opts)
-        opts[:class] == LinkedRecord
-      end
-
-      def linked_record_from_opts(opts)
-        LinkedRecord.find_or_initialize_by_iri(opts[:iri])
-      end
-
-      def opts_from_route(iri, method)
-        opts = Rails.application.routes.recognize_path(sanitized_path(iri), method: method)
-        opts[:type] = opts[:controller]&.singularize
-        opts
-      end
-
-      def resource_action?(action)
-        %w[show update destroy].include?(action)
-      end
-
-      def resource_by_id_from_opts(opts)
-        opts[:class].try(:find_by, id: opts[:id])
+        EMPTY_IRI_OPTS.dup
       end
 
       def sanitized_path(iri)
-        iri.path = "#{iri.path}/" unless iri.path.ends_with?('/')
-        tenant_path = ActsAsTenant.current_tenant.iri.path
+        iri.path = "#{iri.path}/" unless iri.path&.ends_with?('/')
+        tenant_path = ActsAsTenant.current_tenant&.iri&.path
         URI(tenant_path.present? ? iri.to_s.split("#{tenant_path}/").last : iri).path
-      end
-
-      def shortnameable_from_opts(opts)
-        Shortname.find_resource(opts[:id], ActsAsTenant.current_tenant&.uuid) ||
-          opts[:class].find_via_shortname_or_id(opts[:id])
-      end
-
-      def shortnameable_from_opts?(opts)
-        opts[:class].try(:shortnameable?) && !uuid?(opts[:id]) && (/[a-zA-Z]/i =~ opts[:id]).present?
       end
     end
   end

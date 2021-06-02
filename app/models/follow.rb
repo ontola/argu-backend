@@ -49,13 +49,7 @@ class Follow < ApplicationRecord
   class << self
     def build_new(opts)
       user = opts[:user_context]&.user
-      followable = Edge.find_by(uuid: find_params[:gid])
-      return if followable.nil? || permitted_classes.detect { |klass| followable.is_a?(klass) }.nil?
-
-      user.follows.find_or_initialize_by(
-        followable_id: followable.uuid,
-        followable_type: 'Edge'
-      )
+      user.follows.find_or_initialize_by(followable: opts[:parent])
     end
 
     private

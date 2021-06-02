@@ -12,7 +12,7 @@ class Cart < VirtualResource
   alias edgeable_record shop
   alias id root_relative_iri
 
-  with_collection :cart_details
+  with_collection :cart_details, policy_scope: false, default_filters: {}
 
   delegate :budget_max, :currency, to: :shop
 
@@ -28,7 +28,7 @@ class Cart < VirtualResource
       )
   end
 
-  def iri
+  def iri(_opts = {})
     singular_iri
   end
 
@@ -55,17 +55,17 @@ class Cart < VirtualResource
   end
 
   class << self
-    def singular_iri_template
-      uri_template(:carts_iri)
-    end
-
-    def singular_resource(params, user_context)
+    def requested_singular_resource(params, user_context)
       parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
 
       Cart.new(
         shop: parent,
         user: user_context.user
       )
+    end
+
+    def singular_route_key
+      :cart
     end
   end
 end

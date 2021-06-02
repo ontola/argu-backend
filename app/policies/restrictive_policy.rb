@@ -28,6 +28,10 @@ class RestrictivePolicy
     end
   end
 
+  def feed?
+    false
+  end
+
   def staff?
     user.is_staff?
   end
@@ -58,14 +62,6 @@ class RestrictivePolicy
     staff?
   end
 
-  def delete?
-    destroy?
-  end
-
-  def feed?
-    staff?
-  end
-
   # Used when an item displays nested content, therefore this should use the heaviest restrictions
   def show?
     staff? || service?
@@ -77,14 +73,6 @@ class RestrictivePolicy
 
   def edit?
     update?
-  end
-
-  def create_child?(_raw_klass, _opts = {})
-    false
-  end
-
-  def index_children?(_raw_klass, _opts = {})
-    false
   end
 
   def scope

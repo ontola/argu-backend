@@ -6,7 +6,9 @@ class StatisticsController < ParentableController
   private
 
   def authorize_action
-    authorize parent_resource!, :statistics?
+    raise(ActiveRecord::RecordNotFound) unless parent_resource!.enhanced_with?(Statable)
+
+    authorize parent_resource, :statistics?
   end
 
   def observation_dimensions
@@ -33,8 +35,4 @@ class StatisticsController < ParentableController
   end
 
   def requested_resource_parent; end
-
-  def show_includes
-    [:observations, data_structure: %i[measures dimensions]]
-  end
 end

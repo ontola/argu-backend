@@ -12,7 +12,7 @@ class CreateVote < CreateEdge
   def existing_edge(parent, attributes)
     Vote
       .where_with_redis(
-        root_id: parent.root_id,
+        root_id: ActsAsTenant.current_tenant.uuid,
         option: Vote.filter_options[NS::SCHEMA[:option]][:values][attributes[:option]],
         creator: profile,
         primary: true

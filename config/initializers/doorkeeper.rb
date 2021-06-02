@@ -43,7 +43,7 @@ Doorkeeper.configure do
           Argu::Errors::AccountLocked.new
         elsif user_from_db.encrypted_password.blank?
           Argu::Errors::NoPassword.new(user: user_from_db)
-        elsif request.env['warden'].message == :invalid
+        elsif request.env['warden'].message == :invalid || request.env['warden'].message == :last_attempt
           Argu::Errors::WrongPassword.new
         elsif request.env['warden'].message == :not_found_in_database
           Argu::Errors::WrongPassword.new

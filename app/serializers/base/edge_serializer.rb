@@ -19,11 +19,6 @@ class EdgeSerializer < RecordSerializer
 
     RDF::URI("#{base_iri}/granted") if base_iri
   end
-  attribute :granted_sets, predicate: NS::ARGU[:grantedSets], unless: method(:system_scope?) do |object|
-    base_iri = object.persisted? ? object.iri : object.try(:persisted_edge)&.iri
-
-    RDF::URI("#{base_iri}/grant_sets") if base_iri
-  end
   attribute :is_trashed,
             predicate: NS::ARGU[:trashed],
             datatype: NS::XSD[:boolean]

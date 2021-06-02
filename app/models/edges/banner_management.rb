@@ -41,5 +41,9 @@ class BannerManagement < Edge
     def default_collection_display
       :table
     end
+
+    def form_class
+      BannerForm
+    end
   end
 end

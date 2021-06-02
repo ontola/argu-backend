@@ -18,4 +18,5 @@ class VoteEventPolicyTest < Argu::TestHelpers::PolicyTest
   alias trash_results nobody_results
   alias destroy_results nobody_results
   alias destroy_with_children_results nobody_results
+  alias feed_results nobody_results
 end

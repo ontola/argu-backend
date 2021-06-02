@@ -21,10 +21,9 @@ class GroupsControllerTest < ActionController::TestCase
   ####################################
   test 'should get index groups' do
     sign_in administrator
-    get :index, params: {format: :json_api, page_id: argu.url}
+    get :index, params: {format: :json_api}
     assert_response 200
 
     expect_included(collection_iri(argu, :groups, page: 1))
-    expect_included([group.iri])
   end
 end

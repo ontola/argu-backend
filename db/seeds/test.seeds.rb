@@ -81,7 +81,7 @@ other_page = FactorySeeder.create(
   locale: 'en-GB',
   iri_prefix: 'argu.localtest/other_page'
 )
-other_page_forum = ActsAsTenant.with_tenant(other_page) do
+ActsAsTenant.with_tenant(other_page) do
   FactorySeeder.create_forum(
     parent: other_page,
     url: 'other_page_forum',

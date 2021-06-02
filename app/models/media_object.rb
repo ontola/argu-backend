@@ -177,6 +177,12 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       )
     end
 
+    def collection_from_parent_name(_parent, params)
+      return super if params[:used_as].blank?
+
+      "#{params[:used_as]}_collection"
+    end
+
     def content_type_white_list
       MediaObjectUploader::ARCHIVE_TYPES +
         MediaObjectUploader::DOCUMENT_TYPES +

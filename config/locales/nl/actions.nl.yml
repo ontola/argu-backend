@@ -63,6 +63,7 @@ nl:
         label: "Bevestigingslink opnieuw versturen"
         submit: "Verstuur"
       update:
+        label: "Email bevestigen"
         submit: "Bevestig"
     conversions:
       create:

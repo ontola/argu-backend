@@ -4,6 +4,14 @@ module Moveable
   module Model
     extend ActiveSupport::Concern
 
+    included do
+      with_collection :moves
+
+      def moves
+        []
+      end
+    end
+
     def move_to(new_parent)
       self.class.transaction do
         yield if block_given?

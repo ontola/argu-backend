@@ -11,13 +11,11 @@ class ProfilePolicy < RestrictivePolicy
 
   permit_attributes %i[display_name]
 
-  def show?
-    Pundit.policy(context, record.profileable).show?
-  end
+  delegate :show?, to: :profileable_policy
   deprecate show?: 'Please use the more consise method on profileable instead.'
 
   def update?
-    Pundit.policy(context, record.profileable).update? || super
+    profileable_policy.update? || super
   end
 
   private

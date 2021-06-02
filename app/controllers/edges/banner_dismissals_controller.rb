@@ -5,7 +5,7 @@ class BannerDismissalsController < EdgeableController
 
   def active_response_success_message; end
 
-  def permit_params
-    {}
+  def allow_empty_params?
+    true
   end
 end

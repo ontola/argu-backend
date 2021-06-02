@@ -30,7 +30,7 @@ module Edgeable
 
       parent.reload_children_counts
       counter_cache_names.each do |counter_cache_name|
-        parent.children_counts[counter_cache_name.to_s] = parent.children_count(counter_cache_name) - 1
+        parent.children_counts[counter_cache_name.to_s] = [parent.children_count(counter_cache_name) - 1, 0].max
       end
       parent.save(touch: false)
     end

@@ -11,7 +11,7 @@ class GrantTreesController < AuthorizedController
     [permission_groups: :permissions]
   end
 
-  def authenticated_resource
+  def current_resource
     user_context.grant_tree.cache_node(parent_resource)
   end
 end

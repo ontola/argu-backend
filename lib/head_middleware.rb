@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class HeadMiddleware
+  INVALID_STATUS_CODE = -1
   include LinkedRails::Auth::AuthHelper
   include OauthHelper
   attr_reader :headers, :request
@@ -17,12 +18,12 @@ class HeadMiddleware
     prepare_request(env)
 
     resource = env[Rack::REQUEST_METHOD] == Rack::HEAD && resource_from_request
+    status_code = status_code_for_request(resource)
 
-    return @app.call(env) unless resource
+    return @app.call(env) if status_code == INVALID_STATUS_CODE
 
     headers['Include-Resources'] = resource.try(:include_resources)&.join(',')
 
-    status_code = status_code_for_request(resource)
     Rails.logger.info "Completed HEAD #{status_code} #{Rack::Utils::HTTP_STATUS_CODES[status_code]}"
 
     [status_code, headers, []]
@@ -42,7 +43,7 @@ class HeadMiddleware
   def resource_from_request
     return unless ActsAsTenant.current_tenant
 
-    LinkedRails.iri_mapper.resource_from_iri(request.original_url)
+    LinkedRails.iri_mapper.resource_from_iri(request.original_url, user_context)
   end
 
   def prepare_request(env)
@@ -52,17 +53,31 @@ class HeadMiddleware
 
   def doorkeeper_render_error; end
 
-  def status_code_for_request(resource) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  def redirect_request(actual_iri, resource)
+    headers['Location'] = LinkedRails.iri(path: actual_iri).to_s
+
+    Rails.logger.info "Redirecting #{request.fullpath} to #{resource.iri} (#{actual_iri})"
+
+    302
+  end
+
+  def redirect_request?(actual_iri)
+    !actual_iri.nil? && actual_iri != request.fullpath && !(actual_iri == '' && request.fullpath == '/')
+  end
+
+  def status_code_for_request(resource)
+    return INVALID_STATUS_CODE if resource.blank?
+
     actual_iri = resource.try(:root_relative_iri)&.to_s
-    if !actual_iri.nil? && actual_iri != request.fullpath && !(actual_iri == '' && request.fullpath == '/')
-      headers['Location'] = resource.iri.to_s
-      Rails.logger.info "Redirecting #{request.fullpath} to #{resource.iri} (#{actual_iri})"
-      return 302
-    end
+
+    return redirect_request(actual_iri, resource) if redirect_request?(actual_iri)
 
     Pundit.policy(user_context, resource).show? ? 200 : 403
   rescue ActiveRecord::RecordNotFound
     404
+  rescue StandardError => e
+    Bugsnag.notify(e)
+    INVALID_STATUS_CODE
   end
 
   def update_oauth_token(token)

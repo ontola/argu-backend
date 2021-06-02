@@ -21,12 +21,12 @@ class Project < Discussion
     pa_id = PermittedAction.find_by!(title: 'phase_show').id
     description_placeholder = I18n.t('projects.phase_template.description_placeholder')
     identify = phases.create!(
-      service_options.merge(
-        order: 1,
-        description: description_placeholder,
-        name: I18n.t('projects.phase_template.survey.name'),
-        is_published: true
-      )
+      creator: creator,
+      description: description_placeholder,
+      is_published: true,
+      name: I18n.t('projects.phase_template.survey.name'),
+      order: 1,
+      publisher: publisher
     )
 
     survey = CreateEdge.new(
@@ -42,12 +42,12 @@ class Project < Discussion
     Widget.custom.create!(owner: identify, size: 3, resource_iri: [[survey.iri, nil]], permitted_action_id: pa_id)
 
     cocreate = phases.create!(
-      service_options.merge(
-        order: 2,
-        description: description_placeholder,
-        name: I18n.t('projects.phase_template.question.name'),
-        is_published: true
-      )
+      creator: creator,
+      description: description_placeholder,
+      is_published: true,
+      name: I18n.t('projects.phase_template.question.name'),
+      order: 2,
+      publisher: publisher
     )
     question = CreateEdge.new(
       cocreate,
@@ -63,12 +63,12 @@ class Project < Discussion
     Widget.custom.create!(owner: cocreate, size: 3, resource_iri: [[question.iri, nil]], permitted_action_id: pa_id)
 
     decide = phases.create!(
-      service_options.merge(
-        order: 3,
-        description: description_placeholder,
-        name: I18n.t('projects.phase_template.blog_post.name'),
-        is_published: true
-      )
+      creator: creator,
+      description: description_placeholder,
+      is_published: true,
+      name: I18n.t('projects.phase_template.blog_post.name'),
+      order: 3,
+      publisher: publisher
     )
     blog_post = CreateEdge.new(
       cocreate,

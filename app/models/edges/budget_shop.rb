@@ -26,5 +26,9 @@ class BudgetShop < Discussion
     def iri
       [super, NS::ARGU[:Shop]]
     end
+
+    def route_key
+      :budgets
+    end
   end
 end

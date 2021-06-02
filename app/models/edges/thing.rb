@@ -36,7 +36,7 @@ class Thing < Edge
   end
 
   def association_sequence(predicate, association)
-    sequence = LinkedRails::Sequence.new(association)
+    sequence = LinkedRails::Sequence.new(association, scope: false)
     [[iri, predicate, sequence.node]] +
       serializable_resource(sequence, {}).triples
   end

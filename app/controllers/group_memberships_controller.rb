@@ -22,8 +22,6 @@ class GroupMembershipsController < ServiceController
     opts
   end
 
-  alias create_service_parent parent_resource!
-
   def existing_record # rubocop:disable Metrics/AbcSize
     return @existing_record if @existing_record.present?
     return if authenticated_resource.valid?
@@ -38,7 +36,7 @@ class GroupMembershipsController < ServiceController
   end
 
   def permit_params
-    params.permit(*policy(requested_resource || new_resource).permitted_attributes)
+    params.permit(permit_param_keys)
   end
 
   def redirect_param

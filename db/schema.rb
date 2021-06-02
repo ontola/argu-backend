@@ -291,6 +291,7 @@ ActiveRecord::Schema.define(version: 2021_06_08_092538) do
     t.integer "user_id", null: false
     t.string "otp_secret_key", null: false
     t.boolean "active", default: false
+    t.index ["user_id"], name: "index_otp_secrets_on_user_id", unique: true
   end
 
   create_table "permitted_actions", force: :cascade do |t|

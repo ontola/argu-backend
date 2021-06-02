@@ -5,14 +5,6 @@ class ShortnamesController < ParentableController
 
   private
 
-  def ld_action_name(_view)
-    ACTION_MAP[action_name.to_sym] || action_name.to_sym
-  end
-
-  def collection_options
-    super.merge(association_base: unscoped_shortnames)
-  end
-
   def create_execute
     update_execute
   end
@@ -27,7 +19,7 @@ class ShortnamesController < ParentableController
   def parent_resource
     return tree_root if destination_param.blank?
 
-    @parent_resource ||= LinkedRails.iri_mapper.resource_from_iri(destination_param)
+    @parent_resource ||= LinkedRails.iri_mapper.resource_from_iri(destination_param, user_context)
   end
 
   def permit_params
@@ -36,17 +28,5 @@ class ShortnamesController < ParentableController
 
   def redirect_location
     settings_iri(authenticated_resource.root, tab: 'shortnames')
-  end
-
-  def unscoped_shortnames
-    ActsAsTenant.without_tenant do
-      Kaminari.paginate_array(
-        Shortname
-          .joins("INNER JOIN edges ON edges.uuid = shortnames.owner_id AND shortnames.owner_type = 'Edge'")
-          .where(edges: {root_id: parent_resource.uuid}, primary: false)
-          .distinct
-          .to_a
-      )
-    end
   end
 end

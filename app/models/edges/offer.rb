@@ -12,11 +12,6 @@ class Offer < Edge
 
   belongs_to :product, foreign_key_property: :product_id, class_name: 'Edge', dependent: false
 
-  def cart_detail_for(user)
-    CartDetail.where_with_redis(publisher: user, parent: self).first ||
-      CartDetail.new(publisher: user, parent: self, shop_id: parent.id)
-  end
-
   class << self
     def default_collection_display
       :grid

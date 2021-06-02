@@ -63,8 +63,8 @@ class TenantFinder
     return unless Rails.application.config.host_name == @host
 
     Apartment::Tenant.each do
-      match = Page.find_via_shortname(iri_suffix)
-      return match.tenant if match
+      match = Shortname.find_resource(iri_suffix)
+      return match.root.tenant if match.is_a?(Edge)
     end
 
     nil

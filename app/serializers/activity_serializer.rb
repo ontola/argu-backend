@@ -12,7 +12,6 @@ class ActivitySerializer < RecordSerializer
   attribute :comment, predicate: NS::SCHEMA[:text]
   attribute :notify, predicate: NS::ARGU[:sendNotifications], datatype: NS::XSD[:boolean]
 
-  has_one :forum
   has_one :owner, predicate: NS::AS[:actor]
   has_one :recipient, predicate: NS::AS[:target]
   has_one :trackable, predicate: NS::AS[:object]

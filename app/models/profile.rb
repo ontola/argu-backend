@@ -164,10 +164,4 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
     end
   end
-
-  class << self
-    def show_includes
-      Page.show_includes + User.show_includes
-    end
-  end
 end

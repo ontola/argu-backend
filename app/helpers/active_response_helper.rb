@@ -33,18 +33,12 @@ module ActiveResponseHelper
     redirect_location
   end
 
-  def index_association
-    return @index_association if instance_variables.include?(:@index_association)
-
-    @index_association = super ? policy_scope(super) : nil
-  end
-
   def index_success_options_json_api
     index_success_options_rdf
   end
 
   def index_success_options_rdf
-    skip_verify_policy_scoped(true) if index_collection_or_view.present?
+    skip_verify_policy_scoped(true)
     super
   end
 
@@ -105,6 +99,10 @@ module ActiveResponseHelper
     active_response_options
       .merge(opts)
       .merge(resource: resource.presence)
+  end
+
+  def show_failure_options
+    {}
   end
 
   def update_success_location

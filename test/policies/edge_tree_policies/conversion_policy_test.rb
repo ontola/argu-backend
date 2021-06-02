@@ -2,9 +2,9 @@
 
 require 'test_helper'
 class ConversionPolicyTest < Argu::TestHelpers::PolicyTest
-  subject { Conversion.new(edge: motion, klass: Question) }
-  let(:invalid_edge_subject) { Conversion.new(edge: pro_argument, klass: Motion) }
-  let(:invalid_klass_subject) { Conversion.new(edge: motion, klass: Argument) }
+  subject { Conversion.new(edge: motion, klass_iri: Question.iri) }
+  let(:invalid_edge_subject) { Conversion.new(edge: pro_argument, klass_iri: Motion.iri) }
+  let(:invalid_klass_subject) { Conversion.new(edge: motion, klass_iri: Argument.iri) }
 
   test 'create valid conversion' do
     test_policy(subject, :create, staff_only_results)

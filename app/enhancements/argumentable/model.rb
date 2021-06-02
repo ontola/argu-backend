@@ -25,14 +25,5 @@ module Argumentable
         end
       end
     end
-
-    module ClassMethods
-      def show_includes
-        super + [
-          con_argument_collection: inc_shallow_collection,
-          pro_argument_collection: inc_shallow_collection
-        ]
-      end
-    end
   end
 end

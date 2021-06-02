@@ -115,7 +115,8 @@ module Users
         token_url: /.+/,
         email_only: true
       )
-      post user_confirmation_path(user: {email: user.email})
+      post user_confirmation_path,
+           params: {user: {email: user.email}}
       assert_equal user.primary_email_record.confirmation_sent_at.iso8601(6),
                    user.primary_email_record.reload.confirmation_sent_at.iso8601(6)
       assert_response :created
@@ -169,7 +170,8 @@ module Users
 
     test 'other_user should not post create confirmation' do
       sign_in other_user
-      post user_confirmation_path(user: {email: user.email})
+      post user_confirmation_path,
+           params: {user: {email: user.email}}
       assert_response :not_found
     end
 
@@ -257,7 +259,8 @@ module Users
         email: user.email,
         token_url: /.+/
       )
-      post user_confirmation_path(user: {email: user.email})
+      post user_confirmation_path,
+           params: {user: {email: user.email}}
       assert_equal user.primary_email_record.confirmation_sent_at.iso8601(6),
                    user.primary_email_record.reload.confirmation_sent_at.iso8601(6)
       expect_ontola_action(
@@ -296,12 +299,12 @@ module Users
 
     private
 
-    def user_confirmation_path(*args)
-      "/#{argu.url}#{super}"
+    def user_confirmation_path(params = nil)
+      ["/#{argu.url}/u/confirmation", params&.to_param].compact.join('?')
     end
 
-    def new_user_confirmation_path(*args)
-      "/#{argu.url}#{super}"
+    def new_user_confirmation_path
+      "/#{argu.url}/u/confirmation/new"
     end
   end
 end

@@ -47,7 +47,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     menu_item(
       :language,
       label: I18n.t('set_language'),
-      href: iri_from_template(:languages_iri)
+      href: ActsAsTenant.current_tenant.action(:language).iri
     )
   end
 
@@ -87,10 +87,10 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       :new_component,
       image: 'fa-plus',
       policy: :create_child?,
-      policy_arguments: [Forum],
-      policy_resource: ActsAsTenant.current_tenant,
-      href: RDF::DynamicURI(
-        path_with_hostname(expand_uri_template(:new_container_node_iri, title: I18n.t('container_nodes.type_new')))
+      policy_resource: Forum.root_collection(user_context: user_context),
+      href: LinkedRails.iri(
+        path: "#{ContainerNode.root_collection.root_relative_iri}/actions",
+        query: 'title=Nieuwe%20pagina'
       )
     )
   end
@@ -104,22 +104,22 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     items << menu_item(
       :sign_in,
       label: I18n.t('actions.sessions.create.label'),
-      href: LinkedRails.iri(path: 'u/sign_in')
+      href: LinkedRails.iri(path: 'u/session/new')
     )
     items << menu_item(
       :password,
       label: I18n.t('devise.passwords.new.header'),
-      href: LinkedRails.iri(path: 'users/password/new')
+      href: LinkedRails.iri(path: 'u/password/new')
     )
     items << menu_item(
       :confirmation,
       label: I18n.t('devise.confirmations.send'),
-      href: LinkedRails.iri(path: 'users/confirmation/new')
+      href: LinkedRails.iri(path: 'u/confirmation/new')
     )
     items << menu_item(
       :locked,
       label: I18n.t('devise.unlocks.new.header'),
-      href: LinkedRails.iri(path: 'users/unlock/new')
+      href: LinkedRails.iri(path: 'u/unlock/new')
     )
     items
   end
@@ -169,23 +169,19 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       :signout,
       action: NS::LIBRO['actions/logout'],
       label: I18n.t('sign_out'),
-      href: RDF::DynamicURI(sign_out_url)
+      href: LinkedRails.iri(path: 'u/sign_out')
     )
   end
 
-  def user_base_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    if user_context.user.setup_finished?
-      [
-        menu_item(
-          :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_context.user.menu(:profile).iri
-        ),
-        menu_item(
-          :profile, label: I18n.t('profiles.edit.title'), href: user_context.user.menu(:profile).iri(fragment: :profile)
-        )
-      ]
-    else
-      [menu_item(:setup, label: I18n.t('profiles.setup.link'), href: RDF::DynamicURI(setup_users_url))]
-    end
+  def user_base_items
+    [
+      menu_item(
+        :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_context.user.menu(:profile).iri
+      ),
+      menu_item(
+        :profile, label: I18n.t('profiles.edit.title'), href: user_context.user.menu(:profile).iri(fragment: :profile)
+      )
+    ]
   end
 
   def user_forum_management_item

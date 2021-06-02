@@ -36,24 +36,23 @@ module ActivePublishable
       def published_at
         argu_publication.try(:published_at)
       end
-    end
 
-    private
+      private
 
-    def build_default_publication
-      argu_publication || build_argu_publication(
-        channel: :argu,
-        creator: creator,
-        publisher: publisher,
-        published_at: Time.current
-      )
+      def build_default_publication
+        argu_publication || build_argu_publication(
+          channel: :argu,
+          creator: creator,
+          publisher: publisher,
+          published_at: Time.current
+        )
+      end
     end
 
     module ClassMethods
       def build_new(opts)
         resource = super
         resource.build_argu_publication(
-          published_at: Time.current,
           follow_type: 'reactions'
         )
         resource
@@ -65,12 +64,6 @@ module ActivePublishable
 
       def is_publishable?
         true
-      end
-
-      def show_includes
-        super + [
-          last_published_decision: {}
-        ]
       end
     end
   end

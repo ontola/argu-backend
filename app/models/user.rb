@@ -25,6 +25,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include CacheableIri
 
   before_destroy :handle_dependencies
+  placeable :home
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
   has_many :exports, dependent: :destroy
@@ -64,10 +65,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
          :multi_email_confirmable, :lockable, :timeoutable
   acts_as_follower
 
-  with_collection :managed_pages, association_class: Page
   with_collection :email_addresses
-
-  placeable :home
+  with_collection :favorite_pages,
+                  association_class: Page,
+                  default_filters: {},
+                  policy_scope: false
+  with_collection :managed_pages,
+                  association_class: Page
 
   auto_strip_attributes :about, nullify: false
 
@@ -135,6 +139,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def accepted_terms?
     last_accepted.present?
   end
+  alias accepted_terms accepted_terms?
   alias accept_terms accepted_terms?
 
   def active_for_authentication?
@@ -262,23 +267,16 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
   end
 
+  def name_with_fallback
+    display_name || generated_name
+  end
+
   def otp_active?
     otp_secret&.active?
   end
 
   def otp_secret
     super || OtpSecret.create!(user: self)
-  end
-
-  def page_collection(options)
-    @page_collection ||= ::Collection.new(
-      options.merge(
-        association_base: favorite_pages,
-        association_class: Page,
-        default_type: :paginated,
-        parent: self
-      )
-    )
   end
 
   def page_count
@@ -433,6 +431,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
+    def build_new(opts)
+      resource = super
+      resource.shortname = nil if resource.shortname&.shortname.blank?
+      resource.build_profile
+      resource.language = I18n.locale
+      resource
+    end
+
     def followable_classes
       @followable_classes ||= Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze.map(&:to_s)
     end
@@ -447,7 +453,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     def requested_single_resource(params, user_context)
       resource = super
 
-      show_anonymous_user = user_context.guest? && resource.present? && !resource.is_public?
+      show_anonymous_user = user_context&.guest? && resource.present? && !resource.is_public?
       return AnonymousUser.new(url: params[:id]) if show_anonymous_user
 
       resource

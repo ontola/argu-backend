@@ -102,9 +102,5 @@ class GroupMembership < ApplicationRecord
     def iri
       [super, NS::ORG['Membership']]
     end
-
-    def show_includes
-      super + %i[organization]
-    end
   end
 end

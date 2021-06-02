@@ -28,9 +28,7 @@ class VotesControllerTest < ActionController::TestCase
     get :index,
         params: {
           format: :json_api,
-          root_id: argu.url,
-          motion_id: motion.fragment,
-          vote_event_id: vote_event.fragment
+          parent_iri: parent_iri_for(vote_event)
         }
     assert_response 200
 
@@ -45,9 +43,7 @@ class VotesControllerTest < ActionController::TestCase
     get :index,
         params: {
           format: :json_api,
-          root_id: argu.url,
-          motion_id: motion.fragment,
-          vote_event_id: vote_event.fragment,
+          parent_iri: parent_iri_for(vote_event),
           'filter[]' => 'http://schema.org/option=yes'
         }
     assert_response 200

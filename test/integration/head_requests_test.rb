@@ -101,6 +101,16 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     assert_redirected_to demogemeente_forum.iri
   end
 
+  test 'guest should head demogemeente forum from alias' do
+    Shortname.create!(shortname: 'demo_alias', owner: demogemeente_forum, primary: false)
+    sign_in guest_user
+
+    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/forum'
+    head "#{Rails.application.config.origin}/demo_alias", headers: argu_headers(accept: :nq)
+
+    assert_redirected_to demogemeente_forum.iri.to_s
+  end
+
   test 'guest should head freetown' do
     sign_in guest_user
 
@@ -144,7 +154,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   test 'guest should head redirect pro argument with con route key' do
     sign_in guest_user
 
-    head pro_argument.iri.to_s.sub('/pro/', '/con/'), headers: argu_headers(accept: :nq)
+    head pro_argument.iri.to_s.sub('/pros/', '/cons/'), headers: argu_headers(accept: :nq)
 
     assert_redirected_to pro_argument.iri
   end
@@ -152,7 +162,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   test 'guest should head redirect pro argument with m route key' do
     sign_in guest_user
 
-    head pro_argument.iri.to_s.sub('/pro/', '/m/'), headers: argu_headers(accept: :nq)
+    head pro_argument.iri.to_s.sub('/pros/', '/m/'), headers: argu_headers(accept: :nq)
 
     assert_redirected_to pro_argument.iri
   end

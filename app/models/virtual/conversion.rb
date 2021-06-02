@@ -9,27 +9,29 @@ class Conversion < VirtualResource
   enhance LinkedRails::Enhancements::Actionable, only: %i[Model]
 
   validates :edge, presence: true
-  validates :klass,
+  validates :klass_iri,
             presence: true,
-            inclusion: {in: ->(r) { r.edge.convertible_classes.keys.map { |c| c.to_s.classify.constantize.iri } }}
+            inclusion: {in: ->(r) { r.convertible_classes }}
 
-  attr_accessor :edge, :klass
+  attr_accessor :edge, :klass_iri
+
+  def convertible_classes
+    edge.convertible_classes.keys.map { |c| c.to_s.classify.constantize.iri }
+  end
 
   def edgeable_record
     @edgeable_record ||= edge
   end
 
-  def initialize(edge: nil, klass: nil)
+  def initialize(edge: nil, klass_iri: nil)
     @edge = edge
-    @klass = klass
+    @klass_iri = klass_iri
   end
 
-  def identifier
-    "conversion_#{edge.id}_#{klass}"
-  end
-
-  def iri_opts
-    {parent_iri: split_iri_segments(edge&.root_relative_iri)}
+  def klass
+    ApplicationRecord.descendants.detect do |klass|
+      klass.iri.is_a?(Array) ? klass.iri.include?(klass_iri) : klass.iri == klass_iri
+    end
   end
 
   def save
@@ -40,15 +42,12 @@ class Conversion < VirtualResource
   class << self
     def attributes_for_new(opts)
       {
-        edge: opts[:parent],
-        klass: convertible_class_names(opts[:parent])&.first
+        edge: opts[:parent]
       }
     end
 
-    private
-
-    def convertible_class_names(record)
-      record.convertible_classes.keys.map(&:to_s) if record.is_convertible?
+    def route_key
+      :conversion
     end
   end
 end

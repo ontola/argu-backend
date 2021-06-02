@@ -1,22 +1,12 @@
 # frozen_string_literal: true
 
 class CartDetailActionList < EdgeActionList
-  extend LinkedRails::Enhancements::Destroyable::Action::ClassMethods
-
-  has_action(
-    :create,
-    create_options.merge(
-      image: font_awesome_iri('shopping-cart')
-    )
+  has_singular_create_action(
+    image: font_awesome_iri('shopping-cart')
   )
-  has_action(
-    :destroy,
-    destroy_options.merge(
-      collection: true,
-      image: font_awesome_iri('close'),
-      policy_resource: -> { resource.parent.cart_detail_for(user_context.user) },
-      predicate: NS::ONTOLA[:removeFromCart],
-      type: -> { [RDF::Vocab::SCHEMA.Action, NS::ONTOLA["Destroy::#{result_class}"], NS::ONTOLA[:DestroyAction]] }
-    )
+  has_singular_destroy_action(
+    type: lambda {
+      [NS::ONTOLA["Destroy::#{result_class}"], NS::ONTOLA[:DestroyAction], NS::SCHEMA.Action]
+    }
   )
 end

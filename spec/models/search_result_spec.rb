@@ -90,7 +90,7 @@ RSpec.describe SearchResult, type: :model do
   private
 
   def search_result(opts = {})
-    SearchResult.new(
+    SearchResult::Collection.new(
       {
         association_class: Edge,
         parent: parent,

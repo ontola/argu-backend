@@ -6,4 +6,8 @@ class BannerManagementPolicy < BannerPolicy
       Banner
     end
   end
+
+  def class_name
+    'Banner'
+  end
 end

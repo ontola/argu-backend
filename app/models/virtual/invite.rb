@@ -3,7 +3,7 @@
 class Invite < VirtualResource
   include Parentable
 
-  enhance LinkedRails::Enhancements::Actionable, only: %i[Model]
+  enhance LinkedRails::Enhancements::Actionable
 
   parentable :edge
 

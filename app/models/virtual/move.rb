@@ -11,10 +11,6 @@ class Move < VirtualResource
 
   attr_accessor :edge, :new_parent
 
-  def canonical_iri_opts
-    iri_opts
-  end
-
   def edgeable_record
     @edgeable_record ||= edge
   end
@@ -25,10 +21,6 @@ class Move < VirtualResource
 
   def edge_id=(id)
     @edge = id.present? ? Edge.find_by(uuid: id) : nil
-  end
-
-  def identifier
-    "move_#{edge.id}_to_#{new_parent.id}"
   end
 
   def new_parent_id
@@ -42,11 +34,12 @@ class Move < VirtualResource
   def iri_opts
     {parent_iri: split_iri_segments(edge&.root_relative_iri)}
   end
+  alias canonical_iri_opts iri_opts
 
   def save
     moved = false
     edge.with_lock do
-      moved = edge.move_to new_parent
+      moved = edge.move_to(new_parent)
     end
     moved
   end
@@ -55,7 +48,7 @@ class Move < VirtualResource
   private
 
   def find_parent(id)
-    uuid?(id) ? Edge.find_by!(uuid: id) : LinkedRails.iri_mapper.resource_from_iri!(id)
+    uuid?(id) ? Edge.find_by!(uuid: id) : LinkedRails.iri_mapper.resource_from_iri!(id, nil)
   end
 
   class << self
@@ -63,6 +56,10 @@ class Move < VirtualResource
       {
         edge: opts[:parent]
       }
+    end
+
+    def route_key
+      :move
     end
   end
 end

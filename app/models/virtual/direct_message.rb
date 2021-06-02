@@ -8,32 +8,18 @@ class DirectMessage < VirtualResource
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
 
-  attr_accessor :actor, :body, :subject, :email_address
-  attr_writer :resource, :resource_iri
+  attr_accessor :actor, :body, :subject, :email_address, :resource
 
   validates :actor, presence: true
   validates :body, presence: true
   validates :email_address, presence: true
   validates :resource, presence: true
-  validates :resource_iri, presence: true
   validates :subject, presence: true
 
   delegate :root, to: :resource
 
   def edgeable_record
     resource
-  end
-
-  def identifier
-    "#{resource.identifier}_dm"
-  end
-
-  def canonical_iri_opts
-    {parent_iri: split_iri_segments(resource.root_relative_iri)}
-  end
-
-  def iri_opts
-    {parent_iri: split_iri_segments(resource.root_relative_iri)}
   end
 
   def email_address_id=(value)
@@ -46,14 +32,6 @@ class DirectMessage < VirtualResource
 
   def email_address_id
     email_address&.iri
-  end
-
-  def resource_iri
-    @resource_iri ||= resource.iri
-  end
-
-  def resource
-    @resource ||= LinkedRails.iri_mapper.resource_from_iri(@resource_iri)
   end
 
   def send_email! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -84,6 +62,10 @@ class DirectMessage < VirtualResource
         email_address_id: confirmed_email_addresses.any? ? user.primary_email_record.iri : nil,
         resource: opts[:parent]
       }
+    end
+
+    def route_key
+      :dm
     end
   end
 end

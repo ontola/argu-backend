@@ -7,6 +7,10 @@ class VirtualResource
   include LinkedRails::Model
   include ApplicationModel
 
+  def anonymous_iri?
+    true
+  end
+
   def new_record?
     true
   end
@@ -15,11 +19,13 @@ class VirtualResource
     false
   end
 
-  def self.serializer_class
-    "#{class_name.singularize}_serializer".classify.constantize
-  end
-
   def serializer_class
     self.class.serializer_class
+  end
+
+  class << self
+    def serializer_class
+      "#{class_name.singularize}_serializer".classify.safe_constantize
+    end
   end
 end

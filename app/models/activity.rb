@@ -54,11 +54,6 @@ class Activity < PublicActivity::Activity
     key.split('.').last
   end
 
-  # Hands over publication of a collection to the Community profile
-  def self.anonymize(collection)
-    collection.update_all(owner_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
-  end
-
   def identifier
     "#{self.class.name.tableize}_#{id}"
   end
@@ -101,5 +96,20 @@ class Activity < PublicActivity::Activity
     edge.last_activity_at = Time.current
     edge.save(touch: false)
     edge.instance_variable_set(:@mutations_before_last_save, mutations)
+  end
+
+  class << self
+    # Hands over publication of a collection to the Community profile
+    def anonymize(collection)
+      collection.update_all(owner_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
+    end
+
+    def attributes_for_new(opts)
+      parent = opts[:parent].try(:parent)
+
+      {
+        trackable: parent.is_a?(Edge) ? parent : ActsAsTenant.current_tenant
+      }
+    end
   end
 end

@@ -7,26 +7,10 @@ module Trashable
     included do
       include LinkedRails::Enhancements::Destroyable::Controller
 
-      active_response :bin, :trash, :unbin, :untrash
+      active_response :trash, :untrash
     end
 
     private
-
-    def bin_success
-      respond_with_form(bin_success_options)
-    end
-
-    def bin_success_options
-      default_form_options(:bin)
-    end
-
-    def unbin_success
-      respond_with_form(unbin_success_options)
-    end
-
-    def unbin_success_options
-      default_form_options(:unbin)
-    end
 
     def trash_failure
       respond_with_invalid_resource(trash_failure_options)

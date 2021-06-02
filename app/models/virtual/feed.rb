@@ -8,7 +8,7 @@ class Feed < VirtualResource
                   blog_post.trash decision.trash comment.trash intervention.trash measure.trash].freeze
   RELEVANT_KEYS = PUBLISH_KEYS + TRASH_KEYS
 
-  attr_accessor :parent, :relevant_only, :root_id
+  attr_accessor :parent, :relevant_only
 
   with_collection :activities,
                   part_of: :parent,
@@ -18,8 +18,8 @@ class Feed < VirtualResource
   def activities
     @activities ||=
       case parent
-      when Profile
-        profile_activities
+      when User
+        user_activities
       else
         raise "#{parent.class} is not a valid parent type for generating a feed" unless parent.is_a?(Edge)
 
@@ -27,27 +27,11 @@ class Feed < VirtualResource
       end
   end
 
-  def root_relative_canonical_iri(opts = {})
-    case parent
-    when User
-      RDF::URI('')
-    when Profile
-      parent&.profileable&.root_relative_canonical_iri(opts.merge(root: root.url))
-    else
-      parent&.root_relative_canonical_iri(opts)
-    end
+  def root_id
+    ActsAsTenant.current_tenant.uuid
   end
 
-  def root_relative_iri(opts = {})
-    case parent
-    when User
-      RDF::URI('/argu/staff')
-    when Profile
-      parent&.profileable&.root_relative_iri(opts.merge(root: root.url))
-    else
-      parent&.root_relative_iri(opts)
-    end
-  end
+  delegate :root_relative_canonical_iri, :root_relative_iri, to: :parent
 
   def root
     @root ||= Page.find_by(uuid: root_id)
@@ -71,7 +55,21 @@ class Feed < VirtualResource
     activity_base.where(edges: {root_id: parent.root_id}).where('edges.path <@ ?', parent.path)
   end
 
-  def profile_activities
-    activity_base.where(owner_id: parent.id)
+  def user_activities
+    activity_base.where(owner_id: parent.profile.id)
+  end
+
+  class << self
+    def requested_index_resource(params, user_context)
+      parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
+      return unless parent.enhanced_with?(Feedable)
+
+      feed = Feed.new(
+        parent: parent,
+        relevant_only: true
+      )
+
+      feed.activity_collection(index_collection_params(params, user_context))
+    end
   end
 end

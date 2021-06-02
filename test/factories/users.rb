@@ -16,6 +16,7 @@ FactoryBot.define do
     notifications_viewed_at { nil }
     show_feed { true }
     is_public { true }
+    finished_intro { true }
     sequence(:display_name) { |n| "user_name_#{n}" }
     last_accepted { Time.current }
 

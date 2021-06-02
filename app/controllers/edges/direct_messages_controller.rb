@@ -15,19 +15,6 @@ class DirectMessagesController < ParentableController
     authenticated_resource.send_email!
   end
 
-  def new_success
-    authenticated_resource.email_address = current_user.primary_email_record if current_user.confirmed?
-    super
-  end
-
-  def parent_resource
-    return super if parent_resource_param(params)
-
-    @parent_resource ||= LinkedRails.iri_mapper.resource_from_iri(params[:direct_message].try(:[], :resource_iri))
-  end
-
-  def requested_resource; end
-
   def redirect_location
     authenticated_resource.resource.iri
   end

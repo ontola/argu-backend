@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class NotificationActionList < ApplicationActionList
-  has_action(
+  has_resource_action(
     :read,
     result: Notification,
     type: NS::SCHEMA[:ReadAction],

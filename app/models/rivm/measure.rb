@@ -36,7 +36,7 @@ class Measure < Edge
   filterable(
     NS::RIVM[:categories] => {
       filter: lambda do |scope, values|
-        scope.where(category_ids: values.map { |value| LinkedRails.iri_mapper.resource_from_iri(value).uuid })
+        scope.where(category_ids: values.map { |value| LinkedRails.iri_mapper.resource_from_iri(value, nil).uuid })
       end,
       values_in: -> { Vocabulary.new(url: :categorieen).term_collection(page_size: 999).iri }
     }
@@ -60,6 +60,10 @@ class Measure < Edge
 
     def iri_namespace
       NS::RIVM
+    end
+
+    def route_key
+      :voorbeelden
     end
   end
 end

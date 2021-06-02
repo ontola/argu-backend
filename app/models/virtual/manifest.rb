@@ -13,6 +13,10 @@ class Manifest < VirtualResource
 
   alias_attribute :root, :page
 
+  def anonymous_iri?
+    false
+  end
+
   def background_color
     '#eef0f2'
   end
@@ -70,8 +74,8 @@ class Manifest < VirtualResource
       LinkedRails.iri(path: 'forms/linked_rails/auth/sessions').to_s,
       LinkedRails.iri(path: 'forms/linked_rails/auth/access_tokens').to_s,
       LinkedRails.iri(path: 'forms/users/registrations').to_s,
-      LinkedRails.iri(path: '/u/access_tokens/new').to_s,
-      LinkedRails.iri(path: '/users/sign_up').to_s,
+      LinkedRails.iri(path: '/u/access_token/new').to_s,
+      LinkedRails.iri(path: '/u/registration/new').to_s,
       LinkedRails.iri(path: 'menus').to_s
     ]
   end

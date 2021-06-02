@@ -21,7 +21,8 @@ RSpec.describe 'Actions', type: :request do
 
     let(:notification) { Notification.first }
     let(:authorized_user) { notification.user }
-    let(:non_existing_show_path) { "/n/#{non_existing_id}" }
+    let(:show_path) { "/argu/n/#{notification.id}/actions/read" }
+    let(:non_existing_show_path) { "/argu/n/#{non_existing_id}/actions/read" }
 
     it_behaves_like 'get show'
   end

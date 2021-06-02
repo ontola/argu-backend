@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
 class ConversionSerializer < BaseSerializer
-  attribute :klass, datatype: NS::XSD[:string], predicate: NS::ARGU[:convertToClass]
+  attribute :klass_iri,
+            datatype: NS::XSD[:string],
+            predicate: NS::ARGU[:convertToClass]
+  has_many :convertible_classes,
+           sequence: true,
+           predicate: NS::ARGU[:convertibleClasses]
 end

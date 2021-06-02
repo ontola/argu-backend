@@ -24,12 +24,6 @@ class AuthorizedController < ApplicationController
     request.original_url
   end
 
-  def authorize_action
-    return authorize authenticated_resource, :show? if form_action?
-
-    authorize authenticated_resource, "#{params[:action].chomp('!')}?" unless action_name == 'index'
-  end
-
   # A version of {authenticated_resource!} that raises if the record cannot be found
   # @see {authenticated_resource!}
   # @raise [ActiveRecord::RecordNotFound]
@@ -43,15 +37,8 @@ class AuthorizedController < ApplicationController
   # @author Fletcher91 <thom@argu.co>
   # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
   def authenticated_resource!
-    @authenticated_resource ||=
-      case action_name
-      when 'create', 'new'
-        new_resource
-      else
-        requested_resource
-      end
+    current_resource
   end
-  alias current_resource authenticated_resource!
 
   def check_if_registered
     return unless current_user.guest?
@@ -73,28 +60,16 @@ class AuthorizedController < ApplicationController
     %w[new edit delete bin unbin shift settings].include?(action_name)
   end
 
-  def permit_params
-    params
-      .require(model_name)
-      .permit(*policy(requested_resource || new_resource).permitted_attributes)
+  def permit_param_key
+    model_name
+  end
+
+  def permit_param_keys
+    @permit_param_keys ||= policy(requested_resource || new_resource).permitted_attributes
   end
 
   def policy(resource)
     user_context.tree_root_id.nil? && resource.is_a?(Edge) ? NoRootPolicy.new(user_context, resource) : super
-  end
-
-  # Searches the current primary resource by its id
-  # @return [ActiveRecord::Base, nil] The resource by its id
-  def requested_resource
-    @requested_resource ||=
-      LinkedRails.iri_mapper.resource_from_opts(params.merge(class: controller_class))
-  end
-
-  # Searches the current primary resource by its id, raises if the record cannot be found
-  # @return [ActiveRecord::Base, nil] The resource by its id
-  # @raise [ActiveRecord::RecordNotFound]
-  def requested_resource!
-    requested_resource || raise(ActiveRecord::RecordNotFound)
   end
 
   def resource_id

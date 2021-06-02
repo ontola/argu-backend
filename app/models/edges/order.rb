@@ -69,6 +69,12 @@ class Order < Edge
   end
 
   class << self
+    def attributes_for_new(opts)
+      super.merge(
+        cart: opts[:parent]&.cart_for(opts[:user_context]&.user)
+      )
+    end
+
     def default_collection_display
       :table
     end

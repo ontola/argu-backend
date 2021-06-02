@@ -5,24 +5,19 @@ module ConfirmedDestroyable
     extend ActiveSupport::Concern
 
     included do
-      has_action(:destroy, confirmed_destroy_options)
+      has_resource_destroy_action(confirmed_destroy_options)
     end
 
     module ClassMethods
       private
 
-      def confirmed_destroy_options # rubocop:disable Metrics/MethodLength
+      def confirmed_destroy_options(overwrite = {})
         {
-          type: [NS::SCHEMA[:Action], NS::ARGU[:DestroyAction]],
-          policy: :destroy?,
-          image: 'fa-close',
-          url: -> { resource.iri(destroy: true) },
-          http_method: :delete,
           form: Request::ConfirmedDestroyRequestForm,
           root_relative_iri: lambda {
             expand_uri_template(:delete_iri, parent_iri: split_iri_segments(resource.root_relative_iri))
           }
-        }
+        }.merge(overwrite)
       end
     end
   end

@@ -5,7 +5,7 @@ module ActivePublishable
     extend ActiveSupport::Concern
 
     included do
-      has_action(
+      has_resource_action(
         :publish,
         type: [NS::SCHEMA[:Action], NS::ARGU[:PublishAction]],
         policy: :publish?,

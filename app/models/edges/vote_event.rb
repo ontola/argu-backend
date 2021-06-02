@@ -39,12 +39,4 @@ class VoteEvent < Edge
   def voteable
     parent
   end
-
-  class << self
-    def show_includes
-      [
-        vote_collection: inc_nested_collection
-      ]
-    end
-  end
 end

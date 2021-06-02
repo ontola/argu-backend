@@ -22,16 +22,8 @@ class MotionsControllerTest < ActionController::TestCase
 
     expect_relationship('pro_argument_collection')
     expect_relationship('con_argument_collection')
-    expect_included(collection_iri(motion, :pro_arguments))
-    expect_included(collection_iri(motion, :con_arguments))
-
     expect_relationship('attachment_collection')
-    expect_included(collection_iri(motion, :attachments))
-
     expect_relationship('vote_event_collection')
-    expect_included(vote_event.iri)
-    expect_included(collection_iri(vote_event, :votes))
-    expect_not_included(motion.default_vote_event.votes.map(&:iri))
   end
 
   ####################################
@@ -39,7 +31,7 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   test 'should get index motions of forum' do
     ActsAsTenant.with_tenant(holland.parent) do
-      get :index, params: {format: :json_api, root_id: holland.parent.url, container_node_id: holland.url}
+      get :index, params: {format: :json_api, parent_iri: parent_iri_for(holland)}
     end
     assert_response 200
 
@@ -55,8 +47,7 @@ class MotionsControllerTest < ActionController::TestCase
     ActsAsTenant.with_tenant(holland.parent) do
       get :index, params: {
         format: :json_api,
-        root_id: holland.parent.url,
-        container_node_id: holland.url,
+        parent_iri: parent_iri_for(holland),
         type: :infinite
       }
     end
@@ -87,8 +78,7 @@ class MotionsControllerTest < ActionController::TestCase
       get :index,
           params: {
             format: :json_api,
-            root_id: holland.parent.url,
-            container_node_id: holland.url,
+            parent_iri: parent_iri_for(holland),
             type: 'paginated',
             page: 1
           }
@@ -106,7 +96,7 @@ class MotionsControllerTest < ActionController::TestCase
   # Index for Question
   ####################################
   test 'should get index motions of question' do
-    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.fragment}
+    get :index, params: {format: :json_api, parent_iri: parent_iri_for(question)}
     assert_response 200
 
     expect_relationship('part_of')
@@ -117,7 +107,7 @@ class MotionsControllerTest < ActionController::TestCase
 
   test 'should get index motions of question page 1' do
     get :index,
-        params: {format: :json_api, root_id: argu.url, question_id: question.fragment, type: 'paginated', page: 1}
+        params: {format: :json_api, parent_iri: parent_iri_for(question), type: 'paginated', page: 1}
     assert_response 200
 
     expect_relationship('collection')

@@ -55,7 +55,9 @@ class ActivityPolicy < EdgeTreePolicy
     end
   end
 
-  delegate :show?, to: :edgeable_policy
-
   permit_attributes %i[comment notify]
+
+  def show?
+    edgeable_policy.show?
+  end
 end

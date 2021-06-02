@@ -32,7 +32,7 @@ module Public
       end
 
       def tenant_from_parsed_iri
-        parsed_iri = LinkedRails.iri_mapper.resource_from_iri(iri_param)&.iri
+        parsed_iri = LinkedRails.iri_mapper.resource_from_iri(iri_param, user_context)&.iri
         TenantFinder.from_url(parsed_iri) if parsed_iri
       end
 

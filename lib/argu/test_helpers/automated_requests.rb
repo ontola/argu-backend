@@ -168,7 +168,7 @@ module Argu
           let(:destroy_path) { "#{resource_iri(subject).path}?destroy=true" }
           let(:edit_path) { edit_iri(show_path).path }
           let(:shift_path) { new_iri(move_path).path }
-          let(:move_path) { resource_iri(Move.new(edge: subject)).path }
+          let(:move_path) { "#{resource_iri(subject).path}/move" }
           let(:update_path) { show_path }
           let(:delete_path) { delete_iri(show_path).path }
           let(:trash_path) { show_path }

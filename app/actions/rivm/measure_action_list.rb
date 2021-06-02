@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 class MeasureActionList < EdgeActionList
-  has_action(
-    :create,
-    create_options.merge(
-      favorite: true
-    )
+  has_collection_create_action(
+    favorite: true
   )
 end

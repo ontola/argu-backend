@@ -1,17 +1,6 @@
 # frozen_string_literal: true
 
 class CollectionPolicy < LinkedRails::CollectionPolicy
-  def create_child?
-    if parent_policy
-      verdict = parent_policy.create_child?(record.association_class, collection: record)
-      @message = parent_policy.message
-    else
-      verdict = class_policy.create?
-      @message = class_policy.message
-    end
-    verdict
-  end
-
   def expired?
     has_expired_ancestors?
   end
@@ -26,10 +15,6 @@ class CollectionPolicy < LinkedRails::CollectionPolicy
 
   def has_unpublished_ancestors?
     parent_policy.try(:has_unpublished_ancestors?)
-  end
-
-  def show?
-    parent_policy.show? || super
   end
 
   private

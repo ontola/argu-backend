@@ -215,9 +215,9 @@ module SPI
     def user_responses(opts = {})
       bulk_responses(
         {
-          holland_motion1.iri => {cache: 'private', status: 403, include: false},
+          holland_motion1.iri => {cache: 'private', status: 403, include: true},
           holland_motion2.iri => {cache: 'private', status: 403, include: false},
-          resource_iri(holland_motion1.activities.last, root: argu) => {cache: 'private', status: 403, include: false}
+          resource_iri(holland_motion1.activities.last, root: argu) => {cache: 'private', status: 403, include: true}
         }.merge(opts)
       )
     end

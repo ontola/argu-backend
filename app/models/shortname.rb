@@ -19,6 +19,9 @@ class Shortname < ApplicationRecord
   before_save :remove_primary_shortname, if: :primary?
   after_save :update_caches, if: :primary?
   after_destroy :update_caches, if: :primary?
+  scope :join_edges, lambda {
+    joins("INNER JOIN edges ON edges.uuid = shortnames.owner_id AND shortnames.owner_type = 'Edge'")
+  }
 
   with_columns settings: [
     NS::ARGU[:alias],
@@ -52,10 +55,6 @@ class Shortname < ApplicationRecord
 
   def edgeable_record
     owner.is_a?(Edge) ? owner.root : owner
-  end
-
-  def self.find_resource(shortname, root_id = nil)
-    Shortname.where(root_id: root_id).find_by('lower(shortname) = lower(?)', shortname).try(:owner)
   end
 
   def owner
@@ -114,8 +113,12 @@ class Shortname < ApplicationRecord
       {
         primary: false,
         owner: opts[:parent],
-        root_id: ActsAsTenant.current_tenant
+        root: ActsAsTenant.current_tenant
       }
+    end
+
+    def find_resource(shortname, root_id = nil)
+      Shortname.where(root_id: root_id).find_by('lower(shortname) = lower(?)', shortname).try(:owner)
     end
 
     def includes_for_serializer

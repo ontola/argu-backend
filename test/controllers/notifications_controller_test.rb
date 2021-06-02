@@ -80,7 +80,6 @@ class NotificationsControllerTest < ActionController::TestCase
     assert_response 200
     view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
     expect_triple(view, NS::AS[:totalItems], 4)
-    user.notifications.each { |n| expect_triple(n.iri, NS::ONTOLA[:readAction], nil) }
   end
 
   private

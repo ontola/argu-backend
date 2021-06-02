@@ -29,18 +29,6 @@ module VoteEventable
       def includes_for_serializer
         super.merge(default_vote_event: {creator: :profileable})
       end
-
-      def show_includes
-        super + [
-          default_vote_event: [
-            vote_collection: {
-              filter_fields: :options,
-              filters: [],
-              sortings: []
-            }.freeze
-          ].freeze
-        ]
-      end
     end
   end
 end

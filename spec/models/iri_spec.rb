@@ -16,7 +16,7 @@ RSpec.describe "Iri's", type: :model do
     end
 
     it 'can be found with resource_from_iri' do
-      expect(LinkedRails.iri_mapper.resource_from_iri(subject.iri)).to eq(iri_owner)
+      expect(LinkedRails.iri_mapper.resource_from_iri(subject.iri, nil)).to eq(iri_owner)
     end
   end
 

@@ -21,6 +21,10 @@ class CustomMenuItemPolicy < EdgeTreePolicy
   permit_attributes %i[raw_label raw_image order]
   permit_attributes %i[raw_href], has_properties: {edge_id: false}
 
+  def show?
+    true
+  end
+
   def update?
     staff?
   end

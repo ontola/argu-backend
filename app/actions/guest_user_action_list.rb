@@ -3,7 +3,7 @@
 class GuestUserActionList < ApplicationActionList
   extend LanguageHelper
 
-  has_action(
+  has_resource_action(
     :language,
     type: NS::SCHEMA[:UpdateAction],
     image: 'fa-update',

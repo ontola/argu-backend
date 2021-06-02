@@ -23,13 +23,21 @@ class GroupsTest < ActionDispatch::IntegrationTest
 
     get new_iri(argu, :groups)
 
-    assert_not_authorized
+    assert_response :success
   end
 
   test 'user should not get settings' do
     sign_in user
 
     get settings_iri(group)
+
+    assert_response :success
+  end
+
+  test 'user should not put update' do
+    sign_in user
+
+    put group, params: {group: {name: 'new_name'}}
 
     assert_not_authorized
   end
@@ -69,14 +77,14 @@ class GroupsTest < ActionDispatch::IntegrationTest
 
     get new_iri(argu, :groups)
 
-    assert_not_authorized
+    assert_response :success
   end
 
   test 'moderator should not get settings' do
     sign_in moderator
 
     get settings_iri(group)
-    assert_not_authorized
+    assert_response :success
   end
 
   test 'moderator should not delete destroy' do

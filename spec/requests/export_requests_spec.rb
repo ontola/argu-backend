@@ -16,6 +16,10 @@ RSpec.describe 'Exports', type: :request do
   let(:destroy_differences) { {'Export.count' => -1} }
   let(:expect_get_index_guest_serializer) { expect_unauthorized }
   let(:non_existing_id) { SecureRandom.uuid }
+  let(:expect_get_form_guest_serializer) { expect_unauthorized }
+  let(:expect_get_form_unauthorized_serializer) { expect_unauthorized }
+  let(:expect_get_new_guest_serializer) { expect_success }
+  let(:expect_get_new_unauthorized_serializer) { expect_success }
 
   context 'with forum parent' do
     subject { forum_export }

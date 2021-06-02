@@ -121,6 +121,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
               .new(
                 last_accepted: Time.current,
                 id: user_id,
+                display_name: shortname,
                 shortname: Shortname.new(shortname: shortname),
                 email: email,
                 password: SecureRandom.hex(32)

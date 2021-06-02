@@ -55,7 +55,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
       href: resource.widget_collection.iri,
       image: 'fa-th',
       policy: :create_child?,
-      policy_arguments: [Widget]
+      policy_resource: resource.widget_collection
     )
   end
 

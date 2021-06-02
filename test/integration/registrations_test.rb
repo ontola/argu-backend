@@ -535,24 +535,24 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   def create_user_with_locale(locale, &block)
-    put iri_from_template(:languages_iri, language: locale, root: argu)
+    put iri_from_template(:languages_iri, root: argu), params: {user: {language: locale}}
     create_user(&block)
     assert_equal locale, User.last.language.to_sym
   end
 
   def sign_out_path
-    "#{argu.iri}#{super}"
+    "#{argu.iri}/u/sign_out"
   end
 
-  def user_confirmation_path(*args)
-    "#{argu.iri}#{super}"
+  def user_confirmation_path(params = nil)
+    ["/#{argu.url}/u/confirmation", params&.to_param].compact.join('?')
   end
 
   def user_password_path
-    "#{argu.iri}#{super}"
+    "#{argu.iri}/u/password"
   end
 
   def user_registration_path
-    "#{argu.iri}#{super}"
+    "#{argu.iri}/u/registration"
   end
 end

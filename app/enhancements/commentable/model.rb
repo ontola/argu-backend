@@ -18,11 +18,5 @@ module Commentable
         i
       end
     end
-
-    module ClassMethods
-      def show_includes
-        super + [:top_comment, comment_collection: inc_shallow_collection]
-      end
-    end
   end
 end

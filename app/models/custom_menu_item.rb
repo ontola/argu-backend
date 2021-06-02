@@ -61,7 +61,8 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @menu_sequence ||=
       LinkedRails::Sequence.new(
         -> { custom_menu_items },
-        id: menu_sequence_iri
+        id: menu_sequence_iri,
+        scope: false
       )
   end
 
@@ -120,7 +121,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
     def attributes_for_new(opts)
       {
         menu_type: :navigations,
-        resource: opts[:parent]
+        resource: opts[:parent] || ActsAsTenant.current_tenant
       }
     end
 

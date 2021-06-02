@@ -91,20 +91,15 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
     root_id == ActsAsTenant.current_tenant.root_id || id <= 0
   end
 
+  def show_includes
+    [:organization]
+  end
+
   class << self
     def attributes_for_new(opts)
       attrs = super
       attrs[:page] = ActsAsTenant.current_tenant
       attrs
-    end
-
-    def build_new(opts)
-      resource = super
-      resource.grants.build(
-        edge: opts[:parent],
-        grant_set: GrantSet.participator
-      )
-      resource
     end
 
     def iri
@@ -116,15 +111,18 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def root_collection_opts
-      super.merge(parent: ActsAsTenant.current_tenant)
+      super.merge(
+        association: :groups,
+        parent: ActsAsTenant.current_tenant
+      )
+    end
+
+    def route_key
+      :g
     end
 
     def staff
       Group.find_by(id: Group::STAFF_ID)
-    end
-
-    def show_includes
-      [:organization]
     end
 
     def sort_options(_collection)

@@ -7,7 +7,15 @@ module Actions
     def error
       return super unless action_status == NS::ONTOLA[:DisabledActionStatus]
 
-      resource_policy.message || super
+      resource_policy&.message || super
+    end
+
+    class << self
+      def app_action_list_class
+        PageActionList
+      end
+
+      def app_action_list(_user_context); end
     end
   end
 end

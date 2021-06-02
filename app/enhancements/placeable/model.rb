@@ -26,13 +26,11 @@ module Placeable
     end
 
     module ClassMethods
-      def build_new(opts)
-        child = super
-        lat = attribute_from_filter(opts[:filter], NS::SCHEMA[:latitude])
-        lon = attribute_from_filter(opts[:filter], NS::SCHEMA[:longitude])
-        zoom_level = attribute_from_filter(opts[:filter], NS::ONTOLA[:zoomLevel])
-        child.build_custom_placement(lat: lat, lon: lon, zoom_level: zoom_level) if lat && lon
-        child
+      def attributes_from_filters(filters)
+        custom_placement_attributes = Placement.attributes_from_filters(filters)
+        return super if custom_placement_attributes.blank?
+
+        super.merge(custom_placement_attributes: custom_placement_attributes.merge(placement_type: 'custom'))
       end
 
       def define_placement_associations(type)
@@ -54,10 +52,6 @@ module Placeable
       def placeable(*types)
         self.placeable_types = types
         types.each(&method(:define_placement_associations))
-      end
-
-      def show_includes
-        super + placeable_types.map { |type| "#{type}_placement.place".to_sym }
       end
     end
   end

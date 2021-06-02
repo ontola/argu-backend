@@ -34,6 +34,12 @@ module Parentable
     def parent_iri_path(opts = {})
       split_iri_segments(parent&.root_relative_iri(opts))
     end
+
+    def singular_iri_opts
+      {
+        parent_iri: parent_iri_path
+      }
+    end
   end
 
   module ClassMethods

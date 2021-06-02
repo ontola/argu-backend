@@ -35,7 +35,7 @@ module Helpers
         image: 'fa-bullhorn',
         href: new_iri(resource, :blog_posts),
         policy: :create_child?,
-        policy_arguments: [BlogPost]
+        policy_resource: resource.blog_post_collection(user_context: user_context)
       )
     end
 
@@ -54,7 +54,7 @@ module Helpers
         href: collection_iri(resource, :exports),
         image: 'fa-cloud-download',
         policy: :create_child?,
-        policy_arguments: [Export]
+        policy_resource: resource.export_collection(user_context: user_context)
       )
     end
 

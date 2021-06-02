@@ -18,19 +18,15 @@ class QuestionsControllerTest < ActionController::TestCase
     expect_relationship('creator')
 
     expect_relationship('attachment_collection', size: 1)
-    expect_included(collection_iri(question, :attachments))
 
     expect_relationship('motion_collection', size: 1)
-    expect_included(collection_iri(question, :motions))
-    expect_not_included(question.motions.untrashed.map(&:iri))
-    expect_not_included(question.motions.trashed.map(&:iri))
   end
 
   ####################################
   # Index for Forum
   ####################################
   test 'should get index questions of forum' do
-    get :index, params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url}
+    get :index, params: {format: :json_api, parent_iri: parent_iri_for(holland)}
     assert_response 200
 
     expect_relationship('part_of')
@@ -42,7 +38,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
   test 'should get index questions of forum page 1' do
     get :index,
-        params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url, type: 'paginated', page: 1}
+        params: {format: :json_api, parent_iri: parent_iri_for(holland), type: 'paginated', page: 1}
     assert_response 200
 
     expect_relationship('collection')

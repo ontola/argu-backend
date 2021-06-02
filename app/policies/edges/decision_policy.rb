@@ -14,10 +14,6 @@ class DecisionPolicy < EdgePolicy
     false
   end
 
-  def feed?
-    false
-  end
-
   def update?
     is_creator? || has_grant?(:update)
   end

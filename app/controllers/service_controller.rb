@@ -22,8 +22,8 @@ class ServiceController < ParentableController
     params.require(model_name).require(activity_key).permit(:comment, :notify)
   end
 
-  def authenticated_resource!
-    @authenticated_resource ||=
+  def current_resource
+    @current_resource ||=
       case action_name
       when 'create', 'destroy', 'update', 'untrash', 'trash'
         action_service.resource
@@ -40,13 +40,17 @@ class ServiceController < ParentableController
   def create_service
     @create_service ||= service_klass.new(
       create_service_parent,
-      attributes: permit_params.to_h.with_indifferent_access,
+      attributes: create_service_attributes,
       options: service_options
     )
   end
 
+  def create_service_attributes
+    permit_params_with_filters.to_h.with_indifferent_access
+  end
+
   def create_service_parent
-    parent_resource!
+    requested_resource!.is_a?(LinkedRails.collection_class) ? requested_resource!.parent : requested_resource!
   end
 
   # Prepares a memoized {DestroyService} for the relevant model for use in controller#destroy
@@ -100,8 +104,12 @@ class ServiceController < ParentableController
   def update_service
     @update_service ||= service_klass.new(
       requested_resource!,
-      attributes: permit_params,
+      attributes: update_service_attributes,
       options: service_options
     )
+  end
+
+  def update_service_attributes
+    permit_params_with_filters.to_h.with_indifferent_access
   end
 end

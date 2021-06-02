@@ -33,8 +33,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 1e230c97e338e0f782334d486b954cde82a19850
-  branch: master
+  revision: 095285b81143bf12f44e161085f140b9b67bdcab
+  branch: refactor
   specs:
     linked_rails (0.0.0)
       active_response
@@ -47,7 +47,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails-auth
-  revision: ce6b37cdb11585c1b3cc901370ce8f547fb8d3d7
+  revision: 19b2e798852822c3fbf30e7d9f0fc7899b6d9c8b
+  branch: refactor
   specs:
     linked_rails-auth (0.1.0)
       active_model_otp

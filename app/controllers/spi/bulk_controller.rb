@@ -16,23 +16,27 @@ module SPI
       super.map(&:join).map(&:value)
     end
 
-    def handle_resource_error(_opts, error)
-      Bugsnag.notify(error) do |report|
-        Bugsnag.configuration.middleware.run(report)
-      end
-
-      super
-    end
-
     def authorized_resource(opts)
       return super if wrong_host?(opts[:iri])
 
       include = opts[:include].to_s == 'true'
-      resource = LinkedRails.iri_mapper.resource_from_iri(path_to_url(opts[:iri]))
+      resource = LinkedRails.iri_mapper.resource_from_iri(path_to_url(opts[:iri]), user_context)
 
-      return super unless resource.try(:cacheable?)
+      return super if resource.blank?
 
-      response_from_resource(include, resource)
+      response_from_resource(include, opts[:iri], resource)
+    rescue StandardError => e
+      handle_resource_error(opts, e)
+    end
+
+    def log_resource_error(error)
+      super
+
+      return if error_status(error) < 500
+
+      Bugsnag.notify(error) do |report|
+        Bugsnag.configuration.middleware.run(report)
+      end
     end
 
     def resource_request(iri)
@@ -42,47 +46,35 @@ module SPI
       req
     end
 
-    def response_from_resource(include, resource)
+    def response_from_resource(include, iri, resource)
       resource_policy = policy(resource)
       status = resource_status(resource, resource_policy)
 
       resource_response(
-        resource.iri,
+        iri,
         body: include && status == 200 ? resource_body(resource) : nil,
-        cache: resource_cache_control(status, resource_policy),
+        cache: resource_cache_control(resource.try(:cacheable?), status, resource_policy),
         language: I18n.locale,
         status: status
       )
     end
 
-    def response_for_wrong_host(opts)
+    def response_for_wrong_host(opts) # rubocop:disable Metrics/AbcSize
       iri = opts[:iri]
       if ActsAsTenant.current_tenant.allowed_external_sources.any? { |source| iri.start_with?(source) }
         include = opts[:include].to_s == 'true'
 
-        response_from_request(include, LinkedRecord.find_or_initialize_by_iri(opts[:iri]).iri).merge(
-          iri: opts[:iri]
-        )
+        response_from_request(
+          include,
+          LinkedRecord.requested_single_resource({iri: opts[:iri]}, user_context).iri
+        ).merge(iri: opts[:iri])
       else
         resource_response(iri)
       end
     end
 
-    def resource_body(resource)
-      return if resource.nil?
-
-      RDF::Serializers.serializer_for(resource)
-        .new(resource,
-             include: resource&.class.try(:preview_includes),
-             params: {
-               scope: user_context,
-               context: resource&.try(:iri)
-             })
-        .send(:render_hndjson)
-    end
-
-    def resource_cache_control(status, resource_policy)
-      return :private unless status == 200
+    def resource_cache_control(cacheable, status, resource_policy)
+      return :private unless status == 200 && cacheable
       return 'no-cache' if resource_policy.try(:has_unpublished_ancestors?)
       return 'no-cache' unless resource_policy.try(:public_resource?)
 
@@ -92,27 +84,23 @@ module SPI
     def resource_status(resource, resource_policy)
       return 404 if resource.nil?
 
-      resource_policy.show? ? 200 : 403
-    rescue ActiveRecord::RecordNotFound
-      404
-    rescue Argu::Errors::Unauthorized
-      401
-    rescue Pundit::NotAuthorizedError, Argu::Errors::Forbidden
-      403
-    rescue StandardError
-      500
+      raise(Argu::Errors::Forbidden.new(query: :show?)) unless resource_policy.show?
+
+      200
     end
 
     def threaded_authorized_resource(resource) # rubocop:disable Metrics/MethodLength
-      Thread.new(Apartment::Tenant.current, ActsAsTenant.current_tenant) do |apartment, tenant|
+      Thread.new(Apartment::Tenant.current, ActsAsTenant.current_tenant, I18n.locale) do |apartment, tenant, locale|
         ActiveRecord::Base.connection_pool.with_connection do
           Apartment::Tenant.switch(apartment) do
             ActsAsTenant.with_tenant(tenant) do
-              yield
+              I18n.with_locale(locale) do
+                yield
+              end
             end
           end
         end
-      rescue StandardError => e
+      rescue StandardError, ScriptError => e
         handle_resource_error(resource, e)
       end
     end

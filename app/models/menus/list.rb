@@ -3,7 +3,7 @@
 module Menus
   class List < LinkedRails::Menus::List
     class << self
-      def single_resource_from_params(params, user_context)
+      def requested_single_resource(params, user_context)
         super || custom_menu(params, user_context)
       end
 

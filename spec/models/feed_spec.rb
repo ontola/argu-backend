@@ -6,7 +6,7 @@ RSpec.describe Feed, type: :model do
   define_spec_objects
   subject { argu_feed }
 
-  let(:argu_feed) { described_class.new(parent: argu, relevant_only: relevant_only, root_id: argu.uuid) }
+  let(:argu_feed) { described_class.new(parent: argu, relevant_only: relevant_only) }
   let(:relevant_only) { false }
   let(:user) { create(:user) }
   let(:scoped_activities) do
@@ -17,10 +17,12 @@ RSpec.describe Feed, type: :model do
   end
   let(:hidden_votes) { Vote.joins(:publisher).where(users: {show_feed: false}) }
   let(:ungranted_activities) do
-    Activity
-      .all
-      .reject do |a|
-      granted_paths.any? { |p| a.trackable.path == p || a.trackable.path.include?("#{p}.") }
+    ActsAsTenant.without_tenant do
+      Activity
+        .all
+        .reject do |a|
+        granted_paths.any? { |p| a.trackable.path == p || a.trackable.path.include?("#{p}.") }
+      end
     end
   end
   let(:irrelevant_activities) do
@@ -44,16 +46,11 @@ RSpec.describe Feed, type: :model do
   end
   let(:granted_paths) { [freetown.path] }
 
+  before do
+    ActsAsTenant.current_tenant = argu
+  end
+
   RSpec.shared_examples_for 'scope' do
-    context 'relevant_only' do
-      let(:relevant_only) { true }
-
-      it 'contains only relevant activities' do
-        expect(irrelevant_activities).to be_present
-        expect(scoped_activities & irrelevant_activities).to be_empty
-      end
-    end
-
     context 'all activities' do
       it 'also contains irrelevant activities' do
         expect(scoped_activities & irrelevant_activities).not_to be_empty

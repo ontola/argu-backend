@@ -10,4 +10,10 @@ class ConArgument < Argument
   def pro
     instance_variable_defined?('@pro') ? @pro : false
   end
+
+  class << self
+    def route_key
+      :cons
+    end
+  end
 end

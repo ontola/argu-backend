@@ -2,9 +2,6 @@
 
 FactoryBot.define do
   factory :activity, class: Activity do
-    transient do
-      tenant { passed_in?(:forum) ? forum : build(:forum) }
-    end
     trackable { passed_in?(:trackable) ? trackable : create(:pro_argument, parent: tenant) }
 
     association :owner, factory: :profile

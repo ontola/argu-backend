@@ -7,11 +7,6 @@ class WidgetsController < ServiceController
     show_includes
   end
 
-  def ld_action(resource:, view:)
-    action_resource = resource.try(:new_record?) && (collection_from_parent || root_collection) || resource
-    action_resource.action(ld_action_name(view), user_context)
-  end
-
   def redirect_location
     parent_resource.widget_collection.iri
   end

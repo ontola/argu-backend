@@ -40,7 +40,7 @@ module Users
     test 'guest should not get edit password without token' do
       sign_in :guest_user
       get edit_user_password_path
-      assert_not_a_user
+      assert_response 200
     end
 
     test 'guest should get edit password with token' do
@@ -55,6 +55,19 @@ module Users
           params: {
             user: {
               reset_password_token: 'wrong_token',
+              password: 'new_password',
+              password_confirmation: 'new_password'
+            }
+          }
+      assert_response :unprocessable_entity
+      assert_equal user.encrypted_password, user.reload.encrypted_password
+    end
+
+    test 'guest should not put update password without token' do
+      sign_in :guest_user
+      put user_password_path,
+          params: {
+            user: {
               password: 'new_password',
               password_confirmation: 'new_password'
             }
@@ -127,7 +140,7 @@ module Users
       sign_in user
       post user_password_path, params: {user: {email: 'wrong@email.com'}}
       assert_response :created
-      assert_equal(response.headers['Location'], '/argu/u/sign_in')
+      assert_equal(response.headers['Location'], '/argu/u/session/new')
     end
 
     test 'user should post create password for existing email' do
@@ -136,7 +149,7 @@ module Users
       sign_in user
       post user_password_path, params: {user: {email: user.email}}
       assert_response :created
-      assert_equal(response.headers['Location'], '/argu/u/sign_in')
+      assert_equal(response.headers['Location'], '/argu/u/session/new')
       expect_ontola_action(snackbar: 'You will receive an email shortly with instructions to reset your password.')
 
       assert_email_sent
@@ -145,7 +158,7 @@ module Users
     test 'user should not get edit password without token' do
       sign_in user
       get edit_user_password_path
-      assert_not_a_user
+      assert_response 200
     end
 
     test 'user should get edit password with token' do
@@ -217,16 +230,16 @@ module Users
 
     private
 
-    def edit_user_password_path(*args)
-      "#{argu.iri}#{super}"
+    def edit_user_password_path(params = nil)
+      ["#{argu.iri}/u/password/edit", params&.to_param].compact.join('?')
     end
 
     def new_user_password_path
-      "#{argu.iri}#{super}"
+      "#{argu.iri}/u/password/new"
     end
 
     def user_password_path
-      "#{argu.iri}#{super}"
+      "#{argu.iri}/u/password"
     end
   end
 end

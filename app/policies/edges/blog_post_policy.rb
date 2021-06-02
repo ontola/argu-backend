@@ -3,10 +3,6 @@
 class BlogPostPolicy < EdgePolicy
   permit_attributes %i[display_name description trashed_at]
 
-  def feed?
-    false
-  end
-
   def create_expired?
     has_grant?(:create)
   end

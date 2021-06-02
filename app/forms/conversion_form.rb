@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
 class ConversionForm < ApplicationForm
-  field :klass
+  field :klass_iri,
+        sh_in_prop: NS::ARGU[:convertibleClasses]
 end

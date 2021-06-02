@@ -2,11 +2,12 @@
 
 class LinkedRecord < Edge
   enhance Commentable
+  enhance LinkedRails::Enhancements::Indexable, except: [:Routing]
   include SerializationHelper
 
   property :external_iri, :iri, NS::OWL.sameAs
 
-  attr_accessor :authorization, :language
+  attr_accessor :access_token, :language
 
   def anonymous_iri?
     false
@@ -30,6 +31,10 @@ class LinkedRecord < Edge
 
   private
 
+  def authorization
+    "Bearer #{access_token}" if access_token
+  end
+
   def external_body
     body = external_response.body
     blank_nodes = body.scan(/\[\"(\w*)\"/).flatten.uniq
@@ -51,16 +56,16 @@ class LinkedRecord < Edge
   end
 
   class << self
-    def find_or_initialize_by_iri(iri, authorization = nil, language = nil)
+    def requested_single_resource(params, user_context)
       record =
         LinkedRecord.find_or_initialize_by(
-          external_iri: iri,
+          external_iri: params[:iri],
           parent: ActsAsTenant.current_tenant,
           creator: Profile.community,
           publisher: User.community
         )
-      record.authorization = authorization
-      record.language = language
+      record.access_token = user_context.doorkeeper_token&.token
+      record.language = user_context.user.language
       record
     end
   end

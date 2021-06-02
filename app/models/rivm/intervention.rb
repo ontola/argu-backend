@@ -139,6 +139,10 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
       false
     end
 
+    def route_key
+      :interventies
+    end
+
     def sort_options(collection)
       return super if collection.type == :infinite
 

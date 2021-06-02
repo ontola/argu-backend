@@ -19,20 +19,18 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
 
   test 'user should get new otp secret' do
     sign_in user
-    otp_secret_new(response: :ok)
-    assert_enabled_form
+    otp_secret_new(should: true)
   end
 
   test 'activated user should not get new otp secret' do
     sign_in two_fa_user
-    otp_secret_new(response: :ok)
-    assert_disabled_form(error: 'Two factor authentication is already activated.')
+    otp_secret_new(error: 'Two factor authentication is already activated.')
   end
 
   # CREATE
   test 'guest should not create otp secret' do
     sign_in guest_user
-    otp_secret_create(should: false, response: :not_found)
+    otp_secret_create(should: false, response: :unprocessable_entity)
   end
 
   test 'user should create otp secret' do
@@ -81,20 +79,17 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   # DELETE
   test 'guest should not get delete otp secret' do
     sign_in guest_user
-    otp_secret_delete(response: :success)
-    assert_disabled_form(error: 'Two factor authentication is not yet activated.')
+    otp_secret_delete(response: :not_found)
   end
 
   test 'user should get delete otp secret' do
     sign_in user
-    otp_secret_delete(response: :success)
-    assert_disabled_form(error: 'Two factor authentication is not yet activated.')
+    otp_secret_delete(error: 'Two factor authentication is not yet activated.')
   end
 
   test 'activated user should get delete otp secret' do
     sign_in two_fa_user
-    otp_secret_delete(response: :ok, record: two_fa_user.otp_secret)
-    assert_enabled_form
+    otp_secret_delete(record: two_fa_user.otp_secret, should: true)
   end
 
   test 'other user should not get delete otp secret' do
@@ -104,20 +99,18 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
 
   test 'staff should get delete otp secret' do
     sign_in staff
-    otp_secret_delete(response: :ok)
-    assert_disabled_form(error: 'Two factor authentication is not yet activated.')
+    otp_secret_delete(error: 'Two factor authentication is not yet activated.')
   end
 
   test 'staff should get delete otp secret of activated user' do
     sign_in staff
-    otp_secret_delete(response: :ok, record: two_fa_user.otp_secret)
-    assert_enabled_form
+    otp_secret_delete(record: two_fa_user.otp_secret, should: true)
   end
 
   # DESTROY
   test 'guest should not destroy otp secret' do
     sign_in guest_user
-    otp_secret_destroy(response: :unauthorized, should: false)
+    otp_secret_destroy(response: :not_found, should: false)
   end
 
   test 'user should not destroy otp secret' do
@@ -132,7 +125,7 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
 
   test 'other user should not destroy otp secret' do
     sign_in other_user
-    otp_secret_destroy(response: :forbidden, should: false)
+    otp_secret_destroy(response: :not_found, should: false)
   end
 
   test 'staff should destroy otp secret' do
@@ -148,11 +141,11 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   private
 
   def create_path(_parent)
-    '/argu/u/otp_secrets'
+    '/argu/u/otp_secret'
   end
 
   def new_path(*_args)
-    '/argu/u/otp_secrets/new'
+    '/argu/u/otp_secret/new'
   end
 
   def otp_secret_create(
@@ -171,8 +164,8 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
     )
   end
 
-  def otp_secret_delete(response: :ok, record: user.otp_secret)
-    general_delete(record: record, results: {response: response})
+  def otp_secret_delete(error: nil, response: nil, record: user.otp_secret, should: false)
+    general_delete(record: record, results: {error: error, response: response, should: should})
   end
 
   def otp_secret_destroy(response: :ok, record: user.otp_secret, should: true)
@@ -183,8 +176,8 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
     )
   end
 
-  def otp_secret_new(response: :ok)
-    general_new(results: {response: response})
+  def otp_secret_new(error: nil, response: nil, should: false)
+    general_new(results: {error: error, response: response, should: should})
   end
 
   def resource_iri(resource)

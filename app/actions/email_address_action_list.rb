@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EmailAddressActionList < ApplicationActionList
-  has_action(
+  has_resource_action(
     :send_confirmation,
     completed: -> { resource.confirmed? },
     policy: :confirm?,
@@ -15,7 +15,7 @@ class EmailAddressActionList < ApplicationActionList
     type: NS::ONTOLA[:InlineAction]
   )
 
-  has_action(
+  has_resource_action(
     :make_primary,
     completed: -> { resource.primary? },
     policy: :make_primary?,

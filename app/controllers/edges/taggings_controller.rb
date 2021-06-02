@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class TaggingsController < EdgeableController
-  include LinkedRails::Enhancements::Indexable::Controller
-
   private
 
   def authorize_action

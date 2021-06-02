@@ -13,7 +13,7 @@ module Singularable
     def cacheable?
       return false if singular_resource?
 
-      super
+      super if defined?(super)
     end
 
     private

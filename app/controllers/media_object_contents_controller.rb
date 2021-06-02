@@ -21,7 +21,7 @@ class MediaObjectContentsController < ParentableController
   private
 
   def authorize_action
-    authorize parent_resource!
+    authorize parent_from_params!
   end
 
   def head_request?
@@ -32,16 +32,18 @@ class MediaObjectContentsController < ParentableController
     redirect_to(url_for_version || raise(ActiveRecord::RecordNotFound))
   end
 
-  def url_for_version # rubocop:disable Metrics/AbcSize
+  def url_for_version # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    raise(ActiveRecord::RecordNotFound) unless parent_from_params.is_a?(MediaObject)
+
     case params[:version].to_sym
     when :content
-      parent_resource.content.url
+      parent_from_params.content.url
     when :thumbnail
-      parent_resource.thumbnail
+      parent_from_params.thumbnail
     when *MediaObjectUploader::IMAGE_VERSIONS.keys
-      parent_resource.content.url(params[:version])
+      parent_from_params.content.url(params[:version])
     else
-      parent_resource.url
+      parent_from_params.url
     end
   end
 end

@@ -23,6 +23,10 @@ class CurrentActor < VirtualResource
     end
   end
 
+  def anonymous_iri?
+    false
+  end
+
   def mount_action
     return if user.guest? || user.finished_intro
 
@@ -43,5 +47,11 @@ class CurrentActor < VirtualResource
 
   def user_id
     user&.id
+  end
+
+  class << self
+    def preview_includes
+      %i[default_profile_photo actor user]
+    end
   end
 end

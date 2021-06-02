@@ -55,5 +55,24 @@ class GrantSet < ApplicationRecord
       titles = only.nil? ? RESERVED_TITLES - except : only
       GrantSet.where(title: titles)
     end
+
+    def requested_index_resource(params, user_context)
+      parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
+      return unless parent.enhanced_with?(Grantable)
+
+      LinkedRails::Sequence.new(
+        user_context.grant_tree.grant_sets(parent.persisted_edge, group_ids: user_context.user.profile.group_ids),
+        id: parent.granted_sets_iri,
+        scope: false
+      )
+    end
+
+    def requested_single_resource(params, _user_context)
+      if (/[a-zA-Z]/i =~ params[:id]).nil?
+        GrantSet.find_by(id: params[:id])
+      else
+        GrantSet.find_by(title: params[:id])
+      end
+    end
   end
 end

@@ -11,8 +11,8 @@ RSpec.describe 'Follows', type: :request do
 
   subject { create(:follow, follower: staff, followable: freetown) }
 
-  let(:create_path) { "#{collection_iri(argu, :follows)}?gid=#{freetown.uuid}" }
-  let(:non_existing_create_path) { "#{collection_iri(argu, :follows, root: argu)}?gid=#{non_existing_id}" }
+  let(:create_path) { collection_iri(freetown, :follows) }
+  let(:subject_parent) { subject.followable }
   let(:create_params) { {follow_type: 'reactions'} }
   let(:expect_delete_destroy_json_api) { expect(response.code).to eq('200') }
   let(:parent_path) { subject.followable.iri.path }

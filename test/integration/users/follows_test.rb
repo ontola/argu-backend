@@ -20,37 +20,73 @@ module Users
     ####################################
     # As guest
     ####################################
-    test 'guest should not delete destroy follows' do
-      assert_difference(no_differences) do
-        delete collection_iri(user, :follows, root: argu)
+    test 'guest should delete destroy follow' do
+      sign_in :guest_user
+      assert_difference('Follow.news.count' => -1) do
+        delete news_follow.iri, headers: argu_headers
       end
-      assert_not_a_user
+      assert_response :success
+      expect_ontola_action(
+        redirect: motion.iri,
+        snackbar: "You no longer receive notifications for '#{motion.display_name}'"
+      )
+    end
+
+    test 'guest should post destroy follow' do
+      sign_in :guest_user
+      assert_difference('Follow.news.count' => -1) do
+        post news_follow.iri, headers: argu_headers
+      end
+      assert_response :success
+      expect_ontola_action(
+        redirect: motion.iri,
+        snackbar: "You no longer receive notifications for '#{motion.display_name}'"
+      )
+    end
+
+    test 'guest should get unsubscribe follow' do
+      sign_in :guest_user
+      assert_difference('Follow.news.count' => -1) do
+        get "#{news_follow.iri}/unsubscribe", headers: argu_headers
+      end
+      assert_response :success
+      expect_ontola_action(
+        redirect: motion.iri,
+        snackbar: "You no longer receive notifications for '#{motion.display_name}'"
+      )
     end
 
     ####################################
     # As user
     ####################################
-    test 'other_user should not delete destroy follows' do
-      sign_in other_user
-      assert_difference(no_differences) do
-        delete collection_iri(user, :follows, root: argu)
-      end
-      assert_not_authorized
-    end
-
-    test 'user should delete destroy follows' do
-      sign_in user
-      assert_difference(unsubscribe_differences) do
-        delete collection_iri(user, :follows, root: argu)
-      end
-      assert_response :success
-      expect_ontola_action(snackbar: 'Notifications deleted successfully')
-    end
-
-    test 'user should post destroy follows' do
+    test 'user should delete destroy follow' do
       sign_in user
       assert_difference('Follow.news.count' => -1) do
-        post news_follow.iri
+        delete news_follow.iri, headers: argu_headers
+      end
+      assert_response :success
+      expect_ontola_action(
+        redirect: motion.iri,
+        snackbar: "You no longer receive notifications for '#{motion.display_name}'"
+      )
+    end
+
+    test 'user should post destroy follow' do
+      sign_in user
+      assert_difference('Follow.news.count' => -1) do
+        post news_follow.iri, headers: argu_headers
+      end
+      assert_response :success
+      expect_ontola_action(
+        redirect: motion.iri,
+        snackbar: "You no longer receive notifications for '#{motion.display_name}'"
+      )
+    end
+
+    test 'user should get unsubscribe follow' do
+      sign_in user
+      assert_difference('Follow.news.count' => -1) do
+        get "#{news_follow.iri}/unsubscribe", headers: argu_headers
       end
       assert_response :success
       expect_ontola_action(
@@ -66,14 +102,6 @@ module Users
         'Follow.news.count' => 0,
         'Follow.reactions.count' => 0,
         'Follow.never.count' => 0
-      }
-    end
-
-    def unsubscribe_differences
-      {
-        'Follow.news.count' => -1,
-        'Follow.reactions.count' => -1,
-        'Follow.never.count' => 2
       }
     end
   end

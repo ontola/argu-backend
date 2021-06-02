@@ -7,6 +7,14 @@ module Convertible
   module Model
     extend ActiveSupport::Concern
 
+    included do
+      with_collection :conversions
+
+      def conversions
+        []
+      end
+    end
+
     def is_convertible?
       true
     end

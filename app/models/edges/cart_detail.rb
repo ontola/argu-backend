@@ -5,28 +5,19 @@ class CartDetail < Edge
   include RedisResource::Concern
 
   enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Destroyable
   enhance LinkedRails::Enhancements::Indexable
+  enhance Singularable
 
   attribute :shop_id
   parentable :budget_shop, :offer
 
   delegate :display_name, to: :parent
 
-  def anonymous_iri?
-    false
-  end
-
-  def iri_opts
-    super.merge(
-      parent_iri: split_iri_segments(ancestor(:budget_shop)&.cart_for(publisher)&.root_relative_iri),
-      uuid: uuid
-    )
-  end
-
   def added_delta
     data = super
     user_context = UserContext.new(user: publisher, profile: creator)
-    data.concat(reset_offer_action_status(parent, user_context))
+    data.concat(reset_offer_action_status(user_context))
     data.concat(cart_delta(user_context))
     data
   end
@@ -40,7 +31,7 @@ class CartDetail < Edge
 
   def cart_delta(user_context)
     cart = shop.cart_for(publisher)
-    order_action = shop.order_collection.action(:create, user_context)
+    order_action = shop.order_collection(user_context: user_context).action(:create, user_context)
     [
       reset_action_error(order_action),
       reset_action_status(order_action),
@@ -60,10 +51,8 @@ class CartDetail < Edge
     [action.iri, NS::SCHEMA.actionStatus, action.action_status, delta_iri(:replace)]
   end
 
-  def reset_offer_action_status(offer, user_context)
-    %i[create destroy].map do |tag|
-      reset_action_status(offer.cart_detail_collection.action(tag, user_context))
-    end
+  def reset_offer_action_status(user_context)
+    %i[create destroy].map { |tag| reset_action_status(action(tag, user_context)) }
   end
 
   class << self
@@ -76,6 +65,21 @@ class CartDetail < Edge
 
     def default_filters
       {}
+    end
+
+    def include_in_collection?
+      true
+    end
+
+    def singular_route_key
+      :cart_detail
+    end
+
+    def requested_singular_resource(params, user_context)
+      parent = parent_from_params(params, user_context)
+
+      CartDetail.where_with_redis(publisher: user_context.user, parent: parent).first ||
+        CartDetail.new(publisher: user_context.user, parent: parent, shop_id: parent.parent.id)
     end
 
     def store_in_redis?(_opts = {})

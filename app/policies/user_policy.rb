@@ -26,6 +26,10 @@ class UserPolicy < RestrictivePolicy
     tabs
   end
 
+  def feed?
+    record.show_feed? || update?
+  end
+
   def show?
     (record.is_public? || !user.guest?) || super
   end

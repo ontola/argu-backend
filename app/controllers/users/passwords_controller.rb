@@ -21,10 +21,8 @@ module Users
         params[:user] ||= {}
         params[:user][:email] = current_user.email
 
-        self.resource = resource_class.send_reset_password_instructions(resource_params)
-        @current_resource = resource
-
-        successfully_sent?(resource)
+        @current_resource = resource_class.send_reset_password_instructions(resource_params)
+        successfully_sent?(current_resource)
       else
         super
       end
@@ -35,12 +33,11 @@ module Users
     end
 
     def update_execute
-      self.resource = resource_class.reset_password_by_token(resource_params)
+      @current_resource = resource_class.reset_password_by_token(resource_params)
 
-      resource.primary_email_record.confirm if resource.errors.empty?
-      @current_resource = resource
+      current_resource.primary_email_record.confirm if current_resource.errors.empty?
 
-      resource.errors.empty?
+      current_resource.errors.empty?
     end
   end
 end

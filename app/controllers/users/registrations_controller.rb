@@ -23,14 +23,6 @@ module Users
       current_resource.redirect_url || edit_iri(current_resource)
     end
 
-    def new_resource
-      resource = super
-      resource.shortname = nil if resource.shortname&.shortname.blank?
-      resource.build_profile
-      resource.language = I18n.locale
-      resource
-    end
-
     def permit_param_key
       params.key?(:user) ? :user : controller_name.singularize
     end

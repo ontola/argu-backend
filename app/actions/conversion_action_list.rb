@@ -1,19 +1,7 @@
 # frozen_string_literal: true
 
 class ConversionActionList < ApplicationActionList
-  has_action(
-    :create,
-    create_options.merge(
-      collection: false,
-      label: -> { I18n.t('actions.conversions.convert.label') },
-      object: nil,
-      policy: :create?
-    )
+  has_collection_create_action(
+    label: -> { I18n.t('actions.conversions.create.label') }
   )
-
-  private
-
-  def association_class
-    Conversion
-  end
 end

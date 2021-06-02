@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 class ShortnamePolicy < EdgeTreePolicy
+  class Scope < Scope
+    def resolve
+      scope
+        .join_edges
+        .where(primary: false)
+        .where('COALESCE(shortnames.root_id, edges.root_id) = ?', ActsAsTenant.current_tenant.uuid)
+    end
+  end
+
   permit_attributes %i[shortname destination]
 
   delegate :show?, to: :edgeable_policy

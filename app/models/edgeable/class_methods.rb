@@ -11,11 +11,11 @@ module Edgeable
       end
 
       def attributes_for_new(opts)
+        parent = opts[:parent] if opts[:parent].is_a?(Edge)
         attrs = {
           owner_type: name,
-          parent: opts[:parent],
-          persisted_edge: opts[:parent].try(:persisted_edge),
-          is_published: true
+          parent: parent,
+          persisted_edge: opts[:parent].try(:persisted_edge)
         }
         user_context = opts[:user_context]
         attrs[:publisher] = user_context&.user || User.new(show_feed: true)
@@ -32,6 +32,13 @@ module Edgeable
         grant_tree = opts[:user_context]&.grant_tree
         grant_tree&.cache_node(record.parent.try(:persisted_edge)) if record.parent.try(:persisted_edge)
         record
+      end
+
+      def collection_from_parent_name(parent, params)
+        return :tagging_collection if params[:collection] == :taggings
+        return :favorite_page_collection if parent.is_a?(User)
+
+        super
       end
 
       def collection_include_map
@@ -66,6 +73,18 @@ module Edgeable
             .new('->', Edge.arel_table.alias(as)[:children_counts], Arel::Nodes::SqlLiteral.new("'#{type}'"))
         casted = Arel::Nodes::NamedFunction.new('CAST', [column.as('INT')])
         Arel::Nodes::NamedFunction.new('COALESCE', [casted, Arel::Nodes::SqlLiteral.new('0')]).send(direction)
+      end
+
+      def requested_single_resource(params, _user_context)
+        if uuid?(params[:id])
+          Edge.find_by(uuid: params[:id])
+        else
+          Edge.find_by(fragment: params[:id])
+        end
+      end
+
+      def root_collection_opts
+        super.merge(parent: ActsAsTenant.current_tenant)
       end
 
       def sort_options(collection)

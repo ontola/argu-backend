@@ -4,13 +4,18 @@ class GrantedGroupsController < AuthorizedController
   private
 
   def authorize_action
-    authorize parent_resource!, :show?
+    authorize parent_from_params, :show?
   end
 
-  def index_association
+  def requested_resource
+    return unless action_name == 'index'
+
     skip_verify_policy_scoped(true)
 
-    @index_association ||=
-      user_context.grant_tree.granted_groups(parent_resource!.persisted_edge)
+    @requested_resource ||= LinkedRails::Sequence.new(
+      user_context.grant_tree.granted_groups(parent_from_params.persisted_edge),
+      id: index_iri,
+      scope: false
+    )
   end
 end

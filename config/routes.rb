@@ -39,21 +39,6 @@ Rails.application.routes.draw do
   end
 
   constraints(Argu::NoTenantConstraint) do
-    {
-      q: Question,
-      m: Motion,
-      a: Argument,
-      pro: Argument,
-      con: Argument,
-      decision: Decision,
-      posts: BlogPost,
-      c: Comment,
-      group_memberships: GroupMembership
-    }.each do |path, resource|
-      get "#{path}/:id", to: 'redirect#show', defaults: {class: resource}
-    end
-    get ':shortname', to: 'redirect#show'
-
     constraints(LinkedRails::Constraints::Whitelist) do
       namespace :_public do
         namespace :spi do
@@ -75,55 +60,18 @@ Rails.application.routes.draw do
     vocabularies: :ontologies
   )
   use_linked_rails_auth(
+    access_tokens: 'oauth/tokens',
     applications: 'oauth/applications',
     confirmations: 'users/confirmations',
     otp_attempts: 'users/otp_attempts',
     otp_secrets: 'users/otp_secrets',
     passwords: 'users/passwords',
-    registrations: 'users/registrations',
-    tokens: 'oauth/tokens'
+    registrations: 'users/registrations'
   )
-
-  as :user do
-    get 'users/delete', to: 'users#delete'
-  end
-
-  resources :users,
-            path: 'u',
-            only: %i[show edit new create] do
-    resource :follows, only: :destroy, controller: 'users/follows'
-
-    get :setup, to: 'users/setup#edit', on: :collection
-    put :setup, to: 'users/setup#update', on: :collection
-
-    get :pages, to: 'users/pages#index', path: :o
-    resources :pages, only: %i[], path: :o
-
-    get 'language', to: 'users/languages#edit', on: :collection, as: :edit_language
-    put 'language/:locale', to: 'users/languages#update', on: :collection, as: :language
-    put 'language', to: 'users/languages#update', on: :collection
-    get 'profile', to: 'menus/lists#show', id: 'profile'
-    get 'profile/menus', to: 'menus/items#index', list_id: 'profile'
-
-    include_route_concerns
-  end
-
-  scope :profiles do
-    get :setup, to: 'profiles#setup'
-  end
-
-  get :feed, controller: :feed, action: :index
-
-  resources :policy_agreements, only: %i[new create]
-
-  resources :banner_dismissals, only: :create
-  get '/banner_dismissals', to: 'banner_dismissals#create'
 
   get '/values', to: 'documents#show', name: 'values'
   get '/policy', to: 'documents#show', name: 'policy'
   get '/privacy', to: 'documents#show', name: 'privacy'
-
-  resources :info, path: 'i', only: [:show]
 
   resources :notifications,
             only: %i[index show],
@@ -142,21 +90,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :email_addresses, only: %i[show index new create] do
-    include_route_concerns
-  end
-
-  resources :follows, only: %i[create show] do
-    include_route_concerns
-    get :unsubscribe, action: :destroy, on: :member
-    post '', action: :destroy, on: :member
-  end
-
   resources :grant_sets, only: :show
 
   constraints(Argu::StaffConstraint) do
-    resources :documents, only: %i[edit update index new create]
-    resources :notifications, only: :create, path: 'n'
+    resources :documents, only: %i[update index create]
     namespace :portal do
       mount Sidekiq::Web => '/sidekiq'
     end
@@ -170,161 +107,93 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :pages, path: 'o', only: %i[new create show]
-  get :settings, to: 'pages#settings'
-  get 'settings/menus', to: 'menus/items#index', list_id: 'settings'
-
   resource :pages, path: '' do
     include_route_concerns(klass: Page)
   end
-
   resources :actors, only: :index
   resources :activities, only: :show
-  resources :arguments, only: %i[show], path: 'a'
-  %i[pro_arguments con_arguments].each do |model|
-    resources model,
-              path: model == :pro_arguments ? 'pro' : 'con',
-              only: %i[show] do
-      include_route_concerns
-    end
-  end
-  resources :banners, only: %i[show] do
-    include_route_concerns
-  end
-  resources :blog_posts,
-            path: 'posts',
-            only: %i[show] do
-    include_route_concerns
-  end
-  resources :budget_shops, only: %i[show], path: 'budgets' do
-    include_route_concerns
-  end
-  resources :comments, only: %i[show], path: 'c' do
-    include_route_concerns
-    resources :comments, only: %i[index new create], path: 'c'
-  end
-  resources :comments, only: %i[show]
-  resources :creative_works, only: %i[show new create] do
-    include_route_concerns
-  end
-  resources :coupon_batches, only: %i[show] do
-    include_route_concerns
-  end
-  resources :custom_actions, only: %i[show new create] do
-    include_route_concerns
-  end
-  resources :custom_menu_items, only: %i[index show new create] do
-    include_route_concerns
-  end
-  resources :decisions, only: %i[show] do
-    include_route_concerns
-  end
-  resources :direct_messages, path: :dm, only: [:create]
-  resources :exports, only: [] do
-    include_route_concerns
-  end
-  resources :grants, path: 'grants', only: %i[show new create] do
-    include_route_concerns
-  end
-  resources :group_memberships, only: %i[show index] do
-    include_route_concerns
-    post :index, action: :index, on: :collection
-  end
-  resources :groups, path: 'g', only: %i[show create new index] do
-    resources :group_memberships, only: %i[new create index]
-    include_route_concerns
-    resources :grants, only: %i[index new create]
-  end
-  resources :media_objects, only: :show do
-    include_route_concerns
-    resource :media_object_contents, only: :show, path: 'content/:version'
-  end
-  resources :motions,
-            path: 'm',
-            only: %i[show] do
-    include_route_concerns
-  end
-  resource :linked_records,
-           path: 'resource',
-           only: %i[show] do
-    include_route_concerns
-  end
-  resources :offers, only: %i[show] do
-    include_route_concerns
-  end
-  resources :orders, only: %i[show] do
-    include_route_concerns
-    resources :order_details, only: %i[index]
-  end
-  resources :order_details, only: %i[show] do
-    include_route_concerns
-  end
-  resources :placements, only: :show
-  resources :publications, only: :show
-  resources :profiles, only: %i[index update show edit]
-  resources :projects, only: %i[show] do
-    include_route_concerns
-  end
-  resources :phases, only: %i[show] do
-    include_route_concerns
-  end
-  resources :questions,
-            path: 'q' do
-    include_route_concerns
-  end
-  resources :surveys, only: %i[show] do
-    include_route_concerns
-    resource :submission, only: %i[create] do
-      include_route_concerns
-    end
-  end
-  resources :shortnames, only: %i[show new create index] do
-    include_route_concerns
-  end
-  resources :vocabularies, path: :vocab, only: %i[show new create index] do
-    include_route_concerns
+  resource :linked_records, path: 'resource', only: %i[show]
 
-    resources :terms, only: %i[new create index] do
-      include_route_concerns
-    end
-  end
-  resources :terms, only: %i[show] do
-    include_route_concerns
+  get '(*parent_iri)/attachments', to: 'media_objects#index', defaults: {used_as: :attachment}
+  post '(*parent_iri)/attachments', to: 'media_objects#create', defaults: {used_as: :attachment}
+  get '(*parent_iri)/content/:version', to: 'media_object_contents#show'
+  get '(*parent_iri)/feed', to: 'feed#index'
+  get '(*parent_iri)/grant_sets', to: 'grant_sets#index'
+  get '(*parent_iri)/granted', to: 'granted_groups#index'
+  post '(*parent_iri)/o', to: 'pages#create'
+  get '(*parent_iri)/o', to: 'pages#index'
+  get '(*parent_iri)/permissions', to: 'grant_trees#show'
+  get '(*parent_iri)/profile', to: 'menus/lists#show', id: 'profile'
+  get '(*parent_iri)/search', to: 'search_results#index'
+  get '(*parent_iri)/settings', to: 'menus/lists#show', id: 'settings'
+  get '(*parent_iri)/statistics', to: 'statistics#show'
+  get '(*parent_iri)/taggings', to: 'taggings#index', collection: :taggings
+  get '(*parent_iri)/setup', to: 'actions/items#show', id: :setup
+  put 'u/language', to: 'users/languages#update'
 
-    resources :taggings, only: %i[index]
+  linked_resource(Argument)
+  linked_resource(Banner)
+  linked_resource(BannerDismissal)
+  linked_resource(BannerManagement)
+  linked_resource(BlogPost)
+  linked_resource(BudgetShop)
+  singular_linked_resource(Cart)
+  linked_resource(CartDetail)
+  singular_linked_resource(CartDetail)
+  linked_resource(Comment)
+  linked_resource(Conversion)
+  linked_resource(ConArgument)
+  linked_resource(CouponBatch)
+  linked_resource(CreativeWork)
+  linked_resource(CustomAction)
+  linked_resource(CustomMenuItem)
+  linked_resource(Decision)
+  linked_resource(DirectMessage)
+  linked_resource(Discussion)
+  linked_resource(EmailAddress)
+  linked_resource(Export)
+  linked_resource(Follow) do
+    get :unsubscribe, action: :destroy, on: :member
+    post '', action: :destroy, on: :member
   end
-  resources :topics,
-            path: 't',
-            only: %i[show] do
-    include_route_concerns
-  end
-  resources :users, path: 'u', only: %i[] do
-    get :feed, controller: 'users/feed', action: :index
-  end
-  resources :vote_events, only: %i[show] do
-    include_route_concerns
-  end
-  resources :votes, only: %i[show] do
-    include_route_concerns
-  end
-  resources :widgets, only: %i[show new create] do
-    include_route_concerns
-  end
+  linked_resource(Grant)
+  linked_resource(GroupMembership)
+  linked_resource(Group)
+  linked_resource(Invite)
+  linked_resource(MediaObject)
+  linked_resource(Motion)
+  linked_resource(Move)
+  linked_resource(Offer)
+  linked_resource(Order)
+  linked_resource(OrderDetail)
+  linked_resource(Phase)
+  linked_resource(Placement)
+  linked_resource(PolicyAgreement)
+  linked_resource(ProArgument)
+  linked_resource(Profile)
+  linked_resource(Project)
+  linked_resource(Publication)
+  linked_resource(Question)
+  linked_resource(Shortname)
+  linked_resource(Submission)
+  linked_resource(Survey)
+  linked_resource(Term)
+  linked_resource(Topic)
+  singular_linked_resource(User)
+  linked_resource(User)
+  linked_resource(Vocabulary)
+  linked_resource(Vote)
+  singular_linked_resource(Vote)
+  linked_resource(VoteEvent)
+  linked_resource(Widget)
+  linked_resource(InterventionType)
+  linked_resource(Intervention)
+  linked_resource(Measure)
 
-  resources :intervention_types, path: 'interventie_types', only: %i[index new create show] do
-    include_route_concerns
+  ContainerNode.descendants.each do |klass|
+    linked_resource(klass)
   end
-  resources :interventions, path: 'interventies', only: %i[index new create show] do
-    include_route_concerns
-  end
-  resources :measures, path: 'voorbeelden', only: %i[index new create show] do
-    include_route_concerns
-  end
-
-  %i[blogs forums open_data_portals dashboards].each do |container_node|
-    resources container_node, only: %i[index new create]
-  end
-  resources :container_nodes, only: %i[index new]
+  resources :container_nodes, only: %i[index]
   resources :container_nodes,
             only: %i[show],
             path: '' do

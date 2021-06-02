@@ -5,8 +5,8 @@ class ProfilesController < AuthorizedController
 
   private
 
-  def authenticated_resource
-    @authenticated_resource ||=
+  def current_resource
+    @current_resource ||=
       Shortname.find_resource(params[:id])&.profile || Profile.find_by(id: params[:id]) || current_user.profile
   end
 

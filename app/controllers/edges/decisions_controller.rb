@@ -3,15 +3,6 @@
 class DecisionsController < EdgeableController
   private
 
-  def authenticated_resource!
-    case action_name
-    when 'index'
-      parent_resource!.last_or_new_decision
-    else
-      super
-    end
-  end
-
   def active_response_success_message
     if authenticated_resource.argu_publication.published_at.present?
       parent_key = authenticated_resource.parent.model_name.singular

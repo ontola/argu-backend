@@ -28,6 +28,10 @@ class VotePolicyTest < Argu::TestHelpers::PolicyTest
     nobody_results.merge(creator: true)
   end
 
+  def feed_results
+    nobody_results
+  end
+
   def trash_results
     nobody_results
   end

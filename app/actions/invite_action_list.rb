@@ -1,22 +1,9 @@
 # frozen_string_literal: true
 
 class InviteActionList < ApplicationActionList
-  has_action(
-    :create,
-    create_options.merge(
-      collection: false,
-      description: -> { I18n.t('tokens.discussion.description') },
-      include_object: true,
-      label: -> { I18n.t('tokens.discussion.title') },
-      object: nil,
-      policy: :create?,
-      url: -> { iri_from_template(:tokens_iri) }
-    )
+  has_collection_create_action(
+    description: -> { I18n.t('tokens.discussion.description') },
+    label: -> { I18n.t('tokens.discussion.title') },
+    url: -> { iri_from_template(:tokens_iri) }
   )
-
-  private
-
-  def association_class
-    Invite
-  end
 end

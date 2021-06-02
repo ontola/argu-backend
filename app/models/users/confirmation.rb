@@ -6,14 +6,28 @@ module Users
 
     attr_accessor :email
 
-    delegate :confirm!, :confirmed?, to: :email!
+    delegate :confirmed?, to: :email!
 
     def confirm!
-      email!.confirm
+      return false unless email!&.confirm
+
+      set_reset_password_token if reset_password?
+
+      true
     end
 
     def email!
       email || raise(ActiveRecord::RecordNotFound)
+    end
+
+    private
+
+    def reset_password?
+      user.present? && user.encrypted_password.blank?
+    end
+
+    def set_reset_password_token
+      self.password_token = user.send(:set_reset_password_token)
     end
 
     class << self
@@ -21,12 +35,23 @@ module Users
         name.demodulize
       end
 
-      def form_class
-        LinkedRails::Auth::ConfirmationForm
+      def email_to_confirm(params, user_context)
+        return EmailAddress.find_by!(email: params[:email]) if user_context&.doorkeeper_scopes&.include?('service')
+
+        EmailAddress.find_first_by_auth_conditions(confirmation_token: params[:confirmation_token])
       end
 
-      def policy_class
-        LinkedRails::Auth::ConfirmationPolicy
+      def requested_singular_resource(params, user_context)
+        email = email_to_confirm(params, user_context)
+
+        return new if email.blank? && !params.key?(:confirmation_token)
+        return if email.blank?
+
+        new(
+          confirmation_token: params[:confirmation_token],
+          email: email,
+          user: email.user
+        )
       end
     end
   end

@@ -70,5 +70,9 @@ class Argument < Edge
     def includes_for_serializer
       super.merge(votes: {})
     end
+
+    def route_key
+      :a
+    end
   end
 end

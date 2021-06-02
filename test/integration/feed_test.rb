@@ -44,12 +44,6 @@ class FeedTest < ActionDispatch::IntegrationTest
     visit_motion_feed(accept: :nq)
   end
 
-  test 'user should get complete motion/feed nq' do
-    sign_in user
-
-    visit_motion_feed(accept: :nq, complete: true)
-  end
-
   ####################################
   # As Staff
   ####################################
@@ -66,19 +60,16 @@ class FeedTest < ActionDispatch::IntegrationTest
     visit_motion_feed(accept: :nq)
   end
 
-  test 'staff should get complete motion/feed nq' do
-    sign_in staff
-
-    visit_motion_feed(accept: :nq, complete: true)
-  end
-
   private
 
   # Render activity of Motion#create, Motion#publish, 6 comments, 6 public votes and 3 private votes
   def assert_activity_count(accept: :nq, complete: false, count: nil, parent: subject)
     case accept
     when :nq
-      collection = RDF::URI("#{resource_iri(feed(parent))}/feed#{complete ? '?complete=true' : ''}")
+      collection = ActsAsTenant.with_tenant(argu) do
+        feed(parent, complete).activity_collection.iri
+        # RDF::URI("#{resource_iri(feed(parent))}/feed#{complete ? '?complete=true' : ''}")
+      end
       view = rdf_body.query([collection, NS::ONTOLA[:pages]]).first.object
       expect_triple(view, NS::AS[:totalItems], count)
     else
@@ -90,8 +81,8 @@ class FeedTest < ActionDispatch::IntegrationTest
     Activity.update_all(created_at: 1.second.ago) # rubocop:disable Rails/SkipsModelValidations
   end
 
-  def feed(parent)
-    Feed.new(parent: parent, root_id: parent.try(:root_id))
+  def feed(parent, complete)
+    Feed.new(parent: parent, relevant_only: !complete)
   end
 
   def visit_freetown_feed(accept: :nq, count: 8)

@@ -106,9 +106,8 @@ class SearchResult
     end
 
     class << self
-      def collection_params(params)
-        method = params.is_a?(Hash) ? :slice : :permit
-        options = params.send(method, :q, :match).to_h.with_indifferent_access
+      def collection_params(parser)
+        options = parser.params.permit(:q, :match)
 
         super.merge(options)
       end

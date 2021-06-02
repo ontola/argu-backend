@@ -10,4 +10,10 @@ class ProArgument < Argument
   def pro
     instance_variable_defined?('@pro') ? @pro : true
   end
+
+  class << self
+    def route_key
+      :pros
+    end
+  end
 end

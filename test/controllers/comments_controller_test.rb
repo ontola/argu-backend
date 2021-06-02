@@ -26,7 +26,7 @@ class CommentsControllerTest < ActionController::TestCase
   # Index for Argument
   ####################################
   test 'should get index comments of argument' do
-    get :index, params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.fragment}
+    get :index, params: {format: :json_api, parent_iri: parent_iri_for(argument)}
     assert_response 200
 
     expect_relationship('part_of')
@@ -38,7 +38,7 @@ class CommentsControllerTest < ActionController::TestCase
 
   test 'should get index comments of argument with page=1' do
     get :index,
-        params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.fragment, type: 'paginated', page: 1}
+        params: {format: :json_api, parent_iri: parent_iri_for(argument), type: 'paginated', page: 1}
     assert_response 200
 
     expect_relationship('collection')
@@ -51,7 +51,7 @@ class CommentsControllerTest < ActionController::TestCase
   # Index for BlogPost
   ####################################
   test 'should get index comments of blog_post' do
-    get :index, params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.fragment}
+    get :index, params: {format: :json_api, parent_iri: parent_iri_for(blog_post)}
     assert_response 200
 
     expect_relationship('part_of')
@@ -63,7 +63,7 @@ class CommentsControllerTest < ActionController::TestCase
 
   test 'should get index comments of blog_post with page=1' do
     get :index,
-        params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.fragment, type: 'paginated', page: 1}
+        params: {format: :json_api, parent_iri: parent_iri_for(blog_post), type: 'paginated', page: 1}
     assert_response 200
 
     expect_relationship('collection')

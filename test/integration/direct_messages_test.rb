@@ -109,7 +109,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     )
 
     sign_in administrator
-    post collection_iri(argu, :direct_messages),
+    post collection_iri(motion, :direct_messages),
          params: {direct_message: valid_params, actor_iri: resource_iri(actor, root: argu)}
     assert_response :created
     assert_email_sent(skip_sidekiq: true)
@@ -119,8 +119,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     {
       body: 'body',
       email_address_id: administrator.primary_email_record.iri,
-      subject: 'subject',
-      resource_iri: motion.iri
+      subject: 'subject'
     }
   end
 end

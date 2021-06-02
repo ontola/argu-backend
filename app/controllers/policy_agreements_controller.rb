@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PolicyAgreementsController < ApplicationController
-  active_response :new, :create
+  active_response :create
 
   private
 
@@ -13,9 +13,5 @@ class PolicyAgreementsController < ApplicationController
 
   def create_success
     head 200
-  end
-
-  def current_resource
-    @current_resource ||= PolicyAgreement.new
   end
 end

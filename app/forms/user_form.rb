@@ -12,9 +12,9 @@ class UserForm < ApplicationForm
     field :password
     field :current_password
     resource :add_two_fa,
-             url: -> { delete_iri('/u/otp_secrets') }
+             url: -> { delete_iri('/u/otp_secret') }
     resource :remove_two_fa,
-             url: -> { new_iri('/u/otp_secrets') }
+             url: -> { new_iri('/u/otp_secret') }
   end
 
   group :email_address_section, label: -> { I18n.t('email_addresses.plural') } do
@@ -26,6 +26,6 @@ class UserForm < ApplicationForm
     field :has_analytics
     field :is_public
     field :show_feed
-    resource :delete_button, url: -> { delete_iri('users') }
+    resource :delete_button, url: -> { delete_iri('user') }
   end
 end

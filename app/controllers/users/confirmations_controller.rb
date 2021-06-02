@@ -33,12 +33,6 @@ module Users
       )
     end
 
-    def email_by_token
-      return EmailAddress.find_by!(email: params[:email]) if doorkeeper_scopes.include?('service')
-
-      @email_by_token ||= EmailAddress.find_first_by_auth_conditions(confirmation_token: original_token)
-    end
-
     def email_for_user
       email = resource_params[:email]
       return EmailAddress.find_by!(email: email) if current_user.guest?
@@ -47,22 +41,10 @@ module Users
         raise(ActiveRecord::RecordNotFound.new(I18n.t('devise.confirmations.invalid_email', email: email)))
     end
 
-    def requested_resource
-      return unless email_by_token&.user
-
-      @requested_resource ||=
-        LinkedRails.confirmation_class.new(
-          current_user: current_user,
-          email: email_by_token,
-          user: email_by_token.user,
-          token: original_token
-        )
-    end
-
     def update_failure
       respond_with_redirect(
         location: after_confirmation_path_for(resource_name, current_resource),
-        notice: email_by_token.errors.full_messages.first
+        notice: current_resource.email.errors.full_messages.first
       )
     end
 

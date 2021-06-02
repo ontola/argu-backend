@@ -31,5 +31,9 @@ class Vocabulary < Edge
     def default_collection_display
       :table
     end
+
+    def route_key
+      :vocab
+    end
   end
 end

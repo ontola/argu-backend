@@ -22,31 +22,14 @@ class EdgeableController < ServiceController
       end
   end
 
-  def built_associations(action)
-    action
-      .included_object
-      .class
-      .reflect_on_all_associations
-      .select { |association| association.has_one? && action.included_object.association(association.name).loaded? }
-      .map(&:name)
-  end
-
-  def collection_view_includes(_member_includes = {})
-    {member_sequence: {}}
-  end
-
   def create_meta
     return [] if authenticated_resource.is_publishable? && !authenticated_resource.is_published?
 
     resource_added_delta(authenticated_resource)
   end
 
-  def form_resource_includes(action)
-    includes = super
-    return includes unless action_name == 'new' && action.included_object
-
-    includes = [includes] if includes.is_a?(Hash)
-    includes + built_associations(action)
+  def create_service_attributes
+    super.merge(owner_type: controller_class.to_s)
   end
 
   def guest_creator?

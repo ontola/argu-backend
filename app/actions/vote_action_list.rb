@@ -3,30 +3,23 @@
 class VoteActionList < EdgeActionList
   include VotesHelper
 
-  has_action(
-    :create,
-    create_options.merge(
-      image: -> { create_image(resource.filter[NS::SCHEMA[:option]]&.first, resource.parent.upvote_only?) },
-      label: -> { create_label(resource.filter[NS::SCHEMA[:option]]&.first, resource.parent.upvote_only?) },
-      submit_label: -> { create_label(resource.filter[NS::SCHEMA[:option]]&.first, resource.parent.upvote_only?) },
-      favorite: lambda {
-        resource.filter[NS::SCHEMA[:option]].present? && (
-          !resource.parent.upvote_only? || resource.filter[NS::SCHEMA[:option]] == %i[yes]
-        )
-      }
-    )
+  has_collection_create_action(
+    image: -> { create_image(resource.filter[NS::SCHEMA[:option]]&.first, resource.parent.upvote_only?) },
+    label: -> { create_label(resource.filter[NS::SCHEMA[:option]]&.first, resource.parent.upvote_only?) },
+    submit_label: -> { create_label(resource.filter[NS::SCHEMA[:option]]&.first, resource.parent.upvote_only?) },
+    favorite: lambda {
+      resource.filter[NS::SCHEMA[:option]].present? && (
+        !resource.parent.upvote_only? || resource.filter[NS::SCHEMA[:option]] == %i[yes]
+      )
+    }
   )
 
-  has_action(
-    :trash,
-    type: [NS::ARGU[:TrashAction], NS::SCHEMA[:Action]],
-    policy: :trash?,
-    url: -> { resource.iri },
-    http_method: :delete,
-    form: Request::TrashRequestForm,
-    root_relative_iri: lambda {
-      expand_uri_template(:trash_iri, parent_iri: split_iri_segments(resource.root_relative_iri))
-    },
+  has_resource_trash_action(
+    image: -> { create_image(resource.option, resource.parent.upvote_only?) },
+    label: -> { create_label(resource.option, resource.parent.upvote_only?) },
+    submit_label: -> { create_label(resource.option, resource.parent.upvote_only?) }
+  )
+  has_singular_trash_action(
     image: -> { create_image(resource.option, resource.parent.upvote_only?) },
     label: -> { create_label(resource.option, resource.parent.upvote_only?) },
     submit_label: -> { create_label(resource.option, resource.parent.upvote_only?) }

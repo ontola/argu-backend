@@ -2,6 +2,7 @@
 
 class ApplicationActionList < LinkedRails::Actions::List
   extend UriTemplateHelper
+  extend DefaultActions::Trash
   include UriTemplateHelper
 
   def available_actions

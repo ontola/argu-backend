@@ -4,7 +4,7 @@ class NilClassPolicy < RestrictivePolicy
   attr_reader :user, :record
 
   def initialize(_user, _record)
-    raise Pundit::NotAuthorizedError.new('Cannot get policy for nil')
+    raise ActiveRecord::RecordNotFound.new('No resource to authorize')
   end
 
   def permitted_attributes
@@ -16,10 +16,10 @@ class NilClassPolicy < RestrictivePolicy
   end
 
   class Scope
-    def initialize; end
+    def initialize(_context, _scope); end
 
     def resolve
-      scope
+      []
     end
   end
 end

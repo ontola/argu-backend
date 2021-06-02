@@ -14,7 +14,11 @@ module Argu
         get new_path(parent),
             headers: argu_headers
 
-        assert_response results[:response]
+        assert_response results[:response] || :success
+
+        return if results[:response].present?
+
+        results[:should] ? assert_enabled_form : assert_disabled_form(error: results[:error])
       end
 
       def general_create(results: {}, # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -55,7 +59,11 @@ module Argu
         get edit_path(record),
             headers: argu_headers
 
-        assert_response results[:response]
+        assert_response results[:response] || :success
+
+        return if results[:response].present?
+
+        results[:should] ? assert_enabled_form : assert_disabled_form(error: results[:error])
       end
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -105,7 +113,11 @@ module Argu
         get delete_path(record),
             headers: argu_headers
 
-        assert_response results[:response]
+        assert_response results[:response] || :success
+
+        return if results[:response].present?
+
+        results[:should] ? assert_enabled_form : assert_disabled_form(error: results[:error])
       end
 
       def general_destroy(

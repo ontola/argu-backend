@@ -17,17 +17,16 @@ class ActorsController < ParentableController
     current_actor
   end
 
-  def index_association
+  def requested_resource
+    return super unless action_name == 'index'
+
     skip_verify_policy_scoped(true)
 
-    @index_association ||= available_actors
-  end
-
-  def preview_includes
-    %i[default_profile_photo]
-  end
-
-  def show_includes
-    %i[default_profile_photo user actor]
+    @requested_resource ||= LinkedRails::Sequence.new(
+      available_actors,
+      id: index_iri,
+      member_includes: CurrentActor.preview_includes,
+      scope: false
+    )
   end
 end

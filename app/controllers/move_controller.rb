@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MoveController < ServiceController
-  active_response :new, :create
+  active_response :create
 
   private
 

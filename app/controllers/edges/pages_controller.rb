@@ -2,13 +2,13 @@
 
 class PagesController < EdgeableController
   before_action :redirect_generic_shortnames, only: :show
-  skip_before_action :authorize_action, only: %i[index]
 
   private
 
   def authorize_action
-    authorize authenticated_resource, :list?
-    return super unless action_name == 'show'
+    return super unless action_name == 'index' && parent_resource.is_a?(User)
+
+    authorize(parent_resource, :update?)
   end
 
   def create_success
@@ -19,11 +19,6 @@ class PagesController < EdgeableController
   def create_success_rdf
     ActsAsTenant.current_tenant = authenticated_resource
     respond_with_redirect(location: authenticated_resource.iri, reload: true)
-  end
-
-  def new_execute
-    authenticated_resource.build_shortname
-    authenticated_resource.build_profile
   end
 
   def permit_params
@@ -53,13 +48,11 @@ class PagesController < EdgeableController
   def redirect_location
     return new_iri(nil, :pages) unless authenticated_resource.persisted?
 
-    settings_iri(authenticated_resource, tab: tab)
+    settings_iri(authenticated_resource)
   end
 
-  def requested_resource
-    return if %w[new create].include?(action_name)
-
-    @requested_resource ||= ActsAsTenant.without_tenant { super } || ActsAsTenant.current_tenant
+  def new_resource
+    @new_resource ||= ActsAsTenant.without_tenant { super } || ActsAsTenant.current_tenant
   end
 
   def update_meta

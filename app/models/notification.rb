@@ -63,6 +63,11 @@ class Notification < ApplicationRecord
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
 
   class << self
+    def attributes_for_new(opts)
+      user_context = opts[:user_context]
+      {user: user_context&.user || User.new(show_feed: true)}
+    end
+
     def default_collection_type
       :infinite
     end

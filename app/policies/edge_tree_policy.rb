@@ -104,6 +104,6 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def edgeable_record
-    record.try(:edgeable_record) || raise('No edgeable record avaliable in policy')
+    record.try(:edgeable_record) || raise(ActiveRecord::RecordNotFound.new('No edgeable record avaliable in policy'))
   end
 end

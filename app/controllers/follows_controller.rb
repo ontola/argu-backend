@@ -4,7 +4,6 @@ class FollowsController < AuthorizedController
   include UriTemplateHelper
 
   skip_before_action :check_if_registered, only: :destroy
-  prepend_before_action :set_tenant
 
   private
 
@@ -40,17 +39,11 @@ class FollowsController < AuthorizedController
   def destroy_execute
     return true if request.head?
 
-    @unsubscribed = !authenticated_resource.never? && authenticated_resource.never!
+    !authenticated_resource.never? && authenticated_resource.never!
   end
-
-  def collection_from_parent_name; end
 
   def active_response_success_message
     I18n.t('notifications.changed_successfully')
-  end
-
-  def find_params
-    params.permit %i[follow_type gid]
   end
 
   def followable_menu
@@ -69,11 +62,11 @@ class FollowsController < AuthorizedController
   end
 
   def permit_params
-    {}
-  end
+    return {} unless action_name == 'create'
 
-  def set_tenant
-    ActsAsTenant.current_tenant ||= authenticated_resource.followable.root
+    {
+      follow_type: params.require(:follow_type)
+    }
   end
 
   def redirect_location

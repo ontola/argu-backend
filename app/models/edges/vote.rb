@@ -2,13 +2,13 @@
 
 class Vote < Edge
   extend UriTemplateHelper
-  include RedisResource::Concern
 
   enhance LinkedRails::Enhancements::Creatable
   enhance Trashable
   enhance Loggable
   enhance LinkedRails::Enhancements::Updatable
   enhance Singularable
+  include RedisResource::Concern
 
   property :option, :integer, NS::SCHEMA[:option], default: 3, enum: {no: 0, yes: 1, other: 2, abstain: 3}
   property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
@@ -44,12 +44,6 @@ class Vote < Edge
   # Needed for ActivityListener#audit_data
   def display_name
     "#{option} vote for #{parent.display_name}"
-  end
-
-  def iri_template_name
-    return super unless store_in_redis?
-
-    :vote_iri
   end
 
   def pinned_at
@@ -100,8 +94,6 @@ class Vote < Edge
 
     def attributes_for_new(opts)
       attrs = super
-      option = attribute_from_filter(opts[:filter], NS::SCHEMA.option)
-      attrs[:option] = option.present? && option !~ /\D/ ? Vote.options.key(option.to_i) : option
       attrs[:primary] = true
       attrs
     end
@@ -118,15 +110,15 @@ class Vote < Edge
       super.merge(publisher: {}, comment: :properties)
     end
 
-    def singular_iri_template
-      uri_template(:vote_iri)
-    end
-
-    def singular_resource(params, user_context)
+    def requested_singular_resource(params, user_context)
       parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
       return unless parent.enhanced_with?(Votable)
 
       current_vote(parent, user_context) || abstain_vote(parent, user_context)
+    end
+
+    def singular_route_key
+      :vote
     end
   end
 end

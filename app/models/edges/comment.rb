@@ -37,6 +37,14 @@ class Comment < Edge
 
   attr_accessor :is_processed, :vote_id
 
+  def build_child(klass, user_context: nil)
+    return super unless klass == Comment
+
+    child = klass.build_new(parent: parent, user_context: user_context)
+    child.parent_comment_id = uuid
+    child
+  end
+
   def deleted?
     body.blank? || body == '[DELETED]'
   end
@@ -90,9 +98,6 @@ class Comment < Edge
     def attributes_for_new(opts)
       attrs = super
       attrs[:parent_comment_id] = opts[:parent].uuid if opts[:parent].is_a?(Comment)
-      attrs[:pdf_page] = attribute_from_filter(opts[:filter], NS::ARGU[:pdfPage])
-      attrs[:pdf_position_x] = attribute_from_filter(opts[:filter], NS::ARGU[:pdfPositionX])
-      attrs[:pdf_position_y] = attribute_from_filter(opts[:filter], NS::ARGU[:pdfPositionY])
       attrs
     end
 
@@ -100,10 +105,8 @@ class Comment < Edge
       super.merge(comments: {}, vote: {})
     end
 
-    def show_includes
-      super + [
-        comment_collection: inc_shallow_collection
-      ]
+    def route_key
+      :c
     end
   end
 end

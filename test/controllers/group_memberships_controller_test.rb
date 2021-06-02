@@ -26,7 +26,12 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user_not_accepted
 
     assert_difference 'GroupMembership.count' => 1 do
-      post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}, format: :json
+      post :create,
+           params: {
+             parent_iri: parent_iri_for(single_forum_group),
+             token: '1234567890'
+           },
+           format: :json
     end
 
     assert_response :created
@@ -49,7 +54,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, params: {group_id: group, root_id: argu.url}, format: :json
+      post :create, params: {parent_iri: parent_iri_for(group)}, format: :json
     end
 
     assert_not_authorized
@@ -60,7 +65,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, params: {group_id: group, token: '1234567890', root_id: argu.url}, format: :json
+      post :create, params: {parent_iri: parent_iri_for(group), token: '1234567890'}, format: :json
     end
 
     assert_not_authorized
@@ -71,7 +76,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_difference 'GroupMembership.count' => 1 do
-      post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}, format: :json
+      post :create, params: {parent_iri: parent_iri_for(single_forum_group), token: '1234567890'}, format: :json
     end
     assert_equal user.reload.following_type(freetown), 'never'
 
@@ -122,7 +127,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_difference 'GroupMembership.count' => 0 do
-      post :create, format: :json, params: {group_id: group, token: '1234567890', root_id: argu.url}
+      post :create, format: :json, params: {parent_iri: parent_iri_for(group), token: '1234567890'}
       assert_redirected_to group.group_memberships.first.iri
     end
   end
@@ -132,7 +137,12 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in single_forum_group_member
 
     assert_difference 'GroupMembership.count' => 0 do
-      post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
+      post :create,
+           format: :json,
+           params: {
+             parent_iri: parent_iri_for(single_forum_group),
+             token: '1234567890'
+           }
       assert_redirected_to single_forum_group.group_memberships.first.iri
     end
   end
@@ -159,7 +169,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create,
            format: :json,
            params: {
-             group_id: group,
+             parent_iri: parent_iri_for(group),
              shortname: member.url,
              r: settings_iri(freetown, tab: :groups),
              root_id: argu.url
@@ -176,7 +186,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create,
            format: :json,
            params: {
-             group_id: group,
+             parent_iri: parent_iri_for(group),
              shortname: user.url,
              r: settings_iri(freetown, tab: :groups),
              root_id: argu.url
@@ -209,8 +219,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :index,
         params: {
-          root_id: argu.url,
-          group_id: group.id
+          parent_iri: parent_iri_for(group)
         },
         format: :nq
 
@@ -230,10 +239,9 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            format: :json,
            params: {
              actor_iri: argu.iri,
-             group_id: group,
+             parent_iri: parent_iri_for(group),
              shortname: user.url,
-             r: settings_iri(freetown, tab: :groups),
-             root_id: argu.url
+             r: settings_iri(freetown, tab: :groups)
            }
     end
 

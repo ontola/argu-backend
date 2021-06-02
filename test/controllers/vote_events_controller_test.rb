@@ -24,13 +24,10 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('creator')
 
     expect_relationship('vote_collection', size: 1)
-    expect_included(collection_iri(vote_event, :votes))
-    expect_included(vote_event.votes.joins(:publisher).where(users: {show_feed: true}).map(&:iri))
-    expect_not_included(vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri))
   end
 
   test 'should get index vote_events of motion' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
+    get :index, params: {format: :json_api, parent_iri: parent_iri_for(motion)}
     assert_response 200
 
     expect_relationship('part_of')

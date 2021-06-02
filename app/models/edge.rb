@@ -21,7 +21,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Indexable
   enhance Grantable
-  enhance NestedSearchable
 
   acts_as_followable
   has_ltree_hierarchy

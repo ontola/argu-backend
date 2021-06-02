@@ -30,11 +30,5 @@ module Attachable
                       parent_uri_template: :attachments_collection_iri,
                       parent_uri_template_canonical: :attachments_collection_canonical
     end
-
-    module ClassMethods
-      def show_includes
-        super + [attachment_collection: inc_nested_collection]
-      end
-    end
   end
 end

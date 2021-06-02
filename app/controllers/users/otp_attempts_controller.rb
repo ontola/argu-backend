@@ -2,8 +2,6 @@
 
 module Users
   class OtpAttemptsController < LinkedRails::Auth::OtpAttemptsController
-    skip_before_action :check_if_registered
-
     private
 
     def handle_expired_session

@@ -108,6 +108,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def show?
     return if has_unpublished_ancestors? && !show_unpublished?
+    return true if record.owner_type == 'Edge' && record.new_record?
 
     has_grant?(:show)
   end
@@ -145,10 +146,6 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def log?
     update?
-  end
-
-  def feed?
-    show?
   end
 
   def invite?

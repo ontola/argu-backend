@@ -16,6 +16,10 @@ class VotesController < EdgeableController
     end
   end
 
+  def allow_empty_params?
+    true
+  end
+
   def authorize_action
     return super unless action_name == 'create'
 
@@ -38,6 +42,14 @@ class VotesController < EdgeableController
     broadcast_vote_counts
   end
 
+  def current_resource
+    return super unless action_name == 'create' && current_user.guest?
+
+    resource = super
+    resource.singular_resource = true
+    resource
+  end
+
   def remove_same_as_delta
     [current_vote_iri(authenticated_resource.parent), NS::SCHEMA.option, NS::ARGU[:abstain], delta_iri(:replace)]
   end
@@ -52,12 +64,6 @@ class VotesController < EdgeableController
     return super unless unmodified?
 
     head 304
-  end
-
-  def permit_params
-    return super if params[:vote].present?
-
-    params.permit(:id)
   end
 
   def redirect_param

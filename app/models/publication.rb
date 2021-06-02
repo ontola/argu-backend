@@ -19,7 +19,7 @@ class Publication < ApplicationRecord
 
   # @TODO: wrap in transaction
   def commit
-    return if publishable.is_published?
+    return if publishable.nil? || publishable.is_published?
 
     publishable.publish!
     return unless publishable.is_published
@@ -65,7 +65,7 @@ class Publication < ApplicationRecord
 
   # Cancel a previously scheduled job and schedule a new job if needed
   def reset
-    return if destroyed? || publishable.is_published?
+    return if destroyed? || publishable.nil? || publishable.is_published?
 
     cancel if job_id.present?
     schedule

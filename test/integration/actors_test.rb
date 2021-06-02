@@ -46,7 +46,10 @@ class ActorsTest < ActionDispatch::IntegrationTest
   end
 
   def user_iri(resource = user)
-    ActsAsTenant.with_tenant(argu) { resource.iri }
+    ActsAsTenant.with_tenant(argu) do
+      resource.instance_variable_set(:@iri, nil)
+      resource.iri
+    end
   end
 
   def page_iri

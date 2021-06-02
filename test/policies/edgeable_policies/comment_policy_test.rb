@@ -19,6 +19,7 @@ class CommentPolicyTest < Argu::TestHelpers::PolicyTest
   private
 
   alias destroy_with_children_results destroy_results
+  alias feed_results nobody_results
 
   def update_results
     nobody_results.merge(creator: true)

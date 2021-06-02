@@ -6,7 +6,7 @@ module Followable
 
     included do
       %i[news reactions never].each do |follow_type|
-        has_action(
+        has_resource_action(
           :"follow_#{follow_type}",
           type: [NS::SCHEMA[:Action]],
           url: -> { follow_iri(follow_type) },
@@ -16,9 +16,7 @@ module Followable
       end
 
       def follow_iri(follow_type)
-        RDF::DynamicURI(
-          expand_uri_template(:follows_iri, gid: resource.uuid, follow_type: follow_type, with_hostname: true)
-        )
+        collection_iri(resource, :follows, follow_type: follow_type)
       end
     end
   end

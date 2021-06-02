@@ -92,7 +92,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def all_shortnames
-    @all_shortnames = shortnames.pluck(:shortname)
+    @all_shortnames = Shortname.join_edges.where(shortnames: {root_id: nil}, edges: {root_id: uuid}).pluck(:shortname)
   end
 
   def build_profile(*options)
@@ -236,12 +236,28 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       find_via_shortname(ARGU_URL)
     end
 
+    def build_new(opts)
+      record = super
+      record.build_profile
+      record
+    end
+
+    def include_in_collection?
+      true
+    end
+
     def menu_class
       AppMenuList
     end
 
     def preview_includes
       super + %i[default_profile_photo] - %w[navigations_menu settings_menu]
+    end
+
+    def requested_single_resource(params, _user_context)
+      return super if params.key?(:id)
+
+      ActsAsTenant.current_tenant
     end
 
     def update_iris(from, to, scope = nil) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize

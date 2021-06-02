@@ -33,6 +33,10 @@ module DataCube
       def iri
         NS::CUBE[:DataSet]
       end
+
+      def preview_includes
+        [:observations, data_structure: %i[measures dimensions]]
+      end
     end
   end
 end

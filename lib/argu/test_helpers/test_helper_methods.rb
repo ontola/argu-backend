@@ -13,9 +13,9 @@ module Argu
         include JWTHelper
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i[
-          argument pro_argument con_argument blog_post comment forum group_membership motion export
-          group question vote decision grant vote_event page topic intervention intervention_type
-          measure banner vocabulary term
+          argument banner blog_post budget_shop comment con_argument coupon_batch decision export forum
+          group group_membership grant intervention intervention_type measure motion offer order order_detail
+          page pro_argument question term topic vocabulary vote vote_event
         ].freeze
 
         def argu_headers(accept: :nq, bearer: nil, host: nil, referrer: nil)
@@ -222,6 +222,10 @@ module Argu
 
         def open_file(filename)
           File.open("test/files/#{filename}")
+        end
+
+        def parent_iri_for(resource)
+          resource.root_relative_iri.to_s[1..]
         end
 
         def reindex_tree(page = argu)

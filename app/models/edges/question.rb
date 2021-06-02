@@ -8,7 +8,10 @@ class Question < Discussion
 
   include Edgeable::Content
 
-  convertible motions: %i[activities media_objects]
+  convertible(
+    motions: %i[activities media_objects],
+    topics: %i[activities media_objects]
+  )
   parentable :container_node, :phase
 
   validates :description, presence: true, length: {minimum: 5, maximum: MAXIMUM_DESCRIPTION_LENGTH}
@@ -35,5 +38,11 @@ class Question < Discussion
     return super unless map_question?
 
     [super, NS::ARGU[:MapQuestion]]
+  end
+
+  class << self
+    def route_key
+      :q
+    end
   end
 end

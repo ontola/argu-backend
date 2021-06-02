@@ -19,14 +19,13 @@ class ProArgumentsControllerTest < ActionController::TestCase
     expect_relationship('creator')
 
     expect_relationship('comment_collection')
-    expect_included(collection_iri(argument, :comments))
   end
 
   ####################################
   # Index for Motion
   ####################################
   test 'should get index arguments of motion with' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
+    get :index, params: {format: :json_api, parent_iri: parent_iri_for(motion)}
     assert_response 200
 
     expect_relationship('part_of')
@@ -39,7 +38,7 @@ class ProArgumentsControllerTest < ActionController::TestCase
   end
 
   test 'should get index arguments of motion with page=1' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, type: 'paginated', page: 1}
+    get :index, params: {format: :json_api, parent_iri: parent_iri_for(motion), type: 'paginated', page: 1}
     assert_response 200
 
     expect_relationship('collection')

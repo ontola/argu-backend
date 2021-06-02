@@ -117,6 +117,15 @@ module Shortnameable
       super.merge(shortname: {})
     end
 
+    def requested_single_resource(params, _user_context)
+      url = params[:id]
+
+      return super unless (/[a-zA-Z]/i =~ url).present? && !uuid?(url)
+
+      Shortname.find_resource(url, ActsAsTenant.current_tenant&.uuid) ||
+        Shortname.find_resource(url)
+    end
+
     # Useful to test whether a model is shortnameable
     def shortnameable?
       true
