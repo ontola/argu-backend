@@ -7,7 +7,7 @@ class Cart < VirtualResource
 
   parentable :shop
   alias edgeable_record shop
-  alias id iri_path
+  alias id root_relative_iri
 
   with_collection :cart_details
 

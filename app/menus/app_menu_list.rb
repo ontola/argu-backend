@@ -21,7 +21,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   has_menu :navigations,
            menus: -> { navigations_menu_items }
   has_menu :settings,
-           iri_base: -> { ActsAsTenant.current_tenant.iri_path },
+           iri_base: -> { ActsAsTenant.current_tenant.root_relative_iri },
            menus: -> { setting_menu_items }
 
   def iri_template

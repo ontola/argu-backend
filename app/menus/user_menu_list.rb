@@ -5,7 +5,7 @@ class UserMenuList < ApplicationMenuList
   include Helpers::ActionMenuItems
 
   has_menu :profile,
-           iri_base: -> { resource.iri_path },
+           iri_base: -> { resource.root_relative_iri },
            menus: -> { profile_menu_items }
 
   private

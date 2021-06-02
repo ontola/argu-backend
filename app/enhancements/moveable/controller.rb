@@ -31,7 +31,7 @@ module Moveable
     end
 
     def move_success
-      respond_with_redirect(location: authenticated_resource.iri_path)
+      respond_with_redirect(location: authenticated_resource.root_relative_iri.to_s)
     end
 
     def shift_success

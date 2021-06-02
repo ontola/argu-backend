@@ -18,7 +18,7 @@ class CartDetail < Edge
 
   def iri_opts
     super.merge(
-      parent_iri: split_iri_segments(ancestor(:budget_shop)&.cart_for(publisher)&.iri_path),
+      parent_iri: split_iri_segments(ancestor(:budget_shop)&.cart_for(publisher)&.root_relative_iri),
       uuid: uuid
     )
   end

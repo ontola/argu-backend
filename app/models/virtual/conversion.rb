@@ -29,7 +29,7 @@ class Conversion < VirtualResource
   end
 
   def iri_opts
-    {parent_iri: split_iri_segments(edge&.iri_path)}
+    {parent_iri: split_iri_segments(edge&.root_relative_iri)}
   end
 
   def save

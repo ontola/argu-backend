@@ -32,7 +32,7 @@ module Parentable
     end
 
     def parent_iri_path(opts = {})
-      split_iri_segments(parent&.iri_path(opts))
+      split_iri_segments(parent&.root_relative_iri(opts))
     end
   end
 

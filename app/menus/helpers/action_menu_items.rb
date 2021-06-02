@@ -71,7 +71,7 @@ module Helpers
       menu_item(
         :move,
         image: 'fa-sitemap',
-        href: new_iri(Move.new(edge: resource).iri_path),
+        href: new_iri(Move.new(edge: resource).root_relative_iri),
         policy: :move?
       )
     end

@@ -11,7 +11,7 @@ module ConfirmedDestroyable
     module ClassMethods
       private
 
-      def confirmed_destroy_options
+      def confirmed_destroy_options # rubocop:disable Metrics/MethodLength
         {
           type: [NS::SCHEMA[:Action], NS::ARGU[:DestroyAction]],
           policy: :destroy?,
@@ -19,7 +19,9 @@ module ConfirmedDestroyable
           url: -> { resource.iri(destroy: true) },
           http_method: :delete,
           form: Request::ConfirmedDestroyRequestForm,
-          root_relative_iri: -> { expand_uri_template(:delete_iri, parent_iri: split_iri_segments(resource.iri_path)) }
+          root_relative_iri: lambda {
+            expand_uri_template(:delete_iri, parent_iri: split_iri_segments(resource.root_relative_iri))
+          }
         }
       end
     end

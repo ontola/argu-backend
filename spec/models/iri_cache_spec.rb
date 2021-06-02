@@ -13,13 +13,13 @@ RSpec.describe '#iri_cache', type: :model do
   end
 
   context 'iri of a cleared user' do
-    subject { ActsAsTenant.with_tenant(argu) { user.update!(iri_cache: nil) } && user.iri_path }
+    subject { ActsAsTenant.with_tenant(argu) { user.update!(iri_cache: nil) } && user.root_relative_iri.to_s }
 
     it { is_expected.to eq("/u/#{user.url}") }
   end
 
   context 'iri of a user after updated shortname' do
-    subject { user.update!(url: 'new_url') && user.reload.iri_path }
+    subject { user.update!(url: 'new_url') && user.reload.root_relative_iri.to_s }
 
     it { is_expected.to eq('/u/new_url') }
   end

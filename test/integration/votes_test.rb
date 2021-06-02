@@ -480,6 +480,6 @@ class VotesTest < ActionDispatch::IntegrationTest
   private
 
   def iri_without_id(parent = vote_event, params = {})
-    iri_from_template(:vote_iri, params.merge(parent_iri: split_iri_segments(parent.iri_path), root: argu))
+    iri_from_template(:vote_iri, params.merge(parent_iri: split_iri_segments(parent.root_relative_iri), root: argu))
   end
 end

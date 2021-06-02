@@ -7,7 +7,7 @@ class ContainerNodeActionList < ApplicationActionList
       collection: true,
       exclude: true,
       predicate: NS::ONTOLA[:createAction],
-      root_relative_iri: -> { new_iri_path(klass.root_collection.iri_path) }
+      root_relative_iri: -> { new_iri_path(klass.root_collection.root_relative_iri) }
     )
   end
 end

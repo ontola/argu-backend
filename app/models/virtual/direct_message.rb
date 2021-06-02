@@ -29,11 +29,11 @@ class DirectMessage < VirtualResource
   end
 
   def canonical_iri_opts
-    {parent_iri: split_iri_segments(resource.iri_path)}
+    {parent_iri: split_iri_segments(resource.root_relative_iri)}
   end
 
   def iri_opts
-    {parent_iri: split_iri_segments(resource.iri_path)}
+    {parent_iri: split_iri_segments(resource.root_relative_iri)}
   end
 
   def email_address_id=(value)

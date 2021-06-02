@@ -24,7 +24,9 @@ class VoteActionList < EdgeActionList
     url: -> { resource.iri },
     http_method: :delete,
     form: Request::TrashRequestForm,
-    root_relative_iri: -> { expand_uri_template(:trash_iri, parent_iri: split_iri_segments(resource.iri_path)) },
+    root_relative_iri: lambda {
+      expand_uri_template(:trash_iri, parent_iri: split_iri_segments(resource.root_relative_iri))
+    },
     image: -> { create_image(resource.option, resource.parent.upvote_only?) },
     label: -> { create_label(resource.option, resource.parent.upvote_only?) },
     submit_label: -> { create_label(resource.option, resource.parent.upvote_only?) }

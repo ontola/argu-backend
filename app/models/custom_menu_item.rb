@@ -40,7 +40,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
     {
       id: id,
       menu_type: menu_type,
-      parent_iri: split_iri_segments(resource&.iri_path)
+      parent_iri: split_iri_segments(resource&.root_relative_iri)
     }
   end
   alias canonical_iri_opts iri_opts

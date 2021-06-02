@@ -4,7 +4,7 @@ class GroupMenuList < ApplicationMenuList
   include SettingsHelper
 
   has_menu :settings,
-           iri_base: -> { resource.iri_path },
+           iri_base: -> { resource.root_relative_iri },
            menus: -> { settings_menu_items }
 
   private

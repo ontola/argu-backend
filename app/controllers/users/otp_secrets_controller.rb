@@ -12,7 +12,7 @@ module Users
       RDF::Statement.new(
         LinkedRails.iri(path: '/u/otp_secrets/delete'),
         RDF::OWL.sameAs,
-        LinkedRails.iri(path: "#{current_resource.iri_path}/delete")
+        LinkedRails.iri(path: "#{current_resource.root_relative_iri}/delete")
       )
     end
   end
