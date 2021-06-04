@@ -95,18 +95,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def public_pages
-    return @public_pages if instance_variable_defined?('@public_pages')
-
-    page_ids =
-      Forum
-        .joins(:parent)
-        .where(edges: {uuid: Setting.get('suggested_forums')&.split(',')})
-        .pluck('parents_edges.uuid')
-    @public_pages ||=
-      Page.where(uuid: page_ids).includes(:shortname, profile: :default_profile_photo)
-  end
-
   def resource
     ActsAsTenant.current_tenant
   end

@@ -202,5 +202,3 @@ FactorySeeder.create(
   :two_fa_user,
   email: '2fa@example.com'
 )
-
-Setting.set('suggested_forums', [freetown.uuid, other_page_forum.uuid].join(','))
