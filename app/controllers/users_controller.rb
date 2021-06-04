@@ -4,10 +4,6 @@ class UsersController < AuthorizedController
   include VotesHelper
   include UrlHelper
 
-  def wrong_email
-    render locals: {email: params[:email], r: r_param}
-  end
-
   private
 
   def authorized_current_user

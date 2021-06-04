@@ -291,17 +291,6 @@ class UsersTest < ActionDispatch::IntegrationTest
   ##########################################
   # Wrong email after following email token
   ##########################################
-  test 'guest should not get wrong_email' do
-    sign_in :guest_user
-
-    get users_wrong_email_path(email: 'wrong@email.com')
-  end
-
-  test 'user should get wrong_email' do
-    sign_in user
-    get users_wrong_email_path(email: 'wrong@email.com')
-  end
-
   test 'user with correct email should redirect to r on wrong_email' do
     sign_in user
 
@@ -313,7 +302,6 @@ class UsersTest < ActionDispatch::IntegrationTest
               email_addresses_attributes: {
                 '99999' => {email: user.email}
               },
-              form: 'wrong_email',
               redirect_url: argu_url('/tokens/email/xxx')
             }
           }
@@ -337,7 +325,6 @@ class UsersTest < ActionDispatch::IntegrationTest
               email_addresses_attributes: {
                 '99999' => {email: 'new@email.com'}
               },
-              form: 'wrong_email',
               r: argu_url('/tokens/email/xxx')
             }
           }
@@ -360,7 +347,6 @@ class UsersTest < ActionDispatch::IntegrationTest
               email_addresses_attributes: {
                 '99999' => {email: user.email}
               },
-              form: 'wrong_email',
               r: argu_url('/tokens/email/xxx')
             }
           }

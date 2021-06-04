@@ -55,7 +55,6 @@ class UserPolicy < RestrictivePolicy
     current_user? || super
   end
   alias language? update?
-  alias wrong_email? update?
 
   def setup?
     current_user? && !user.setup_finished?

@@ -86,7 +86,6 @@ Rails.application.routes.draw do
 
   as :user do
     get 'users/delete', to: 'users#delete'
-    get 'users/wrong_email', to: 'users#wrong_email'
   end
 
   resources :users,
