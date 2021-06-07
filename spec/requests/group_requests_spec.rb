@@ -13,10 +13,8 @@ RSpec.describe 'Groups', type: :request do
   let(:required_keys) { %w[name] }
   let(:non_existing_index_path) { '/non_existing/groups' }
 
-  let(:expect_get_index_guest_serializer) { expect_unauthorized }
-  let(:expect_get_show_guest_serializer) { expect_unauthorized }
-  let(:expect_get_form_guest_serializer) { expect_unauthorized }
-  let(:expect_get_form_unauthorized_serializer) { expect_unauthorized }
+  let(:expect_get_index_unauthorized_serializer) { expect_success }
+  let(:expect_get_show_unauthorized_serializer) { expect_success }
 
   it_behaves_like 'requests', skip: %i[trash untrash]
 end

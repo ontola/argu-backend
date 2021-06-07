@@ -23,7 +23,7 @@ class GroupPolicy < EdgeTreePolicy
   delegate :update?, to: :edgeable_policy
 
   def show?
-    [Group::PUBLIC_ID, Group::STAFF_ID].include?(record.id) || is_member? || service? || edgeable_policy.update?
+    true
   end
 
   def create?

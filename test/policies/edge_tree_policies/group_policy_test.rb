@@ -28,6 +28,6 @@ class GroupPolicyTest < Argu::TestHelpers::PolicyTest
   end
 
   def show_results
-    nobody_results.merge(administrator: true, staff: true, group_member: true)
+    everybody_results
   end
 end
