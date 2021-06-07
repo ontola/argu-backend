@@ -307,6 +307,7 @@ class PagesTest < ActionDispatch::IntegrationTest
                  confirmation_string: 'remove'
                }
              }
+      assert_response :success
     end
   end
 

@@ -6,7 +6,6 @@ class AuthorizedController < ApplicationController
 
   before_action :verify_terms_accepted, only: %i[update create]
   before_action :verify_setup, only: %i[update create]
-  prepend_before_action :authorize_current_actor
   before_bugsnag_notify :add_errors_tab
 
   active_response :index, :show
@@ -29,12 +28,6 @@ class AuthorizedController < ApplicationController
     return authorize authenticated_resource, :show? if form_action?
 
     authorize authenticated_resource, "#{params[:action].chomp('!')}?" unless action_name == 'index'
-  end
-
-  def authorize_current_actor
-    authorize current_actor, :show?
-  rescue Argu::Errors::Forbidden
-    current_actor.actor = current_user.profile
   end
 
   # A version of {authenticated_resource!} that raises if the record cannot be found

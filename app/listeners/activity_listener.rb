@@ -9,8 +9,8 @@ class ActivityListener
   # @option opts [String] comment An optional Comment to explain the action
   # @option opts [Bool] notify Whether to create notifications
   def initialize(opts = {})
-    @publisher = opts[:publisher]
-    @creator = opts[:creator]
+    @publisher = opts[:user_context].user
+    @creator = opts[:user_context].profile
     @comment = opts[:comment]
     @notify = opts[:notify].to_s == 'true'
   end

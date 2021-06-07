@@ -14,7 +14,7 @@ class RestrictivePolicy
     end
 
     delegate :user, to: :context, allow_nil: true
-    delegate :actor, to: :context, allow_nil: true
+    delegate :profile, to: :context, allow_nil: true
     delegate :export_scope?, :service_scope?, :system_scope?,
              to: :scope,
              allow_nil: true
@@ -37,7 +37,7 @@ class RestrictivePolicy
   end
 
   delegate :user, to: :context
-  delegate :actor, to: :context
+  delegate :profile, to: :context
   attr_reader :context, :record, :message
 
   def initialize(context, record)

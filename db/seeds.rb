@@ -42,7 +42,7 @@ if current_tenant == 'argu'
       CreateGroupMembership.new(
         Group.staff,
         attributes: {member: staff.profile},
-        options: {publisher: staff, creator: staff.profile}
+        options: {user_context: UserContext.new(user: staff, profile: staff.profile)}
       ).resource
     staff_membership.save!(validate: false)
 

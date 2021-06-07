@@ -9,7 +9,7 @@ class AdministrationPolicy < Struct.new(:context, :administration) # rubocop:dis
   end
 
   delegate :user, to: :context
-  delegate :actor, to: :context
+  delegate :profile, to: :context
 
   def show?
     user.is_staff?

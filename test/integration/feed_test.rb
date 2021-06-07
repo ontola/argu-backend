@@ -12,7 +12,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   let(:trashed_motion) do
     m = create(:motion, parent: freetown)
     ActsAsTenant.with_tenant(argu) do
-      TrashService.new(m, options: {creator: publisher.profile, publisher: publisher}).commit
+      TrashService.new(m, options: {user_context: UserContext.new(user: publisher, profile: publisher.profile)}).commit
     end
     m
   end

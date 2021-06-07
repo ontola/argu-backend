@@ -47,8 +47,7 @@ class Argument < Edge
         creator: profile
       },
       options: {
-        creator: profile,
-        publisher: user
+        user_context: UserContext.new(profile: profile, user: user)
       }
     )
     service.on(:create_vote_failed) do

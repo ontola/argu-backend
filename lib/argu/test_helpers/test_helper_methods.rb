@@ -173,37 +173,48 @@ module Argu
           user
         end
 
-        # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
+        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def create_resource(klass, attributes = {}, options = {})
           parent_edge = attributes.delete(:parent)
           ActsAsTenant.with_tenant(parent_edge&.root || ActsAsTenant.current_tenant) do
-            if klass < Edge
-              options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
-              options[:creator] = options[:publisher].profile if options[:creator].nil?
-              attributes[:owner_type] = klass.to_s
-            end
+            attributes[:owner_type] = klass.to_s if klass < Edge
 
+            options = service_options(creator: options[:creator], publisher: options[:publisher])
             service_class = "Create#{klass}".safe_constantize || service_class_fallback(klass)
-            service = service_class.new(parent_edge, attributes: attributes, options: options)
+            service = service_class.new(
+              parent_edge,
+              attributes: attributes,
+              options: options
+            )
             service.commit
             raise service.resource.errors.full_messages.first unless service.resource.valid?
 
             service.resource.try(:store_in_redis?) ? service.resource : service.resource.reload
           end
         end
-        # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
+        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+        def service_options(publisher: nil, creator: nil)
+          user = publisher || create(:user, confirmed_at: Time.current)
+          profile = creator || user.profile
+          user_context = UserContext.new(
+            user: user,
+            profile: profile
+          )
+
+          {user_context: user_context}
+        end
 
         def destroy_resource(resource, user = nil, profile = nil) # rubocop:disable Metrics/MethodLength
           ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
-            user ||= create(:user)
-            profile ||= user.profile
-            options = {}
-            options[:publisher] = user
-            options[:creator] = profile
             service_class = "Destroy#{resource.class}".safe_constantize || DestroyService
-            service = service_class.new(resource, attributes: {}, options: options)
-            service.subscribe(ActivityListener.new(creator: profile,
-                                                   publisher: user))
+            options = service_options(publisher: user, creator: profile)
+            service = service_class.new(
+              resource,
+              attributes: {},
+              options: options
+            )
+            service.subscribe(ActivityListener.new(options))
             service.commit
             nil
           end
@@ -246,33 +257,31 @@ module Argu
           ActsAsTenant.current_tenant = resource.root
         end
 
-        def trash_resource(resource, user = nil, profile = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        def trash_resource(resource, user = nil, profile = nil) # rubocop:disable Metrics/MethodLength
           ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
-            user ||= create(:user)
-            profile ||= user.profile
-            options = {}
-            options[:publisher] = user
-            options[:creator] = profile
             service_class = "Trash#{resource.class}".safe_constantize || TrashService
-            service = service_class.new(resource, attributes: {}, options: options)
-            service.subscribe(ActivityListener.new(creator: profile,
-                                                   publisher: user))
+            options = service_options(publisher: user, creator: profile)
+            service = service_class.new(
+              resource,
+              attributes: {},
+              options: options
+            )
+            service.subscribe(ActivityListener.new(options))
             service.commit
             resource.reload
           end
         end
 
-        def update_resource(resource, attributes = {}, user = nil, profile = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        def update_resource(resource, attributes = {}, user = nil, profile = nil) # rubocop:disable Metrics/MethodLength
           ActsAsTenant.with_tenant(resource&.root || ActsAsTenant.current_tenant) do
-            user ||= create(:user)
-            profile ||= user.profile
-            options = {}
-            options[:publisher] = user
-            options[:creator] = profile
             service_class = "Update#{resource.class}".safe_constantize || UpdateService
-            service = service_class.new(resource, attributes: attributes, options: options)
-            service.subscribe(ActivityListener.new(creator: profile,
-                                                   publisher: user))
+            options = service_options(publisher: user, creator: profile)
+            service = service_class.new(
+              resource,
+              attributes: attributes,
+              options: options
+            )
+            service.subscribe(ActivityListener.new(options))
             service.commit
             resource.reload
           end

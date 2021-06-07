@@ -117,6 +117,10 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @granted_root_ids[grant_set] ||= scope.pluck(:root_id).uniq
   end
 
+  def guest?
+    profileable.try(:guest?)
+  end
+
   def self.includes_for_profileable
     {profileable: {}}
   end
@@ -139,7 +143,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def url
-    profileable.presence && profileable.url.presence
+    profileable&.url.presence
   end
 
   # ######Methods########

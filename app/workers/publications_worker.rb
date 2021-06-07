@@ -8,7 +8,8 @@ class PublicationsWorker
     return if cancelled?
 
     @publication = Publication.find_by(publishable_id: publishable_id)
-    @publication.subscribe ActivityListener.new(publisher: @publication.publisher, creator: @publication.creator)
+    user_context = UserContext.new(user: @publication.publisher, profile: @publication.creator)
+    @publication.subscribe ActivityListener.new(user_context: user_context)
     @publication.commit
 
     broadcast_publication

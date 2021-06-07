@@ -94,7 +94,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
         CreateGroupMembership.new(
           group,
           attributes: {member_id: profile.id},
-          options: {publisher: user, creator: profile}
+          options: {user_context: UserContext.new(user: user, profile: profile)}
         ).resource
       group_membership.save!(validate: false)
       group_membership

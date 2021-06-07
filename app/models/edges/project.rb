@@ -17,7 +17,7 @@ class Project < Discussion
   private
 
   def create_default_phases # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    service_options = {creator: creator, publisher: publisher}
+    service_options = {user_context: UserContext.new(profile: creator, user: publisher)}
     pa_id = PermittedAction.find_by!(title: 'phase_show').id
     description_placeholder = I18n.t('projects.phase_template.description_placeholder')
     identify = phases.create!(

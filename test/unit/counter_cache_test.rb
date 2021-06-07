@@ -146,16 +146,15 @@ class CounterCacheTest < ActiveSupport::TestCase
 
   test 'update count when changing vote' do
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
+    voter = motion
+              .default_vote_event
+              .votes
+              .find_by(properties: {predicate: NS::SCHEMA[:option].to_s, integer: 1})
+              .publisher
     CreateVote.new(
       motion.default_vote_event,
       attributes: {option: :no},
-      options: service_options(
-        motion
-          .default_vote_event
-          .votes
-          .find_by(properties: {predicate: NS::SCHEMA[:option].to_s, integer: 1})
-          .publisher
-      )
+      options: service_options(publisher: voter)
     ).commit
     assert_counts(motion.default_vote_event, votes_pro: 1, votes_con: 3, votes_neutral: 2)
     Vote.fix_counts
@@ -167,7 +166,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     CreateVote.new(
       motion.default_vote_event,
       attributes: {option: :no},
-      options: service_options(unconfirmed)
+      options: service_options(publisher: unconfirmed)
     ).commit
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
     Vote.fix_counts
@@ -181,13 +180,5 @@ class CounterCacheTest < ActiveSupport::TestCase
     counts.each do |klass, count|
       assert_equal count, record.children_count(klass), "wrong #{klass} count: #{record.children_counts}"
     end
-  end
-
-  def service_options(user = nil)
-    user ||= create(:user)
-    {
-      creator: user.profile,
-      publisher: user
-    }
   end
 end

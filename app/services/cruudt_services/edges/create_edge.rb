@@ -4,7 +4,8 @@ class CreateEdge < CreateService
   # @note Call super when overriding.
   # @param [Edge] parent The parent edge or its id
   def initialize(parent, attributes: {}, options: {})
-    @edge = initialize_edge(parent, options, attributes)
+    @user_context = options[:user_context]
+    @edge = initialize_edge(parent, attributes)
     super
   end
 
@@ -28,14 +29,12 @@ class CreateEdge < CreateService
   end
 
   # @param [Edge, Integer] parent The instance or id of the parent edge of the new child
-  # @option options [Hash] publisher The publisher of the new child
-  # @option attributes [Hash] publisher The publisher of the new child
-  def initialize_edge(parent, options, attributes)
-    parent_edge = parent.is_a?(Edge) ? parent : Edge.find(parent)
-    edge = parent_edge.build_child(resource_klass(attributes))
+  def initialize_edge(parent, attributes)
+    klass = resource_klass(attributes)
+    edge = parent.build_child(klass, user_context: user_context)
     edge.created_at = attributes.with_indifferent_access[:created_at]
-    edge.publisher = options[:publisher]
-    edge.creator = options[:creator]
+    edge.publisher = user
+    edge.creator = profile
     edge
   end
 

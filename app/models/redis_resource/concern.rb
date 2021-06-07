@@ -63,7 +63,7 @@ module RedisResource
       end
 
       def store_in_redis?(opts = {})
-        !opts[:skip_redis] && opts[:creator]&.profileable&.guest?
+        !opts[:skip_redis] && opts[:creator]&.guest?
       end
     end
   end

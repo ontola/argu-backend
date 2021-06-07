@@ -4,7 +4,7 @@ class CreateGroup < CreateService
   def initialize(parent, attributes: {}, options: {})
     raise 'The parent of a Group must be the Edge of a Page' unless parent.owner_type == 'Page'
 
-    @resource = parent.build_child(Group)
+    @resource = parent.build_child(Group, user_context: options[:user_context])
     if attributes[:grants_attributes]&.values&.first.try(:[], 'grant_set_id') == '-1'
       attributes = attributes.except(:grants_attributes)
     end

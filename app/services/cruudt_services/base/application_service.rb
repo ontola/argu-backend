@@ -10,14 +10,17 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   def initialize(_orig_resource, attributes: {}, options: {})
     @attributes = attributes
     @actions = {}
-    @options = options
+    @options = options.except(:user_context)
+    @user_context = options[:user_context]
     prepare_attributes
     assign_attributes
     set_nested_associations
     subscribe_listeners
   end
 
-  attr_reader :attributes, :options, :resource
+  attr_reader :attributes, :options, :resource, :user_context
+
+  delegate :profile, :user, to: :user_context
 
   # Executes the action, so generally message broadcasts begin here.
   # @see {after_save}
@@ -134,8 +137,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     subscribe(
       ActivityListener.new(
         comment: options[:comment],
-        creator: options.fetch(:creator),
-        publisher: options.fetch(:publisher),
+        user_context: user_context,
         notify: options[:notify]
       )
     )
@@ -168,14 +170,14 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   end
 
   def prepare_placement_attributes
-    @attributes[:custom_placement_attributes]&.merge!(creator: @options[:creator], publisher: @options[:publisher])
+    @attributes[:custom_placement_attributes]&.merge!(creator: profile, publisher: user)
   end
 
   def prepare_media_object_attributes
     %i[cover_photo profile_photo].select { |type| @attributes.key?(:"default_#{type}_attributes") }.each do |type|
       @attributes[:"default_#{type}_attributes"]&.reverse_merge!(
-        creator: @options[:creator],
-        publisher: @options[:publisher],
+        creator: profile,
+        publisher: user,
         used_as: type
       )
     end

@@ -5,13 +5,13 @@ require 'test_helper'
 class ConversionsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:question) do
-    create(:question,
-           :with_follower,
-           :with_motions,
-           parent: freetown,
-           options: {
-             creator: create(:profile_direct_email)
-           })
+    create(
+      :question,
+      :with_follower,
+      :with_motions,
+      parent: freetown,
+      creator: create(:profile_direct_email)
+    )
   end
   let(:motion) do
     create(:motion,

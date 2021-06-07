@@ -3,15 +3,28 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  attr_accessor :doorkeeper_token, :user
-  attr_reader :actor
+  attr_accessor :doorkeeper_token, :current_actor
+
+  delegate :user, :profile, to: :current_actor
+  delegate :guest?, to: :user
 
   def initialize(doorkeeper_token: nil, profile: nil, user: nil)
     @doorkeeper_token = doorkeeper_token
-    @user = user || GuestUser.new
-    @actor = profile
+    @current_actor = authorized_current_actor(user, profile)
     @lookup_map = {}
     @grant_trees = {}
+  end
+
+  def authorized_current_actor(user, profile)
+    user ||= GuestUser.new
+
+    if profile
+      current_actor = CurrentActor.new(user: user, profile: profile)
+
+      return current_actor if CurrentActorPolicy.new(nil, current_actor).show?
+    end
+
+    CurrentActor.new(user: user, profile: user.profile)
   end
 
   def cache_key(ident, key, val)
@@ -67,6 +80,10 @@ class UserContext
     @language ||= doorkeeper_token_payload['user']['language']
   end
 
+  def profile=(new_profile)
+    @current_actor = authorized_current_actor(user, new_profile)
+  end
+
   def service_scope?
     doorkeeper_scopes&.include? 'service'
   end
@@ -81,6 +98,10 @@ class UserContext
 
   def tree_root_id
     tree_root&.uuid
+  end
+
+  def user=(new_user)
+    @current_actor = authorized_current_actor(new_user, new_user.profile)
   end
 
   def with_root(root)

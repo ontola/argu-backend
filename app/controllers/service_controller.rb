@@ -69,10 +69,6 @@ class ServiceController < ParentableController
     action_service.commit
   end
 
-  def service_creator
-    current_actor.actor
-  end
-
   def service_klass
     "#{action_name.classify}#{controller_name.classify}".safe_constantize ||
       "#{action_name.classify}Service".constantize
@@ -82,13 +78,8 @@ class ServiceController < ParentableController
   # @return [Hash] Defaults with the creator and publisher set to the current profile/user
   def service_options(options = {})
     {
-      creator: service_creator,
-      publisher: service_publisher
+      user_context: user_context
     }.merge(activity_options).merge(options).with_indifferent_access
-  end
-
-  def service_publisher
-    current_user
   end
 
   # The name of the failure signal as emitted from `action_service`

@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class CurrentActor < VirtualResource
-  attr_accessor :actor, :user
+  attr_accessor :profile, :user
 
-  delegate :display_name, to: :actor, allow_nil: true
+  delegate :display_name, to: :profile, allow_nil: true
   delegate :id, :default_profile_photo, :default_profile_photo_id, :has_analytics?, to: :user
 
   def actor_type # rubocop:disable Metrics/MethodLength
-    if actor.present?
-      owner = actor.profileable
+    if profile.present?
+      owner = profile.profileable
       if owner.is_a?(GuestUser)
         'GuestUser'
       elsif owner.confirmed?
@@ -30,7 +30,7 @@ class CurrentActor < VirtualResource
   end
 
   def shortname
-    actor&.url
+    profile&.url
   end
 
   def user_id

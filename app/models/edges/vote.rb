@@ -90,7 +90,7 @@ class Vote < Edge
         is_published: true,
         parent: parent,
         publisher: user_context&.user,
-        creator: user_context&.actor
+        creator: user_context&.profile
       )
     end
 
@@ -110,7 +110,7 @@ class Vote < Edge
       return nil if user_context.nil?
 
       Vote
-        .where_with_redis(creator: user_context.actor, root_id: ActsAsTenant.current_tenant.uuid)
+        .where_with_redis(creator: user_context.profile, root_id: ActsAsTenant.current_tenant.uuid)
         .find_by(parent: parent, primary: true)
     end
 

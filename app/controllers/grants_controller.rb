@@ -14,8 +14,4 @@ class GrantsController < ServiceController
   def redirect_location
     settings_iri(authenticated_resource.root, tab: :groups)
   end
-
-  def service_options
-    super.except(:publisher, :creator)
-  end
 end

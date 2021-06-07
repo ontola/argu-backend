@@ -97,8 +97,10 @@ FactoryBot.define do
             motion.default_vote_event,
             attributes: {option: :yes},
             options: {
-              creator: user.profile,
-              publisher: user
+              user_context: UserContext.new(
+                profile: user.profile,
+                user: user
+              )
             }
           ).commit
           trashed = Motion.trashed.first
@@ -106,8 +108,10 @@ FactoryBot.define do
             trashed.default_vote_event,
             attributes: {option: :yes},
             options: {
-              creator: user.profile,
-              publisher: user
+              user_context: UserContext.new(
+                profile: user.profile,
+                user: user
+              )
             }
           ).commit
         end

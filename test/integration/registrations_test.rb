@@ -399,9 +399,9 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should delete destroy with content published by page' do
-    create :motion, publisher: user, creator: argu.profile, parent: freetown
-    create :question, publisher: user, creator: argu.profile, parent: freetown
-    create :pro_argument, publisher: user, creator: argu.profile, parent: Motion.last
+    create :motion, publisher: argu.publisher, creator: argu.profile, parent: freetown
+    create :question, publisher: argu.publisher, creator: argu.profile, parent: freetown
+    create :pro_argument, publisher: argu.publisher, creator: argu.profile, parent: Motion.last
 
     sign_in user
 

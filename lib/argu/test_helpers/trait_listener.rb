@@ -177,7 +177,7 @@ module Argu
         service = CreateEdge.new(
           vote.voteable,
           attributes: {content: 'opinion', owner_type: 'Comment'},
-          options: {creator: vote.creator, publisher: vote.publisher}
+          options: {user_context: UserContext.new(profile: vote.creator, user: vote.publisher)}
         )
         service.commit
         reset_publication(service.resource.publications.last)
@@ -201,16 +201,14 @@ module Argu
       def guest_service_options(id: 'guest_id')
         guest_user = GuestUser.new(id: id)
         {
-          creator: guest_user.profile,
-          publisher: guest_user
+          user_context: UserContext.new(profile: guest_user.profile, user: guest_user)
         }
       end
 
       def service_options(opts = {})
         user = create(:user, opts)
         {
-          creator: user.profile,
-          publisher: user
+          user_context: UserContext.new(user: user, profile: user.profile)
         }
       end
 

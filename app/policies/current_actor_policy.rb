@@ -8,27 +8,24 @@ class CurrentActorPolicy < RestrictivePolicy
   end
 
   def show?
-    current_user && moderator?
+    moderator?
   end
 
   def update?
-    current_user && moderator?
+    moderator?
   end
 
   private
 
-  def current_user
-    record.user == user
-  end
-
   def moderator? # rubocop:disable Metrics/AbcSize
-    owner = record.actor.profileable
-    if owner.class == User || owner.class == GuestUser
-      owner == user
-    else
-      return unless user.confirmed?
+    profile_owner = record.profile.profileable
 
-      owner == user.profile || user.managed_profile_ids.include?(owner.profile.id)
+    if profile_owner.class == User || profile_owner.class == GuestUser
+      profile_owner == record.user
+    else
+      return unless record.user.confirmed?
+
+      record.profile == record.user.profile || record.user.managed_profile_ids.include?(record.profile.id)
     end
   end
 end

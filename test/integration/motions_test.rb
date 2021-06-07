@@ -6,21 +6,21 @@ class MotionsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let(:question) do
-    create(:question,
-           :with_follower,
-           parent: freetown,
-           options: {
-             creator: create(:profile_direct_email)
-           })
+    create(
+      :question,
+      :with_follower,
+      parent: freetown,
+      creator: create(:profile_direct_email)
+    )
   end
   let(:question_requires_location) do
-    create(:question,
-           :with_follower,
-           parent: freetown,
-           require_location: true,
-           options: {
-             creator: create(:profile_direct_email)
-           })
+    create(
+      :question,
+      :with_follower,
+      parent: freetown,
+      require_location: true,
+      creator: create(:profile_direct_email)
+    )
   end
   let(:subject) do
     create(:motion,

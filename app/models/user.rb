@@ -272,10 +272,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # @return [Array] The ids of the profiles managed by the user
   def managed_profile_ids
     @managed_profile_ids ||=
-      if !confirmed? || managed_pages.blank?
-        [profile.id]
-      else
-        managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)
+      ActsAsTenant.without_tenant do
+        if !confirmed? || managed_pages.blank?
+          [profile.id]
+        else
+          managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)
+        end
       end
   end
 

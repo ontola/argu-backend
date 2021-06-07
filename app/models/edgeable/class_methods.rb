@@ -19,7 +19,7 @@ module Edgeable
         }
         user_context = opts[:user_context]
         attrs[:publisher] = user_context&.user || User.new(show_feed: true)
-        attrs[:creator] = user_context&.actor unless user_context&.actor&.profileable&.guest?
+        attrs[:creator] = user_context&.profile unless user_context&.profile&.guest?
         attrs
       end
 

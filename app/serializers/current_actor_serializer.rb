@@ -16,6 +16,6 @@ class CurrentActorSerializer < BaseSerializer
 
   has_one :user, predicate: NS::ARGU[:user]
   has_one :actor, predicate: NS::ONTOLA[:actor] do |object|
-    object.actor&.profileable
+    object.profile&.profileable
   end
 end

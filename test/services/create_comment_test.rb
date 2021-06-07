@@ -15,8 +15,7 @@ class CreateCommentTest < ActiveSupport::TestCase
   end
   let(:comment_options) do
     {
-      creator: user.profile,
-      publisher: user
+      user_context: UserContext.new(profile: user.profile, user: user)
     }
   end
 

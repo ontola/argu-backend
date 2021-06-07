@@ -27,6 +27,6 @@ class VotePolicy < EdgePolicy
   private
 
   def is_creator?
-    record.creator_id == actor.id || user.managed_profile_ids.include?(record.creator_id)
+    record.creator_id == profile.id || user.managed_profile_ids.include?(record.creator_id)
   end
 end

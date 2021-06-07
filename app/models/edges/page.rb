@@ -194,7 +194,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     service = CreateGroupMembership.new(
       group,
       attributes: {member: creator},
-      options: {publisher: publisher, creator: creator}
+      options: {user_context: UserContext.new(user: publisher, profile: creator)}
     )
     service.on(:create_group_membership_failed) do |gm|
       raise gm.errors.full_messages.join('\n')

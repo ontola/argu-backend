@@ -5,6 +5,7 @@ require 'test_helper'
 class DraftsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
+  let(:staff) { create(:user, :staff) }
   let!(:motion) do
     create(:motion,
            parent: freetown,
@@ -20,6 +21,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
     create(:motion,
            parent: freetown,
            creator: argu.profile,
+           publisher: argu.publisher,
            argu_publication_attributes: {draft: true})
   end
 
@@ -121,8 +123,6 @@ class DraftsTest < ActionDispatch::IntegrationTest
   ####################################
   # As Staff
   ####################################
-  let(:staff) { create(:user, :staff) }
-
   test 'staff should get index' do
     sign_in staff
     get drafts_iri

@@ -26,7 +26,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def show?
-    record.member == actor || edgeable_policy.update?
+    record.member == profile || edgeable_policy.update?
   end
 
   def create?

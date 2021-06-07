@@ -9,17 +9,17 @@ class CreateVote < CreateEdge
     @edge.parent.reload
   end
 
-  def existing_edge(parent, options, attributes)
+  def existing_edge(parent, attributes)
     Vote
       .where_with_redis(
         root_id: parent.root_id,
         option: Vote.filter_options[NS::SCHEMA[:option]][:values][attributes[:option]],
-        creator: options[:creator],
+        creator: profile,
         primary: true
       ).find_by(parent: parent)
   end
 
-  def initialize_edge(parent, options, attributes)
-    existing_edge(parent, options, attributes) || super
+  def initialize_edge(parent, attributes)
+    existing_edge(parent, attributes) || super
   end
 end

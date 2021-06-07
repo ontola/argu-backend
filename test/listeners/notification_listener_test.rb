@@ -62,7 +62,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
         service = CreateProArgument.new(
           motion,
           attributes: {title: 'argument title'},
-          options: {publisher: user, creator: user.profile}
+          options: {user_context: UserContext.new(user: user, profile: user.profile)}
         )
         service.commit
         reset_publication(service.resource.publications.last)

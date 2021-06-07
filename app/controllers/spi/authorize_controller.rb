@@ -28,7 +28,7 @@ module SPI
                   else
                     Profile.find_by(id: params[:resource_id])
                   end
-        CurrentActor.new(user: current_user, actor: profile)
+        CurrentActor.new(user: current_user, profile: profile)
       else
         ApplicationRecord.descendants.detect { |m| m.to_s == params[:resource_type] }.find_by(id: params[:resource_id])
       end

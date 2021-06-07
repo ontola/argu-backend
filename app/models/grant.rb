@@ -54,7 +54,7 @@ class Grant < ApplicationRecord
   end
 
   def parent
-    @parent ||= edge || group.root
+    @parent ||= edge || ActsAsTenant.current_tenant
   end
   alias edgeable_record parent
 

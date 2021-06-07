@@ -18,7 +18,7 @@ class CommentTest < ActiveSupport::TestCase
     nested_comment
     assert_difference('Comment.count', -2) do
       DestroyService
-        .new(motion, options: {creator: motion.creator, publisher: motion.publisher})
+        .new(motion, options: {user_context: UserContext.new(user: motion.publisher, profile: motion.creator)})
         .commit
     end
   end

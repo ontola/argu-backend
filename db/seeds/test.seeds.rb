@@ -26,7 +26,7 @@ staff_membership =
   CreateGroupMembership.new(
     staff_group,
     attributes: {member: staff.profile},
-    options: {publisher: staff, creator: staff.profile}
+    options: {user_context: UserContext.new(user: staff, profile: staff.profile)}
   ).resource
 staff_membership.save(validate: false)
 
@@ -158,7 +158,7 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
     )
   TrashService.new(
     trashed_question,
-    options: {creator: trashed_question.creator, publisher: trashed_question.publisher}
+    options: {user_context: UserContext.new(profile: trashed_question.creator, user: trashed_question.publisher)}
   ).commit
   trashed_motion =
     FactorySeeder.create(

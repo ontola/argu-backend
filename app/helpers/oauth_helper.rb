@@ -10,7 +10,7 @@ module OauthHelper
   end
 
   def current_actor
-    @current_actor ||= CurrentActor.new(user: current_user, actor: current_actor_profile(current_user))
+    user_context.current_actor
   end
 
   def current_actor_profile(user) # rubocop:disable Metrics/AbcSize
@@ -21,9 +21,9 @@ module OauthHelper
     end
   end
 
-  # @return [Profile] The {Profile} of the {User}
+  # @return [Profile] The {Profile} used by the {User}
   def current_profile
-    current_user.profile
+    user_context.profile
   end
 
   def doorkeeper_unauthorized_render_options(error: nil)
@@ -40,7 +40,6 @@ module OauthHelper
     raise('2fa not verified') if resource.otp_active? && !otp_verified
 
     super
-    current_actor.user = resource
     user_context.user = resource
   end
 
@@ -57,7 +56,7 @@ module OauthHelper
       request.env['User-Context'] ||
       UserContext.new(
         doorkeeper_token: doorkeeper_token,
-        profile: current_profile,
+        profile: current_actor_profile(current_user),
         user: current_user
       )
   end

@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class ActorsController < ParentableController
-  skip_before_action :authorize_action
-
   private
+
+  def verify_authorized?
+    false
+  end
 
   def available_actors
     return [] if current_user.guest?

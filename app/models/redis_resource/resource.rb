@@ -46,8 +46,7 @@ module RedisResource
         resource.parent,
         attributes: resource.attributes.with_indifferent_access.except('publisher_id', 'creator_id', 'is_published'),
         options: {
-          creator: user.profile,
-          publisher: user
+          user_context: UserContext.new(profile: user.profile, user: user)
         }
       )
 
