@@ -79,9 +79,5 @@ en:
     form:
       is_public:
         description: "By enabling this option, your name will be replace with \"Anonymous\" for guest users. This way your name will not be indexed by search engines. Registered users are always allowed to view your profile and name."
-      first_name:
-        label: "First name"
-      last_name:
-        label: "Last name"
-      hide_last_name:
-        label: 'Hide my last name'
+      display_name:
+        label: "Name"

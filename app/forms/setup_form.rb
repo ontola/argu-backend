@@ -15,8 +15,6 @@ class SetupForm < ApplicationForm
   end
 
   field :url
-  field :first_name, min_count: 1, if: intro_required
-  field :first_name, unless: intro_required
-  field :last_name, min_count: 1, if: intro_required
-  field :last_name, unless: intro_required
+  field :display_name, min_count: 1, if: intro_required
+  field :display_name, unless: intro_required
 end

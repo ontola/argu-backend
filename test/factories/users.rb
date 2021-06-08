@@ -16,8 +16,7 @@ FactoryBot.define do
     notifications_viewed_at { nil }
     show_feed { true }
     is_public { true }
-    sequence(:first_name) { |n| "first_name_#{n}" }
-    sequence(:last_name) { |n| "last_name_#{n}" }
+    sequence(:display_name) { |n| "user_name_#{n}" }
     last_accepted { Time.current }
 
     trait :not_accepted_terms do

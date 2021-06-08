@@ -145,8 +145,7 @@ nl:
         decisions_email: "Bij officiele besluiten"
         url: "Gebruikersnaam"
       setup:
-        first_name: "Voornaam"
-        last_name: "Achternaam"
+        display_name: "Naam"
         url: "Gebruikersnaam"
     hints:
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."

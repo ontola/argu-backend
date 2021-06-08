@@ -112,7 +112,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
             }
   validate :validate_url_uniqueness
 
-  auto_strip_attributes :first_name, :last_name, :middle_name, squish: true
+  auto_strip_attributes :display_name, squish: true
+  alias_attribute :name, :display_name
 
   def self.find_for_database_authentication(warden_conditions)
     if warden_conditions[:email].include?('@')
@@ -186,15 +187,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       url: Rails.application.routes.url_helpers.setup_users_path,
       permanent: true
     )
-  end
-
-  def display_name
-    real_name || url || generated_name
-  end
-  alias name display_name
-
-  def enforce_hidden_last_name!
-    update!(hide_last_name: true)
   end
 
   # Creates a new {Follow} or updates an existing one, except when a higher follow or a never follow is present.
@@ -331,10 +323,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     encrypted_password.present? || password.present? || password_confirmation.present?
   end
 
-  def real_name
-    [first_name, middle_name, (!hide_last_name && last_name).presence].compact.join(' ').presence
-  end
-
   def requires_2fa?
     profile.groups.where(require_2fa: true).any? if profile
   end
@@ -387,7 +375,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def setup_finished?
-    (url || first_name).present?
+    display_name != generated_name
   end
 
   private
@@ -396,7 +384,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return if birthday.blank?
 
     self.birthday = Date.new(birthday.year, 7, 1)
-    self.hide_last_name = true if minor?
   end
 
   def dependent_associations
@@ -440,10 +427,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     remove_on_destroy? ? destroy_dependencies : expropriate_dependencies
 
     email_addresses.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
-  end
-
-  def minor?
-    birthday && (Date.current.year - birthday.year) <= 18
   end
 
   def sanitize_redirect_url

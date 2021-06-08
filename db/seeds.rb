@@ -32,8 +32,7 @@ if current_tenant == 'argu'
           shortname_attributes: {shortname: 'staff_account'},
           password: 'arguargu',
           password_confirmation: 'arguargu',
-          first_name: 'Douglas',
-          last_name: 'Engelbart',
+          display_name: 'Douglas Engelbart',
           profile: Profile.new,
           last_accepted: Time.current
         )

@@ -79,9 +79,5 @@ nl:
     form:
       is_public:
         description: "Als je dit uitzet, verandert je naam voor niet-leden in \"Anoniem\". Door dit uit te zetten voorkom je dat je in zoekmachines terecht komt. Geregistreerde leden kunnen altijd je profiel en naam bekijken."
-      first_name:
-        label: "Voornaam"
-      last_name:
-        label: "Achternaam"
-      hide_last_name:
-        label: 'Verberg mijn achternaam'
+      display_name:
+        label: "Naam"

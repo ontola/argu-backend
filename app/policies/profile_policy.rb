@@ -9,7 +9,7 @@ class ProfilePolicy < RestrictivePolicy
     end
   end
 
-  permit_attributes %i[name first_name last_name hide_last_name]
+  permit_attributes %i[display_name]
 
   def show?
     Pundit.policy(context, record.profileable).show?

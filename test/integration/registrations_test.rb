@@ -8,7 +8,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
   let(:user) { create(:user) }
-  let(:user_no_shortname) { create(:user, :no_shortname, first_name: nil, last_name: nil) }
+  let(:user_no_shortname) { create(:user, :no_shortname, display_name: nil) }
   let(:guest_user) { create_guest_user }
   let(:other_guest_user) { create_guest_user(id: 'other_id') }
   let(:place) { create(:place) }

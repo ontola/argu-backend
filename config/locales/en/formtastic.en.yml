@@ -145,8 +145,7 @@ en:
         decisions_email: "For official decisions"
         url: "Username"
       setup:
-        first_name: "First name"
-        last_name: "Last name"
+        display_name: "Name"
         url: "Username"
     hints:
       username: "At least 4 characters. Numbers, letters and '_'. only."

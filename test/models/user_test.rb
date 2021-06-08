@@ -42,20 +42,6 @@ class UserTest < ActiveSupport::TestCase
     assert_not_update_redirect_url('https://evilwebsite.com/users/sign_in?param=blabla')
   end
 
-  test 'hide last_name' do
-    assert_equal subject.display_name, "#{subject.first_name} #{subject.last_name}"
-    subject.update(hide_last_name: true)
-    assert_equal subject.display_name, subject.first_name
-  end
-
-  test 'minor should hide first_name' do
-    assert_equal subject.hide_last_name, false
-    subject.update!(birthday: 19.years.ago)
-    assert_equal subject.reload.hide_last_name, false
-    subject.update!(birthday: 18.years.ago)
-    assert_equal subject.reload.hide_last_name, true
-  end
-
   private
 
   def assert_update_redirect_url(url)

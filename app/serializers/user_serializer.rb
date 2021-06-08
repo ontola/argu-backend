@@ -16,16 +16,15 @@ class UserSerializer < RecordSerializer # rubocop:disable Metrics/ClassLength
     RDF::URI("#{ActsAsTenant.current_tenant.iri}/grant_sets") if ActsAsTenant.current_tenant
   end
   attribute :accept_terms, predicate: NS::ARGU[:acceptTerms], datatype: NS::XSD[:boolean]
-  attribute :display_name, predicate: NS::SCHEMA[:name]
-  attribute :name, predicate: NS::FOAF[:name]
+  attribute :name_with_fallback, predicate: NS::SCHEMA[:name] do |object|
+    object.display_name || object.generated_name
+  end
+  attribute :display_name, predicate: NS::ARGU[:name]
   attribute :about, predicate: NS::SCHEMA[:description]
   attribute :url,
             predicate: NS::ARGU[:shortname],
             datatype: NS::XSD[:string],
             if: method(:service_or_self?), &:url
-  attribute :first_name, predicate: NS::SCHEMA[:givenName], datatype: NS::XSD[:string], if: method(:service_or_self?)
-  attribute :last_name, predicate: NS::SCHEMA[:familyName], datatype: NS::XSD[:string], if: method(:service_or_self?)
-  attribute :hide_last_name, predicate: NS::ARGU[:hideLastName], if: method(:service_or_self?)
   attribute :show_feed, predicate: NS::ARGU[:votesPublic]
   attribute :is_public, predicate: NS::ARGU[:public]
   attribute :group_ids, predicate: NS::ORG[:organization] do |object|

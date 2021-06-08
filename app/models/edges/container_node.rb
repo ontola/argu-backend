@@ -66,10 +66,6 @@ class ContainerNode < Edge
     ]
   end
 
-  def enforce_hidden_last_name?
-    url == 'youngbelegen'
-  end
-
   def hide_header
     !show_header
   end

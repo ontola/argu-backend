@@ -14,7 +14,6 @@ class UsersTest < ActionDispatch::IntegrationTest
   let(:unconfirmed_email) { create(:email_address, user: user, email: 'unconfirmed@argu.co') }
   let(:administrator) { create_administrator(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
-  let(:user_hidden_last_name) { create(:user, hide_last_name: true) }
   let(:home_placement) { create(:home_placement, placeable: user) }
   let(:hidden_home_placement) { create(:home_placement, placeable: user_non_public) }
   let(:user_no_shortname) do
@@ -57,8 +56,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     expect_resource_type(NS::ONTOLA[:AnonymousUser])
     expect_triple(requested_iri, NS::SCHEMA[:name], I18n.t('users.anonymous'))
-    assert_not_includes(response.body, user_hidden_votes.first_name)
-    assert_not_includes(response.body, user_hidden_votes.last_name)
+    assert_not_includes(response.body, user_hidden_votes.display_name)
     assert_not_includes(response.body, user_hidden_votes.email)
   end
 
@@ -96,25 +94,6 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_not_includes(response.body, user_no_shortname.email)
-  end
-
-  test 'user should get show user with hidden last name' do
-    sign_in user
-
-    get resource_iri(user_hidden_last_name, root: argu)
-
-    assert_response 200
-    refute_triple user_hidden_last_name.iri, NS::SCHEMA[:familyName], user_hidden_last_name.last_name
-  end
-
-  test 'user should get show self with hidden last name' do
-    sign_in user_hidden_last_name
-
-    get resource_iri(user_hidden_last_name, root: argu)
-
-    assert_response 200
-    user_iri = resource_iri(user_hidden_last_name, root: argu)
-    expect_triple user_iri, NS::SCHEMA[:familyName], user_hidden_last_name.last_name
   end
 
   test 'user should get show non public' do
@@ -369,16 +348,15 @@ class UsersTest < ActionDispatch::IntegrationTest
         show_feed: false,
         is_public: false,
         has_analytics: true,
-        first_name: 'new name'
+        display_name: 'new name'
       }
     }
     expect_triple(user.iri, NS::ARGU[:hasAnalytics], true, NS::LL[:replace])
     expect_triple(user.iri, NS::ARGU[:votesPublic], false, NS::LL[:replace])
     expect_triple(user.iri, NS::ARGU[:public], false, NS::LL[:replace])
-    expect_triple(user.iri, NS::SCHEMA[:givenName], 'new name', NS::LL[:replace])
-    expect_triple(user.iri, NS::SCHEMA[:name], "new name #{user.last_name}", NS::LL[:replace])
+    expect_triple(user.iri, NS::SCHEMA[:name], 'new name', NS::LL[:replace])
     assert_response :success
-    assert_equal 'new name', user.reload.first_name
+    assert_equal 'new name', user.reload.display_name
   end
 
   test 'user should not put update password without current password' do
@@ -439,7 +417,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     put resource_iri(user, root: argu),
         params: {
           user: {
-            first_name: 'name',
+            display_name: 'name',
             default_profile_photo_attributes: {
               id: user.default_profile_photo.id,
               content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
@@ -450,7 +428,7 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
         }
     assert_response :success
-    assert_equal 'name', user.reload.first_name
+    assert_equal 'name', user.reload.display_name
     assert_equal 2, user.media_objects.reload.count
     assert_equal('profile_photo.png', user.default_profile_photo.content_identifier)
     assert_equal('cover_photo.jpg', user.default_cover_photo.content_identifier)
@@ -468,7 +446,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
         }
-    assert_equal 'name', user.reload.first_name
+    assert_equal 'name', user.reload.display_name
     assert_nil(user.default_profile_photo.content_identifier)
   end
 
@@ -481,7 +459,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       put resource_iri(user, root: argu),
           params: {
             user: {
-              first_name: 'name',
+              display_name: 'name',
               home_placement_attributes: {
                 postal_code: '3583GP',
                 country_code: 'NL'
@@ -502,7 +480,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       put resource_iri(user, root: argu),
           params: {
             user: {
-              first_name: 'name',
+              display_name: 'name',
               home_placement_attributes: {
                 postal_code: '',
                 country_code: 'NL'
@@ -522,7 +500,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       put resource_iri(user, root: argu),
           params: {
             user: {
-              first_name: 'name',
+              display_name: 'name',
               home_placement_attributes: {
                 postal_code: '3583GP',
                 country_code: ''
@@ -542,7 +520,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       put resource_iri(user, root: argu),
           params: {
             user: {
-              first_name: 'name',
+              display_name: 'name',
               home_placement_attributes: {
                 postal_code: 'wrong_postal_code',
                 country_code: 'NL'
@@ -562,7 +540,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       put resource_iri(user, root: argu),
           params: {
             user: {
-              first_name: 'name',
+              display_name: 'name',
               home_placement_attributes: {
                 postal_code: '3583GP',
                 country_code: 'NL'
@@ -585,7 +563,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       put resource_iri(user, root: argu),
           params: {
             user: {
-              first_name: 'name',
+              display_name: 'name',
               home_placement_attributes: {
                 id: placement.id,
                 postal_code: '',

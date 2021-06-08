@@ -18,10 +18,6 @@ class ProfileTest < ActiveSupport::TestCase
     assert_equal shortname, subject.url
   end
 
-  test 'display_name valid' do
-    assert_equal "#{subject.profileable.first_name} #{subject.profileable.last_name}", subject.display_name
-  end
-
   test 'granted_edges' do
     capetown
 

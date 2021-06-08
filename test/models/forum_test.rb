@@ -33,12 +33,4 @@ class ForumTest < ActiveSupport::TestCase
   test 'description should work' do
     assert_equal subject.description, subject.bio
   end
-
-  test 'enforce hide last_name for youngbelegen' do
-    assert_equal user.hide_last_name, false
-    create(:motion, publisher: user, parent: cairo)
-    assert_equal user.reload.hide_last_name, false
-    create(:motion, publisher: user, parent: youngbelegen)
-    assert_equal user.reload.hide_last_name, true
-  end
 end
