@@ -121,8 +121,7 @@ nl:
         submit: "Opslaan"
       setup:
         label: "Welkom!"
-        description: "Stel in hoe je zichtbaar bent voor anderen. De meesten mensen gebruiken hun echte voor- en achternaam. Je kunt deze altijd nog wijzigen, maar je gebruikersnaam staat vast."
-        submit: "Opslaan"
+        submit: "Doorgaan"
       authentication:
         label: "Authenticatie"
         submit: "Opslaan"
@@ -135,8 +134,7 @@ nl:
     setups:
       update:
         label: "Welkom!"
-        description: "Stel in hoe je zichtbaar bent voor anderen. De meesten mensen gebruiken hun echte voor- en achternaam. Je kunt deze altijd nog wijzigen, maar je gebruikersnaam staat vast."
-        submit: "Opslaan"
+        submit: "Doorgaan"
     pages:
       create:
         label: "Nieuwe website"

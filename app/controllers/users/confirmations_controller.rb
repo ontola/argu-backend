@@ -18,12 +18,6 @@ module Users
       end
     end
 
-    def after_sign_in_path_for(resource)
-      return super if setup_finished?
-
-      iri_from_template(:setup_iri)
-    end
-
     def correct_mail
       current_user.guest? ? true : resource_params[:email] == current_user.email
     end

@@ -4,16 +4,16 @@ module Users
   class Confirmation < LinkedRails::Auth::Confirmation
     include UriTemplateHelper
 
+    attr_accessor :email
+
+    delegate :confirm!, :confirmed?, to: :email!
+
     def confirm!
-      return false unless email&.confirm
-
-      set_reset_password_token if reset_password?
-
-      true
+      email!.confirm
     end
 
-    def confirmed?
-      email&.confirmed?
+    def email!
+      email || raise(ActiveRecord::RecordNotFound)
     end
 
     class << self

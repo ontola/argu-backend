@@ -22,12 +22,19 @@ class UserActionList < ApplicationActionList
   has_action(
     :destroy,
     confirmed_destroy_options.merge(
-      description: -> { I18n.t('actions.users.destroy.description', name: resource.url || resource.generated_name) },
+      description: -> { I18n.t('actions.users.destroy.description', name: resource.display_name) },
       form: Users::DestroyForm
     )
   )
 
-  has_action(
+  has_singular_destroy_action(
+    confirmed_destroy_options(
+      description: -> { I18n.t('actions.users.destroy.description', name: resource.display_name) },
+      form: Users::DestroyForm
+    )
+  )
+
+  has_resource_action(
     :profile,
     update_options.merge(
       label: -> { I18n.t('profiles.edit.title') },
@@ -36,14 +43,14 @@ class UserActionList < ApplicationActionList
     )
   )
 
-  has_action(
+  has_singular_action(
     :setup,
     type: NS::SCHEMA[:UpdateAction],
     policy: :update?,
     image: 'fa-update',
-    url: -> { iri_from_template(:setup_iri) },
+    url: -> { resource.iri },
     http_method: :put,
-    form: SetupForm,
+    form: Users::SetupForm,
     root_relative_iri: -> { expand_uri_template(:setup_iri) }
   )
 

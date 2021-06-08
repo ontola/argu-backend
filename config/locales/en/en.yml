@@ -22,7 +22,6 @@ en:
   sign_up: "Sign up"
   sign_up_description: "Sign up with a free account:"
   argu_sign_up: "Create Argu account"
-  cant_change_username: "You can't change your username after signing up."
   sign_up_argu: "Create Argu account"
   sign_up_email: "Sign up with email"
   sign_out: "Sign out"

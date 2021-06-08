@@ -80,4 +80,10 @@ nl:
       is_public:
         description: "Als je dit uitzet, verandert je naam voor niet-leden in \"Anoniem\". Door dit uit te zetten voorkom je dat je in zoekmachines terecht komt. Geregistreerde leden kunnen altijd je profiel en naam bekijken."
       display_name:
+        description: ""
         label: "Naam"
+    properties:
+      url:
+        helper_text: "Je kunt jouw gebruikersnaam later niet meer wijzigen."
+      display_name:
+        helper_text: "Stel in hoe je zichtbaar bent voor anderen. De meesten mensen gebruiken hun echte naam."

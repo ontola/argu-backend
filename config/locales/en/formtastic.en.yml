@@ -167,6 +167,7 @@ en:
       blog:
         bio: "Summarize in one sentence what function the blog has. This text will appear under the name of the forum. There's a maximum of 80 characters."
       user:
+        display_name: ""
         shortname: "No spaces. Only letters, numbers and _. Start with a letter."
         has_analytics: "We use Bugsnag to get notified of and help fix errors in your browser. We use Matomo to analyze how the website is used, so we can improve the user experience."
       shortname:
@@ -217,6 +218,7 @@ en:
         display_name: "Enter the core of your challenge here"
         title: "Enter the core of your challenge here"
       user:
+        display_name: ""
         email: "email@example.com"
       group:
         name: "e.g. 'Civilians'"

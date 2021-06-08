@@ -8,10 +8,8 @@ module Users
       iri_from_template(:user_sign_in).path
     end
 
-    def after_resetting_password_path_for(resource)
-      return iri_from_template(:user_sign_in).path if current_user.guest? || resource.setup_finished?
-
-      iri_from_template(:setup_iri)
+    def after_resetting_password_path_for(_resource)
+      iri_from_template(:user_sign_in).path
     end
 
     def assert_reset_token_passed

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserSerializer < RecordSerializer # rubocop:disable Metrics/ClassLength
+class UserSerializer < RecordSerializer
   extend LanguageHelper
   extend UriTemplateHelper
 
@@ -16,11 +16,13 @@ class UserSerializer < RecordSerializer # rubocop:disable Metrics/ClassLength
     RDF::URI("#{ActsAsTenant.current_tenant.iri}/grant_sets") if ActsAsTenant.current_tenant
   end
   attribute :accept_terms, predicate: NS::ARGU[:acceptTerms], datatype: NS::XSD[:boolean]
+  attribute :accepted_terms, predicate: NS::ARGU[:acceptedTerms], datatype: NS::XSD[:boolean]
   attribute :name_with_fallback, predicate: NS::SCHEMA[:name] do |object|
     object.display_name || object.generated_name
   end
   attribute :display_name, predicate: NS::ARGU[:name]
   attribute :about, predicate: NS::SCHEMA[:description]
+  attribute :finished_intro, predicate: NS::ARGU[:introFinished]
   attribute :url,
             predicate: NS::ARGU[:shortname],
             datatype: NS::XSD[:string],

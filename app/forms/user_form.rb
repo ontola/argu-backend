@@ -9,7 +9,6 @@ class UserForm < ApplicationForm
   end
 
   group :authentication_section, label: -> { I18n.t('actions.users.authentication.label') } do
-    field :url
     field :password
     field :current_password
     resource :add_two_fa,

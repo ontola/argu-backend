@@ -11,7 +11,7 @@ module Users
              }
     hidden do
       field :redirect_url
-      field :accept_terms
+      field :accept_terms, default_value: true
     end
   end
 end

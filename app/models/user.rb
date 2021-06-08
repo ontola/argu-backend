@@ -10,6 +10,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Menuable
+  enhance LinkedRails::Enhancements::Singularable
+  enhance Feedable
+  enhance Grantable
 
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable, primary_key: :uuid
   enhance ProfilePhotoable
@@ -77,7 +80,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   FAILED_LOGIN_ATTRS = %w[current_sign_in_at last_sign_in_at sign_in_count updated_at].freeze
 
   before_save :adjust_birthday, if: :birthday_changed?
-  before_create :skip_confirmation_notification!
   before_create :build_public_group_membership
   validates :about, length: {maximum: 3000}
   before_save :sanitize_redirect_url
@@ -123,10 +125,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def accept_terms
-    true if new_record?
-  end
-
   def accept_terms=(val)
     return unless val.to_s == 'true'
 
@@ -137,6 +135,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def accepted_terms?
     last_accepted.present?
   end
+  alias accept_terms accepted_terms?
 
   def active_for_authentication?
     true
@@ -176,16 +175,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       permanent: true,
       root_id: root_id,
       send_mail_after: 24.hours.from_now
-    )
-  end
-
-  def create_finish_intro_notification
-    return if setup_finished? || notifications.finish_intro.any?
-
-    Notification.finish_intro.create(
-      user: self,
-      url: Rails.application.routes.url_helpers.setup_users_path,
-      permanent: true
     )
   end
 
@@ -374,10 +363,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     id == User::SERVICE_ID
   end
 
-  def setup_finished?
-    display_name != generated_name
-  end
-
   private
 
   def adjust_birthday
@@ -459,9 +444,30 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       ]
     end
 
+    def requested_single_resource(params, user_context)
+      resource = super
+
+      show_anonymous_user = user_context.guest? && resource.present? && !resource.is_public?
+      return AnonymousUser.new(url: params[:id]) if show_anonymous_user
+
+      resource
+    end
+
+    def requested_singular_resource(_params, user_context)
+      user_context.user
+    end
+
+    def route_key
+      :u
+    end
+
     def serialize_from_session(key, salt)
       record = to_adapter.get(key[0].to_param)
       record if record && record.authenticatable_salt == salt
+    end
+
+    def singular_route_key
+      :user
     end
 
     def iri

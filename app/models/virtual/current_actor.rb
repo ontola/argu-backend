@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CurrentActor < VirtualResource
+  include LinkedRails::Helpers::OntolaActionsHelper
+
   attr_accessor :profile, :user
 
   delegate :display_name, to: :profile, allow_nil: true
@@ -19,6 +21,12 @@ class CurrentActor < VirtualResource
     else
       'GuestUser'
     end
+  end
+
+  def mount_action
+    return if user.guest? || user.finished_intro
+
+    ontola_dialog_action(LinkedRails.iri(path: expand_uri_template(:setup_iri)))
   end
 
   def primary_email

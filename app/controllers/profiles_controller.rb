@@ -3,15 +3,6 @@
 class ProfilesController < AuthorizedController
   active_response :show
 
-  # GET /profiles/setup
-  def setup
-    active_response_block do
-      @authenticated_resource = user_or_redirect
-      @profile = @authenticated_resource.profile
-      respond_with_redirect location: redirect_url || @authenticated_resource.iri.path
-    end
-  end
-
   private
 
   def authenticated_resource
@@ -31,13 +22,6 @@ class ProfilesController < AuthorizedController
     redirect_url = authenticated_resource.redirect_url
     authenticated_resource.update redirect_url: ''
     redirect_url
-  end
-
-  def setup_permit_params
-    pp = params.require(:user).permit(*policy(authenticated_resource || User).permitted_attributes).to_h
-    merge_photo_params(pp)
-    merge_placement_params(pp, User)
-    pp
   end
 
   def user_or_redirect(redirect = nil)

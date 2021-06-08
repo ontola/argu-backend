@@ -17,7 +17,6 @@ en:
       confirm_account:
         one: "Please confirm your vote by clicking the link we've sent to %{email}"
         other: "Please confirm your %{count} votes by clicking the link we've sent to %{email}"
-      finish_intro: "Finish your profile to be more recognizable."
     unsubscribe:
       success: "You no longer receive notifications for '%{item}'."
       failed: "You don't receive notifications already for '%{item}'."

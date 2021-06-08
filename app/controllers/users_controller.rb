@@ -1,16 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < AuthorizedController
-  include VotesHelper
-  include UrlHelper
+  skip_before_action :verify_setup
 
   private
-
-  def authorized_current_user
-    return current_resource_owner unless current_resource_owner&.guest?
-
-    raise Argu::Errors::Unauthorized.new
-  end
 
   def changes_triples
     super + [
@@ -20,22 +13,6 @@ class UsersController < AuthorizedController
 
   def current_user?
     current_resource == current_user
-  end
-
-  def delete_meta
-    return [] unless current_user?
-
-    [
-      RDF::Statement.new(delete_iri('users'), NS::OWL.sameAs, delete_iri(current_resource))
-    ]
-  end
-
-  def delete_success
-    respond_with_resource(
-      include: action_form_includes,
-      resource: current_resource.action(:destroy, user_context),
-      meta: delete_meta
-    )
   end
 
   def destroy_execute
@@ -50,22 +27,6 @@ class UsersController < AuthorizedController
     end
 
     super
-  end
-
-  def requested_resource
-    @requested_resource ||=
-      case action_name
-      when 'show', 'delete', 'destroy'
-        user = params[:id] ? User.preload(:profile).find_via_shortname_or_id(params[:id]) : current_resource_owner
-        show_anonymous_user?(user) ? AnonymousUser.new(url: params[:id]) : user
-      else
-        authorized_current_user
-      end
-  end
-
-  def show_anonymous_user?(user)
-    (current_resource_owner.nil? || current_resource_owner.guest?) &&
-      user.present? && !user.is_public?
   end
 
   def email_changed? # rubocop:disable Metrics/AbcSize

@@ -20,13 +20,7 @@ module Users
     end
 
     def create_success_location
-      if current_resource.redirect_url
-        current_resource.redirect_url
-      elsif current_resource.url
-        edit_user_url(current_resource.url)
-      else
-        iri_from_template(:setup_iri).path
-      end
+      current_resource.redirect_url || edit_iri(current_resource)
     end
 
     def new_resource

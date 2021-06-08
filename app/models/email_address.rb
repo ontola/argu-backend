@@ -49,7 +49,6 @@ class EmailAddress < ApplicationRecord
 
   def confirm
     user.notifications.confirmation_reminder.destroy_all
-    user.create_finish_intro_notification
     super
   end
 

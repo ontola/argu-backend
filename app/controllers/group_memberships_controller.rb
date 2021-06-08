@@ -2,6 +2,7 @@
 
 class GroupMembershipsController < ServiceController
   skip_before_action :verify_terms_accepted
+  skip_before_action :verify_setup
 
   private
 
@@ -53,8 +54,4 @@ class GroupMembershipsController < ServiceController
     authenticated_resource!.page.iri
   end
   alias destroy_success_location redirect_location
-
-  def requires_setup?
-    false
-  end
 end

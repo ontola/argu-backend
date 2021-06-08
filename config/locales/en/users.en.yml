@@ -80,4 +80,10 @@ en:
       is_public:
         description: "By enabling this option, your name will be replace with \"Anonymous\" for guest users. This way your name will not be indexed by search engines. Registered users are always allowed to view your profile and name."
       display_name:
+        description: ""
         label: "Name"
+    properties:
+      url:
+        helper_text: "You can't change your username after setting it."
+      display_name:
+        helper_text: "Set how you will be visible to others. Most people use their real name."

@@ -4,7 +4,7 @@ module UsersHelper
   include UriTemplateHelper
 
   def accept_terms_param
-    params[:accept_terms].to_s == 'true'
+    (params[:accept_terms] || params[permit_param_key].try(:[], :accept_terms)).to_s == 'true'
   end
 
   def r_param

@@ -44,7 +44,6 @@ class Shortname < ApplicationRecord
               message: I18n.t('profiles.should_start_with_capital')
             }
 
-  after_create :destroy_finish_intro_notification
   attr_reader :destination
 
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i.freeze
@@ -87,10 +86,6 @@ class Shortname < ApplicationRecord
 
   def base_url
     root_id.present? ? root.iri : RDF::DynamicURI(Rails.application.config.origin)
-  end
-
-  def destroy_finish_intro_notification
-    owner.notifications.finish_intro.destroy_all if owner.is_a?(User)
   end
 
   def remove_primary_shortname

@@ -9,9 +9,10 @@ class UserPolicy < RestrictivePolicy
   include ChildOperations
 
   permit_nested_attributes %i[home_placement email_addresses]
-  permit_attributes %i[accept_terms password password_confirmation current_password time_zone language]
-  permit_attributes %i[display_name about show_feed is_public]
+  permit_attributes %i[password password_confirmation current_password time_zone language]
+  permit_attributes %i[display_name about show_feed is_public finished_intro]
   permit_attributes %i[reactions_email news_email decisions_email memberships_email created_email has_analytics]
+  permit_attributes %i[accept_terms], has_values: {accepted_terms: false}
   permit_attributes %i[url], has_properties: {url: false}
   permit_attributes %i[email redirect_url], new_record: true
   permit_attributes %i[destroy_strategy], grant_sets: %i[staff]
@@ -55,10 +56,6 @@ class UserPolicy < RestrictivePolicy
     current_user? || super
   end
   alias language? update?
-
-  def setup?
-    current_user? && !user.setup_finished?
-  end
 
   def destroy?
     if record.profile.grants.administrator.count.positive?

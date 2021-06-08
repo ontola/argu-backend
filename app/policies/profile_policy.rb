@@ -20,11 +20,9 @@ class ProfilePolicy < RestrictivePolicy
     Pundit.policy(context, record.profileable).update? || super
   end
 
-  def feed?
-    record.profileable.show_feed? || Pundit.policy(context, record.profileable).update?
-  end
+  private
 
-  def setup?
-    update?
+  def profileable_policy
+    @profileable_policy ||= Pundit.policy(context, record.profileable)
   end
 end

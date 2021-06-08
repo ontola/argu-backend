@@ -172,7 +172,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
           }
     end
     assert_response :success
-    assert_equal response.header['Location'], iri_from_template(:user_sign_in, root: argu).path
+    assert_equal response.header['Location'], '/argu/u/session/new'
     assert_not User.last.encrypted_password == ''
     assert_email_sent(skip_sidekiq: true)
   end
@@ -205,7 +205,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       end
     end
     assert_response :success
-    assert_equal response.header['Location'], iri_from_template(:setup_iri, root: argu).path
+    assert_equal response.header['Location'], edit_iri(User.last, root: argu)
     assert_email_sent(skip_sidekiq: true)
 
     create_email_mock('confirmation_reminder', attrs[:email], token_url: /.+/)
@@ -522,7 +522,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
            }
       assert_response :success
-      assert_equal response.header['Location'], redirect_url || iri_from_template(:setup_iri, root: argu).path
+      assert_equal response.header['Location'], redirect_url || edit_iri(User.last, root: argu)
     end
 
     assert_equal 'test@example.com', User.last.email

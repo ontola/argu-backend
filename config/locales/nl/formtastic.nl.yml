@@ -168,6 +168,7 @@ nl:
         bio: "Zet in één zin neer waar het blog voor dient. Deze tekst verschijnt onder de naam van het blog. Maximaal 80 karakters."
         bio_long: "Hier kan je verder toelichten over het blog. Je kunt hier markdown gebruiken."
       user:
+        display_name: ""
         shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
         has_analytics: "We gebruiken Bugsnag om fouten in je browser te detecteren en op te lossen. We gebruiken Matomo om geanonimiseerd op te slaan hoe de website wordt gebruikt, zodat we hem sneller kunnen verbeteren."
       shortname:
@@ -218,6 +219,7 @@ nl:
         display_name: "Plaats hier de kern van jouw uitdaging"
         title: "Plaats hier de kern van jouw uitdaging"
       user:
+        display_name: ""
         email: "email@example.com"
       group:
         name: "bv Burgers"

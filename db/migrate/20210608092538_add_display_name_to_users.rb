@@ -13,5 +13,6 @@ class AddDisplayNameToUsers < ActiveRecord::Migration[6.0]
       'AND shortnames.owner_id = users.uuid '\
       'AND users.display_name IS NULL'
     )
+    User.where('display_name IS NOT NULL').update_all(finished_intro: true)
   end
 end

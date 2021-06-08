@@ -110,7 +110,7 @@ class AuthorizedController < ApplicationController
   end
 
   def setup_finished?
-    current_user.setup_finished?
+    current_user.finished_intro?
   end
 
   def verify_setup
