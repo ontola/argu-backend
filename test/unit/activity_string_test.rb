@@ -131,9 +131,10 @@ class ActivityStringTest < ActiveSupport::TestCase
 
   test 'string for forwarded decision to you' do
     forwarded_activity = forwarded_decision.activities.second
-    assert_equal "#{forwarded_decision.publisher.display_name} "\
-                 "forwarded the decision on #{motion.display_name} to you",
-                 Argu::ActivityString.new(forwarded_activity, motion.reload.assigned_user, render: :display_name).to_s
+    assert_equal(
+      "#{forwarded_decision.publisher.display_name} forwarded the decision on #{motion.display_name} to you",
+      Argu::ActivityString.new(forwarded_activity, forwarded_decision.forwarded_user, render: :display_name).to_s
+    )
   end
 
   test 'string for updated decision' do

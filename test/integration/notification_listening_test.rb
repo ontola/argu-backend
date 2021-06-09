@@ -211,54 +211,6 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'staff should forward to other with notification' do
-    sign_in staff
-    motion
-    group_membership
-
-    assert_difference('Decision.count' => 1, 'Notification.count' => 0) do
-      post collection_iri(motion, :decisions),
-           params: {
-             decision: attributes_for(:decision,
-                                      state: 'forwarded',
-                                      forwarded_user_id: user.id,
-                                      forwarded_group_id: group.id,
-                                      content: 'Content')
-           }
-    end
-    # Notification for creator and follower of Motion and forwarded_to_user
-    assert_notifications(3, 'reaction')
-  end
-
-  test 'staff should forward to self and approve with notifications' do
-    sign_in staff
-    motion
-    create(:group_membership, parent: group, member: staff.profile)
-    assert_difference('Decision.count' => 1, 'Notification.count' => 0) do
-      post collection_iri(motion, :decisions),
-           params: {
-             decision: attributes_for(:decision,
-                                      state: 'forwarded',
-                                      forwarded_user_id: staff.id,
-                                      forwarded_group_id: group.id,
-                                      content: 'Content')
-           }
-    end
-    # Notification for creator and follower of Motion
-    assert_notifications(2, 'reaction')
-
-    assert_difference('Decision.count' => 1, 'Notification.count' => 0) do
-      post collection_iri(motion, :decisions),
-           params: {
-             decision: attributes_for(:decision,
-                                      state: 'approved',
-                                      content: 'Content')
-           }
-    end
-    # Notification for creator, follower and news_follower of Motion
-    assert_notifications(3, 'news')
-  end
-
   private
 
   def create_notification_count

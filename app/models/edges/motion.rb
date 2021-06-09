@@ -4,7 +4,6 @@ class Motion < Discussion
   include ActionView::Helpers::NumberHelper
 
   enhance Argumentable
-  enhance Decisionable
   enhance VoteEventable
 
   include Edgeable::Content
