@@ -15,26 +15,27 @@ class InterventionType < Edge
     NS::SCHEMA[:name],
     NS::ARGU[:interventionsCount]
   ]
+
+  property :one_off_costs_score, :integer, NS::RIVM[:oneOffCostsScore], default: 0
+  property :recurring_costs_score, :integer, NS::RIVM[:recurringCostsScore], default: 0
+  property :security_improved_score, :integer, NS::RIVM[:securityImprovedScore], default: 0
+
   self.default_sortings = [{key: NS::ARGU[:interventionsCount], direction: :desc}]
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
 
-  def one_off_costs_score
-    average_score(NS::RIVM[:oneOffCosts])
-  end
-
-  def recurring_costs_score
-    average_score(NS::RIVM[:recurringCosts])
-  end
-
-  def security_improved_score
-    average_score(NS::RIVM[:securityImproved])
+  def sync_scores
+    update(
+      one_off_costs_score: average_score(NS::RIVM[:oneOffCosts]),
+      recurring_costs_score: average_score(NS::RIVM[:recurringCosts]),
+      security_improved_score: average_score(NS::RIVM[:securityImproved])
+    )
   end
 
   private
 
   def average_score(predicate)
-    descendants.active.joins(:properties).where(properties: {predicate: predicate.to_s}).average(:integer).to_f
+    descendants.active.joins(:properties).where(properties: {predicate: predicate.to_s}).average(:integer).to_f * 100
   end
 
   class << self

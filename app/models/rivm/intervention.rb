@@ -97,9 +97,8 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   # rubocop:enable Rails/Validation
   validate :validate_parent_type
   before_save :sync_comments_allowed
-  def initialize(*args)
-    super
-  end
+  after_commit :sync_scores
+  delegate :sync_scores, to: :parent
 
   def effects
     %i[plans_and_procedure people_and_resources competence communication

@@ -63,12 +63,14 @@ class InterventionsTest < ActionDispatch::IntegrationTest
   test 'initiator should post create intervention' do
     sign_in initiator
 
+    assert_equal intervention_type.one_off_costs_score, 0
     general_create(
       results: {should: true, response: :created},
       parent: :argu,
       attributes: intervention_attributes,
       differences: [['Intervention', 1], ['Intervention.published', 1], ['Activity', 2]]
     )
+    assert_equal intervention_type.reload.one_off_costs_score, 300
   end
 
   private
