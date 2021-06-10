@@ -89,6 +89,14 @@ class EdgeTreePolicy < RestrictivePolicy
     @grant_tree ||= context.grant_tree_for(edgeable_record)
   end
 
+  def granted_group_ids(action)
+    edgeable_policy.try(:granted_group_ids, action) if record.try(:edgeable_record)
+  end
+
+  def public_resource?
+    granted_group_ids(:show).include?(Group::PUBLIC_ID)
+  end
+
   private
 
   def edgeable_policy

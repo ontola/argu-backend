@@ -224,6 +224,14 @@ module Argu
           File.open("test/files/#{filename}")
         end
 
+        def reindex_tree(page = argu)
+          Thread.current[:mock_searchkick] = false
+          ActsAsTenant.with_tenant(page) do
+            Edge.reindex_with_tenant(async: false)
+          end
+          Thread.current[:mock_searchkick] = true
+        end
+
         def reset_tenant
           ActsAsTenant.current_tenant = nil
         end

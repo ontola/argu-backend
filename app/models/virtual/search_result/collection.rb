@@ -14,6 +14,10 @@ class SearchResult
       @association_base ||= Query.new(self)
     end
 
+    def cacheable?
+      q.blank?
+    end
+
     def filter_options
       Hash[aggs.map(&method(:filter_option_for_aggregate)).compact] if aggs
     end

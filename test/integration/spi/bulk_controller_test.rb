@@ -49,6 +49,16 @@ module SPI
                    responses: bulk_responses_demogemeente)
     end
 
+    test 'guest should post bulk request public resources' do
+      sign_in guest_user
+      reindex_tree
+
+      bulk_request(
+        resources: public_resources,
+        responses: public_responses
+      )
+    end
+
     ####################################
     # As User
     ####################################
@@ -102,7 +112,9 @@ module SPI
         {include: false, iri: hidden_vote2.iri},
         {include: false, iri: 'https://example.com'},
         {include: true, iri: "#{argu.iri}/wrong_iri"},
-        {include: true, iri: "#{argu.iri}/cable"}
+        {include: true, iri: "#{argu.iri}/cable"},
+        {include: true, iri: resource_iri(motion1.activities.last, root: argu)},
+        {include: true, iri: resource_iri(holland_motion1.activities.last, root: argu)}
       ]
     end
 
@@ -126,7 +138,9 @@ module SPI
         hidden_vote2.iri => {cache: 'private', status: 403, include: false},
         'https://example.com' => {cache: 'private', status: 404, include: false},
         "#{argu.iri}/wrong_iri" => {cache: 'private', status: 404, include: true},
-        "#{argu.iri}/cable" => {cache: 'private', status: 404, include: true}
+        "#{argu.iri}/cable" => {cache: 'private', status: 404, include: true},
+        resource_iri(motion1.activities.last, root: argu) => {cache: 'public', status: 200, include: true},
+        resource_iri(holland_motion1.activities.last, root: argu) => {cache: 'no-cache', status: 200, include: true}
       }.merge(opts)
     end
 
@@ -156,6 +170,8 @@ module SPI
 
       responses.each do |iri, expectation|
         resource = response.detect { |r| r[:iri] == iri }
+        raise("No expected response available for #{resource}") if resource.blank?
+
         assert_equal iri.to_s, resource[:iri]
         assert_equal expectation[:status], resource[:status], "#{iri} should be #{expectation[:status]}"
         assert_equal expectation[:cache], resource[:cache], "#{iri} should be #{expectation[:cache]}"
@@ -178,11 +194,30 @@ module SPI
       "http://#{demogemeente.iri_prefix}/c_a"
     end
 
+    def public_resources
+      [
+        {include: true, iri: "#{argu.iri}/search"},
+        {include: true, iri: "#{argu.iri}/search?q=1"},
+        {include: true, iri: "#{argu.iri}/ns/core"},
+        {include: true, iri: resource_iri(MotionForm.new, root: argu)}
+      ]
+    end
+
+    def public_responses(opts = {})
+      {
+        "#{argu.iri}/search" => {cache: 'public', status: 200, include: true},
+        "#{argu.iri}/search?q=1" => {cache: 'private', status: 200, include: true},
+        "#{argu.iri}/ns/core" => {cache: 'public', status: 200, include: true},
+        resource_iri(MotionForm.new, root: argu) => {cache: 'public', status: 200, include: true}
+      }.merge(opts)
+    end
+
     def user_responses(opts = {})
       bulk_responses(
         {
           holland_motion1.iri => {cache: 'private', status: 403, include: false},
-          holland_motion2.iri => {cache: 'private', status: 403, include: false}
+          holland_motion2.iri => {cache: 'private', status: 403, include: false},
+          resource_iri(holland_motion1.activities.last, root: argu) => {cache: 'private', status: 403, include: false}
         }.merge(opts)
       )
     end

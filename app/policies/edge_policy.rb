@@ -98,6 +98,10 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     false
   end
 
+  def public_resource?
+    granted_group_ids(:show).include?(Group::PUBLIC_ID)
+  end
+
   def shift?
     move?
   end

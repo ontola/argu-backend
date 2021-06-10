@@ -15,6 +15,7 @@ class Activity < PublicActivity::Activity
   }.freeze
 
   include LinkedRails::Model
+  include Cacheable
   has_many :notifications, dependent: :destroy
   # The creator of the activity
   # @example Create action
