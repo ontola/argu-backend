@@ -74,7 +74,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :matomo_site_id, :string, NS::ONTOLA[:matomoSiteId]
   property :matomo_host, :string, NS::ONTOLA[:matomoHost]
   property :allowed_external_sources, :string, NS::ONTOLA[:allowedExternalSources], array: true
-  property :enable_white_label, :boolean, NS::ONTOLA[:enableWhiteLabel]
+  property :hide_language_switcher, :boolean, NS::ONTOLA[:hideLanguageSwitcher]
   property :styled_headers, :boolean, NS::ONTOLA[:styledHeaders]
   property :live_updates, :boolean, NS::ONTOLA[:liveUpdates], default: false
 

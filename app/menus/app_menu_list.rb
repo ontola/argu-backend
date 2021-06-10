@@ -38,13 +38,12 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   end
 
   def info_menu_items
-    [
-      *custom_menu_items(:info, ActsAsTenant.current_tenant),
-      powered_by_link
-    ]
+    custom_menu_items(:info, ActsAsTenant.current_tenant)
   end
 
   def language_menu_item
+    return if ActsAsTenant.current_tenant.hide_language_switcher?
+
     menu_item(
       :language,
       label: I18n.t('set_language'),
@@ -94,12 +93,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
         path_with_hostname(expand_uri_template(:new_container_node_iri, title: I18n.t('container_nodes.type_new')))
       )
     )
-  end
-
-  def powered_by_link
-    return if ActsAsTenant.current_tenant.enable_white_label?
-
-    menu_item(:powered_by, label: I18n.t('about.powered_by'), href: RDF::URI('https://ontola.io/nl/webdevelopment'))
   end
 
   def public_pages
