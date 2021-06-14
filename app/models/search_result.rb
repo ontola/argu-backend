@@ -106,6 +106,10 @@ class SearchResult < Collection
     def iri
       NS::ONTOLA[:SearchResult]
     end
+
+    def iri_template_keys
+      @iri_template_keys ||= super + %i[match q]
+    end
   end
 
   class Result
@@ -118,10 +122,6 @@ class SearchResult < Collection
 
     def initialize(collection)
       self.collection = collection
-    end
-
-    def iri_template_keys
-      @iri_template_keys ||= super + %i[match q]
     end
 
     def each(&block)
