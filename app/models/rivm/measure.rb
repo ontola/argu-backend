@@ -33,6 +33,14 @@ class Measure < Edge
   property :measure_owner, :string, NS::RIVM[:measureOwner]
   property :contact_info, :string, NS::RIVM[:contactInfo]
   property :more_info, :string, NS::RIVM[:moreInfo]
+  filterable(
+    NS::RIVM[:categories] => {
+      filter: lambda do |scope, values|
+        scope.where(category_ids: values.map { |value| LinkedRails.iri_mapper.resource_from_iri(value).uuid })
+      end,
+      values_in: -> { Vocabulary.new(url: :categorieen).term_collection.iri }
+    }
+  )
 
   private
 
