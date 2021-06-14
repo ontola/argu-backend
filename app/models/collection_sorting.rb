@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class CollectionSorting < LinkedRails::Collection::Sorting
-  include LinkedRails::Model
-
-  def iri(_opts = {})
-    self
-  end
-
   def sort_value
     return super unless children_count_sorting?
 

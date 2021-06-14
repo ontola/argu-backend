@@ -20,18 +20,14 @@ class Discussion < Edge
 
   parentable :container_node, :page
   filterable(
-    NS::ARGU[:pinned] => {
-      filter: lambda { |scope, value|
-        value ? scope.where.not(pinned_at: nil) : scope.where(pinned_at: nil)
-      },
-      values: [true, false]
-    },
-    NS::ARGU[:trashed] => {
-      filter: lambda { |scope, value|
-        value ? scope.where.not(trashed_at: nil) : scope.where(trashed_at: nil)
-      },
-      values: [true, false]
-    }
+    NS::ARGU[:pinned] => boolean_filter(
+      ->(scope) { scope.where.not(pinned_at: nil) },
+      ->(scope) { scope.where(pinned_at: nil) }
+    ),
+    NS::ARGU[:trashed] => boolean_filter(
+      ->(scope) { scope.where.not(trashed_at: nil) },
+      ->(scope) { scope.where(trashed_at: nil) }
+    )
   )
   paginates_per 12
   placeable :custom

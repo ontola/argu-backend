@@ -86,6 +86,7 @@ en:
   delete_type: "Delete %{type}"
   untrash_type: "Untrash %{type}"
   trashed: "Hidden"
+  is_draft: "Draft"
   reply: "Reply"
   reply_count: "Reply (%{comment_count})"
   report: "Report"

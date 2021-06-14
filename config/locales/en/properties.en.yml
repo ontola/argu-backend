@@ -4,6 +4,8 @@ en:
       label: "Title"
     is_trashed:
       label: "Trashed"
+    is_draft:
+      label: "Draft"
     pinned:
       label: "Pinned"
     trash_activity:
@@ -12,3 +14,5 @@ en:
       label: "Type"
     untrash_activity:
       label: "Explanation"
+    categories:
+      label: "Categories"

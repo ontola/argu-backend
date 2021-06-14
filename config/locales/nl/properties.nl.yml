@@ -4,6 +4,8 @@ nl:
       label: "Titel"
     is_trashed:
       label: "Verborgen"
+    is_draft:
+      label: "Concept"
     pinned:
       label: "Vastgezet"
     trash_activity:
@@ -12,3 +14,5 @@ nl:
       label: "Type"
     untrash_activity:
       label: "Toelichting"
+    categories:
+      label: "Categorieën"

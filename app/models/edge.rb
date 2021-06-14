@@ -27,16 +27,14 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_ltree_hierarchy
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
   filterable(
-    NS::ARGU[:trashed] => {
-      filter: lambda { |scope, value|
-        value ? scope.where.not(trashed_at: nil) : scope.where(trashed_at: nil)
-      },
-      values: [true, false]
-    },
-    NS::ARGU[:isDraft] => {
-      filter: ->(scope, value) { scope.where(is_published: !value) },
-      values: [true, false]
-    }
+    NS::ARGU[:trashed] => boolean_filter(
+      ->(scope) { scope.where.not(trashed_at: nil) },
+      ->(scope) { scope.where(trashed_at: nil) }
+    ),
+    NS::ARGU[:isDraft] => boolean_filter(
+      ->(scope) { scope.where(is_published: false) },
+      ->(scope) { scope.where(is_published: true) }
+    )
   )
 
   belongs_to :parent,

@@ -86,6 +86,7 @@ nl:
   delete_type: "Verwijder %{type}"
   untrash_type: "%{type} terugplaatsen"
   trashed: "Verborgen"
+  is_draft: "Concept"
   reply: "Reageer"
   reply_count: "Reageer (%{comment_count})"
   report: "Rapporteer"
