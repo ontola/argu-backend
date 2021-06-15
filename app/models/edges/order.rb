@@ -44,13 +44,13 @@ class Order < Edge
     cart.cart_details.each(&:destroy)
   end
 
-  def coupon_badge
-    @coupon_badge ||= parent.coupon_badges.find_by(coupons: coupon)
+  def coupon_batch
+    @coupon_batch ||= parent.coupon_batches.find_by(coupons: coupon)
   end
 
   def invalidate_token
     Property.find_by!(
-      edge: coupon_badge,
+      edge: coupon_batch,
       predicate: NS::ARGU[:coupons].to_s,
       string: coupon
     ).update!(predicate: NS::ARGU[:usedCoupons].to_s)
@@ -61,7 +61,7 @@ class Order < Edge
   end
 
   def validate_coupon
-    return if coupon_badge.present?
+    return if coupon_batch.present?
 
     errors.add(:coupon, I18n.t('orders.errors.coupon.invalid'))
   end

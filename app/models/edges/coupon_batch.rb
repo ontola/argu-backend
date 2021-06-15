@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CouponBadge < Edge
+class CouponBatch < Edge
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Tableable
   parentable :budget_shop

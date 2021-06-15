@@ -15,7 +15,7 @@ class BudgetShopMenuList < ApplicationMenuList
   def action_menu_items # rubocop:disable Metrics/MethodLength
     [
       edit_link,
-      coupon_badges_links,
+      coupon_batch_links,
       orders_links,
       activity_link,
       search_link,
@@ -27,12 +27,12 @@ class BudgetShopMenuList < ApplicationMenuList
     ]
   end
 
-  def coupon_badges_links
+  def coupon_batch_links
     menu_item(
-      :coupon_badges,
+      :coupon_batches,
       image: 'fa-link',
-      label: I18n.t('coupon_badges.type'),
-      href: collection_iri(resource, :coupon_badges),
+      label: I18n.t('coupon_batches.type'),
+      href: collection_iri(resource, :coupon_batches),
       policy: :edit?
     )
   end

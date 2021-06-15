@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-module Couponable
+module CouponBatchable
   module Routing; end
 
   class << self
     def dependent_classes
-      [CouponBadge]
+      [CouponBatch]
     end
 
     def route_concerns(mapper)
-      mapper.concern :couponable do
-        mapper.resources :coupon_badges, only: %i[index new create]
+      mapper.concern :coupon_batchable do
+        mapper.resources :coupon_batches, only: %i[index new create]
       end
     end
   end

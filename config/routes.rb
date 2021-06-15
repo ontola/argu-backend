@@ -145,7 +145,7 @@ Rails.application.routes.draw do
   # @todo canonical urls of edges should redirect
   resources :edges, only: %i[show index] do
     %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
-       motions questions votes vote_events budget_shops offers orders coupon_badges].map do |edgeable|
+       motions questions votes vote_events budget_shops offers orders coupon_batches].map do |edgeable|
       resources edgeable, only: :index
     end
   end
@@ -215,7 +215,7 @@ Rails.application.routes.draw do
   resources :creative_works, only: %i[show new create] do
     include_route_concerns
   end
-  resources :coupon_badges, only: %i[show] do
+  resources :coupon_batches, only: %i[show] do
     include_route_concerns
   end
   resources :custom_actions, only: %i[show new create] do

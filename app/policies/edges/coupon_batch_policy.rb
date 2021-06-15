@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CouponBadgePolicy < EdgePolicy
+class CouponBatchPolicy < EdgePolicy
   permit_attributes %i[coupon_count display_name]
 
   class Scope < EdgeTreePolicy::Scope

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Couponable
+module CouponBatchable
   module Serializer
     extend ActiveSupport::Concern
 
     included do
-      with_collection :coupon_badges, predicate: NS::ARGU[:couponBadges]
+      with_collection :coupon_batches, predicate: NS::ARGU[:couponBatches]
     end
   end
 end
