@@ -188,6 +188,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     RDF::URI(expand_uri_template(:edges_iri, id: uuid))
   end
 
+  def activity_recipient
+    parent.is_a?(Phase) ? parent.parent : parent
+  end
+
   def canonical_iri
     ActsAsTenant.with_tenant(root || ActsAsTenant.current_tenant) { super }
   end

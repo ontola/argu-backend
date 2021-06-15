@@ -20,30 +20,30 @@ class ActivityListener
   %w[create destroy trash untrash update publish].each do |method|
     AUTO_GENERATED_LISTENER_CLASSES.each do |model|
       define_method "#{method}_#{model}_successful" do |resource|
-        create_activity(resource, resource.parent, method)
+        create_activity(resource, resource.activity_recipient, method)
       end
     end
 
     define_method "#{method}_decision_successful" do |resource|
       action = method == 'publish' ? resource.state : method
-      create_activity(resource, resource.parent, action)
+      create_activity(resource, resource.activity_recipient, action)
     end
   end
 
   def create_conversion_successful(resource)
     create_activity(
       resource.edge,
-      resource.edge.parent,
+      resource.edge.activity_recipient,
       :convert
     )
   end
 
   def create_vote_successful(resource)
     ActiveRecord::Base.transaction do
-      destroy_recent_similar_activities(resource, resource.parent, 'create')
+      destroy_recent_similar_activities(resource, resource.activity_recipient, 'create')
       create_activity(
         resource,
-        resource.parent,
+        resource.activity_recipient,
         :create,
         parameters: {option: resource.option}
       )
