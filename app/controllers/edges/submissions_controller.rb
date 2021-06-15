@@ -8,16 +8,4 @@ class SubmissionsController < EdgeableController
       session_id: session_id
     }
   end
-
-  def service_creator
-    return super unless current_user.guest?
-
-    Profile.community
-  end
-
-  def service_publisher
-    return super unless current_user.guest?
-
-    User.community
-  end
 end

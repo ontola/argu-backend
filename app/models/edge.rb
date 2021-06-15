@@ -403,7 +403,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def set_confirmed
-    self.confirmed = user.confirmed?
+    self.confirmed = user&.confirmed? || false
   end
 
   def set_root_id

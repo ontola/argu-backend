@@ -29,11 +29,6 @@ class Cart < VirtualResource
     super.merge(parent_iri: parent_iri_path)
   end
 
-  def submitted
-    @submitted ||= Order.where(publisher: user, parent: shop).any?
-  end
-  alias submitted? submitted
-
   def total_value
     @total_value ||= Money.new(cart_details_values.map { |value| Money.new(value, currency) }.sum, currency)
   end

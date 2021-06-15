@@ -10,4 +10,10 @@ class OrdersController < EdgeableController
   def redirect_location
     current_resource.parent.iri
   end
+
+  def resource_new_params
+    super.merge(
+      cart: parent_resource.cart_for(current_user)
+    )
+  end
 end

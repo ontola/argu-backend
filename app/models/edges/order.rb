@@ -9,10 +9,7 @@ class Order < Edge
   validates :coupon, presence: true
   validate :validate_coupon
   after_create :invalidate_token
-
-  def cart
-    @cart ||= parent.cart_for(publisher)
-  end
+  attr_accessor :cart
 
   def added_delta # rubocop:disable Metrics/AbcSize
     [

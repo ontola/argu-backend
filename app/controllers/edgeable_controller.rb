@@ -53,6 +53,10 @@ class EdgeableController < ServiceController
     includes + built_associations(action)
   end
 
+  def guest_creator?
+    current_user.guest? && !controller_class.include?(RedisResource::Concern)
+  end
+
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
@@ -71,9 +75,21 @@ class EdgeableController < ServiceController
     super.merge(owner_type: controller_name.classify)
   end
 
+  def service_creator
+    return super unless guest_creator?
+
+    Profile.community
+  end
+
   def service_klass
     "#{action_name.classify}#{controller_name.classify}".safe_constantize ||
       "#{action_name.classify}Edge".constantize
+  end
+
+  def service_publisher
+    return super unless guest_creator?
+
+    User.community
   end
 
   # Prepares a memoized {TrashService} for the relevant model for use in controller#trash
