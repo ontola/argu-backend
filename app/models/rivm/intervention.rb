@@ -145,9 +145,9 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
       [
         NS::SCHEMA[:name],
         NS::SCHEMA[:dateCreated],
-        NS::RIVM[:oneOffCostsScore],
-        NS::RIVM[:recurringCostsScore],
-        NS::RIVM[:securityImprovedScore]
+        NS::RIVM[:oneOffCosts],
+        NS::RIVM[:recurringCosts],
+        NS::RIVM[:securityImproved]
       ]
     end
   end
