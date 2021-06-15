@@ -53,7 +53,7 @@ class Order < Edge
       edge: coupon_batch,
       predicate: NS::ARGU[:coupons].to_s,
       string: coupon
-    ).update!(predicate: NS::ARGU[:usedCoupons].to_s)
+    ).update_column(:predicate, NS::ARGU[:usedCoupons].to_s)
   end
 
   def order_details_values
