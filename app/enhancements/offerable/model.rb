@@ -5,7 +5,7 @@ module Offerable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :order
+      with_collection :orders
       with_collection :offers
     end
   end

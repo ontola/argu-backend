@@ -13,7 +13,7 @@ module Offerable
         mapper.resource :cart, only: %i[show], path: :cart do
           mapper.resources :cart_details, only: %i[index new]
         end
-        mapper.resources :orders, only: %i[new create]
+        mapper.resources :orders, only: %i[index new create]
         mapper.resources :offers, only: %i[index new create]
       end
     end

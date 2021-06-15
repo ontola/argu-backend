@@ -75,6 +75,8 @@ PermittedAction.create_for_grant_sets('ProArgument', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('ConArgument', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('BlogPost', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('Comment', 'trash', moderator_plus)
+PermittedAction.create_for_grant_sets('Order', 'show', moderator_plus)
+PermittedAction.create_for_grant_sets('OrderDetail', 'show', moderator_plus)
 
 administrator_plus = GrantSet.reserved(only: %w[administrator staff])
 PermittedAction.create_for_grant_sets('CreativeWork', 'create', administrator_plus)

@@ -4,7 +4,7 @@ class OrderPolicy < EdgePolicy
   permit_attributes %i[coupon]
 
   def show?
-    new_record? || is_creator?
+    new_record? || is_creator? || super
   end
 
   def create?

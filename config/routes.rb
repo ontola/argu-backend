@@ -262,6 +262,10 @@ Rails.application.routes.draw do
   end
   resources :orders, only: %i[show] do
     include_route_concerns
+    resources :order_details, only: %i[index]
+  end
+  resources :order_details, only: %i[show] do
+    include_route_concerns
   end
   resources :placements, only: :show
   resources :publications, only: :show

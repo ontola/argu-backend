@@ -16,6 +16,7 @@ class BudgetShopMenuList < ApplicationMenuList
     [
       edit_link,
       coupon_badges_links,
+      orders_links,
       activity_link,
       search_link,
       new_update_link,
@@ -32,6 +33,16 @@ class BudgetShopMenuList < ApplicationMenuList
       image: 'fa-link',
       label: I18n.t('coupon_badges.type'),
       href: collection_iri(resource, :coupon_badges),
+      policy: :edit?
+    )
+  end
+
+  def orders_links
+    menu_item(
+      :orders_links,
+      image: 'fa-list-alt',
+      label: I18n.t('orders.plural'),
+      href: collection_iri(resource, :orders),
       policy: :edit?
     )
   end
