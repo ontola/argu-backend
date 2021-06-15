@@ -14,7 +14,6 @@ class Phase < Edge
   enhance Moveable
   enhance Placeable
   enhance Statable
-  enhance Timelineable
   enhance Surveyable
   enhance Questionable
   enhance Motionable

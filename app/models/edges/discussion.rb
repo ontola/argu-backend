@@ -16,7 +16,6 @@ class Discussion < Edge
   enhance Moveable
   enhance Placeable
   enhance Statable
-  enhance Timelineable
 
   parentable :container_node, :page
   filterable(
