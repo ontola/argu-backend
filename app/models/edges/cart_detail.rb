@@ -67,6 +67,10 @@ class CartDetail < Edge
   end
 
   class << self
+    def default_filters
+      {}
+    end
+
     def store_in_redis?(_opts = {})
       true
     end
