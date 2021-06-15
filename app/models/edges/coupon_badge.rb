@@ -29,6 +29,10 @@ class CouponBadge < Edge
     self.coupons = coupon_count.times.map { generate_token }
   end
 
+  def should_broadcast_changes
+    false
+  end
+
   class << self
     def default_collection_display
       :table
