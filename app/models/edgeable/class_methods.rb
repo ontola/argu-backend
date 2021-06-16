@@ -58,13 +58,13 @@ module Edgeable
 
       def has_many_children(association, dependent: :destroy, order: {created_at: :asc}, through: nil) # rubocop:disable Metrics/MethodLength
         has_many association,
-                 -> { order(order).includes(:properties) },
+                 -> { order(order).included_properties },
                  foreign_key: :parent_id,
                  inverse_of: :parent,
                  dependent: dependent,
                  through: through
         has_many "active_#{association}".to_sym,
-                 -> { active.order(order).includes(:properties) },
+                 -> { active.order(order).included_properties },
                  class_name: association.to_s.classify,
                  foreign_key: :parent_id,
                  inverse_of: :parent,

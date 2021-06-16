@@ -67,10 +67,22 @@ module Edgeable
       end
 
       def properties
+        options[:preload] == false ? properties_without_preload : properties_with_preload
+      end
+
+      def properties_with_preload
         instance
           .properties
           .select { |prop| prop.predicate == predicate && !prop.marked_for_destruction? }
           .sort_by(&:order)
+      end
+
+      def properties_without_preload
+        @properties_without_preload ||=
+          instance
+            .properties
+            .where(predicate: predicate.to_s)
+            .sort_by(&:order)
       end
 
       def sync_property(val)

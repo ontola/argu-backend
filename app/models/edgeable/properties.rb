@@ -28,8 +28,7 @@ module Edgeable
       self.property_managers = {}
 
       defined_properties&.each do |p|
-        property_manager(p[:predicate]).preload
-        clear_attribute_change(p[:name])
+        preload_property(p) unless p[:preload] == false
       end
       self.properties_preloaded = true
     end
@@ -57,6 +56,11 @@ module Edgeable
       preload_properties(true)
     end
 
+    def preload_property(property)
+      property_manager(property[:predicate]).preload
+      clear_attribute_change(property[:name])
+    end
+
     module ClassMethods
       def property_options(filter)
         defined_properties&.detect { |property| filter.all? { |key, value| property[key] == value } }
@@ -81,6 +85,15 @@ module Edgeable
       def property_filter_string(key, value)
         column = "#{key}_filter.value"
         predicate_builder.build_from_hash(column => value)[0].to_sql.gsub(/\$\d+/, '?')
+      end
+
+      def skipped_properties
+        return @skipped_properties if instance_variables.include?(:@skipped_properties)
+
+        @skipped_properties =
+          defined_properties
+            &.select { |property| property[:preload] == false }
+            &.map { |property| property[:predicate].to_s }
       end
 
       private
@@ -115,7 +128,8 @@ module Edgeable
 
       def property(name, type, predicate, opts = {}) # rubocop:disable Metrics/AbcSize
         initialize_defined_properties
-        defined_properties << {name: name, type: type, predicate: predicate}.merge(opts)
+        options = {name: name, type: type, predicate: predicate}.merge(opts)
+        defined_properties << options
 
         attr_opts = {default: opts[:default]}
         attr_opts[:array] = true if opts[:array]
@@ -126,7 +140,15 @@ module Edgeable
 
         enum name => opts[:enum] if opts[:enum].present?
 
+        define_property_preload_getter(options) if opts[:preload] == false
         define_property_setter(name, opts[:association])
+      end
+
+      def define_property_preload_getter(opts)
+        define_method opts[:name] do
+          preload_property(opts)
+          attributes[opts[:name].to_s]
+        end
       end
 
       def property_type(type)
@@ -173,7 +195,7 @@ module ActiveRecord
       self
     end
 
-    def where(opts = :chain, *rest) # rubocop:disable Metrics/AbcSize
+    def where(opts = :chain, *rest) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
       unless klass <= Edge && opts.is_a?(Hash) && opts.present? && (properties = properties_from_opts(opts)).presence
         return super
       end
@@ -181,7 +203,8 @@ module ActiveRecord
       properties.reduce(where(opts.except(*properties.keys), *rest)) do |query, condition|
         key = condition.first.to_sym
         value = property_filter_value(key, condition.second)
-        query
+        base = property_options(name: key)[:preload] == false ? query.joins(:properties) : query
+        base
           .joins(target_class.property_join_string(key))
           .where(target_class.property_filter_string(key, value), *(value.is_a?(Array) ? value.compact : value))
       end

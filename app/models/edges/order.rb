@@ -49,11 +49,13 @@ class Order < Edge
   end
 
   def invalidate_token
+    # rubocop:disable Rails/SkipsModelValidations
     Property.find_by!(
       edge: coupon_batch,
       predicate: NS::ARGU[:coupons].to_s,
       string: coupon
     ).update_column(:predicate, NS::ARGU[:usedCoupons].to_s)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def order_details_values

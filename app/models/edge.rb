@@ -118,24 +118,24 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :vote_events
   has_many_children :votes
   has_many :threads,
-           -> { where(parent_comment_id: nil).includes(:properties).order('edges.created_at ASC') },
+           -> { where(parent_comment_id: nil).included_properties.order('edges.created_at ASC') },
            class_name: 'Comment',
            foreign_key: :parent_id,
            inverse_of: :parent
   has_one :top_comment,
-          -> { active.order(created_at: :asc).includes(:properties) },
+          -> { active.order(created_at: :asc).included_properties },
           class_name: 'Comment',
           foreign_key: :parent_id,
           inverse_of: :parent,
           dependent: :destroy
   has_one :last_decision,
-          -> { order(created_at: :desc).includes(:properties) },
+          -> { order(created_at: :desc).included_properties },
           class_name: 'Decision',
           foreign_key: :parent_id,
           inverse_of: :parent,
           dependent: :destroy
   has_one :last_published_decision,
-          -> { published.order(created_at: :desc).includes(:properties) },
+          -> { published.order(created_at: :desc).included_properties },
           class_name: 'Decision',
           foreign_key: :parent_id,
           inverse_of: :parent,
@@ -147,7 +147,14 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
           inverse_of: :parent,
           dependent: :destroy
 
-  default_scope -> { includes(:properties) }
+  default_scope -> { included_properties }
+  scope :included_properties, lambda {
+    if klass.skipped_properties.present?
+      includes(:properties).where.not(properties: {predicate: klass.skipped_properties})
+    else
+      includes(:properties)
+    end
+  }
   scope :published, -> { where('edges.is_published = true') }
   scope :unpublished, -> { where('edges.is_published = false') }
   scope :trashed, -> { where('edges.trashed_at IS NOT NULL') }

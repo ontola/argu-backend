@@ -14,8 +14,8 @@ class CouponBatch < Edge
   before_create :generate_tokens
 
   property :display_name, :string, NS::SCHEMA[:name]
-  property :coupons, :string, NS::ARGU[:coupons], array: true
-  property :used_coupons, :string, NS::ARGU[:usedCoupons], array: true
+  property :coupons, :string, NS::ARGU[:coupons], array: true, preload: false
+  property :used_coupons, :string, NS::ARGU[:usedCoupons], array: true, preload: false
   property :coupon_count, :integer, NS::ARGU[:couponCount], default: 0
 
   private
