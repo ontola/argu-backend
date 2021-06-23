@@ -78,7 +78,7 @@ module Edgeable
         property = property_options(name: key)
         column = "properties.#{connection.quote_string(property[:type].to_s)}"
         where = "properties.predicate = '#{connection.quote_string(property[:predicate].to_s)}'"
-        select = "(SELECT DISTINCT ON (edge_id) edge_id, #{column} AS value FROM properties WHERE #{where})"
+        select = "(SELECT DISTINCT edge_id, #{column} AS value FROM properties WHERE #{where})"
         "LEFT JOIN #{select} #{key}_filter ON #{key}_filter.edge_id = edges.uuid"
       end
 
