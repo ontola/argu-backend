@@ -33,8 +33,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 51d09525769a9591e2bcaea0c0605ead56d6e451
-  branch: refactor-filtering
+  revision: 1e230c97e338e0f782334d486b954cde82a19850
+  branch: master
   specs:
     linked_rails (0.0.0)
       active_response
