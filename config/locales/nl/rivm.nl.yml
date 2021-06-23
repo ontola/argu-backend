@@ -270,7 +270,7 @@ nl:
         label: "Voorbeelden"
   measures:
     type: "Voorbeeld"
-    type_new: "Nieuw voorbeeld"
+    type_new: "Maak je eigen voorbeeld"
     plural: "Voorbeelden"
     comments_allowed:
       comments_are_allowed: "Ja"
