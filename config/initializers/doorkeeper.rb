@@ -167,7 +167,7 @@ Doorkeeper::JWT.configure do
     payload = {
       iat: Time.current.to_i,
       scopes: opts[:scopes].entries,
-      application_id: opts[:application]&.id
+      application_id: opts[:application]&.uid
     }
     if user
       payload[:user] = {

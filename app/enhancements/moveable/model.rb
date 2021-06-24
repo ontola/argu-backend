@@ -18,7 +18,6 @@ module Moveable
         update_activities_on_move(new_parent)
         self.parent = new_parent
         save!
-        try(:invalidate_cache)
       end
       true
     end

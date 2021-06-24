@@ -53,6 +53,9 @@ module Argu
     ENV['REDIS_URL'] = ENV['REDIS_URL'].presence ||
       "redis://#{ENV['REDIS_ADDRESS'] || 'localhost'}:#{ENV['REDIS_PORT'] || 6379}/12"
 
+    config.cache_stream = ENV['CACHE_STREAM'].presence || 'transactions'
+    config.cache_redis_database = (ENV['CACHE_REDIS_DATABASE'])&.to_i || 8
+
     config.app_generators.template_engine :slim
 
     # Configure the default encoding used in templates for Ruby 1.9.

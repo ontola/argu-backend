@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-Argu::Cache.invalidate_all if Rails.env.development? || ENV['INVALIDATE_CACHE_ON_BOOT']
+InvalidateCacheWorker.perform_async(-1, false) if Rails.env.development? || ENV['INVALIDATE_CACHE_ON_BOOT']

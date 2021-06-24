@@ -1,1 +1,0 @@
-../../service_module/app/workers/redis_publish_worker.rb
