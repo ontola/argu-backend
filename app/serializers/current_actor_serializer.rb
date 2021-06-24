@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class CurrentActorSerializer < BaseSerializer
-  extend AnalyticsHelper
   include ProfilePhotoable::Serializer
 
-  attribute :a_uuid, predicate: NS::ARGU[:anonymousID] do |object|
-    a_uuid(object.user)
-  end
   attribute :actor_type, predicate: NS::ONTOLA[:actorType]
   attribute :has_analytics?, predicate: NS::ARGU[:hasAnalytics]
   attribute :mount_action, predicate: NS::ONTOLA[:mountAction]

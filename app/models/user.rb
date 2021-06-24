@@ -121,14 +121,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   auto_strip_attributes :display_name, squish: true
   alias_attribute :name, :display_name
 
-  def self.find_for_database_authentication(warden_conditions)
-    if warden_conditions[:email].include?('@')
-      joins(:email_addresses).find_by('lower(email_addresses.email) = ?', warden_conditions[:email].downcase)
-    else
-      joins(:shortname).find_by('lower(shortnames.shortname) = ?', warden_conditions[:email].downcase)
-    end
-  end
-
   def accept_terms=(val)
     return unless val.to_s == 'true'
 
@@ -148,10 +140,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def ancestor(_type); end
 
-  def self.anonymous
-    User.find(User::ANONYMOUS_ID)
-  end
-
   def build_public_group_membership
     return if Group.public.nil?
     return if profile.group_memberships.any? { |m| m.group_id == Group::PUBLIC_ID }
@@ -161,10 +149,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       group_id: Group::PUBLIC_ID,
       start_date: Time.current
     )
-  end
-
-  def self.community
-    User.find(User::COMMUNITY_ID)
   end
 
   def confirmed?
@@ -318,19 +302,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     id <= 0
   end
 
-  def salt # rubocop:disable Metrics/AbcSize
-    if encrypted_password.presence
-      ::BCrypt::Password.new(encrypted_password).salt
-    else
-      salt = Argu::Redis.get("user:#{id}:salt")
-      if salt.blank?
-        salt = ::BCrypt::Engine.generate_salt(Rails.application.config.devise.stretches)
-        Argu::Redis.set("user:#{id}:salt", salt)
-      end
-      salt.presence || ::BCrypt::Engine.generate_salt(Rails.application.config.devise.stretches)
-    end
-  end
-
   def send_devise_notification(notification, *args) # rubocop:disable Metrics/MethodLength
     case notification
     when :reset_password_instructions
@@ -351,10 +322,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     token = set_reset_password_token
     SendEmailWorker
       .perform_async(:set_password, id, token_url: iri_from_template(:user_set_password, reset_password_token: token))
-  end
-
-  def self.service
-    User.find(User::SERVICE_ID)
   end
 
   def service?
@@ -431,12 +398,28 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
+    def anonymous
+      User.find(User::ANONYMOUS_ID)
+    end
+
     def build_new(opts)
       resource = super
       resource.shortname = nil if resource.shortname&.shortname.blank?
       resource.build_profile
       resource.language = I18n.locale
       resource
+    end
+
+    def community
+      User.find(User::COMMUNITY_ID)
+    end
+
+    def find_for_database_authentication(warden_conditions)
+      if warden_conditions[:email].include?('@')
+        joins(:email_addresses).find_by('lower(email_addresses.email) = ?', warden_conditions[:email].downcase)
+      else
+        joins(:shortname).find_by('lower(shortnames.shortname) = ?', warden_conditions[:email].downcase)
+      end
     end
 
     def followable_classes
@@ -470,6 +453,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     def serialize_from_session(key, salt)
       record = to_adapter.get(key[0].to_param)
       record if record && record.authenticatable_salt == salt
+    end
+
+    def service
+      User.find(User::SERVICE_ID)
     end
 
     def singular_route_key
