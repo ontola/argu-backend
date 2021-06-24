@@ -450,11 +450,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       :u
     end
 
-    def serialize_from_session(key, salt)
-      record = to_adapter.get(key[0].to_param)
-      record if record && record.authenticatable_salt == salt
-    end
-
     def service
       User.find(User::SERVICE_ID)
     end
