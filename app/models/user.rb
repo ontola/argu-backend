@@ -217,10 +217,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     false
   end
 
-  def forum_management?
-    page_management? || profile.grants.moderator.presence
-  end
-
   def iri_opts
     {id: url || id}
   end
