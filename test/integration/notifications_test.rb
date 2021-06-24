@@ -52,7 +52,6 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     sign_in follower
     get collection_iri(argu, :notifications), headers: argu_headers(accept: :nq)
     assert_response 200
-    expect_triple(RDF::URI("#{argu.iri}/n"), NS::ARGU[:unreadCount], 1)
   end
 
   test 'follower should put update as nq' do
@@ -64,7 +63,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     assert_response 200
     notification.reload
-    expect_triple(RDF::URI("#{argu.iri}/n"), NS::ARGU[:unreadCount], 0)
+    expect_triple(RDF::URI("#{argu.iri}/c_a"), NS::ARGU[:unreadCount], 0)
     expect_triple(
       resource_iri(notification),
       NS::SCHEMA[:dateRead],

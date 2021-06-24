@@ -2,8 +2,6 @@
 
 # @note: Common create ready
 class NotificationsController < AuthorizedController
-  include NotificationsHelper
-
   skip_before_action :authorize_action, only: :index
 
   after_action :update_viewed_time
@@ -28,17 +26,6 @@ class NotificationsController < AuthorizedController
     authorize Notification, :read?
   end
 
-  def index_meta
-    [
-      RDF::Statement.new(
-        Notification.root_collection.iri,
-        NS::ARGU[:unreadCount],
-        unread_notification_count,
-        graph_name: delta_iri(:replace)
-      )
-    ]
-  end
-
   def update_execute
     n = authenticated_resource
     read_before = n.read_at.present?
@@ -46,7 +33,14 @@ class NotificationsController < AuthorizedController
   end
 
   def update_meta
-    index_meta + super
+    [
+      RDF::Statement.new(
+        current_actor.iri,
+        NS::ARGU[:unreadCount],
+        current_actor.unread_notification_count,
+        graph_name: delta_iri(:replace)
+      )
+    ]
   end
 
   def update_success_rdf

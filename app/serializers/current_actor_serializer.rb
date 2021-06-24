@@ -14,6 +14,7 @@ class CurrentActorSerializer < BaseSerializer
   attribute :user_seq, predicate: RDF[:_0] do |object|
     object&.user&.iri
   end
+  attribute :unread_notification_count, predicate: NS::ARGU[:unreadCount]
 
   has_one :user, predicate: NS::ARGU[:user]
   has_one :actor, predicate: NS::ONTOLA[:actor] do |object|
