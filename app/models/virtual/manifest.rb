@@ -3,7 +3,7 @@
 class Manifest < VirtualResource
   ICON_FORMATS = {
     'apple-touch-icon' => %w[114x114 120x120 144x144 152x152 180x180 57x57 60x60 72x72 76x76],
-    favicon: %w[160x160 16x16 192x192 32x32 96x96],
+    favicon: %w[160x160 16x16 192x192 32x32 512x512 96x96],
     mstile: %w[144x144 150x150 310x310 70x70]
   }.freeze
 
@@ -111,7 +111,7 @@ class Manifest < VirtualResource
   private
 
   def icon(name, size)
-    {
+    props = {
       src: URI(
         ActionController::Base.helpers.asset_path(
           "assets/favicons/#{page.template}/#{name}-#{size}.png",
@@ -121,6 +121,8 @@ class Manifest < VirtualResource
       sizes: size,
       type: 'image/png'
     }
+    props[:purpose] = 'any maskable' if size == '192x192' && name == 'favicon'
+    props
   end
 
   def template_options
