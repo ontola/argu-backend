@@ -38,7 +38,7 @@ class Measure < Edge
       filter: lambda do |scope, values|
         scope.where(category_ids: values.map { |value| LinkedRails.iri_mapper.resource_from_iri(value).uuid })
       end,
-      values_in: -> { Vocabulary.new(url: :categorieen).term_collection.iri }
+      values_in: -> { Vocabulary.new(url: :categorieen).term_collection(page_size: 999).iri }
     }
   )
 
