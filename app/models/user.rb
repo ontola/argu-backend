@@ -20,9 +20,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   include Broadcastable
   include RedirectHelper
-  include Shortnameable
   include Uuidable
-  include CacheableIri
 
   before_destroy :handle_dependencies
   placeable :home
@@ -116,7 +114,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
               in: I18n.available_locales.map(&:to_s),
               message: '%<value> is not a valid locale'
             }
-  validate :validate_url_uniqueness
 
   auto_strip_attributes :display_name, squish: true
   alias_attribute :name, :display_name
@@ -215,10 +212,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def guest?
     false
-  end
-
-  def iri_opts
-    {id: url || id}
   end
 
   def is_staff?
@@ -386,13 +379,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     !(keys & LOGIN_ATTRS == keys || keys & FAILED_LOGIN_ATTRS == keys) # rubocop:disable Style/MultipleComparison
   end
 
-  def validate_url_uniqueness
-    shortname&.errors&.each do |_key, message|
-      errors.add(:url, message)
-    end
-    errors[:'shortname.shortname'].clear
-  end
-
   class << self
     def anonymous
       User.find(User::ANONYMOUS_ID)
@@ -400,7 +386,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def build_new(opts)
       resource = super
-      resource.shortname = nil if resource.shortname&.shortname.blank?
       resource.build_profile
       resource.language = I18n.locale
       resource
@@ -411,11 +396,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def find_for_database_authentication(warden_conditions)
-      if warden_conditions[:email].include?('@')
-        joins(:email_addresses).find_by('lower(email_addresses.email) = ?', warden_conditions[:email].downcase)
-      else
-        joins(:shortname).find_by('lower(shortnames.shortname) = ?', warden_conditions[:email].downcase)
-      end
+      joins(:email_addresses).find_by('lower(email_addresses.email) = ?', warden_conditions[:email].downcase)
     end
 
     def followable_classes
@@ -430,10 +411,11 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def requested_single_resource(params, user_context)
-      resource = super
+      # @todo Remove shortname check (https://gitlab.com/ontola/core/-/issues/741)
+      resource = (/[a-zA-Z]/i =~ params[:id]).present? ? Shortname.find_resource(params[:id]) : super
 
       show_anonymous_user = user_context&.guest? && resource.present? && !resource.is_public?
-      return AnonymousUser.new(url: params[:id]) if show_anonymous_user
+      return AnonymousUser.new(id: params[:id]) if show_anonymous_user
 
       resource
     end

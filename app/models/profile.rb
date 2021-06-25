@@ -64,14 +64,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     profileable_id
   end
 
-  def self.anonymous
-    @anonymous ||= Profile.find(Profile::ANONYMOUS_ID)
-  end
-
-  def self.community
-    @community ||= Profile.find(Profile::COMMUNITY_ID)
-  end
-
   def confirmed?
     profileable.try :confirmed?
   end
@@ -121,10 +113,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     profileable.try(:guest?)
   end
 
-  def self.includes_for_profileable
-    {profileable: {}}
-  end
-
   # @return [Boolean] Whether the user has a group_membership for the provided group_id
   def is_group_member?(group_id)
     group_ids.include?(group_id)
@@ -136,14 +124,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
       profileable = super
       profileable.nil? ? association(:profileable).reload&.reader : profileable
     end
-  end
-
-  def self.service
-    Profile.find(Profile::SERVICE_ID)
-  end
-
-  def url
-    profileable&.url.presence
   end
 
   # ######Methods########
@@ -162,6 +142,24 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
           &.model
           &.anonymize(try(association))
       end
+    end
+  end
+
+  class << self
+    def anonymous
+      @anonymous ||= Profile.find(Profile::ANONYMOUS_ID)
+    end
+
+    def community
+      @community ||= Profile.find(Profile::COMMUNITY_ID)
+    end
+
+    def includes_for_profileable
+      {profileable: {}}
+    end
+
+    def service
+      Profile.find(Profile::SERVICE_ID)
     end
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe 'Exports', type: :model do
       File.delete(tmp_path) if File.exist?(tmp_path)
       Zip::File.open(subject.zip.path).detect { |f| f.name == 'data.n3' }.extract(tmp_path)
       File.foreach(tmp_path) { |line| expect(line).not_to(match(/@.+\./)) }
-      expect(File.foreach(tmp_path)).to(be_any { |line| line.include?('anonymous') })
+      expect(File.foreach(tmp_path)).to(be_any { |line| line.include?('/u/-1>') })
       File.delete(tmp_path)
     end
   end

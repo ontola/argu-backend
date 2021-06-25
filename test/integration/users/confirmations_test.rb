@@ -180,31 +180,12 @@ module Users
     ####################################
     let(:user) { create(:unconfirmed_user) }
 
-    test 'user without shortname should get show confirmation' do
+    test 'user should get show confirmation' do
       sign_in user
-      user.shortname.destroy
-      user.reload
-      assert_not user.confirmed?
-      assert_not user.url.present?
       get user_confirmation_path(confirmation_token: user.confirmation_token)
       assert_response :success
       assert_not user.reload.confirmed?
       assert_not response.headers['New-Authorization']
-    end
-
-    test 'user without shortname should put update confirmation' do
-      sign_in user
-      user.shortname.destroy
-      user.reload
-      assert_not user.confirmed?
-      assert_not user.url.present?
-      put user_confirmation_path(confirmation_token: user.confirmation_token)
-      assert_response :success
-      expect_ontola_action(
-        snackbar: 'Your account has been confirmed',
-        redirect: '/argu'
-      )
-      assert user.reload.confirmed?
     end
 
     test 'user should put update confirmation and persist temporary votes' do

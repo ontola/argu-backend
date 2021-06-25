@@ -3,7 +3,7 @@
 class CreateDecision < CreateEdge
   def initialize(parent, attributes: {}, options: {})
     if attributes['forwarded_user_id']
-      attributes[:forwarded_user] = User.find_via_shortname_or_id(attributes.delete('forwarded_user_id'))
+      attributes[:forwarded_user] = User.find_by(id: attributes.delete('forwarded_user_id'))
     end
     super
   end

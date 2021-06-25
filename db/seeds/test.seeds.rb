@@ -18,7 +18,7 @@ ActsAsTenant.current_tenant = nil
 
 staff = FactorySeeder.create(
   :user,
-  shortname: FactorySeeder.build(:shortname, shortname: 'argu_owner'),
+  display_name: 'argu_owner',
   email: 'staff@example.com'
 )
 staff_group = Group.find(Group::STAFF_ID)

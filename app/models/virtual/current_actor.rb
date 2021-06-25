@@ -41,10 +41,6 @@ class CurrentActor < VirtualResource
     NS::ONTOLA[actor_type]
   end
 
-  def shortname
-    profile&.url
-  end
-
   def unread_notification_count
     Pundit.policy_scope(UserContext.new(user: user), Notification).where('read_at is NULL').count
   end

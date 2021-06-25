@@ -52,7 +52,7 @@ RSpec.describe 'Pages', type: :request do
       trash untrash new_unauthorized new_non_existing create_non_existing create_unauthorized index
     ]
     context 'user pages' do
-      let(:index_path) { "/#{argu.url}/u/#{authorized_user.url}/o" }
+      let(:index_path) { "/#{argu.url}/u/#{authorized_user.id}/o" }
       let(:expect_get_index_guest_serializer) { expect_unauthorized }
 
       it_behaves_like 'get index', skip: %i[unauthorized non_existing]

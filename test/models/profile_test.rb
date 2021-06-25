@@ -12,12 +12,6 @@ class ProfileTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
-  test 'shortname valid' do
-    shortname = subject.profileable.shortname.shortname
-    assert shortname.length > 3
-    assert_equal shortname, subject.url
-  end
-
   test 'granted_edges' do
     capetown
 

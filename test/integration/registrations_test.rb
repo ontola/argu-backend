@@ -8,7 +8,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
   let(:user) { create(:user) }
-  let(:user_no_shortname) { create(:user, :no_shortname, display_name: nil) }
+  let(:other_user) { create(:user) }
   let(:guest_user) { create_guest_user }
   let(:other_guest_user) { create_guest_user(id: 'other_id') }
   let(:place) { create(:place) }
@@ -310,21 +310,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'user without name and shortname should delete destroy' do
-    sign_in user_no_shortname
-
-    assert_difference('User.count' => -1) do
-      delete resource_iri(user_no_shortname, root: argu),
-             params: {
-               user: {
-                 confirmation_string: 'remove'
-               }
-             }
-    end
-
-    assert_response :success
-  end
-
   test 'user should delete destroy with placement, uploaded_photo and expired group_membership' do
     placement = user.build_home_placement(creator: user.profile, publisher: user, place: place)
     placement.save
@@ -423,10 +408,10 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'user should not delete destroy other user' do
     sign_in user
-    user_no_shortname
+    other_user
 
     assert_difference('User.count' => 0) do
-      delete resource_iri(user_no_shortname, root: argu),
+      delete resource_iri(other_user, root: argu),
              params: {
                user: {
                  confirmation_string: 'remove'
@@ -458,10 +443,10 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'administrator should not delete destroy other user' do
     sign_in administrator
-    user_no_shortname
+    other_user
 
     assert_difference('User.count' => 0) do
-      delete resource_iri(user_no_shortname, root: argu),
+      delete resource_iri(other_user, root: argu),
              params: {
                user: {
                  confirmation_string: 'remove'

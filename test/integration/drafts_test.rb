@@ -112,7 +112,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
   ####################################
   test 'administrator should get index' do
     group = create(:group, parent: argu)
-    create(:group_membership, parent: group, shortname: user.url)
+    create(:group_membership, parent: group, member: user.profile)
     create(:grant, edge: argu, group: group, grant_set: GrantSet.administrator)
     sign_in user
     get drafts_iri

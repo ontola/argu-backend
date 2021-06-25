@@ -378,7 +378,7 @@ class PagesTest < ActionDispatch::IntegrationTest
            params: {
              page: {
                name: 'Name',
-               url: staff.url,
+               url: argu.url,
                accepted_terms: 'true'
              }
            }, headers: argu_headers(accept: :n3)

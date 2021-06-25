@@ -6,7 +6,6 @@ module Users
   class PasswordsTest < ActionDispatch::IntegrationTest
     define_freetown
     let(:user) { create(:unconfirmed_user) }
-    let(:user_no_shortname) { create(:user, :no_shortname, display_name: nil) }
     let(:password_form) { RDF::URI('https:example.com/password') }
 
     ####################################
@@ -95,7 +94,7 @@ module Users
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end
 
-    test 'guest should put update password with shortname' do
+    test 'guest should put update password' do
       sign_in :guest_user
       assert_not user.confirmed?
       put user_password_path,
@@ -111,20 +110,6 @@ module Users
       assert user.confirmed?
 
       expect_ontola_action(snackbar: 'Your password has been updated successfully')
-    end
-
-    test 'guest should put update password without shortname' do
-      sign_in :guest_user
-      put user_password_path,
-          params: {
-            user: {
-              reset_password_token: user_no_shortname.send(:set_reset_password_token),
-              password: 'new_password',
-              password_confirmation: 'new_password'
-            }
-          }
-      assert_response :success
-      assert_not_equal user_no_shortname.encrypted_password, user_no_shortname.reload.encrypted_password
     end
 
     ####################################
@@ -200,7 +185,7 @@ module Users
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end
 
-    test 'user should put update password with shortname' do
+    test 'user should put update password' do
       sign_in user
       put user_password_path,
           params: {
@@ -212,20 +197,6 @@ module Users
           }
       assert_response :success
       assert_not_equal user.encrypted_password, user.reload.encrypted_password
-    end
-
-    test 'user should put update password without shortname' do
-      sign_in user_no_shortname
-      put user_password_path,
-          params: {
-            user: {
-              reset_password_token: user_no_shortname.send(:set_reset_password_token),
-              password: 'new_password',
-              password_confirmation: 'new_password'
-            }
-          }
-      assert_response :success
-      assert_not_equal user_no_shortname.encrypted_password, user_no_shortname.reload.encrypted_password
     end
 
     private

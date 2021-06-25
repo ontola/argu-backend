@@ -50,7 +50,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_not_authorized
   end
 
-  test 'user should not post create' do
+  test 'user should not post create without token' do
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
@@ -122,31 +122,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'member should not post create as json' do
-    validate_valid_bearer_token
-    sign_in member
-
-    assert_difference 'GroupMembership.count' => 0 do
-      post :create, format: :json, params: {parent_iri: parent_iri_for(group), token: '1234567890'}
-      assert_redirected_to group.group_memberships.first.iri
-    end
-  end
-
-  test 'member with group_memberships should post create as json' do
-    validate_valid_bearer_token
-    sign_in single_forum_group_member
-
-    assert_difference 'GroupMembership.count' => 0 do
-      post :create,
-           format: :json,
-           params: {
-             parent_iri: parent_iri_for(single_forum_group),
-             token: '1234567890'
-           }
-      assert_redirected_to single_forum_group.group_memberships.first.iri
-    end
-  end
-
   test 'member should delete destroy own membership' do
     sign_in member
 
@@ -161,40 +136,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   # As Administrator
   ####################################
   let(:administator) { create_administrator(freetown) }
-
-  test 'administrator should not post create member json' do
-    sign_in administator
-
-    assert_difference 'GroupMembership.count', 0 do
-      post :create,
-           format: :json,
-           params: {
-             parent_iri: parent_iri_for(group),
-             shortname: member.url,
-             r: settings_iri(freetown, tab: :groups),
-             root_id: argu.url
-           }
-    end
-
-    assert_response 403
-  end
-
-  test 'administrator should not post create other json' do
-    sign_in administator
-    user
-    assert_difference 'GroupMembership.count', 0 do
-      post :create,
-           format: :json,
-           params: {
-             parent_iri: parent_iri_for(group),
-             shortname: user.url,
-             r: settings_iri(freetown, tab: :groups),
-             root_id: argu.url
-           }
-    end
-
-    assert_response 403
-  end
 
   test 'administrator should delete expire' do
     sign_in administator
@@ -226,25 +167,5 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_response :success
     view = expect_triple(group.group_membership_collection.iri, NS::ONTOLA[:pages], nil).objects.first
     expect_triple(view, NS::AS[:totalItems], 1)
-  end
-
-  ####################################
-  # As admin
-  ####################################
-  test 'page should not post create other' do
-    sign_in administator
-    user
-    assert_difference 'GroupMembership.count', 0 do
-      post :create,
-           format: :json,
-           params: {
-             actor_iri: argu.iri,
-             parent_iri: parent_iri_for(group),
-             shortname: user.url,
-             r: settings_iri(freetown, tab: :groups)
-           }
-    end
-
-    assert_response 403
   end
 end

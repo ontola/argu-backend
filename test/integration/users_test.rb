@@ -16,14 +16,6 @@ class UsersTest < ActionDispatch::IntegrationTest
   let(:user_public) { create(:user, profile: create(:profile)) }
   let(:home_placement) { create(:home_placement, placeable: user) }
   let(:hidden_home_placement) { create(:home_placement, placeable: user_non_public) }
-  let(:user_no_shortname) do
-    u = create(:user, profile: create(:profile))
-    u.shortname.destroy
-    u.shortname = nil
-    u.url = nil
-    u.iri_cache = nil
-    u
-  end
   let(:user_non_public) { create(:user, is_public: false) }
   let(:user_hidden_votes) { create(:user, show_feed: false) }
   let(:user_form) { RDF::URI('https:example.com/user') }
@@ -37,14 +29,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     get resource_iri(user_public, root: argu)
 
     assert_response :success
-  end
-
-  test 'guest should get show by id user without shortname' do
-    sign_in :guest_user
-
-    get resource_iri(user_no_shortname, root: argu)
-
-    assert_response 200
   end
 
   test 'guest should not get show non public' do
@@ -85,15 +69,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     get resource_iri(user_public, root: argu)
 
     assert_response :success
-  end
-
-  test 'user should get show by id user without shortname' do
-    sign_in user
-
-    get resource_iri(user_no_shortname, root: argu)
-
-    assert_response 200
-    assert_not_includes(response.body, user_no_shortname.email)
   end
 
   test 'user should get show non public' do

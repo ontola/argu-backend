@@ -122,7 +122,7 @@ module Argu
           group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,
-                 shortname: user.url)
+                 member: user.profile)
           create(:grant, edge: record, group: group, grant_set: GrantSet.moderator)
           user
         end
@@ -133,7 +133,7 @@ module Argu
           group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,
-                 shortname: user.url)
+                 member: user.profile)
           create(:grant, edge: record, group: group, grant_set: GrantSet.spectator)
           user
         end
@@ -144,7 +144,7 @@ module Argu
           group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,
-                 shortname: user.url)
+                 member: user.profile)
           create(:grant, edge: record, group: group, grant_set: GrantSet.participator)
           user
         end
@@ -155,7 +155,7 @@ module Argu
           group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,
-                 shortname: user.url)
+                 member: user.profile)
           create(:grant, edge: record, group: group, grant_set: GrantSet.initiator)
           user
         end

@@ -29,7 +29,6 @@ if current_tenant == 'argu'
       User
         .create!(
           email: 'staff@argu.co',
-          shortname_attributes: {shortname: 'staff_account'},
           password: 'arguargu',
           password_confirmation: 'arguargu',
           display_name: 'Douglas Engelbart',

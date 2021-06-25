@@ -65,7 +65,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
       id: current_user.id,
       responder_type: active_response_type,
       scopes: doorkeeper_scopes,
-      shortname: current_user.url
+      name: current_user.display_name
     }
   end
 
@@ -148,8 +148,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   # @private
   # For Devise
   def configure_permitted_parameters
-    devise_parameter_sanitizer
-      .permit(:sign_up, keys: [:email, :redirect_url, :accept_terms, shortname_attributes: [:shortname]])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[email redirect_url accept_terms])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:redirect_url])
   end
 

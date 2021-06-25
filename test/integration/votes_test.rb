@@ -195,7 +195,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     expect_triple(
       unconfirmed_vote.iri,
       NS::SCHEMA.creator,
-      RDF::URI("#{argu.iri}/u/#{unconfirmed.url}")
+      RDF::URI("#{argu.iri}/u/#{unconfirmed.id}")
     )
   end
 

@@ -39,12 +39,6 @@ RSpec.describe "Iri's", type: :model do
     it_behaves_like 'iri matches route'
   end
 
-  context 'User without shortname' do
-    subject { create(:user, :no_shortname) }
-
-    it_behaves_like 'iri matches route'
-  end
-
   context 'User profile' do
     subject { create(:user).profile }
 

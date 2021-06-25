@@ -25,6 +25,6 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],
-                 "#{Rails.application.config.origin.sub('https', 'http')}/#{argu.url}/u/#{user.url}"
+                 "#{Rails.application.config.origin.sub('https', 'http')}/#{argu.url}/u/#{user.id}"
   end
 end

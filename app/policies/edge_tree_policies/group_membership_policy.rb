@@ -20,9 +20,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def permitted_attributes
-    attributes = %i[token]
-    attributes.append(:shortname) if edgeable_policy.update?
-    attributes
+    %i[token]
   end
 
   def show?

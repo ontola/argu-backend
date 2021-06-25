@@ -76,11 +76,11 @@ class IriHelperTest < ActiveSupport::TestCase
   end
 
   test 'should find PageCollection of user' do
-    resource_from_path(user.favorite_page_collection, "/u/#{user.url}/o", argu)
+    resource_from_path(user.favorite_page_collection, "/u/#{user.id}/o", argu)
   end
 
   test 'should find PageCollection view of user' do
-    resource_from_path(user.favorite_page_collection.default_view, "/u/#{user.url}/o?page=1", argu)
+    resource_from_path(user.favorite_page_collection.default_view, "/u/#{user.id}/o?page=1", argu)
   end
 
   test 'should find root Motion collection' do

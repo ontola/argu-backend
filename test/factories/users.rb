@@ -3,7 +3,6 @@
 FactoryBot.define do
   factory :unconfirmed_user, class: User do
     association :profile, strategy: :build
-    association :shortname, strategy: :build
 
     sequence :email do |n|
       "user#{n}@example.com"
@@ -28,14 +27,6 @@ FactoryBot.define do
       password { nil }
       password_confirmation { nil }
       encrypted_password { nil }
-    end
-
-    trait :no_shortname do
-      after(:create) do |user|
-        user.shortname.destroy
-        user.url = nil
-        user.cache_iri_path!
-      end
     end
 
     trait :staff do

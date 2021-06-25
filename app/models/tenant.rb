@@ -112,7 +112,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
       token
     end
 
-    def create_system_user(user_id, profile_id, shortname, email) # rubocop:disable Metrics/MethodLength
+    def create_system_user(user_id, profile_id, name, email) # rubocop:disable Metrics/MethodLength
       profile =
         Profile.new(
           id: profile_id,
@@ -121,8 +121,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
               .new(
                 last_accepted: Time.current,
                 id: user_id,
-                display_name: shortname,
-                shortname: Shortname.new(shortname: shortname),
+                display_name: name,
                 email: email,
                 password: SecureRandom.hex(32)
               )

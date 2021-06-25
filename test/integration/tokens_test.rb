@@ -119,13 +119,6 @@ class TokensTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'User should post create token with username' do
-    sign_in guest_user
-    assert_difference('Doorkeeper::AccessToken.count', 1) do
-      post_token_password(name: user.url)
-    end
-  end
-
   test 'User should post create token with caps' do
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
@@ -308,16 +301,6 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post_token_password(name: 'wrong@example.com', results: {error_code: 'UNKNOWN_EMAIL'})
-    end
-  end
-
-  ####################################
-  # UNKOWN USERNAME
-  ####################################
-  test 'User should not post create token with unknown username' do
-    sign_in guest_user
-    assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token_password(name: 'wrong', results: {error_code: 'UNKNOWN_USERNAME'})
     end
   end
 

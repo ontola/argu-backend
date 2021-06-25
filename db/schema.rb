@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_08_092538) do
+ActiveRecord::Schema.define(version: 2021_06_25_124903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -471,7 +471,6 @@ ActiveRecord::Schema.define(version: 2021_06_08_092538) do
     t.integer "news_email", default: 3, null: false
     t.integer "reactions_email", default: 3, null: false
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
-    t.string "iri_cache"
     t.boolean "hide_last_name", default: false
     t.boolean "is_public", default: true
     t.boolean "show_feed", default: true

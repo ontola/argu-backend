@@ -33,12 +33,9 @@ Doorkeeper.configure do
     user_from_db = user || User.find_for_database_authentication(request.params[:user])
 
     if user.blank?
-      email = request.params[:user][:email]&.include?('@')
       raise(
-        if email && EmailAddress.find_by(email: request.params[:user][:email]).nil?
+        if EmailAddress.find_by(email: request.params[:user][:email]).nil?
           Argu::Errors::UnknownEmail.new
-        elsif !email && Shortname.find_by(owner_type: 'User', shortname: request.params[:user][:email]).nil?
-          Argu::Errors::UnknownUsername.new
         elsif request.env['warden'].message == :locked
           Argu::Errors::AccountLocked.new
         elsif user_from_db.encrypted_password.blank?
