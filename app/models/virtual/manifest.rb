@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Manifest < VirtualResource
+class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
   ICON_FORMATS = {
     'apple-touch-icon' => %w[114x114 120x120 144x144 152x152 180x180 57x57 60x60 72x72 76x76],
     favicon: %w[160x160 16x16 192x192 32x32 512x512 96x96],
@@ -59,13 +59,14 @@ class Manifest < VirtualResource
       styled_headers: page.styled_headers,
       theme: page.template,
       theme_options: template_options,
-      tracking: tracking
+      tracking: tracking,
+      website_iri: page.iri
     }
   end
 
   def preload_iris # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     [
-      scope,
+      LinkedRails.iri,
       LinkedRails.iri(path: 'ns/core').to_s,
       LinkedRails.iri(path: 'c_a').to_s,
       LinkedRails.iri(path: 'banners').to_s,
@@ -81,7 +82,7 @@ class Manifest < VirtualResource
 
   def serviceworker
     {
-      src: "#{manifest_scope}/sw.js?manifestLocation=#{Rack::Utils.escape("#{manifest_scope}/manifest.json")}",
+      src: "#{page.iri}/sw.js?manifestLocation=#{Rack::Utils.escape("#{page.iri}/manifest.json")}",
       scope: manifest_scope
     }
   end
@@ -91,17 +92,17 @@ class Manifest < VirtualResource
       google_analytics_ua_code: page.google_uac,
       matomo_hostname: page.matomo_host || ENV['MATOMO_HOST'],
       matomo_site_id: page.matomo_site_id,
-      tag_manager: page.google_tag_manager,
+      tag_manager: page.google_tag_manager
     }
   end
 
   def manifest_scope
-    @manifest_scope ||= "https://#{page.iri_prefix}"
+    @manifest_scope ||= page.iri.path || '/'
   end
   alias scope manifest_scope
 
   def start_url
-    @start_url ||= "#{manifest_scope}/"
+    @start_url ||= manifest_scope == '/' ? manifest_scope : "#{manifest_scope}/"
   end
 
   def theme_color
@@ -112,17 +113,21 @@ class Manifest < VirtualResource
 
   def icon(name, size)
     props = {
-      src: URI(
-        ActionController::Base.helpers.asset_path(
-          "assets/favicons/#{page.template}/#{name}-#{size}.png",
-          skip_pipeline: true
-        )
-      ).path,
+      src: icon_src(name, size),
       sizes: size,
       type: 'image/png'
     }
     props[:purpose] = 'any maskable' if size == '192x192' && name == 'favicon'
     props
+  end
+
+  def icon_src(name, size)
+    URI(
+      ActionController::Base.helpers.asset_path(
+        "assets/favicons/#{page.template}/#{name}-#{size}.png",
+        skip_pipeline: true
+      )
+    ).path
   end
 
   def template_options
