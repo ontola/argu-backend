@@ -50,8 +50,6 @@ class Manifest < VirtualResource
       css_class: page.template,
       header_background: page.header_background.sub('background_', ''),
       header_text: page.header_text.sub('text_', ''),
-      matomo_hostname: page.matomo_host || ENV['MATOMO_HOST'],
-      matomo_site_id: page.matomo_site_id,
       preconnect: [
         Rails.application.config.aws_url
       ].compact,
@@ -60,7 +58,8 @@ class Manifest < VirtualResource
       secondary_color: page.secondary_color,
       styled_headers: page.styled_headers,
       theme: page.template,
-      theme_options: template_options
+      theme_options: template_options,
+      tracking: tracking
     }
   end
 
@@ -84,6 +83,15 @@ class Manifest < VirtualResource
     {
       src: "#{manifest_scope}/sw.js?manifestLocation=#{Rack::Utils.escape("#{manifest_scope}/manifest.json")}",
       scope: manifest_scope
+    }
+  end
+
+  def tracking
+    {
+      google_analytics_ua_code: page.google_uac,
+      matomo_hostname: page.matomo_host || ENV['MATOMO_HOST'],
+      matomo_site_id: page.matomo_site_id,
+      tag_manager: page.google_tag_manager,
     }
   end
 

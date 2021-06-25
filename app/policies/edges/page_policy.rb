@@ -10,7 +10,7 @@ class PagePolicy < EdgePolicy
   permit_attributes %i[display_name name url iri_prefix locale]
   permit_attributes %i[primary_container_node_id], new_record: false
   permit_attributes %i[accepted_terms], has_properties: {last_accepted: false}
-  permit_attributes %i[matomo_site_id matomo_host], grant_sets: %i[staff]
+  permit_attributes %i[matomo_site_id matomo_host google_tag_manager google_uac], grant_sets: %i[staff]
 
   def permitted_tabs
     tabs = []

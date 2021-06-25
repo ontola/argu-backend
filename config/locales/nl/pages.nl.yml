@@ -65,6 +65,10 @@ nl:
       text_secondary: "Secondaire kleur"
       text_auto: "Automatisch"
     form:
+      google_tag_manager:
+        label: "Google tag manager"
+      google_uac:
+        label: "Google UA code"
       matomo_host:
         label: "Matomo host"
         description: "Laat leeg om de standaard host te gebruiken"

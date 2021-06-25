@@ -27,5 +27,7 @@ class PageForm < ApplicationForm
         label: -> { I18n.t('forms.staff_only') } do
     field :matomo_site_id
     field :matomo_host
+    field :google_tag_manager
+    field :google_uac
   end
 end

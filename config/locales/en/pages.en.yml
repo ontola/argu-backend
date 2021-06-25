@@ -66,6 +66,10 @@ en:
       text_secondary: "Secondary color"
       text_auto: "Automatic"
     form:
+      google_tag_manager:
+        label: "Google tag manager"
+      google_uac:
+        label: "Google UA code"
       matomo_host:
         label: "Matomo host"
         description: "Leave blank to use the default host"

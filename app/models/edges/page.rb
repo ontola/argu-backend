@@ -73,6 +73,8 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :requires_intro, :boolean, NS::ONTOLA[:requiresIntro], default: false
   property :matomo_site_id, :string, NS::ONTOLA[:matomoSiteId]
   property :matomo_host, :string, NS::ONTOLA[:matomoHost]
+  property :google_tag_manager, :string, NS::ONTOLA[:googleTagManager]
+  property :google_uac, :string, NS::ONTOLA[:googleUac]
   property :allowed_external_sources, :string, NS::ONTOLA[:allowedExternalSources], array: true
   property :hide_language_switcher, :boolean, NS::ONTOLA[:hideLanguageSwitcher]
   property :styled_headers, :boolean, NS::ONTOLA[:styledHeaders]
