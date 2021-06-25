@@ -66,7 +66,8 @@ Rails.application.routes.draw do
     otp_attempts: 'users/otp_attempts',
     otp_secrets: 'users/otp_secrets',
     passwords: 'users/passwords',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
   )
 
   get '/values', to: 'documents#show', name: 'values'
