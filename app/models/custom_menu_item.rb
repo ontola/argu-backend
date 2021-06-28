@@ -43,7 +43,6 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
       parent_iri: split_iri_segments(resource&.root_relative_iri)
     }
   end
-  alias canonical_iri_opts iri_opts
 
   def label
     return edge.display_name if attribute_in_database(:label).blank? && edge.present?

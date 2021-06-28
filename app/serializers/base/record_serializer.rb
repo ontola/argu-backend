@@ -2,7 +2,6 @@
 
 class RecordSerializer < BaseSerializer
   attribute :iri
-  attribute :created_at, predicate: NS.schema.dateCreated
   attribute :published_at, predicate: NS.schema.datePublished do |object|
     object.is_publishable? ? object.published_at : object.created_at
   end

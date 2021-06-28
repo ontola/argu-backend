@@ -217,14 +217,6 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     expect_response(200)
   end
 
-  test 'user should head freetown by canonical' do
-    sign_in user
-
-    head ActsAsTenant.with_tenant(argu) { freetown.canonical_iri }, headers: argu_headers(accept: :nq)
-
-    assert_redirected_to freetown.iri
-  end
-
   test 'user should head freetown discussions collection' do
     sign_in user
 

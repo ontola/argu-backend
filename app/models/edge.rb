@@ -189,16 +189,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   alias user publisher
   alias profile creator
 
-  def root_relative_canonical_iri(_opts = {})
-    RDF::URI(expand_uri_template(:edges_iri, id: uuid))
-  end
-
   def activity_recipient
     parent.is_a?(Phase) ? parent.parent : parent
-  end
-
-  def canonical_iri
-    ActsAsTenant.with_tenant(root || ActsAsTenant.current_tenant) { super }
   end
 
   def children(*args)

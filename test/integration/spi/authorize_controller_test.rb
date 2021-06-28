@@ -27,14 +27,6 @@ module SPI
       assert_response 200
     end
 
-    test 'guest should show motion as canonical' do
-      sign_in guest_user
-
-      get spi_authorize_path(resource_iri: motion.canonical_iri, authorize_action: 'show')
-
-      assert_response 200
-    end
-
     test 'guest should not show non-existing motion' do
       sign_in guest_user
 
@@ -54,17 +46,6 @@ module SPI
       assert_response 404
     end
 
-    test 'guest should not show non-existing motion as canonical' do
-      sign_in guest_user
-
-      get spi_authorize_path(
-        resource_iri: expand_uri_template(:edges_iri, id: SecureRandom.uuid, with_hostname: true),
-        authorize_action: 'show'
-      )
-
-      assert_response 404
-    end
-
     test 'guest should not update motion' do
       sign_in guest_user
 
@@ -77,14 +58,6 @@ module SPI
       sign_in guest_user
 
       get spi_authorize_path(resource_iri: resource_iri(motion), authorize_action: 'update')
-
-      assert_response 403
-    end
-
-    test 'guest should not update motion as canonical' do
-      sign_in guest_user
-
-      get spi_authorize_path(resource_iri: motion.canonical_iri, authorize_action: 'update')
 
       assert_response 403
     end

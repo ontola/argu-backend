@@ -34,7 +34,6 @@ class Move < VirtualResource
   def iri_opts
     {parent_iri: split_iri_segments(edge&.root_relative_iri)}
   end
-  alias canonical_iri_opts iri_opts
 
   def save
     moved = false

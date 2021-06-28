@@ -46,7 +46,6 @@ class SearchResult
     def iri_template_name
       :search_results_iri
     end
-    alias canonical_iri_template_name iri_template_name
 
     def iri_opts
       opts = super
