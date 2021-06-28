@@ -12,7 +12,7 @@ class EmailAddressActionList < ApplicationActionList
       )
     },
     http_method: :post,
-    type: NS::ONTOLA[:InlineAction]
+    type: NS.ontola[:InlineAction]
   )
 
   has_resource_action(
@@ -22,6 +22,6 @@ class EmailAddressActionList < ApplicationActionList
     image: 'fa-circle-o',
     url: -> { resource.iri('email_address%5Bprimary%5D': true) },
     http_method: :put,
-    type: NS::ONTOLA[:InlineAction]
+    type: NS.ontola[:InlineAction]
   )
 end

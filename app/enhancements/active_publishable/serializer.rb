@@ -5,7 +5,7 @@ module ActivePublishable
     extend ActiveSupport::Concern
 
     included do
-      has_one :argu_publication, predicate: NS::ARGU[:arguPublication]
+      has_one :argu_publication, predicate: NS.argu[:arguPublication]
     end
   end
 end

@@ -2,7 +2,7 @@
 
 class MeasureForm < ApplicationForm
   field :display_name
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
   field :second_opinion
   field :second_opinion_by, min_count: 1
   term_field :phase_ids,

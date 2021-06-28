@@ -2,7 +2,7 @@
 
 class SurveyForm < ContainerNodeForm
   field :display_name
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
   field :external_iri
   has_one :default_cover_photo
   has_one :custom_placement

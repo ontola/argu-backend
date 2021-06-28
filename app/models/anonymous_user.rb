@@ -12,7 +12,7 @@ class AnonymousUser < User
   end
 
   def self.iri
-    [NS::ONTOLA[:AnonymousUser], NS::SCHEMA[:Person]]
+    [NS.ontola[:AnonymousUser], NS.schema.Person]
   end
 
   private

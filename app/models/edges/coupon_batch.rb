@@ -6,17 +6,17 @@ class CouponBatch < Edge
   parentable :budget_shop
 
   with_columns default: [
-    NS::SCHEMA.name,
-    NS::ARGU[:couponCount],
-    NS::SCHEMA.dateCreated
+    NS.schema.name,
+    NS.argu[:couponCount],
+    NS.schema.dateCreated
   ]
 
   before_create :generate_tokens
 
-  property :display_name, :string, NS::SCHEMA[:name]
-  property :coupons, :string, NS::ARGU[:coupons], array: true, preload: false
-  property :used_coupons, :string, NS::ARGU[:usedCoupons], array: true, preload: false
-  property :coupon_count, :integer, NS::ARGU[:couponCount], default: 0
+  property :display_name, :string, NS.schema.name
+  property :coupons, :string, NS.argu[:coupons], array: true, preload: false
+  property :used_coupons, :string, NS.argu[:usedCoupons], array: true, preload: false
+  property :coupon_count, :integer, NS.argu[:couponCount], default: 0
 
   private
 

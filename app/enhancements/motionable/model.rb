@@ -14,27 +14,27 @@ module Motionable
       def default_motion_sorting_for(parent)
         sorting = default_motion_sorting_opts(parent)
         [
-          {key: NS::ARGU[:pinnedAt], direction: :asc},
+          {key: NS.argu[:pinnedAt], direction: :asc},
           sorting
         ]
       end
 
-      def default_motion_sorting_opts(parent) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
-        return {key: NS::ARGU[:lastActivityAt], direction: :desc} unless parent.try(:default_motion_sorting)
+      def default_motion_sorting_opts(parent) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+        return {key: NS.argu[:lastActivityAt], direction: :desc} unless parent.try(:default_motion_sorting)
 
         case parent.default_motion_sorting
         when 'popular'
-          {key: NS::ARGU[:votesProCount], direction: :desc}
+          {key: NS.argu[:votesProCount], direction: :desc}
         when 'created_at'
-          {key: NS::SCHEMA[:dateCreated], direction: :desc}
+          {key: NS.schema.dateCreated, direction: :desc}
         when 'updated_at'
-          {key: NS::ARGU[:lastActivityAt], direction: :desc}
+          {key: NS.argu[:lastActivityAt], direction: :desc}
         when 'popular_asc'
-          {key: NS::ARGU[:votesProCount], direction: :asc}
+          {key: NS.argu[:votesProCount], direction: :asc}
         when 'created_at_asc'
-          {key: NS::SCHEMA[:dateCreated], direction: :asc}
+          {key: NS.schema.dateCreated, direction: :asc}
         when 'updated_at_asc'
-          {key: NS::ARGU[:lastActivityAt], direction: :asc}
+          {key: NS.argu[:lastActivityAt], direction: :asc}
         end
       end
     end

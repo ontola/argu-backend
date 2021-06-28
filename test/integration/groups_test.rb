@@ -200,6 +200,6 @@ class GroupsTest < ActionDispatch::IntegrationTest
   # @param [Symbol] tab The tab to be shown (defaults to :general)
   def assert_group_settings_shown(group, tab = :general)
     assert_response 200
-    expect_resource_type(NS::ONTOLA[:MenuItem], iri: settings_iri(group, tab: tab))
+    expect_resource_type(NS.ontola[:MenuItem], iri: settings_iri(group, tab: tab))
   end
 end

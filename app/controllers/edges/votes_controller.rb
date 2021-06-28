@@ -51,7 +51,7 @@ class VotesController < EdgeableController
   end
 
   def remove_same_as_delta
-    [current_vote_iri(authenticated_resource.parent), NS::SCHEMA.option, NS::ARGU[:abstain], delta_iri(:replace)]
+    [current_vote_iri(authenticated_resource.parent), NS.schema.option, NS.argu[:abstain], delta_iri(:replace)]
   end
 
   def destroy_success
@@ -81,8 +81,8 @@ class VotesController < EdgeableController
   def invalidate_trash_action
     [
       current_resource.action(:trash).iri,
-      NS::SP[:Variable],
-      NS::SP[:Variable],
+      NS.sp.Variable,
+      NS.sp.Variable,
       delta_iri(:invalidate)
     ]
   end

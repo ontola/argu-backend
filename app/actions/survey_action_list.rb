@@ -4,7 +4,7 @@ class SurveyActionList < EdgeActionList
   has_resource_action(
     :create_submission,
     result: Submission,
-    type: -> { [NS::ARGU[:SubmitAction]] },
+    type: -> { [NS.argu[:SubmitAction]] },
     policy: :create_child?,
     policy_resource: -> { resource.submission_collection(user_context: user_context) },
     url: -> { collection_iri(resource, :submissions) },

@@ -2,7 +2,7 @@
 
 class DecisionForm < ApplicationForm
   field :state, input_field: LinkedRails::Form::Field::RadioGroup
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
 
   footer do
     actor_selector

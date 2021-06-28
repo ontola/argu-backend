@@ -67,12 +67,12 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
         .group_by { |m| m.class.name }
   end
 
-  def format_value_xls(value) # rubocop:disable Metrics/MethodLength
+  def format_value_xls(value) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     case value
     when Array
       value.map { |v| format_value_xls(v) }.join(', ')
     when Hash
-      if value[:type] == NS::ONTOLA[:Collection]
+      if value[:type] == NS.ontola[:Collection]
         value[:totalCount]
       elsif value[:iri].present?
         Spreadsheet::Link.new(value[:iri].to_s)
@@ -151,8 +151,8 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
       record.path,
       record.iri.to_s,
       retracted_label(record),
-      measures[NS::ARGU[:usersCount]],
-      measures[NS::ARGU[:contributionsCount]],
+      measures[NS.argu[:usersCount]],
+      measures[NS.argu[:contributionsCount]],
       record.try(:default_vote_event)&.children_count(:votes_pro),
       record.try(:default_vote_event)&.children_count(:votes_neutral),
       record.try(:default_vote_event)&.children_count(:votes_con)

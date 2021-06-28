@@ -5,7 +5,7 @@ module Phaseable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :phases, predicate: NS::ARGU[:phases]
+      with_collection :phases, predicate: NS.argu[:phases]
     end
   end
 end

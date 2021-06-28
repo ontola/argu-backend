@@ -5,7 +5,7 @@ module CouponBatchable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :coupon_batches, predicate: NS::ARGU[:couponBatches]
+      with_collection :coupon_batches, predicate: NS.argu[:couponBatches]
     end
   end
 end

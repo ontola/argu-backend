@@ -167,7 +167,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   def sign_out_menu_item
     menu_item(
       :signout,
-      action: NS::LIBRO['actions/logout'],
+      action: NS.libro['actions/logout'],
       label: I18n.t('sign_out'),
       href: LinkedRails.iri(path: 'u/sign_out')
     )

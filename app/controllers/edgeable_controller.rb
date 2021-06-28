@@ -82,7 +82,7 @@ class EdgeableController < ServiceController
     if current_resource.previously_changed_relations.include?('grant_collection')
       meta.concat(
         GrantTree.new(current_resource.root).granted_groups(current_resource).map do |granted_group|
-          [current_resource.iri, NS::ARGU[:grantedGroups], granted_group.iri, delta_iri(:replace)]
+          [current_resource.iri, NS.argu[:grantedGroups], granted_group.iri, delta_iri(:replace)]
         end
       )
     end

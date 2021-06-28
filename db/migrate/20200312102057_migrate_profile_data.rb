@@ -16,7 +16,7 @@ class MigrateProfileData < ActiveRecord::Migration[6.0]
     # migrate to pages
     Property.create(
       Profile.where(profileable_type: 'Edge').pluck(:profileable_id, :name).map do |props|
-        {edge_id: props.first, string: props.second, predicate: NS::SCHEMA[:name].to_s}
+        {edge_id: props.first, string: props.second, predicate: NS.schema.name.to_s}
       end
     )
 

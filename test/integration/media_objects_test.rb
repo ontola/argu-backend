@@ -19,7 +19,7 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
     get resource_iri(media_object), headers: argu_headers(accept: :json_api)
 
     assert_response 200
-    assert_equal NS::SCHEMA[:MediaObject].to_s, primary_resource['attributes']['type']
+    assert_equal NS.schema.MediaObject.to_s, primary_resource['attributes']['type']
   end
 
   test 'Guest should get show ImageObject' do
@@ -28,7 +28,7 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
     get resource_iri(image_object), headers: argu_headers(accept: :json_api)
 
     assert_response 200
-    assert_equal NS::SCHEMA[:ImageObject].to_s, primary_resource['attributes']['type']
+    assert_equal NS.schema.ImageObject.to_s, primary_resource['attributes']['type']
   end
 
   test 'Guest should get show user profile photo' do
@@ -37,7 +37,7 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
     get resource_iri(user.default_profile_photo, root: argu), headers: argu_headers(accept: :json_api)
 
     assert_response 200
-    assert_equal NS::SCHEMA[:ImageObject].to_s, primary_resource['attributes']['type']
+    assert_equal NS.schema.ImageObject.to_s, primary_resource['attributes']['type']
   end
 
   test 'Guest should get html redirect original version of image' do
@@ -66,7 +66,7 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
 
     expect_triple(
       requested_iri,
-      NS::OWL.sameAs,
+      NS.owl.sameAs,
       RDF::URI(path_with_hostname("/photos/#{profile_photo.id}/profile_photo.png").sub('http:', 'https:'))
     )
   end
@@ -79,7 +79,7 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
 
     expect_triple(
       requested_iri,
-      NS::OWL.sameAs,
+      NS.owl.sameAs,
       RDF::URI(path_with_hostname("/photos/#{profile_photo.id}/box_profile_photo.jpg").sub('http:', 'https:'))
     )
   end

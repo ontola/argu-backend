@@ -2,7 +2,7 @@
 
 class PhaseForm < ContainerNodeForm
   field :display_name
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
   field :order
   field :time
   has_many :attachments

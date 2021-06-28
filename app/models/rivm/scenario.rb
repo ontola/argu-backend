@@ -5,7 +5,7 @@ class Scenario < Edge
   enhance Attachable
   enhance LinkedRails::Enhancements::Tableable
   with_columns default: [
-    NS::SCHEMA[:name]
+    NS.schema.name
   ]
 
   parentable :incident
@@ -19,7 +19,7 @@ class Scenario < Edge
 
   class << self
     def iri_namespace
-      NS::RIVM
+      NS.rivm
     end
   end
 end

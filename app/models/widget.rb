@@ -24,15 +24,15 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
     custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, blog_posts: 6, new_topic: 7
   }
   enum view: {full_view: 0, compact_view: 1, preview_view: 2}
-  self.default_sortings = [{key: NS::ARGU[:order], direction: :asc}]
+  self.default_sortings = [{key: NS.argu[:order], direction: :asc}]
 
   with_columns default: [
-    NS::ARGU[:rawResource],
-    NS::ONTOLA[:widgetSize],
-    NS::ARGU[:order],
-    NS::ARGU[:view],
-    NS::ONTOLA[:updateAction],
-    NS::ONTOLA[:destroyAction]
+    NS.argu[:rawResource],
+    NS.ontola[:widgetSize],
+    NS.argu[:order],
+    NS.argu[:view],
+    NS.ontola[:updateAction],
+    NS.ontola[:destroyAction]
   ]
 
   acts_as_list scope: :owner
@@ -75,10 +75,10 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def topology
-    return NS::ARGU[:grid] if preview_view?
-    return NS::ARGU[:container] if compact_view?
+    return NS.argu[:grid] if preview_view?
+    return NS.argu[:container] if compact_view?
 
-    NS::ARGU[:fullResource]
+    NS.argu[:fullResource]
   end
 
   private
@@ -108,7 +108,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def iri
-      NS::ONTOLA[:Widget]
+      NS.ontola[:Widget]
     end
 
     def create_blog_posts(owner)

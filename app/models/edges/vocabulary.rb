@@ -11,13 +11,13 @@ class Vocabulary < Edge
   enhance RootGrantable
   include Shortnameable
 
-  property :display_name, :string, NS::SCHEMA[:name]
-  property :description, :text, NS::SCHEMA[:text]
-  property :tagged_label, :text, NS::ARGU[:taggedLabel]
+  property :display_name, :string, NS.schema.name
+  property :description, :text, NS.schema.text
+  property :tagged_label, :text, NS.argu[:taggedLabel]
   with_columns default: [
-    NS::SCHEMA[:name],
-    NS::ONTOLA[:updateAction],
-    NS::ONTOLA[:destroyAction]
+    NS.schema.name,
+    NS.ontola[:updateAction],
+    NS.ontola[:destroyAction]
   ]
   with_collection :terms, default_title: ->(r) { r.display_name }
 

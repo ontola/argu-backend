@@ -5,7 +5,7 @@ module BudgetShoppable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :budget_shops, predicate: NS::ARGU[:budgetShops]
+      with_collection :budget_shops, predicate: NS.argu[:budgetShops]
     end
   end
 end

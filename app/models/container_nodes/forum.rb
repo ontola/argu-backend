@@ -8,7 +8,7 @@ class Forum < ContainerNode
   enhance Questionable
   enhance Topicable
 
-  property :default_decision_group_id, :integer, NS::ARGU[:defaultDecisionGroupId]
+  property :default_decision_group_id, :integer, NS.argu[:defaultDecisionGroupId]
 
   belongs_to :default_decision_group, class_name: 'Group', foreign_key_property: :default_decision_group_id
   has_one :primary_container_node_of,

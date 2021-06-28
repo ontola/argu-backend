@@ -22,10 +22,10 @@ class Phase < Edge
 
   counter_cache true
   parentable :project
-  self.default_sortings = [{key: NS::ARGU[:order], direction: :asc}]
+  self.default_sortings = [{key: NS.argu[:order], direction: :asc}]
 
-  property :order, :integer, NS::ARGU[:order]
-  property :time, :string, NS::ARGU[:time]
+  property :order, :integer, NS.argu[:order]
+  property :time, :string, NS.argu[:time]
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}

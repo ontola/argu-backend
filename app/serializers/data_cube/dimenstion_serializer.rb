@@ -2,6 +2,6 @@
 
 module DataCube
   class DimensionSerializer < ComponentSerializer
-    attribute :predicate, predicate: NS::CUBE[:dimension]
+    attribute :predicate, predicate: NS.cube[:dimension]
   end
 end

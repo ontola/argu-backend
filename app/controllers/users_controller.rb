@@ -7,7 +7,7 @@ class UsersController < AuthorizedController
 
   def changes_triples
     super + [
-      change_triple(NS::SCHEMA[:name], current_resource.display_name)
+      change_triple(NS.schema.name, current_resource.display_name)
     ]
   end
 

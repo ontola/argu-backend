@@ -8,14 +8,14 @@ class HomePlacementSerializer < PlacementSerializer
     def self.options
       Hash[
         country_options.map do |key, value|
-          [value.upcase.to_sym, label: key, exact_match: NS::ARGU["Country/#{value}"]]
+          [value.upcase.to_sym, label: key, exact_match: NS.argu["Country/#{value}"]]
         end
       ]
     end
   end
 
   enum :country_code,
-       predicate: NS::SCHEMA[:addressCountry],
-       type: NS::SCHEMA[:Country],
+       predicate: NS.schema.addressCountry,
+       type: NS.schema.Country,
        options: CountryOptions.options
 end

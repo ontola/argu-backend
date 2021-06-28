@@ -26,11 +26,11 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_ltree_hierarchy
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
   filterable(
-    NS::ARGU[:trashed] => boolean_filter(
+    NS.argu[:trashed] => boolean_filter(
       ->(scope) { scope.where.not(trashed_at: nil) },
       ->(scope) { scope.where(trashed_at: nil) }
     ),
-    NS::ARGU[:isDraft] => boolean_filter(
+    NS.argu[:isDraft] => boolean_filter(
       ->(scope) { scope.where(is_published: false) },
       ->(scope) { scope.where(is_published: true) }
     )
@@ -180,8 +180,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   acts_as_sequenced scope: :root_id, column: :fragment
 
   self.default_filters = {
-    NS::ARGU[:trashed] => [false],
-    NS::ARGU[:isDraft] => [false]
+    NS.argu[:trashed] => [false],
+    NS.argu[:isDraft] => [false]
   }
 
   attr_writer :root

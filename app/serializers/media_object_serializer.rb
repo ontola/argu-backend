@@ -7,47 +7,47 @@ class MediaObjectSerializer < RecordSerializer
 
   attribute :type, predicate: RDF[:type] do |object|
     if object.type == 'image' || object.profile_photo? || object.cover_photo?
-      NS::SCHEMA[:ImageObject]
+      NS.schema.ImageObject
     elsif object.type == 'video'
-      NS::SCHEMA[:VideoObject]
+      NS.schema.VideoObject
     else
-      NS::SCHEMA[:MediaObject]
+      NS.schema.MediaObject
     end
   end
-  attribute :content, predicate: NS::SCHEMA[:contentUrl] do |object|
+  attribute :content, predicate: NS.schema.contentUrl do |object|
     object.url_for_version('content') if object.persisted?
   end
   attribute :content_type,
-            predicate: NS::SCHEMA[:encodingFormat],
-            datatype: NS::XSD[:string] do |object|
+            predicate: NS.schema.encodingFormat,
+            datatype: NS.xsd.string do |object|
     object.content_type unless object.type == 'video'
   end
-  attribute :created_at, predicate: NS::SCHEMA[:uploadDate]
-  attribute :description, predicate: NS::SCHEMA[:caption]
-  attribute :embed_url, predicate: NS::SCHEMA[:embedUrl]
-  attribute :filename, predicate: NS::DBO[:filename] do |object|
+  attribute :created_at, predicate: NS.schema.uploadDate
+  attribute :description, predicate: NS.schema.caption
+  attribute :embed_url, predicate: NS.schema.embedUrl
+  attribute :filename, predicate: NS.dbo[:filename] do |object|
     object.filename || object.content_uid
   end
   attribute :remote_content_url,
-            predicate: NS::ARGU[:remoteContentUrl],
-            datatype: NS::XSD[:string], &:remote_url
-  attribute :thumbnail, predicate: NS::SCHEMA[:thumbnail] do |object|
+            predicate: NS.argu[:remoteContentUrl],
+            datatype: NS.xsd.string, &:remote_url
+  attribute :thumbnail, predicate: NS.schema.thumbnail do |object|
     object.url_for_version('thumbnail')
   end
   attribute :position_y,
-            predicate: NS::ONTOLA[:imagePositionY],
-            datatype: NS::XSD[:integer] do |object|
+            predicate: NS.ontola[:imagePositionY],
+            datatype: NS.xsd.integer do |object|
     object.position_y || 50
   end
-  attribute :used_as, predicate: NS::ARGU[:fileUsage]
-  attribute :copy_url, predicate: NS::ARGU[:copyUrl] do |object|
+  attribute :used_as, predicate: NS.argu[:fileUsage]
+  attribute :copy_url, predicate: NS.argu[:copyUrl] do |object|
     ontola_copy_action(object.iri)
   end
-  enum :content_source, predicate: NS::ARGU[:contentSource]
+  enum :content_source, predicate: NS.argu[:contentSource]
   statements :copy_action_statements
 
   MediaObjectUploader::IMAGE_VERSIONS.each do |format, opts|
-    attribute format, predicate: NS::ONTOLA[:"imgUrl#{opts[:w]}x#{opts[:h]}"] do |object|
+    attribute format, predicate: NS.ontola[:"imgUrl#{opts[:w]}x#{opts[:h]}"] do |object|
       object.url_for_version(format)
     end
   end
@@ -57,12 +57,12 @@ class MediaObjectSerializer < RecordSerializer
       action_iri = ontola_copy_action(object.iri)
       target_iri = RDF::URI("#{action_iri}#entrypoint")
       [
-        RDF::Statement.new(action_iri, RDF[:type], NS::ARGU[:CopyAction]),
-        RDF::Statement.new(action_iri, NS::SCHEMA.name, I18n.t('menus.default.copy')),
-        RDF::Statement.new(action_iri, NS::SCHEMA.target, target_iri),
-        RDF::Statement.new(target_iri, RDF[:type], NS::SCHEMA.EntryPoint),
-        RDF::Statement.new(target_iri, NS::SCHEMA.name, I18n.t('menus.default.copy')),
-        RDF::Statement.new(target_iri, NS::SCHEMA.image, font_awesome_iri('clipboard'))
+        RDF::Statement.new(action_iri, RDF[:type], NS.argu[:CopyAction]),
+        RDF::Statement.new(action_iri, NS.schema.name, I18n.t('menus.default.copy')),
+        RDF::Statement.new(action_iri, NS.schema.target, target_iri),
+        RDF::Statement.new(target_iri, RDF[:type], NS.schema.EntryPoint),
+        RDF::Statement.new(target_iri, NS.schema.name, I18n.t('menus.default.copy')),
+        RDF::Statement.new(target_iri, NS.schema.image, font_awesome_iri('clipboard'))
       ]
     end
   end

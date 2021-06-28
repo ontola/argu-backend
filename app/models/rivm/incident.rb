@@ -7,8 +7,8 @@ class Incident < Edge
   enhance LinkedRails::Enhancements::Tableable
 
   with_columns default: [
-    NS::SCHEMA[:name],
-    NS::ARGU[:scenariosCount]
+    NS.schema.name,
+    NS.argu[:scenariosCount]
   ]
 
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
@@ -16,7 +16,7 @@ class Incident < Edge
 
   class << self
     def iri_namespace
-      NS::RIVM
+      NS.rivm
     end
   end
 end

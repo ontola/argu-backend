@@ -21,24 +21,24 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
 
   test 'property assignment' do
     motion
-    name_id = motion.property_manager(NS::SCHEMA[:name]).send(:properties).first.id
-    text_id = motion.property_manager(NS::SCHEMA[:text]).send(:properties).first.id
+    name_id = motion.property_manager(NS.schema.name).send(:properties).first.id
+    text_id = motion.property_manager(NS.schema.text).send(:properties).first.id
 
     assert_no_difference('Property.count') do
       motion.update!(description: 'New description')
     end
 
-    assert_not_equal(text_id, reloaded_motion.property_manager(NS::SCHEMA[:text]).send(:properties).first.id)
-    assert_equal(name_id, reloaded_motion.property_manager(NS::SCHEMA[:name]).send(:properties).first.id)
+    assert_not_equal(text_id, reloaded_motion.property_manager(NS.schema.text).send(:properties).first.id)
+    assert_equal(name_id, reloaded_motion.property_manager(NS.schema.name).send(:properties).first.id)
     assert_equal 'New description', reloaded_motion.description
-    assert_equal 'New description', reloaded_motion.property_manager(NS::SCHEMA[:text]).value
+    assert_equal 'New description', reloaded_motion.property_manager(NS.schema.text).value
 
     assert_no_difference('Property.count') do
       motion.update!(description: nil)
     end
 
     assert_nil reloaded_motion.description
-    assert_nil reloaded_motion.property_manager(NS::SCHEMA[:text]).value
+    assert_nil reloaded_motion.property_manager(NS.schema.text).value
   end
 
   test 'property array assignment' do
@@ -46,22 +46,22 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
     assert_difference('Property.count' => 2) do
       intervention.update!(communication: %i[open_communication communication_processed])
     end
-    prop_id = intervention.property_manager(NS::RIVM[:communication]).send(:properties).first.id
+    prop_id = intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
     assert_difference('Property.count' => 0) do
       intervention.update!(communication: %i[open_communication communication_processed])
     end
     assert_equal %w[open_communication communication_processed], reloaded_intervention.communication
-    assert_equal prop_id, intervention.property_manager(NS::RIVM[:communication]).send(:properties).first.id
+    assert_equal prop_id, intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
 
     assert_difference('Property.count' => -1) do
       intervention.update!(communication: %i[open_communication])
     end
-    assert_not_equal prop_id, intervention.property_manager(NS::RIVM[:communication]).send(:properties).first.id
-    prop_id = intervention.property_manager(NS::RIVM[:communication]).send(:properties).first.id
+    assert_not_equal prop_id, intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
+    prop_id = intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
     assert_difference('Property.count' => 0) do
       intervention.update!(communication: %i[open_communication])
     end
-    assert_equal prop_id, intervention.property_manager(NS::RIVM[:communication]).send(:properties).first.id
+    assert_equal prop_id, intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
     assert_equal %w[open_communication], reloaded_intervention.communication
   end
 
@@ -70,11 +70,11 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
     assert_difference('Property.count' => 1) do
       intervention.update!(communication: :open_communication)
     end
-    prop_id = intervention.property_manager(NS::RIVM[:communication]).send(:properties).first.id
+    prop_id = intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
     assert_difference('Property.count' => 0) do
       intervention.update!(communication: %i[open_communication])
     end
-    assert_equal prop_id, intervention.property_manager(NS::RIVM[:communication]).send(:properties).first.id
+    assert_equal prop_id, intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
     assert_equal %w[open_communication], reloaded_intervention.communication
   end
 
@@ -158,7 +158,7 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
 
   test 'property destruction' do
     assert_not_nil freetown.default_decision_group
-    Property.where(predicate: NS::ARGU[:defaultDecisionGroupId].to_s).destroy_all
+    Property.where(predicate: NS.argu[:defaultDecisionGroupId].to_s).destroy_all
     assert_nil freetown.reload.default_decision_group
   end
 

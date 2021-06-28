@@ -13,7 +13,7 @@ class CreateVote < CreateEdge
     Vote
       .where_with_redis(
         root_id: ActsAsTenant.current_tenant.uuid,
-        option: Vote.filter_options[NS::SCHEMA[:option]][:values][attributes[:option]],
+        option: Vote.filter_options[NS.schema.option][:values][attributes[:option]],
         creator: profile,
         primary: true
       ).find_by(parent: parent)

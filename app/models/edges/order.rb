@@ -7,7 +7,7 @@ class Order < Edge
   after_commit :clear_cart!
   delegate :currency, to: :parent
 
-  property :coupon, :string, NS::ARGU[:coupon]
+  property :coupon, :string, NS.argu[:coupon]
   validates :coupon, presence: true
   validate :validate_coupon
   after_create :invalidate_token
@@ -15,18 +15,18 @@ class Order < Edge
 
   with_collection :order_details
   with_columns default: [
-    NS::SCHEMA.creator,
-    NS::ARGU[:orderDetails],
-    NS::ARGU[:price],
-    NS::SCHEMA.dateCreated
+    NS.schema.creator,
+    NS.argu[:orderDetails],
+    NS.argu[:price],
+    NS.schema.dateCreated
   ]
 
   def added_delta # rubocop:disable Metrics/AbcSize
     [
-      [cart.iri, NS::SP[:Variable], NS::SP[:Variable], delta_iri(:invalidate)],
-      [parent.order_collection.action(:create).iri, NS::SP[:Variable], NS::SP[:Variable], delta_iri(:invalidate)],
-      [NS::SP[:Variable], RDF.type, NS::ONTOLA['Create::CartDetail'], delta_iri(:invalidate)],
-      [NS::SP[:Variable], RDF.type, NS::ONTOLA['Destroy::CartDetail'], delta_iri(:invalidate)]
+      [cart.iri, NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)],
+      [parent.order_collection.action(:create).iri, NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)],
+      [NS.sp.Variable, RDF.type, NS.ontola['Create::CartDetail'], delta_iri(:invalidate)],
+      [NS.sp.Variable, RDF.type, NS.ontola['Destroy::CartDetail'], delta_iri(:invalidate)]
     ]
   end
 
@@ -52,9 +52,9 @@ class Order < Edge
     # rubocop:disable Rails/SkipsModelValidations
     Property.find_by!(
       edge: coupon_batch,
-      predicate: NS::ARGU[:coupons].to_s,
+      predicate: NS.argu[:coupons].to_s,
       string: coupon
-    ).update_column(:predicate, NS::ARGU[:usedCoupons].to_s)
+    ).update_column(:predicate, NS.argu[:usedCoupons].to_s)
     # rubocop:enable Rails/SkipsModelValidations
   end
 

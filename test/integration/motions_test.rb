@@ -96,9 +96,9 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     filter = {
-      CGI.escape(NS::SCHEMA[:latitude]) => 1,
-      CGI.escape(NS::SCHEMA[:longitude]) => 1,
-      CGI.escape(NS::ONTOLA[:zoomLevel]) => 1
+      CGI.escape(NS.schema.latitude) => 1,
+      CGI.escape(NS.schema.longitude) => 1,
+      CGI.escape(NS.ontola[:zoomLevel]) => 1
     }
     Thread.current[:mock_searchkick] = false
     assert_difference('Motion.count' => 1, 'Placement.count' => 1, 'Place.count' => 1, 'Activity.count' => 1) do

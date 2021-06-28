@@ -35,20 +35,20 @@ class CartDetail < Edge
     [
       reset_action_error(order_action),
       reset_action_status(order_action),
-      [cart.iri, NS::SCHEMA.totalPaymentDue, cart.total_value&.cents, delta_iri(:replace)]
+      [cart.iri, NS.schema.totalPaymentDue, cart.total_value&.cents, delta_iri(:replace)]
     ]
   end
 
   def reset_action_error(action)
     if action.error
-      [action.iri, NS::SCHEMA.error, action.error, delta_iri(:replace)]
+      [action.iri, NS.schema.error, action.error, delta_iri(:replace)]
     else
-      [action.iri, NS::SCHEMA.error, NS::SP[:Variable], delta_iri(:remove)]
+      [action.iri, NS.schema.error, NS.sp.Variable, delta_iri(:remove)]
     end
   end
 
   def reset_action_status(action)
-    [action.iri, NS::SCHEMA.actionStatus, action.action_status, delta_iri(:replace)]
+    [action.iri, NS.schema.actionStatus, action.action_status, delta_iri(:replace)]
   end
 
   def reset_offer_action_status(user_context)

@@ -437,7 +437,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def iri
-      NS::SCHEMA[:Person]
+      NS.schema.Person
     end
   end
 end

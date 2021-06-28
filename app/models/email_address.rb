@@ -22,17 +22,17 @@ class EmailAddress < ApplicationRecord
   before_update :send_confirmation_instructions, if: :email_changed?
 
   with_columns settings: [
-    NS::SCHEMA[:email],
-    NS::ONTOLA[:makePrimaryAction],
-    NS::ONTOLA[:sendConfirmationAction],
-    NS::ONTOLA[:destroyAction]
+    NS.schema.email,
+    NS.ontola[:makePrimaryAction],
+    NS.ontola[:sendConfirmationAction],
+    NS.ontola[:destroyAction]
   ]
-  filterable NS::ARGU[:confirmed] => boolean_filter(
+  filterable NS.argu[:confirmed] => boolean_filter(
     ->(scope) { scope.where.not(confirmed_at: nil) },
     ->(scope) { scope.where(confirmed_at: nil) }
   )
 
-  self.default_sortings = [{key: NS::SCHEMA[:email], direction: :asc}]
+  self.default_sortings = [{key: NS.schema.email, direction: :asc}]
 
   validate :dont_update_confirmed_email
   validates :email,
@@ -121,11 +121,11 @@ class EmailAddress < ApplicationRecord
     end
 
     def input_select_property
-      NS::SCHEMA[:email]
+      NS.schema.email
     end
 
     def sort_options(_collection)
-      [NS::SCHEMA[:email]]
+      [NS.schema.email]
     end
   end
 end

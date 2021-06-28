@@ -5,8 +5,8 @@ module Offerable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :offers, predicate: NS::ARGU[:offers]
-      with_collection :orders, predicate: NS::ARGU[:orders]
+      with_collection :offers, predicate: NS.argu[:offers]
+      with_collection :orders, predicate: NS.argu[:orders]
     end
   end
 end

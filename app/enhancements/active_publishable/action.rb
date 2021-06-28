@@ -7,7 +7,7 @@ module ActivePublishable
     included do
       has_resource_action(
         :publish,
-        type: [NS::SCHEMA[:Action], NS::ARGU[:PublishAction]],
+        type: [NS.schema.Action, NS.argu[:PublishAction]],
         policy: :publish?,
         http_method: :put,
         image: 'fa-send',

@@ -5,7 +5,7 @@ module Projectable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :projects, predicate: NS::ARGU[:projects]
+      with_collection :projects, predicate: NS.argu[:projects]
     end
   end
 end

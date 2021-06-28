@@ -5,7 +5,7 @@ module Scenariable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :scenarios, predicate: NS::RIVM[:scenarios]
+      with_collection :scenarios, predicate: NS.rivm[:scenarios]
     end
   end
 end

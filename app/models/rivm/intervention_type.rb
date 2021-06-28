@@ -12,23 +12,23 @@ class InterventionType < Edge
 
   parentable :page
   with_columns default: [
-    NS::SCHEMA[:name],
-    NS::ARGU[:interventionsCount]
+    NS.schema.name,
+    NS.argu[:interventionsCount]
   ]
 
-  property :one_off_costs_score, :integer, NS::RIVM[:oneOffCostsScore], default: 0
-  property :recurring_costs_score, :integer, NS::RIVM[:recurringCostsScore], default: 0
-  property :security_improved_score, :integer, NS::RIVM[:securityImprovedScore], default: 0
+  property :one_off_costs_score, :integer, NS.rivm[:oneOffCostsScore], default: 0
+  property :recurring_costs_score, :integer, NS.rivm[:recurringCostsScore], default: 0
+  property :security_improved_score, :integer, NS.rivm[:securityImprovedScore], default: 0
 
-  self.default_sortings = [{key: NS::ARGU[:interventionsCount], direction: :desc}]
+  self.default_sortings = [{key: NS.argu[:interventionsCount], direction: :desc}]
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
 
   def sync_scores
     update(
-      one_off_costs_score: average_score(NS::RIVM[:oneOffCosts]),
-      recurring_costs_score: average_score(NS::RIVM[:recurringCosts]),
-      security_improved_score: average_score(NS::RIVM[:securityImproved])
+      one_off_costs_score: average_score(NS.rivm[:oneOffCosts]),
+      recurring_costs_score: average_score(NS.rivm[:recurringCosts]),
+      security_improved_score: average_score(NS.rivm[:securityImproved])
     )
   end
 
@@ -44,7 +44,7 @@ class InterventionType < Edge
     end
 
     def iri_namespace
-      NS::RIVM
+      NS.rivm
     end
 
     def default_collection_display
@@ -63,11 +63,11 @@ class InterventionType < Edge
       return super if collection.type == :infinite
 
       [
-        NS::SCHEMA[:name],
-        NS::SCHEMA[:dateCreated],
-        NS::RIVM[:oneOffCostsScore],
-        NS::RIVM[:recurringCostsScore],
-        NS::RIVM[:securityImprovedScore]
+        NS.schema.name,
+        NS.schema.dateCreated,
+        NS.rivm[:oneOffCostsScore],
+        NS.rivm[:recurringCostsScore],
+        NS.rivm[:securityImprovedScore]
       ]
     end
 

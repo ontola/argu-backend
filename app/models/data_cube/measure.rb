@@ -4,7 +4,7 @@ module DataCube
   class Measure < Component
     class << self
       def iri
-        NS::CUBE[:MeasureProperty]
+        NS.cube[:MeasureProperty]
       end
     end
   end

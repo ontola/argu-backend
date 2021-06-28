@@ -4,7 +4,7 @@ module DataCube
   class Dimension < Component
     class << self
       def iri
-        NS::CUBE[:DimensionProperty]
+        NS.cube[:DimensionProperty]
       end
     end
   end

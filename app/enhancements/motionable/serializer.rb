@@ -5,7 +5,7 @@ module Motionable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :motions, predicate: NS::ARGU[:motions]
+      with_collection :motions, predicate: NS.argu[:motions]
     end
   end
 end

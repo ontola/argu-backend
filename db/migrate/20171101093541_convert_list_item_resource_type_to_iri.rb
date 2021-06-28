@@ -9,9 +9,9 @@ class ConvertListItemResourceTypeToIRI < ActiveRecord::Migration[5.1]
         full_type =
           case resource_type[PREFIX_INDEX]
           when 'argu'
-            NS::ARGU[resource_type[TERM_INDEX]]
+            NS.argu[resource_type[TERM_INDEX]]
           when 'schema'
-            NS::SCHEMA[resource_type[TERM_INDEX]]
+            NS.schema[resource_type[TERM_INDEX]]
           else
             raise Error.new('prefix not known')
           end

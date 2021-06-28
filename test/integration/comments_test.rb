@@ -41,9 +41,9 @@ class CommentsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     filter = {
-      CGI.escape(NS::ARGU[:pdfPositionX]) => 1,
-      CGI.escape(NS::ARGU[:pdfPositionY]) => 2,
-      CGI.escape(NS::ARGU[:pdfPage]) => 3
+      CGI.escape(NS.argu[:pdfPositionX]) => 1,
+      CGI.escape(NS.argu[:pdfPositionY]) => 2,
+      CGI.escape(NS.argu[:pdfPage]) => 3
     }
     motion
 

@@ -21,8 +21,8 @@ class NotificationsControllerTest < ActionController::TestCase
 
     assert_response 200
 
-    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
-    expect_triple(view, NS::AS[:totalItems], 0)
+    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    expect_triple(view, NS.as[:totalItems], 0)
   end
 
   ####################################
@@ -37,8 +37,8 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200, format: :nq
-    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
-    expect_triple(view, NS::AS[:totalItems], 4)
+    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    expect_triple(view, NS.as[:totalItems], 4)
   end
 
   test 'unconfirmed user with notifications and redis_vote should get index' do
@@ -49,8 +49,8 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200
-    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
-    expect_triple(view, NS::AS[:totalItems], 5)
+    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    expect_triple(view, NS.as[:totalItems], 5)
   end
 
   ####################################
@@ -65,8 +65,8 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200
-    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
-    expect_triple(view, NS::AS[:totalItems], 0)
+    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    expect_triple(view, NS.as[:totalItems], 0)
   end
 
   test 'user with notifications should get index nq' do
@@ -78,8 +78,8 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200
-    view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
-    expect_triple(view, NS::AS[:totalItems], 4)
+    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    expect_triple(view, NS.as[:totalItems], 4)
   end
 
   private

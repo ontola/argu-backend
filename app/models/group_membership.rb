@@ -28,8 +28,8 @@ class GroupMembership < ApplicationRecord
   }
 
   with_columns settings: [
-    NS::ORG[:member],
-    NS::ONTOLA[:destroyAction]
+    NS.org[:member],
+    NS.ontola[:destroyAction]
   ]
 
   validates :member, presence: true
@@ -100,7 +100,7 @@ class GroupMembership < ApplicationRecord
     end
 
     def iri
-      [super, NS::ORG['Membership']]
+      [super, NS.org['Membership']]
     end
   end
 end

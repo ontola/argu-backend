@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BannerForm < ApplicationForm
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
   field :audience
   field :dismiss_button
   field :expires_at

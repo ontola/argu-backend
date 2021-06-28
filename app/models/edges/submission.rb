@@ -5,7 +5,7 @@ class Submission < Edge
 
   enhance LinkedRails::Enhancements::Creatable
 
-  property :session_id, :string, NS::ARGU[:sessionID]
+  property :session_id, :string, NS.argu[:sessionID]
 
   parentable :survey
 

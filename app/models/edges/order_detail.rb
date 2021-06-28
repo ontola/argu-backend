@@ -5,12 +5,12 @@ class OrderDetail < Edge
 
   parentable :order
 
-  property :offer_id, :linked_edge_id, NS::SCHEMA.orderedItem
+  property :offer_id, :linked_edge_id, NS.schema.orderedItem
   belongs_to :offer, foreign_key_property: :offer_id, class_name: 'Edge', dependent: false
   after_create :follow_product
   with_columns default: [
-    NS::SCHEMA.orderedItem,
-    NS::ARGU[:price]
+    NS.schema.orderedItem,
+    NS.argu[:price]
   ]
   delegate :price, :currency, to: :offer
 
@@ -26,7 +26,7 @@ class OrderDetail < Edge
     end
 
     def iri
-      NS::SCHEMA.OrderItem
+      NS.schema.OrderItem
     end
   end
 end

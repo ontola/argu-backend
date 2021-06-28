@@ -7,9 +7,9 @@ module Votable
     included do
       extend UriTemplateHelper
 
-      with_collection :votes, predicate: NS::ARGU[:votes]
+      with_collection :votes, predicate: NS.argu[:votes]
 
-      attribute :current_vote, predicate: NS::ARGU[:currentVote] do |object|
+      attribute :current_vote, predicate: NS.argu[:currentVote] do |object|
         current_vote_iri(object)
       end
     end

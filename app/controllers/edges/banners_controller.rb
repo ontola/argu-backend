@@ -15,6 +15,6 @@ class BannersController < EdgeableController
   def update_meta
     return super unless current_resource.dismiss_action
 
-    super + [[current_resource.dismiss_action, NS::SP[:Variable], NS::SP[:Variable], delta_iri(:invalidate)]]
+    super + [[current_resource.dismiss_action, NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]]
   end
 end

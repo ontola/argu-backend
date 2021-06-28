@@ -5,7 +5,7 @@ class Survey < Discussion
   TYPEFORM_TEMPLATE = %r{\Ahttps:\/\/(\w*).typeform.com\/to\/(\w*)\z}.freeze
   include Edgeable::Content
 
-  property :external_iri, :string, NS::ARGU[:externalIRI]
+  property :external_iri, :string, NS.argu[:externalIRI]
   parentable :container_node, :page, :phase
   with_collection :submissions
 

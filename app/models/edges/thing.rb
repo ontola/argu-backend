@@ -10,7 +10,7 @@ class Thing < Edge
   end
 
   def display_name
-    properties.find_by(predicate: [NS::SCHEMA.name.to_s, NS::FOAF.name.to_s, NS::RDFS.label.to_s])&.value
+    properties.find_by(predicate: [NS.schema.name.to_s, NS.foaf.name.to_s, NS.rdfs.label.to_s])&.value
   end
 
   def property_statements
@@ -23,7 +23,7 @@ class Thing < Edge
   def rdf_type
     properties
       .detect { |prop| prop.predicate == RDF.type }
-      &.value || NS::SCHEMA.Thing
+      &.value || NS.schema.Thing
   end
 
   private

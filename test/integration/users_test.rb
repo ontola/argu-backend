@@ -38,8 +38,8 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_response 200
 
-    expect_resource_type(NS::ONTOLA[:AnonymousUser])
-    expect_triple(requested_iri, NS::SCHEMA[:name], I18n.t('users.anonymous'))
+    expect_resource_type(NS.ontola[:AnonymousUser])
+    expect_triple(requested_iri, NS.schema.name, I18n.t('users.anonymous'))
     assert_not_includes(response.body, user_hidden_votes.display_name)
     assert_not_includes(response.body, user_hidden_votes.email)
   end
@@ -264,7 +264,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     expect_errors(
       user_form,
-      NS::SCHEMA[:email] => 'Has already been taken'
+      NS.schema.email => 'Has already been taken'
     )
   end
 
@@ -309,7 +309,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_response 422
     expect_errors(
       user_form,
-      NS::SCHEMA[:email] => 'Has already been taken'
+      NS.schema.email => 'Has already been taken'
     )
   end
 
@@ -326,10 +326,10 @@ class UsersTest < ActionDispatch::IntegrationTest
         display_name: 'new name'
       }
     }
-    expect_triple(user.iri, NS::ARGU[:hasAnalytics], true, NS::LL[:replace])
-    expect_triple(user.iri, NS::ARGU[:votesPublic], false, NS::LL[:replace])
-    expect_triple(user.iri, NS::ARGU[:public], false, NS::LL[:replace])
-    expect_triple(user.iri, NS::SCHEMA[:name], 'new name', NS::LL[:replace])
+    expect_triple(user.iri, NS.argu[:hasAnalytics], true, NS.ll[:replace])
+    expect_triple(user.iri, NS.argu[:votesPublic], false, NS.ll[:replace])
+    expect_triple(user.iri, NS.argu[:public], false, NS.ll[:replace])
+    expect_triple(user.iri, NS.schema.name, 'new name', NS.ll[:replace])
     assert_response :success
     assert_equal 'new name', user.reload.display_name
   end
@@ -348,7 +348,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal password, user.reload.encrypted_password
     expect_errors(
       user_form,
-      NS::ARGU[:currentPassword] => 'Can\'t be blank'
+      NS.argu[:currentPassword] => 'Can\'t be blank'
     )
   end
 
@@ -367,7 +367,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal password, user.reload.encrypted_password
     expect_errors(
       user_form,
-      NS::ARGU[:currentPassword] => 'Is invalid'
+      NS.argu[:currentPassword] => 'Is invalid'
     )
   end
 
@@ -556,7 +556,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user
     get resource_iri(user, root: argu)
     assert_response :success
-    expect_triple(resource_iri(user, root: argu), NS::SCHEMA[:homeLocation], nil)
+    expect_triple(resource_iri(user, root: argu), NS.schema.homeLocation, nil)
   end
 
   test 'other user should not show homePlacement' do
@@ -564,6 +564,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user_public
     get resource_iri(user, root: argu)
     assert_response :success
-    refute_triple(resource_iri(user, root: argu), NS::SCHEMA[:homeLocation], nil)
+    refute_triple(resource_iri(user, root: argu), NS.schema.homeLocation, nil)
   end
 end

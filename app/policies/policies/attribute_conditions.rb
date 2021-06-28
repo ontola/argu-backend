@@ -23,7 +23,7 @@ module Policies
       def creator_shapes(_opts)
         [
           LinkedRails::SHACL::PropertyShape.new(
-            path: [NS::SCHEMA[:creator]],
+            path: [NS.schema.creator],
             sh_in: -> { actors_iri }
           )
         ]
@@ -32,7 +32,7 @@ module Policies
       def grant_sets_shapes(grant_sets)
         [
           LinkedRails::SHACL::PropertyShape.new(
-            path: [NS::ARGU[:grantedSets], NS::RDFS.member, NS::ARGU[:grantSetKey]],
+            path: [NS.argu[:grantedSets], NS.rdfs.member, NS.argu[:grantSetKey]],
             sh_in: grant_sets
           )
         ]

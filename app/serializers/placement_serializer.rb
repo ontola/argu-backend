@@ -3,8 +3,8 @@
 class PlacementSerializer < RecordSerializer
   extend NamesHelper
 
-  attribute :coordinates, predicate: NS::ARGU[:geoCoordinates], if: method(:never)
-  attribute :image, predicate: NS::SCHEMA[:image] do |object|
+  attribute :coordinates, predicate: NS.argu[:geoCoordinates], if: method(:never)
+  attribute :image, predicate: NS.schema.image do |object|
     image =
       if object.placement_type == 'custom'
         icon = icon_for(object.placeable)
@@ -16,14 +16,14 @@ class PlacementSerializer < RecordSerializer
     serialize_image(image) if image
   end
 
-  has_one :place, predicate: NS::SCHEMA[:geo]
-  has_one :placeable, predicate: NS::SCHEMA[:isPartOf], polymorphic: true
+  has_one :place, predicate: NS.schema.geo
+  has_one :placeable, predicate: NS.schema.isPartOf, polymorphic: true
 
-  attribute :country_code, predicate: NS::SCHEMA[:addressCountry]
-  attribute :placement_type, predicate: NS::ARGU[:placementType]
-  attribute :postal_code, predicate: NS::SCHEMA[:postalCode]
+  attribute :country_code, predicate: NS.schema.addressCountry
+  attribute :placement_type, predicate: NS.argu[:placementType]
+  attribute :postal_code, predicate: NS.schema.postalCode
 
-  attribute :lat, predicate: NS::SCHEMA[:latitude]
-  attribute :lon, predicate: NS::SCHEMA[:longitude]
-  attribute :zoom_level, predicate: NS::ONTOLA[:zoomLevel]
+  attribute :lat, predicate: NS.schema.latitude
+  attribute :lon, predicate: NS.schema.longitude
+  attribute :zoom_level, predicate: NS.ontola[:zoomLevel]
 end

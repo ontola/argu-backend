@@ -5,7 +5,7 @@ module Measureable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :measures, predicate: NS::RIVM[:measures]
+      with_collection :measures, predicate: NS.rivm[:measures]
     end
   end
 end

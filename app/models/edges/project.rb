@@ -7,7 +7,7 @@ class Project < Discussion
 
   with_collection :phases
 
-  property :current_phase_id, :linked_edge_id, NS::ARGU[:currentPhase], default: nil
+  property :current_phase_id, :linked_edge_id, NS.argu[:currentPhase], default: nil
 
   belongs_to :current_phase, foreign_key_property: :current_phase_id, class_name: 'Phase', dependent: false
 

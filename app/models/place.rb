@@ -34,7 +34,7 @@ class Place < ApplicationRecord
     end
 
     def iri
-      NS::SCHEMA[:GeoCoordinates]
+      NS.schema.GeoCoordinates
     end
 
     private

@@ -9,7 +9,7 @@ module DataCube
     end
 
     def key
-      @key ||= predicate.to_s.gsub(NS::ARGU.to_s, '').underscore
+      @key ||= predicate.to_s.gsub(NS.argu.to_s, '').underscore
     end
 
     def label

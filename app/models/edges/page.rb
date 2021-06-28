@@ -24,7 +24,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance CoverPhotoable
   enhance Bannerable
 
-  property :primary_container_node_id, :linked_edge_id, NS::FOAF[:homepage]
+  property :primary_container_node_id, :linked_edge_id, NS.foaf[:homepage]
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   has_one :tenant, dependent: :destroy, foreign_key: :root_id, primary_key: :uuid, inverse_of: :page
@@ -63,22 +63,22 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   parentable :user
   placeable :custom
-  property :display_name, :string, NS::SCHEMA[:name]
-  property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
-  property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
-  property :template, :string, NS::ONTOLA[:template], default: :default
-  property :template_options, :text, NS::ONTOLA[:templateOpts], default: '{}'
-  property :home_menu_label, :string, NS::ONTOLA[:homeMenuLabel]
-  property :home_menu_image, :string, NS::ONTOLA[:homeMenuImage]
-  property :requires_intro, :boolean, NS::ONTOLA[:requiresIntro], default: false
-  property :matomo_site_id, :string, NS::ONTOLA[:matomoSiteId]
-  property :matomo_host, :string, NS::ONTOLA[:matomoHost]
-  property :google_tag_manager, :string, NS::ONTOLA[:googleTagManager]
-  property :google_uac, :string, NS::ONTOLA[:googleUac]
-  property :allowed_external_sources, :string, NS::ONTOLA[:allowedExternalSources], array: true
-  property :hide_language_switcher, :boolean, NS::ONTOLA[:hideLanguageSwitcher]
-  property :styled_headers, :boolean, NS::ONTOLA[:styledHeaders]
-  property :live_updates, :boolean, NS::ONTOLA[:liveUpdates], default: false
+  property :display_name, :string, NS.schema.name
+  property :last_accepted, :datetime, NS.argu[:lastAccepted]
+  property :locale, :string, NS.argu[:locale], default: 'nl-NL'
+  property :template, :string, NS.ontola[:template], default: :default
+  property :template_options, :text, NS.ontola[:templateOpts], default: '{}'
+  property :home_menu_label, :string, NS.ontola[:homeMenuLabel]
+  property :home_menu_image, :string, NS.ontola[:homeMenuImage]
+  property :requires_intro, :boolean, NS.ontola[:requiresIntro], default: false
+  property :matomo_site_id, :string, NS.ontola[:matomoSiteId]
+  property :matomo_host, :string, NS.ontola[:matomoHost]
+  property :google_tag_manager, :string, NS.ontola[:googleTagManager]
+  property :google_uac, :string, NS.ontola[:googleUac]
+  property :allowed_external_sources, :string, NS.ontola[:allowedExternalSources], array: true
+  property :hide_language_switcher, :boolean, NS.ontola[:hideLanguageSwitcher]
+  property :styled_headers, :boolean, NS.ontola[:styledHeaders]
+  property :live_updates, :boolean, NS.ontola[:liveUpdates], default: false
 
   belongs_to :primary_container_node,
              foreign_key_property: :primary_container_node_id,
@@ -270,7 +270,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
         .where(scope)
         .update_all("resource_iri = replace(resource_iri::text, '#{escaped_from}', '#{escaped_to}')::text[]")
       Property
-        .where(predicate: [NS::SCHEMA.url.to_s, NS::ONTOLA[:templateOpts].to_s])
+        .where(predicate: [NS.schema.url.to_s, NS.ontola[:templateOpts].to_s])
         .where(scope)
         .update_all("text = replace(text, '#{escaped_from}', '#{escaped_to}')")
       CustomMenuItem

@@ -63,9 +63,9 @@ class MotionsControllerTest < ActionController::TestCase
         :motions,
         type: :infinite,
         'before%5B%5D': %W[
-          #{CGI.escape(NS::ARGU[:pinnedAt])}=#{LinkedRails::Collection::Sorting::DATE_TIME_MIN.iso8601(6)}
-          #{CGI.escape(NS::ARGU[:lastActivityAt])}=#{current_time}
-          #{CGI.escape(NS::ONTOLA[:primaryKey])}=-2147483648
+          #{CGI.escape(NS.argu[:pinnedAt])}=#{LinkedRails::Collection::Sorting::DATE_TIME_MIN.iso8601(6)}
+          #{CGI.escape(NS.argu[:lastActivityAt])}=#{current_time}
+          #{CGI.escape(NS.ontola[:primaryKey])}=-2147483648
         ]
       )
     )

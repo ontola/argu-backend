@@ -5,7 +5,7 @@ module Discussable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :discussions, predicate: NS::ARGU[:discussions]
+      with_collection :discussions, predicate: NS.argu[:discussions]
     end
   end
 end

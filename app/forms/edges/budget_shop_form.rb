@@ -4,7 +4,7 @@ class BudgetShopForm < ApplicationForm
   visibility_text
 
   field :display_name
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
   field :budget_max, input_field: MoneyInput
   has_one :default_cover_photo
   has_many :attachments

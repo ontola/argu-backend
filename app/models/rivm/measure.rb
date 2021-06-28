@@ -21,20 +21,20 @@ class Measure < Edge
   counter_cache true
   placeable :custom
 
-  property :comments_allowed, :integer, NS::RIVM[:commentsAllowed], enum: {
+  property :comments_allowed, :integer, NS.rivm[:commentsAllowed], enum: {
     comments_are_allowed: 1,
     comments_not_allowed: 2
   }
-  term_property :phase_ids, NS::RIVM[:phases], array: true, association: :phases
-  term_property :category_ids, NS::RIVM[:categories], array: true, association: :categories
-  property :second_opinion, :boolean, NS::RIVM[:secondOpinion]
-  property :second_opinion_by, :string, NS::RIVM[:secondOpinionBy]
-  property :attachment_published_at, :datetime, NS::RIVM[:attachmentPublicationDate]
-  property :measure_owner, :string, NS::RIVM[:measureOwner]
-  property :contact_info, :string, NS::RIVM[:contactInfo]
-  property :more_info, :string, NS::RIVM[:moreInfo]
+  term_property :phase_ids, NS.rivm[:phases], array: true, association: :phases
+  term_property :category_ids, NS.rivm[:categories], array: true, association: :categories
+  property :second_opinion, :boolean, NS.rivm[:secondOpinion]
+  property :second_opinion_by, :string, NS.rivm[:secondOpinionBy]
+  property :attachment_published_at, :datetime, NS.rivm[:attachmentPublicationDate]
+  property :measure_owner, :string, NS.rivm[:measureOwner]
+  property :contact_info, :string, NS.rivm[:contactInfo]
+  property :more_info, :string, NS.rivm[:moreInfo]
   filterable(
-    NS::RIVM[:categories] => {
+    NS.rivm[:categories] => {
       filter: lambda do |scope, values|
         scope.where(category_ids: values.map { |value| LinkedRails.iri_mapper.resource_from_iri(value, nil).uuid })
       end,
@@ -59,7 +59,7 @@ class Measure < Edge
     end
 
     def iri_namespace
-      NS::RIVM
+      NS.rivm
     end
 
     def route_key

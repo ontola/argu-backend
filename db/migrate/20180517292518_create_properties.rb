@@ -18,29 +18,29 @@ class CreateProperties < ActiveRecord::Migration[5.1]
 
     migrate_properties(
       'Page',
-      [:visibility, :integer, NS::ARGU[:visibility]],
-      [:last_accepted, :datetime, NS::ARGU[:lastAccepted]],
-      [:base_color, :string, NS::ARGU[:baseColor]]
+      [:visibility, :integer, NS.argu[:visibility]],
+      [:last_accepted, :datetime, NS.argu[:lastAccepted]],
+      [:base_color, :string, NS.argu[:baseColor]]
     )
     migrate_properties(
       'VoteEvent',
-      [:starts_at, :datetime, NS::SCHEMA[:startDate]]
+      [:starts_at, :datetime, NS.schema.startDate]
     )
     migrate_properties(
       'Motion',
-      [:title, :string, NS::SCHEMA[:name]],
-      [:content, :text, NS::SCHEMA[:text]]
+      [:title, :string, NS.schema.name],
+      [:content, :text, NS.schema.text]
     )
     migrate_properties(
       'Question',
-      [:title, :string, NS::SCHEMA[:name]],
-      [:content, :text, NS::SCHEMA[:text]],
-      [:require_location, :boolean, NS::ARGU[:requireLocation]],
-      [:default_sorting, :integer, NS::ARGU[:defaultSorting]]
+      [:title, :string, NS.schema.name],
+      [:content, :text, NS.schema.text],
+      [:require_location, :boolean, NS.argu[:requireLocation]],
+      [:default_sorting, :integer, NS.argu[:defaultSorting]]
     )
     migrate_properties(
       'Comment',
-      [:body, :text, NS::SCHEMA[:text]]
+      [:body, :text, NS.schema.text]
     )
     ActiveRecord::Base.connection.execute(
       "INSERT INTO properties (created_at, updated_at, edge_id, predicate, linked_edge_id) SELECT current_timestamp, current_timestamp, edges.uuid, 'https://argu.co/ns/core#inReplyTo', linked_edges.uuid "\
@@ -48,7 +48,7 @@ class CreateProperties < ActiveRecord::Migration[5.1]
     )
     migrate_properties(
       'Vote',
-      [:for, :integer, NS::SCHEMA[:option]]
+      [:for, :integer, NS.schema.option]
       )
     ActiveRecord::Base.connection.execute(
       "INSERT INTO properties (created_at, updated_at, edge_id, predicate, linked_edge_id) SELECT current_timestamp, current_timestamp, edges.uuid, 'https://argu.co/ns/core#explanation', linked_edges.uuid "\
@@ -56,36 +56,36 @@ class CreateProperties < ActiveRecord::Migration[5.1]
     )
     migrate_properties(
       'Decision',
-      [:content, :text, NS::SCHEMA[:text]],
-      [:forwarded_group_id, :integer, NS::ARGU[:forwardedGroup]],
-      [:forwarded_user_id, :integer, NS::ARGU[:forwardedUser]],
-      [:state, :integer, NS::ARGU[:state]],
-      [:step, :integer, NS::ARGU[:step]]
+      [:content, :text, NS.schema.text],
+      [:forwarded_group_id, :integer, NS.argu[:forwardedGroup]],
+      [:forwarded_user_id, :integer, NS.argu[:forwardedUser]],
+      [:state, :integer, NS.argu[:state]],
+      [:step, :integer, NS.argu[:step]]
     )
     migrate_properties(
       'BlogPost',
-      [:title, :string, NS::SCHEMA[:name]],
-      [:content, :text, NS::SCHEMA[:text]]
+      [:title, :string, NS.schema.name],
+      [:content, :text, NS.schema.text]
     )
     migrate_properties(
       'Forum',
-      [:name, :string, NS::SCHEMA[:name]],
-      [:bio, :text, NS::SCHEMA[:description]],
-      [:bio_long, :text, NS::SCHEMA[:text]],
-      [:cover_photo_attribution, :string, NS::ARGU[:photoAttribution]],
-      [:discoverable, :boolean, NS::ARGU[:discoverable]],
-      [:locale, :string, NS::ARGU[:locale]],
-      [:default_decision_group_id, :integer, NS::ARGU[:defaultDecisionGroupId]]
+      [:name, :string, NS.schema.name],
+      [:bio, :text, NS.schema.description],
+      [:bio_long, :text, NS.schema.text],
+      [:cover_photo_attribution, :string, NS.argu[:photoAttribution]],
+      [:discoverable, :boolean, NS.argu[:discoverable]],
+      [:locale, :string, NS.argu[:locale]],
+      [:default_decision_group_id, :integer, NS.argu[:defaultDecisionGroupId]]
     )
     migrate_properties(
       'ConArgument',
-      [:title, :string, NS::SCHEMA[:name]],
-      [:content, :text, NS::SCHEMA[:text]]
+      [:title, :string, NS.schema.name],
+      [:content, :text, NS.schema.text]
     )
     migrate_properties(
       'ProArgument',
-      [:title, :string, NS::SCHEMA[:name]],
-      [:content, :text, NS::SCHEMA[:text]]
+      [:title, :string, NS.schema.name],
+      [:content, :text, NS.schema.text]
     )
   end
 

@@ -6,12 +6,12 @@ class CreativeWork < Edge
   enhance LinkedRails::Enhancements::Menuable
   enhance Trashable
 
-  property :display_name, :string, NS::SCHEMA[:name]
-  property :description, :text, NS::SCHEMA[:text]
-  property :url_path, :string, NS::SCHEMA[:url]
+  property :display_name, :string, NS.schema.name
+  property :description, :text, NS.schema.text
+  property :url_path, :string, NS.schema.url
   property :creative_work_type,
            :integer,
-           NS::ARGU[:CreativeWorkType],
+           NS.argu[:CreativeWorkType],
            default: 0,
            enum: {custom: 0}
 
@@ -25,7 +25,7 @@ class CreativeWork < Edge
 
   class << self
     def iri
-      NS::SCHEMA[:CreativeWork]
+      NS.schema.CreativeWork
     end
   end
 end

@@ -75,7 +75,7 @@ RSpec.describe SearchResult, type: :model do
       wait_for_count(question.display_name, 1)
       wait_for_count('New_name', 0)
       Sidekiq::Testing.inline! do
-        question.property_manager(NS::SCHEMA[:name]).send(:properties).first.update!(string: 'New_name')
+        question.property_manager(NS.schema.name).send(:properties).first.update!(string: 'New_name')
       end
       wait_for_count(question.display_name, 1)
       wait_for_count('New_name', 0)

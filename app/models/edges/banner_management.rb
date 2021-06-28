@@ -10,17 +10,17 @@ class BannerManagement < Edge
   enhance Dismissable
 
   with_columns default: [
-    NS::SCHEMA[:text],
-    NS::ONTOLA[:audience],
-    NS::ONTOLA[:publishAction],
-    NS::ARGU[:expiresAt],
-    NS::ONTOLA[:updateAction],
-    NS::ONTOLA[:destroyAction]
+    NS.schema.text,
+    NS.ontola[:audience],
+    NS.ontola[:publishAction],
+    NS.argu[:expiresAt],
+    NS.ontola[:updateAction],
+    NS.ontola[:destroyAction]
   ]
 
-  property :description, :text, NS::SCHEMA[:text]
-  property :audience, :integer, NS::ONTOLA[:audience], default: 0, enum: {everyone: 0, guests: 1, users: 2}
-  property :dismiss_button, :string, NS::ONTOLA[:dismissButton]
+  property :description, :text, NS.schema.text
+  property :audience, :integer, NS.ontola[:audience], default: 0, enum: {everyone: 0, guests: 1, users: 2}
+  property :dismiss_button, :string, NS.ontola[:dismissButton]
 
   validates :description, length: {minimum: 1, maximum: MAXIMUM_DESCRIPTION_LENGTH}
 

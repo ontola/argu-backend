@@ -5,8 +5,8 @@ module Argumentable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :pro_arguments, default_sortings: [{key: NS::ARGU[:votesProCount], direction: :desc}]
-      with_collection :con_arguments, default_sortings: [{key: NS::ARGU[:votesProCount], direction: :desc}]
+      with_collection :pro_arguments, default_sortings: [{key: NS.argu[:votesProCount], direction: :desc}]
+      with_collection :con_arguments, default_sortings: [{key: NS.argu[:votesProCount], direction: :desc}]
       accepts_nested_attributes_for :pro_arguments
       accepts_nested_attributes_for :con_arguments
       attribute :invert_arguments, :boolean

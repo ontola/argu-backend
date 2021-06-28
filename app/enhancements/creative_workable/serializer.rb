@@ -5,7 +5,7 @@ module CreativeWorkable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :creative_works, predicate: NS::ARGU[:creative_works]
+      with_collection :creative_works, predicate: NS.argu[:creative_works]
     end
   end
 end

@@ -2,7 +2,7 @@
 
 class ProArgumentForm < ApplicationForm
   field :display_name
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
 
   footer do
     actor_selector

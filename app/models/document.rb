@@ -12,7 +12,7 @@ class Document < ApplicationRecord
 
   class << self
     def iri
-      NS::SCHEMA[:CreativeWork]
+      NS.schema.CreativeWork
     end
   end
 end

@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 class VoteSerializer < EdgeSerializer
-  has_one :creator, predicate: NS::SCHEMA[:creator] do |object|
+  has_one :creator, predicate: NS.schema.creator do |object|
     object.publisher.show_feed? ? object.creator&.profileable : User.anonymous
   end
 
-  has_one :voteable, predicate: NS::SCHEMA[:isPartOf] do |object|
+  has_one :voteable, predicate: NS.schema.isPartOf do |object|
     object.parent.voteable
   end
 
-  attribute :primary, predicate: NS::ARGU[:primaryVote]
-  attribute :option, predicate: NS::SCHEMA[:option] do |object|
-    NS::ARGU[object.option || :abstain]
+  attribute :primary, predicate: NS.argu[:primaryVote]
+  attribute :option, predicate: NS.schema.option do |object|
+    NS.argu[object.option || :abstain]
   end
-  attribute :display_name, predicate: NS::SCHEMA[:name], unless: method(:export_scope?)
+  attribute :display_name, predicate: NS.schema.name, unless: method(:export_scope?)
 end

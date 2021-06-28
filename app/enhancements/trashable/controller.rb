@@ -24,9 +24,9 @@ module Trashable
       trash_activity = current_resource.dup.trash_activity
       menu = current_resource.menu(:actions)
       resource_removed_delta(current_resource) + [
-        [current_resource.iri, NS::ARGU[:trashActivity], trash_activity.iri, delta_iri(:replace)],
-        [current_resource.iri, NS::ARGU[:trashedAt], current_resource.trashed_at, delta_iri(:replace)],
-        [menu.menu_sequence_iri, NS::SP[:Variable], NS::SP[:Variable], delta_iri(:invalidate)]
+        [current_resource.iri, NS.argu[:trashActivity], trash_activity.iri, delta_iri(:replace)],
+        [current_resource.iri, NS.argu[:trashedAt], current_resource.trashed_at, delta_iri(:replace)],
+        [menu.menu_sequence_iri, NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]
       ]
     end
 
@@ -51,9 +51,9 @@ module Trashable
     def untrash_meta # rubocop:disable Metrics/AbcSize
       menu = current_resource.menu(:actions)
       resource_added_delta(current_resource) + [
-        [current_resource.iri, NS::ARGU[:trashActivity], NS::SP[:Variable], delta_iri(:remove)],
-        [current_resource.iri, NS::ARGU[:trashedAt], NS::SP[:Variable], delta_iri(:remove)],
-        [menu.menu_sequence_iri, NS::SP[:Variable], NS::SP[:Variable], delta_iri(:invalidate)]
+        [current_resource.iri, NS.argu[:trashActivity], NS.sp.Variable, delta_iri(:remove)],
+        [current_resource.iri, NS.argu[:trashedAt], NS.sp.Variable, delta_iri(:remove)],
+        [menu.menu_sequence_iri, NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]
       ]
     end
 

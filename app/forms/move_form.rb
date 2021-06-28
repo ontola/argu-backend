@@ -6,8 +6,8 @@ class MoveForm < ApplicationForm
         sh_in: lambda {
           ActsAsTenant.current_tenant.search_result_collection(
             filter: {
-              NS::RDFV.type => [
-                NS::ARGU[:ContainerNode],
+              NS.rdfv.type => [
+                NS.argu[:ContainerNode],
                 Question.iri
               ]
             }

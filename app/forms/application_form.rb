@@ -13,7 +13,7 @@ class ApplicationForm < LinkedRails::Form
 
     def actor_selector(attr = :creator)
       field attr,
-            datatype: NS::XSD[:string],
+            datatype: NS.xsd.string,
             max_count: 1,
             sh_in: -> { actors_iri }
     end
@@ -28,13 +28,13 @@ class ApplicationForm < LinkedRails::Form
 
     def term_field(key, url, **opts)
       field key, {
-        datatype: NS::XSD[:string],
+        datatype: NS.xsd.string,
         sh_in: -> { collection_iri(Vocabulary.new(url: url).root_relative_iri, :terms, opts[:sh_in_opts]) }
       }.merge(**opts.except(:sh_in_opts))
     end
 
     def visibility_text
-      resource :visibility_text, path: NS::ARGU[:grantedGroups]
+      resource :visibility_text, path: NS.argu[:grantedGroups]
     end
   end
 end

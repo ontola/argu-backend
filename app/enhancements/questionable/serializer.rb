@@ -5,7 +5,7 @@ module Questionable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :questions, predicate: NS::ARGU[:questions]
+      with_collection :questions, predicate: NS.argu[:questions]
     end
   end
 end

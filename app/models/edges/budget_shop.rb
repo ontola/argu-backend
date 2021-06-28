@@ -6,8 +6,8 @@ class BudgetShop < Discussion
 
   include Edgeable::Content
 
-  property :budget_max, :integer, NS::ARGU[:budgetMax]
-  property :currency, :string, NS::SCHEMA.priceCurrency, default: 'EUR'
+  property :budget_max, :integer, NS.argu[:budgetMax]
+  property :currency, :string, NS.schema.priceCurrency, default: 'EUR'
   parentable :container_node, :page, :phase
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
@@ -24,7 +24,7 @@ class BudgetShop < Discussion
 
   class << self
     def iri
-      [super, NS::ARGU[:Shop]]
+      [super, NS.argu[:Shop]]
     end
 
     def route_key

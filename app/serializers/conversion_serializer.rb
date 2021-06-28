@@ -2,9 +2,9 @@
 
 class ConversionSerializer < BaseSerializer
   attribute :klass_iri,
-            datatype: NS::XSD[:string],
-            predicate: NS::ARGU[:convertToClass]
+            datatype: NS.xsd.string,
+            predicate: NS.argu[:convertToClass]
   has_many :convertible_classes,
            sequence: true,
-           predicate: NS::ARGU[:convertibleClasses]
+           predicate: NS.argu[:convertibleClasses]
 end

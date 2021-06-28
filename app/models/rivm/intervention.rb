@@ -14,10 +14,10 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
 
   parentable :intervention_type
 
-  property :show_organization_name, :boolean, NS::ARGU[:anonymous], default: true
-  property :organization_name, :string, NS::ARGU[:organizationName]
-  property :job_title, :string, NS::SCHEMA[:roleName]
-  property :industry, :integer, NS::SCHEMA[:industry], enum: {
+  property :show_organization_name, :boolean, NS.argu[:anonymous], default: true
+  property :organization_name, :string, NS.argu[:organizationName]
+  property :job_title, :string, NS.schema.roleName
+  property :industry, :integer, NS.schema.industry, enum: {
     argiculutre: 1, food_industry: 2, textile: 3, wood_industry: 4, paper_and_cardboard: 5, grafimedia: 6, chemistry: 7,
     rubber_and_plastic: 8, production_of_other_mineral_products: 9, metal: 10, metal_production: 11,
     manufacture_of_metal_products: 12, manufacture_of_electronics: 13, manufacture_of_electrical_appliances: 14,
@@ -32,50 +32,50 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
     public_administration_and_government_services: 41, education: 42, healthcare: 43, nursing: 44, social_services: 45,
     sport_and_recreation: 46
   }
-  property :goal, :text, NS::RIVM[:interventionGoal]
-  property :additional_introduction_information, :text, NS::RIVM[:additionalIntroductionInformation]
-  property :plans_and_procedure, :integer, NS::RIVM[:plansAndProcedure], array: true, enum: plans_and_procedure_options
+  property :goal, :text, NS.rivm[:interventionGoal]
+  property :additional_introduction_information, :text, NS.rivm[:additionalIntroductionInformation]
+  property :plans_and_procedure, :integer, NS.rivm[:plansAndProcedure], array: true, enum: plans_and_procedure_options
   property(
     :people_and_resources,
-    :integer, NS::RIVM[:peopleAndResources],
+    :integer, NS.rivm[:peopleAndResources],
     array: true,
     enum: people_and_resources_options
   )
-  property :competence, :integer, NS::RIVM[:competence], array: true, enum: competence_options
-  property :communication, :integer, NS::RIVM[:communication], array: true, enum: communication_options
+  property :competence, :integer, NS.rivm[:competence], array: true, enum: competence_options
+  property :communication, :integer, NS.rivm[:communication], array: true, enum: communication_options
   property(
     :motivation_and_commitment,
     :integer,
-    NS::RIVM[:motivationAndCommitment],
+    NS.rivm[:motivationAndCommitment],
     array: true,
     enum: motivation_and_commitment_options
   )
   property(
     :conflict_and_prioritization,
     :integer,
-    NS::RIVM[:conflictAndPrioritization],
+    NS.rivm[:conflictAndPrioritization],
     array: true,
     enum: conflict_and_prioritization_options
   )
-  property :ergonomics, :integer, NS::RIVM[:ergonomics], array: true, enum: ergonomics_options
-  property :tools, :integer, NS::RIVM[:tools], array: true, enum: tools_options
-  property :target_audience, :integer, NS::RIVM[:targetAudience], array: true, enum: target_audience_options
-  property :risk_reduction, :integer, NS::RIVM[:riskReduction], array: true, enum: risk_reduction_options
-  property :continuous, :integer, NS::RIVM[:continuous], enum: continuous_options
-  property :independent, :integer, NS::RIVM[:independent], enum: independent_options
-  property(:management_involvement, :integer, NS::RIVM[:managementInvolvement], enum: management_involvement_options)
-  property :training_required, :integer, NS::RIVM[:trainingRequired], enum: training_required_options
-  property :nature_of_costs, :integer, NS::RIVM[:natureOfCosts], array: true, enum: nature_of_costs_options
-  property :one_off_costs, :integer, NS::RIVM[:oneOffCosts], enum: one_off_costs_options
-  property :recurring_costs, :integer, NS::RIVM[:recurringCosts], enum: recurring_costs_options
-  property :cost_explanation, :text, NS::RIVM[:costExplanation]
-  property :effectivity_research_method, :integer, NS::RIVM[:effectivityResearchMethod], enum: research_method_options
-  property :security_improved, :integer, NS::RIVM[:securityImproved], enum: security_improved_options
-  property :security_improvement_reason, :text, NS::RIVM[:securityImprovementReason]
-  property :business_section, :integer, NS::RIVM[:businessSection], enum: business_section_options
-  property :business_section_employees, :integer, NS::RIVM[:businessSectionEmployees], enum: section_employees_options
-  property :comments_allowed, :integer, NS::RIVM[:commentsAllowed], enum: comments_allowed_options
-  property :contact_allowed, :integer, NS::RIVM[:contactAllowed], enum: contact_allowed_options
+  property :ergonomics, :integer, NS.rivm[:ergonomics], array: true, enum: ergonomics_options
+  property :tools, :integer, NS.rivm[:tools], array: true, enum: tools_options
+  property :target_audience, :integer, NS.rivm[:targetAudience], array: true, enum: target_audience_options
+  property :risk_reduction, :integer, NS.rivm[:riskReduction], array: true, enum: risk_reduction_options
+  property :continuous, :integer, NS.rivm[:continuous], enum: continuous_options
+  property :independent, :integer, NS.rivm[:independent], enum: independent_options
+  property(:management_involvement, :integer, NS.rivm[:managementInvolvement], enum: management_involvement_options)
+  property :training_required, :integer, NS.rivm[:trainingRequired], enum: training_required_options
+  property :nature_of_costs, :integer, NS.rivm[:natureOfCosts], array: true, enum: nature_of_costs_options
+  property :one_off_costs, :integer, NS.rivm[:oneOffCosts], enum: one_off_costs_options
+  property :recurring_costs, :integer, NS.rivm[:recurringCosts], enum: recurring_costs_options
+  property :cost_explanation, :text, NS.rivm[:costExplanation]
+  property :effectivity_research_method, :integer, NS.rivm[:effectivityResearchMethod], enum: research_method_options
+  property :security_improved, :integer, NS.rivm[:securityImproved], enum: security_improved_options
+  property :security_improvement_reason, :text, NS.rivm[:securityImprovementReason]
+  property :business_section, :integer, NS.rivm[:businessSection], enum: business_section_options
+  property :business_section_employees, :integer, NS.rivm[:businessSectionEmployees], enum: section_employees_options
+  property :comments_allowed, :integer, NS.rivm[:commentsAllowed], enum: comments_allowed_options
+  property :contact_allowed, :integer, NS.rivm[:contactAllowed], enum: contact_allowed_options
 
   counter_cache true
 
@@ -132,7 +132,7 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
 
   class << self
     def iri_namespace
-      NS::RIVM
+      NS.rivm
     end
 
     def require_profile_photo?
@@ -147,11 +147,11 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
       return super if collection.type == :infinite
 
       [
-        NS::SCHEMA[:name],
-        NS::SCHEMA[:dateCreated],
-        NS::RIVM[:oneOffCosts],
-        NS::RIVM[:recurringCosts],
-        NS::RIVM[:securityImproved]
+        NS.schema.name,
+        NS.schema.dateCreated,
+        NS.rivm[:oneOffCosts],
+        NS.rivm[:recurringCosts],
+        NS.rivm[:securityImproved]
       ]
     end
   end

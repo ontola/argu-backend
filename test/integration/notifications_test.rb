@@ -28,8 +28,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     get collection_iri(argu, :notifications)
     assert_response 200
     ActsAsTenant.with_tenant(argu) do
-      view = expect_triple(Notification.root_collection.iri, NS::ONTOLA[:pages], nil).objects.first
-      expect_triple(view, NS::AS[:totalItems], 0)
+      view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+      expect_triple(view, NS.as[:totalItems], 0)
     end
   end
 
@@ -63,13 +63,13 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     assert_response 200
     notification.reload
-    expect_triple(RDF::URI("#{argu.iri}/c_a"), NS::ARGU[:unreadCount], 0)
+    expect_triple(RDF::URI("#{argu.iri}/c_a"), NS.argu[:unreadCount], 0)
     expect_triple(
       resource_iri(notification),
-      NS::SCHEMA[:dateRead],
+      NS.schema.dateRead,
       notification.read_at.to_datetime,
-      NS::ONTOLA[:replace]
+      NS.ontola[:replace]
     )
-    expect_triple(resource_iri(notification), NS::ARGU[:unread], false, NS::ONTOLA[:replace])
+    expect_triple(resource_iri(notification), NS.argu[:unread], false, NS.ontola[:replace])
   end
 end

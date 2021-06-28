@@ -60,7 +60,7 @@ class SearchResult
     end
 
     def sort_options
-      [NS::ONTOLA[:relevance]] +
+      [NS.ontola[:relevance]] +
         (filtered_classes || [association_class])
           .map { |klass| klass.sort_options(self) }
           .reduce { |total, new| total & new }
@@ -85,7 +85,7 @@ class SearchResult
       [
         {
           direction: :desc,
-          key: NS::ONTOLA[:relevance]
+          key: NS.ontola[:relevance]
         }
       ]
     end
@@ -93,7 +93,7 @@ class SearchResult
     def filtered_classes
       @filtered_classes ||=
         filters
-          .detect { |filter| filter.key == NS::RDFV.type }
+          .detect { |filter| filter.key == NS.rdfv.type }
           &.value
           &.map { |iri| class_by_iri(iri) }
     end
@@ -113,7 +113,7 @@ class SearchResult
       end
 
       def iri
-        NS::ONTOLA[:SearchResult]
+        NS.ontola[:SearchResult]
       end
 
       def iri_template_keys

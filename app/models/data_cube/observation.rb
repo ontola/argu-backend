@@ -6,7 +6,7 @@ module DataCube
 
     class << self
       def iri
-        NS::CUBE[:Observation]
+        NS.cube[:Observation]
       end
     end
   end

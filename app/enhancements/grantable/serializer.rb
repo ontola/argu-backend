@@ -5,7 +5,7 @@ module Grantable
     extend ActiveSupport::Concern
 
     included do
-      attribute :granted_sets_iri, predicate: NS::ARGU[:grantedSets], unless: method(:system_scope?)
+      attribute :granted_sets_iri, predicate: NS.argu[:grantedSets], unless: method(:system_scope?)
     end
   end
 end

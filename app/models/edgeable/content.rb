@@ -14,8 +14,8 @@ module Edgeable
 
       auto_strip_attributes :title, squish: true
       auto_strip_attributes :content
-      property :display_name, :string, NS::SCHEMA[:name]
-      property :description, :text, NS::SCHEMA[:text]
+      property :display_name, :string, NS.schema.name
+      property :description, :text, NS.schema.text
       attribute :pinned, :boolean
 
       before_save :capitalize_title

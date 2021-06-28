@@ -21,12 +21,12 @@ class Question < Discussion
 
   custom_grants_for :motions, :create
 
-  property :map_question, :boolean, NS::ARGU[:mapQuestion], default: false
-  property :require_location, :boolean, NS::ARGU[:requireLocation], default: false
-  property :upvote_only, :boolean, NS::ARGU[:upvoteOnly], default: false
+  property :map_question, :boolean, NS.argu[:mapQuestion], default: false
+  property :require_location, :boolean, NS.argu[:requireLocation], default: false
+  property :upvote_only, :boolean, NS.argu[:upvoteOnly], default: false
   property :default_motion_sorting,
            :integer,
-           NS::ARGU[:defaultSorting],
+           NS.argu[:defaultSorting],
            default: 0,
            enum: {popular: 0, created_at: 1, updated_at: 2, popular_asc: 3, created_at_asc: 4, updated_at_asc: 5}
 
@@ -37,7 +37,7 @@ class Question < Discussion
   def rdf_type
     return super unless map_question?
 
-    [super, NS::ARGU[:MapQuestion]]
+    [super, NS.argu[:MapQuestion]]
   end
 
   class << self

@@ -5,7 +5,7 @@ module LanguageHelper
     Hash[
       I18n
         .available_locales
-        .map { |l| [l.to_sym, {exact_match: NS::ARGU["locale/#{l}"], label: I18n.t(:language, locale: l)}] }
+        .map { |l| [l.to_sym, {exact_match: NS.argu["locale/#{l}"], label: I18n.t(:language, locale: l)}] }
     ]
   end
 

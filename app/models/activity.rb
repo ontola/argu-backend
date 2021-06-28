@@ -2,16 +2,16 @@
 
 class Activity < PublicActivity::Activity
   ACTION_TYPE = {
-    create: NS::AS[:Create],
-    publish: NS::ARGU[:PublishActivity],
-    update: NS::AS[:Update],
-    destroy: NS::AS[:Delete],
-    trash: NS::AS[:Remove],
-    approved: NS::AS[:Accept],
-    rejected: NS::AS[:Reject],
-    forwarded: NS::ARGU[:ForwardActivity],
-    untrash: NS::AS[:Add],
-    convert: NS::ARGU[:ConvertActivity]
+    create: NS.as[:Create],
+    publish: NS.argu[:PublishActivity],
+    update: NS.as[:Update],
+    destroy: NS.as[:Delete],
+    trash: NS.as[:Remove],
+    approved: NS.as[:Accept],
+    rejected: NS.as[:Reject],
+    forwarded: NS.argu[:ForwardActivity],
+    untrash: NS.as[:Add],
+    convert: NS.argu[:ConvertActivity]
   }.freeze
 
   include LinkedRails::Model
@@ -82,7 +82,7 @@ class Activity < PublicActivity::Activity
   end
 
   def rdf_type
-    ACTION_TYPE[action.to_sym] || NS::AS[:Activity]
+    ACTION_TYPE[action.to_sym] || NS.as[:Activity]
   end
 
   def touch_edges

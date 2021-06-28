@@ -11,7 +11,7 @@ class ImageObject < MediaObject
 
   class << self
     def iri
-      NS::SCHEMA[:ImageObject]
+      NS.schema.ImageObject
     end
 
     def content_type_white_list

@@ -149,7 +149,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     voter = motion
               .default_vote_event
               .votes
-              .find_by(properties: {predicate: NS::SCHEMA[:option].to_s, integer: 1})
+              .find_by(properties: {predicate: NS.schema.option.to_s, integer: 1})
               .publisher
     CreateVote.new(
       motion.default_vote_event,

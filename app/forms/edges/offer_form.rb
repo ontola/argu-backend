@@ -4,7 +4,7 @@ class OfferForm < ApplicationForm
   visibility_text
 
   field :product_id,
-        datatype: NS::XSD[:string],
+        datatype: NS.xsd.string,
         sh_in: -> { Motion.root_collection.search_result_collection.iri }
   field :price, input_field: MoneyInput
 

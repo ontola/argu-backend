@@ -1,6 +1,6 @@
 class MergeEmployments < ActiveRecord::Migration[6.0]
   def change
-    Property.where(predicate: NS::RIVM[:employmentId].to_s).pluck(:edge_id, :linked_edge_id).each do |edge_id, employment_id|
+    Property.where(predicate: NS.rivm[:employmentId].to_s).pluck(:edge_id, :linked_edge_id).each do |edge_id, employment_id|
       Property.where(edge_id: employment_id).find_each do |property|
         Property.create!(
           edge_id: edge_id,

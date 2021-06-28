@@ -26,9 +26,9 @@ class Grant < ApplicationRecord
   scope :custom, -> { where('group_id > 0') }
 
   with_columns settings: [
-    NS::SCHEMA[:name],
-    NS::ARGU[:grantSet],
-    NS::ONTOLA[:destroyAction]
+    NS.schema.name,
+    NS.argu[:grantSet],
+    NS.ontola[:destroyAction]
   ]
 
   validates :grant_set, presence: true

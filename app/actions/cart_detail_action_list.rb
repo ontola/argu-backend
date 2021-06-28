@@ -6,7 +6,7 @@ class CartDetailActionList < EdgeActionList
   )
   has_singular_destroy_action(
     type: lambda {
-      [NS::ONTOLA["Destroy::#{result_class}"], NS::ONTOLA[:DestroyAction], NS::SCHEMA.Action]
+      [NS.ontola["Destroy::#{result_class}"], NS.ontola[:DestroyAction], NS.schema.Action]
     }
   )
 end

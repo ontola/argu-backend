@@ -8,7 +8,7 @@ module Followable
       %i[news reactions never].each do |follow_type|
         has_resource_action(
           :"follow_#{follow_type}",
-          type: [NS::SCHEMA[:Action]],
+          type: [NS.schema.Action],
           url: -> { follow_iri(follow_type) },
           http_method: :post,
           label: -> { I18n.t("menus.default.#{follow_type}") }

@@ -19,11 +19,11 @@ class Discussion < Edge
 
   parentable :container_node, :page
   filterable(
-    NS::ARGU[:pinned] => boolean_filter(
+    NS.argu[:pinned] => boolean_filter(
       ->(scope) { scope.where.not(pinned_at: nil) },
       ->(scope) { scope.where(pinned_at: nil) }
     ),
-    NS::ARGU[:trashed] => boolean_filter(
+    NS.argu[:trashed] => boolean_filter(
       ->(scope) { scope.where.not(trashed_at: nil) },
       ->(scope) { scope.where(trashed_at: nil) }
     )

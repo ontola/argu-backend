@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ContainerNodeSerializer < EdgeSerializer
-  has_one :parent, predicate: NS::SCHEMA[:isPartOf], &:parent
+  has_one :parent, predicate: NS.schema.isPartOf, &:parent
 
-  attribute :follows_count, predicate: NS::ARGU[:followsCount]
-  attribute :hide_header, predicate: NS::ONTOLA[:hideHeader]
+  attribute :follows_count, predicate: NS.argu[:followsCount]
+  attribute :hide_header, predicate: NS.ontola[:hideHeader]
 end

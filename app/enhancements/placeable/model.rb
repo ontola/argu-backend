@@ -16,7 +16,7 @@ module Placeable
       return super unless try(:parent).respond_to?(:children_placements_iri)
 
       super + [
-        [parent.children_placements_iri, NS::SP[:Variable], NS::SP[:Variable], NS::ONTOLA[:invalidate]]
+        [parent.children_placements_iri, NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate]]
       ]
     end
     alias removed_delta added_delta

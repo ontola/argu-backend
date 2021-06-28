@@ -10,13 +10,13 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include TranslatableProperties
 
   with_columns default: [
-    NS::SCHEMA[:name],
-    NS::ONTOLA[:href],
-    NS::ARGU[:order],
-    NS::ONTOLA[:updateAction],
-    NS::ONTOLA[:destroyAction]
+    NS.schema.name,
+    NS.ontola[:href],
+    NS.argu[:order],
+    NS.ontola[:updateAction],
+    NS.ontola[:destroyAction]
   ]
-  self.default_sortings = [{key: NS::ARGU[:order], direction: :asc}]
+  self.default_sortings = [{key: NS.argu[:order], direction: :asc}]
 
   belongs_to :resource, polymorphic: true, primary_key: :uuid
   belongs_to :edge, primary_key: :uuid, optional: true
@@ -85,7 +85,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def added_delta
     super + [
-      [parent.iri, NS::SP[:Variable], NS::SP[:Variable], NS::ONTOLA[:invalidate]]
+      [parent.iri, NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate]]
     ]
   end
   alias removed_delta added_delta
@@ -134,7 +134,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def iri
-      NS::ONTOLA[:MenuItem]
+      NS.ontola[:MenuItem]
     end
 
     def navigations

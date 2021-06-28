@@ -5,7 +5,7 @@ module RootGrantable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :grants, predicate: NS::ARGU[:grants]
+      with_collection :grants, predicate: NS.argu[:grants]
     end
   end
 end

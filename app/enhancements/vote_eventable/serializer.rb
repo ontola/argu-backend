@@ -5,9 +5,9 @@ module VoteEventable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :vote_events, predicate: NS::ARGU[:voteEvents]
+      with_collection :vote_events, predicate: NS.argu[:voteEvents]
       has_one :default_vote_event,
-              predicate: NS::ARGU[:voteableVoteEvent]
+              predicate: NS.argu[:voteableVoteEvent]
     end
   end
 end

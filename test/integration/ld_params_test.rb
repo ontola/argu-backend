@@ -31,7 +31,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
       Motion,
       {'Motion.count' => 1, 'Publication.where("published_at IS NOT NULL").count' => 1, 'MediaObject.count' => 1},
       'motion_with_cover.n3',
-      "<#{NS::LL['blobs/randomString']}>" => fixture_file_upload('cover_photo.jpg', 'image/jpg')
+      "<#{NS.ll['blobs/randomString']}>" => fixture_file_upload('cover_photo.jpg', 'image/jpg')
     )
     assert File.exist?(Motion.last.default_cover_photo.content.cover.file.path)
   end
@@ -42,8 +42,8 @@ class LDParamsTest < ActionDispatch::IntegrationTest
       Motion,
       {'Motion.count' => 1, 'MediaObject.count' => 2},
       'motion_with_attachments.n3',
-      "<#{NS::LL['blobs/randomString1']}>" => fixture_file_upload('cover_photo.jpg', 'image/jpg'),
-      "<#{NS::LL['blobs/randomString2']}>" => fixture_file_upload('profile_photo.png', 'image/png')
+      "<#{NS.ll['blobs/randomString1']}>" => fixture_file_upload('cover_photo.jpg', 'image/jpg'),
+      "<#{NS.ll['blobs/randomString2']}>" => fixture_file_upload('profile_photo.png', 'image/png')
     )
   end
 
@@ -60,12 +60,12 @@ class LDParamsTest < ActionDispatch::IntegrationTest
 
   private
 
-  def create_with_ld_params(path, klass, differences, fixture, params = {})
+  def create_with_ld_params(path, klass, differences, fixture, params = {}) # rubocop:disable Metrics/AbcSize
     sign_in administrator
     assert_difference(differences) do
       post path,
            params: {
-             "<#{NS::LL[:graph]}>" => fixture_file_upload(fixture, 'text/n3')
+             "<#{NS.ll[:graph]}>" => fixture_file_upload(fixture, 'text/n3')
            }.merge(params),
            headers: argu_headers(accept: :nq)
     end

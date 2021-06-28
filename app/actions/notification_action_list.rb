@@ -4,7 +4,7 @@ class NotificationActionList < ApplicationActionList
   has_resource_action(
     :read,
     result: Notification,
-    type: NS::SCHEMA[:ReadAction],
+    type: NS.schema.ReadAction,
     policy: :read?,
     image: 'fa-check',
     url: -> { resource.iri },

@@ -9,12 +9,12 @@ class Term < Edge
   enhance CoverPhotoable
   enhance Attachable
 
-  property :display_name, :string, NS::SCHEMA[:name]
-  property :description, :text, NS::SCHEMA[:text]
+  property :display_name, :string, NS.schema.name
+  property :description, :text, NS.schema.text
   with_columns default: [
-    NS::SCHEMA[:name],
-    NS::ONTOLA[:updateAction],
-    NS::ONTOLA[:destroyAction]
+    NS.schema.name,
+    NS.ontola[:updateAction],
+    NS.ontola[:destroyAction]
   ]
   has_many :taggings,
            primary_key_property: nil,

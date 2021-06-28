@@ -88,9 +88,9 @@ module Edgeable
       end
 
       def sort_options(collection)
-        return [NS::SCHEMA[:dateCreated]] if collection.type == :infinite
+        return [NS.schema.dateCreated] if collection.type == :infinite
 
-        [NS::SCHEMA[:name], NS::SCHEMA[:dateCreated]]
+        [NS.schema.name, NS.schema.dateCreated]
       end
 
       private

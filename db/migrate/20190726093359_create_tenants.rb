@@ -41,7 +41,7 @@ class CreateTenants < ActiveRecord::Migration[5.2]
 
     Apartment::Tenant.switch('argu') do
       Page.find_each do |p|
-        p.iri_prefix = p.property_instance(NS::ARGU[:iriPrefix]).string
+        p.iri_prefix = p.property_instance(NS.argu[:iriPrefix]).string
         p.send(:create_or_update_tenant)
       end
     end

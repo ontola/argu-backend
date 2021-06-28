@@ -38,7 +38,7 @@ class CurrentActor < VirtualResource
   end
 
   def rdf_type
-    NS::ONTOLA[actor_type]
+    NS.ontola[actor_type]
   end
 
   def unread_notification_count

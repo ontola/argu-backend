@@ -13,7 +13,7 @@ class MediaObjectContentsController < ParentableController
     respond_with_resource(
       resource: nil,
       meta: [
-        RDF::Statement.new(RDF::URI(request.original_url), NS::OWL.sameAs, RDF::URI(url_for_version))
+        RDF::Statement.new(RDF::URI(request.original_url), NS.owl.sameAs, RDF::URI(url_for_version))
       ]
     )
   end

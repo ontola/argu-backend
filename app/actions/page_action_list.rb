@@ -17,7 +17,7 @@ class PageActionList < EdgeActionList
     policy: :update?,
     policy_resource: -> { user_context.user },
     submit_label: -> { I18n.t('save') },
-    type: NS::SCHEMA[:UpdateAction],
+    type: NS.schema.UpdateAction,
     url: -> { iri_from_template(:languages_iri) }
   )
 end

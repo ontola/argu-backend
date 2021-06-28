@@ -5,7 +5,7 @@ module Topicable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :topics, predicate: NS::ARGU[:topics]
+      with_collection :topics, predicate: NS.argu[:topics]
     end
   end
 end

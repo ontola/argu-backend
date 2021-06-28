@@ -55,7 +55,7 @@ class FollowsController < AuthorizedController
 
     [
       menu_item.iri,
-      NS::SCHEMA[:image],
+      NS.schema.image,
       font_awesome_iri(menu_item.image),
       delta_iri(:replace)
     ]

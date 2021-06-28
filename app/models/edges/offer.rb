@@ -18,13 +18,13 @@ class Offer < Edge
     end
 
     def iri
-      NS::SCHEMA.Offer
+      NS.schema.Offer
     end
 
     def sort_options(collection)
       return super if collection.type == :infinite
 
-      [NS::ARGU[:price], NS::SCHEMA.dateCreated]
+      [NS.argu[:price], NS.schema.dateCreated]
     end
   end
 end

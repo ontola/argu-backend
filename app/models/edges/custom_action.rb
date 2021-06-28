@@ -7,15 +7,15 @@ class CustomAction < Edge
   enhance LinkedRails::Enhancements::Menuable
   include TranslatableProperties
 
-  property :label, :string, NS::SCHEMA.name
-  property :description, :text, NS::SCHEMA.text
-  property :submit_label, :string, NS::ARGU[:submitLabel]
-  property :href, :text, NS::SCHEMA.url
+  property :label, :string, NS.schema.name
+  property :description, :text, NS.schema.text
+  property :submit_label, :string, NS.argu[:submitLabel]
+  property :href, :text, NS.schema.url
 
   parentable :container_node
 
   def action_status
-    NS::SCHEMA.PotentialActionStatus
+    NS.schema.PotentialActionStatus
   end
 
   def description

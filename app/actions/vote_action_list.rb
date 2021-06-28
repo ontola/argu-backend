@@ -4,12 +4,12 @@ class VoteActionList < EdgeActionList
   include VotesHelper
 
   has_collection_create_action(
-    image: -> { create_image(resource.filter[NS::SCHEMA[:option]]&.first, resource.parent.upvote_only?) },
-    label: -> { create_label(resource.filter[NS::SCHEMA[:option]]&.first, resource.parent.upvote_only?) },
-    submit_label: -> { create_label(resource.filter[NS::SCHEMA[:option]]&.first, resource.parent.upvote_only?) },
+    image: -> { create_image(resource.filter[NS.schema.option]&.first, resource.parent.upvote_only?) },
+    label: -> { create_label(resource.filter[NS.schema.option]&.first, resource.parent.upvote_only?) },
+    submit_label: -> { create_label(resource.filter[NS.schema.option]&.first, resource.parent.upvote_only?) },
     favorite: lambda {
-      resource.filter[NS::SCHEMA[:option]].present? && (
-        !resource.parent.upvote_only? || resource.filter[NS::SCHEMA[:option]] == %i[yes]
+      resource.filter[NS.schema.option].present? && (
+        !resource.parent.upvote_only? || resource.filter[NS.schema.option] == %i[yes]
       )
     }
   )
@@ -43,7 +43,7 @@ class VoteActionList < EdgeActionList
 
   def create_url(option)
     iri = resource.unfiltered_collection.iri.dup
-    iri.query = {NS::SCHEMA[:option] => option}.to_query
+    iri.query = {NS.schema.option => option}.to_query
     iri
   end
 end

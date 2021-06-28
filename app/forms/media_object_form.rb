@@ -3,14 +3,14 @@
 class MediaObjectForm < ApplicationForm
   def self.is_local
     LinkedRails::SHACL::PropertyShape.new(
-      path: NS::ARGU[:contentSource],
+      path: NS.argu[:contentSource],
       has_value: -> { MediaObjectSerializer.enum_options(:content_source)[:local].iri }
     )
   end
 
   def self.is_remote
     LinkedRails::SHACL::PropertyShape.new(
-      path: NS::ARGU[:contentSource],
+      path: NS.argu[:contentSource],
       has_value: -> { MediaObjectSerializer.enum_options(:content_source)[:remote].iri }
     )
   end

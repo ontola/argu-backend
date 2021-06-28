@@ -28,7 +28,7 @@ module Users
 
       get collection_iri(user, :pages, root: other_page)
       assert_response :success
-      expect_triple(requested_iri, NS::AS[:totalItems], 1)
+      expect_triple(requested_iri, NS.as[:totalItems], 1)
     end
 
     ####################################
@@ -41,7 +41,7 @@ module Users
 
       get collection_iri(administrator, :pages, root: other_page)
       assert_response :success
-      expect_triple(requested_iri, NS::AS[:totalItems], 2)
+      expect_triple(requested_iri, NS.as[:totalItems], 2)
     end
 
     test 'administrator should not get index of other user' do

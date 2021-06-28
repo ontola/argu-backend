@@ -18,8 +18,8 @@ module Discussable
 
       with_collection :discussions,
                       default_sortings: [
-                        {key: NS::ARGU[:pinnedAt], direction: :asc},
-                        {key: NS::ARGU[:lastActivityAt], direction: :desc}
+                        {key: NS.argu[:pinnedAt], direction: :asc},
+                        {key: NS.argu[:lastActivityAt], direction: :desc}
                       ]
     end
   end

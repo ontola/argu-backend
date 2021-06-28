@@ -5,8 +5,8 @@ module Buyable
     extend ActiveSupport::Concern
 
     included do
-      money_attribute :price, predicate: NS::ARGU[:price]
-      attribute :currency, predicate: NS::SCHEMA.priceCurrency
+      money_attribute :price, predicate: NS.argu[:price]
+      attribute :currency, predicate: NS.schema.priceCurrency
     end
   end
 end

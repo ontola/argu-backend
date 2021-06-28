@@ -31,7 +31,7 @@ module DataCube
 
     class << self
       def iri
-        NS::CUBE[:DataSet]
+        NS.cube[:DataSet]
       end
 
       def preview_includes

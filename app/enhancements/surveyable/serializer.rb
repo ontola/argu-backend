@@ -5,7 +5,7 @@ module Surveyable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :surveys, predicate: NS::ARGU[:surveys]
+      with_collection :surveys, predicate: NS.argu[:surveys]
     end
   end
 end

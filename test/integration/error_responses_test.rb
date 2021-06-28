@@ -196,9 +196,9 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     ActsAsTenant.current_tenant = argu
     subject = RDF::URI("#{Rails.application.config.origin}#{path}")
 
-    expect_resource_type(NS::ONTOLA["errors/#{opts[:error]}Error"], iri: subject)
-    expect_triple(subject, NS::SCHEMA[:name], I18n.t('status')[status])
-    expect_triple(subject, NS::SCHEMA[:text], opts[:message])
+    expect_resource_type(NS.ontola["errors/#{opts[:error]}Error"], iri: subject)
+    expect_triple(subject, NS.schema.name, I18n.t('status')[status])
+    expect_triple(subject, NS.schema.text, opts[:message])
   end
 
   def json_api_errors(code: nil, message: nil, source: nil, status: nil)

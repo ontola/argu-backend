@@ -29,7 +29,7 @@ module DefaultActions
         root_relative_iri: lambda {
           expand_uri_template(:trash_iri, parent_iri: split_iri_segments(resource.root_relative_iri))
         },
-        type: [NS::ARGU[:TrashAction], NS::SCHEMA[:Action]],
+        type: [NS.argu[:TrashAction], NS.schema.Action],
         url: -> { resource.iri }
       }.merge(overwrite)
     end
@@ -43,7 +43,7 @@ module DefaultActions
         root_relative_iri: lambda {
           expand_uri_template(:untrash_iri, parent_iri: split_iri_segments(resource.root_relative_iri))
         },
-        type: [NS::ARGU[:UntrashAction], NS::SCHEMA[:Action]],
+        type: [NS.argu[:UntrashAction], NS.schema.Action],
         url: -> { untrash_iri(resource) }
       }.merge(overwrite)
     end

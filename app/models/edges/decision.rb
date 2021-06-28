@@ -8,10 +8,10 @@ class Decision < Edge
   enhance LinkedRails::Enhancements::Updatable
 
   attribute :display_name
-  property :description, :text, NS::SCHEMA[:text]
-  property :forwarded_group_id, :integer, NS::ARGU[:forwardedGroup]
-  property :forwarded_user_id, :integer, NS::ARGU[:forwardedUser]
-  property :state, :integer, NS::ARGU[:state], default: 0, enum: {pending: 0, approved: 1, rejected: 2, forwarded: 3}
+  property :description, :text, NS.schema.text
+  property :forwarded_group_id, :integer, NS.argu[:forwardedGroup]
+  property :forwarded_user_id, :integer, NS.argu[:forwardedUser]
+  property :state, :integer, NS.argu[:state], default: 0, enum: {pending: 0, approved: 1, rejected: 2, forwarded: 3}
 
   belongs_to :forwarded_group, class_name: 'Group', foreign_key_property: :forwarded_group_id
   belongs_to :forwarded_user, class_name: 'User', foreign_key_property: :forwarded_user_id
@@ -29,7 +29,7 @@ class Decision < Edge
 
   def added_delta
     [
-      [parent.iri, NS::ARGU[:decision], iri, delta_iri(:replace)]
+      [parent.iri, NS.argu[:decision], iri, delta_iri(:replace)]
     ]
   end
 

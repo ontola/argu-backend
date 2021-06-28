@@ -5,7 +5,7 @@ class GuestUserActionList < ApplicationActionList
 
   has_resource_action(
     :language,
-    type: NS::SCHEMA[:UpdateAction],
+    type: NS.schema.UpdateAction,
     image: 'fa-update',
     label: -> { I18n.t('set_language') },
     submit_label: -> { I18n.t('save') },

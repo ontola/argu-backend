@@ -47,7 +47,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     get freetown.iri.to_s.gsub('freetown', 'Freetown'), headers: argu_headers
 
     assert_response :success
-    expect_resource_type(NS::ARGU[:Forum], iri: freetown.iri)
+    expect_resource_type(NS.argu[:Forum], iri: freetown.iri)
   end
 
   test 'guest should get show by upcased page shortname' do
@@ -288,9 +288,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
     expect_triple(
       forum_with_placement.iri,
-      NS::SCHEMA.location,
-      NS::SP[:Variable],
-      NS::ONTOLA[:remove]
+      NS.schema.location,
+      NS.sp.Variable,
+      NS.ontola[:remove]
     )
   end
 

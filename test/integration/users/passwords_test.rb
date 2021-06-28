@@ -25,7 +25,7 @@ module Users
       assert_response :unprocessable_entity
       expect_errors(
         password_form,
-        NS::SCHEMA[:email] => 'Not found'
+        NS.schema.email => 'Not found'
       )
     end
 
@@ -89,7 +89,7 @@ module Users
       assert_response :unprocessable_entity
       expect_errors(
         password_form,
-        NS::ONTOLA[:passwordConfirmation] => "Doesn't match Password"
+        NS.ontola[:passwordConfirmation] => "Doesn't match Password"
       )
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end
@@ -180,7 +180,7 @@ module Users
       assert_response :unprocessable_entity
       expect_errors(
         password_form,
-        NS::ONTOLA[:passwordConfirmation] => "Doesn't match Password"
+        NS.ontola[:passwordConfirmation] => "Doesn't match Password"
       )
       assert_equal user.encrypted_password, user.reload.encrypted_password
     end

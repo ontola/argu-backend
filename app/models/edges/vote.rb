@@ -10,8 +10,8 @@ class Vote < Edge
   enhance Singularable
   include RedisResource::Concern
 
-  property :option, :integer, NS::SCHEMA[:option], default: 3, enum: {no: 0, yes: 1, other: 2, abstain: 3}
-  property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
+  property :option, :integer, NS.schema.option, default: 3, enum: {no: 0, yes: 1, other: 2, abstain: 3}
+  property :comment_id, :linked_edge_id, NS.argu[:explanation]
   attribute :primary, :boolean, default: true
 
   belongs_to :comment, foreign_key_property: :comment_id
@@ -25,7 +25,7 @@ class Vote < Edge
 
   parentable :pro_argument, :con_argument, :vote_event
 
-  filterable NS::SCHEMA[:option] => {
+  filterable NS.schema.option => {
     values: Vote.options,
     counter_cache: {yes: :votes_pro, other: :votes_neutral, no: :votes_con}
   }

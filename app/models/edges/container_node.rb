@@ -24,19 +24,19 @@ class ContainerNode < Edge
   enhance BudgetShoppable
   enhance RootGrantable
 
-  property :display_name, :string, NS::SCHEMA[:name]
-  property :bio, :text, NS::SCHEMA[:description]
-  property :bio_long, :text, NS::SCHEMA[:text]
-  property :cover_photo_attribution, :string, NS::ARGU[:photoAttribution]
-  property :discoverable, :boolean, NS::ARGU[:discoverable], default: true
-  property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
-  property :show_header, :boolean, NS::ARGU[:showHeader], default: true
+  property :display_name, :string, NS.schema.name
+  property :bio, :text, NS.schema.description
+  property :bio_long, :text, NS.schema.text
+  property :cover_photo_attribution, :string, NS.argu[:photoAttribution]
+  property :discoverable, :boolean, NS.argu[:discoverable], default: true
+  property :locale, :string, NS.argu[:locale], default: 'nl-NL'
+  property :show_header, :boolean, NS.argu[:showHeader], default: true
 
   with_columns settings: [
-    NS::SCHEMA[:name],
-    NS::ARGU[:followsCount],
-    NS::ONTOLA[:updateAction],
-    NS::ONTOLA[:destroyAction]
+    NS.schema.name,
+    NS.argu[:followsCount],
+    NS.ontola[:updateAction],
+    NS.ontola[:destroyAction]
   ]
 
   parentable :page
@@ -108,7 +108,7 @@ class ContainerNode < Edge
     end
 
     def iri
-      [super, NS::ARGU[:ContainerNode]]
+      [super, NS.argu[:ContainerNode]]
     end
   end
 end

@@ -4,7 +4,7 @@ class InterventionForm < ApplicationForm
   # rubocop:disable Metrics/BlockLength
   group :intervention_description, label: -> { I18n.t('forms.intervention_description.label') } do
     field :display_name
-    field :description, datatype: NS::FHIR[:markdown]
+    field :description, datatype: NS.fhir[:markdown]
     field :organization_name
     field :show_organization_name
     has_one :default_profile_photo
@@ -14,11 +14,11 @@ class InterventionForm < ApplicationForm
           min_count: 1,
           sh_in: lambda {
             InterventionType
-              .root_collection(page_size: 100, sort: [{key: NS::SCHEMA[:name], direction: :asc}])
+              .root_collection(page_size: 100, sort: [{key: NS.schema.name, direction: :asc}])
               .default_view
               .members_iri
           },
-          datatype: NS::XSD[:string],
+          datatype: NS.xsd.string,
           input_field: LinkedRails::Form::Field::SelectInput
     resource :goal_and_effect,
              label: -> { I18n.t('forms.goal_and_effect.label') },

@@ -4,7 +4,7 @@ class PageForm < ApplicationForm
   field :display_name
   field :url
   field :primary_container_node_id,
-        datatype: NS::XSD[:string],
+        datatype: NS.xsd.string,
         max_count: 1,
         sh_in: -> { collection_iri(nil, :container_nodes) }
   field :locale

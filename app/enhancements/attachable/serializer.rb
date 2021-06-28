@@ -5,7 +5,7 @@ module Attachable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :attachments, predicate: NS::ARGU[:attachments], image: 'paperclip'
+      with_collection :attachments, predicate: NS.argu[:attachments], image: 'paperclip'
     end
   end
 end

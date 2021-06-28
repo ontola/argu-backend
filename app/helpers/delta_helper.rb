@@ -19,7 +19,7 @@ module DeltaHelper
   def counter_column_delta(resource, column)
     [
       resource.parent.iri,
-      NS::ARGU["#{column.to_s.camelcase(:lower)}Count".to_sym],
+      NS.argu["#{column.to_s.camelcase(:lower)}Count".to_sym],
       resource.parent.reload.children_count(column),
       delta_iri(:replace)
     ]

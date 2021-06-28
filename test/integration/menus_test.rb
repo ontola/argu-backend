@@ -37,7 +37,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path, headers: argu_headers(accept: :nq)
 
     assert_response 200
-    expect_resource_type(NS::ONTOLA[:MenuItem], iri: menu_url(:info))
+    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:info))
   end
 
   test 'Guest should get show page menu with custom item' do
@@ -48,18 +48,18 @@ class MenusTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     navigations_iri = resource_iri(argu.menu(:navigations, user_context), root: argu)
-    expect_resource_type(NS::ONTOLA[:MenuItem], iri: navigations_iri)
-    sequence = expect_sequence(navigations_iri, NS::ONTOLA[:menuItems])
+    expect_resource_type(NS.ontola[:MenuItem], iri: navigations_iri)
+    sequence = expect_sequence(navigations_iri, NS.ontola[:menuItems])
     home_menu_iri = RDF::URI("#{navigations_iri}#home")
     freetown_menu_iri = RDF::URI("#{navigations_iri}#menu_item_#{CustomMenuItem.find_by(edge: freetown).id}")
     feed_menu_iri = RDF::URI("#{navigations_iri}#menu_item_#{CustomMenuItem.find_by(resource: argu, order: 100).id}")
-    expect_triple(freetown_menu_iri, NS::ONTOLA[:href], freetown.iri)
-    expect_triple(feed_menu_iri, NS::ONTOLA[:href], feeds_iri(argu))
+    expect_triple(freetown_menu_iri, NS.ontola[:href], freetown.iri)
+    expect_triple(feed_menu_iri, NS.ontola[:href], feeds_iri(argu))
     expect_sequence_member(sequence, 0, home_menu_iri)
     expect_sequence_member(sequence, 1, freetown_menu_iri)
     expect_sequence_member(sequence, 2, resource_iri(custom_menu_item, root: argu))
     expect_sequence_member(sequence, 3, feed_menu_iri)
-    expect_triple(resource_iri(custom_menu_item, root: argu), NS::ONTOLA[:menuItems], nil)
+    expect_triple(resource_iri(custom_menu_item, root: argu), NS.ontola[:menuItems], nil)
   end
 
   ####################################
@@ -70,8 +70,8 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path, headers: argu_headers(accept: :nq)
 
     assert_response 200
-    expect_resource_type(NS::ONTOLA[:MenuItem], iri: menu_url(:user))
-    expect_resource_type(NS::ONTOLA[:MenuItem], iri: menu_url(:info))
+    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:user))
+    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:info))
   end
 
   private

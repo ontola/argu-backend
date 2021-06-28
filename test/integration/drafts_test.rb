@@ -37,8 +37,8 @@ class DraftsTest < ActionDispatch::IntegrationTest
 
     get drafts_iri
     assert 200
-    expect_triple(drafts_iri, NS::AS[:totalItems], 0, NS::ONTOLA[:replace])
-    expect_triple(drafts_iri, NS::AS[:name], 'My drafts', NS::ONTOLA[:replace])
+    expect_triple(drafts_iri, NS.as[:totalItems], 0, NS.ontola[:replace])
+    expect_triple(drafts_iri, NS.as[:name], 'My drafts', NS.ontola[:replace])
   end
 
   ####################################
@@ -50,8 +50,8 @@ class DraftsTest < ActionDispatch::IntegrationTest
     sign_in user
     get drafts_iri
     assert 200
-    expect_triple(drafts_iri, NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
-    expect_triple(drafts_iri, NS::AS[:name], 'My drafts', NS::ONTOLA[:replace])
+    expect_triple(drafts_iri, NS.as[:totalItems], 1, NS.ontola[:replace])
+    expect_triple(drafts_iri, NS.as[:name], 'My drafts', NS.ontola[:replace])
   end
 
   test 'user should publish draft with draft=false' do
@@ -117,7 +117,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
     sign_in user
     get drafts_iri
     assert 200
-    expect_triple(drafts_iri, NS::AS[:totalItems], 2, NS::ONTOLA[:replace])
+    expect_triple(drafts_iri, NS.as[:totalItems], 2, NS.ontola[:replace])
   end
 
   ####################################
@@ -127,7 +127,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
     sign_in staff
     get drafts_iri
     assert 200
-    expect_triple(drafts_iri, NS::AS[:totalItems], 1, NS::ONTOLA[:replace])
+    expect_triple(drafts_iri, NS.as[:totalItems], 1, NS.ontola[:replace])
   end
 
   private

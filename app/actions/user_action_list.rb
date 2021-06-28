@@ -38,7 +38,7 @@ class UserActionList < ApplicationActionList
 
   has_singular_action(
     :setup,
-    type: NS::SCHEMA[:UpdateAction],
+    type: NS.schema.UpdateAction,
     policy: :update?,
     image: 'fa-update',
     url: -> { resource.iri },

@@ -85,13 +85,13 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     expect_path(RDF::URI(iri_without_id),
-                [NS::OWL.sameAs, NS::SCHEMA.creator],
+                [NS.owl.sameAs, NS.schema.creator],
                 RDF::URI("#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}"))
     expect_path(RDF::URI(iri_without_id),
-                [NS::OWL.sameAs, NS::SCHEMA.isPartOf],
+                [NS.owl.sameAs, NS.schema.isPartOf],
                 vote_event.iri)
     expect_path(RDF::URI(iri_without_id),
-                [NS::OWL.sameAs, NS::SCHEMA.creator],
+                [NS.owl.sameAs, NS.schema.creator],
                 RDF::URI("#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}"))
   end
 
@@ -101,7 +101,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     other_guest_vote
     current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(vote_event) }
     get current_vote, headers: argu_headers(accept: :json_api)
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:abstain].to_s
+    assert_equal parsed_body['data']['attributes']['option'], NS.argu[:abstain].to_s
   end
 
   test 'guest should post create for motion json' do
@@ -131,7 +131,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 0,
                       'vote_event.reload.children_count(:votes_con)' => 0) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes, type: :paginated, filter: {CGI.escape(NS::SCHEMA[:option]) => :no}),
+        post collection_iri(vote_event, :votes, type: :paginated, filter: {CGI.escape(NS.schema.option) => :no}),
              headers: argu_headers(accept: :nq)
       end
     end
@@ -149,7 +149,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 403
     current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(closed_question_motion.default_vote_event) }
     get current_vote, headers: argu_headers(accept: :json_api)
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:abstain].to_s
+    assert_equal parsed_body['data']['attributes']['option'], NS.argu[:abstain].to_s
   end
 
   test 'guest should post update vote' do
@@ -157,17 +157,17 @@ class VotesTest < ActionDispatch::IntegrationTest
     guest_vote
     get iri_without_id, headers: argu_headers(accept: :json_api)
     assert_response 200
-    assert_equal primary_resource['attributes']['option'], NS::ARGU[:yes]
+    assert_equal primary_resource['attributes']['option'], NS.argu[:yes]
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
       post collection_iri(vote_event, :votes, canonical: true),
            params: {vote: {option: :no}},
            headers: argu_headers(accept: :json_api)
     end
     assert_response 201
-    assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
+    assert_equal primary_resource['attributes']['option'], NS.argu[:no]
     get iri_without_id, headers: argu_headers(accept: :json_api)
     assert_response 200
-    assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
+    assert_equal primary_resource['attributes']['option'], NS.argu[:no]
   end
 
   test 'guest should delete destroy argument vote' do
@@ -190,11 +190,11 @@ class VotesTest < ActionDispatch::IntegrationTest
     get iri_without_id
     assert_response 200
 
-    expect_triple(RDF::URI(iri_without_id), NS::OWL.sameAs, unconfirmed_vote.iri)
-    expect_triple(unconfirmed_vote.iri, NS::SCHEMA.isPartOf, vote_event.iri)
+    expect_triple(RDF::URI(iri_without_id), NS.owl.sameAs, unconfirmed_vote.iri)
+    expect_triple(unconfirmed_vote.iri, NS.schema.isPartOf, vote_event.iri)
     expect_triple(
       unconfirmed_vote.iri,
-      NS::SCHEMA.creator,
+      NS.schema.creator,
       RDF::URI("#{argu.iri}/u/#{unconfirmed.id}")
     )
   end
@@ -205,7 +205,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     unconfirmed_vote2
     current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(vote_event) }
     get current_vote, headers: argu_headers(accept: :json_api)
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:abstain].to_s
+    assert_equal parsed_body['data']['attributes']['option'], NS.argu[:abstain].to_s
   end
 
   test 'unconfirmed should post create for motion with json' do
@@ -276,7 +276,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'vote_event.reload.children_count(:votes_pro)' => 1) do
       Sidekiq::Testing.inline! do
         post(
-          collection_iri(vote_event, :votes, filter: {CGI.escape(NS::SCHEMA[:option]) => :yes}),
+          collection_iri(vote_event, :votes, filter: {CGI.escape(NS.schema.option) => :yes}),
           headers: argu_headers(accept: :nq)
         )
       end
@@ -428,7 +428,7 @@ class VotesTest < ActionDispatch::IntegrationTest
       delete argument_vote.iri.path, headers: argu_headers(accept: :nq)
     end
 
-    expect_triple(vote_iri, NS::SCHEMA[:option], NS::ARGU[:abstain], NS::ONTOLA[:replace])
+    expect_triple(vote_iri, NS.schema.option, NS.argu[:abstain], NS.ontola[:replace])
     assert_response 200
   end
 
@@ -453,7 +453,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 1,
                       'vote_event.reload.children_count(:votes_con)' => 1) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes, type: :paginated, filter: {CGI.escape(NS::SCHEMA[:option]) => :no}),
+        post collection_iri(vote_event, :votes, type: :paginated, filter: {CGI.escape(NS.schema.option) => :no}),
              headers: argu_headers(accept: :nq)
       end
     end

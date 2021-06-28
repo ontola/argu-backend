@@ -2,6 +2,6 @@
 
 class GrantTree
   class PermissionGroupSerializer < BaseSerializer
-    has_many :permissions, predicate: NS::ARGU[:permission]
+    has_many :permissions, predicate: NS.argu[:permission]
   end
 end

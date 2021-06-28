@@ -3,12 +3,12 @@
 module Grants
   class EdgeForm < ApplicationForm
     field :group_id,
-          datatype: NS::XSD[:string],
+          datatype: NS.xsd.string,
           max_count: 1,
           input_field: LinkedRails::Form::Field::SelectInput,
           sh_in: -> { [::Group.public.iri].concat(ActsAsTenant.current_tenant.groups.map(&:iri)) }
     field :grant_set_id,
-          datatype: NS::XSD[:string],
+          datatype: NS.xsd.string,
           max_count: 1,
           input_field: LinkedRails::Form::Field::SelectInput,
           sh_in: lambda {

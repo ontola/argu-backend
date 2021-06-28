@@ -38,10 +38,10 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
                   collection_class: SearchResult::Collection
 
   with_columns settings: [
-    NS::SCHEMA[:name],
-    NS::ORG[:hasMember],
-    NS::ONTOLA[:settingsMenu],
-    NS::ONTOLA[:destroyAction]
+    NS.schema.name,
+    NS.org[:hasMember],
+    NS.ontola[:settingsMenu],
+    NS.ontola[:destroyAction]
   ]
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
@@ -103,7 +103,7 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def iri
-      [super, NS::ORG['Organization']]
+      [super, NS.org['Organization']]
     end
 
     def public
@@ -126,7 +126,7 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def sort_options(_collection)
-      [NS::SCHEMA[:name], NS::SCHEMA[:dateCreated]]
+      [NS.schema.name, NS.schema.dateCreated]
     end
   end
 end

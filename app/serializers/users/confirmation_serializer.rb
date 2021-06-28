@@ -2,7 +2,7 @@
 
 module Users
   class ConfirmationSerializer < LinkedRails::Auth::ConfirmationSerializer
-    attribute :email, predicate: RDF::Vocab::SCHEMA.email, datatype: RDF::XSD[:string] do |object|
+    attribute :email, predicate: NS.schema.email, datatype: NS.xsd.string do |object|
       object.email&.email
     end
   end

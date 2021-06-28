@@ -9,7 +9,7 @@ class BannerDismissal < Edge
 
   def added_delta
     [
-      [parent.iri, NS::ONTOLA[:dismissedAt], Time.current, delta_iri(:replace)]
+      [parent.iri, NS.ontola[:dismissedAt], Time.current, delta_iri(:replace)]
     ]
   end
 

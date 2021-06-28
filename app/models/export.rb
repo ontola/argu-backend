@@ -15,10 +15,10 @@ class Export < ApplicationRecord
   mount_uploader :zip, ExportUploader
   parentable :edge
   with_columns default: [
-    NS::SCHEMA[:dateCreated],
-    NS::SCHEMA[:url],
-    NS::ARGU[:exportStatus],
-    NS::ONTOLA[:destroyAction]
+    NS.schema.dateCreated,
+    NS.schema.url,
+    NS.argu[:exportStatus],
+    NS.ontola[:destroyAction]
   ]
 
   def display_name

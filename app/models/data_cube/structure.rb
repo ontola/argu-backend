@@ -16,7 +16,7 @@ module DataCube
 
     class << self
       def iri
-        NS::CUBE[:DataStructureDefinition]
+        NS.cube[:DataStructureDefinition]
       end
     end
   end

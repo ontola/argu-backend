@@ -25,18 +25,18 @@ class GrantTree
           "@#{action}",
           node
             .permitted_parent_types(action: action, group_id: permission_group.group_id, resource_type: resource_type)
-            .map { |a| a == '*' ? NS::ARGU[:contentTreeClass] : a.constantize.iri }
+            .map { |a| a == '*' ? NS.argu[:contentTreeClass] : a.constantize.iri }
         )
       end
 
       define_method "#{action}_icon" do
         return 'fa-close' if send(action).blank?
 
-        send(action).include?(NS::ARGU[:contentTreeClass]) ? 'fa-check' : 'fa-question'
+        send(action).include?(NS.argu[:contentTreeClass]) ? 'fa-check' : 'fa-question'
       end
 
       define_method "#{action}_tooltip" do
-        return nil if send(action).blank? || send(action).include?(NS::ARGU[:contentTreeClass])
+        return nil if send(action).blank? || send(action).include?(NS.argu[:contentTreeClass])
 
         send(action).map { |parent_type| I18n.t("#{parent_type.to_s.split('#').last.tableize}.plural") }.join(', ')
       end

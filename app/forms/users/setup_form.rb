@@ -6,7 +6,7 @@ module Users
       def intro_required
         @intro_required ||= [
           LinkedRails::SHACL::PropertyShape.new(
-            path: [NS::ONTOLA[:organization], NS::ONTOLA[:requiresIntro]],
+            path: [NS.ontola[:organization], NS.ontola[:requiresIntro]],
             has_value: true
           )
         ]
@@ -15,7 +15,7 @@ module Users
       def terms_accepts
         @terms_accepts ||= [
           LinkedRails::SHACL::PropertyShape.new(
-            path: [NS::ARGU[:acceptedTerms]],
+            path: [NS.argu[:acceptedTerms]],
             has_value: true
           )
         ]

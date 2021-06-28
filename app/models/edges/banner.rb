@@ -5,7 +5,7 @@ class Banner < BannerManagement
 
   class << self
     def iri_namespace
-      NS::ONTOLA
+      NS.ontola
     end
   end
 end

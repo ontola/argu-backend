@@ -3,7 +3,7 @@
 class Dashboard < ContainerNode
   class << self
     def iri
-      NS::SCHEMA[:WebPage]
+      NS.schema[:WebPage]
     end
   end
 end

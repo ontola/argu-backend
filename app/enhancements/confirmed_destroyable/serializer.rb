@@ -6,8 +6,8 @@ module ConfirmedDestroyable
 
     included do
       attribute :confirmation_string,
-                predicate: NS::ARGU[:confirmationString],
-                datatype: NS::XSD[:string]
+                predicate: NS.argu[:confirmationString],
+                datatype: NS.xsd.string
     end
   end
 end

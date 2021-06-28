@@ -6,7 +6,7 @@ class ContainerNodeActionList < ApplicationActionList
     has_collection_action(
       "new_#{klass.name.underscore}",
       create_collection_options(
-        predicate: NS::ONTOLA[:createAction],
+        predicate: NS.ontola[:createAction],
         root_relative_iri: -> { new_iri_path(klass.root_collection.root_relative_iri) }
       )
     )

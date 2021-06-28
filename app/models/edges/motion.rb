@@ -55,7 +55,7 @@ class Motion < Discussion
     end
 
     def order_by_predicate(predicate, direction)
-      return super unless predicate == NS::ARGU[:votesProCount]
+      return super unless predicate == NS.argu[:votesProCount]
 
       Edge.order_child_count_sql(:votes_pro, as: 'default_vote_events_edges', direction: direction)
     end
@@ -67,7 +67,7 @@ class Motion < Discussion
     def sort_options(collection)
       return super if collection.type == :infinite
 
-      [NS::ARGU[:votesProCount], NS::SCHEMA[:dateCreated], NS::ARGU[:lastActivityAt], NS::SCHEMA[:name]]
+      [NS.argu[:votesProCount], NS.schema.dateCreated, NS.argu[:lastActivityAt], NS.schema.name]
     end
   end
 end

@@ -7,7 +7,7 @@ class MotionForm < ApplicationForm
     def location_required
       @location_required ||= [
         LinkedRails::SHACL::PropertyShape.new(
-          path: [NS::SCHEMA.isPartOf, NS::ARGU[:requireLocation]],
+          path: [NS.schema.isPartOf, NS.argu[:requireLocation]],
           has_value: true
         )
       ]
@@ -15,7 +15,7 @@ class MotionForm < ApplicationForm
   end
 
   field :display_name
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
   has_one :default_cover_photo
   has_many :attachments
   has_one :custom_placement, min_count: 1, if: location_required

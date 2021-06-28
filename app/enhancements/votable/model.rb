@@ -16,8 +16,8 @@ module Votable
       def vote_action_triples
         options = upvote_only? ? %i[yes] : %i[yes other no]
         options.map do |option|
-          action = vote_collection.new_child(filter: {NS::SCHEMA[:option] => [option]}).action(:create)
-          [iri, LinkedRails::Vocab::ONTOLA[:favoriteAction], action.iri]
+          action = vote_collection.new_child(filter: {NS.schema.option => [option]}).action(:create)
+          [iri, NS.ontola[:favoriteAction], action.iri]
         end
       end
     end

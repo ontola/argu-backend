@@ -4,7 +4,7 @@ class TopicForm < ApplicationForm
   visibility_text
 
   field :display_name
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
   has_one :default_cover_photo
   has_many :attachments
   has_one :custom_placement

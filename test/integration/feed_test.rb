@@ -63,15 +63,15 @@ class FeedTest < ActionDispatch::IntegrationTest
   private
 
   # Render activity of Motion#create, Motion#publish, 6 comments, 6 public votes and 3 private votes
-  def assert_activity_count(accept: :nq, complete: false, count: nil, parent: subject)
+  def assert_activity_count(accept: :nq, complete: false, count: nil, parent: subject) # rubocop:disable Metrics/AbcSize
     case accept
     when :nq
       collection = ActsAsTenant.with_tenant(argu) do
         feed(parent, complete).activity_collection.iri
         # RDF::URI("#{resource_iri(feed(parent))}/feed#{complete ? '?complete=true' : ''}")
       end
-      view = rdf_body.query([collection, NS::ONTOLA[:pages]]).first.object
-      expect_triple(view, NS::AS[:totalItems], count)
+      view = rdf_body.query([collection, NS.ontola[:pages]]).first.object
+      expect_triple(view, NS.as[:totalItems], count)
     else
       raise 'Wrong format'
     end

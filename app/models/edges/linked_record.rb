@@ -5,7 +5,7 @@ class LinkedRecord < Edge
   enhance LinkedRails::Enhancements::Indexable, except: [:Routing]
   include SerializationHelper
 
-  property :external_iri, :iri, NS::OWL.sameAs
+  property :external_iri, :iri, NS.owl.sameAs
 
   attr_accessor :access_token, :language
 

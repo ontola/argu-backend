@@ -24,9 +24,9 @@ class Shortname < ApplicationRecord
   }
 
   with_columns settings: [
-    NS::ARGU[:alias],
-    NS::ARGU[:shortnameable],
-    NS::ONTOLA[:destroyAction]
+    NS.argu[:alias],
+    NS.argu[:shortnameable],
+    NS.ontola[:destroyAction]
   ]
 
   # Uniqueness is done in the database (since rails lowercase support sucks,

@@ -5,7 +5,7 @@ module Actions
     attr_writer :target
 
     def error
-      return super unless action_status == NS::ONTOLA[:DisabledActionStatus]
+      return super unless action_status == NS.ontola[:DisabledActionStatus]
 
       resource_policy&.message || super
     end

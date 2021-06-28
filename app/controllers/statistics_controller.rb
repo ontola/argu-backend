@@ -12,7 +12,7 @@ class StatisticsController < ParentableController
   end
 
   def observation_dimensions
-    @observation_dimensions ||= {NS::SCHEMA[:about] => parent_from_params.iri}
+    @observation_dimensions ||= {NS.schema.about => parent_from_params.iri}
   end
 
   def observation_measures

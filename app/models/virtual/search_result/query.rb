@@ -56,7 +56,7 @@ class SearchResult
     end
 
     def sort_key(key)
-      return :_score if key == NS::ONTOLA[:relevance]
+      return :_score if key == NS.ontola[:relevance]
 
       key
     end

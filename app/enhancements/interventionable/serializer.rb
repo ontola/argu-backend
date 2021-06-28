@@ -5,7 +5,7 @@ module Interventionable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :interventions, predicate: NS::RIVM[:interventions]
+      with_collection :interventions, predicate: NS.rivm[:interventions]
     end
   end
 end

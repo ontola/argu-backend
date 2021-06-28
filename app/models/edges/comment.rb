@@ -6,10 +6,10 @@ class Comment < Edge
 
   include Edgeable::Content
 
-  property :parent_comment_id, :linked_edge_id, NS::ARGU[:inReplyTo], default: nil
-  property :pdf_position_x, :integer, NS::ARGU[:pdfPositionX], default: nil
-  property :pdf_position_y, :integer, NS::ARGU[:pdfPositionY], default: nil
-  property :pdf_page, :integer, NS::ARGU[:pdfPage], default: nil
+  property :parent_comment_id, :linked_edge_id, NS.argu[:inReplyTo], default: nil
+  property :pdf_position_x, :integer, NS.argu[:pdfPositionX], default: nil
+  property :pdf_position_y, :integer, NS.argu[:pdfPositionY], default: nil
+  property :pdf_page, :integer, NS.argu[:pdfPage], default: nil
 
   has_one :vote, primary_key_property: :comment_id, dependent: false
   belongs_to :parent_comment, foreign_key_property: :parent_comment_id, class_name: 'Comment', dependent: false
@@ -30,7 +30,7 @@ class Comment < Edge
   paginates_per 10
   parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :topics,
              :intervention, :intervention_type, :measure, :linked_records
-  filterable NS::ARGU[:pdfPage] => {values: []}
+  filterable NS.argu[:pdfPage] => {values: []}
 
   validates :description, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :creator, presence: true
@@ -57,7 +57,7 @@ class Comment < Edge
 
   def added_delta
     super + [
-      [parent.iri, NS::ARGU[:topComment], iri, NS::ONTOLA[:replace]]
+      [parent.iri, NS.argu[:topComment], iri, NS.ontola[:replace]]
     ]
   end
 

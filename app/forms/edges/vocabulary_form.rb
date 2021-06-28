@@ -3,7 +3,7 @@
 class VocabularyForm < ContainerNodeForm
   field :display_name
   field :url
-  field :description, datatype: NS::FHIR[:markdown]
+  field :description, datatype: NS.fhir[:markdown]
   field :tagged_label
   has_one :default_cover_photo
   has_many :attachments

@@ -34,13 +34,13 @@ class EmailAddressesController < ParentableController
       [
         RDF::Statement.new(
           primary_action.iri,
-          NS::SCHEMA[:actionStatus],
+          NS.schema.actionStatus,
           primary_action.action_status,
           graph_name: delta_iri(:replace)
         ),
         RDF::Statement.new(
           delete_action.iri,
-          NS::SCHEMA[:actionStatus],
+          NS.schema.actionStatus,
           delete_action.action_status,
           graph_name: delta_iri(:replace)
         )

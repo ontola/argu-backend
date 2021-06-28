@@ -80,8 +80,8 @@ module Edgeable
       def searchable_aggregations
         [
           RDF[:type].to_s,
-          NS::ARGU[:trashed].to_s,
-          NS::ARGU[:pinned].to_s
+          NS.argu[:trashed].to_s,
+          NS.argu[:pinned].to_s
         ]
       end
     end

@@ -48,7 +48,7 @@ module Searchable
     def search_data
       data = rdf_attributes
       data[:iri] = iri.to_s
-      data[NS::ONTOLA[:primaryKey].to_s] = id
+      data[NS.ontola[:primaryKey].to_s] = id
       data
     end
 
@@ -91,7 +91,7 @@ module Searchable
       end
 
       def searchable_partial_fields
-        [:iri, NS::SCHEMA.name]
+        [:iri, NS.schema.name]
       end
     end
   end

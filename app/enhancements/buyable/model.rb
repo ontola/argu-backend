@@ -5,8 +5,8 @@ module Buyable
     extend ActiveSupport::Concern
 
     included do
-      property :price, :integer, NS::ARGU[:price]
-      property :product_id, :linked_edge_id, NS::SCHEMA.itemOffered
+      property :price, :integer, NS.argu[:price]
+      property :product_id, :linked_edge_id, NS.schema.itemOffered
       validates :price, presence: true
       validates :product_id, presence: true
 

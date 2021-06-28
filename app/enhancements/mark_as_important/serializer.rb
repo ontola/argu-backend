@@ -5,8 +5,8 @@ module MarkAsImportant
     extend ActiveSupport::Concern
 
     included do
-      attribute :mark_as_important, predicate: NS::ARGU[:markAsImportant]
-      attribute :mark_as_important?, predicate: NS::ARGU[:important]
+      attribute :mark_as_important, predicate: NS.argu[:markAsImportant]
+      attribute :mark_as_important?, predicate: NS.argu[:important]
     end
   end
 end

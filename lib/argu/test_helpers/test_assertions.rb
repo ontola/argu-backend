@@ -9,13 +9,13 @@ module Argu
 
       def assert_disabled_form(iri: requested_iri, error: 'This action is currently not available')
         assert_response 200
-        expect_triple(iri, NS::SCHEMA.actionStatus, NS::ONTOLA[:DisabledActionStatus])
-        expect_triple(iri, NS::SCHEMA.error, error)
+        expect_triple(iri, NS.schema.actionStatus, NS.ontola[:DisabledActionStatus])
+        expect_triple(iri, NS.schema.error, error)
       end
 
       def assert_enabled_form(iri: requested_iri)
         assert_response 200
-        expect_triple(iri, NS::SCHEMA.actionStatus, NS::SCHEMA[:PotentialActionStatus])
+        expect_triple(iri, NS.schema.actionStatus, NS.schema.PotentialActionStatus)
       end
 
       def assert_not_a_user
@@ -69,7 +69,7 @@ module Argu
       end
 
       def expect_errors(iri, errors)
-        error_response = expect_triple(iri, NS::LL[:errorResponse], nil).first.object
+        error_response = expect_triple(iri, NS.ll[:errorResponse], nil).first.object
         assert_equal expect_triple(error_response, nil, nil).count, errors.count + 2
         errors.each do |key, value|
           expect_triple(error_response, key, value)
@@ -103,7 +103,7 @@ module Argu
         expect_triple(iri, RDF[:type], type)
       end
 
-      def expect_triple(subject, predicate, object, graph = NS::LL[:supplant])
+      def expect_triple(subject, predicate, object, graph = NS.ll[:supplant])
         statement = RDF::Statement(subject, predicate, object, graph_name: graph)
         match = rdf_body.query(statement)
         assert match.present?, "Expected to find #{statement} in\n#{response.body}"

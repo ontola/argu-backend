@@ -12,15 +12,15 @@ class UserSerializer < RecordSerializer
     object == opts[:scope]&.user
   end
 
-  attribute :accept_terms, predicate: NS::ARGU[:acceptTerms], datatype: NS::XSD[:boolean]
-  attribute :accepted_terms, predicate: NS::ARGU[:acceptedTerms], datatype: NS::XSD[:boolean]
-  attribute :name_with_fallback, predicate: NS::SCHEMA[:name]
-  attribute :display_name, predicate: NS::ARGU[:name]
-  attribute :about, predicate: NS::SCHEMA[:description]
-  attribute :finished_intro, predicate: NS::ARGU[:introFinished]
-  attribute :show_feed, predicate: NS::ARGU[:votesPublic]
-  attribute :is_public, predicate: NS::ARGU[:public]
-  attribute :group_ids, predicate: NS::ORG[:organization] do |object|
+  attribute :accept_terms, predicate: NS.argu[:acceptTerms], datatype: NS.xsd.boolean
+  attribute :accepted_terms, predicate: NS.argu[:acceptedTerms], datatype: NS.xsd.boolean
+  attribute :name_with_fallback, predicate: NS.schema.name
+  attribute :display_name, predicate: NS.argu[:name]
+  attribute :about, predicate: NS.schema.description
+  attribute :finished_intro, predicate: NS.argu[:introFinished]
+  attribute :show_feed, predicate: NS.argu[:votesPublic]
+  attribute :is_public, predicate: NS.argu[:public]
+  attribute :group_ids, predicate: NS.org[:organization] do |object|
     if ActsAsTenant.current_tenant && object.profile
       Group
         .joins(group_memberships: :member)
@@ -33,66 +33,66 @@ class UserSerializer < RecordSerializer
     end
   end
 
-  has_many :email_addresses, predicate: NS::ARGU[:emails], if: method(:service_or_self?)
-  attribute :email, predicate: NS::SCHEMA[:email], if: method(:service_or_self?)
-  attribute :has_analytics, predicate: NS::ARGU[:hasAnalytics], if: method(:self?)
-  attribute :password, predicate: NS::ONTOLA[:password], datatype: NS::ONTOLA['datatype/password'], if: method(:never)
+  has_many :email_addresses, predicate: NS.argu[:emails], if: method(:service_or_self?)
+  attribute :email, predicate: NS.schema.email, if: method(:service_or_self?)
+  attribute :has_analytics, predicate: NS.argu[:hasAnalytics], if: method(:self?)
+  attribute :password, predicate: NS.ontola[:password], datatype: NS.ontola['datatype/password'], if: method(:never)
   attribute :password_confirmation,
-            predicate: NS::ONTOLA[:passwordConfirmation],
-            datatype: NS::ONTOLA['datatype/password'],
+            predicate: NS.ontola[:passwordConfirmation],
+            datatype: NS.ontola['datatype/password'],
             if: method(:never)
   attribute :current_password,
-            predicate: NS::ARGU[:currentPassword],
-            datatype: NS::ONTOLA['datatype/password'],
+            predicate: NS.argu[:currentPassword],
+            datatype: NS.ontola['datatype/password'],
             if: method(:never)
-  attribute :redirect_url, predicate: NS::ONTOLA[:redirectUrl], datatype: NS::XSD[:string]
+  attribute :redirect_url, predicate: NS.ontola[:redirectUrl], datatype: NS.xsd.string
 
   enum :destroy_strategy,
-       predicate: NS::ARGU[:destroyStrategy],
-       datatype: NS::XSD[:string]
+       predicate: NS.argu[:destroyStrategy],
+       datatype: NS.xsd.string
   enum :reactions_email,
-       predicate: NS::ARGU[:reactionsEmails],
+       predicate: NS.argu[:reactionsEmails],
        if: method(:self?),
-       type: NS::SCHEMA[:Thing],
+       type: NS.schema.Thing,
        options: {
-         never_reactions_email: {exact_match: NS::ARGU[:never]},
-         weekly_reactions_email: {exact_match: NS::ARGU[:weekly]},
-         daily_reactions_email: {exact_match: NS::ARGU[:daily]},
-         direct_reactions_email: {exact_match: NS::ARGU[:direct]}
+         never_reactions_email: {exact_match: NS.argu[:never]},
+         weekly_reactions_email: {exact_match: NS.argu[:weekly]},
+         daily_reactions_email: {exact_match: NS.argu[:daily]},
+         direct_reactions_email: {exact_match: NS.argu[:direct]}
        }
   enum :news_email,
-       predicate: NS::ARGU[:newsEmails],
+       predicate: NS.argu[:newsEmails],
        if: method(:self?),
-       type: NS::SCHEMA[:Thing],
+       type: NS.schema.Thing,
        options: {
-         never_news_email: {exact_match: NS::ARGU[:never]},
-         weekly_news_email: {exact_match: NS::ARGU[:weekly]},
-         daily_news_email: {exact_match: NS::ARGU[:daily]},
-         direct_news_email: {exact_match: NS::ARGU[:direct]}
+         never_news_email: {exact_match: NS.argu[:never]},
+         weekly_news_email: {exact_match: NS.argu[:weekly]},
+         daily_news_email: {exact_match: NS.argu[:daily]},
+         direct_news_email: {exact_match: NS.argu[:direct]}
        }
   enum :decisions_email,
-       type: NS::SCHEMA[:Thing],
-       predicate: NS::ARGU[:decisionsEmails],
+       type: NS.schema.Thing,
+       predicate: NS.argu[:decisionsEmails],
        if: method(:self?),
        options: {
-         never_decisions_email: {exact_match: NS::ARGU[:never]},
-         weekly_decisions_email: {exact_match: NS::ARGU[:weekly]},
-         daily_decisions_email: {exact_match: NS::ARGU[:daily]},
-         direct_decisions_email: {exact_match: NS::ARGU[:direct]}
+         never_decisions_email: {exact_match: NS.argu[:never]},
+         weekly_decisions_email: {exact_match: NS.argu[:weekly]},
+         daily_decisions_email: {exact_match: NS.argu[:daily]},
+         direct_decisions_email: {exact_match: NS.argu[:direct]}
        }
   enum :language,
-       type: NS::SCHEMA[:Language],
+       type: NS.schema.Language,
        options: available_locales,
-       predicate: NS::SCHEMA[:language],
+       predicate: NS.schema.language,
        if: method(:service_or_self?)
   enum :time_zone,
-       type: NS::SCHEMA[:Thing],
-       predicate: NS::TIME[:timeZone],
+       type: NS.schema.Thing,
+       predicate: NS.time[:timeZone],
        if: method(:service_or_self?),
        options: Hash[
          ActiveSupport::TimeZone.all.uniq(&:tzinfo).map do |value|
            id = value.tzinfo.name.gsub(%r{Etc\/([A-Z]+)}, 'UTC')
-           [value.tzinfo.name, {close_match: NS::DBPEDIA[id], label: value.to_s}]
+           [value.tzinfo.name, {close_match: NS.dbpedia[id], label: value.to_s}]
          end
        ]
 end

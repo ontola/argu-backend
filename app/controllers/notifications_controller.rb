@@ -36,7 +36,7 @@ class NotificationsController < AuthorizedController
     [
       RDF::Statement.new(
         current_actor.iri,
-        NS::ARGU[:unreadCount],
+        NS.argu[:unreadCount],
         current_actor.unread_notification_count,
         graph_name: delta_iri(:replace)
       )
