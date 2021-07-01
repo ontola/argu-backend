@@ -16,8 +16,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
            label: -> { user_context.user.display_name },
            image: -> { user_context.user.default_profile_photo.thumbnail },
            menus: -> { user_menu_items }
-  has_menu :session,
-           menus: -> { session_links }
   has_menu :navigations,
            menus: -> { navigations_menu_items }
   has_menu :settings,
@@ -97,31 +95,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
 
   def resource
     ActsAsTenant.current_tenant
-  end
-
-  def session_links # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    items = []
-    items << menu_item(
-      :sign_in,
-      label: I18n.t('actions.sessions.create.label'),
-      href: LinkedRails.iri(path: 'u/session/new')
-    )
-    items << menu_item(
-      :password,
-      label: I18n.t('devise.passwords.new.header'),
-      href: LinkedRails.iri(path: 'u/password/new')
-    )
-    items << menu_item(
-      :confirmation,
-      label: I18n.t('devise.confirmations.send'),
-      href: LinkedRails.iri(path: 'u/confirmation/new')
-    )
-    items << menu_item(
-      :locked,
-      label: I18n.t('devise.unlocks.new.header'),
-      href: LinkedRails.iri(path: 'u/unlock/new')
-    )
-    items
   end
 
   def setting_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

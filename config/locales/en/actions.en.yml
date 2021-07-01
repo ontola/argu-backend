@@ -53,7 +53,7 @@ en:
         submit: "Make primary email address"
     access_tokens:
       create:
-        label: "Sign in"
+        label: "Log in"
         submit: "Continue"
     blogs:
       create:
@@ -102,7 +102,7 @@ en:
         submit: "Upvote"
     registrations:
       create:
-        label: "Register"
+        label: "Sign up"
         submit: "Confirm"
     sessions:
       create:
@@ -151,6 +151,6 @@ en:
         label: "Set your password"
     unlocks:
       create:
-        label: 'Account locked?'
+        label: 'Your account is locked'
         description: "Enter your email address and you'll receive a link to unlock your account."
         submit: "Send"

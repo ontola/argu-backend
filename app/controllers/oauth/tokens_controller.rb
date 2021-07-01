@@ -15,6 +15,14 @@ module Oauth
       process_previous_token(authorize_response)
     end
 
+    def handle_token_exception(exception)
+      return super unless exception.is_a?(Argu::Errors::AccountLocked)
+
+      headers['Location'] = LinkedRails.iri(path: 'u/unlock/new').to_s
+
+      head 200
+    end
+
     def otp_setup_required?
       User.find_by(id: authorize_response.token.resource_owner_id)&.requires_2fa?
     end

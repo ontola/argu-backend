@@ -151,6 +151,6 @@ nl:
         label: "Stel je wachtwoord in"
     unlocks:
       create:
-        label: 'Account vergrendeld?'
+        label: 'Je account is vergrendeld'
         description: 'Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je je account kunt ontgrendelen.'
         submit: "Verstuur"

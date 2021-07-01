@@ -26,8 +26,18 @@ module OauthTestHelpers
     "/#{argu.url}#{super}"
   end
 
-  # rubocop:disable Metrics/MethodLength
   def post_token_password(name: user.email, password: user.password, scope: 'user', redirect: nil, results: {})
+    post_token_password_request(name, password, scope, redirect)
+
+    token = token_response(**results)
+    return unless token
+
+    token_user = token['user']
+    assert_equal scope, token_user['type']
+    token_user
+  end
+
+  def post_token_password_request(name, password, scope = 'user', redirect = nil) # rubocop:disable Metrics/MethodLength
     post oauth_token_path,
          headers: argu_headers(accept: :json),
          params: {
@@ -39,15 +49,7 @@ module OauthTestHelpers
            scope: scope,
            r: redirect
          }
-
-    token = token_response(**results)
-    return unless token
-
-    token_user = token['user']
-    assert_equal scope, token_user['type']
-    token_user
   end
-  # rubocop:enable Metrics/MethodLength
 
   def post_token_client_credentials(scope: nil, redirect: nil, results: {}, client_id: nil, client_secret: nil)
     post oauth_token_path,

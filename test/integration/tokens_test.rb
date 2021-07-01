@@ -350,7 +350,9 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_nil user.locked_at
 
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token_password(results: {error_code: 'ACCOUNT_LOCKED'}, password: 'wrong')
+      post_token_password_request(user.email, 'wrong')
+      assert_response :success
+      assert_equal response.headers['Location'], LinkedRails.iri(path: 'argu/u/unlock/new')
     end
 
     assert_not_nil user.reload.locked_at
@@ -363,7 +365,9 @@ class TokensTest < ActionDispatch::IntegrationTest
     user.update!(locked_at: Time.current)
 
     assert_no_difference('Doorkeeper::AccessToken.count') do
-      post_token_password(results: {error_code: 'ACCOUNT_LOCKED'})
+      post_token_password_request(user.email, user.password)
+      assert_response :success
+      assert_equal response.headers['Location'], LinkedRails.iri(path: 'argu/u/unlock/new')
     end
   end
 

@@ -74,8 +74,6 @@ class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
       LinkedRails.iri(path: 'forms/linked_rails/auth/sessions').to_s,
       LinkedRails.iri(path: 'forms/linked_rails/auth/access_tokens').to_s,
       LinkedRails.iri(path: 'forms/users/registrations').to_s,
-      LinkedRails.iri(path: '/u/access_token/new').to_s,
-      LinkedRails.iri(path: '/u/registration/new').to_s,
       LinkedRails.iri(path: 'menus').to_s
     ]
   end
