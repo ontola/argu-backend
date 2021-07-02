@@ -129,7 +129,8 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
         :vocabularies,
         label: I18n.t('vocabularies.plural'),
         href: collection_iri(ActsAsTenant.current_tenant, :vocabularies, display: :table)
-      )
+      ),
+      setting_item(:delete, href: delete_iri(resource))
     ]
   end
 

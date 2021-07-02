@@ -9,7 +9,6 @@ class PageForm < ApplicationForm
         sh_in: -> { collection_iri(nil, :container_nodes) }
   field :locale
   field :accepted_terms
-  resource :delete_button, url: -> { delete_iri(ActsAsTenant.current_tenant) }
 
   group :theme,
         label: -> { I18n.t('forms.theme.label') },
