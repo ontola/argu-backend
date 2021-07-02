@@ -54,7 +54,7 @@ module Argu
       "redis://#{ENV['REDIS_ADDRESS'] || 'localhost'}:#{ENV['REDIS_PORT'] || 6379}/12"
 
     config.cache_stream = ENV['CACHE_STREAM'].presence || 'transactions'
-    config.cache_redis_database = (ENV['CACHE_REDIS_DATABASE'])&.to_i || 8
+    config.stream_redis_database = (ENV['STREAM_REDIS_DATABASE'])&.to_i || 7
 
     config.app_generators.template_engine :slim
 
