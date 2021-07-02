@@ -10,7 +10,7 @@ class UserContext
 
   def initialize(doorkeeper_token: nil, profile: nil, user: nil)
     @doorkeeper_token = doorkeeper_token
-    @current_actor = authorized_current_actor(user, profile)
+    authorized_current_actor(user, profile)
     @lookup_map = {}
     @grant_trees = {}
   end
@@ -19,12 +19,12 @@ class UserContext
     user ||= GuestUser.new
 
     if profile
-      current_actor = CurrentActor.new(user: user, profile: profile)
+      @current_actor = CurrentActor.new(user: user, profile: profile)
 
-      return current_actor if CurrentActorPolicy.new(nil, current_actor).show?
+      return if CurrentActorPolicy.new(self, current_actor).show?
     end
 
-    CurrentActor.new(user: user, profile: user.profile)
+    @current_actor = CurrentActor.new(user: user, profile: user.profile)
   end
 
   def cache_key(ident, key, val)
@@ -78,6 +78,27 @@ class UserContext
 
   def language
     @language ||= doorkeeper_token_payload['user']['language']
+  end
+
+  def managed_profile_ids
+    return [] if user.guest?
+    return [user.profile.id, ActsAsTenant.current_tenant.profile.id] if page_manager?
+
+    [user.profile.id]
+  end
+
+  def page_manager? # rubocop:disable Metrics/MethodLength
+    @page_manager ||=
+      PermittedAction
+        .joins(grant_sets: {grants: {group: :group_memberships}})
+        .where(
+          resource_type: 'Page',
+          action: 'update',
+          grants: {edge_id: ActsAsTenant.current_tenant.uuid},
+          group_memberships: {member_id: user.profile.id},
+          permitted_actions: {resource_type: 'Page', action: 'update'}
+        )
+        .any?
   end
 
   def profile=(new_profile)

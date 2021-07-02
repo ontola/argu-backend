@@ -35,7 +35,7 @@ en:
             body_html: "<b>NOT READING THIS MESSAGE MIGHT LEAD TO UNWANTED LOSS OF CONTENT</b><br>Deleting this page will delete <b>all content</b> of this page! This action can <b>NOT</b> be undone!"
             howto: "Please enter 'remove' below to confirm the deletion."
             understand: "I understand the consequences, delete this page."
-          forum_owner: "This page owns one or multiple forums. Transfer these forum to another page or contact Argu before proceeding."
+          forum_owner: "This page owns one or multiple forums. Delete these or contact Argu before proceeding."
     management:
       title: "Organization management"
       managed_current_out_of_max: "%{current} of max %{max} organization(s) managed."

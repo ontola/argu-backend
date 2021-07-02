@@ -46,7 +46,7 @@ class ActivityPolicy < EdgeTreePolicy
         .where(
           '(edges.is_published = true AND ancestors.id IS NULL) OR activities.owner_id IN (:profile_ids) OR '\
           '(SELECT array_agg(path) FROM managed_forum_paths) @> edges.path',
-          profile_ids: user.managed_profile_ids
+          profile_ids: managed_profile_ids
         )
     end
 

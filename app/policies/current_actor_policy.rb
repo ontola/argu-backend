@@ -25,7 +25,7 @@ class CurrentActorPolicy < RestrictivePolicy
     else
       return unless record.user.confirmed?
 
-      record.profile == record.user.profile || record.user.managed_profile_ids.include?(record.profile.id)
+      record.profile == record.user.profile || user_context.managed_profile_ids.include?(record.profile.id)
     end
   end
 end

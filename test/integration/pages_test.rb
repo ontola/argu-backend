@@ -4,7 +4,6 @@ require 'test_helper'
 
 class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create_page }
-  let!(:other_page) { create_page }
   let(:freetown) { create_forum(name: 'freetown', parent: page) }
   let(:second_freetown) { create_forum(name: 'second_freetown', parent: page) }
   let(:helsinki) { create_forum(name: 'second_freetown', parent: page, discoverable: false) }
@@ -14,21 +13,21 @@ class PagesTest < ActionDispatch::IntegrationTest
   let(:motion) do
     create(:motion,
            parent: freetown,
-           creator: other_page.profile,
-           publisher: other_page.publisher)
+           creator: page.profile,
+           publisher: page.publisher)
   end
   let(:argument) do
     create(:pro_argument,
            parent: motion,
-           creator: other_page.profile,
-           publisher: other_page.publisher)
+           creator: page.profile,
+           publisher: page.publisher)
   end
 
   let(:comment) do
     create(:comment,
            parent: argument,
-           creator: other_page.profile,
-           publisher: other_page.publisher)
+           creator: page.profile,
+           publisher: page.publisher)
   end
 
   def init_freetown_with_content
@@ -173,7 +172,6 @@ class PagesTest < ActionDispatch::IntegrationTest
   ####################################
   let(:administrator) { page.publisher }
   let(:argu_administrator) { argu.publisher }
-  let(:other_page_administrator) { other_page.publisher }
 
   test 'administrator should get settings and all tabs' do
     create(:place, address: {country_code: 'nl'})
@@ -285,25 +283,6 @@ class PagesTest < ActionDispatch::IntegrationTest
            }
     end
     assert_response :forbidden
-  end
-
-  test 'administrator should delete destroy and anonimize its content' do
-    init_freetown_with_content
-    sign_in other_page_administrator
-
-    assert_difference('Page.count' => -1,
-                      'Tenant.count' => -1,
-                      'ProArgument.anonymous.count' => 1,
-                      'Comment.anonymous.count' => 1,
-                      'Motion.anonymous.count' => 1) do
-      delete other_page,
-             params: {
-               page: {
-                 confirmation_string: 'remove'
-               }
-             }
-      assert_response :success
-    end
   end
 
   test 'administrator should delete destroy when page not owns a forum' do

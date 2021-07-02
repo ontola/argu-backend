@@ -27,6 +27,12 @@ class PagePolicy < EdgePolicy
 
   def is_creator?; end
 
+  def destroy?
+    return super if record.children.empty?
+
+    forbid_with_message(I18n.t('pages.settings.advanced.delete.forum_owner'))
+  end
+
   def show?
     true
   end

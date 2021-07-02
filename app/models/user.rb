@@ -68,8 +68,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
                   association_class: Page,
                   default_filters: {},
                   policy_scope: false
-  with_collection :managed_pages,
-                  association_class: Page
 
   auto_strip_attributes :about, nullify: false
 
@@ -218,28 +216,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @is_staff ||= profile.is_group_member?(Group::STAFF_ID)
   end
 
-  # @return [ActiveRecord::Relation] The pages managed by the user
-  def managed_pages
-    @managed_pages ||=
-      Page
-        .joins(grants: {group: :group_memberships, grant_set: :permitted_actions})
-        .where(group_memberships: {member_id: profile.id}, permitted_actions: {resource_type: 'Page', action: 'update'})
-        .distinct
-  end
-
-  # Find the ids of profiles managed by the user, both its own profile as profiles of pages it manages
-  # @return [Array] The ids of the profiles managed by the user
-  def managed_profile_ids
-    @managed_profile_ids ||=
-      ActsAsTenant.without_tenant do
-        if !confirmed? || managed_pages.blank?
-          [profile.id]
-        else
-          managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)
-        end
-      end
-  end
-
   def name_with_fallback
     display_name || generated_name
   end
@@ -258,10 +234,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def page_ids
     @page_ids ||= ActsAsTenant.without_tenant { edges.where(owner_type: 'Page').pluck(:uuid) }
-  end
-
-  def page_management?
-    page_count.positive?
   end
 
   def password_required?

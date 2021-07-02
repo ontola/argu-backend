@@ -9,8 +9,9 @@ class ActorsController < ParentableController
 
   def available_actors
     return [] if current_user.guest?
+    return [current_user, ActsAsTenant.current_tenant] if user_context.page_manager?
 
-    [current_user] + current_user.managed_pages.includes(:default_cover_photo, :shortname, :default_profile_photo)
+    [current_user]
   end
 
   def current_resource

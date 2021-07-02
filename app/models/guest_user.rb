@@ -40,10 +40,6 @@ class GuestUser < User
     super
   end
 
-  def managed_profile_ids
-    []
-  end
-
   def otp_secret; end
 
   def profile
