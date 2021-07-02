@@ -95,10 +95,6 @@ class GroupMembership < ApplicationRecord
       attrs
     end
 
-    def includes_for_serializer
-      [user: {}, group: {}]
-    end
-
     def iri
       [super, NS.org['Membership']]
     end

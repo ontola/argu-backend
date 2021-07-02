@@ -106,10 +106,6 @@ class Vote < Edge
         .find_by(parent: parent, primary: true)
     end
 
-    def includes_for_serializer
-      super.merge(publisher: {}, comment: :properties)
-    end
-
     def requested_singular_resource(params, user_context)
       parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
       return unless parent.enhanced_with?(Votable)

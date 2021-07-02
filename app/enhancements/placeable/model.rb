@@ -45,10 +45,6 @@ module Placeable
         validates :custom_placement, presence: true, if: :requires_location? if type == :custom
       end
 
-      def includes_for_serializer
-        super.merge(Hash[placeable_types.map { |type| ["#{type}_placement".to_sym, :place] }])
-      end
-
       def placeable(*types)
         self.placeable_types = types
         types.each(&method(:define_placement_associations))

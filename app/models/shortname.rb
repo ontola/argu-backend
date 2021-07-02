@@ -120,9 +120,5 @@ class Shortname < ApplicationRecord
     def find_resource(shortname, root_id = nil)
       Shortname.where(root_id: root_id).find_by('lower(shortname) = lower(?)', shortname).try(:owner)
     end
-
-    def includes_for_serializer
-      [owner: {}]
-    end
   end
 end

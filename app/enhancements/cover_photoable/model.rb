@@ -27,10 +27,6 @@ module CoverPhotoable
     end
 
     module ClassMethods
-      def includes_for_serializer
-        super.merge(default_cover_photo: {})
-      end
-
       def preview_includes
         super + %i[default_cover_photo]
       end

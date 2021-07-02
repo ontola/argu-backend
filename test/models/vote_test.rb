@@ -30,7 +30,7 @@ class VoteTest < ActiveSupport::TestCase
     assert_equal comment.description, vote_with_comment.comment.description
     assert_equal(
       comment.description,
-      Vote.where(id: vote_with_comment.id).includes(Vote.includes_for_serializer).first.comment.description
+      Vote.where(id: vote_with_comment.id).first.comment.description
     )
   end
 

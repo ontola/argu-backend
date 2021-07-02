@@ -58,10 +58,6 @@ module ActivePublishable
         resource
       end
 
-      def includes_for_serializer
-        super.merge(argu_publication: {}, published_publications: {})
-      end
-
       def is_publishable?
         true
       end

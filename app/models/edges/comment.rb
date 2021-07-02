@@ -101,10 +101,6 @@ class Comment < Edge
       attrs
     end
 
-    def includes_for_serializer
-      super.merge(comments: {}, vote: {})
-    end
-
     def route_key
       :c
     end

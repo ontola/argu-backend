@@ -8,10 +8,4 @@ class ApplicationRecord < ActiveRecord::Base
   include VirtualAttributes
 
   self.abstract_class = true
-
-  class << self
-    def collection_include_map
-      JSONAPI::IncludeDirective::Parser.parse_include_args([:root] + [show_includes])
-    end
-  end
 end

@@ -75,9 +75,5 @@ class Notification < ApplicationRecord
     def preview_includes
       [operation: :target]
     end
-
-    def includes_for_serializer
-      [:user, activity: {recipient: {}, trackable: :root, owner: :profileable}]
-    end
   end
 end

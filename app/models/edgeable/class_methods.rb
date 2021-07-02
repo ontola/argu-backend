@@ -41,10 +41,6 @@ module Edgeable
         super
       end
 
-      def collection_include_map
-        JSONAPI::IncludeDirective::Parser.parse_include_args(%i[root shortname])
-      end
-
       def edge_includes_for_index
         {
           published_publications: {},
@@ -57,14 +53,6 @@ module Edgeable
       # Hands over ownership of a collection to the Community user
       def expropriate(collection)
         collection.update_all(publisher_id: User::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
-      end
-
-      def includes_for_serializer
-        super.merge(
-          creator: :profileable,
-          parent: {},
-          root: {}
-        )
       end
 
       def order_child_count_sql(type, direction: :desc, as: 'edges') # rubocop:disable Naming/MethodParameterName

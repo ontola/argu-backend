@@ -24,11 +24,5 @@ module VoteEventable
         )
       # rubocop:enable Naming/MemoizedInstanceVariableName
     end
-
-    module ClassMethods
-      def includes_for_serializer
-        super.merge(default_vote_event: {creator: :profileable})
-      end
-    end
   end
 end
