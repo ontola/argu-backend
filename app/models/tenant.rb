@@ -70,7 +70,6 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
         profile: Profile.new,
         name: name.humanize,
         url: name,
-        last_accepted: Time.current,
         is_published: true,
         iri_prefix: iri_prefix
       )

@@ -1,18 +1,12 @@
 # frozen_string_literal: true
 
 class PageSerializer < EdgeSerializer
-  def self.manager?(object, opts)
-    opts[:scope].user.managed_pages.include?(object)
-  end
-
   attribute :name, predicate: NS.foaf[:name], datatype: NS.xsd.string do |object|
     profile = object.is_a?(Profile) ? object : object.profile
     profile&.name
   end
   attribute :url, predicate: NS.argu[:shortname], datatype: NS.xsd.string
   attribute :follows_count, predicate: NS.argu[:followsCount]
-  attribute :accepted_terms, predicate: NS.argu[:acceptedTerms], datatype: NS.xsd.boolean, if: method(:manager?)
-  attribute :last_accepted, predicate: NS.argu[:lastAccepted], if: method(:manager?)
   attribute :database_schema, predicate: NS.argu[:dbSchema], if: method(:service_scope?)
 
   has_one :primary_container_node, predicate: NS.foaf[:homepage], unless: method(:service_scope?)

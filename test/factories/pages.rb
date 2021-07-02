@@ -7,7 +7,6 @@ FactoryBot.define do
 
   factory :page do
     association :profile
-    last_accepted { Time.current }
     is_published { true }
     sequence :url do |n|
       "page_#{n}"

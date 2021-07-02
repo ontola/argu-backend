@@ -54,8 +54,7 @@ class PagesTest < ActionDispatch::IntegrationTest
            params: {
              page: {
                name: 'Utrecht Two',
-               url: 'UtrechtNumberTwo',
-               accepted_terms: 'true'
+               url: 'UtrechtNumberTwo'
              }
            }
     end
@@ -95,8 +94,7 @@ class PagesTest < ActionDispatch::IntegrationTest
            params: {
              page: {
                name: 'Utrecht Two',
-               url: 'UtrechtNumberTwo',
-               accepted_terms: 'true'
+               url: 'UtrechtNumberTwo'
              }
            }
     end
@@ -115,8 +113,7 @@ class PagesTest < ActionDispatch::IntegrationTest
            params: {
              page: {
                name: 'Utrecht Two',
-               url: 'UtrechtNumberTwo',
-               accepted_terms: 'true'
+               url: 'UtrechtNumberTwo'
              }
            }
     end
@@ -132,8 +129,7 @@ class PagesTest < ActionDispatch::IntegrationTest
            params: {
              page: {
                name: 'a',
-               url: 'shortnmae',
-               accepted_terms: 'true'
+               url: 'shortnmae'
              }
            }
     end
@@ -284,8 +280,7 @@ class PagesTest < ActionDispatch::IntegrationTest
            params: {
              page: {
                name: 'Utrecht Two',
-               url: 'UtrechtNumberTwo',
-               accepted_terms: 'true'
+               url: 'UtrechtNumberTwo'
              }
            }
     end
@@ -362,8 +357,7 @@ class PagesTest < ActionDispatch::IntegrationTest
          params: {
            page: {
              name: 'Utrecht Two',
-             url: 'UtrechtNumberTwo',
-             accepted_terms: 'true'
+             url: 'UtrechtNumberTwo'
            }
          }
 
@@ -378,8 +372,7 @@ class PagesTest < ActionDispatch::IntegrationTest
            params: {
              page: {
                name: 'Name',
-               url: argu.url,
-               accepted_terms: 'true'
+               url: argu.url
              }
            }, headers: argu_headers(accept: :n3)
     end
@@ -393,8 +386,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       post collection_iri(argu, :pages),
            params: {
              page: {
-               name: 'Name',
-               accepted_terms: 'true'
+               name: 'Name'
              }
            }, headers: argu_headers(accept: :n3)
     end

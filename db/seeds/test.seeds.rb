@@ -38,7 +38,6 @@ FactorySeeder.create(
 page = FactorySeeder.create(
   :page,
   id: 0,
-  last_accepted: Time.current,
   name: 'Argu page',
   url: 'argu',
   iri_prefix: 'argu.localtest/argu',

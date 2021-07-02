@@ -38,7 +38,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   delegate :database_schema, to: :tenant, allow_nil: true
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
-  validates :profile, :last_accepted, :iri_prefix, presence: true
+  validates :profile, :iri_prefix, presence: true
   validates :name, presence: true, length: {minimum: 3, maximum: 75}
 
   after_create :tenant_create
@@ -64,7 +64,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   parentable :user
   placeable :custom
   property :display_name, :string, NS.schema.name
-  property :last_accepted, :datetime, NS.argu[:lastAccepted]
   property :locale, :string, NS.argu[:locale], default: 'nl-NL'
   property :template, :string, NS.ontola[:template], default: :default
   property :template_options, :text, NS.ontola[:templateOpts], default: '{}'
@@ -84,14 +83,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
              foreign_key_property: :primary_container_node_id,
              class_name: 'Edge',
              dependent: false
-
-  def accepted_terms
-    last_accepted.present?
-  end
-
-  def accepted_terms=(bool)
-    self.last_accepted = bool.to_s == 'true' ? Time.current : nil
-  end
 
   def all_shortnames
     @all_shortnames = Shortname.join_edges.where(shortnames: {root_id: nil}, edges: {root_id: uuid}).pluck(:shortname)

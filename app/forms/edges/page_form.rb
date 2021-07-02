@@ -8,7 +8,6 @@ class PageForm < ApplicationForm
         max_count: 1,
         sh_in: -> { collection_iri(nil, :container_nodes) }
   field :locale
-  field :accepted_terms
 
   group :theme,
         label: -> { I18n.t('forms.theme.label') },
@@ -29,4 +28,11 @@ class PageForm < ApplicationForm
     field :google_tag_manager
     field :google_uac
   end
+
+  resource :confirmation_text,
+           description: lambda {
+             I18n.t('legal.continue_html',
+                    policy: "[#{I18n.t('legal.documents.policy')}](#{ActsAsTenant.current_tenant.iri}/policy)",
+                    privacy: "[#{I18n.t('legal.documents.privacy')}](#{ActsAsTenant.current_tenant.iri}/privacy)")
+           }
 end

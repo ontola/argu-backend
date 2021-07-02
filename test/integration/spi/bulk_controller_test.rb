@@ -146,7 +146,7 @@ module SPI
 
     def bulk_responses_demogemeente
       {
-        demogemeente.iri => {cache: 'no-cache', status: 200, include: true},
+        demogemeente.iri => {cache: 'public', status: 200, include: true},
         dg_current_actor_iri => {cache: 'private', status: 200, include: true},
         dg_motion1.iri => {cache: 'public', status: 200, include: true},
         'https://example.com' => {cache: 'private', status: 404, include: false}

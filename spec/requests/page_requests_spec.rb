@@ -25,8 +25,7 @@ RSpec.describe 'Pages', type: :request do
     {
       page: {
         name: 'name',
-        url: 'new_page',
-        accepted_terms: 'true'
+        url: 'new_page'
       }
     }
   end
