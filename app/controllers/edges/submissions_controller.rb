@@ -8,6 +8,12 @@ class SubmissionsController < EdgeableController
     policy: :update?,
     target_url: -> { resource.iri('submission%5Bstatus%5D': :submission_completed) }
   )
+  has_resource_action(
+    :claim_reward,
+    http_method: :get,
+    policy: :reward?,
+    target_url: -> { resource.reward_iri }
+  )
 
   private
 

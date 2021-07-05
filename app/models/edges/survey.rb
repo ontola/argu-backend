@@ -9,6 +9,7 @@ class Survey < Discussion
   include Edgeable::Content
 
   property :external_iri, :string, NS.argu[:externalIRI]
+  property :reward, :integer, NS.argu[:reward], default: 0
   parentable :container_node, :page, :phase
   with_collection :submissions
 
@@ -20,6 +21,10 @@ class Survey < Discussion
     super + [
       invalidate_resource_delta(menu(:settings))
     ]
+  end
+
+  def currency
+    'EUR'
   end
 
   def manage_iri

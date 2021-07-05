@@ -3,7 +3,8 @@
 class SurveyForm < ContainerNodeForm
   field :display_name
   field :description, datatype: NS.fhir[:markdown]
-  field :external_iri
+  field :external_iri, min_count: 1
+  field :reward, input_field: MoneyInput
   has_one :default_cover_photo
   has_one :custom_placement
 

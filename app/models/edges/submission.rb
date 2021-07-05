@@ -28,6 +28,10 @@ class Submission < Edge
     ]
   end
 
+  def reward_iri
+    RDF::URI('https://acegif.com/wp-content/gifs/raining-money-8.gif')
+  end
+
   class << self
     def interact_as_guest?
       true
