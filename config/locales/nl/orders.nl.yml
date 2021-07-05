@@ -1,5 +1,7 @@
 nl:
   orders:
+    plural: "Bestellingen"
+    type: "Bestelling"
     type_new: "Afronden"
     errors:
       coupon:

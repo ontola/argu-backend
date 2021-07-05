@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class OrderSerializer < EdgeSerializer
-  attribute :coupon, predicate: NS.argu[:coupon], if: method(:never)
   attribute :cart_iri, predicate: NS.argu[:cart] do |object|
     Cart.new(shop: object.parent).iri
   end

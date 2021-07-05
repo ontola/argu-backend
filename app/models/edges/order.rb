@@ -2,14 +2,10 @@
 
 class Order < Edge
   enhance LinkedRails::Enhancements::Creatable
+  enhance Couponable
   parentable :budget_shop
   after_commit :clear_cart!
   delegate :currency, to: :parent
-
-  property :coupon, :string, NS.argu[:coupon]
-  validates :coupon, presence: true
-  validate :validate_coupon
-  after_create :invalidate_token
   attr_accessor :cart
 
   with_collection :order_details
@@ -43,28 +39,8 @@ class Order < Edge
     cart.cart_details.each(&:destroy)
   end
 
-  def coupon_batch
-    @coupon_batch ||= parent.coupon_batches.find_by(coupons: coupon)
-  end
-
-  def invalidate_token
-    # rubocop:disable Rails/SkipsModelValidations
-    Property.find_by!(
-      edge: coupon_batch,
-      predicate: NS.argu[:coupons].to_s,
-      string: coupon
-    ).update_column(:predicate, NS.argu[:usedCoupons].to_s)
-    # rubocop:enable Rails/SkipsModelValidations
-  end
-
   def order_details_values
     order_details.map { |detail| detail.offer.price }
-  end
-
-  def validate_coupon
-    return if coupon_batch.present?
-
-    errors.add(:coupon, I18n.t('orders.errors.coupon.invalid'))
   end
 
   class << self

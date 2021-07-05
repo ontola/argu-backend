@@ -1,3 +1,6 @@
 en:
   coupon_batches:
     type_new: "New coupons"
+    errors:
+      coupon:
+        invalid: "Coupon is not valid"

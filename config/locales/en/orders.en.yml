@@ -1,5 +1,7 @@
 en:
   orders:
+    plural: "Orders"
+    type: "Order"
     type_new: "Finish"
     errors:
       coupon:
