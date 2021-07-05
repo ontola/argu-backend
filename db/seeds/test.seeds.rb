@@ -195,6 +195,13 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
 
   FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))
   FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))
+
+  budget = FactorySeeder.create(:budget_shop, parent: freetown, budget_max: 1000)
+  FactorySeeder.create(:offer, parent: budget, product_id: motion.uuid, price: 600)
+  FactorySeeder.create(:offer, parent: budget, product_id: expired_motion.uuid, price: 300)
+  FactorySeeder.create(:offer, parent: budget, product_id: forum_motion.uuid, price: 200)
+  batch = FactorySeeder.create(:coupon_batch, parent: budget)
+  batch.update(coupons: %w[COUPON1 COUPON1])
 end
 
 FactorySeeder.create(
