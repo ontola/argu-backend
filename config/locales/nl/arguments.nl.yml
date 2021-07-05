@@ -2,21 +2,11 @@
 
 nl:
   pro_arguments:
-    type: "Voordeel"
     type_new: "Nieuw voordeel"
-    plural: "Voordelen"
-    tooltips:
-      info: "Een voorargument is een reden om ergens voor te zijn."
   con_arguments:
-    type: "Nadeel"
     type_new: "Nieuw nadeel"
-    plural: "Nadelen"
-    tooltips:
-      info: "Een tegenargument is een reden om ergens tegen te zijn."
   arguments:
-    type: "Argument"
     type_new: "Nieuw argument"
-    plural: "Argumenten"
     vote: "Stem"
     new_btn: "Argument toevoegen"
     references: "Referenties"
@@ -39,10 +29,6 @@ nl:
       create: "+ argument %{side}"
       pro: "Argument voor toevoegen"
       con: "Argument tegen toevoegen"
-    tooltips:
-      info: "Een argument is een enkele reden voor of tegen een idee."
-    revisions:
-      title_wiped: 'Gewiste reacties'
     form:
       title:
         label: "Kern van jouw argument"

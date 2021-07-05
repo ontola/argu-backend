@@ -17,7 +17,7 @@ class UserForm < ApplicationForm
              url: -> { new_iri('/u/otp_secret') }
   end
 
-  group :email_address_section, label: -> { I18n.t('email_addresses.plural') } do
+  group :email_address_section, label: -> { EmailAddress.plural_label } do
     resource :email_addresses_table,
              url: -> { collection_iri(nil, :email_addresses, display: :settingsTable) }
   end

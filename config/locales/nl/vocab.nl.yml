@@ -1,0 +1,312 @@
+nl:
+  argu:
+    Argument:
+      description: "Een argument is een enkele reden voor of tegen een idee."
+      icon: "argument"
+      label: "Argument"
+      plural_label: "Argumenten"
+    Blog:
+      label: "Blog"
+      plural_label: "Blogs"
+    BlogPost:
+      description: "Een Blogpost is een bericht of artikel waarin iets wordt gedeeld."
+      icon: "bullhorn"
+      label: "Update"
+      plural_label: "Updates"
+    BudgetShop:
+      icon: "shopping-cart"
+      label: "Budget"
+      plural_label: "Budgetten"
+    CartDetail:
+      label: "Geselecteerde optie"
+      plural_label: "Geselecteerde opties"
+    Comment:
+      description: "Een reactie is een geschreven antwoord of notitie over een ding."
+      icon: "comment"
+      label: "Reactie"
+      plural_label: "Reacties"
+    ConArgument:
+      description: "Een tegenargument is een reden om ergens tegen te zijn."
+      icon: "minus"
+      label: "Nadeel"
+      plural_label: "Nadelen"
+    ContainerNode:
+      label: "Component"
+      plural_label: "Componenten"
+    Conversion:
+      label: "Conversie"
+      plural_label: "Conversies"
+    CouponBatch:
+      label: "Coupons"
+      plural_label: "Coupons"
+    CustomAction:
+      label: "Action"
+      plural_label: "Actions"
+    Dashboard:
+      label: "Dashboard"
+      plural_label: "Dashboards"
+    Decision:
+      icon: "Besluit"
+      label: "Decision"
+      plural_label: "Besluiten"
+    DirectMessage:
+      label: "Bericht"
+      plural_label: "Berichten"
+    Discussion:
+      label: 'Onderwerp'
+      plural_label: 'Onderwerpen'
+    EmailAddress:
+      label: "E-mail adres"
+      plural_label: "E-mail adressen"
+    Export:
+      label: "Export"
+      plural_label: "Exports"
+    Follow:
+      label: "Meldingen"
+      plural_label: "Meldingen"
+    Form:
+      label: "Forum"
+      plural_label: "Forums"
+    Grant:
+      label: "Recht"
+      plural_label: "Rechten"
+    GroupMembership:
+      label: "Lid"
+      plural_label: "Leden"
+    Group:
+      label: "Groep"
+      plural_label: "Groepen"
+    Invite:
+      label: "Uitnodiging"
+      plural_label: "Uitnodigingen"
+    Motion:
+      description: "Een idee is een voorstel waar je voor of tegen kan zijn."
+      icon: "lightbulb-o"
+      label: "Idee"
+      plural_label: "Ideeën"
+    Move:
+      label: "Verplaatsing"
+      plural_label: "Verplaatsingen"
+    Notification:
+      label: "Melding"
+      plural_label: "Meldingen"
+    OpenDataPortal:
+      label: "Dataportaal"
+      plural_label: "Dataportalen"
+    Order:
+      label: "Bestelling"
+      plural_label: "Bestellingen"
+    Page:
+      label: "Organisatie"
+      plural_label: "Organisaties"
+    Phase:
+      icon: "calendar-o"
+      label: "Fase"
+      plural_label: "Fases"
+    Placement:
+      label: "Locatie"
+      plural_label: "Locaties"
+    ProArgument:
+      description: "Een voorargument is een reden om ergens voor te zijn."
+      icon: "plus"
+      label: "Voordeel"
+      plural_label: "Voordelen"
+    Project:
+      icon: "rocket"
+      label: "Traject"
+      plural_label: "Trajecten"
+    Publication:
+      label: "Publicatie"
+      plural_label: "Publicaties"
+    Question:
+      description: "Een uitdaging is een vraagstuk of probleem waaronder ideeën kunnen worden geplaatst."
+      icon: "question"
+      label: "Uitdaging"
+      plural_label: "Uitdagingen"
+    Shortname:
+      label: 'Redirect'
+      plural_label: 'Redirects'
+    Survey:
+      icon: "list-ul"
+      label: "Enquête"
+      plural_label: "Enquêtes"
+    Term:
+      label: "Term"
+      plural_label: "Termen"
+    Topic:
+      description: "Een topic is een gesprek over een specifiek onderwerp."
+      icon: "comments"
+      label: "Thread"
+      plural_label: "Threads"
+    Vocabulary:
+      label: "Vocabularie"
+      plural_label: "Vocabularies"
+    Vote:
+      label: "Stem"
+      plural_label: "Stemmen"
+    VoteEvent:
+      label: "Stemronde"
+      plural_label: "Stemrondes"
+    alias:
+      label: "Alias"
+    confirmed:
+      label: "Bevestigd"
+    copyUrl:
+      label: "Kopieer"
+    couponCount:
+      label: "Aantal"
+    exportStatus:
+      label: "Status"
+    expiresAt:
+      label: "Verloopdatum"
+    fileUsage:
+      label: "Gebruik"
+    followsCount:
+      label: "Volgers"
+    grantSet:
+      label: "Rechtenset"
+    interventionsCount:
+      label: "Interventies"
+    isDraft:
+      label: "Concept"
+    lastActivityAt:
+      label: "Laatst actief"
+    order:
+      label: "Positie"
+    orderDetails:
+      label: "Details"
+    pdfPage:
+      label: "Pagina"
+    pinned:
+      label: "Vastgezet"
+    price:
+      label: "Prijs"
+    view:
+      label: "View"
+    rawResource:
+      label: "Resource"
+    shortnameable:
+      label: "Item"
+    trashed:
+      label: "Verborgen"
+    votesProCount:
+      label: "Stemmen voor"
+  dbo:
+    filename:
+      label: "Bestandsnaam"
+  foaf:
+    name:
+      label: "Naam"
+  ontola:
+    Banner:
+      label: 'Banner'
+      plural_label: 'Banners'
+    MenuItem:
+      label: "Menu item"
+      plural_label: "Menu items"
+    OtpSecret:
+      label: 'Tweestapsverificatie'
+    SearchResult:
+      label: "Zoekresultaat"
+    audience:
+      label: "Publiek"
+    destroyAction:
+      label: "Verwijderen"
+    href:
+      label: "Url"
+    makePrimaryAction:
+      label: "Maak primair"
+    publishAction:
+      label: "Publiceer"
+    relevance:
+      label: "Relevantie"
+    sendConfirmationAction:
+      label: "Bevestigen"
+    settingsMenu:
+      label: "Instellingen"
+    text:
+      label: "Tekst"
+    updateAction:
+      label: "Bewerken"
+    widgetSize:
+      label: "Breedte"
+  org:
+    hasMember:
+      label: "Leden"
+    member:
+      label: "Lid"
+  rivm:
+    Category:
+      label: "Categorie"
+      plural_label: "Categorieën"
+    Incident:
+      label: "Gebeurtenis"
+      plural_label: "Gebeurtenissen"
+    Intervention:
+      label: "Interventie"
+      plural_label: "Interventies"
+    InterventionType:
+      label: "Interventietype"
+      plural_label: "Interventietypes"
+    Measure:
+      label: "Voorbeeld"
+      plural_label: "Voorbeelden"
+    MeasureType:
+      label: "Maatregel"
+      plural_label: "Maatregelen"
+    Risk:
+      label: "Gevaar"
+      plural_label: "Gevaren"
+    Scenario:
+      label: "Scenario"
+      plural_label: "Scenarios"
+    categories:
+      label: "Categorieën"
+    oneOffCostsScore:
+      label: "Eenmalige kosten"
+    recurringCostsScore:
+      label: "Doorlopende kosten"
+    securityImprovedScore:
+      label: "Ervaren effectiviteit"
+  schema:
+    CreativeWork:
+      label: "Document"
+      plural_label: "Documenten"
+    GeoCoordinates:
+      label: "Locatie"
+      plural_label: "Locaties"
+    ImageObject:
+      icon: "file-image-o"
+      label: "Plaatje"
+      plural_label: "Plaatjes"
+    MediaObject:
+      description: 'Een bijlage is een bestand dat bij een document gevoegd is om meer informatie te verschaffen.'
+      icon: "file"
+      label: "Bijlage"
+      plural_label: "Bijlages"
+    Offer:
+      label: "Optie"
+      plural_label: "Opties"
+    Person:
+      label: "Persoon"
+      plural_label: "Mensen"
+    Thing:
+      label: "Object"
+      plural_label: "Objecten"
+    Widget:
+      label: "Widget"
+      plural_label: "Widgets"
+    dateCreated:
+      label: "Aanmaakdatum"
+    email:
+      label: "Email"
+    name:
+      label: "Naam"
+    option:
+      label: "Optie"
+    orderedItem:
+      label: "Item"
+    uploadDate:
+      label: "Upload datum"
+    url:
+      label: "Url"

@@ -2,10 +2,7 @@ nl:
   websites:
     type_new: "Nieuwe website"
   pages:
-    resource_name: "Organisatie"
-    type: "Organisatie"
     type_new: "Nieuwe organisatie"
-    plural: "Organisaties"
     show: "Organisatie weergeven"
     discover_header: "Ontdek"
     my_pages: "Mijn Argu websites"

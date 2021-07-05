@@ -2,11 +2,9 @@
 
 nl:
   motions:
-    type: "Idee"
     type_new: "Nieuw idee"
     title: "Idee"
     header: "Ideeën"
-    plural: "Ideeën"
     pros: "voor"
     cons: "tegen"
     edit: "stelling bewerken"
@@ -18,9 +16,6 @@ nl:
       zero: "Nog niemand heeft hier op gestemd."
       one: "Één persoon heeft hier op gestemd."
       other: "%{percentage}% of %{count} votes is in favor."
-    tooltips:
-      count: "Aantal geplaatste ideeën"
-      info: "Een idee is een voorstel waar je voor of tegen kan zijn."
     votes:
       pro: "Voor"
       neutral: "Anders"
@@ -35,8 +30,6 @@ nl:
         zero: "geen tegenargumenten"
         one: "1  tegenargument"
         other: "%{count} tegenargumenten"
-    revisions:
-      title_wiped: 'Gewiste argumenten'
     form:
       title:
         label: "Vat je idee samen in één zin."
@@ -83,14 +76,6 @@ nl:
       header: "Converteer object"
       body: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
       body_2: "GEBRUIK DIT NIET ZOMAAR, DATA GAAT WAARSCHIJNLIJK VERLOREN"
-    expired_at:
-      tooltip: "Dit idee sloot op %{date}."
-    expires_at:
-      tooltip: "Dit idee wordt gesloten op %{date}."
-    accepted:
-      tooltip: "Dit voorstel is aangenomen op %{date}."
-    rejected:
-      tooltip: "Dit voorstel is afgewezen op %{date}."
   pundit:
     motion_policy:
       create_without_question?: "Je mag hier geen idee aanmaken zonder het eerst te koppelen aan een uitdaging."

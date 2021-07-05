@@ -1,21 +1,11 @@
 en:
   container_nodes:
-    type: "Component"
     type_new: "New page"
-    plural: "Components"
   blogs:
-    type: "Blog"
     type_new: "New blog"
-    plural: "Blogs"
   forums:
-    type: "Forum"
     type_new: "New forum"
-    plural: "Forums"
   dashboards:
-    type: "Dashboard"
     type_new: "New dashboard"
-    plural: "Dashboards"
   open_data_portals:
-    type: "Dataportal"
     type_new: "New dataportal"
-    plural: "Dataportals"

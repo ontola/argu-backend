@@ -7,8 +7,6 @@ en:
       pro: "Agrees"
       neutral: "Other"
       con: "Disagrees"
-    tooltips:
-      argument: "Important argument"
     collection:
       votes: "%{count} votes"
       :yes: "%{count} agrees"
@@ -18,7 +16,6 @@ en:
       success: "Thanks for your vote!"
       failed: "Something went wrong, please try again."
       trashed: "Vote deleted successfully"
-    type: "Vote"
     instance_type:
       pro: "Agree"
       :yes: "Agree"
@@ -27,7 +24,6 @@ en:
       con: "Disagree"
       :no: "Disagree"
     type_new: "New vote"
-    plural: "Votes"
     confirm:
       headline: "Confirm vote"
       skip: "Not now, skip voting"

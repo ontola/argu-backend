@@ -31,7 +31,7 @@ class BudgetShopMenuList < ApplicationMenuList
     menu_item(
       :coupon_batches,
       image: 'fa-link',
-      label: I18n.t('coupon_batches.type'),
+      label: CouponBatch.label,
       href: collection_iri(resource, :coupon_batches),
       policy: :edit?
     )
@@ -41,7 +41,7 @@ class BudgetShopMenuList < ApplicationMenuList
     menu_item(
       :orders_links,
       image: 'fa-list-alt',
-      label: I18n.t('orders.plural'),
+      label: Order.plural_label,
       href: collection_iri(resource, :orders),
       policy: :edit?
     )

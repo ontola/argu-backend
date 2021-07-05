@@ -1,7 +1,5 @@
 nl:
   direct_messages:
-    type: "Bericht"
-    plural: "Berichten"
     notice:
       success: "De e-mail wordt verstuurd"
     header: "Verstuur bericht"

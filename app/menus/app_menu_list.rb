@@ -117,17 +117,17 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       ),
       setting_item(
         :custom_menu_items,
-        label: I18n.t('custom_menu_items.plural'),
+        label: CustomMenuItem.plural_label,
         href: collection_iri(ActsAsTenant.current_tenant, :custom_menu_items)
       ),
       setting_item(
         :banners,
-        label: I18n.t('banners.plural'),
+        label: Banner.plural_label,
         href: collection_iri(ActsAsTenant.current_tenant, :banner_managements)
       ),
       setting_item(
         :vocabularies,
-        label: I18n.t('vocabularies.plural'),
+        label: Vocabulary.plural_label,
         href: collection_iri(ActsAsTenant.current_tenant, :vocabularies, display: :table)
       ),
       setting_item(:delete, href: delete_iri(resource))

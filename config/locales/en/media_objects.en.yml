@@ -1,9 +1,5 @@
 en:
   media_objects:
-    type: "Attachment"
-    plural: "Attachments"
-    tooltips:
-      info: 'An attachment is a file which has been appended to a document to provide more information.'
     form:
       content:
         label: "Select a file"
@@ -15,8 +11,6 @@ en:
       local: "On my computer"
       remote: "On the internet"
   image_objects:
-    type: "Image"
-    plural: "Images"
     form:
       content:
         label: "Select a file"

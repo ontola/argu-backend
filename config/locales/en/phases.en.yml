@@ -1,8 +1,6 @@
 en:
   phases:
-    type: "Phase"
     type_new: "New phase"
-    plural: "Phases"
     form:
       order:
         label: "Position"

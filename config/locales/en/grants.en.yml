@@ -2,9 +2,7 @@
 
 en:
   grants:
-    type: "Grant"
     type_new: "New grant"
-    plural: "Grants"
     empty: "No grants"
     new: "Assign new grants"
     inherited: "This role is inherited from the %{type}"

@@ -1,8 +1,6 @@
 nl:
   projects:
-    type: "Traject"
     type_new: "Nieuw traject"
-    plural: "Trajecten"
     phase_template:
       description_placeholder: "Klik op het menu rechtsboven en dan op 'Bewerken' om de titel en deze tekst aan te passen."
       blog_post:

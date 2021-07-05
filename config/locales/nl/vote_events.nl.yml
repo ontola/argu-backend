@@ -1,7 +1,5 @@
 nl:
   vote_events:
-    type: "Stemronde"
-    plural: "Stemrondes"
     statistics:
       count:
         header: "Aantal"

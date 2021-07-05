@@ -99,6 +99,10 @@ class Activity < PublicActivity::Activity
     edge.instance_variable_set(:@mutations_before_last_save, mutations)
   end
 
+  def trackable_class
+    @trackable_class ||= trackable&.class || trackable_type.classify.constantize
+  end
+
   class << self
     # Hands over publication of a collection to the Community profile
     def anonymize(collection)

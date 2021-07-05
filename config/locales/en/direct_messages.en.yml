@@ -1,7 +1,5 @@
 en:
   direct_messages:
-    type: "Message"
-    plural: "Messages"
     notice:
       success: "The mail will be sent"
     header: "Send message"

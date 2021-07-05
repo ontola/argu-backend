@@ -1,8 +1,6 @@
 en:
   email_addresses:
-    type: "Email address"
     type_new: "New email address"
-    plural: "Email addresses"
     form:
       user:
         label: "User"

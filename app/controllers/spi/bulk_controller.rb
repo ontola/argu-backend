@@ -59,18 +59,16 @@ module SPI
       )
     end
 
-    def response_for_wrong_host(opts) # rubocop:disable Metrics/AbcSize
+    def response_for_wrong_host(opts)
       iri = opts[:iri]
-      if ActsAsTenant.current_tenant.allowed_external_sources.any? { |source| iri.start_with?(source) }
-        include = opts[:include].to_s == 'true'
+      return super unless ActsAsTenant.current_tenant.allowed_external_sources.any? { |source| iri.start_with?(source) }
 
-        response_from_request(
-          include,
-          LinkedRecord.requested_single_resource({iri: opts[:iri]}, user_context).iri
-        ).merge(iri: opts[:iri])
-      else
-        resource_response(iri)
-      end
+      include = opts[:include].to_s == 'true'
+
+      response_from_request(
+        include,
+        LinkedRecord.requested_single_resource({iri: iri}, user_context).iri
+      ).merge(iri: iri)
     end
 
     def resource_cache_control(cacheable, status, resource_policy)

@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     enum_values: :enum_values,
     forms: :forms,
     manifests: :manifests,
-    vocabularies: :ontologies
+    ontologies: :ontologies
   )
   use_linked_rails_auth(
     access_tokens: 'oauth/tokens',

@@ -1,8 +1,6 @@
 nl:
   vocabularies:
-    type: "Vocabularie"
     type_new: "Nieuwe vocabularie"
-    plural: "Vocabularies"
   formtastic:
     labels:
       vocabulary:

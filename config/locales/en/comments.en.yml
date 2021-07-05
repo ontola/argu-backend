@@ -1,8 +1,6 @@
 en:
   comments:
-    type: "Comment"
     type_new: "New comment"
-    plural: "Comments"
     show_all:
       zero: "Place a comment"
       one: "Place a comment"
@@ -23,8 +21,6 @@ en:
     confirm:
       headline: "Confirm your comment"
       skip: "Not now, just show the %{skip_type}"
-    tooltips:
-      info: "A comment is a written response or note about a thing."
   pundit:
     comment_policy:
       create?: "You are not allowed to submit a comment with this account."

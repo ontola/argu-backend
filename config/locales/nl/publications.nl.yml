@@ -2,7 +2,6 @@
 
 nl:
   publications:
-    type: "Publicatie"
     instance_type:
       direct: 'Publiceer direct'
       draft: 'Bewaar concept'

@@ -1,7 +1,5 @@
 en:
   banners:
-    type: 'Banner'
-    plural: 'Banners'
     type_new: 'New banner'
     audiences:
       guests: 'Guests'

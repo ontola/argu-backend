@@ -1,8 +1,6 @@
 
 en:
   custom_actions:
-    type: "Action"
-    plural: "Actions"
     form:
       raw_label:
         label: "Label"

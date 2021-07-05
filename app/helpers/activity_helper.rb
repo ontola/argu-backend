@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module ActivityHelper
-  include NamesHelper
-
   # Generates an activity string for an activity in the sense of: 'Foo responded to your Bar'
   # @param [string] activity The Activity to generate the activity_string for
   # @param [User] user The User to generate the activity_string for

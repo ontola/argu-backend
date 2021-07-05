@@ -77,7 +77,7 @@ module Argu
 
     def subject_display_name
       if @activity.object == 'comment'
-        I18n.t("#{@activity.trackable_type.tableize}.type").downcase
+        @activity.trackable_class.label.downcase
       elsif @activity.trackable.present?
         @activity.trackable.try(:display_name)
       else
@@ -118,7 +118,7 @@ module Argu
         if @activity.object == 'vote'
           'stem'
         else
-          I18n.t("#{@activity.trackable_type.tableize}.type").downcase
+          @activity.trackable_class.label.downcase
         end
       string.to_s
     end

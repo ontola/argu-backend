@@ -7,7 +7,6 @@ module Placeable
     included do
       has_one :custom_placement,
               predicate: NS.schema.location,
-              image: 'map-marker',
               if: method(:has_custom_placement?)
       has_one :home_placement,
               predicate: NS.schema.homeLocation,

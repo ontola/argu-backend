@@ -12,7 +12,7 @@ Apartment::Tenant.switch('rivm') do
       menu_type: :navigations,
       resource: Page.first,
       order: 0,
-      label: 'intervention_types.plural',
+      label: InterventionType.plural_label,
       href: InterventionType.root_collection.iri
     )
   end

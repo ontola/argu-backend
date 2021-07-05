@@ -1,7 +1,5 @@
 en:
   follows:
-    type: "Subscription"
-    plural: "Subscriptions"
     status:
       never: "You are not receiving notifications for '%{item}'."
       decisions: "You are receiving notifications for decisions on '%{item}'."

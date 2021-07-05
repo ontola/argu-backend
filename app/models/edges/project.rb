@@ -33,7 +33,7 @@ class Project < Discussion
       identify,
       attributes: {
         owner_type: 'Survey',
-        name: I18n.t('surveys.type'),
+        name: Survey.label,
         description: description_placeholder,
         argu_publication_attributes: {draft: true}
       },
@@ -53,7 +53,7 @@ class Project < Discussion
       cocreate,
       attributes: {
         owner_type: 'Question',
-        name: I18n.t('questions.type'),
+        name: Question.label,
         description: description_placeholder,
         argu_publication_attributes: {draft: true}
       },
@@ -74,7 +74,7 @@ class Project < Discussion
       cocreate,
       attributes: {
         owner_type: 'BlogPost',
-        name: I18n.t('blog_posts.type'),
+        name: BlogPost.label,
         description: description_placeholder,
         argu_publication_attributes: {draft: true}
       },

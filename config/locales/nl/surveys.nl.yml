@@ -1,8 +1,6 @@
 nl:
   surveys:
-    type: "Enquête"
     type_new: "Nieuwe enquête"
-    plural: "Enquêtes"
   properties:
     surveys:
       external_iri:

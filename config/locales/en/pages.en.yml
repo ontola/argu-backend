@@ -2,10 +2,7 @@ en:
   websites:
     type_new: "New website"
   pages:
-    resource_name: "Organizations"
-    type: "Organization"
     type_new: "New organization"
-    plural: "Organizations"
     show: "Show organization"
     discover_header: "Discover"
     my_pages: "My Argu websites"

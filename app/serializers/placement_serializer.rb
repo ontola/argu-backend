@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 class PlacementSerializer < RecordSerializer
-  extend NamesHelper
-
   attribute :coordinates, predicate: NS.argu[:geoCoordinates], if: method(:never)
   attribute :image, predicate: NS.schema.image do |object|
     image =
       if object.placement_type == 'custom'
-        icon = icon_for(object.placeable)
+        icon = LinkedRails.translate(:class, :icon, object.placeable.class.iri)
         :"fa-#{icon}" if icon
       elsif object.placement_type == 'home'
         :'fa-home'

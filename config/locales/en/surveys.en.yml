@@ -1,8 +1,6 @@
 en:
   surveys:
-    type: "Survey"
     type_new: "New survey"
-    plural: "Surveys"
   properties:
     surveys:
       external_iri:

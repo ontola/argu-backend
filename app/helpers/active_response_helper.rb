@@ -4,7 +4,7 @@ module ActiveResponseHelper
   private
 
   def active_response_failure_message
-    I18n.t("type_#{action_name}_failure", type: type_for(current_resource, default: I18n.t('type_changes')).downcase)
+    I18n.t("type_#{action_name}_failure", type: current_resource.class.label.downcase)
   end
 
   def active_response_success_message # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
@@ -12,12 +12,12 @@ module ActiveResponseHelper
 
     if current_resource.try(:is_publishable?) && (action_name == 'create' || resource_was_published?)
       if current_resource.try(:argu_publication)&.publish_time_lapsed?
-        I18n.t('type_publish_success', type: type_for(current_resource).capitalize)
+        I18n.t('type_publish_success', type: current_resource.class.label.capitalize)
       else
-        I18n.t('type_draft_success', type: type_for(current_resource).capitalize)
+        I18n.t('type_draft_success', type: current_resource.class.label.capitalize)
       end
     else
-      I18n.t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
+      I18n.t("type_#{action_name}_success", type: current_resource.class.label.capitalize)
     end
   end
 
@@ -49,11 +49,11 @@ module ActiveResponseHelper
     current_resource.parent.iri
   end
 
-  def redirect_message
+  def redirect_message # rubocop:disable Metrics/AbcSize
     if action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?
-      I18n.t('type_publish_success', type: type_for(current_resource).capitalize)
+      I18n.t('type_publish_success', type: current_resource.class.label.capitalize)
     else
-      I18n.t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
+      I18n.t("type_#{action_name}_success", type: current_resource.class.label.capitalize)
     end
   end
 

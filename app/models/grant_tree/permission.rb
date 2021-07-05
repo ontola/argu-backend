@@ -38,7 +38,7 @@ class GrantTree
       define_method "#{action}_tooltip" do
         return nil if send(action).blank? || send(action).include?(NS.argu[:contentTreeClass])
 
-        send(action).map { |parent_type| I18n.t("#{parent_type.to_s.split('#').last.tableize}.plural") }.join(', ')
+        send(action).map { |parent_type| parent_type.to_s.split('#').last.classify.constantize.plural_label }.join(', ')
       end
     end
   end

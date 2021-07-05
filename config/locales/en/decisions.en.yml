@@ -1,8 +1,6 @@
 en:
   decisions:
-    type: "Decision"
     type_new: "Take a decision"
-    plural: "Decisions"
     menu: "Take decision"
     approved: "Approved"
     rejected: "Rejected"

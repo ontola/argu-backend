@@ -1,8 +1,6 @@
 
 nl:
   custom_actions:
-    type: "Actie"
-    plural: "Acties"
     form:
       raw_label:
         label: "Label"

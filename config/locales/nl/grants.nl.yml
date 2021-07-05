@@ -2,9 +2,7 @@
 
 nl:
   grants:
-    type: "Recht"
     type_new: "Nieuw recht"
-    plural: "Rechten"
     empty: "Geen rechten"
     new: "Verleen nieuwe rechten"
     inherited: "Deze rol is geërfd van bovenliggend %{type}"

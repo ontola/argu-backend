@@ -1,7 +1,5 @@
 en:
   group_memberships:
-    type: "Member"
-    plural: "Members"
     type_new: "Add user"
     new: "Add user"
     empty: "No members"

@@ -1,7 +1,5 @@
 nl:
   banners:
-    type: 'Banner'
-    plural: 'Banners'
     type_new: 'Nieuwe banner'
     audiences:
       guests: 'Gasten'

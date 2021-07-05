@@ -1,7 +1,5 @@
 nl:
   follows:
-    type: "Meldingen"
-    plural: "Meldingen"
     status:
       never: "Je ontvangt geen meldingen meer voor '%{item}'."
       decisions: "Je ontvangt meldingen voor besluiten over '%{item}'."

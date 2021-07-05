@@ -11,7 +11,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   include JsonAPIHelper
   include NestedAttributesHelper
   include UsersHelper
-  include NamesHelper
   include PublicActivity::StoreController
   include DeltaHelper
   include NestedResourceHelper

@@ -1,8 +1,6 @@
 en:
   custom_menu_items:
-    type: "Menu item"
     type_new: "New menu item"
-    plural: "Menu items"
     form:
       raw_label:
         label: "Label"

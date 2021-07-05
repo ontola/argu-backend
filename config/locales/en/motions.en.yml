@@ -2,11 +2,9 @@
 
 en:
   motions:
-    type: "Idea"
     type_new: "New idea"
     title: "Idea"
     header: "Ideas"
-    plural: "Ideas"
     pros: "pro"
     cons: "con"
     edit: "Edit idea"
@@ -18,9 +16,6 @@ en:
       zero: "Nobody has voted on this yet."
       one: "1 user is in favor."
       other: "%{percentage}% of %{count} votes is in favor."
-    tooltips:
-      count: "Number of ideas"
-      info: "An idea is a proposal on which people can vote and add pro- or con arguments."
     votes:
       pro: "Agree"
       neutral: "Neutral"
@@ -35,8 +30,6 @@ en:
         zero: "no con arguments"
         one: "1  con argument"
         other: "%{count} con arguments"
-    revisions:
-      title_wiped: 'Deleted arguments'
     form:
       title:
         label: "Summarize your idea in one sentence"
@@ -83,14 +76,6 @@ en:
       header: "Convert object"
       body: "This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty."
       body_2: "USE WITH CAUTION, DATA MIGHT BE LOST"
-    expired_at:
-      tooltip: "This motion closed on %{date}."
-    expires_at:
-      tooltip: "This motion closes on %{date}."
-    accepted:
-      tooltip: "This motion has been accepted on %{date}."
-    rejected:
-      tooltip: "This motion has been rejected on %{date}."
     helper_html: "<h2>What is an idea?</h2>
       <p>An <b class='motion-t'>idea</b> is a proposal that solves one or more problems.</p>
       <h2>Tips:</h2>

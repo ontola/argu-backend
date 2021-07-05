@@ -84,9 +84,6 @@ nl:
       attributes:
         user:
           login: "email of gebruikersnaam"
-  identities:
-    type: "Koppeling"
-    plural: "Koppelingen"
   intro:
     initial:
       headers:

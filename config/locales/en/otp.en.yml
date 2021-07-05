@@ -7,7 +7,6 @@ en:
       otp_attempt:
         helper_text: 'You can find this in the authentication-application you used earlier.'
   otp_secrets:
-    type: 'Two factor authentication'
     form:
       otp_attempt:
         label: "Authentication code"

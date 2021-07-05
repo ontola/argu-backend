@@ -1,7 +1,5 @@
 en:
   exports:
-    type: "Export"
-    plural: "Exports"
     type_new: "New export"
     empty: "There are no exports yet"
     create: "Create new export"

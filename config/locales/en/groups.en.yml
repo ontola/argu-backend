@@ -2,8 +2,6 @@
 
 en:
   groups:
-    type: "Group"
-    plural: "Groups"
     type_new: "Add group"
     new: "Add group"
     public:

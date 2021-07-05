@@ -1,9 +1,5 @@
 nl:
   media_objects:
-    type: "Bijlage"
-    plural: "Bijlages"
-    tooltips:
-      info: 'Een bijlage is een bestand dat bij een document gevoegd is om meer informatie te verschaffen.'
     form:
       content:
         label: "Selecteer een bestand"
@@ -15,8 +11,6 @@ nl:
       local: "Op mijn computer"
       remote: "Op het internet"
   image_objects:
-    type: "Afbeelding"
-    plural: "Afbeeldingen"
     form:
       content:
         label: "Selecteer een bestand"

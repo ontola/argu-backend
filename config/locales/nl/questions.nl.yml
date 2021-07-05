@@ -2,16 +2,10 @@
 
 nl:
   questions:
-    type: "Uitdaging"
     type_new: "Nieuwe uitdaging"
-    plural: "Uitdagingen"
-    new_btn: "Uitdaging toevoegen"
     header: "uitdagingen"
     view_all_motions: "Bekijk alle %{amount} ideeën..."
     go_to_parent: "Ga naar de bovenliggende uitdaging."
-    tooltips:
-      count: "Aantal geplaatste uitdagingen"
-      info: "Een uitdaging is een vraagstuk of probleem waaronder ideeën kunnen worden geplaatst."
     call_to_action:
       title: "Oplossing nodig?"
       body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
@@ -54,10 +48,6 @@ nl:
         title: "Plaats hier de kern van de uitdaging"
         content: "Beschrijf hier de uitdaging in detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
         themes: "Thema's of onderwerpen die aan deze uitdaging gerelateerd zijn. Plaats komma's tussen de thema's."
-    expired_at:
-      tooltip: "Deze uitdaging sloot op %{date}."
-    expires_at:
-      tooltip: "Deze uitdaging wordt gesloten op %{date}."
   activerecord:
     attributes:
       question:

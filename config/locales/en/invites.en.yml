@@ -1,7 +1,5 @@
 en:
   invites:
-    type: "Invite"
-    plural: "Invites"
     form:
       message:
         label: "Message"

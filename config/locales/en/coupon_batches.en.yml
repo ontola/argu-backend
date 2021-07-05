@@ -1,5 +1,3 @@
 en:
   coupon_batches:
-    type: "Coupons"
     type_new: "New coupons"
-    plural: "Coupons"

@@ -1,8 +1,6 @@
 nl:
   budget_shops:
-    type: "Budget"
     type_new: "Nieuw budget"
-    plural: "Budgetten"
     form:
       budget_max:
         label: "Budget"

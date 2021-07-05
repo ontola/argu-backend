@@ -1,5 +1,3 @@
 nl:
   creative_works:
-    type: "Document"
     type_new: "Nieuw document"
-    plural: "Documenten"

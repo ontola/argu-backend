@@ -1,7 +1,5 @@
 en:
   discussions:
-    type: 'Topic'
-    plural: 'Topics'
     new:
       title: 'New topic'
       start_header: 'Start a new discussion'

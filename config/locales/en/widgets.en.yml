@@ -1,8 +1,6 @@
 en:
   widgets:
-    type: "Widget"
     type_new: "New widget"
-    plural: "Widgets"
     form:
       size:
         label: "Width"

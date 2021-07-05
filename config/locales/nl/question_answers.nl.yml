@@ -1,6 +1,5 @@
 
 nl:
   question_answers:
-    couple_motion: "Voorstel koppelen"
     destroy:
       confirmation: 'Hiermee koppel je dit idee los van de uitdaging, deze kan later weer gekoppeld worden.'

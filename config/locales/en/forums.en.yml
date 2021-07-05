@@ -2,15 +2,12 @@
 
 en:
   forums:
-    resource_name: "Forum"
     my: "My forums"
     current: "This forum"
     back_to: "Go back to forum"
     show_open: "Show open forums"
     no_bio: "No description"
     more_info: "Read more."
-    resource_name:
-      management: "forum management"
     settings:
       title: "Forum settings"
       general: "General settings"
@@ -107,8 +104,6 @@ en:
       body: "We deliver discussion environments for municipalities, companies, education facilities and other organisations. Read more about <b>%{governments}</b>. <b><a href='mailto:info@argu.co'>Contact us</a></b> for more information."
     shortname:
       warning: "When setting a new url, the old one will remain valid until it is reused somewhere else."
-    tooltips:
-      members_count: "Followers of this forum"
     visit: "Visit forum"
     shortname_helper_html: "https://argu.co/<b>your_argu_url</b>"
   activerecord: #These currently aren't used for forms.

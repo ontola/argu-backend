@@ -1,6 +1,4 @@
 en:
   terms:
-    type: "Term"
     type_new: "New term"
-    plural: "Terms"
     tagged_items: "Tagged"

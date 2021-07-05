@@ -54,12 +54,20 @@ class CustomAction < Edge
     translate_property(super)
   end
 
+  def tag
+    :create
+  end
+
   def target
     @target ||= LinkedRails.entry_point_class.new(parent: self, url: href)
   end
 
   def target_id
     target.iri
+  end
+
+  def translation_key
+    :default
   end
 
   class << self

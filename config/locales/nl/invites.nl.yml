@@ -1,7 +1,5 @@
 nl:
   invites:
-    type: "Uitnodiging"
-    plural: "Uitnodigingen"
     form:
       message:
         label: "Toelichting"

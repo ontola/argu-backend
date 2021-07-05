@@ -8,7 +8,7 @@ class DecisionsController < EdgeableController
       parent_key = authenticated_resource.parent.model_name.singular
       I18n.t("decisions.#{parent_key}.#{authenticated_resource.state}")
     else
-      I18n.t('type_save_success', type: I18n.t('decisions.type').capitalize)
+      I18n.t('type_save_success', type: Decision.label.capitalize)
     end
   end
 

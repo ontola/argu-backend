@@ -7,8 +7,6 @@ nl:
       pro: "Is voor"
       neutral: "Geen van beide"
       con: "Is tegen"
-    tooltips:
-      argument: "Belangrijk argument"
     collection:
       votes: "%{count} stemmen"
       :yes: "%{count} stemmen voor"
@@ -18,7 +16,6 @@ nl:
       success: "Bedankt voor je stem!"
       failed: "Er is iets fout gegaan, probeer het opnieuw."
       trashed: "Stem succesvol verwijderd"
-    type: "Stem"
     instance_type:
       pro: "Voor"
       :yes: "Voor"
@@ -27,7 +24,6 @@ nl:
       con: "Tegen"
       :no: "Tegen"
     type_new: "Nieuwe stem"
-    plural: "Stemmen"
     confirm:
       headline: "Bevestig stem"
       skip: "Niet nu, stemmen overslaan"

@@ -40,7 +40,6 @@ en:
         label: "To which group do you want to add these people?"
         placeholder: "Select a group"
         create: "Create"
-        tooltip: "Groups can have certain rights, for example allowing members to view or edit content. Please choose a suitable group for the people you are inviting, or create a new one."
     errors:
       no_receivers: "Please enter one or more users or emailaddresses."
       not_found: "This token is invalid"

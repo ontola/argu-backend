@@ -31,7 +31,7 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
   def add_json(zip)
     json = data.map do |type, records|
       [
-        type,
+        type.label,
         records.map { |record| json_for(record) }
       ]
     end
@@ -64,7 +64,7 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
         .self_and_descendants
         .includes(:activities, :parent)
         .flat_map(&method(:relations))
-        .group_by { |m| m.class.name }
+        .group_by(&:class)
   end
 
   def format_value_xls(value) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -86,7 +86,7 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
 
   def populate_class_sheets(book) # rubocop:disable Metrics/AbcSize
     data.each do |type, records|
-      sheet = book.create_worksheet(name: I18n.t("#{type.tableize}.plural"))
+      sheet = book.create_worksheet(name: type.plural_label)
       records.each_with_index do |record, index|
         json = json_for(record)
         sheet.row(0).replace(json.keys.map { |key| key.to_s.gsub('Collection', 'Count') }) if index.zero?
@@ -105,9 +105,10 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
 
   def overview_header
     overview_prefix_titles.concat(HIERARCHY.map do |c|
+      label = c.to_s.classify.constantize.label
       [
-        I18n.t('exports.formats.xls.title', type: I18n.t("#{c}.type")),
-        I18n.t('exports.formats.xls.description', type: I18n.t("#{c}.type"))
+        I18n.t('exports.formats.xls.title', type: label),
+        I18n.t('exports.formats.xls.description', type: label)
       ]
     end).flatten
   end

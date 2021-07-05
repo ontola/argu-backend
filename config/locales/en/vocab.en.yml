@@ -1,0 +1,312 @@
+en:
+  argu:
+    Argument:
+      description: "An argument is a single reason in favor or against an idea."
+      icon: "argument"
+      label: "Argument"
+      plural_label: "Arguments"
+    Blog:
+      label: "Blog"
+      plural_label: "Blogs"
+    BlogPost:
+      description: "An Blogpost is a message or article in which something is shared."
+      icon: "bullhorn"
+      label: "Update"
+      plural_label: "Updates"
+    BudgetShop:
+      icon: "shopping-cart"
+      label: "Budget"
+      plural_label: "Budgets"
+    CartDetail:
+      label: "Selected option"
+      plural_label: "Selected options"
+    Comment:
+      description: "A comment is a written response or note about a thing."
+      icon: "comment"
+      label: "Comment"
+      plural_label: "Comments"
+    ConArgument:
+      description: "A con argument is a reason to be against something."
+      icon: "minus"
+      label: "Con"
+      plural_label: "Cons"
+    ContainerNode:
+      label: "Component"
+      plural_label: "Components"
+    Conversion:
+      label: "Conversion"
+      plural_label: "Conversions"
+    CouponBatch:
+      label: "Coupons"
+      plural_label: "Coupons"
+    CustomAction:
+      label: "Action"
+      plural_label: "Actions"
+    Dashboard:
+      label: "Dashboard"
+      plural_label: "Dashboards"
+    Decision:
+      icon: "gavel"
+      label: "Decision"
+      plural_label: "Decisions"
+    DirectMessage:
+      label: "Message"
+      plural_label: "Messages"
+    Discussion:
+      label: 'Topic'
+      plural_label: 'Topics'
+    EmailAddress:
+      label: "Email address"
+      plural_label: "Email addresses"
+    Export:
+      label: "Export"
+      plural_label: "Exports"
+    Follow:
+      label: "Subscription"
+      plural_label: "Subscriptions"
+    Form:
+      label: "Forum"
+      plural_label: "Forums"
+    Grant:
+      label: "Grant"
+      plural_label: "Grants"
+    GroupMembership:
+      label: "Member"
+      plural_label: "Members"
+    Group:
+      label: "Group"
+      plural_label: "Groups"
+    Invite:
+      label: "Invite"
+      plural_label: "Invites"
+    Motion:
+      description: "An idea is a proposal on which people can vote and add pro- or con arguments."
+      icon: "lightbulb-o"
+      label: "Idea"
+      plural_label: "Ideas"
+    Move:
+      label: "Movement"
+      plural_label: "Movements"
+    Notification:
+      label: "Notification"
+      plural_label: "Notifications"
+    OpenDataPortal:
+      label: "Dataportal"
+      plural_label: "Dataportals"
+    Order:
+      type: "Order"
+      plural_label: "Orders"
+    Page:
+      label: "Organization"
+      plural_label: "Organizations"
+    Phase:
+      icon: "calendar-o"
+      label: "Phase"
+      plural_label: "Phases"
+    Placement:
+      label: "Location"
+      plural_label: "Locations"
+    ProArgument:
+      description: "A pro argument is a reason to be in favor of something."
+      icon: "plus"
+      label: "Pro"
+      plural_label: "Pros"
+    Project:
+      icon: "rocket"
+      label: "Project"
+      plural_label: "Projects"
+    Publication:
+      label: "Publication"
+      plural_label: "Publications"
+    Question:
+      description: "A challenge is een problem or question to which people can submit their ideas."
+      icon: "question"
+      label: "Challenge"
+      plural_label: "Challenges"
+    Shortname:
+      label: 'Redirect'
+      plural_label: 'Redirects'
+    Survey:
+      icon: "list-ul"
+      label: "Survey"
+      plural_label: "Surveys"
+    Term:
+      label: "Term"
+      plural_label: "Terms"
+    Topic:
+      description: "A topic is a general discussion about a specific subject."
+      icon: "comments"
+      label: "Thread"
+      plural_label: "Threads"
+    Vocabulary:
+      label: "Vocabulary"
+      plural_label: "Vocabularies"
+    Vote:
+      label: "Vote"
+      plural_label: "Votes"
+    VoteEvent:
+      label: "Vote event"
+      plural_label: "Vote events"
+    alias:
+      label: "Alias"
+    confirmed:
+      label: "Confirmed"
+    copyUrl:
+      label: "Copy"
+    couponCount:
+      label: "Count"
+    exportStatus:
+      label: "Status"
+    expiresAt:
+      label: "Expiry date"
+    fileUsage:
+      label: "Usage"
+    followsCount:
+      label: "Followers"
+    grantSet:
+      label: "Grant set"
+    interventionsCount:
+      label: "Interventions"
+    isDraft:
+      label: "Draft"
+    lastActivityAt:
+      label: "Last active"
+    order:
+      label: "Position"
+    orderDetails:
+      label: "Details"
+    pdfPage:
+      label: "Page"
+    pinned:
+      label: "Pinned"
+    price:
+      label: "Price"
+    view:
+      label: "View"
+    rawResource:
+      label: "Resource"
+    shortnameable:
+      label: "Item"
+    trashed:
+      label: "Trashed"
+    votesProCount:
+      label: "Votes in favour"
+  dbo:
+    filename:
+      label: "Filename"
+  foaf:
+    name:
+      label: "Naam"
+  ontola:
+    Banner:
+      label: 'Banner'
+      plural_label: 'Banners'
+    MenuItem:
+      label: "Menu item"
+      plural_label: "Menu items"
+    OtpSecret:
+      label: 'Two factor authentication'
+    SearchResult:
+      label: "Search result"
+    audience:
+      label: "Audience"
+    destroyAction:
+      label: "Destroy"
+    href:
+      label: "Url"
+    makePrimaryAction:
+      label: "Make primary"
+    publishAction:
+      label: "Publish"
+    relevance:
+      label: "Relevance"
+    sendConfirmationAction:
+      label: "Confirm"
+    settingsMenu:
+      label: "Settings"
+    text:
+      label: "Text"
+    updateAction:
+      label: "Update"
+    widgetSize:
+      label: "Size"
+  org:
+    hasMember:
+      label: "Members"
+    member:
+      label: "Member"
+  rivm:
+    Category:
+      label: "Category"
+      plural_label: "Categories"
+    Incident:
+      label: "Incident"
+      plural_label: "Incidents"
+    Intervention:
+      label: "Intervention"
+      plural_label: "Interventions"
+    InterventionType:
+      label: "Intervention type"
+      plural_label: "Intervention types"
+    Measure:
+      label: "Measure"
+      plural_label: "Measures"
+    MeasureType:
+      label: "Measure type"
+      plural_label: "Measure types"
+    Risk:
+      label: "Risk"
+      plural_label: "Risks"
+    Scenario:
+      label: "Scenario"
+      plural_label: "Scenarios"
+    categories:
+      label: "Categories"
+    oneOffCostsScore:
+      label: "Costs"
+    recurringCostsScore:
+      label: "Recurring costs"
+    securityImprovedScore:
+      label: "Improvement"
+  schema:
+    CreativeWork:
+      label: "Document"
+      plural_label: "Documents"
+    GeoCoordinates:
+      label: "Location"
+      plural_label: "Locations"
+    ImageObject:
+      icon: "file-image-o"
+      label: "Image"
+      plural_label: "Images"
+    MediaObject:
+      description: 'An attachment is a file which has been appended to a document to provide more information.'
+      icon: "file"
+      label: "Attachment"
+      plural_label: "Attachments"
+    Offer:
+      label: "Option"
+      plural_label: "Options"
+    Person:
+      label: "Person"
+      plural_label: "People"
+    Thing:
+      label: "Thing"
+      plural_label: "Things"
+    Widget:
+      label: "Widget"
+      plural_label: "Widgets"
+    dateCreated:
+      label: "Date created"
+    email:
+      label: "Email"
+    name:
+      label: "Name"
+    option:
+      label: "Option"
+    orderedItem:
+      label: "Ordered item"
+    uploadDate:
+      label: "Upload date"
+    url:
+      label: "Url"

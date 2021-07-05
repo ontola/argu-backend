@@ -1,6 +1,4 @@
 nl:
   terms:
-    type: "Term"
     type_new: "Nieuwe term"
-    plural: "Termen"
     tagged_items: "Getagd"

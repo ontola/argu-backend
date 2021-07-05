@@ -1,7 +1,5 @@
 nl:
   discussions:
-    type: 'Onderwerp'
-    plural: 'Onderwerpen'
     new:
       title: 'Nieuw onderwerp'
       start_header: 'Start een nieuwe discussie'

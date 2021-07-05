@@ -84,9 +84,6 @@ en:
       attributes:
         user:
           login: "email or username"
-  identities:
-    type: "Account"
-    plural: "Accounts"
   intro:
     initial:
       headers:

@@ -31,7 +31,7 @@ class Order < Edge
   end
 
   def display_name
-    I18n.t('orders.type')
+    Order.label
   end
 
   def total_value
