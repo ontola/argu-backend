@@ -13,9 +13,6 @@ nl:
     empty:
       name: "Plaats jouw reactie"
     edited_at: "gewijzigd op %{time}"
-    notices:
-      updated: "De reactie is gewijzigd."
-    reply: "Reageer"
     more: "Toon meer"
     edit: "Wijzig reactie"
     confirm:

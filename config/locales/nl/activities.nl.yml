@@ -1,7 +1,6 @@
 
 nl:
   activities:
-    timeline: "Tijdlijn"
     votes:
       create: "%{owner} %{side} %{parent}"
       :yes: "is vóór"
@@ -49,12 +48,3 @@ nl:
       trash: "%{owner} heeft een %{subject} op %{parent} verwijderd"
       untrash: "%{owner} heeft een %{subject} op %{parent} teruggeplaatst"
       update: "%{owner} heeft een %{subject} op %{parent} gewijzigd"
-    group_responses:
-      create: "%{owner} heeft als %{group_singular} gereageerd op %{parent}"
-    ui:
-      load_more: "Laad meer"
-      no_more_artivities: "Geen oudere activiteiten"
-      loading: "Bezig.."
-      comment: "Toelichting voor deze actie: (optioneel)"
-    news_feed:
-      title: "Nieuwsoverzicht"

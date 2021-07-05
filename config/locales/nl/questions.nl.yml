@@ -4,8 +4,9 @@ nl:
   questions:
     type_new: "Nieuwe uitdaging"
     header: "uitdagingen"
-    view_all_motions: "Bekijk alle %{amount} ideeën..."
-    go_to_parent: "Ga naar de bovenliggende uitdaging."
+    tooltips:
+      count: "Aantal geplaatste uitdagingen"
+      info: "Een uitdaging is een vraagstuk of probleem waaronder ideeën kunnen worden geplaatst."
     call_to_action:
       title: "Oplossing nodig?"
       body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
@@ -20,34 +21,11 @@ nl:
     form:
       title:
         label: "Geef jouw uitdaging een titel"
-        body_html: "<ul class='bullets'>
-                     <li>Open vragen zijn vaak geschikte titels voor uitdagingen.</li>
-                     <li>Een uitdaging moet mensen aanzetten tot het indienen van ideeën.</li>
-                   </ul>"
       content:
         label: "Licht je uitdaging toe"
-        body_html: "<ul class='bullets'>
-                            <li>Leg de <b>huidige situatie</b> uit. Geef achtergrondinformatie van het probleem en leg uit waarom er nog geen oplossing is.</li>
-                            <li>Geef aan waar een mogelijke oplossing (een idee) aan zouden moeten voldoen.</li>
-                            <li>Eindig door gebruikers nog eens aan te zetten tot het <b>het indienen van een idee</b>, zodat je meer reacties krijgt.</li>
-                          </ul>"
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
       default_sorting:  'Standaard sortering van ideeën'
-      helper:
-        examples:
-          title: "Voorbeelden"
-          first: "Hoe kunnen we de CO2 uitstoot verlagen?"
-          1_explained: "Open vragen zijn vaak geschikte titels voor uitdagingen."
-          second: "Bedenk beleid om CO2 te verlagen"
-          2_explained: "Een activerende stelling kan ook werken. Zorg dat je uitdaging mensen stimuleert om ideeën in te dienen."
-          third: "Moeten we de CO2 uitstoot verlagen?"
-          3_explained: "Geen gesloten vragen. Een discussie over een ja/nee vraag kan je starten door een idee te plaatsen."
-          fourth: "Waar moet ik een paspoort halen?"
-          4_explained: "Geen kennisvragen. Argu discussies gaan over het vinden van ideeën voor een bepaalde uitdaging."
-        title: "Plaats hier de kern van de uitdaging"
-        content: "Beschrijf hier de uitdaging in detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
-        themes: "Thema's of onderwerpen die aan deze uitdaging gerelateerd zijn. Plaats komma's tussen de thema's."
   activerecord:
     attributes:
       question:

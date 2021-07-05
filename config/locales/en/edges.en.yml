@@ -2,9 +2,5 @@ en:
   edges:
     pinned_at: "Pinned at %{datetime}"
     show_placement: "Show location"
-    form:
-      helper:
-        pinned: "This item will be shown at the top of the page"
-        require_location: "Require selecting a location for submitted ideas."
     collection:
       drafts: "My drafts"

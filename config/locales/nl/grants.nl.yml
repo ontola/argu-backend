@@ -43,8 +43,6 @@ nl:
       moderator: "Naast reageren en onderwerpen starten kan je hiermee ook sommige reacties van anderen aanpassen of verwijderen."
       administrator: "De hoogst mogelijke rechtenset. Hiermee kan alles worden bewerkt en bekeken."
       staff: "Medewerkers van Ontola"
-    list:
-      remove_html: "<a href='%{url}' data-method='delete' data-remote='true' data-confirm='Weet je zeker dat je dit recht wilt intrekken?'><span class='fa fa-close'></span></a>"
   grant_resets:
     label: "Wie mogen ideeën plaatsen?"
     default: "Gebruik forum instellingen"

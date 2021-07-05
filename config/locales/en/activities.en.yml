@@ -1,7 +1,6 @@
 
 en:
   activities:
-    timeline: "Timeline"
     votes:
       create: "%{owner} %{side} %{parent}"
       :yes: "is in favour of"
@@ -49,12 +48,3 @@ en:
       trash: "%{owner} trashed a %{subject} for %{parent}"
       untrash: "%{owner} untrashed a %{subject} for %{parent}"
       update: "%{owner} updated a %{subject} for %{parent}"
-    group_responses:
-      create: "%{owner} posted a %{type} as a %{group_singular} in %{parent}"
-    ui:
-      load_more: "Load more"
-      no_more_artivities: "No more activities"
-      loading: "Loading.."
-      comment: "Explanation for this action: (optional)"
-    news_feed:
-      title: "News feed"

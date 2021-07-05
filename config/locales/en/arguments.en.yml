@@ -8,60 +8,21 @@ en:
   arguments:
     type_new: "New argument"
     vote: "vote"
-    new_btn: "Add argument"
-    references: "references"
-    show_all_x_pro: "Show %{count} pros"
-    show_all_x_con: "Show %{count} cons"
     header:
       pro: "pro argument"
       con: "con argument"
-    index:
-      title: "arguments"
-      parties: "parties"
-      law: "law"
-    show:
-      title: "arguments"
-      reply: "reply"
-      created_by: "%{user} - %{date}"
-    new:
-      header: "%{side} argument for the proposition: "
-      header_short: "%{side}: "
-      create: "+ %{side} argument"
-      pro: "Add pro"
-      con: "Add con"
+    tooltips:
+      info: "An argument is a single reason in favor or against an idea."
     form:
       title:
         label: "Core of your argument"
-        body_html: "<ul class='bullets'>
-                     <li>An argument is a <b>single reason</b> <b class='pro-t'>in favour</b> or <b class='con-t'>against</b> an <b class='motion-t'>idea</b>.</li>
-                     <li>Use a <b>short and concise</b> title.</li>
-                   </ul>"
       content:
         label: "Argument details (optional)"
-        body_html: "<ul class='bullets'>
-                      <li>Give <b>background information</b> to support your argument.</li>
-                      <li>Use <b>references</b> and add links.</li>
-                      <li>The <b>first sentences</b> will be read most often, so make sure they are convincing!</li>
-                      <li>Make sure you provide just <b>a single reason</b>! That way, we keep discussions uncluttered.</li>
-                    </ul>"
       type: "type"
       submit: "Submit argument"
       side:
         pro: "pro argument"
         con: "con argument"
-    helper_html: "<h2>What is an argument?</h2>
-            <p>An argument is a <b>single reason</b> <b class='pro-t'>supporting</b> or <b class='con-t'>opposing</b> an <b class='motion-t'>idea</b>.</p>
-            <h2>Tips</h2>
-            <ul class='bullets'>
-              <li>Start with the most important part. The first lines are read the most.</li>
-              <li>The argument should not already have been placed.</li>
-              <li>Use reliable sources to make your point more credible.</li>
-              <li>Be friendly and content oriented.</li>
-            <ul>"
-    notices:
-      restored: "The argument has been restored."
-      created: "The argument has been placed."
-      updated: "The argument has been updated."
     collection:
       'yes': "Advantages"
       'no': "Problems"

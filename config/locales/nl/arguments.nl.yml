@@ -8,60 +8,21 @@ nl:
   arguments:
     type_new: "Nieuw argument"
     vote: "Stem"
-    new_btn: "Argument toevoegen"
-    references: "Referenties"
-    show_all_x_pro: "Toon %{count} voordelen"
-    show_all_x_con: "Toon %{count} nadelen"
     header:
       pro: "Argument voor"
       con: "Argument tegen"
-    index:
-      title: "Argumenten"
-      parties: "Partijen"
-      law: "Wet"
-    show:
-      title: "Argumenten"
-      reply: "Reageer"
-      created_by: "%{user} - %{date}"
-    new:
-      header: "Argument %{side} de stelling: "
-      header_short: "%{side}: "
-      create: "+ argument %{side}"
-      pro: "Argument voor toevoegen"
-      con: "Argument tegen toevoegen"
+    tooltips:
+      info: "Een argument is een enkele reden voor of tegen een idee."
     form:
       title:
         label: "Kern van jouw argument"
-        body_html: "<ul class='bullets'>
-                     <li>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='motion-t'>idee</b>.</li>
-                     <li>Maak de titel zo <b>kort en duidelijk</b> mogelijk.</li>
-                   </ul>"
       content:
         label: "Licht je argument toe (optioneel)"
-        body_html: "<ul class='bullets'>
-                      <li>De <b>eerste zinnen</b> worden het meest gelezen, dus zorg dat die overtuigen!</li>
-                      <li>Plaats maar <b>één enkele reden</b>! Zo houden we de discussie overzichtelijk.</li>
-                      <li>Geef <b>achtergrondinformatie</b> om jouw argument krachtiger te maken.</li>
-                      <li>Gebruik <b>bronnen</b> en voeg links toe.</li>
-                    </ul>"
       type: "type"
       submit: "argument plaatsen"
       side:
         pro: "argument voor"
         con: "argument tegen"
-    helper_html: "<h2>Wat is een argument?</h2>
-            <p>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='motion-t'>idee</b>.</p>
-            <h2>Tips</h2>
-            <ul class='bullets'>
-              <li>Begin met het belangrijkste. De eerste regels worden het meest gelezen.</li>
-              <li>Het argument moet niet al eerder geplaatst zijn bij dit idee.</li>
-              <li>Gebruik betrouwbare bronnen om je punt overtuigender te maken.</li>
-              <li>Wees vriendelijk en inhoudelijk.</li>
-            <ul>"
-    notices:
-      restored: "Het argument is teruggeplaatst."
-      created: "Het argument is geplaatst."
-      updated: "Het argument is gewijzigd."
     collection:
       'yes': "Voordelen"
       'no': "Problemen"

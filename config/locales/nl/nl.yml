@@ -76,21 +76,13 @@ nl:
   con: "tegen"
   log: "Log"
   feed: "Activiteit"
-  feed_filter:
-    relevant: "Relevant"
-    complete: "Compleet"
   overview: "Overzicht"
   edited: "Bewerkt"
   deleted: "Verwijderd"
-  delete_type: "Verwijder %{type}"
-  untrash_type: "%{type} terugplaatsen"
   trashed: "Verborgen"
   is_draft: "Concept"
-  reply: "Reageer"
-  reply_count: "Reageer (%{comment_count})"
   report: "Rapporteer"
   clearance: "Bevoegdheid"
-  access_denied: "Je bent niet bevoegd om deze actie uit te voeren.  (%{action})"
   forum: "Forum"
   share: "Delen"
   menu: "Menu"
@@ -99,11 +91,7 @@ nl:
     policy: "Gebruiksvoorwaarden"
     privacy: "Privacy"
     cookies: "Cookies"
-  trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."
-  untrash_confirmation: "Dit object zal weer zichtbaar zijn in de publieke discussie."
-  destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
   destroy_confirm_string: 'verwijder'
-  destroy_confirm_error: 'Typ "verwijder"'
   not_allowed: "Actie niet toegestaan."
   error: "Fout"
   error_prohibited: " bij het opslaan:"
@@ -281,20 +269,6 @@ nl:
   info_bar: "Info balk"
   images: "Afbeeldingen"
   display: "Weergave"
-  markdown_helper_html: "<h2>Links toevoegen</h2>
-                <p>Je kan in jouw tekst links toevoegen met blokhaken en normale haakjes. Dat doe je als volgt:</p>
-                <code>Dit is [Argu](www.argu.co).</code>
-                <p>Verschijnt als:</p>
-                <code>Dit is <a target='_blank' href='http://www.argu.co'>Argu</a>.</code>
-                <h2>Opmaak</h2>
-                <p>Je kunt je tekst eenvoudig opmaken door leestekens te gebruiken:</p>
-                <code>*Schuingedrukt*</code>
-                <code>**Dikgedrukt**</code>
-                <code>##Tussenkop</code>
-                <code>1. Genummerde <br> 2. Lijst</code>
-                <code>* Ongenummerde <br> * Lijst</code>
-                <p>Wanneer je een speciaal teken wil laten zien (#) kan je deze <a target='_blank' href='https://en.wikipedia.org/wiki/Escape_character'>escapen</a> met een backslash (\\):</p>
-                <code>\\#hashtag</code>"
   welcome_video_open: 'Nieuw op Argu? Bekijk de video!'
   welcome_video_close: 'Sluit deze banner'
   welcome_video_dismiss: 'Verberg deze boodschap.'

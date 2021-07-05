@@ -24,7 +24,6 @@ en:
         delete:
           confirm:
             header: "Are you absolutely sure?"
-            body_html: "<b>NOT READING THIS MESSAGE MIGHT LEAD TO UNWANTED LOSS OF CONTENT</b><br>Deleting this forum will delete <b>all content</b> of this forum! This action can <b>NOT</b> be undone!"
             howto: "Please enter 'remove' below to confirm the deletion."
             understand: "I understand the consequences, delete this forum."
       privacy: "Privacy"
@@ -105,7 +104,6 @@ en:
     shortname:
       warning: "When setting a new url, the old one will remain valid until it is reused somewhere else."
     visit: "Visit forum"
-    shortname_helper_html: "https://argu.co/<b>your_argu_url</b>"
   activerecord: #These currently aren't used for forms.
     attributes:
       forum:

@@ -76,21 +76,13 @@ en:
   con: "con"
   log: "Log"
   feed: "Feed"
-  feed_filter:
-    relevant: "Relevant"
-    complete: "Complete"
   overview: "Overview"
   edited: "Edited"
   deleted: "Deleted"
-  delete_type: "Delete %{type}"
-  untrash_type: "Untrash %{type}"
   trashed: "Hidden"
   is_draft: "Draft"
-  reply: "Reply"
-  reply_count: "Reply (%{comment_count})"
   report: "Report"
   clearance: "Clearance"
-  access_denied: "You're not authorized for that action. (%{action})"
   forum: "Forum"
   share: "Share"
   menu: "Menu"
@@ -99,11 +91,7 @@ en:
     policy: "Terms of use"
     privacy: "Privacy"
     cookies: "Cookies"
-  trash_confirmation: "This item will no longer be visible in public discussion. This can be undone."
-  untrash_confirmation: "This item will be visible again in public discussion."
-  destroy_confirmation: "This object and all related data will be permanently removed. This cannot be undone."
   destroy_confirm_string: 'remove'
-  destroy_confirm_error: 'type "remove"'
   not_allowed: "Action not allowed."
   error: "Error"
   error_prohibited: " whilst saving:"
@@ -280,19 +268,6 @@ en:
   info_bar: "Info bar"
   images: "Images"
   display: "Display"
-  markdown_helper_html: "<h2>Add links</h2>
-                <p>You can add links in your text by using square brackets and normal brackets.</p>
-                <code>This is [Argu](www.argu.co).</code>
-                <p>Will appear as:</p>
-                <code>This is <a target='_blank' href='http://www.argu.co'>Argu</a>.</code>
-                <h2>Formatting</h2>
-                <p>You can format your text using the following characters:</p>
-                <code>*Cursive*</code>
-                <code>**Bold**</code>
-                <code>##Heading</code>
-                <code>1. Numbered <br> 2. List</code>
-                <code>* Bullet <br> * List</code>
-                <p>If you need to display a hash (#) you can <a target='_blank' href='https://en.wikipedia.org/wiki/Escape_character'>escape</a> it with a backslash (\\)<p>"
   welcome_video_open: 'First time on Argu? Watch the video!'
   welcome_video_close: 'Close this banner'
   welcome_video_dismiss: "Hide this message."

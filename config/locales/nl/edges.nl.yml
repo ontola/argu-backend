@@ -2,9 +2,5 @@ nl:
   edges:
     pinned_at: "Vastgezet op %{datetime}"
     show_placement: "Bekijk locatie"
-    form:
-      helper:
-        pinned: "Dit item zal bovenaan de pagina worden getoond."
-        require_location: "Maak het selecteren van een locatie verplicht voor ingediende ideeēn."
     collection:
       drafts: "Mijn concepten"

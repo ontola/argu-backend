@@ -33,22 +33,10 @@ nl:
     form:
       title:
         label: "Vat je idee samen in één zin."
-        body_html: "<ul class='bullets'>
-                    <li>Beschrijf jouw idee zo <b>kort en bondig</b> als je maar kan.</li>
-                  </ul>"
       content:
         label: "Licht je idee toe"
-        body_html: "<ul class='bullets'>
-                            <li>Zorg dat jouw idee <b>concreet</b> is en implementeerbaar. Leg uit wat er precies moet gebeuren.</li>
-                            <li>Geef <b>achtergrondinformatie</b>. Wat is de huidige situatie?</li>
-                            <li>Plaats hier <b>geen argumenten</b>; dat doe je pas nadat je idee is geplaatst.</li>
-                          </ul>"
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
-      helper:
-        title: "Vat de stelling zo bondig mogelijk samen."
-        content: "Beschrijf jouw idee in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
-        themes: "Thema's of onderwerpen die aan deze stelling gerelateerd zijn. Plaats komma's tussen de thema's."
     mod:
       edit_moderators:
         title: 'Moderators van %{title}'

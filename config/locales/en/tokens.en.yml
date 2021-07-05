@@ -1,48 +1,6 @@
 en:
   tokens:
-    invite: "Invite"
-    generate: "Generate link"
-    loading: "Loading..."
-    total: "Total: %{total}"
-    retract:
-      button: "retract"
-      confirm: "Are you sure you want to retract this link?"
-    labels:
-      link: "Link"
-      usages: "Usages"
-      invitee: "Invitee"
-      createdAt: "Invited at"
-      message: "Message"
-      sender_profile: "Send as:"
-      isRead: "Is read"
-    bearer:
-      title: "Invite links"
-      description: "Anyone who clicks on this link will be added to this group automatically. These tokens can be used infinitely."
-    email:
-      title: "Invite people"
-      description: "Invite people to join this group."
-      pending: "Pending invites"
-      create: "Send invites"
-      input_placeholder: "Enter one or more email addresses"
-      success: "The invitations are being sent"
-      processing: "We are processing the invitations"
-      default_message: "I invite you to join the group '%{group}'."
-      has_invalid: "Has invalid email(s)"
-      placeholder: "Search user(s) or enter email addres(ses)"
-      status:
-        delivery_failed: "Mail could not be delivered"
-        pending: "Sending email"
     discussion:
       title: "Invite people"
       description: "Invite people to join the discussion."
       default_message: "Join the discussion about '%{resource}'."
-      group:
-        label: "To which group do you want to add these people?"
-        placeholder: "Select a group"
-        create: "Create"
-    errors:
-      no_receivers: "Please enter one or more users or emailaddresses."
-      not_found: "This token is invalid"
-      inactive: "This token is already used or is retracted"
-    form:
-      header: "Please enter a token"

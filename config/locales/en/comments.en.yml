@@ -13,9 +13,6 @@ en:
     empty:
       name: "Place your comment"
     edited_at: "edited at %{time}"
-    notices:
-      updated: "The comment has been updated"
-    reply: "Reply"
     more: "Show more"
     edit: "Edit comment"
     confirm:

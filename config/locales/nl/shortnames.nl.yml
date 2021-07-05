@@ -2,7 +2,6 @@ nl:
   shortnames:
     type_new: 'Nieuwe redirect'
     info: 'Als je een url aanpast, wordt er automatisch een redirect aangemaakt voor de oude url. Ook kan je zelf redirects toevoegen. Hier zie je een overzicht van de huidige redirects.'
-    contact_argu: 'Nog kortere urls? Neem contact op met Argu voor meer informatie'
     labels:
       from: "Van"
       to: "Naar"
