@@ -2,6 +2,7 @@
 
 class SubmissionPolicy < EdgePolicy
   permit_attributes %i[status]
+  permit_attributes %i[coupon], has_values: {require_coupon: true}
 
   def update?
     return forbid_with_status(NS.schema.ExpiredActionStatus) if expired?
@@ -11,7 +12,7 @@ class SubmissionPolicy < EdgePolicy
   end
 
   def reward?
-    record.parent.reward.positive?
+    record.parent.has_reward?
   end
 
   def show?

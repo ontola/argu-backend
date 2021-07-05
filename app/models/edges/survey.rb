@@ -4,6 +4,7 @@ class Survey < Discussion
   TYPEFORM_MANAGE_TEMPLATE = URITemplate.new('https://admin.typeform.com/form/{typeform_id}/create')
   TYPEFORM_TEMPLATE = %r{\Ahttps:\/\/(\w*).typeform.com\/to\/(\w*)\z}.freeze
 
+  enhance CouponBatchable
   enhance Settingable
 
   include Edgeable::Content
@@ -25,6 +26,10 @@ class Survey < Discussion
 
   def currency
     'EUR'
+  end
+
+  def has_reward?
+    reward.positive?
   end
 
   def manage_iri

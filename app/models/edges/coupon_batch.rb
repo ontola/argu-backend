@@ -2,7 +2,7 @@
 
 class CouponBatch < Edge
   enhance LinkedRails::Enhancements::Creatable
-  parentable :budget_shop
+  parentable :budget_shop, :survey
 
   with_columns default: [
     NS.schema.name,

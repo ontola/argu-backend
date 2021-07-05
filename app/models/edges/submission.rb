@@ -5,6 +5,7 @@ class Submission < Edge
 
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
+  enhance Couponable
 
   with_columns default: [
     NS.schema.dateCreated,
@@ -26,6 +27,10 @@ class Submission < Edge
       invalidate_resource_delta(parent.submission_collection.action(:create)),
       invalidate_resource_delta(parent.menu(:settings))
     ]
+  end
+
+  def require_coupon?
+    parent.has_reward? && super
   end
 
   def reward_iri

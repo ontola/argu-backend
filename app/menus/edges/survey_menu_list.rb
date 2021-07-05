@@ -27,6 +27,12 @@ class SurveyMenuList < ApplicationMenuList
     [
       submission_item,
       setting_item(
+        :coupon_batches,
+        image: 'fa-link',
+        label: I18n.t('argu.CouponBatch.label'),
+        href: collection_iri(resource, :coupon_batches)
+      ),
+      setting_item(
         :submissions,
         label: I18n.t('argu.Submission.plural_label'),
         href: collection_iri(resource, :submissions, display: :table)
