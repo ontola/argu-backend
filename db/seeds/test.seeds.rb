@@ -202,6 +202,15 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   FactorySeeder.create(:offer, parent: budget, product_id: forum_motion.uuid, price: 200)
   batch = FactorySeeder.create(:coupon_batch, parent: budget)
   batch.update(coupons: %w[COUPON1 COUPON1])
+
+  survey_iri = 'https://arthurdingemans.typeform.com/to/E6zdDk?__dangerous-disable-submissions'
+  open_survey = FactorySeeder.create(:survey, parent: freetown, external_iri: survey_iri)
+  batch = FactorySeeder.create(:coupon_batch, parent: open_survey)
+  batch.update(coupons: %w[COUPON1 COUPON1])
+
+  reward_survey = FactorySeeder.create(:survey, parent: freetown, external_iri: survey_iri, reward: 100)
+  batch = FactorySeeder.create(:coupon_batch, parent: reward_survey)
+  batch.update(coupons: %w[COUPON1 COUPON1])
 end
 
 FactorySeeder.create(
