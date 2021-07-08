@@ -11,8 +11,6 @@ class Argument < Edge
   enhance Statable
   enhance Votable
 
-  include VotesHelper
-
   validates :description, presence: false, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 75}
   validates :creator, presence: true

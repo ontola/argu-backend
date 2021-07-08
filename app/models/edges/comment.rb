@@ -11,7 +11,6 @@ class Comment < Edge
   property :pdf_position_y, :integer, NS.argu[:pdfPositionY], default: nil
   property :pdf_page, :integer, NS.argu[:pdfPage], default: nil
 
-  has_one :vote, primary_key_property: :comment_id, dependent: false
   belongs_to :parent_comment, foreign_key_property: :parent_comment_id, class_name: 'Comment', dependent: false
   has_many :comments, primary_key_property: :parent_comment_id, class_name: 'Comment', dependent: false
   has_many :active_comments,
@@ -21,9 +20,6 @@ class Comment < Edge
            dependent: false,
            inverse_of: :parent_comment
   belongs_to :commentable, polymorphic: true
-
-  after_commit :set_vote, on: :create
-  after_trash :unlink_vote
 
   counter_cache comments: {}, threads: {parent_comment_id: nil}
   with_collection :comments, counter_cache_column: nil
@@ -35,7 +31,7 @@ class Comment < Edge
   validates :description, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :creator, presence: true
 
-  attr_accessor :is_processed, :vote_id
+  attr_accessor :is_processed
 
   def build_child(klass, user_context: nil)
     return super unless klass == Comment
@@ -75,23 +71,8 @@ class Comment < Edge
     Comment.transaction do
       trash unless is_trashed?
       Comment.anonymize(Comment.where(id: id))
-      unlink_vote
       update_attribute(:body, '') # rubocop:disable Rails/SkipsModelValidations
     end
-  end
-
-  private
-
-  def set_vote
-    return if vote_id.nil?
-
-    vote = Vote.where_with_redis(creator: creator, uuid: vote_id, root_id: root_id).first ||
-      raise(ActiveRecord::RecordNotFound)
-    vote.update!(comment_id: uuid)
-  end
-
-  def unlink_vote
-    vote&.update(comment_id: nil)
   end
 
   class << self

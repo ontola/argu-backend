@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class VoteActionList < EdgeActionList
-  include VotesHelper
-
   has_collection_create_action(
     image: -> { create_image(resource.filter[NS.schema.option]&.first, resource.parent.upvote_only?) },
     label: -> { create_label(resource.filter[NS.schema.option]&.first, resource.parent.upvote_only?) },
@@ -45,5 +43,16 @@ class VoteActionList < EdgeActionList
     iri = resource.unfiltered_collection.iri.dup
     iri.query = {NS.schema.option => option}.to_query
     iri
+  end
+
+  def icon_for_side(side)
+    case side.to_s
+    when 'pro', 'yes'
+      'thumbs-up'
+    when 'neutral', 'other'
+      'pause'
+    when 'con', 'no'
+      'thumbs-down'
+    end
   end
 end

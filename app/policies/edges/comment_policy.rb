@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CommentPolicy < EdgePolicy
-  permit_attributes %i[description parent_comment_id vote_id]
+  permit_attributes %i[description parent_comment_id]
   permit_attributes %i[pdf_page pdf_position_x pdf_position_y]
 
   def create?
