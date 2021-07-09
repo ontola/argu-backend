@@ -17,6 +17,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :permitted_action
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
+  paginates_per 100
 
   before_create :set_root
 
