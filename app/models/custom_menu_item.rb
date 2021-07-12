@@ -36,18 +36,14 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
     super.present? ? RDF::URI(super) : edge&.iri
   end
 
-  def iri_opts
-    {
-      id: id,
-      menu_type: menu_type,
-      parent_iri: split_iri_segments(resource&.root_relative_iri)
-    }
-  end
-
   def label
     return edge.display_name if attribute_in_database(:label).blank? && edge.present?
 
     translate_property(super)
+  end
+
+  def menu_list(_user_context)
+    @menu_list ||= Menus::List.new(resource: self, menus: menu_list.custom_menu_items(menu_type, self))
   end
 
   def menus_present?
@@ -70,7 +66,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     sequence_iri = iri.dup
     sequence_iri.path ||= ''
-    sequence_iri.path += '/menus'
+    sequence_iri.path += '/menu_items'
     @menu_sequence_iri = sequence_iri
   end
 
@@ -138,6 +134,10 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def navigations
       where(menu_type: :navigations)
+    end
+
+    def root_collection_opts
+      super.merge(association_scope: :navigations)
     end
 
     def valid_parent?(_klass)

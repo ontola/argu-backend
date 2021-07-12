@@ -24,6 +24,7 @@ class CollectionPolicy < LinkedRails::CollectionPolicy
   end
 
   def parent_policy # rubocop:disable Metrics/AbcSize
+    return super if record.parent.is_a?(LinkedRails.collection_class)
     return if record.parent.blank?
 
     if record.parent.is_a?(Edge) && user_context.tree_root_id.nil?

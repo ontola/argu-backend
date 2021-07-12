@@ -3,10 +3,6 @@
 module Menus
   class List < LinkedRails::Menus::List
     class << self
-      def requested_single_resource(params, user_context)
-        super || custom_menu(params, user_context)
-      end
-
       def custom_menu(params, user_context)
         menu_list = menu_list_from_params(params, user_context)
         menu_tag = params[:id]&.to_sym
@@ -18,6 +14,10 @@ module Menus
           resource: resource,
           tag: menu_tag
         )
+      end
+
+      def requested_single_resource(params, user_context)
+        super || custom_menu(params, user_context)
       end
     end
   end
