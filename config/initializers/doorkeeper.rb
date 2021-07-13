@@ -163,6 +163,7 @@ Doorkeeper::JWT.configure do
 
     payload = {
       iat: Time.current.to_i,
+      iss: ActsAsTenant.current_tenant&.iri,
       scopes: opts[:scopes].entries,
       application_id: opts[:application]&.uid
     }
