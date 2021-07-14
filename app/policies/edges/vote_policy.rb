@@ -27,6 +27,8 @@ class VotePolicy < EdgePolicy
   private
 
   def is_creator?
+    return current_session? if record.creator_id == User::GUEST_ID
+
     record.creator_id == profile.id || managed_profile_ids.include?(record.creator_id)
   end
 end

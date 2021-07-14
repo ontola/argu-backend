@@ -30,7 +30,7 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   # CREATE
   test 'guest should not create otp secret' do
     sign_in guest_user
-    otp_secret_create(should: false, response: :unprocessable_entity)
+    otp_secret_create(should: false, response: :unauthorized)
   end
 
   test 'user should create otp secret' do
@@ -110,7 +110,7 @@ class OtpSecretsTest < ActionDispatch::IntegrationTest
   # DESTROY
   test 'guest should not destroy otp secret' do
     sign_in guest_user
-    otp_secret_destroy(response: :not_found, should: false)
+    otp_secret_destroy(response: :unauthorized, should: false)
   end
 
   test 'user should not destroy otp secret' do

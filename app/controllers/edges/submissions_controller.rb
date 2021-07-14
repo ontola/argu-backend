@@ -3,9 +3,7 @@
 class SubmissionsController < EdgeableController
   private
 
-  def permit_params
-    {
-      session_id: session_id
-    }
+  def allow_empty_params?
+    true
   end
 end

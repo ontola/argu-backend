@@ -11,8 +11,8 @@ class CreatePage < CreateEdge
   def initialize_edge(_parent, attributes)
     Page.new(
       created_at: attributes.with_indifferent_access[:created_at],
-      publisher: user,
-      creator: profile,
+      publisher: publisher,
+      creator: creator,
       profile: Profile.new
     )
   end

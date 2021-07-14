@@ -14,8 +14,8 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
     id = assigns[:doorkeeper_token].resource_owner_id
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data'],
-                 'id' => "#{Rails.application.config.origin.sub('https', 'http')}/#{argu.url}/sessions/#{id}",
-                 'type' => 'guest_user'
+                 'id' => "#{Rails.application.config.origin.sub('https', 'http')}/#{argu.url}/u/#{id}",
+                 'type' => 'user'
   end
 
   test 'user should get show current actor' do

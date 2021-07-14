@@ -3,28 +3,27 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext # rubocop:disable Metrics/ClassLength
-  attr_accessor :doorkeeper_token, :current_actor
+  include JWTHelper
+
+  attr_accessor :doorkeeper_token
+  attr_reader :allow_expired
 
   delegate :user, :profile, to: :current_actor
   delegate :guest?, :id, :otp_active?, to: :user
 
-  def initialize(doorkeeper_token: nil, profile: nil, user: nil)
+  def initialize(allow_expired: false, doorkeeper_token: nil, language: nil, profile: nil, user: nil, session_id: nil) # rubocop:disable Metrics/ParameterLists
+    @allow_expired = allow_expired
     @doorkeeper_token = doorkeeper_token
-    authorized_current_actor(user, profile)
+    @session_id = session_id
+    @profile = profile
+    @user = user
+    @language = language
     @lookup_map = {}
     @grant_trees = {}
   end
 
-  def authorized_current_actor(user, profile)
-    user ||= GuestUser.new
-
-    if profile
-      @current_actor = CurrentActor.new(user: user, profile: profile)
-
-      return if CurrentActorPolicy.new(self, current_actor).show?
-    end
-
-    @current_actor = CurrentActor.new(user: user, profile: user.profile)
+  def current_actor
+    @current_actor ||= authorized_current_actor(@user || user_from_token, @profile)
   end
 
   def cache_key(ident, key, val)
@@ -49,13 +48,15 @@ class UserContext # rubocop:disable Metrics/ClassLength
     doorkeeper_token&.scopes
   end
 
-  def doorkeeper_token_payload
-    @doorkeeper_token_payload ||= JWT.decode(
-      doorkeeper_token.token,
-      Doorkeeper::JWT.configuration.secret_key,
-      true,
-      algorithms: [Doorkeeper::JWT.configuration.encryption_method.to_s.upcase]
-    )[0]
+  def doorkeeper_token_payload # rubocop:disable Metrics/AbcSize
+    return {} if doorkeeper_token&.token.blank?
+    return {} if !allow_expired && !doorkeeper_token.accessible?
+
+    @doorkeeper_token_payload ||= decode_token(doorkeeper_token.token)
+  rescue JWT::ExpiredSignature
+    return {} unless allow_expired
+
+    decode_token(doorkeeper_token.token, exp_leeway: 1.year.to_i)
   end
 
   def export_scope?
@@ -81,7 +82,8 @@ class UserContext # rubocop:disable Metrics/ClassLength
   end
 
   def language
-    @language ||= doorkeeper_token_payload['user']['language']
+    @language ||=
+      user_payload['language'] || user_language || ActsAsTenant.current_tenant&.language || I18n.default_locale
   end
 
   def managed_profile_ids
@@ -113,6 +115,10 @@ class UserContext # rubocop:disable Metrics/ClassLength
     doorkeeper_scopes&.include? 'service'
   end
 
+  def session_id
+    @session_id ||= doorkeeper_token_payload['session_id'] || SecureRandom.hex
+  end
+
   def system_scope?
     service_scope? || export_scope?
   end
@@ -133,5 +139,33 @@ class UserContext # rubocop:disable Metrics/ClassLength
     raise 'no root given' if root.nil?
 
     ActsAsTenant.with_tenant(root) { yield }
+  end
+
+  private
+
+  def authorized_current_actor(user, profile)
+    user ||= GuestUser.new(session_id: session_id)
+
+    if profile
+      @current_actor = CurrentActor.new(user: user, profile: profile)
+
+      return @current_actor if CurrentActorPolicy.new(self, current_actor).show?
+    end
+
+    @current_actor = CurrentActor.new(user: user, profile: user.profile)
+  end
+
+  def user_from_token
+    user = User.find(user_payload['id']) if user_payload['id']
+    user&.session_id = session_id
+    user
+  end
+
+  def user_language
+    user.language if user.id.positive?
+  end
+
+  def user_payload
+    doorkeeper_token_payload['user'] || {}
   end
 end

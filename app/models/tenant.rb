@@ -29,6 +29,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
       create_system_user(User::COMMUNITY_ID, Profile::COMMUNITY_ID, 'community', 'community@argu.co')
       create_system_user(User::SERVICE_ID, Profile::SERVICE_ID, 'service', 'service_user@argu.co')
       create_system_user(User::ANONYMOUS_ID, Profile::ANONYMOUS_ID, 'anonymous', 'anonymous@argu.co')
+      create_system_user(User::GUEST_ID, Profile::GUEST_ID, 'guest', 'guest@argu.co')
     end
 
     def setup_schema(name, iri_prefix, page_url = nil)
@@ -49,11 +50,12 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
         first_page.send(:create_staff_grant)
 
         create_system_group_membership(Group.public, User.community, Profile.community)
+        create_system_group_membership(Group.public, User.guest, Profile.guest)
 
-        create_system_token(Doorkeeper::Application.argu, User::SERVICE_ID, 'service', ENV['SERVICE_TOKEN'])
+        create_system_token(Doorkeeper::Application.argu, User.service, 'service', ENV['SERVICE_TOKEN'])
         create_system_token(
           Doorkeeper::Application.argu_front_end,
-          User::COMMUNITY_ID,
+          User.community,
           'service',
           ENV['RAILS_OAUTH_TOKEN']
         )
@@ -99,10 +101,10 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
       group_membership
     end
 
-    def create_system_token(app, user_id, scopes, secret)
+    def create_system_token(app, user, scopes, secret)
       token = Doorkeeper::AccessToken.find_or_create_for(
         application: app,
-        resource_owner: user_id,
+        resource_owner: UserContext.new(user: user),
         scopes: scopes,
         expires_in: 10.years.to_i,
         use_refresh_token: true

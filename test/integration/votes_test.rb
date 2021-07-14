@@ -6,7 +6,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
   let(:guest_user) { create_guest_user }
-  let(:other_guest_user) { create_guest_user(id: 'other_id') }
+  let(:other_guest_user) { create_guest_user(session_id: 'other_id') }
   let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown) }
   let(:closed_question_motion) { create(:motion, parent: closed_question) }
   let(:closed_question_argument) { create(:pro_argument, parent: closed_question_motion) }
@@ -86,13 +86,10 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     expect_path(RDF::URI(iri_without_id),
                 [NS.owl.sameAs, NS.schema.creator],
-                RDF::URI("#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}"))
+                resource_iri(User.guest, root: argu))
     expect_path(RDF::URI(iri_without_id),
                 [NS.owl.sameAs, NS.schema.isPartOf],
                 vote_event.iri)
-    expect_path(RDF::URI(iri_without_id),
-                [NS.owl.sameAs, NS.schema.creator],
-                RDF::URI("#{argu.iri}/sessions/#{assigns[:doorkeeper_token].resource_owner_id}"))
   end
 
   test 'guest should not get show non-existent vote' do

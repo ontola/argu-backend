@@ -192,6 +192,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def is_creator?
     return if record.creator_id.blank?
+    return current_session? if record.creator_id == User::GUEST_ID
 
     record.publisher_id == user.id || managed_profile_ids.include?(record.creator_id)
   end

@@ -48,18 +48,11 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   COMMUNITY_ID = 0
   ANONYMOUS_ID = -1
   SERVICE_ID = -2
+  GUEST_ID = -3
 
   def as_json(options = {})
     # Hide profileable for the more friendly actor
-    super(options.merge(except: %i[profileable profileable_type profileable_id], methods: %i[actor_type actor_id]))
-  end
-
-  def actor_type
-    profileable_type
-  end
-
-  def actor_id
-    profileable_id
+    super(options.merge(except: %i[profileable profileable_type profileable_id]))
   end
 
   def confirmed?
@@ -108,7 +101,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def guest?
-    profileable.try(:guest?)
+    id == GUEST_ID
   end
 
   # @return [Boolean] Whether the user has a group_membership for the provided group_id
@@ -145,11 +138,15 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   class << self
     def anonymous
-      @anonymous ||= Profile.find(Profile::ANONYMOUS_ID)
+      Profile.find(Profile::ANONYMOUS_ID)
     end
 
     def community
-      @community ||= Profile.find(Profile::COMMUNITY_ID)
+      Profile.find(Profile::COMMUNITY_ID)
+    end
+
+    def guest
+      Profile.find(Profile::GUEST_ID)
     end
 
     def includes_for_profileable

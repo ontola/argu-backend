@@ -2,6 +2,6 @@
 
 class SubmissionPolicy < EdgePolicy
   def create?
-    record.parent.submission_for(user).blank?
+    record.parent.submission_for(user_context).blank?
   end
 end

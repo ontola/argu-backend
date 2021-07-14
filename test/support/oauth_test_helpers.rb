@@ -12,8 +12,7 @@ module OauthTestHelpers
   end
 
   def expired_token(resource)
-    token = doorkeeper_token_for(resource)
-    token.update(expires_in: 1)
+    token = doorkeeper_token_for(resource, expires_in: 1)
     sleep 1
     token
   end
@@ -93,9 +92,8 @@ module OauthTestHelpers
       assert_equal ttl, parsed_body['expires_in']
       assert_not_nil parsed_body['refresh_token'] if refresh_token
       if parsed_body['access_token']
-        token = JWT.decode(parsed_body['access_token'], nil, false)[0]
         assert_equal(response.headers['New-Authorization'], parsed_body['access_token'])
-        token
+        parsed_access_token
       else
         assert_nil(response.headers['New-Authorization'])
         nil

@@ -116,7 +116,7 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
       return nil if user_context.nil?
 
       Vote
-        .where_with_redis(creator: user_context.profile, root_id: ActsAsTenant.current_tenant.uuid)
+        .where_with_redis(publisher: user_context.user, root_id: ActsAsTenant.current_tenant.uuid)
         .find_by(parent: parent, primary: true)
     end
 

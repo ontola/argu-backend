@@ -6,8 +6,10 @@ module RedisResource
   class RelationTest < ActiveSupport::TestCase
     define_freetown
     let(:user) { create(:user) }
-    let(:guest_user) { GuestUser.new(id: 'my_id') }
-    let(:other_guest_user) { GuestUser.new(id: 'other_id') }
+    let(:guest_session) { :guest_session }
+    let(:guest_user) { GuestUser.new(session_id: guest_session) }
+    let(:other_session) { :other_session }
+    let(:other_guest_user) { GuestUser.new(session_id: other_session) }
     let(:unconfirmed) { create(:unconfirmed_user) }
     let(:relation) { RedisResource::Relation.where(root_id: argu.uuid, publisher: guest_user) }
     let(:edge_relation) { RedisResource::EdgeRelation.where(root_id: argu.uuid, publisher: guest_user) }
@@ -37,7 +39,6 @@ module RedisResource
       init_redis_votes(count: 5)
       init_redis_votes(user: other_guest_user, count: 1)
       first_result = edge_relation.where(parent_id: Motion.first.default_vote_event.id).to_a.first
-      assert first_result.is_a?(Edge)
       assert first_result.is_a?(Vote)
     end
 
@@ -51,7 +52,6 @@ module RedisResource
     test 'find first edge_relation' do
       init_redis_votes(count: 5)
       init_redis_votes(user: other_guest_user, count: 1)
-      assert edge_relation.first.is_a?(Edge)
       assert edge_relation.first.is_a?(Vote)
     end
 

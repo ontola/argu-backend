@@ -35,23 +35,24 @@ module Argu
           decode_token(client_token_from_response)
         end
 
-        def doorkeeper_token_for(resource) # rubocop:disable Metrics/MethodLength
-          id, role =
+        def doorkeeper_token_for(resource, expires_in: 10.minutes) # rubocop:disable Metrics/MethodLength
+          owner, role =
             case resource
             when :service
-              [User::SERVICE_ID, 'service']
+              [User.service, 'service']
             when :guest_user
-              [SecureRandom.hex, 'guest']
+              [GuestUser.new, 'guest']
             when GuestUser
-              [resource.id, 'guest']
+              [resource, 'guest']
             else
-              [resource.id, 'user']
+              [resource, 'user']
             end
+          resource_owner = UserContext.new(user: owner, profile: owner.profile, session_id: owner.session_id)
           Doorkeeper::AccessToken.create!(
             application: Doorkeeper::Application.argu,
-            resource_owner_id: id,
+            resource_owner: resource_owner,
             scopes: role,
-            expires_in: 10.minutes,
+            expires_in: expires_in,
             use_refresh_token: true
           )
         end
@@ -112,8 +113,8 @@ module Argu
           end
         end
 
-        def create_guest_user(id: nil)
-          GuestUser.new(id: id || @request&.session&.id)
+        def create_guest_user(session_id: SecureRandom.hex)
+          GuestUser.new(session_id: session_id)
         end
 
         def create_moderator(record, user = nil)
@@ -199,7 +200,8 @@ module Argu
           profile = creator || user.profile
           user_context = UserContext.new(
             user: user,
-            profile: profile
+            profile: profile,
+            session_id: user.try(:session_id)
           )
 
           {user_context: user_context}

@@ -198,8 +198,8 @@ module Argu
         create_comment_for_vote(service.resource)
       end
 
-      def guest_service_options(id: 'guest_id')
-        guest_user = GuestUser.new(id: id)
+      def guest_service_options(session_id: 'guest_id')
+        guest_user = GuestUser.new(session_id: session_id)
         {
           user_context: UserContext.new(profile: guest_user.profile, user: guest_user)
         }

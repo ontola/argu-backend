@@ -24,10 +24,15 @@ module RedisResource
     # @option opts [Uuid] root_id
     # @option opts [Edge] parent
     # @option opts [Integer] parent_id
-    def initialize(opts = {}) # rubocop:disable Metrics/AbcSize
+    def initialize(opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       opts.compact!
-      self.user_type ||= opts[:user]&.class&.to_s&.underscore || opts.fetch(:user_type, '*')
-      self.user_id ||= opts[:user]&.id || opts.fetch(:user_id, '*')
+      if opts.key?(:user)
+        self.user_type ||= opts[:user].guest? ? 'GuestUser' : 'User'
+        self.user_id ||= opts[:user].guest? ? opts[:user].session_id : opts[:user].id
+      else
+        self.user_type ||= opts.fetch(:user_type, '*')
+        self.user_id ||= opts.fetch(:user_id, '*')
+      end
       self.user = opts[:user] || load_user || nil
       self.root_id ||= opts.fetch(:root_id, '*')
       self.owner_type ||= opts.fetch(:owner_type, '*')
@@ -82,7 +87,12 @@ module RedisResource
     private
 
     def load_user
-      (user_type == 'user' && User.find_by(id: user_id)) || (user_type == 'guest_user' && GuestUser.new(id: user_id))
+      case user_type
+      when 'user'
+        User.find_by(id: user_id)
+      when 'guest_user'
+        GuestUser.new(session_id: user_id)
+      end
     end
 
     class << self

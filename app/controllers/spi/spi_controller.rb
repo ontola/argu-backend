@@ -9,15 +9,7 @@ module SPI
     include JsonAPIHelper
     include Argu::Controller::Authentication
     include Argu::Controller::Authorization
-
-    def user_context
-      @user_context ||=
-        UserContext.new(
-          doorkeeper_token: doorkeeper_token,
-          profile: current_user.profile,
-          user: current_user
-        )
-    end
+    include OauthHelper
 
     private
 

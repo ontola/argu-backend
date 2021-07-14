@@ -41,9 +41,7 @@ class RestrictivePolicy
     @service ||= context.doorkeeper_scopes&.include? 'service'
   end
 
-  delegate :user, to: :context
-  delegate :profile, to: :context
-  delegate :managed_profile_ids, to: :context
+  delegate :user, :profile, :managed_profile_ids, :session_id, to: :context
   attr_reader :context, :record, :message
 
   def initialize(context, record)
@@ -121,6 +119,10 @@ class RestrictivePolicy
     return nil if record.try(:id).blank?
 
     user_context.check_key(record.identifier, action)
+  end
+
+  def current_session?
+    record.session_id == session_id
   end
 
   def forbid_with_message(message)

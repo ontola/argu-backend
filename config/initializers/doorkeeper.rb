@@ -10,18 +10,11 @@ Doorkeeper.configure do
   base_controller 'ApplicationController'
   base_metal_controller 'ApplicationController'
 
+  use_polymorphic_resource_owner
+
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    if doorkeeper_token&.acceptable?('user')
-      User.find_by(id: doorkeeper_token.resource_owner_id)
-    elsif doorkeeper_token&.acceptable?('service') && doorkeeper_token.resource_owner_id.to_i == User::SERVICE_ID
-      User.service
-    elsif doorkeeper_token&.acceptable?('guest') && doorkeeper_token_payload['user']
-      GuestUser.new(
-        id: doorkeeper_token.resource_owner_id,
-        language: doorkeeper_token_payload['user']['language']
-      )
-    end
+    UserContext.new(doorkeeper_token: doorkeeper_token)
   end
 
   resource_owner_from_credentials do
@@ -50,7 +43,7 @@ Doorkeeper.configure do
       )
     else
       request.env['warden'].logout
-      user
+      UserContext.new(user: user)
     end
   end
 
@@ -151,31 +144,26 @@ Doorkeeper::JWT.configure do
   # Defaults to a randomly generated token in a hash
   # { token: "RANDOM-TOKEN" }
   token_payload do |opts|
-    user =
-      if opts[:scopes].include?('guest')
-        GuestUser.new(
-          id: opts[:resource_owner_id],
-          language: I18n.locale
-        )
-      elsif opts[:resource_owner_id]
-        User.find(opts[:resource_owner_id])
-      end
+    user_context = opts[:resource_owner]
 
     payload = {
       iat: Time.current.to_i,
       iss: ActsAsTenant.current_tenant&.iri,
       scopes: opts[:scopes].entries,
-      application_id: opts[:application]&.uid
+      application_id: opts[:application]&.uid,
+      session_id: user_context&.session_id
     }
+    user = user_context&.user
     if user
       payload[:user] = {
-        type: user.guest? ? 'guest' : 'user',
         '@id': user.iri,
         id: user.id.to_s,
         email: user.email,
-        language: user.language
+        language: user_context.language,
+        type: user.guest? ? 'guest' : 'user'
       }
     end
+
     payload[:exp] = (opts[:created_at] + opts[:expires_in].seconds).to_i if opts[:expires_in].present?
     payload
   end
@@ -202,10 +190,31 @@ Doorkeeper::JWT.configure do
 end
 
 module Doorkeeper
+  module Request
+    class RefreshToken < Strategy
+      def refresh_token
+        token = Doorkeeper.config.access_token_model.by_refresh_token(parameters[:refresh_token])
+        token.resource_owner = UserContext.new(allow_expired: true, doorkeeper_token: token) if token
+        token
+      end
+    end
+  end
+
   class AccessToken < ActiveRecord::Base
     extend JWTHelper
 
     validate :validate_scope_for_resource_owner
+
+    attr_reader :resource_owner
+
+    def resource_owner=(user_context)
+      unless user_context.blank? || user_context.is_a?(UserContext)
+        raise("Expected resource_owner to by a UserContext, but is a #{user_context.class}")
+      end
+
+      self.resource_owner_id = user_context&.user&.id
+      @resource_owner = user_context
+    end
 
     private
 
@@ -213,6 +222,20 @@ module Doorkeeper
       return if resource_owner_id || scopes.to_s == 'guest'
 
       raise Doorkeeper::Errors::DoorkeeperError.new(:invalid_grant)
+    end
+
+    class << self
+      def by_resource_owner(resource_owner)
+        where(resource_owner_id: resource_owner_id_for(resource_owner))
+      end
+
+      def resource_owner_id_for(resource_owner)
+        if resource_owner.is_a?(UserContext)
+          resource_owner.user.id
+        else
+          resource_owner
+        end
+      end
     end
   end
 

@@ -10,7 +10,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
   let(:guest_user) { create_guest_user }
-  let(:other_guest_user) { create_guest_user(id: 'other_id') }
+  let(:other_guest_user) { create_guest_user(session_id: 'other_id') }
   let(:place) { create(:place) }
   let(:motion) { create(:motion, parent: freetown) }
   let(:argument) { create(:pro_argument, parent: motion) }

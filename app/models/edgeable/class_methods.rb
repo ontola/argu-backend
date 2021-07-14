@@ -10,7 +10,7 @@ module Edgeable
         collection.update_all(creator_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
       end
 
-      def attributes_for_new(opts)
+      def attributes_for_new(opts) # rubocop:disable Metrics/MethodLength
         parent = opts[:parent] if opts[:parent].is_a?(Edge)
         attrs = {
           owner_type: name,
@@ -20,6 +20,7 @@ module Edgeable
         user_context = opts[:user_context]
         attrs[:publisher] = user_context&.user || User.new(show_feed: true)
         attrs[:creator] = user_context&.profile unless user_context&.profile&.guest?
+        attrs[:session_id] = user_context&.session_id
         attrs
       end
 

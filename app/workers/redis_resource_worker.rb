@@ -19,6 +19,6 @@ class RedisResourceWorker
   private
 
   def get_user(klass, id)
-    [User, LinkedRails::Auth::Registration].include?(klass) ? User.find(id) : GuestUser.new(id: id)
+    [User, LinkedRails::Auth::Registration].include?(klass) ? User.find(id) : GuestUser.new(session_id: id)
   end
 end

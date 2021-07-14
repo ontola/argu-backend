@@ -8,7 +8,7 @@ class OrderPolicy < EdgePolicy
   end
 
   def create?
-    cart = record.parent.cart_for(user)
+    cart = record.parent.cart_for(user_context)
 
     return forbid_with_message(I18n.t('actions.orders.create.errors.budget_exceeded')) if cart.budget_exceeded?
     return forbid_with_message(I18n.t('actions.orders.create.errors.cart_empty')) if cart.cart_details.empty?

@@ -8,7 +8,7 @@ class BannerPolicy < EdgePolicy
       audience = [Banner.audiences[:everyone]]
       audience << Banner.audiences[:guests] if user.guest?
       audience << Banner.audiences[:users] unless user.guest?
-      dismissed = BannerDismissal.where_with_redis(creator: @profile).pluck(:parent_id)
+      dismissed = BannerDismissal.where_with_redis(publisher: user).pluck(:parent_id)
 
       scope
         .active

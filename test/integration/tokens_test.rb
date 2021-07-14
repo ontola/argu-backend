@@ -7,8 +7,9 @@ class TokensTest < ActionDispatch::IntegrationTest
   include OauthTestHelpers
 
   define_freetown
+  define_cairo
   let(:guest_user) { create_guest_user }
-  let(:other_guest_user) { create_guest_user(id: 'other_id') }
+  let(:other_guest_user) { create_guest_user(session_id: 'other_id') }
   let(:two_fa_user) { create(:two_fa_user) }
   let(:motion) { create(:motion, parent: freetown) }
   let(:motion2) { create(:motion, parent: freetown) }
@@ -142,12 +143,15 @@ class TokensTest < ActionDispatch::IntegrationTest
       post_token_password
     end
     refresh_token = parsed_body['refresh_token']
+    session_id = parsed_access_token['session_id']
+    assert_equal session_id.class, String
     assert refresh_token
     sleep 1
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       refresh_access_token(refresh_token)
     end
     token_response
+    assert_equal session_id, parsed_access_token['session_id']
     sleep 1
     assert_difference('Doorkeeper::AccessToken.count', 0) do
       refresh_access_token(refresh_token)
@@ -155,7 +159,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     token_response(error_type: 'invalid_grant')
   end
 
-  test 'User should not refresh token with expired token' do
+  test 'User should refresh token with expired token' do
     token = expired_token(user)
     sign_in token.token
 
@@ -216,7 +220,7 @@ class TokensTest < ActionDispatch::IntegrationTest
         results: {scope: 'guest'}
       )
       assert token['id']
-      assert_equal Doorkeeper::AccessToken.last.resource_owner_id, token['id']
+      assert_equal '-3', token['id']
     end
   end
 
@@ -374,12 +378,24 @@ class TokensTest < ActionDispatch::IntegrationTest
   ####################################
   # Make request with expired token
   ####################################
-  test 'Make request with expired token' do
-    sign_in expired_token(user).token
+  test 'Make request to public resource with expired token' do
+    sign_in freetown.publisher
+    get freetown.iri
+    assert_response :success
 
-    get argu.iri
+    sign_in expired_token(freetown.publisher).token
+    get freetown.iri
+    assert_response :success
+  end
 
-    token_response(error_type: 'invalid_token')
+  test 'Make request to private resource with expired token' do
+    sign_in cairo.publisher
+    get cairo.iri
+    assert_response :success
+
+    sign_in expired_token(cairo.publisher).token
+    get cairo.iri
+    assert_response :forbidden
   end
 
   ####################################

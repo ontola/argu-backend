@@ -20,25 +20,9 @@ class EdgeableController < ServiceController
     super.merge(owner_type: controller_class.to_s)
   end
 
-  def guest_creator?
-    current_user.guest? && !controller_class.include?(RedisResource::Concern)
-  end
-
-  def service_creator
-    return super unless guest_creator?
-
-    Profile.community
-  end
-
   def service_klass(action = action_name)
     "#{action.classify}#{controller_name.classify}".safe_constantize ||
       "#{action.classify}Edge".constantize
-  end
-
-  def service_publisher
-    return super unless guest_creator?
-
-    User.community
   end
 
   def update_meta # rubocop:disable Metrics/AbcSize

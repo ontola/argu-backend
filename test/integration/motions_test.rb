@@ -48,7 +48,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
            parent: question)
   end
   let(:guest_user) { create_guest_user }
-  let(:other_guest_user) { create_guest_user(id: 'other_id') }
+  let(:other_guest_user) { create_guest_user(session_id: 'other_id') }
   let(:guest_vote) do
     create(:vote,
            parent: subject.default_vote_event,

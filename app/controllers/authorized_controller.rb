@@ -48,6 +48,7 @@ class AuthorizedController < ApplicationController
 
   def check_if_registered?
     return false if SAFE_METHODS.include?(request.method)
+    return true if doorkeeper_token.nil?
 
     !interact_as_guest?
   end

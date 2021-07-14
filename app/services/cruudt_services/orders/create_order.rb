@@ -8,8 +8,8 @@ class CreateOrder < CreateEdge
     resource.cart.cart_details.each do |cart_detail|
       resource.order_details.build(
         is_published: true,
-        creator: profile,
-        publisher: user,
+        creator: creator,
+        publisher: publisher,
         offer: cart_detail.parent
       )
     end

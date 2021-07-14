@@ -14,7 +14,7 @@ class CreateVote < CreateEdge
       .where_with_redis(
         root_id: ActsAsTenant.current_tenant.uuid,
         option: Vote.filter_options[NS.schema.option][:values][attributes[:option]],
-        creator: profile,
+        publisher: user,
         primary: true
       ).find_by(parent: parent)
   end

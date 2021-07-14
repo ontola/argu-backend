@@ -10,11 +10,10 @@ module RedisResource
       remove_from_redis
     end
 
-    def key # rubocop:disable Metrics/AbcSize
+    def key
       @key ||= RedisResource::Key.new(
         root_id: resource.root_id,
-        user_type: resource.publisher.class.name,
-        user_id: resource.publisher.id,
+        user: resource.publisher,
         owner_type: resource.class.name,
         edge_id: resource.id,
         parent: resource.parent

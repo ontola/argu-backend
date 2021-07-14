@@ -59,6 +59,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
       id: current_user.id,
       responder_type: active_response_type,
       scopes: doorkeeper_scopes,
+      session_id: session_id,
       name: current_user.display_name
     }
   end
@@ -102,7 +103,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   # @private
   def set_locale
-    I18n.locale = current_user.language
+    I18n.locale = user_context.language
   end
 
   def set_vary

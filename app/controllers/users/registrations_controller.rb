@@ -10,7 +10,7 @@ module Users
     def create_success
       super
 
-      guest_user = GuestUser.new(id: session_id)
+      guest_user = GuestUser.new(session_id: session_id)
       mail_sent = send_confirmation_mail(
         current_resource,
         RedisResource::Relation.where(publisher: guest_user, parent: {owner_type: 'VoteEvent'})

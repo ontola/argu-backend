@@ -6,7 +6,7 @@ class Cart < VirtualResource
   enhance Singularable
   include Parentable
   include IRITemplateHelper
-  attr_accessor :shop, :user
+  attr_accessor :shop, :user_context
 
   parentable :shop
   alias edgeable_record shop
@@ -23,7 +23,7 @@ class Cart < VirtualResource
   def cart_details
     @cart_details ||=
       CartDetail.where_with_redis(
-        publisher: user,
+        publisher: user_context.user,
         shop_id: shop.id
       )
   end
@@ -60,7 +60,7 @@ class Cart < VirtualResource
 
       Cart.new(
         shop: parent,
-        user: user_context.user
+        user_context: user_context
       )
     end
 

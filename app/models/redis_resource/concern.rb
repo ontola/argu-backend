@@ -26,7 +26,7 @@ module RedisResource
     end
 
     def store_in_redis?(opts = {})
-      self.class.store_in_redis?(attributes.merge(creator: creator).merge(opts))
+      self.class.store_in_redis?(attributes.merge(publisher: publisher).merge(opts))
     end
 
     def trash
@@ -63,7 +63,7 @@ module RedisResource
       end
 
       def store_in_redis?(opts = {})
-        !opts[:skip_redis] && opts[:creator]&.guest?
+        !opts[:skip_redis] && opts[:publisher]&.guest?
       end
     end
   end

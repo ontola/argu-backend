@@ -70,6 +70,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   COMMUNITY_ID = 0
   ANONYMOUS_ID = -1
   SERVICE_ID = -2
+  GUEST_ID = -3
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/.freeze
   LOGIN_ATTRS = %w[updated_at failed_attempts].freeze
@@ -80,7 +81,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :about, length: {maximum: 3000}
   before_save :sanitize_redirect_url
 
-  attr_accessor :current_password
+  attr_accessor :current_password, :session_id
 
   attribute :destroy_strategy, default: :expropriate_on_destroy
 
@@ -205,7 +206,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def guest?
-    false
+    id == GUEST_ID
   end
 
   def is_staff?
@@ -369,6 +370,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def followable_classes
       @followable_classes ||= Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze.map(&:to_s)
+    end
+
+    def guest
+      User.find(User::GUEST_ID)
     end
 
     def preview_includes

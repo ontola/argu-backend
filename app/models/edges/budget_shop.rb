@@ -18,8 +18,8 @@ class BudgetShop < Discussion
     Money.new(super, currency) if super
   end
 
-  def cart_for(user)
-    Cart.new(shop: self, user: user)
+  def cart_for(user_context)
+    Cart.new(shop: self, user_context: user_context)
   end
 
   class << self

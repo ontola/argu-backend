@@ -11,7 +11,7 @@ class CurrentActor < VirtualResource
   def actor_type # rubocop:disable Metrics/MethodLength
     if profile.present?
       owner = profile.profileable
-      if owner.is_a?(GuestUser)
+      if owner.guest?
         'GuestUser'
       elsif owner.confirmed?
         'ConfirmedUser'

@@ -5,7 +5,7 @@ require 'test_helper'
 module RedisResource
   class ResourceTest < ActiveSupport::TestCase
     define_freetown
-    let(:guest_user) { GuestUser.new(id: 'my_id') }
+    let(:guest_user) { GuestUser.new(session_id: 'my_id') }
     let(:unconfirmed) { create(:unconfirmed_user) }
     let(:user) { create(:user) }
     let(:motion) { create(:motion, parent: freetown) }
@@ -20,7 +20,7 @@ module RedisResource
     test 'find by key string' do
       redis_resource =
         RedisResource::Resource
-          .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
+          .find("temporary.guest_user.#{guest_user.session_id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
       assert redis_resource.is_a?(RedisResource::Resource)
       assert redis_resource.resource.uuid == guest_vote.uuid
       assert_not redis_resource.resource.persisted?
@@ -76,7 +76,7 @@ module RedisResource
     test 'persist' do
       redis_resource =
         RedisResource::Resource
-          .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
+          .find("temporary.guest_user.#{guest_user.session_id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
       assert_difference('Vote.count' => 1, 'Argu::Redis.keys("temporary*").count' => -1) do
         redis_resource.persist(user)
       end
@@ -86,7 +86,7 @@ module RedisResource
       vote
       redis_resource =
         RedisResource::Resource
-          .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
+          .find("temporary.guest_user.#{guest_user.session_id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
       assert_difference('Vote.count' => 0, 'Argu::Redis.keys("temporary*").count' => -1) do
         redis_resource.persist(user)
       end

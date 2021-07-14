@@ -23,7 +23,7 @@ class GuestUser < User
   end
 
   def id
-    @id ||= SecureRandom.hex
+    GUEST_ID
   end
 
   def iri_opts
@@ -43,7 +43,7 @@ class GuestUser < User
   def otp_secret; end
 
   def profile
-    @profile ||= GuestProfile.find(COMMUNITY_ID)
+    @profile ||= GuestProfile.find(GUEST_ID)
     @profile.profileable = self
     @profile
   end

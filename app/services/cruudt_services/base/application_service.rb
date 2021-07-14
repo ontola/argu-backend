@@ -77,10 +77,18 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     resource.assign_attributes(@attributes)
   end
 
+  def creator
+    profile
+  end
+
   def publish_success_signals # rubocop:disable Metrics/AbcSize
     publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]
     publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
     publish("unpublish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:unpublished]
+  end
+
+  def publisher
+    user
   end
 
   def persist_parents
@@ -167,14 +175,14 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   end
 
   def prepare_placement_attributes
-    @attributes[:custom_placement_attributes]&.merge!(creator: profile, publisher: user)
+    @attributes[:custom_placement_attributes]&.merge!(creator: creator, publisher: publisher)
   end
 
   def prepare_media_object_attributes
     %i[cover_photo profile_photo].select { |type| @attributes.key?(:"default_#{type}_attributes") }.each do |type|
       @attributes[:"default_#{type}_attributes"]&.reverse_merge!(
-        creator: profile,
-        publisher: user,
+        creator: creator,
+        publisher: publisher,
         used_as: type
       )
     end

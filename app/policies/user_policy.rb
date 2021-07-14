@@ -61,7 +61,9 @@ class UserPolicy < RestrictivePolicy
   alias language? update?
 
   def destroy?
-    if record.profile.grants.administrator.count.positive?
+    if system_user?
+      forbid_with_message(I18n.t('users_cancel_system_user'))
+    elsif record.profile.grants.administrator.count.positive?
       forbid_with_message(I18n.t('users_cancel_super_admin'))
     else
       current_user? || staff?
@@ -69,6 +71,8 @@ class UserPolicy < RestrictivePolicy
   end
 
   def current_user?
+    return user.session_id == session_id if user.guest?
+
     record.id == user.id
   end
 
@@ -76,5 +80,9 @@ class UserPolicy < RestrictivePolicy
 
   def home_placement_attributes
     HomePlacementPolicy.new(context, record.home_placement || HomePlacement.new(placeable: record)).permitted_attributes
+  end
+
+  def system_user?
+    !record.id.positive?
   end
 end

@@ -70,7 +70,7 @@ class Order < Edge
   class << self
     def attributes_for_new(opts)
       super.merge(
-        cart: opts[:parent]&.cart_for(opts[:user_context]&.user)
+        cart: opts[:parent]&.cart_for(opts[:user_context])
       )
     end
 

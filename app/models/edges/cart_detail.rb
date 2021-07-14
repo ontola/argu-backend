@@ -29,7 +29,7 @@ class CartDetail < Edge
   private
 
   def cart_delta(user_context)
-    cart = shop.cart_for(publisher)
+    cart = shop.cart_for(user_context)
     order_action = shop.order_collection(user_context: user_context).action(:create, user_context)
     [
       reset_action_error(order_action),

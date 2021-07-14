@@ -17,11 +17,11 @@ class Survey < Discussion
     TYPEFORM_MANAGE_TEMPLATE.expand(typeform_id: typeform_id) if external_iri
   end
 
-  def submission_for(user)
+  def submission_for(user_context)
     if user.guest?
-      submissions.find_by(session_id: user.id)
+      submissions.find_by(session_id: user_context.session_id)
     else
-      submissions.find_by(publisher: user)
+      submissions.find_by(publisher: user_context.user)
     end
   end
 

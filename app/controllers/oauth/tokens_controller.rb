@@ -32,7 +32,7 @@ module Oauth
       return unless doorkeeper_token && !res.token.scopes.scopes?(%i[guest])
 
       schedule_redis_resource_worker(
-        GuestUser.new(id: doorkeeper_token.resource_owner_id),
+        GuestUser.new(session_id: session_id),
         User.find(res.token.resource_owner_id),
         redirect_url_param
       )

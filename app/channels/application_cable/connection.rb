@@ -35,11 +35,11 @@ module ApplicationCable
     end
 
     def find_verified_user
-      current_resource_owner || guest_user || reject_unauthorized_connection
+      current_resource_owner&.user || guest_user || reject_unauthorized_connection
     end
 
     def guest_user
-      GuestUser.new(id: doorkeeper_token&.resource_owner_id)
+      GuestUser.new(session_id: current_resource_owner.session_id)
     end
 
     def send_welcome_message
