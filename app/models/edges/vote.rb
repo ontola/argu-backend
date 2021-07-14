@@ -108,7 +108,7 @@ class Vote < Edge
 
     def requested_singular_resource(params, user_context)
       parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
-      return unless parent.enhanced_with?(Votable)
+      return unless parent&.enhanced_with?(Votable)
 
       current_vote(parent, user_context) || abstain_vote(parent, user_context)
     end

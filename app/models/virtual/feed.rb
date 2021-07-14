@@ -62,7 +62,7 @@ class Feed < VirtualResource
   class << self
     def requested_index_resource(params, user_context)
       parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
-      return unless parent.enhanced_with?(Feedable)
+      return unless parent&.enhanced_with?(Feedable)
 
       feed = Feed.new(
         parent: parent,

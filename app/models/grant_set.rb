@@ -58,7 +58,7 @@ class GrantSet < ApplicationRecord
 
     def requested_index_resource(params, user_context)
       parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
-      return unless parent.enhanced_with?(Grantable)
+      return unless parent&.enhanced_with?(Grantable)
 
       LinkedRails::Sequence.new(
         user_context.grant_tree.grant_sets(parent.persisted_edge, group_ids: user_context.user.profile.group_ids),
