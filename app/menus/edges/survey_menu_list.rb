@@ -4,12 +4,36 @@ class SurveyMenuList < ApplicationMenuList
   include Helpers::FollowMenuItems
   include Helpers::ShareMenuItems
   include Helpers::ActionMenuItems
+  include SettingsHelper
 
   has_action_menu
   has_follow_menu
   has_share_menu
+  has_menu :settings,
+           iri_base: -> { resource.root_relative_iri },
+           menus: -> { settings_menu_items }
 
   private
+
+  def settings_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    submission = resource.submission_for(user_context)
+    submission_item =
+      if submission
+        setting_item(:submission, href: submission.iri)
+      else
+        setting_item(:participate, href: resource.submission_collection.action(:create).iri)
+      end
+
+    [
+      submission_item,
+      setting_item(
+        :submissions,
+        label: I18n.t('argu.Submission.plural_label'),
+        href: collection_iri(resource, :submissions, display: :table)
+      ),
+      setting_item(:typeform, href: resource.manage_iri, image: 'fa-external-link')
+    ]
+  end
 
   def action_menu_items
     [

@@ -24,7 +24,10 @@ module SettingsHelper
       invite: 'user-plus',
       bearer_invite: 'link',
       email_invite: 'send',
-      vocabularies: 'tags'
+      vocabularies: 'tags',
+      submissions: 'list-ul',
+      submission: 'pencil',
+      participate: 'pencil'
     }
   end
 

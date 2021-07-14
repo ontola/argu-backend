@@ -102,6 +102,10 @@ en:
       create:
         label: "Sign in or register"
         submit: "Confirm"
+    submissions:
+      create:
+        label: "Fill in survey"
+        submit: "Start"
     policy_agreements:
       create:
         submit: "Accept"

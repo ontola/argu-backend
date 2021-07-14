@@ -45,6 +45,8 @@ PermittedAction.create_for_grant_sets('CartDetail', 'show', participator_plus)
 PermittedAction.create_for_grant_sets('CartDetail', 'create', participator_plus)
 PermittedAction.create_for_grant_sets('CartDetail', 'destroy', participator_plus)
 PermittedAction.create_for_grant_sets('Order', 'create', participator_plus)
+PermittedAction.create_for_grant_sets('Submission', 'create', participator_plus)
+PermittedAction.create_for_grant_sets('Submission', 'update', participator_plus)
 
 motion_with_question_create = PermittedAction.find_or_create_by!(
   title: 'motion_with_question_create',
@@ -79,6 +81,7 @@ PermittedAction.create_for_grant_sets('BlogPost', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('Comment', 'trash', moderator_plus)
 PermittedAction.create_for_grant_sets('Order', 'show', moderator_plus)
 PermittedAction.create_for_grant_sets('OrderDetail', 'show', moderator_plus)
+PermittedAction.create_for_grant_sets('Submission', 'show', moderator_plus)
 
 administrator_plus = GrantSet.reserved(only: %w[administrator staff])
 PermittedAction.create_for_grant_sets('CreativeWork', 'create', administrator_plus)

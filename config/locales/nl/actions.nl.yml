@@ -102,6 +102,10 @@ nl:
       create:
         label: "Inloggen of registeren"
         submit: "Bevestig"
+    submissions:
+      create:
+        label: "Enquête invullen"
+        submit: "Start"
     policy_agreements:
       create:
         submit: "Accepteer"

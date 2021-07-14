@@ -28,6 +28,8 @@ en:
       notifications: "Notifications"
       settings: "Settings"
       typeform: "Manage"
+      participate: "Submit"
+      submission: "Response"
       new_component: "Add page"
       new_forum: "New forum"
       new_open_data_portal: "New data portal"

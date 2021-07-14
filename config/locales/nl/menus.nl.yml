@@ -28,6 +28,8 @@ nl:
       notifications: "Meldingen"
       settings: "Instellingen"
       typeform: "Beheer"
+      participate: "Invullen"
+      submission: "Reactie"
       new_component: "Pagina toevoegen"
       new_forum: "Nieuw forum"
       new_open_data_portal: "Nieuw dataportaal"

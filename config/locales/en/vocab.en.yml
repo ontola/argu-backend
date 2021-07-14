@@ -126,6 +126,10 @@ en:
     Shortname:
       label: 'Redirect'
       plural_label: 'Redirects'
+    Submission:
+      icon: "pencil"
+      label: "Response"
+      plural_label: "Responses"
     Survey:
       icon: "list-ul"
       label: "Survey"

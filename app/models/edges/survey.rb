@@ -3,6 +3,9 @@
 class Survey < Discussion
   TYPEFORM_MANAGE_TEMPLATE = URITemplate.new('https://admin.typeform.com/form/{typeform_id}/create')
   TYPEFORM_TEMPLATE = %r{\Ahttps:\/\/(\w*).typeform.com\/to\/(\w*)\z}.freeze
+
+  enhance Settingable
+
   include Edgeable::Content
 
   property :external_iri, :string, NS.argu[:externalIRI]
@@ -13,15 +16,23 @@ class Survey < Discussion
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :external_iri, format: {allow_nil: true, with: TYPEFORM_TEMPLATE}
 
+  def added_delta
+    super + [
+      invalidate_resource_delta(menu(:settings))
+    ]
+  end
+
   def manage_iri
     TYPEFORM_MANAGE_TEMPLATE.expand(typeform_id: typeform_id) if external_iri
   end
 
   def submission_for(user_context)
-    if user.guest?
-      submissions.find_by(session_id: user_context.session_id)
+    return nil if user_context.nil?
+
+    if user_context.guest?
+      submissions.reorder(created_at: :desc).find_by(session_id: user_context.session_id)
     else
-      submissions.find_by(publisher: user_context.user)
+      submissions.reorder(created_at: :desc).find_by(publisher: user_context.user)
     end
   end
 
