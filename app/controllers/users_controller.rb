@@ -105,7 +105,9 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     return false unless valid_locale?
 
     I18n.locale = locale_param
-    return false unless current_user.guest? || current_user.update(language: locale_param)
+    current_user.language = locale_param
+
+    return false unless current_user.guest? || current_user.save
 
     update_oauth_token(new_oauth_token)
   end

@@ -372,8 +372,11 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       @followable_classes ||= Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze.map(&:to_s)
     end
 
-    def guest
-      User.find(User::GUEST_ID)
+    def guest(session_id = nil, language = nil)
+      user = User.find(User::GUEST_ID)
+      user.session_id = session_id
+      user.language = language || ActsAsTenant.current_tenant&.language
+      user
     end
 
     def preview_includes

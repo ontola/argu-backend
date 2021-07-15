@@ -22,7 +22,7 @@ Doorkeeper.configure do
     request.params[:user][:email] ||= (request.params[:username] || request.params[:email])&.downcase
     request.params[:user][:password] ||= request.params[:token] || request.params[:password]
     request.env['devise.allow_params_authentication'] = true
-    user = request.params[:scope] == 'guest' ? GuestUser.new : request.env['warden'].authenticate(scope: :user)
+    user = request.params[:scope] == 'guest' ? User.guest : request.env['warden'].authenticate(scope: :user)
     user_from_db = user || User.find_for_database_authentication(request.params[:user])
 
     if user.blank?

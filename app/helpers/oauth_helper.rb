@@ -6,7 +6,7 @@ module OauthHelper
   private
 
   def create_guest_user
-    GuestUser.new(session_id: session_id)
+    User.guest(session_id)
   end
 
   def current_actor

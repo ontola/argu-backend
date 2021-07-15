@@ -41,8 +41,8 @@ module Argu
             when :service
               [User.service, 'service']
             when :guest_user
-              [GuestUser.new, 'guest']
-            when GuestUser
+              [User.guest, 'guest']
+            when resource.guest?
               [resource, 'guest']
             else
               [resource, 'user']
@@ -114,7 +114,7 @@ module Argu
         end
 
         def create_guest_user(session_id: SecureRandom.hex)
-          GuestUser.new(session_id: session_id)
+          User.guest(session_id)
         end
 
         def create_moderator(record, user = nil)

@@ -18,7 +18,7 @@ class LanguageTest < ActionDispatch::IntegrationTest
         params: {user: {language: :nl}},
         headers: argu_headers(bearer: client_token_from_response)
 
-    assert_not_a_user
+    assert_language :nl
   end
 
   test 'guest should put language' do

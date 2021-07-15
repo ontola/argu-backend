@@ -39,7 +39,7 @@ module ApplicationCable
     end
 
     def guest_user
-      GuestUser.new(session_id: current_resource_owner.session_id)
+      User.guest(current_resource_owner.session_id)
     end
 
     def send_welcome_message

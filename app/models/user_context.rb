@@ -9,7 +9,7 @@ class UserContext # rubocop:disable Metrics/ClassLength
   attr_reader :allow_expired
 
   delegate :user, :profile, to: :current_actor
-  delegate :guest?, :id, :otp_active?, to: :user
+  delegate :guest?, :id, :language, :otp_active?, to: :user
 
   def initialize(allow_expired: false, doorkeeper_token: nil, language: nil, profile: nil, user: nil, session_id: nil) # rubocop:disable Metrics/ParameterLists
     @allow_expired = allow_expired
@@ -81,11 +81,6 @@ class UserContext # rubocop:disable Metrics/ClassLength
     "<UserContext user_id: #{user.id}, profile_id: #{profile.id}>"
   end
 
-  def language
-    @language ||=
-      user_payload['language'] || user_language || ActsAsTenant.current_tenant&.language || I18n.default_locale
-  end
-
   def managed_profile_ids
     return [] if user.guest?
     return [user.profile.id, ActsAsTenant.current_tenant.profile.id] if page_manager?
@@ -144,7 +139,7 @@ class UserContext # rubocop:disable Metrics/ClassLength
   private
 
   def authorized_current_actor(user, profile)
-    user ||= GuestUser.new(session_id: session_id)
+    user ||= User.guest(session_id)
 
     if profile
       @current_actor = CurrentActor.new(user: user, profile: profile)
@@ -156,13 +151,9 @@ class UserContext # rubocop:disable Metrics/ClassLength
   end
 
   def user_from_token
-    user = User.find(user_payload['id']) if user_payload['id']
-    user&.session_id = session_id
-    user
-  end
+    return User.guest(session_id, user_payload['language']) if user_payload['id'].to_s == User::GUEST_ID.to_s
 
-  def user_language
-    user.language if user.id.positive?
+    User.find(user_payload['id']) if user_payload['id']
   end
 
   def user_payload

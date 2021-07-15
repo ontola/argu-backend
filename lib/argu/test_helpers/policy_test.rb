@@ -30,7 +30,7 @@ module Argu
       let(:moderator) { create_moderator(page, create(:user)) }
       let(:initiator) { create_initiator(page, create(:user)) }
       let(:participator) { create_participator(page, create(:user)) }
-      let(:guest) { GuestUser.new(session_id: 'my_id') }
+      let(:guest) { User.guest('my_id') }
       let(:direct_child) { nil }
 
       before do

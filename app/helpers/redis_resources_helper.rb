@@ -11,9 +11,8 @@ module RedisResourcesHelper
       end
     end
     RedisResourceWorker.perform_async(
-      old_user.class,
+      old_user.guest? ? 'GuestUser' : 'User',
       old_user.guest? ? session_id : old_user.id,
-      new_user.class,
       new_user.id
     )
   end

@@ -3,9 +3,9 @@
 class RedisResourceWorker
   include Sidekiq::Worker
 
-  def perform(old_user_class, old_user_id, new_user_class, new_user_id)
-    old_user = get_user(old_user_class.constantize, old_user_id)
-    new_user = get_user(new_user_class.constantize, new_user_id)
+  def perform(old_user_class, old_user_id, new_user_id)
+    old_user = get_user(old_user_class, old_user_id)
+    new_user = User.find(new_user_id)
 
     redis_relation = RedisResource::Relation.where(publisher: old_user)
     return if redis_relation.empty?
@@ -19,6 +19,8 @@ class RedisResourceWorker
   private
 
   def get_user(klass, id)
-    [User, LinkedRails::Auth::Registration].include?(klass) ? User.find(id) : GuestUser.new(session_id: id)
+    return User.guest(id) if klass == 'GuestUser'
+
+    User.find(id)
   end
 end

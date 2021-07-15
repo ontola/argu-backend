@@ -7,9 +7,9 @@ module RedisResource
     define_freetown
     let(:user) { create(:user) }
     let(:guest_session) { :guest_session }
-    let(:guest_user) { GuestUser.new(session_id: guest_session) }
+    let(:guest_user) { User.guest(guest_session) }
     let(:other_session) { :other_session }
-    let(:other_guest_user) { GuestUser.new(session_id: other_session) }
+    let(:other_guest_user) { User.guest(other_session) }
     let(:unconfirmed) { create(:unconfirmed_user) }
     let(:relation) { RedisResource::Relation.where(root_id: argu.uuid, publisher: guest_user) }
     let(:edge_relation) { RedisResource::EdgeRelation.where(root_id: argu.uuid, publisher: guest_user) }

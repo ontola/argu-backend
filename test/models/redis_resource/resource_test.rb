@@ -5,7 +5,7 @@ require 'test_helper'
 module RedisResource
   class ResourceTest < ActiveSupport::TestCase
     define_freetown
-    let(:guest_user) { GuestUser.new(session_id: 'my_id') }
+    let(:guest_user) { User.guest('my_id') }
     let(:unconfirmed) { create(:unconfirmed_user) }
     let(:user) { create(:user) }
     let(:motion) { create(:motion, parent: freetown) }

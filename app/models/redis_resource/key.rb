@@ -91,7 +91,7 @@ module RedisResource
       when 'user'
         User.find_by(id: user_id)
       when 'guest_user'
-        GuestUser.new(session_id: user_id)
+        User.guest(user_id)
       end
     end
 

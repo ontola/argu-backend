@@ -71,7 +71,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def current_user?
-    return user.session_id == session_id if user.guest?
+    return record.session_id == session_id if user.guest?
 
     record.id == user.id
   end
