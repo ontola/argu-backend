@@ -5,6 +5,7 @@ require 'test_helper'
 module SPI
   class AuthorizeControllerTest < ActionDispatch::IntegrationTest
     define_freetown
+    let(:other_page) { create_page }
     let(:guest_user) { create_guest_user }
     let(:motion) { create(:motion, publisher: creator, parent: freetown) }
 
@@ -165,6 +166,20 @@ module SPI
       assert_response 200
     end
 
+    test 'user should show user actor as iri in other tenant' do
+      sign_in user
+      iri = resource_iri(user, root: argu)
+
+      get spi_authorize_path(
+        root: other_page,
+        resource_type: 'CurrentActor',
+        resource_id: iri,
+        authorize_action: 'show'
+      )
+
+      assert_response 200
+    end
+
     test 'user should not is_member administrators group' do
       sign_in user
 
@@ -257,8 +272,10 @@ module SPI
 
     private
 
-    def spi_authorize_path(*args)
-      "/#{argu.url}#{super}"
+    def spi_authorize_path(**args)
+      root = args.delete(:root) || argu
+
+      "/#{root.url}#{super}"
     end
   end
 end

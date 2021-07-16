@@ -26,7 +26,9 @@ class TenantFinder
     tenant = same_tenant? ? ActsAsTenant.current_tenant.tenant : find_tenant
     return if tenant.blank?
 
-    Apartment::Tenant.switch(tenant.database_schema) { tenant.page }
+    ActsAsTenant.without_tenant do
+      Apartment::Tenant.switch(tenant.database_schema) { tenant.page }
+    end
   end
 
   private
