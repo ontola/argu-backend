@@ -63,7 +63,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
 
   def changes_triples
     super + [
-      change_triple(NS.schema.name, current_resource.display_name)
+      change_triple(NS.schema.name, current_resource.name_with_fallback)
     ]
   end
 

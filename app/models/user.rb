@@ -209,6 +209,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     id == GUEST_ID
   end
 
+  def identifier
+    return "users_#{id}" unless guest? && session_id
+
+    "sessions_#{session_id}"
+  end
+
   def is_staff?
     @is_staff ||= profile.is_group_member?(Group::STAFF_ID)
   end
@@ -370,6 +376,16 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def followable_classes
       @followable_classes ||= Edge.descendants.select { |klass| klass.enhanced_with?(Followable) }.freeze.map(&:to_s)
+    end
+
+    def from_identifier(identifier)
+      split = identifier.split('_')
+      case split.first
+      when 'sessions'
+        User.guest(split.second)
+      else
+        User.find(split.second)
+      end
     end
 
     def guest(session_id = nil, language = nil)

@@ -3,9 +3,9 @@
 class RedisResourceWorker
   include Sidekiq::Worker
 
-  def perform(old_user_class, old_user_id, new_user_id)
-    old_user = get_user(old_user_class, old_user_id)
-    new_user = User.find(new_user_id)
+  def perform(old_identifier, new_identifier)
+    old_user = User.from_identifier(old_identifier)
+    new_user = User.from_identifier(new_identifier)
 
     redis_relation = RedisResource::Relation.where(publisher: old_user)
     return if redis_relation.empty?
@@ -14,13 +14,5 @@ class RedisResourceWorker
       new_user.create_confirmation_reminder_notification(root_id)
     end
     redis_relation.persist(new_user)
-  end
-
-  private
-
-  def get_user(klass, id)
-    return User.guest(id) if klass == 'GuestUser'
-
-    User.find(id)
   end
 end

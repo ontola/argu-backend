@@ -3,7 +3,7 @@
 module RedisResourcesHelper
   include NestedResourceHelper
 
-  def schedule_redis_resource_worker(old_user, new_user, redirect = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def schedule_redis_resource_worker(old_user, new_user, redirect = nil) # rubocop:disable Metrics/AbcSize
     resource = LinkedRails.iri_mapper.resource_from_iri(path_to_url(redirect), nil) if redirect.present?
     if resource.is_a?(Edge) && resource.default_vote_event.present?
       ActsAsTenant.with_tenant(resource.root) do
@@ -11,9 +11,8 @@ module RedisResourcesHelper
       end
     end
     RedisResourceWorker.perform_async(
-      old_user.guest? ? 'GuestUser' : 'User',
-      old_user.guest? ? session_id : old_user.id,
-      new_user.id
+      old_user.identifier,
+      new_user.identifier
     )
   end
 end
