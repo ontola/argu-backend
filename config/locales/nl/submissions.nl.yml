@@ -1,3 +1,6 @@
 nl:
   submissions:
     type_new: "Nieuwe reactie"
+    status:
+      submission_active: "Actief"
+      submission_completed: "Afgerond"

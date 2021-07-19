@@ -1,3 +1,6 @@
 en:
   submissions:
     type_new: "New response"
+    status:
+      submission_active: "Active"
+      submission_completed: "Completed"

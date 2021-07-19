@@ -9,6 +9,12 @@ class Thing < Edge
     []
   end
 
+  def assign_graph(graph)
+    graph.query([NS.ll.targetResource]) do |statement|
+      properties << Property.from_statement(self, statement) unless statement.object.is_a?(RDF::Node)
+    end
+  end
+
   def display_name
     properties.find_by(predicate: [NS.schema.name.to_s, NS.foaf.name.to_s, NS.rdfs.label.to_s])&.value
   end
@@ -21,9 +27,11 @@ class Thing < Edge
   end
 
   def rdf_type
-    properties
-      .detect { |prop| prop.predicate == RDF.type }
-      &.value || NS.schema.Thing
+    rdf_type_property&.value || NS.schema.Thing
+  end
+
+  def rdf_type=(type)
+    (rdf_type_property || properties.build(predicate: RDF.type)).iri = type
   end
 
   private
@@ -63,5 +71,9 @@ class Thing < Edge
         .order(:order)
         .select { |prop| prop.type == 'linked_edge_id' && prop.predicate == predicate }
         .map { |prop| prop.linked_edge.iri }
+  end
+
+  def rdf_type_property
+    properties.detect { |prop| prop.predicate == RDF.type }
   end
 end

@@ -9,7 +9,8 @@ class Submission < Edge
 
   with_columns default: [
     NS.schema.dateCreated,
-    NS.argu[:submissionStatus]
+    NS.argu[:submissionStatus],
+    NS.argu[:submissionData]
   ]
 
   property :session_id, :string, NS.argu[:sessionID]
@@ -17,7 +18,10 @@ class Submission < Edge
     submission_active: 0,
     submission_completed: 1
   }
+  property :submission_data_id, :linked_edge_id, NS.argu[:submissionData], association_class: 'Thing'
+  attr_accessor :body_graph
 
+  after_save :store_submission_data
   parentable :survey
 
   def display_name; end
@@ -35,6 +39,17 @@ class Submission < Edge
 
   def reward_iri
     RDF::URI('https://acegif.com/wp-content/gifs/raining-money-8.gif')
+  end
+
+  private
+
+  def store_submission_data
+    return if body_graph.blank?
+
+    self.submission_data ||= Thing.new(parent: self, creator: creator, publisher: publisher)
+    submission_data.assign_graph(body_graph)
+    submission_data.rdf_type = NS.argu[:SubmissionData]
+    submission_data.save!
   end
 
   class << self

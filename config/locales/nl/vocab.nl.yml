@@ -130,6 +130,8 @@ nl:
       icon: "pencil"
       label: "Reactie"
       plural_label: "Reacties"
+    SubmissionData:
+      label: "Data"
     Survey:
       icon: "list-ul"
       label: "Enquête"
@@ -191,6 +193,10 @@ nl:
       label: "Resource"
     shortnameable:
       label: "Item"
+    submissionData:
+      label: "Data"
+    submissionStatus:
+      label: "Status"
     trashed:
       label: "Verborgen"
     voteableVoteEvent:

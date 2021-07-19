@@ -33,6 +33,10 @@ class SubmissionsController < EdgeableController
 
   def create_success_message; end
 
+  def permit_params
+    super.merge(body_graph: params[:body_graph])
+  end
+
   def update_meta
     super + [
       invalidate_resource_delta(current_resource),

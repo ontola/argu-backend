@@ -3,6 +3,7 @@
 require 'types/iri_type'
 
 class Property < ApplicationRecord
+  MAX_STR_LEN = 255
   TYPE_COLUMNS = %w[boolean string text datetime integer iri linked_edge_id].freeze
   TRANSLATABLE_COLUMNS = %w[string text].freeze
 
@@ -57,5 +58,26 @@ class Property < ApplicationRecord
     return unless edge.is_a?(Page) && root_id && edge_id && root_id != edge_id
 
     errors.add(:root_id, 'Wrong root')
+  end
+
+  class << self
+    def column_for_term(term)
+      return :iri if term.is_a?(RDF::URI)
+
+      raw = term.datatype.relativize(RDF::XSD).to_s.downcase.to_sym
+
+      return :text if raw == :string && term.to_s.length >= MAX_STR_LEN
+      return raw if TYPE_COLUMNS.include?(raw.to_s)
+
+      :string
+    end
+
+    def from_statement(edge, statement)
+      new(
+        edge: edge,
+        predicate: statement.predicate,
+        column_for_term(statement.object) => statement.object.to_s
+      )
+    end
   end
 end
