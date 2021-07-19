@@ -10,9 +10,12 @@ class Survey < Discussion
   include Edgeable::Content
 
   property :external_iri, :string, NS.argu[:externalIRI]
+  property :action_body, :iri, NS.ll[:actionBody]
   property :reward, :integer, NS.argu[:reward], default: 0
   parentable :container_node, :page, :phase
   with_collection :submissions
+  enum form_type: {remote: 0, local: 1}
+  attr_writer :form_type
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
@@ -30,6 +33,10 @@ class Survey < Discussion
 
   def has_reward?
     reward.positive?
+  end
+
+  def form_type
+    action_body.present? ? :local : :remote
   end
 
   def manage_iri
