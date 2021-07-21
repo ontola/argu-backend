@@ -110,6 +110,8 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       'file-pdf-o'
     when *MediaObjectUploader::DOCUMENT_TYPES
       'file-word-o'
+    when *MediaObjectUploader::AUDIO_TYPES
+      'file-audio-o'
     when *MediaObjectUploader::ARCHIVE_TYPES
       'file-archive-o'
     when *MediaObjectUploader::SPREADSHEET_TYPES
@@ -186,6 +188,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def content_type_white_list
       MediaObjectUploader::ARCHIVE_TYPES +
+        MediaObjectUploader::AUDIO_TYPES +
         MediaObjectUploader::DOCUMENT_TYPES +
         MediaObjectUploader::IMAGE_TYPES +
         MediaObjectUploader::PORTABLE_DOCUMENT_TYPES +
