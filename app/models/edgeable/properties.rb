@@ -7,6 +7,8 @@ module Edgeable
     extend ActiveSupport::Concern
 
     included do
+      include Edgeable::Properties::Associations
+
       has_many :properties,
                primary_key: :uuid,
                autosave: true,

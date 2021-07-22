@@ -11,7 +11,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Edgeable::ClassMethods
   include Edgeable::CounterCache
   include Edgeable::Properties
-  include Edgeable::PropertyAssociations
   include Edgeable::Searchable
   include Parentable
   include Shortnameable
