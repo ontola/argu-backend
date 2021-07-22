@@ -3,16 +3,9 @@ nl:
     type_new: "Neem een besluit"
     menu: "Besluit nemen"
     explanation: "Licht het besluit toe"
-    forward_to: "Groep of gebruiker"
-    forward_group_missing: "Groep ontbreekt"
-    forward_failed: "Doorsturen naar user %{user_id} in groep %{group_id} mislukt"
     motion:
       approved: "Idee is aangenomen"
       rejected: "Idee is verworpen"
-      forwarded: "Besluit is doorgestuurd"
-    assigned:
-      to_user: "Het besluit ligt momenteel bij"
-      to_group: "Het besluit ligt momenteel bij de groep"
   enums:
     decisions:
       state:

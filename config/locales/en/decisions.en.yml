@@ -3,19 +3,11 @@ en:
     type_new: "Take a decision"
     menu: "Take decision"
     explanation: "Explain this decision"
-    forward_to: "Group or user"
-    forward_group_missing: "Group is missing"
-    forward_failed: "Can't create forward for user %{user_id} in group %{group_id}"
     motion:
       approved: "Idea is approved"
       rejected: "Idea is rejected"
-      forwarded: "Decision is forwarded"
-    assigned:
-      to_user: "The decision is currently assigned to"
-      to_group: "The decision is currently assigned to the group"
   enums:
     decisions:
       state:
         approved: "Approve"
         rejected: "Reject"
-        forwarded: "Forward"

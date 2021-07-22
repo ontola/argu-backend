@@ -11,19 +11,12 @@ class Group < ApplicationRecord
   enhance Searchable
 
   include Parentable
-  include Edgeable::PropertyAssociations
 
   has_many :group_memberships, -> { active }, inverse_of: :group
   has_many :unscoped_group_memberships, class_name: 'GroupMembership', dependent: :destroy
   has_many :grants, dependent: :destroy, inverse_of: :group
   has_many :members, through: :group_memberships, class_name: 'Profile'
-  has_many :default_decision_forums,
-           primary_key: :id,
-           primary_key_property: :default_decision_group_id,
-           class_name: 'Forum',
-           dependent: :restrict_with_exception
   belongs_to :page, optional: false, inverse_of: :groups, primary_key: :uuid, foreign_key: :root_id
-  has_many :decisions, primary_key_property: :forwarded_group_id, dependent: :nullify
   accepts_nested_attributes_for :grants, reject_if: :all_blank
   alias_attribute :display_name, :name
 

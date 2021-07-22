@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
-  define_freetown
+  define_freetown('freetown', attributes: {bio: 'Test'})
   define_freetown('second')
   let(:second_page) { create_page }
   let(:motion) { create(:motion, parent: freetown) }
@@ -150,16 +150,16 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
     assert_equal [term1, term2], measure.reload.phases.order(:id)
   end
 
-  test 'properties remain when destorying other page' do
-    assert_not_nil freetown.default_decision_group
+  test 'properties remain when destroying other page' do
+    assert_not_nil freetown.bio
     second_page.destroy
-    assert_not_nil freetown.reload.default_decision_group
+    assert_not_nil freetown.reload.bio
   end
 
   test 'property destruction' do
-    assert_not_nil freetown.default_decision_group
-    Property.where(predicate: NS.argu[:defaultDecisionGroupId].to_s).destroy_all
-    assert_nil freetown.reload.default_decision_group
+    assert_not_nil freetown.bio
+    Property.where(predicate: NS.schema.description.to_s).destroy_all
+    assert_nil freetown.reload.bio
   end
 
   test 'linked edge destruction' do

@@ -21,11 +21,6 @@ class ForumTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
-  test 'default decision group' do
-    group
-    assert forum.default_decision_group.grants.administrator.present?
-  end
-
   test 'display_name should work' do
     assert_equal subject.name, subject.display_name
   end

@@ -8,12 +8,8 @@ class Decision < Edge
 
   attribute :display_name
   property :description, :text, NS.schema.text
-  property :forwarded_group_id, :integer, NS.argu[:forwardedGroup]
-  property :forwarded_user_id, :integer, NS.argu[:forwardedUser]
-  property :state, :integer, NS.argu[:state], default: 0, enum: {pending: 0, approved: 1, rejected: 2, forwarded: 3}
+  property :state, :integer, NS.argu[:state], default: 0, enum: {pending: 0, approved: 1, rejected: 2}
 
-  belongs_to :forwarded_group, class_name: 'Group', foreign_key_property: :forwarded_group_id
-  belongs_to :forwarded_user, class_name: 'User', foreign_key_property: :forwarded_user_id
   has_one :decision_activity,
           -> { where("key ~ '*.?'", Decision.actioned_keys.join('|').freeze) },
           foreign_key: :trackable_edge_id,
@@ -22,7 +18,6 @@ class Decision < Edge
           primary_key: :uuid
 
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
-  validate :correctly_forwarded, if: :forwarded?
   validates :state, presence: true
   parentable :motion
 
@@ -38,35 +33,10 @@ class Decision < Edge
     self[:display_name] = I18n.t("decisions.#{parent.model_name.i18n_key}.#{state}")
   end
 
-  private
-
-  def correctly_forwarded # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
-    if forwarded_group_id.nil? && forwarded_group.nil?
-      errors.add(:forwarded_to, I18n.t('decisions.forward_group_missing'))
-      return
-    end
-    return if forwarded_user_id.nil? && forwarded_user.nil?
-
-    group_id = forwarded_group_id || forwarded_group.id
-    user_id = forwarded_user.uuid || User.find(forwarded_user_id).uuid
-    return if GroupMembership
-                .joins(:member)
-                .where(profiles: {profileable_type: 'User', profileable_id: user_id}, group_id: group_id)
-                .any?
-
-    errors.add(:forwarded_to, I18n.t('decisions.forward_failed', user_id: user_id, group_id: group_id))
-  end
-
   class << self
     # @return [Array<Symbol>] States that indicate an action was taken on this decision
     def actioned_keys
       states.keys[1..]
-    end
-
-    def attributes_for_new(_opts)
-      super.merge(
-        state: 'forwarded'
-      )
     end
   end
 end

@@ -19,13 +19,6 @@ class ActivityStringTest < ActiveSupport::TestCase
            state: 'rejected')
   end
   let(:group) { create(:group, parent: argu) }
-  let!(:forwarded_decision) do
-    create(:decision,
-           parent: motion,
-           state: 'forwarded',
-           forwarded_user_id: create(:group_membership, parent: group).member.profileable.id,
-           forwarded_group_id: group.id)
-  end
 
   test 'string for activities of question' do
     create_activity = question.activities.first
@@ -120,21 +113,6 @@ class ActivityStringTest < ActiveSupport::TestCase
     assert_equal "#{rejected_decision.publisher.display_name} "\
                  "rejected #{motion.display_name}",
                  Argu::ActivityString.new(rejected_activity, receiver, render: :display_name).to_s
-  end
-
-  test 'string for forwarded decision' do
-    forwarded_activity = forwarded_decision.activities.second
-    assert_equal "#{forwarded_decision.publisher.display_name} "\
-                 "forwarded the decision on #{motion.display_name}",
-                 Argu::ActivityString.new(forwarded_activity, receiver, render: :display_name).to_s
-  end
-
-  test 'string for forwarded decision to you' do
-    forwarded_activity = forwarded_decision.activities.second
-    assert_equal(
-      "#{forwarded_decision.publisher.display_name} forwarded the decision on #{motion.display_name} to you",
-      Argu::ActivityString.new(forwarded_activity, forwarded_decision.forwarded_user, render: :display_name).to_s
-    )
   end
 
   test 'string for updated decision' do

@@ -25,18 +25,12 @@ class NotificationListener
     activity.new_content? || activity.notify
   end
 
-  def create_notifications_for(activity) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+  def create_notifications_for(activity) # rubocop:disable Metrics/AbcSize
     recipients = FollowersCollector.new(activity: activity).call.to_a
     if activity.trackable_type == 'Comment' && activity.trackable.parent_comment_id
       recipients.concat(
         FollowersCollector.new(activity: activity, resource: activity.trackable.reload.parent_comment).call.to_a
       )
-    end
-    if activity.trackable_type == 'Decision'
-      forwarded_to = activity.trackable.forwarded_user
-      if forwarded_to.present? && !recipients.include?(forwarded_to) && forwarded_to != activity.owner.profileable
-        recipients << forwarded_to
-      end
     end
     Notification.create!(prepare_recipients(activity, recipients))
   end

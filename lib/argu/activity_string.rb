@@ -94,22 +94,8 @@ module Argu
       end
     end
 
-    def sub_action_key # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      return unless @activity.trackable_type == 'Decision' && @activity.action == 'forwarded'
-      return :to_any if @render == :template
-
-      if @activity.trackable.forwarded_user == @user
-        :to_you
-      elsif @activity.trackable.forwarded_user.nil? &&
-          @user.profile.group_ids.include?(@activity.trackable.forwarded_group)
-        :to_group
-      else
-        :to_any
-      end
-    end
-
     def translation_key(base_key)
-      [base_key, @activity.action, sub_action_key].compact.join('.')
+      [base_key, @activity.action].join('.')
     end
 
     # @return [String] Type name of activity.trackable as bold text

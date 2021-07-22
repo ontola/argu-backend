@@ -9,7 +9,6 @@ class Activity < PublicActivity::Activity
     trash: NS.as[:Remove],
     approved: NS.as[:Accept],
     rejected: NS.as[:Reject],
-    forwarded: NS.argu[:ForwardActivity],
     untrash: NS.as[:Add],
     convert: NS.argu[:ConvertActivity]
   }.freeze
@@ -70,7 +69,7 @@ class Activity < PublicActivity::Activity
     case action
     when 'publish'
       %w[blog_post motion question topic con_argument pro_argument comment intervention measure].include?(object)
-    when 'approved', 'rejected', 'forwarded'
+    when 'approved', 'rejected'
       true
     else
       false
