@@ -3,12 +3,19 @@
 module Edgeable
   module Properties
     class Manager
-      attr_accessor :instance, :predicate
+      attr_accessor :dirty, :instance, :predicate
       attr_reader :value
 
+      alias dirty? dirty
+
       def initialize(instance, predicate)
+        self.dirty = false
         self.instance = instance
         self.predicate = predicate
+      end
+
+      def linked_edges
+        properties.map(&:linked_edge)
       end
 
       def preload
@@ -19,6 +26,7 @@ module Edgeable
       def value=(val)
         return if value == val
 
+        self.dirty = true
         @value = val
         invalidate_properties
         initialize_properties

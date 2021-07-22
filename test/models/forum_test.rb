@@ -28,4 +28,10 @@ class ForumTest < ActiveSupport::TestCase
   test 'description should work' do
     assert_equal subject.description, subject.bio
   end
+
+  test 'primary_container_node_of should work' do
+    page.update(primary_container_node: subject)
+    assert_equal subject.reload.primary_container_node_of, page
+    assert_nil cairo.reload.primary_container_node_of
+  end
 end

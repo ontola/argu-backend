@@ -17,30 +17,23 @@ module Edgeable
       end
 
       module ClassMethods
-        def belongs_to(name, scope = nil, **options)
-          opts = options.presence || scope
-          return super unless opts&.key?(:foreign_key_property)
-
-          property_association(:has_one, opts, name)
-        end
-
         def has_one(name, scope = nil, **options)
           opts = options.presence || scope
-          return super unless opts&.key?(:primary_key_property)
+          return super unless opts.is_a?(Hash) && opts.key?(:primary_key_property)
 
-          property_association(:has_one, opts, name)
+          property_association(:has_one, name, opts)
         end
 
         def has_many(name, scope = nil, **options)
           opts = options.presence || scope
           return super unless opts.is_a?(Hash) && (opts.key?(:foreign_key_property) || opts.key?(:primary_key_property))
 
-          property_association(:has_many, opts, name)
+          property_association(:has_many, name, opts)
         end
 
         private
 
-        def property_association(type, opts, name) # rubocop:disable Metrics/MethodLength
+        def property_association(type, name, opts) # rubocop:disable Metrics/MethodLength
           klass_name = property_association_klass(opts, name)
           property_opts = property_association_property_opts(klass_name, opts)
 

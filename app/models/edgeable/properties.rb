@@ -100,25 +100,58 @@ module Edgeable
 
       private
 
-      def define_property_association(name, opts)
-        method = opts[:array] ? :has_many : :has_one
-        send(
-          method,
-          opts[:association],
-          foreign_key_property: name,
-          class_name: opts[:association_class] || opts[:association].to_s.classify,
-          dependent: false
-        )
+      def define_property_belongs_to(foreign_key, association, opts)
+        type = opts[:array] ? :has_many : :has_one
+        class_name = opts[:association_class] || association.to_s.classify
+        property_association(type, association, foreign_key_property: foreign_key, class_name: class_name)
+
+        if opts[:array]
+          define_property_belongs_to_many_setter(foreign_key, association, opts)
+        else
+          define_property_belongs_to_getter(foreign_key, association)
+          define_property_belongs_to_setter(foreign_key, association, opts)
+        end
       end
 
-      def define_property_setter(name, association)
+      def define_property_belongs_to_getter(name, association)
+        define_method name do
+          primary_key = association(association).reflection.active_record_primary_key
+          association(association).reader.try(primary_key)
+        end
+      end
+
+      def define_property_belongs_to_setter(name, association, opts)
         define_method "#{name}=" do |value|
-          if association
-            send("#{name}_will_change!")
-            super(value)
+          assign_property(name, value)
+          manager = property_manager(opts[:predicate])
+          super(value)
+          association(association).target = manager.linked_edges.first if manager.dirty?
+        end
+      end
+
+      def define_property_belongs_to_many_setter(name, association, opts)
+        define_method "#{name}=" do |value|
+          assign_property(name, value)
+          manager = property_manager(opts[:predicate])
+          send("#{name}_will_change!")
+          if manager.dirty?
+            association(association).target = manager.linked_edges
           else
-            super(assign_property(name, value))
+            super(value)
           end
+        end
+      end
+
+      def define_property_getter(opts)
+        define_method opts[:name] do
+          preload_property(opts)
+          attributes[opts[:name].to_s]
+        end
+      end
+
+      def define_property_setter(name)
+        define_method "#{name}=" do |value|
+          super(assign_property(name, value))
         end
       end
 
@@ -128,7 +161,7 @@ module Edgeable
         self.defined_properties = superclass.try(:defined_properties)&.dup || []
       end
 
-      def property(name, type, predicate, opts = {}) # rubocop:disable Metrics/AbcSize
+      def property(name, type, predicate, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         initialize_defined_properties
         options = {name: name, type: type, predicate: predicate}.merge(opts)
         defined_properties << options
@@ -138,18 +171,13 @@ module Edgeable
 
         attribute name, property_type(type), **attr_opts
 
-        define_property_association(name, opts) if opts[:association]
-
-        enum name => opts[:enum] if opts[:enum].present?
-
-        define_property_preload_getter(options) if opts[:preload] == false
-        define_property_setter(name, opts[:association])
-      end
-
-      def define_property_preload_getter(opts)
-        define_method opts[:name] do
-          preload_property(opts)
-          attributes[opts[:name].to_s]
+        if type == :linked_edge_id
+          association = opts[:association] || name.to_s.chomp('_id').to_sym
+          define_property_belongs_to(name, association, options)
+        else
+          enum name => opts[:enum] if opts[:enum].present?
+          define_property_getter(options) if opts[:preload] == false
+          define_property_setter(name)
         end
       end
 

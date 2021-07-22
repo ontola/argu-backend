@@ -87,16 +87,30 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
   end
 
   test 'property has_one assignment by record' do
-    comment.parent_comment = parent_comment
+    comment
+    parent_comment
+    assert_difference('Property.count' => 1) do
+      comment.parent_comment = parent_comment
+    end
     assert_equal parent_comment, comment.parent_comment
-    comment.save
+    assert_difference('Property.count' => 0) do
+      comment.save
+    end
     assert_equal parent_comment, comment.reload.parent_comment
   end
 
   test 'property has_one assignment by id' do
-    comment.parent_comment_id = parent_comment.uuid
-    comment.save
+    comment
+    parent_comment
+    assert_difference('Property.count' => 0) do
+      comment.parent_comment_id = parent_comment.uuid
+    end
+    assert_equal parent_comment, comment.parent_comment
+    assert_difference('Property.count' => 1) do
+      comment.save
+    end
     assert_equal parent_comment, comment.reload.parent_comment
+    assert_equal parent_comment, Comment.find_by(uuid: comment.uuid).parent_comment
   end
 
   test 'property has_many association' do
@@ -131,10 +145,10 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
     assert_empty measure.phases
     term1
     term2
-    assert_difference('Property.count' => 2) do
+    assert_difference('Property.count' => 0) do
       measure.phase_ids = [term1.uuid, term2.uuid]
     end
-    assert_difference('Property.count' => 0) do
+    assert_difference('Property.count' => 2) do
       measure.save
     end
     assert_equal [term1, term2], measure.phases.order(:id)
@@ -145,9 +159,9 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
     assert_difference('Property.count' => 0) do
       measure.save
     end
-    assert_equal [term1, term2], measure.phases.order(:id)
+    assert_equal [term2, term1], measure.phases.order(:id)
 
-    assert_equal [term1, term2], measure.reload.phases.order(:id)
+    assert_equal [term2, term1], measure.reload.phases.order(:id)
   end
 
   test 'properties remain when destroying other page' do
