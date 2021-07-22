@@ -3,8 +3,7 @@
 class OrderDetail < Edge
   parentable :order
 
-  property :offer_id, :linked_edge_id, NS.schema.orderedItem
-  belongs_to :offer, foreign_key_property: :offer_id, class_name: 'Edge', dependent: false
+  property :offer_id, :linked_edge_id, NS.schema.orderedItem, association: :offer, association_class: 'Edge'
   after_create :follow_product
   with_columns default: [
     NS.schema.orderedItem,

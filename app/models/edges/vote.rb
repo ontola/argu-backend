@@ -14,8 +14,6 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
   property :comment_id, :linked_edge_id, NS.argu[:explanation]
   attribute :primary, :boolean, default: true
 
-  belongs_to :comment, foreign_key_property: :comment_id
-
   before_create :trash_primary_votes
   before_create :create_confirmation_reminder_notification
   after_trash :remove_primary

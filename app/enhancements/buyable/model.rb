@@ -6,7 +6,8 @@ module Buyable
 
     included do
       property :price, :integer, NS.argu[:price]
-      property :product_id, :linked_edge_id, NS.schema.itemOffered
+      property :product_id, :linked_edge_id, NS.schema.itemOffered, association_class: 'Edge'
+
       validates :price, presence: true
       validates :product_id, presence: true
 

@@ -7,9 +7,7 @@ class Project < Discussion
 
   with_collection :phases
 
-  property :current_phase_id, :linked_edge_id, NS.argu[:currentPhase], default: nil
-
-  belongs_to :current_phase, foreign_key_property: :current_phase_id, class_name: 'Phase', dependent: false
+  property :current_phase_id, :linked_edge_id, NS.argu[:currentPhase], association_class: 'Phase'
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}

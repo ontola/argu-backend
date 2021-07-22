@@ -6,12 +6,11 @@ class Comment < Edge
 
   include Edgeable::Content
 
-  property :parent_comment_id, :linked_edge_id, NS.argu[:inReplyTo], default: nil
-  property :pdf_position_x, :integer, NS.argu[:pdfPositionX], default: nil
-  property :pdf_position_y, :integer, NS.argu[:pdfPositionY], default: nil
-  property :pdf_page, :integer, NS.argu[:pdfPage], default: nil
+  property :parent_comment_id, :linked_edge_id, NS.argu[:inReplyTo], association_class: 'Comment'
+  property :pdf_position_x, :integer, NS.argu[:pdfPositionX]
+  property :pdf_position_y, :integer, NS.argu[:pdfPositionY]
+  property :pdf_page, :integer, NS.argu[:pdfPage]
 
-  belongs_to :parent_comment, foreign_key_property: :parent_comment_id, class_name: 'Comment', dependent: false
   has_many :comments, primary_key_property: :parent_comment_id, class_name: 'Comment', dependent: false
   has_many :active_comments,
            -> { active },

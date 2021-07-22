@@ -9,8 +9,6 @@ class Offer < Edge
 
   delegate :display_name, :description, :default_cover_photo, to: :product, allow_nil: true
 
-  belongs_to :product, foreign_key_property: :product_id, class_name: 'Edge', dependent: false
-
   class << self
     def default_collection_display
       :grid

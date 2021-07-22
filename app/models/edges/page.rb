@@ -23,7 +23,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance CoverPhotoable
   enhance Bannerable
 
-  property :primary_container_node_id, :linked_edge_id, NS.foaf[:homepage]
+  property :primary_container_node_id, :linked_edge_id, NS.foaf[:homepage], association_class: 'Edge'
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   has_one :tenant, dependent: :destroy, foreign_key: :root_id, primary_key: :uuid, inverse_of: :page
@@ -79,11 +79,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :hide_language_switcher, :boolean, NS.ontola[:hideLanguageSwitcher]
   property :styled_headers, :boolean, NS.ontola[:styledHeaders]
   property :live_updates, :boolean, NS.ontola[:liveUpdates], default: false
-
-  belongs_to :primary_container_node,
-             foreign_key_property: :primary_container_node_id,
-             class_name: 'Edge',
-             dependent: false
 
   def all_shortnames
     @all_shortnames = Shortname.join_edges.where(shortnames: {root_id: nil}, edges: {root_id: uuid}).pluck(:shortname)
