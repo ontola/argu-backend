@@ -42,6 +42,7 @@ module Helpers
     def edit_link
       menu_item(
         :edit,
+        action: ontola_dialog_action(edit_iri(resource)),
         image: 'fa-edit',
         href: edit_iri(resource),
         policy: :update?
@@ -92,6 +93,7 @@ module Helpers
     def destroy_link
       menu_item(
         :destroy,
+        action: ontola_dialog_action(delete_iri(resource)),
         href: delete_iri(resource),
         image: 'fa-close',
         policy: :destroy?
@@ -101,6 +103,7 @@ module Helpers
     def untrash_link
       menu_item(
         :untrash,
+        action: ontola_dialog_action(untrash_iri(resource)),
         href: untrash_iri(resource),
         image: 'fa-eye',
         policy: :untrash?
@@ -110,6 +113,7 @@ module Helpers
     def trash_link
       menu_item(
         :trash,
+        action: ontola_dialog_action(trash_iri(resource)),
         href: trash_iri(resource),
         image: 'fa-trash',
         policy: :trash?
