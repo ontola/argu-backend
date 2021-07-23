@@ -4,6 +4,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Destroyable
+  enhance Orderable
   include TranslatableProperties
 
   with_columns default: [
@@ -13,8 +14,6 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
     NS.ontola[:updateAction],
     NS.ontola[:destroyAction]
   ]
-  self.default_sortings = [{key: NS.argu[:order], direction: :asc}]
-
   belongs_to :resource, polymorphic: true, primary_key: :uuid
   belongs_to :edge, primary_key: :uuid, optional: true
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
@@ -22,7 +21,6 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :custom_menu_items, -> { order(:order) }, foreign_key: :parent_menu_id, inverse_of: :parent_menu
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
-  before_create :set_order
   before_create :set_root
 
   attr_writer :parent
@@ -96,13 +94,8 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   private
 
-  def set_order
-    self.order ||= (
-      CustomMenuItem
-        .where(resource: resource, menu_type: menu_type)
-        .where('custom_menu_items.order < ?', 100)
-        .maximum(:order) || 0
-    ) + 1
+  def order_scope
+    CustomMenuItem.where(resource: resource, menu_type: menu_type).where('custom_menu_items.order < ?', 100)
   end
 
   def set_root

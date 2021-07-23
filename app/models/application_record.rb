@@ -8,4 +8,10 @@ class ApplicationRecord < ActiveRecord::Base
   include VirtualAttributes
 
   self.abstract_class = true
+
+  class << self
+    def sort_options(_collection)
+      []
+    end
+  end
 end

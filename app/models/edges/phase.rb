@@ -18,15 +18,20 @@ class Phase < Edge
   enhance Questionable
   enhance Motionable
   enhance Widgetable
+  enhance Orderable
   include Edgeable::Content
 
   counter_cache true
   parentable :project
-  self.default_sortings = [{key: NS.argu[:order], direction: :asc}]
 
-  property :order, :integer, NS.argu[:order]
   property :time, :string, NS.argu[:time]
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
+
+  private
+
+  def order_scope
+    parent&.phases || Phase.all
+  end
 end

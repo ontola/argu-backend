@@ -9,12 +9,14 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Destroyable
+  enhance Orderable
 
   belongs_to :owner, polymorphic: true, primary_key: :uuid
   belongs_to :permitted_action
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
   paginates_per 100
+  alias_attribute :order, :position
 
   before_create :set_root
 
@@ -22,7 +24,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
     custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, blog_posts: 6, new_topic: 7
   }
   enum view: {full_view: 0, compact_view: 1, preview_view: 2}
-  self.default_sortings = [{key: NS.argu[:order], direction: :asc}]
 
   with_columns default: [
     NS.argu[:rawResource],
@@ -80,6 +81,10 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   private
+
+  def order_scope
+    parent&.widgets || Widget.all
+  end
 
   def property_shape(iri, predicate)
     @property_shapes ||= {}
