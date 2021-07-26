@@ -42,18 +42,6 @@ class Motion < Discussion
   end
 
   class << self
-    def edge_includes_for_index(full = false)
-      includes = super().deep_merge(default_vote_event: {}, last_published_decision: :properties)
-      return includes unless full
-
-      includes.deep_merge(
-        attachments: {},
-        creator: Profile.includes_for_profileable,
-        top_comment: [vote: :properties, creator: Profile.includes_for_profileable],
-        active_arguments: {}
-      )
-    end
-
     def order_by_predicate(predicate, direction)
       return super unless predicate == NS.argu[:votesProCount]
 
