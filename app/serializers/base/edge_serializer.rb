@@ -5,7 +5,7 @@ class EdgeSerializer < RecordSerializer
 
   has_one :parent, predicate: NS.schema.isPartOf do |object, opts|
     if object.parent.is_a?(Page) && object.parent_collections(opts[:scope]).count == 1
-      object.parent_collections(opts[:scope]).first
+      object.parent_collections(opts[:scope]).reject { |c| c.is_a?(SearchResult::Collection) }.first
     else
       object.parent
     end
