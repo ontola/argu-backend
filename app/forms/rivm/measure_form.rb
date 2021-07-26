@@ -25,6 +25,10 @@ class MeasureForm < ApplicationForm
   field :more_info
   field :comments_allowed
 
+  footer do
+    actor_selector
+  end
+
   hidden do
     field :is_draft
   end

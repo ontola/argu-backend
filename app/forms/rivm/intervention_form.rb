@@ -78,6 +78,10 @@ class InterventionForm < ApplicationForm
     has_many :attachments, description: -> { I18n.t('interventions.attachments.description') }
   end
 
+  footer do
+    actor_selector
+  end
+
   hidden do
     field :is_draft
   end
