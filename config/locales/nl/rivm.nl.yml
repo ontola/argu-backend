@@ -259,17 +259,24 @@ nl:
     comments_allowed:
       comments_are_allowed: "Ja"
       comments_not_allowed: "Nee"
-    properties:
+    form:
       attachment_published_at:
         label: "Publicatiedatum bijlage(s)"
+      description:
+        helper_text: "Beschrijf het voorbeeld, of geef een samenvatting van de toegevoegde pdf in minder dan 20.000 tekens."
+        label: "Beschrijving"
       measure_owner:
-        label: "Eigenaar bijlage(s)"
+        helper_text: "Wat is de naam van de organisatie van de makers?"
+        label: "Eigenaar"
+      comments_allowed:
+        description: "Wilt u reacties op uw Voorbeeld toestaan?"
+        label: "Reacties toestaan"
       contact_info:
+        helper_text: "Hier kan een telefoonnummer, website of e-mailadres worden geplaatst."
         label: "Contactinformatie"
       more_info:
-        label: "Meer informatie"
-      second_opinion_by:
-        label: "Second opinion"
+        helper_text: "Plaats een link naar een website waar meer informatie over dit voorbeeld te vinden is."
+        label: "Meer info link"
   formtastic:
     labels:
       example_of_id: "Beschermt tegen"
@@ -318,7 +325,6 @@ nl:
         phase_ids: "Fases"
         category_ids: "Categorieën"
         attachment_published_at: "Publicatiedatum bijlage(s)"
-        measure_owner: "Eigenaar"
         contact_info: "Contactinformatie"
         more_info: "Meer informatie"
     hints:
@@ -380,6 +386,26 @@ nl:
           **Mag ik als aanbieder/ontwikkelaar van interventies deze ook op de website plaatsen?**
 
           Op deze website staat het delen van praktijkervaringen met interventies centraal. Het uitgangspunt is daarom dat de interventie wordt ingediend door het bedrijf dat de interventie heeft toegepast. Een bijdrage vanuit ontwikkelaars wordt alleen opgenomen als de ontwikkelaar kan verwijzen naar ervaringen uit de praktijk.
+    measures:
+      create:
+        description: |
+          Op deze pagina kunt u uw praktijkvoorbeelden delen. Door praktijkvoorbeelden te delen, kunnen anderen leren van uw ervaringen. Door anderen de mogelijkheid te geven om te reageren op het door u ingediende voorbeeld kunt u weer leren van hun vragen en opmerkingen. Zo krijgen we gezamenlijk steeds meer ervaring met maatregelen waarmee mens en milieu worden beschermd tegen ongevallen met gevaarlijke stoffen.
+
+          ### Hoe werkt het invoeren van een praktijkvoorbeeld?
+
+          Om het delen van een praktijkvoorbeelden zo eenvoudig mogelijk te maken, maken we gebruik van een invulformulier. Hoe nauwkeuriger en vollediger u het formulier invult, des te eenvoudiger het is voor anderen om uw praktijkvoorbeelden te vertalen naar hun eigen situatie.
+
+          ### Heb ik een account nodig?
+
+          Voor het opslaan van concepten, het uploaden van bijlagen en het publiceren van een voorbeeld moet u zijn ingelogd. U kunt inloggen nadat u zichzelf heeft geregistreerd. Als u bent ingelogd kunt u bij uw gegevens, concepten en gepubliceerde voorbeelden.
+
+          ### Mag ieder praktijkvoorbeeld worden ingediend?
+
+          Op deze website staat het delen van praktijkvoorbeelden centraal. De gedeelde voorbeelden moeten voor derden toepasbaar zijn, dit betekent dat gebruikers het voorbeeld naar hun eigen situatie moeten kunnen vertalen zonder dat de indiener van het voorbeeld of een andere partij daar aan te pas komt.
+
+          ### Welke voorwaarden zijn verbonden aan het indienen van voorbeelden?
+
+          Door het indienen van een voorbeeld gaat u akkoord met de gebruiksvoorwaarden. Als indiener hoeft u zelf geen eigenaar te zijn van het door u ingediende praktijkvoorbeeld. Wel vragen we u in het formulier om aan te geven wie de eigenaar is van het voorbeeld, dit kan bijvoorbeeld ook de organisatie zijn waar u werkt. Als u voorbeelden plaatst waarvan u zelf niet de eigenaar bent, is het belangrijk dat u heeft gecontroleerd dat u geen inbreuk maakt op de rechten van de eigenaar.
   forms:
     goal_and_effect:
       label: "Doelen en effecten van de interventie"
