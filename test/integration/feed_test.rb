@@ -51,7 +51,7 @@ class FeedTest < ActionDispatch::IntegrationTest
 
   test 'staff should get forum/feed nq' do
     sign_in staff
-    visit_freetown_feed(accept: :nq, count: 9)
+    visit_freetown_feed(accept: :nq, count: 8)
   end
 
   test 'staff should get motion/feed nq' do
@@ -63,12 +63,11 @@ class FeedTest < ActionDispatch::IntegrationTest
   private
 
   # Render activity of Motion#create, Motion#publish, 6 comments, 6 public votes and 3 private votes
-  def assert_activity_count(accept: :nq, complete: false, count: nil, parent: subject) # rubocop:disable Metrics/AbcSize
+  def assert_activity_count(accept: :nq, count: nil, parent: subject) # rubocop:disable Metrics/AbcSize
     case accept
     when :nq
       collection = ActsAsTenant.with_tenant(argu) do
-        feed(parent, complete).activity_collection.iri
-        # RDF::URI("#{resource_iri(feed(parent))}/feed#{complete ? '?complete=true' : ''}")
+        feed(parent).activity_collection.iri
       end
       view = rdf_body.query([collection, NS.ontola[:pages]]).first.object
       expect_triple(view, NS.as[:totalItems], count)
@@ -81,11 +80,11 @@ class FeedTest < ActionDispatch::IntegrationTest
     Activity.update_all(created_at: 1.second.ago) # rubocop:disable Rails/SkipsModelValidations
   end
 
-  def feed(parent, complete)
-    Feed.new(parent: parent, relevant_only: !complete)
+  def feed(parent)
+    Feed.new(parent: parent)
   end
 
-  def visit_freetown_feed(accept: :nq, count: 8)
+  def visit_freetown_feed(accept: :nq, count: 7)
     init_content([subject, unpublished_motion, unpublished_motion_argument, trashed_motion])
 
     get feeds_iri(freetown),
@@ -96,17 +95,13 @@ class FeedTest < ActionDispatch::IntegrationTest
     assert_activity_count(accept: accept, count: count, parent: freetown)
   end
 
-  def visit_motion_feed(accept: :nq, complete: false)
+  def visit_motion_feed(accept: :nq)
     init_content
 
-    count = complete ? 10 : 7
-
-    get feeds_iri(subject),
-        params: complete ? {complete: true} : {},
-        headers: argu_headers(accept: accept)
+    get feeds_iri(subject), headers: argu_headers(accept: accept)
 
     assert_response 200
 
-    assert_activity_count(accept: accept, count: count, complete: complete)
+    assert_activity_count(accept: accept, count: 7)
   end
 end

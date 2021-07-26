@@ -1,19 +1,11 @@
 # frozen_string_literal: true
 
 class Feed < VirtualResource
-  PUBLISH_KEYS = %w[question.publish motion.publish topic.publish argument.publish pro_argument.publish
-                    con_argument.publish blog_post.publish decision.approved decision.rejected comment.publish
-                    intervention.publish measure.publish].freeze
-  TRASH_KEYS = %w[question.trash motion.trash topic.trash argument.trash pro_argument.trash con_argument.trash
-                  blog_post.trash decision.trash comment.trash intervention.trash measure.trash].freeze
-  RELEVANT_KEYS = PUBLISH_KEYS + TRASH_KEYS
-
-  attr_accessor :parent, :relevant_only
+  attr_accessor :parent
 
   with_collection :activities,
                   part_of: :parent,
-                  default_type: :infinite,
-                  parent_uri_template_opts: ->(r) { r.relevant_only ? {} : {complete: true} }
+                  default_type: :infinite
 
   def activities
     @activities ||=
@@ -45,10 +37,10 @@ class Feed < VirtualResource
               .joins(:trackable, :recipient)
               .where('edges.owner_type != ?', 'Banner')
               .where('edges.owner_type != ? OR recipients_activities.owner_type != ?', 'Vote', 'Argument')
+              .where("key ~ '#{self.class.class_key}.update|publish'")
+              .where(edges: {is_published: true, trashed_at: nil})
     scope = scope.where(edges: {root_id: root_id}) if root_id
-    return scope unless relevant_only
-
-    scope.where("key IN (?) AND (edges.trashed_at IS NULL OR key ~ '*.trash')", RELEVANT_KEYS)
+    scope
   end
 
   def edge_activities
@@ -60,14 +52,16 @@ class Feed < VirtualResource
   end
 
   class << self
+    def class_key
+      @class_key ||=
+        Edge.descendants.select { |k| k.include?(Edgeable::Content) }.map { |k| k.name.underscore }.join('|')
+    end
+
     def requested_index_resource(params, user_context)
       parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
       return unless parent&.enhanced_with?(Feedable)
 
-      feed = Feed.new(
-        parent: parent,
-        relevant_only: true
-      )
+      feed = Feed.new(parent: parent)
 
       feed.activity_collection(index_collection_params(params, user_context))
     end

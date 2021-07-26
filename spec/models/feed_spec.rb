@@ -6,8 +6,7 @@ RSpec.describe Feed, type: :model do
   define_spec_objects
   subject { argu_feed }
 
-  let(:argu_feed) { described_class.new(parent: argu, relevant_only: relevant_only) }
-  let(:relevant_only) { false }
+  let(:argu_feed) { described_class.new(parent: argu) }
   let(:user) { create(:user) }
   let(:scoped_activities) do
     ActivityPolicy::Scope.new(
@@ -23,14 +22,6 @@ RSpec.describe Feed, type: :model do
         .reject do |a|
         granted_paths.any? { |p| a.trackable.path == p || a.trackable.path.include?("#{p}.") }
       end
-    end
-  end
-  let(:irrelevant_activities) do
-    Activity
-      .all
-      .reject do |a|
-      (Feed::PUBLISH_KEYS.include?(a.key) && a.trackable.is_published && !a.trackable.is_trashed?) ||
-        Feed::TRASH_KEYS.include?(a.key)
     end
   end
   let(:unpublished_branch_activities) do
@@ -53,7 +44,7 @@ RSpec.describe Feed, type: :model do
   RSpec.shared_examples_for 'scope' do
     context 'all activities' do
       it 'also contains irrelevant activities' do
-        expect(scoped_activities & irrelevant_activities).not_to be_empty
+        expect(scoped_activities).not_to be_empty
       end
 
       it 'does not contain items with unpublished ancestors' do

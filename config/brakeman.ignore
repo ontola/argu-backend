@@ -23,24 +23,24 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "8bffbc953891e9d03a05ec7f4f2f8dc5fc3d0bce3775a7f65251803775ef6d3c",
+      "fingerprint": "3c0cb54587fd0d9e36f38197979483c3fc7a2bc25c00ba87cc8c10418772f79e",
       "check_name": "SQL",
       "message": "Possible SQL injection",
-      "file": "app/policies/edges/container_node_policy.rb",
-      "line": 10,
+      "file": "app/models/virtual/feed.rb",
+      "line": 40,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "scope.property_join(:discoverable).with(granted_paths).where(:root_id => grant_tree.tree_root_id).where(\"discoverable_filter.value = true OR #{granted_path_type_filter(:parent_type => \"Page\")}\")",
+      "code": "Activity.includes(:owner).joins(:trackable, :recipient).where(\"edges.owner_type != ?\", \"Banner\").where(\"edges.owner_type != ? OR recipients_activities.owner_type != ?\", \"Vote\", \"Argument\").where(\"key ~ '#{self.class.class_key}.update|publish'\")",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "ContainerNodePolicy::Scope",
-        "method": "resolve"
+        "class": "Feed",
+        "method": "activity_base"
       },
-      "user_input": "granted_path_type_filter(:parent_type => \"Page\")",
+      "user_input": "self.class.class_key",
       "confidence": "Weak",
       "note": ""
     }
   ],
-  "updated": "2021-02-22 09:46:04 +0100",
-  "brakeman_version": "5.0.0"
+  "updated": "2021-07-27 15:53:31 +0200",
+  "brakeman_version": "5.0.4"
 }
