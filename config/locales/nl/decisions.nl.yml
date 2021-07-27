@@ -2,15 +2,11 @@ nl:
   decisions:
     type_new: "Neem een besluit"
     menu: "Besluit nemen"
-    approved: "Aangenomen"
-    rejected: "Verworpen"
-    forwarded: "Doorgestuurd"
-    forwarded_to: "Doorgestuurd naar %{to}"
-    edit_draft: "Pas concept aan"
-    state:
-      approved: "Aannemen"
-      rejected: "Verwerpen"
-      forwarded: "Doorsturen"
+    enums:
+      state:
+        approved: "Aannemen"
+        rejected: "Verwerpen"
+        forwarded: "Doorsturen"
     explanation: "Licht het besluit toe"
     forward_to: "Groep of gebruiker"
     forward_group_missing: "Groep ontbreekt"
@@ -22,4 +18,3 @@ nl:
     assigned:
       to_user: "Het besluit ligt momenteel bij"
       to_group: "Het besluit ligt momenteel bij de groep"
-    find_user_info: "Typ om een gebruiker te zoeken"

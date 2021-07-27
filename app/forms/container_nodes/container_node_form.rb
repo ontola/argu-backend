@@ -18,7 +18,7 @@ class ContainerNodeForm < ApplicationForm
     def url_options
       {
         description: lambda do
-          I18n.t('formtastic.hints.container_nodes.url', iri_prefix: ActsAsTenant.current_tenant.iri_prefix)
+          I18n.t('shortnames.form.destination.description', iri_prefix: ActsAsTenant.current_tenant.iri_prefix)
         end
       }
     end

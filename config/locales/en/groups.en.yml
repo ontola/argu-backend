@@ -17,10 +17,15 @@ en:
         invite: 'Invite'
         grants: 'Grants'
         advanced: 'Advanced'
+    form:
+      name:
+        description: "e.g. 'Civilians'"
+        label: "Name"
+      name_singular:
+        description: "e.g. 'Civilian'"
+        label: "Name singular"
+      require_2fa:
+        label: "Force two factor authentication"
     delete:
       info: "Are you sure you wish to delete the group '%{group}'?"
-      member_count: "The group has %{group_memberships_count} members."
-      howto: "Please enter '%{cancel_string}' below to confirm the deletion of this group."
       not_allowed: "It's not possible to delete this group."
-    visible_for: "Visible for %{groups}"
-    visible_for_everybody: "Visible for everybody"

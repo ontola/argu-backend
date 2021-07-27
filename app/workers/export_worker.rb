@@ -135,7 +135,7 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
   def overview_prefix_titles
     [
       I18n.t('exports.formats.xls.path'),
-      I18n.t('formtastic.labels.url'),
+      I18n.t('schema.url.label'),
       I18n.t('retracted'),
       I18n.t('statistics.users_count.label'),
       I18n.t('statistics.contributions_count.label'),

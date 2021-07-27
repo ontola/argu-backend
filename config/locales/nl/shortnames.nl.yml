@@ -7,7 +7,11 @@ nl:
       to: "Naar"
       delete: "Verwijderen"
     form:
+      destination:
+        description: "Voer het gedeelte van de url in dat komt na %{iri_prefix}/"
+        label: "Bestemming"
       shortname:
+        description: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
         label: "URL"
   activerecord:
     errors:

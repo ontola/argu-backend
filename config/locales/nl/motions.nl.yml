@@ -4,7 +4,6 @@ nl:
   motions:
     type_new: "Nieuw idee"
     title: "Idee"
-    header: "Ideeën"
     pros: "voor"
     cons: "tegen"
     edit: "stelling bewerken"
@@ -31,39 +30,20 @@ nl:
         one: "1  tegenargument"
         other: "%{count} tegenargumenten"
     form:
-      title:
-        label: "Vat je idee samen in één zin."
       content:
+        description: "Plaats hier de details en achtergrondinformatie van jouw idee."
         label: "Licht je idee toe"
-      themes: "thema1, thema2"
-      invert: "alle argumenten omkeren"
-    mod:
-      edit_moderators:
-        title: 'Moderators van %{title}'
-        remove: 'afzetten'
-        title_invite: 'Moderators uitnodigen'
-        invite: 'Uitnodigen'
-        invited: 'Uitnodigd'
-        is_mod: 'is al een mod'
-      show_moderation_panel: 'moderator'
+      description:
+        description: "Plaats hier de details en achtergrondinformatie van jouw idee."
+      display_name:
+        description: "Plaats hier de kern van jouw idee"
+      title:
+        description: "Plaats hier de kern van jouw idee"
+        label: "Vat je idee samen in één zin."
     call_to_action:
       title: "Heb jij een goed idee?"
       body: "Heb jij een goed idee en wil je anderen daarvan overtuigen?"
       action: "Deel jouw idee."
-
-    #motion types
-    type_social: "Maatschappelijk"
-    type_political: "Politiek"
-    type_jurisdictional: "Juridisch"
-    type_ecological: "Ecologisch"
-    type_economical: "Economisch"
-    type_technological: "Technologisch"
-    type_discussion: "In discussie"
-    type_other: "Overig"
-    convert:
-      header: "Converteer object"
-      body: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
-      body_2: "GEBRUIK DIT NIET ZOMAAR, DATA GAAT WAARSCHIJNLIJK VERLOREN"
   pundit:
     motion_policy:
       create_without_question?: "Je mag hier geen idee aanmaken zonder het eerst te koppelen aan een uitdaging."

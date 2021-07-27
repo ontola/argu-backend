@@ -2,14 +2,13 @@ en:
   direct_messages:
     notice:
       success: "The mail will be sent"
-    header: "Send message"
-    description: "Send an e-mail to %{creator}, the poster of this item. If he replies to the e-mail, the reply will be send to your mailbox directly so you can continue the conversation outside of this platform."
-  formtastic:
-    labels:
-      direct_message:
-        email_address_id: "Sender"
-        subject: "Subject"
-        body: "Message"
-    hints:
-      direct_message:
-        email_address_id: "You can send an email from one of your confirmed emailadresses. Is your emailadress not visible? Go to User settings to confirm your address."
+    form:
+      email:
+        description: ""
+      email_address_id:
+        description: "You can send an email from one of your confirmed emailadresses. Is your emailadress not visible? Go to User settings to confirm your address."
+        label: "Sender"
+      subject:
+        label: "Subject"
+      body:
+        label: "Message"

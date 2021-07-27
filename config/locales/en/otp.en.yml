@@ -2,10 +2,8 @@ en:
   otp_attempts:
     form:
       otp_attempt:
-        label: "Authentication code"
-    properties:
-      otp_attempt:
         helper_text: 'You can find this in the authentication-application you used earlier.'
+        label: "Authentication code"
   otp_secrets:
     form:
       otp_attempt:

@@ -2,14 +2,13 @@ nl:
   direct_messages:
     notice:
       success: "De e-mail wordt verstuurd"
-    header: "Verstuur bericht"
-    description: "Verstuur een e-mail naar %{creator}, de plaatser van dit item. Als hij of zij reageert op de e-mail, dan komt het antwoord direct in jouw mailbox en kan je het gesprek buiten dit platform verder voeren."
-  formtastic:
-    labels:
-      direct_message:
-        email_address_id: "Afzender"
-        subject: "Onderwerp"
-        body: "Bericht"
-    hints:
-      direct_message:
-        email_address_id: "Je kan email versturen vanaf een van jouw bevestigde e-mailadressen. Staat je e-mailadres er niet tussen? Ga dan naar Gebruikersinstellingen via het menu in de bovenbalk om je e-mailadres te bevestigen."
+    form:
+      email:
+        description: ""
+      email_address_id:
+        description: "Je kan email versturen vanaf een van jouw bevestigde e-mailadressen. Staat je e-mailadres er niet tussen? Ga dan naar Gebruikersinstellingen via het menu in de bovenbalk om je e-mailadres te bevestigen."
+        label: "Afzender"
+      subject:
+        label: "Onderwerp"
+      body:
+        label: "Bericht"

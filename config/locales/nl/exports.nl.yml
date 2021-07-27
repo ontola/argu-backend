@@ -1,13 +1,6 @@
 nl:
   exports:
     type_new: "Nieuwe export"
-    empty: "Er zijn nog geen exports gemaakt"
-    create: "Maak export aan"
-    download: "Download"
-    headers:
-      created_at: "Gemaakt op"
-      status: "Status"
-      download: "Download"
     destroy_confirmation: "Weet je zeker dat je deze export wilt verwijderen?"
     status:
       pending: "Wachten op verwerking"

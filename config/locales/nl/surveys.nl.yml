@@ -1,11 +1,8 @@
 nl:
   surveys:
     type_new: "Nieuwe enquête"
-  properties:
-    surveys:
+    form:
       external_iri:
+        description: "https://[accountNaam].typeform.com/to/[surveyId]"
         helper_text: "Ga voor meer informatie over surveys naar [onze helpdesk](https://argu.co/argu/t/10509)"
-  formtastic:
-    placeholders:
-      survey:
-        external_iri: "https://[accountNaam].typeform.com/to/[surveyId]"
+        label: "Typeform url"

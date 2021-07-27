@@ -1,0 +1,153 @@
+nl:
+  forms:
+    about:
+      label: "Over"
+    attachments:
+      label: "Bijlagen"
+    attachment_collection:
+      label: "Bijlagen"
+    audience:
+      label: "Publiek"
+    bio:
+      label: "Doel"
+    confirmation_string:
+      description: "Type 'verwijder' om te bevestigen"
+      label: "Bevestiging"
+    content:
+      label: "Inhoud"
+    country_code:
+      label: "Land"
+    coupon:
+      label: "Coupon"
+    coupons:
+      label: "Coupons"
+    coupon_count:
+      label: "Aantal coupons"
+    cover_photo_attribution:
+      description: "Als jij niet de auteursrechten van de afbeelding bezit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
+      label: "Auteursrechten"
+    cover_photo:
+      label: "Omslagfoto"
+    cover_photo_add:
+      label: "Afbeelding toevoegen"
+    created_at:
+      label: "Gemaakt op"
+    creator:
+      label: "Plaatsen als"
+    current_password:
+      label: "Huidig wachtwoord"
+    custom_placement:
+      label: "Locatie"
+    default_cover_photo:
+      label: "Coverfoto"
+    default_profile_photo:
+      label: "Profielfoto"
+    description:
+      description: "Voer een beschrijving in"
+      label: "Inhoud"
+    dismiss_button:
+      label: "Knoptekst"
+    dismissable:
+      label: "Sluitbaar"
+    display_name:
+      description: "Voer een titel in"
+      label: "Titel"
+    edge_id:
+      label: "Object"
+    email:
+      description: "email@voorbeeld.nl"
+      label: "Email"
+    ends_at:
+      label: "Eindigen op"
+    expires_at:
+      label: "Verloopt op"
+    filename:
+      label: "Bestandsnaam"
+    follows_count:
+      label: 'Volgers'
+    grant_set:
+      label: 'Rechtenset'
+    grant_set_id:
+      label: 'Rechtenset'
+    grants:
+      label: "Rechten"
+    grant_collection:
+      label: "Rechten"
+    group_membership_collection:
+      label: 'Leden'
+    group_id:
+      label: 'Groep'
+    header_background:
+      label: "Achtergrond van bovenste balk"
+    header_text:
+      label: "Tekstkleur van bovenste balk"
+    home_placement:
+      label: "Adres"
+    is_public:
+      label: "Profiel zichtbaar voor niet-leden"
+    is_draft:
+      label: "Concept"
+    last_accepted:
+      label: "Ik ga akkoord"
+    last_activity_at:
+      label: "Activiteit"
+    language:
+      label: "Taal"
+    locale:
+      label: "Taal"
+    map_question:
+      label: "Grote kaart"
+    mark_as_important:
+      label: "Markeer als belangrijk"
+    name:
+      label: "Naam"
+    notify:
+      label: 'Verstuur notificatie naar de plaatser'
+    password_confirmation:
+      description: "Zelfde als hierboven"
+      label: "Wachtwoord bevestigen"
+    password:
+      description: "Minimaal 8 karakters."
+      label: "Wachtwoord"
+    path:
+      label: "alias"
+    pinned:
+      label: "Vastzetten"
+    postal_code:
+      label: "Postcode"
+    primary_color:
+      label: "Primaire kleur"
+    primary_container_node_id:
+      label: "Homepage"
+    profile_photo:
+      label: "Profielfoto"
+    published_at:
+      label: "Publicatie"
+    remember_me:
+      label: "Gegevens onthouden"
+    require_location:
+      label: "Locatie is verplicht"
+    secondary_color:
+      label: "Secondaire kleur"
+    show_feed:
+      label: "Toon mijn activiteit en mijn stemmen in mijn profiel"
+    status:
+      label: 'Status'
+    styled_headers:
+      label: 'Gebruik primaire kleur voor titels'
+    title:
+      label: "Titel"
+    time_zone:
+      label: "Tijdzone"
+    trash_activity:
+      label: "Toelichting"
+    type:
+      label: "Type"
+    untrash_activity:
+      label: "Toelichting"
+    upvote_only:
+      label: "Upvote ideeën"
+    url:
+      label: "Url"
+    used_coupons:
+      label: "Gebruikte coupons"

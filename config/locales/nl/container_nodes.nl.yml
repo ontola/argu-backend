@@ -1,8 +1,14 @@
 nl:
   container_nodes:
     type_new: "Nieuwe pagina"
+    form:
+      url:
+        description: "Het gedeelte van de url dat komt na %{iri_prefix}/"
   blogs:
     type_new: "Nieuw blog"
+    form:
+      bio:
+        description: "Zet in één zin neer waar het blog voor dient. Deze tekst verschijnt onder de naam van het blog. Maximaal 80 karakters."
   forums:
     type_new: "Nieuw forum"
   dashboards:

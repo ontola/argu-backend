@@ -10,7 +10,8 @@ en:
         label: "View"
       raw_resource_iri:
         label: "Object"
-    view:
-      full_view: "Volledig"
-      compact_view: "Compact"
-      preview_view: "Preview"
+    enums:
+      view:
+        full_view: "Volledig"
+        compact_view: "Compact"
+        preview_view: "Preview"

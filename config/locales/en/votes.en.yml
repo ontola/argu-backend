@@ -3,10 +3,6 @@
 en:
   votes:
     score: "score"
-    header:
-      pro: "Agrees"
-      neutral: "Other"
-      con: "Disagrees"
     collection:
       votes: "%{count} votes"
       :yes: "%{count} agrees"
@@ -24,9 +20,6 @@ en:
       con: "Disagree"
       :no: "Disagree"
     type_new: "New vote"
-    confirm:
-      headline: "Confirm vote"
-      skip: "Not now, skip voting"
     disabled:
       expired: 'Voting is no longer possible'
       unauthorized: 'You are not allowed to vote on this item'

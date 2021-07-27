@@ -4,6 +4,12 @@ nl:
   blog_posts:
     type_new: "Nieuwe update"
     unpublished: "Concept"
-    header: "Blog"
-    latest: "Laatste nieuws"
-    see_all: "Lees alle nieuws"
+    form:
+      content:
+        description: "Licht je update hier toe."
+      description:
+        description: "Licht je update hier toe."
+      display_name:
+        description: "Plaats de kern van de update"
+      title:
+        description: "Plaats de kern van de update"

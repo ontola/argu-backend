@@ -27,10 +27,6 @@ nl:
         get_one: "Een forum toevoegen aan jouw organisatie? <a href='mailto:info@argu.co'>Neem contact met ons op</a> voor de mogelijkheden."
       advanced:
         delete:
-          confirm:
-            header: "Weet je het daadwerkelijk zeker?"
-            howto: "Voer hieronder 'verwijder' in om te bevestigen."
-            understand: "Ik begrijp de consequenties, verwijder de pagina."
           forum_owner: "Deze bevat een of meer forums. Verwijder deze eerst, of neem contact op met Argu."
     management:
       title: "Organisatiebeheer"
@@ -40,26 +36,31 @@ nl:
     create: "Maak een organisatie"
     legal: "Door deze organisatie aan te maken verklaar je toestemming te hebben om de organisatie officieel op Argu te vertegenwoordigen, en dat je akkoord gaat met de Algemene Voorwaarden."
     limit_reached_amount: "Je kunt maximaal %{amount} organisatie(s) aanmaken."
-    shortname:
-      warning: "Let op! Hierdoor verandert de url van deze organisatie. Sommige links zullen niet meer werken als je dit wijzigt."
-    header_background:
-      background_primary: "Primaire kleur"
-      background_secondary: "Secondaire kleur"
-      background_white: "Wit"
-    header_text:
-      text_primary: "Primaire kleur"
-      text_secondary: "Secondaire kleur"
-      text_auto: "Automatisch"
+    enums:
+      header_background:
+        background_primary: "Primaire kleur"
+        background_secondary: "Secondaire kleur"
+        background_white: "Wit"
+      header_text:
+        text_primary: "Primaire kleur"
+        text_secondary: "Secondaire kleur"
+        text_auto: "Automatisch"
     form:
+      accepted_terms:
+        label: "Ik ga akkoord met de gebruiksvoorwaarden"
       google_tag_manager:
         label: "Google tag manager"
       google_uac:
         label: "Google UA code"
+      last_accepted:
+        label: "Ik ga akkoord met de gebruiksvoorwaarden"
       matomo_host:
         label: "Matomo host"
         description: "Laat leeg om de standaard host te gebruiken"
       matomo_site_id:
         label: "Matomo site id"
+      shortname:
+        label: "Argu URL"
   activerecord:
     attributes:
       page:

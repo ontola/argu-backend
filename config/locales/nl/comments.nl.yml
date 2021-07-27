@@ -1,10 +1,6 @@
 nl:
   comments:
     type_new: "Nieuwe reactie"
-    show_all:
-      zero: "Reageer"
-      one: "Reageer"
-      other: "%{count} reacties"
     menu:
       zero: "Reacties"
       one: "Reacties (%{count})"
@@ -15,9 +11,9 @@ nl:
     edited_at: "gewijzigd op %{time}"
     more: "Toon meer"
     edit: "Wijzig reactie"
-    confirm:
-      headline: "Bevestig jouw reactie"
-      skip: "Niet nu, laat het %{skip_type} zien"
+    form:
+      description:
+        description: "Plaats een reactie"
   pundit:
     comment_policy:
       create?: "Je mag hier met dit account geen reactie plaatsen."

@@ -4,6 +4,12 @@ en:
   blog_posts:
     type_new: "New update"
     unpublished: "Draft"
-    header: "Blog"
-    latest: "Latest news"
-    see_all: "Read all news"
+    form:
+      content:
+        description: "Enter details and background information on your update here."
+      description:
+        description: "Enter details and background information on your update here."
+      display_name:
+        description: "Enter the core of your update here"
+      title:
+        description: "Enter the core of your update here"

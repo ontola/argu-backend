@@ -2,15 +2,11 @@ en:
   decisions:
     type_new: "Take a decision"
     menu: "Take decision"
-    approved: "Approved"
-    rejected: "Rejected"
-    forwarded: "Forwarded"
-    forwarded_to: "Forwarded to %{to}"
-    edit_draft: "Edit draft"
-    state:
-      approved: "Approve"
-      rejected: "Reject"
-      forwarded: "Forward"
+    enums:
+      state:
+        approved: "Approve"
+        rejected: "Reject"
+        forwarded: "Forward"
     explanation: "Explain this decision"
     forward_to: "Group or user"
     forward_group_missing: "Group is missing"
@@ -22,4 +18,3 @@ en:
     assigned:
       to_user: "The decision is currently assigned to"
       to_group: "The decision is currently assigned to the group"
-    find_user_info: "Type to find a user"

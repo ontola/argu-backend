@@ -3,21 +3,40 @@
 nl:
   pro_arguments:
     type_new: "Nieuw voordeel"
+    form:
+      content:
+        description: "Details en achtergrondinformatie van jouw argument."
+      description:
+        description: "Details en achtergrondinformatie van jouw argument."
+      display_name:
+        description: "De kern van het voordeel"
+      title:
+        description: "De kern van het voordeel"
   con_arguments:
     type_new: "Nieuw nadeel"
+    form:
+      content:
+        description: "Details en achtergrondinformatie van jouw argument."
+      description:
+        description: "Details en achtergrondinformatie van jouw argument."
+      display_name:
+        description: "De kern van het nadeel"
+      title:
+        description: "De kern van het nadeel"
   arguments:
     type_new: "Nieuw argument"
     vote: "Stem"
-    header:
-      pro: "Argument voor"
-      con: "Argument tegen"
-    tooltips:
-      info: "Een argument is een enkele reden voor of tegen een idee."
     form:
-      title:
-        label: "Kern van jouw argument"
       content:
+        description: "Plaats hier de details en achtergrondinformatie van jouw argument."
         label: "Licht je argument toe (optioneel)"
+      description:
+        description: "Plaats hier de details en achtergrondinformatie van jouw argument."
+      display_name:
+        description: "Plaats hier de kern van jouw argument"
+      title:
+        description: "Plaats hier de kern van jouw argument"
+        label: "Kern van jouw argument"
       type: "type"
       submit: "argument plaatsen"
       side:

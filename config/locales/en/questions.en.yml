@@ -3,29 +3,31 @@
 en:
   questions:
     type_new: "New challenge"
-    header: "Challenges"
-    tooltips:
-      count: "Number of challenges"
-      info: "A challange is een problem or question to which people can submit their ideas."
     call_to_action:
       title: "Looking for good ideas?"
       body: "Are you looking for good ideas to a burning question?"
       action: "Share your challenge"
-    default_motion_sorting:
-      popular: "Votes in favour (most first)"
-      created_at: "Creation date (newest first)"
-      updated_at: "Activity (most recent first)"
-      popular_asc: "Votes in favour (least first)"
-      created_at_asc: "Creation date (oldest first)"
-      updated_at_asc: "Activity (oldest first)"
+    enums:
+      default_motion_sorting:
+        popular: "Votes in favour (most first)"
+        created_at: "Creation date (newest first)"
+        updated_at: "Activity (most recent first)"
+        popular_asc: "Votes in favour (least first)"
+        created_at_asc: "Creation date (oldest first)"
+        updated_at_asc: "Activity (oldest first)"
     form:
-      title:
-        label: "Give your challenge a fitting title"
       content:
+        description: "Enter details and background information on your challenge here."
         label: "Explain your challenge"
-      themes: "theme1, theme2"
-      invert: "invert all arguments"
-      default_sorting:  'Default sorting of ideas'
+      description:
+        description: "Enter details and background information on your challenge here."
+      display_name:
+        description: "Enter the core of your challenge here"
+      default_motion_sorting:
+        label: "Default sorting of ideas"
+      title:
+        description: "Enter the core of your challenge here"
+        label: "Give your challenge a fitting title"
   activerecord:
     attributes:
       question:

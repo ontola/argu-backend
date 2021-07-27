@@ -24,9 +24,6 @@ nl:
       con: "Tegen"
       :no: "Tegen"
     type_new: "Nieuwe stem"
-    confirm:
-      headline: "Bevestig stem"
-      skip: "Niet nu, stemmen overslaan"
     disabled:
       expired: 'Stemmen is niet langer mogelijk'
       unauthorized: 'Je hebt niet voldoende rechten om te stemmen'

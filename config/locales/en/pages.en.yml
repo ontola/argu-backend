@@ -27,10 +27,6 @@ en:
         get_one: "Do you want to add a forum for your organisation? Please <a href='mailto:info@argu.co'>contact us</a> for the possibilities."
       advanced:
         delete:
-          confirm:
-            header: "Are you absolutely sure?"
-            howto: "Please enter 'remove' below to confirm the deletion."
-            understand: "I understand the consequences, delete this page."
           forum_owner: "This page owns one or multiple forums. Delete these or contact Argu before proceeding."
     management:
       title: "Organization management"
@@ -41,26 +37,31 @@ en:
     legal: "By creating this organization you declare having permission to represent the related organisation on Argu, and that you agree to the general terms and conditions."
     limit_reached_amount: "You can create no more than %{amount} organization(s)."
     page_management: "organization management"
-    shortname:
-      warning: "Warning! This changes the url of this organisation. Some links will no longer be valid when changing this."
-    header_background:
-      background_primary: "Primary color"
-      background_secondary: "Secondary color"
-      background_white: "White"
-    header_text:
-      text_primary: "Primary color"
-      text_secondary: "Secondary color"
-      text_auto: "Automatic"
+    enums:
+      header_background:
+        background_primary: "Primary color"
+        background_secondary: "Secondary color"
+        background_white: "White"
+      header_text:
+        text_primary: "Primary color"
+        text_secondary: "Secondary color"
+        text_auto: "Automatic"
     form:
+      accepted_terms:
+        label: "I accept the terms of use"
       google_tag_manager:
         label: "Google tag manager"
       google_uac:
         label: "Google UA code"
+      last_accepted:
+        label: "I accept the terms of use"
       matomo_host:
         label: "Matomo host"
         description: "Leave blank to use the default host"
       matomo_site_id:
         label: "Matomo site id"
+      shortname:
+        label: "Argu URL"
   activerecord:
     attributes:
       page:

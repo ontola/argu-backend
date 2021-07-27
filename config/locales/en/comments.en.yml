@@ -1,10 +1,6 @@
 en:
   comments:
     type_new: "New comment"
-    show_all:
-      zero: "Place a comment"
-      one: "Place a comment"
-      other: "Show all %{count} comments"
     menu:
       zero: "Comments"
       one: "Comments (%{count})"
@@ -15,9 +11,9 @@ en:
     edited_at: "edited at %{time}"
     more: "Show more"
     edit: "Edit comment"
-    confirm:
-      headline: "Confirm your comment"
-      skip: "Not now, just show the %{skip_type}"
+    form:
+      description:
+        description: "Enter your comment"
   pundit:
     comment_policy:
       create?: "You are not allowed to submit a comment with this account."

@@ -1,6 +1,3 @@
 en:
   attachments:
     type: "Attachment"
-    add: "Add attachment"
-    helpers:
-      remote_url: "Enter a link to a file or movie:"

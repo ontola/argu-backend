@@ -3,7 +3,7 @@ en:
     type_new: "Nieuwe categorie"
   incidents:
     type_new: "Nieuwe gebeurtenis"
-    properties:
+    form:
       scenarios_count:
         label: "Scenario's"
   risks:
@@ -12,7 +12,7 @@ en:
     type_new: "Nieuw scenario"
   intervention_types:
     type_new: "Nieuw interventietype"
-    properties:
+    form:
       interventions_count:
         label: "Interventies in de praktijk"
   interventions:
@@ -20,335 +20,190 @@ en:
     publish_success: "De interventie is ingediend voor moderatie"
     attachments:
       description: "Hier kunt u interventiemateriaal, zoals flyers, presentaties of effectiviteitsrapporten uploaden. Anderen kunnen dit materiaal dan downloaden"
-    plans_and_procedure:
-      usability: "De begrijpbaarheid en bruikbaarheid van regels, richtlijnen en procedures"
-      planning: "Het goed plannen van werkzaamheden"
-      procedures: "Organisatie en procedures voor onderhoud"
-      responsibilities: "Afspraken rondom taken, verantwoordelijkheden en bevoegdheden"
-      preparation: "Voorbereiding voor noodsituaties"
-      other_plans: "Een ander aspect van plannen en procedures"
-      no_plans_and_procedure: "Geen effect op plannen en procedures"
-    people_and_resources:
-      labor_force: "Voldoende bezetting en genoeg collega’s"
-      resources: "Beschikbaarheid van voldoende middelen"
-      other_people_resource: "Een ander aspect van mensen en middelen"
-      no_people_and_resources: "Geen effect op beschikbaarheid van mensen en middelen"
-    competence:
-      craftsmanship: "Vakmanschap in de uitvoering van het werk"
-      training: "Training en opleidingssystemen"
-      knowledge: "Kennis van veiligheid, risico’s en regels"
-      unexpected_situation: "Hoe om te gaan met onverwachte situaties"
-      other_competence: "Een ander aspect van competentie/deskundigheid"
-      no_competence: "Geen effect op competentie / deskundigheid"
-    communication:
-      open_communication: "Open communicatie"
-      communication_processed: "Communicatieprocessen en afspraken"
-      communication_resources: "Communicatiemiddelen (bijv. telefoons, porto’s enz.)"
-      other_communication: "Een ander aspect van communicatie"
-      no_communication: "Geen effect op communicatie"
-    motivation_and_commitment:
-      rules_and_behavior: "Regelovertreding en gedrag"
-      leading_by_example: "Voorbeeldgedrag van leidinggevenden"
-      participation: "Participatie van medewerkers en betrokkenheid bij veiligheid"
-      other_motivation: "Een ander aspect van motivatie en betrokkenheid"
-      no_motivation_and_commitment: "Geen effect op motivatie en betrokkenheid"
-    conflict_and_prioritization:
-      leadership_priorities: "De prioriteit voor veiligheid bij leidinggevenden"
-      consitent_leadership: "Consistent leiderschap"
-      dilemmas: "Omgaan met dilemma’s / afwegingen"
-      other_conflict: "Een ander aspect van conflictoplossing en prioriteiten"
-      no_conflict_and_prioritization: "Geen effect op conflictoplossing en prioriteiten"
-    ergonomics:
-      buttons_and_devices: "Ergonomie van knoppen, afsluiters en apparaten"
-      software: "Ergonomie van controlesystemen, schermen en software"
-      housekeeping: "Opgeruimdheid / housekeeping"
-      other_ergonomics: "Een ander aspect van ergonomie"
-      no_ergonomics: "Geen effect op ergonomie"
-    tools:
-      tool_availability: "Beschikbaarheid (reserve) onderdelen"
-      design_process: "Ontwerp processen"
-      technical_state: "Technische staat en onderhoud"
-      personal_protection: "Persoonlijke beschermingsmiddelen"
-      other_tools: "Een ander aspect van gereedschap, materiaal en (reserve) onderdelen"
-      no_tools: "Geen effect op gereedschap, materiaal en (reserve) onderdelen"
-    target_audience:
-      operational_employees: "Operationele medewerkers"
-      contractors: "(Onder)aannemers"
-      hired_peronel: "Ingehuurde medewerkers"
-      managers: "Direct leidinggevenden"
-      higher_management: "Hoger management"
-      safety_professionals: "Veiligheidsprofessionals"
-      trainers: "Trainers, opleiders of adviseurs"
-    risk_reduction:
-      removal_from_danger: "Het geheel wegnemen van een bepaald gevaar (bronmaatregel)"
-      change_of_technique: "Fundamentele aanpassingen aan de gebruikte techniek."
-      technical_adjustment: "Technische aanpassingen om groepen medewerkers te beschermen (bijvoorbeeld afscherming)"
-      change_personal_protection: "Verbeterde inzet van persoonlijke beschermingsmiddelen"
-      change_knowledge: "Verandering van kennis, motivatie of instelling"
-      change_behavior: "Verandering van gedrag van de doelgroep"
-      change_culture: "Verandering van het klimaat of de cultuur binnen de organisatie"
-      change_organisation: "Structurele aanpassing van de organisatie"
-      unknown_reduction: "Weet niet"
-    continuous:
-      is_continuous: "Doorlopende interventie"
-      is_not_continuous: "Interventie met einddatum"
-      continuous_unknown: "Weet niet"
-    independent:
-      fully_independent: "Volledig zelfstandig"
-      optionally_independent: "Optioneel zelfstandig, maar idealiter met een externe partij met onafhankelijke rol"
-      external_party_required: "Alleen met behulp van een externe partij met onafhankelijke rol"
-    management_involvement:
-      management_very_important: "Zeer belangrijk"
-      management_important: "Belangrijk"
-      management_not_very_important: "Niet zo belangrijk"
-      management_not_important: "Niet belangrijk"
-    training_required:
-      training_is_required: "Ja"
-      training_is_not_required: "Nee"
-      training_unkown_required: "Weet niet"
-    nature_of_costs:
-      purchase_of_license: "Aanschaf van licenties en eigendomsrechten"
-      purchase_of_materials: "Aanschaf van materialen en middelen"
-      hiring_of_advisors: "Inhuur van externe adviseurs"
-      use_of_advisors: "Inzet van eigen veiligheidsprofessionals, HR medewerkers en dergelijke"
-      use_of_operational_employees: "Inzet van uitvoerende medewerkers in het bedrijf"
-      use_of_managers: "Inzet van leidinggevenden en managers in het bedrijf"
-    one_off_costs:
-      one_off_very_low: "Zeer laag"
-      one_off_low: "Laag"
-      one_off_normal: "Gemiddeld"
-      one_off_high: "Hoog"
-      one_off_very_high: "Zeer hoog"
-    recurring_costs:
-      recurring_very_low: "Zeer laag"
-      recurring_low: "Laag"
-      recurring_normal: "Gemiddeld"
-      recurring_high: "Hoog"
-      recurring_very_high: "Zeer hoog"
-    effectivity_research_method:
-      no_effectivity_research: "Nee, de effectiviteit is niet in kaart gebracht"
-      effectivity_conversational_research: "Ja, door middel van interne gesprekken"
-      effectivity_internal_research: "Ja, door middel van een interne rapportage"
-      effectivity_external_research: "Ja, door middel van een externe partij via een rapportage"
-      effectivity_scientific_research: "Ja, door middel van een wetenschappelijke studie naar de effectiviteit"
-    security_improved:
-      no_security_improvement: "De veiligheid is verslechterd"
-      very_small_security_improvement: "De veiligheid is hetzelfde gebleven"
-      small_security_improvement: "De veiligheid is in enige mate verbeterd"
-      big_security_improvement: "De veiligheid is in sterke mate verbeterd"
-      very_big_security_improvement: "De veiligheid is in zeer sterke mate verbeterd"
-      unkown_security_improvement: "Weet niet"
-    business_section:
-      full_business: "Op het gehele bedrijf"
-      part_of_business: "Op een afdeling, regio, land of vestiging"
-    business_section_employees:
-      business_section_0_49: "0 – 49 medewerkers"
-      business_section_50_99: "50 – 99 medewerkers"
-      business_section_100_249: "100 – 249 medewerkers"
-      business_section_250_499: "250 – 499 medewerkers"
-      business_section_500_999: "500 – 999 medewerkers"
-      business_section_1000_2999: "1000 – 2.999 medewerkers"
-      business_section_3000_plus: "3000 of meer medewerkers"
-    comments_allowed:
-      comments_are_allowed: "Ja"
-      comments_not_allowed: "Nee"
-    contact_allowed:
-      contact_is_allowed: "Ja"
-      contact_not_allowed: "Nee"
-    properties:
-      effects:
-        label: "Bedoelde effecten"
-      goal:
-        label: "Doel"
+    enums:
+      plans_and_procedure:
+        usability: "De begrijpbaarheid en bruikbaarheid van regels, richtlijnen en procedures"
+        planning: "Het goed plannen van werkzaamheden"
+        procedures: "Organisatie en procedures voor onderhoud"
+        responsibilities: "Afspraken rondom taken, verantwoordelijkheden en bevoegdheden"
+        preparation: "Voorbereiding voor noodsituaties"
+        other_plans: "Een ander aspect van plannen en procedures"
+        no_plans_and_procedure: "Geen effect op plannen en procedures"
       people_and_resources:
-        label: "Beschikbaarheid van mensen en middelen"
+        labor_force: "Voldoende bezetting en genoeg collega’s"
+        resources: "Beschikbaarheid van voldoende middelen"
+        other_people_resource: "Een ander aspect van mensen en middelen"
+        no_people_and_resources: "Geen effect op beschikbaarheid van mensen en middelen"
+      competence:
+        craftsmanship: "Vakmanschap in de uitvoering van het werk"
+        training: "Training en opleidingssystemen"
+        knowledge: "Kennis van veiligheid, risico’s en regels"
+        unexpected_situation: "Hoe om te gaan met onverwachte situaties"
+        other_competence: "Een ander aspect van competentie/deskundigheid"
+        no_competence: "Geen effect op competentie / deskundigheid"
+      communication:
+        open_communication: "Open communicatie"
+        communication_processed: "Communicatieprocessen en afspraken"
+        communication_resources: "Communicatiemiddelen (bijv. telefoons, porto’s enz.)"
+        other_communication: "Een ander aspect van communicatie"
+        no_communication: "Geen effect op communicatie"
+      motivation_and_commitment:
+        rules_and_behavior: "Regelovertreding en gedrag"
+        leading_by_example: "Voorbeeldgedrag van leidinggevenden"
+        participation: "Participatie van medewerkers en betrokkenheid bij veiligheid"
+        other_motivation: "Een ander aspect van motivatie en betrokkenheid"
+        no_motivation_and_commitment: "Geen effect op motivatie en betrokkenheid"
+      conflict_and_prioritization:
+        leadership_priorities: "De prioriteit voor veiligheid bij leidinggevenden"
+        consitent_leadership: "Consistent leiderschap"
+        dilemmas: "Omgaan met dilemma’s / afwegingen"
+        other_conflict: "Een ander aspect van conflictoplossing en prioriteiten"
+        no_conflict_and_prioritization: "Geen effect op conflictoplossing en prioriteiten"
+      ergonomics:
+        buttons_and_devices: "Ergonomie van knoppen, afsluiters en apparaten"
+        software: "Ergonomie van controlesystemen, schermen en software"
+        housekeeping: "Opgeruimdheid / housekeeping"
+        other_ergonomics: "Een ander aspect van ergonomie"
+        no_ergonomics: "Geen effect op ergonomie"
+      tools:
+        tool_availability: "Beschikbaarheid (reserve) onderdelen"
+        design_process: "Ontwerp processen"
+        technical_state: "Technische staat en onderhoud"
+        personal_protection: "Persoonlijke beschermingsmiddelen"
+        other_tools: "Een ander aspect van gereedschap, materiaal en (reserve) onderdelen"
+        no_tools: "Geen effect op gereedschap, materiaal en (reserve) onderdelen"
       target_audience:
-        label: "Doelgroep(en)"
+        operational_employees: "Operationele medewerkers"
+        contractors: "(Onder)aannemers"
+        hired_peronel: "Ingehuurde medewerkers"
+        managers: "Direct leidinggevenden"
+        higher_management: "Hoger management"
+        safety_professionals: "Veiligheidsprofessionals"
+        trainers: "Trainers, opleiders of adviseurs"
       risk_reduction:
-        label: "Werking"
+        removal_from_danger: "Het geheel wegnemen van een bepaald gevaar (bronmaatregel)"
+        change_of_technique: "Fundamentele aanpassingen aan de gebruikte techniek."
+        technical_adjustment: "Technische aanpassingen om groepen medewerkers te beschermen (bijvoorbeeld afscherming)"
+        change_personal_protection: "Verbeterde inzet van persoonlijke beschermingsmiddelen"
+        change_knowledge: "Verandering van kennis, motivatie of instelling"
+        change_behavior: "Verandering van gedrag van de doelgroep"
+        change_culture: "Verandering van het klimaat of de cultuur binnen de organisatie"
+        change_organisation: "Structurele aanpassing van de organisatie"
+        unknown_reduction: "Weet niet"
       continuous:
-        label: "Aard van de interventie"
+        is_continuous: "Doorlopende interventie"
+        is_not_continuous: "Interventie met einddatum"
+        continuous_unknown: "Weet niet"
       independent:
-        label: "Zelfstandig of ondersteund door een derde partij"
+        fully_independent: "Volledig zelfstandig"
+        optionally_independent: "Optioneel zelfstandig, maar idealiter met een externe partij met onafhankelijke rol"
+        external_party_required: "Alleen met behulp van een externe partij met onafhankelijke rol"
       management_involvement:
-        label: "Belang betrokken management"
+        management_very_important: "Zeer belangrijk"
+        management_important: "Belangrijk"
+        management_not_very_important: "Niet zo belangrijk"
+        management_not_important: "Niet belangrijk"
       training_required:
-        label: "Training of opleiding nodig"
-      additional_introduction_information:
-        label: "Extra informatie over het invoeren van de interventie"
+        training_is_required: "Ja"
+        training_is_not_required: "Nee"
+        training_unkown_required: "Weet niet"
       nature_of_costs:
-        label: "De aard van deze kosten was"
+        purchase_of_license: "Aanschaf van licenties en eigendomsrechten"
+        purchase_of_materials: "Aanschaf van materialen en middelen"
+        hiring_of_advisors: "Inhuur van externe adviseurs"
+        use_of_advisors: "Inzet van eigen veiligheidsprofessionals, HR medewerkers en dergelijke"
+        use_of_operational_employees: "Inzet van uitvoerende medewerkers in het bedrijf"
+        use_of_managers: "Inzet van leidinggevenden en managers in het bedrijf"
       one_off_costs:
-        label: "Eenmalige kosten"
-      one_off_costs_score:
-        label: "Eenmalige kosten"
+        one_off_very_low: "Zeer laag"
+        one_off_low: "Laag"
+        one_off_normal: "Gemiddeld"
+        one_off_high: "Hoog"
+        one_off_very_high: "Zeer hoog"
       recurring_costs:
-        label: "Doorlopende kosten"
-      recurring_costs_score:
-        label: "Doorlopende kosten"
-      cost_explanation:
-        label: "Aanvullend commentaar"
+        recurring_very_low: "Zeer laag"
+        recurring_low: "Laag"
+        recurring_normal: "Gemiddeld"
+        recurring_high: "Hoog"
+        recurring_very_high: "Zeer hoog"
       effectivity_research_method:
-        label: "Effectiviteit gemeten"
+        no_effectivity_research: "Nee, de effectiviteit is niet in kaart gebracht"
+        effectivity_conversational_research: "Ja, door middel van interne gesprekken"
+        effectivity_internal_research: "Ja, door middel van een interne rapportage"
+        effectivity_external_research: "Ja, door middel van een externe partij via een rapportage"
+        effectivity_scientific_research: "Ja, door middel van een wetenschappelijke studie naar de effectiviteit"
       security_improved:
-        label: "Ervaren effectiviteit"
-      security_improved_score:
-        label: "Ervaren effectiviteit"
-      security_improvement_reason:
-        label: "Toelichting op de ervaren effectiviteit"
+        no_security_improvement: "De veiligheid is verslechterd"
+        very_small_security_improvement: "De veiligheid is hetzelfde gebleven"
+        small_security_improvement: "De veiligheid is in enige mate verbeterd"
+        big_security_improvement: "De veiligheid is in sterke mate verbeterd"
+        very_big_security_improvement: "De veiligheid is in zeer sterke mate verbeterd"
+        unkown_security_improvement: "Weet niet"
       business_section:
-        label: "Bereik binnen bedrijf"
+        full_business: "Op het gehele bedrijf"
+        part_of_business: "Op een afdeling, regio, land of vestiging"
       business_section_employees:
-        label: "Omvang"
-    industry:
-      argiculutre: "Landbouw"
-      food_industry: "Voedingsmiddelenindustrie"
-      textile: "Textiel"
-      wood_industry: "Houtindustrie"
-      paper_and_cardboard: "Papier en karton"
-      grafimedia: "Grafimedia"
-      chemistry: "Chemie"
-      rubber_and_plastic: "Rubber en kunststof"
-      production_of_other_mineral_products: "Productie overige minerale producten"
-      metal: "Metaal"
-      metal_production: "Metaalproductie"
-      manufacture_of_metal_products: "Vervaardiging metaalproducten"
-      manufacture_of_electronics: "Vervaardiging elektronica"
-      manufacture_of_electrical_appliances: "Vervaardiging elektrische apparaten"
-      manufacture_of_other_machines_and_equipment: "Vervaardiging overige machines en apparaten"
-      car_industry: "Autoindustrie"
-      manufacture_of_other_means_of_transport: "Vervaardiging andere vervoersmiddelen"
-      furniture_industry: "Meubelindustrie"
-      social_work_facilities: "Sociale werkvoorzieningen"
-      repair_and_installation_of_machines: "Reparatie en installaties van machines"
-      energy_companies: "Energiebedrijven"
-      waste_treatment_and_recycling: "Afvalbehandeling en recycling"
-      remediation_and_other_waste_management: "Sanering en overige afvalbeheer"
-      residential_building_and_construction_for_public_life: "Woningbouw en bouw voor het openbare leven"
-      ground_water_and_road_construction: "Grond-, water- en wegenbouw"
-      construction_industry: "Bouwnijverheid"
-      car_trade_and_repair: "Autohandel en -reparatie"
-      wholesale: "Groothandel"
-      retail: "Detailhandel"
-      freight_transport: "Goederenvervoer"
-      inland_shipping: "Binnenscheepvaart"
-      transport_and_logistics: "Transport en logistiek"
-      catering_industry: "Horeca"
-      accommodation: "Logiesverstrekking"
-      food_and_beverage_outlets: "Eet- en drinkgelegenheden"
-      rental_of_and_trade_in_real_estate: "Verhuur van en handel in onroerend goed"
-      architects_and_engineers: "architecten en ingenieurs"
-      rental_of_movable_property: "Verhuur van roerende goederen"
-      catering_cleaning_companies_and_gardeners: "Catering, schoonmaakbedrijven en hoveniers"
-      other_business_services: "Overige zakelijke dienstverlening"
-      public_administration_and_government_services: "Openbaar bestuur en overheidsdiensten"
-      education: "Onderwijs"
-      healthcare: "Gezondheidszorg"
-      nursing: "Verpleging"
-      social_services: "Maatschappelijke dienstverlening"
-      sport_and_recreation: "Sport en recreatie"
-  measure_types:
-    type_new: "Nieuwe maatregel"
-    collection_for: "Maatregelen tegen %{parent}"
-    example_of: "Beschermt tegen"
-    properties:
-      measures_count:
-        label: "Voorbeelden"
-  measures:
-    type_new: "Maak je eigen voorbeeld"
-    comments_allowed:
-      comments_are_allowed: "Ja"
-      comments_not_allowed: "Nee"
-    form:
-      attachment_published_at:
-        label: "Publicatiedatum bijlage(s)"
-      description:
-        helper_text: "Beschrijf het voorbeeld, of geef een samenvatting van de toegevoegde pdf in minder dan 20.000 tekens."
-        label: "Beschrijving"
-      measure_owner:
-        helper_text: "Wat is de naam van de organisatie van de makers?"
-        label: "Eigenaar"
+        business_section_0_49: "0 – 49 medewerkers"
+        business_section_50_99: "50 – 99 medewerkers"
+        business_section_100_249: "100 – 249 medewerkers"
+        business_section_250_499: "250 – 499 medewerkers"
+        business_section_500_999: "500 – 999 medewerkers"
+        business_section_1000_2999: "1000 – 2.999 medewerkers"
+        business_section_3000_plus: "3000 of meer medewerkers"
       comments_allowed:
-        description: "Wilt u reacties op uw Voorbeeld toestaan?"
-        label: "Reacties toestaan"
-      contact_info:
-        helper_text: "Hier kan een telefoonnummer, website of e-mailadres worden geplaatst."
-        label: "Contactinformatie"
-      more_info:
-        helper_text: "Plaats een link naar een website waar meer informatie over dit voorbeeld te vinden is."
-        label: "Meer info link"
-  formtastic:
-    labels:
-      example_of_id: "Beschermt tegen"
-      category_id: "Categorie"
-      intervention:
-        display_name: "Wat is de naam van de interventie?"
-        description: "Geef een korte beschrijving van de interventie."
-        goal: "Welke doel(en) hoopt u te bereiken met uw interventie?"
-        plans_and_procedure: "Plannen en procedures"
-        people_and_resources: "Beschikbaarheid van mensen en middelen"
-        competence: "Competentie / deskundigheid"
-        communication: "Communicatie"
-        motivation_and_commitment: "Motivatie en betrokkenheid"
-        conflict_and_prioritization: "Conflictoplossing en prioriteiten"
-        ergonomics: "Ergonomie"
-        parent_id: "Onder welke op deze website beschreven interventietypes is de interventie in te delen?"
-        tools: "Gereedschap, materiaal en (reserve) onderdelen"
-        target_audience: "Wie is of wie zijn de doelgroep(en) van de interventie?"
-        risk_reduction: "Op welke manier verlaagt de interventie volgens u de kans op ongevallen?"
-        continuous: "Is de interventie doorlopend of heeft deze een vaste einddatum?"
-        independent: "Kan de interventie zelfstandig worden uitgevoerd of is ondersteuning vanuit een externe partij met een onafhankelijke rol noodzakelijk?"
-        management_involvement: "Is het belangrijk dat het management van het bedrijf betrokken wordt bij deze interventie?"
-        training_required: "Is het nodig om een training of opleiding te volgen om deze interventie in te kunnen voeren in een bedrijf?"
-        additional_introduction_information: "Beschrijf hieronder hoe u de interventie heeft aangepakt."
-        nature_of_costs: "Wat is de aard van de kosten die het bedrijf voor deze interventie heeft gemaakt? (Meerdere opties mogelijk)"
-        one_off_costs: "Eenmalige kosten (bijvoorbeeld op maat maken, lanceren, uitleggen, etc.)"
-        recurring_costs: "Doorlopende kosten (gericht op het blijvend gebruiken van de interventie)"
-        cost_explanation: "Geef een toelichting waar deze kosten uit bestaan."
-        effectivity_research_method: "Is de effectiviteit van de interventie na de toepassing in het bedrijf in kaart gebracht?"
-        security_improved: "Denkt u dat de veiligheid is veranderd door het uitvoeren van de interventie?"
-        security_improvement_reason: "Waarom denkt u dat de interventie de veiligheid wel of niet verbeterd heeft? Waaraan is dit merkbaar?"
-        business_section: "Is de interventie gericht op het gehele bedrijf of op een deel van het bedrijf zoals een afdeling, regio, land of vestiging?"
-        business_section_employees: "Hoeveel medewerkers zijn er ongeveer werkzaam in het land, de regio, vestiging of afdeling van het bedrijf?"
-        comments_allowed: "Wilt u reacties op uw interventie toestaan?"
-        contact_allowed: "Mogen mensen contact met u opnemen over de interventie?"
-        organization_name: "Wat is de naam van het bedrijf waar de interventie is uitgevoerd?"
-        show_organization_name: "De bedrijfsnaam mag getoond worden"
-        job_title: "Wat is uw functie bij dit bedrijf?"
-        industry: "In welke sector is dit bedrijf actief?"
-        default_profile_photo: "Bedrijfslogo"
-      measure:
-        comments_allowed: "Wilt u reacties op uw interventie toestaan?"
-        parent_id: "Onder welke op deze website beschreven maatregelen is dit voorbeeld in te delen?"
-        second_opinion: "Dit voorbeeld is door een andere organisatie gecontroleerd"
-        second_opinion_by: "Door welke organisatie?"
-        phase_ids: "Fases"
-        category_ids: "Categorieën"
-        attachment_published_at: "Publicatiedatum bijlage(s)"
-        contact_info: "Contactinformatie"
-        more_info: "Meer informatie"
-    hints:
-      measure:
-        category_ids: "Selecteer de categorieën"
-        description: "Beschrijf het voorbeeld, of geef een samenvatting van de toegevoegde pdf."
-        display_name: "Voeg hier de titel in van het voorbeeld?"
-        phase_ids: "Selecteer de fase waar dit voorbeeld onder valt."
-        second_opinion_by: "Voer een organisatie naam in"
-  properties:
-    interventions:
-      description:
-        helper_text: |
-          Neem hier in ieder geval de volgende onderdelen in op:
-            • Wat zijn de activiteiten van het bedrijf?
-            • Wat houdt de interventie in?
-            • Waarom is deze interventie ingevoerd?
-            • Hoe is de interventie uitgevoerd?"
-      goal:
-        helper_text: |
-          Probeer het doel of de doelen zo specifiek en helder mogelijk te verwoorden.
-          Neem hier ook bij mee:
-            • Wat is de doelgroep van de interventie?
-            • Wat probeert u met de interventie bij deze doelgroep te bereiken?
+        comments_are_allowed: "Ja"
+        comments_not_allowed: "Nee"
+      contact_allowed:
+        contact_is_allowed: "Ja"
+        contact_not_allowed: "Nee"
+      industry:
+        argiculutre: "Landbouw"
+        food_industry: "Voedingsmiddelenindustrie"
+        textile: "Textiel"
+        wood_industry: "Houtindustrie"
+        paper_and_cardboard: "Papier en karton"
+        grafimedia: "Grafimedia"
+        chemistry: "Chemie"
+        rubber_and_plastic: "Rubber en kunststof"
+        production_of_other_mineral_products: "Productie overige minerale producten"
+        metal: "Metaal"
+        metal_production: "Metaalproductie"
+        manufacture_of_metal_products: "Vervaardiging metaalproducten"
+        manufacture_of_electronics: "Vervaardiging elektronica"
+        manufacture_of_electrical_appliances: "Vervaardiging elektrische apparaten"
+        manufacture_of_other_machines_and_equipment: "Vervaardiging overige machines en apparaten"
+        car_industry: "Autoindustrie"
+        manufacture_of_other_means_of_transport: "Vervaardiging andere vervoersmiddelen"
+        furniture_industry: "Meubelindustrie"
+        social_work_facilities: "Sociale werkvoorzieningen"
+        repair_and_installation_of_machines: "Reparatie en installaties van machines"
+        energy_companies: "Energiebedrijven"
+        waste_treatment_and_recycling: "Afvalbehandeling en recycling"
+        remediation_and_other_waste_management: "Sanering en overige afvalbeheer"
+        residential_building_and_construction_for_public_life: "Woningbouw en bouw voor het openbare leven"
+        ground_water_and_road_construction: "Grond-, water- en wegenbouw"
+        construction_industry: "Bouwnijverheid"
+        car_trade_and_repair: "Autohandel en -reparatie"
+        wholesale: "Groothandel"
+        retail: "Detailhandel"
+        freight_transport: "Goederenvervoer"
+        inland_shipping: "Binnenscheepvaart"
+        transport_and_logistics: "Transport en logistiek"
+        catering_industry: "Horeca"
+        accommodation: "Logiesverstrekking"
+        food_and_beverage_outlets: "Eet- en drinkgelegenheden"
+        rental_of_and_trade_in_real_estate: "Verhuur van en handel in onroerend goed"
+        architects_and_engineers: "architecten en ingenieurs"
+        rental_of_movable_property: "Verhuur van roerende goederen"
+        catering_cleaning_companies_and_gardeners: "Catering, schoonmaakbedrijven en hoveniers"
+        other_business_services: "Overige zakelijke dienstverlening"
+        public_administration_and_government_services: "Openbaar bestuur en overheidsdiensten"
+        education: "Onderwijs"
+        healthcare: "Gezondheidszorg"
+        nursing: "Verpleging"
+        social_services: "Maatschappelijke dienstverlening"
+        sport_and_recreation: "Sport en recreatie"
+    form:
       additional_introduction_information:
         helper_text: |
           Denk hierbij aan:
@@ -356,8 +211,141 @@ en:
             • De nodige inzet van (externe) adviseurs;
             • Communicatie met de doelgroep;
             • Noodzakelijke materialen zoals handboek, protocol, flyers, video’s, vragenlijsten, software of presentaties.
+        label: "Beschrijf hieronder hoe u de interventie heeft aangepakt."
+      business_section:
+        label: "Is de interventie gericht op het gehele bedrijf of op een deel van het bedrijf zoals een afdeling, regio, land of vestiging?"
+      business_section_employees:
+        label: "Hoeveel medewerkers zijn er ongeveer werkzaam in het land, de regio, vestiging of afdeling van het bedrijf?"
+      comments_allowed:
+        label: "Wilt u reacties op uw interventie toestaan?"
+      competence:
+        label: "Competentie / deskundigheid"
+      communication:
+        label: "Communicatie"
+      conflict_and_prioritization:
+        label: "Conflictoplossing en prioriteiten"
+      contact_allowed:
+        label: "Mogen mensen contact met u opnemen over de interventie?"
+      continuous:
+        label: "Is de interventie doorlopend of heeft deze een vaste einddatum?"
       cost_explanation:
         helper_text: "Denk hierbij bijvoorbeeld aan personeelskosten, aanschafkosten, etc."
+        label: "Geef een toelichting waar deze kosten uit bestaan."
+      default_profile_photo:
+        label: "Bedrijfslogo"
+      description:
+        helper_text: |
+          Neem hier in ieder geval de volgende onderdelen in op:
+            • Wat zijn de activiteiten van het bedrijf?
+            • Wat houdt de interventie in?
+            • Waarom is deze interventie ingevoerd?
+            • Hoe is de interventie uitgevoerd?"
+        label: "Geef een korte beschrijving van de interventie."
+      display_name:
+        label: "Wat is de naam van de interventie?"
+      effectivity_research_method:
+        label: "Is de effectiviteit van de interventie na de toepassing in het bedrijf in kaart gebracht?"
+      effects:
+        label: "Bedoelde effecten"
+      ergonomics:
+        label: "Ergonomie"
+      goal:
+        helper_text: |
+          Probeer het doel of de doelen zo specifiek en helder mogelijk te verwoorden.
+          Neem hier ook bij mee:
+            • Wat is de doelgroep van de interventie?
+            • Wat probeert u met de interventie bij deze doelgroep te bereiken?
+        label: "Welke doel(en) hoopt u te bereiken met uw interventie?"
+      independent:
+        label: "Kan de interventie zelfstandig worden uitgevoerd of is ondersteuning vanuit een externe partij met een onafhankelijke rol noodzakelijk?"
+      industry:
+        label: "In welke sector is dit bedrijf actief?"
+      job_title:
+        label: "Wat is uw functie bij dit bedrijf?"
+      management_involvement:
+        label: "Is het belangrijk dat het management van het bedrijf betrokken wordt bij deze interventie?"
+      motivation_and_commitment:
+        label: "Motivatie en betrokkenheid"
+      nature_of_costs:
+        label: "Wat is de aard van de kosten die het bedrijf voor deze interventie heeft gemaakt? (Meerdere opties mogelijk)"
+      one_off_costs:
+        label: "Eenmalige kosten (bijvoorbeeld op maat maken, lanceren, uitleggen, etc.)"
+      one_off_costs_score:
+        label: "Eenmalige kosten"
+      organization_name:
+        label: "Wat is de naam van het bedrijf waar de interventie is uitgevoerd?"
+      parent_id:
+        label: "Onder welke op deze website beschreven interventietypes is de interventie in te delen?"
+      people_and_resources:
+        label: "Beschikbaarheid van mensen en middelen"
+      plans_and_procedure:
+        label: "Plannen en procedures"
+      recurring_costs:
+        label: "Doorlopende kosten (gericht op het blijvend gebruiken van de interventie)"
+      recurring_costs_score:
+        label: "Doorlopende kosten"
+      risk_reduction:
+        label: "Op welke manier verlaagt de interventie volgens u de kans op ongevallen?"
+      security_improved:
+        label: "Denkt u dat de veiligheid is veranderd door het uitvoeren van de interventie?"
+      security_improved_score:
+        label: "Ervaren effectiviteit"
+      security_improvement_reason:
+        label: "Waarom denkt u dat de interventie de veiligheid wel of niet verbeterd heeft? Waaraan is dit merkbaar?"
+      show_organization_name:
+        label: "De bedrijfsnaam mag getoond worden"
+      target_audience:
+        label: "Wie is of wie zijn de doelgroep(en) van de interventie?"
+      tools:
+        label: "Gereedschap, materiaal en (reserve) onderdelen"
+      training_required:
+        label: "Is het nodig om een training of opleiding te volgen om deze interventie in te kunnen voeren in een bedrijf?"
+  measure_types:
+    type_new: "Nieuwe maatregel"
+    collection_for: "Maatregelen tegen %{parent}"
+    example_of: "Beschermt tegen"
+    form:
+      measures_count:
+        label: "Voorbeelden"
+  measures:
+    type_new: "Maak je eigen voorbeeld"
+    enums:
+      comments_allowed:
+        comments_are_allowed: "Ja"
+        comments_not_allowed: "Nee"
+    form:
+      attachment_published_at:
+        label: "Publicatiedatum bijlage(s)"
+      category_ids:
+        description: "Selecteer de categorieën"
+        label: "Categorieën"
+      comments_allowed:
+        label: "Reacties toestaan"
+        description: "Wilt u reacties op uw Voorbeeld toestaan?"
+      contact_info:
+        helper_text: "Hier kan een telefoonnummer, website of e-mailadres worden geplaatst."
+        label: "Contactinformatie"
+      description:
+        helper_text: "Beschrijf het voorbeeld, of geef een samenvatting van de toegevoegde pdf in minder dan 20.000 tekens."
+        label: "Beschrijving"
+      display_name:
+        description: "Voeg hier de titel in van het voorbeeld?"
+      measure_owner:
+        helper_text: "Wat is de naam van de organisatie van de makers?"
+        label: "Eigenaar"
+      more_info:
+        helper_text: "Plaats een link naar een website waar meer informatie over dit voorbeeld te vinden is."
+        label: "Meer info link"
+      parent_id:
+        label: "Onder welke op deze website beschreven maatregelen is dit voorbeeld in te delen?"
+      phase_ids:
+        label: "Fases"
+        description: "Selecteer de fase waar dit voorbeeld onder valt."
+      second_opinion:
+        label: "Dit voorbeeld is door een andere organisatie gecontroleerd"
+      second_opinion_by:
+        description: "Voer een organisatie naam in"
+        label: "Door welke organisatie?"
   actions:
     interventions:
       create:

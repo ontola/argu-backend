@@ -2,10 +2,8 @@ nl:
   otp_attempts:
     form:
       otp_attempt:
-        label: "Authenticatiecode"
-    properties:
-      otp_attempt:
         helper_text: 'Deze kun je vinden in de authenticatie-applicatie waarmee je eerder hebt ingelogd.'
+        label: "Authenticatiecode"
   otp_secrets:
     form:
       otp_attempt:

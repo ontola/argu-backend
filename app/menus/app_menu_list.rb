@@ -158,14 +158,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     ]
   end
 
-  def user_forum_management_item
-    menu_item(
-      :forums,
-      label: I18n.t('forums.management.title'),
-      href: RDF::DynamicURI(forums_user_url(user_context.user))
-    )
-  end
-
   def user_menu_items
     return [language_menu_item] if user_context.user.guest?
 

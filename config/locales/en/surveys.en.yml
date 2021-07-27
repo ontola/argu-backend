@@ -1,11 +1,8 @@
 en:
   surveys:
     type_new: "New survey"
-  properties:
-    surveys:
+    form:
       external_iri:
+        description: "https://[userName].typeform.com/to/[surveyId]"
         helper_text: "See [our helpdesk](https://argu.co/argu/t/10509) for more information about creating surveys"
-  formtastic:
-    placeholders:
-      survey:
-        external_iri: "https://[userName].typeform.com/to/[surveyId]"
+        label: "Typeform url"

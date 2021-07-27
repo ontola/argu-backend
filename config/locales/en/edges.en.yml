@@ -1,6 +1,4 @@
 en:
   edges:
-    pinned_at: "Pinned at %{datetime}"
-    show_placement: "Show location"
     collection:
       drafts: "My drafts"

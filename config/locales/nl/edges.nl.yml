@@ -1,6 +1,4 @@
 nl:
   edges:
-    pinned_at: "Vastgezet op %{datetime}"
-    show_placement: "Bekijk locatie"
     collection:
       drafts: "Mijn concepten"

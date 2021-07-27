@@ -54,7 +54,6 @@ nl:
   newe_type: "Nieuwe %{type}"
   add_type: "%{type} toevoegen"
   back: "Terug"
-  back_to: "Terug naar %{type}"
   cancel: "Annuleren"
   show: "Tonen"
   add: "Toevoegen"

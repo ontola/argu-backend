@@ -182,7 +182,7 @@ nl:
     price:
       label: "Prijs"
     view:
-      label: "View"
+      label: "Weergave"
     rawResource:
       label: "Resource"
     shortnameable:

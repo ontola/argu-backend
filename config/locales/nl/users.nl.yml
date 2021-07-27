@@ -17,71 +17,60 @@ nl:
         advanced: "Geavanceerd"
         emails: "E-mailadressen"
         destroy: "Verwijder"
-    edit:
-      analytics_helper: "We gebruiken Bugsnag om fouten in je browser te detecteren en op te lossen. We gebruiken Google Analytics om de gebruikerservaring te verbeteren."
-    privacy:
-      public_helper: "Hierdoor kunnen zoekmachines jouw profielpagina indexeren."
     registrations:
-      categories:
-        general: "Algemeen"
-        authentication: "Authenticatie"
-        notifications: "Meldingen"
-      confirmed: "E-mail bevestigd"
-      unconfirmed: "E-mail nog niet bevestigd"
-      unconfirmed_email: "Email in afwachting: %{email}"
       confirm_mail_change_notice: "We hebben je een mail gestuurd naar het nieuwe adres. Bevestig deze om de wijziging op te slaan."
-    reactions_email:
-      never_reactions_email: 'Nooit'
-      direct_reactions_email: 'Onmiddelijk'
-      daily_reactions_email: 'Dagelijks'
-      weekly_reactions_email: 'Wekelijks'
-    news_email:
-      never_news_email: 'Nooit'
-      direct_news_email: 'Onmiddelijk'
-      daily_news_email: 'Dagelijks'
-      weekly_news_email: 'Wekelijks'
-    decisions_email:
-      never_decisions_email: 'Nooit'
-      direct_decisions_email: 'Onmiddelijk'
-      daily_decisions_email: 'Dagelijks'
-      weekly_decisions_email: 'Wekelijks'
-    memberships_email:
-      never_memberships_email: 'Nooit'
-      direct_memberships_email: 'Onmiddelijk'
-      daily_memberships_email: 'Dagelijks'
-      weekly_memberships_email: 'Wekelijks'
-    created_email:
-      never_created_email: 'Nooit'
-      direct_created_email: 'Onmiddelijk'
-      daily_created_email: 'Dagelijks'
-      weekly_created_email: 'Wekelijks'
-    destroy_strategy:
-      expropriate_on_destroy: "Anonimiseer content"
-      remove_on_destroy: "Verwijder content"
-    cap_reached: "We zitten vol"
-    cap_reached_body: "Bedankt voor je interesse in Argu, door overweldigende aanmeldingen hebben we maximum capaciteit bereikt. Aanmeldingen gaan weer open als we onze capaciteit hebben verhoogd."
-    authentications:
-      cant_decouple_note_provider: "Je kunt je gekoppelde accounts alleen ontkoppelen door een wachtwoord in te stellen of je account te verwijderen."
-      email_mismatch: "Email komt niet overeen met de huidige gebruiker, log eerst uit alvorens met een ander account in te loggen."
-    connect:
-      title: "Koppel accounts"
-      text: "Er bestaat al een gebruiker op Argu genaamd %{to_name} met hetzelfde email adres als jouw %{from_type} account. Om het %{from_type} account van %{from_name} te koppelen aan dit Argu account, moet je het wachtwoord van het Argu account invoeren."
+    enums:
+      reactions_email:
+        never_reactions_email: 'Nooit'
+        direct_reactions_email: 'Onmiddelijk'
+        daily_reactions_email: 'Dagelijks'
+        weekly_reactions_email: 'Wekelijks'
+      news_email:
+        never_news_email: 'Nooit'
+        direct_news_email: 'Onmiddelijk'
+        daily_news_email: 'Dagelijks'
+        weekly_news_email: 'Wekelijks'
+      decisions_email:
+        never_decisions_email: 'Nooit'
+        direct_decisions_email: 'Onmiddelijk'
+        daily_decisions_email: 'Dagelijks'
+        weekly_decisions_email: 'Wekelijks'
+      memberships_email:
+        never_memberships_email: 'Nooit'
+        direct_memberships_email: 'Onmiddelijk'
+        daily_memberships_email: 'Dagelijks'
+        weekly_memberships_email: 'Wekelijks'
+      created_email:
+        never_created_email: 'Nooit'
+        direct_created_email: 'Onmiddelijk'
+        daily_created_email: 'Dagelijks'
+        weekly_created_email: 'Wekelijks'
+      destroy_strategy:
+        expropriate_on_destroy: "Anonimiseer content"
+        remove_on_destroy: "Verwijder content"
     drafts:
       title: "Mijn concepten"
-      empty:
-        self: "Je hebt momenteel geen concepten"
-        other: "%{user} heeft momenteel geen concepten"
-    emails:
-      primary: "primary"
-      add: "Voeg email toe"
     form:
-      is_public:
-        description: "Als je dit uitzet, verandert je naam voor niet-leden in \"Anoniem\". Door dit uit te zetten voorkom je dat je in zoekmachines terecht komt. Geregistreerde leden kunnen altijd je profiel en naam bekijken."
+      decisions_email:
+        label: "Bij officiele besluiten"
       display_name:
         description: ""
+        helper_text: "Stel in hoe je zichtbaar bent voor anderen. De meesten mensen gebruiken hun echte naam."
         label: "Naam"
-    properties:
+      email:
+        description: "email@example.com"
+      has_analytics:
+        description: "We gebruiken Bugsnag om fouten in je browser te detecteren en op te lossen. We gebruiken Matomo om geanonimiseerd op te slaan hoe de website wordt gebruikt, zodat we hem sneller kunnen verbeteren."
+        label: "Activeer browser diensten"
+      is_public:
+        description: "Als je dit uitzet, verandert je naam voor niet-leden in \"Anoniem\". Door dit uit te zetten voorkom je dat je in zoekmachines terecht komt. Geregistreerde leden kunnen altijd je profiel en naam bekijken."
+      news_email:
+        label: "Bij belangrijke items"
+      reactions_email:
+        label: "Bij nieuwe items"
+      shortname:
+        description: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
+        label: "Gebruikersnaam"
       url:
         helper_text: "Je kunt jouw gebruikersnaam later niet meer wijzigen."
-      display_name:
-        helper_text: "Stel in hoe je zichtbaar bent voor anderen. De meesten mensen gebruiken hun echte naam."
+        label: "Gebruikersnaam"

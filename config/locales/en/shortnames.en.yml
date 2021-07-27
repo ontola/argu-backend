@@ -6,9 +6,12 @@ en:
       from: "From"
       to: "To"
       delete: "Delete"
-    errors:
     form:
+      destination:
+        description: "Enter the part of the url following %{iri_prefix}/"
+        label: "Destination"
       shortname:
+        description: "No spaces. Only letters, numbers and _. Start with a letter."
         label: "URL"
   activerecord:
     errors:

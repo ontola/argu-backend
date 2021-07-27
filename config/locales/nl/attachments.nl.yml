@@ -1,6 +1,3 @@
 nl:
   attachments:
     type: "Bijlage"
-    add: "Bijlage toevoegen"
-    helpers:
-      remote_url: "Voer een link in naar een bestand of filmpje:"

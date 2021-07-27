@@ -1,11 +1,12 @@
 en:
   banners:
     type_new: 'New banner'
-    audiences:
-      guests: 'Guests'
-      users: 'Users'
-      members: 'Members'
-      everyone: 'Everyone'
+    enums:
+      audience:
+        guests: 'Guests'
+        users: 'Users'
+        members: 'Members'
+        everyone: 'Everyone'
   banner_managements:
     type: 'Banner'
     plural: 'Banners'

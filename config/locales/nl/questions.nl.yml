@@ -3,29 +3,31 @@
 nl:
   questions:
     type_new: "Nieuwe uitdaging"
-    header: "uitdagingen"
-    tooltips:
-      count: "Aantal geplaatste uitdagingen"
-      info: "Een uitdaging is een vraagstuk of probleem waaronder ideeën kunnen worden geplaatst."
     call_to_action:
       title: "Oplossing nodig?"
       body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
       action: "Deel jouw uitdaging."
-    default_motion_sorting:
-      popular: "Stemmen voor (meeste eerst)"
-      created_at: "Aanmaakdatum (nieuwste eerst)"
-      updated_at: "Activiteit (recenste eerst)"
-      popular_asc: "Stemmen voor (minste eerst)"
-      created_at_asc: "Aanmaakdatum (oudste eerst)"
-      updated_at_asc: "Activiteit (oudste eerst)"
+    enums:
+      default_motion_sorting:
+        popular: "Stemmen voor (meeste eerst)"
+        created_at: "Aanmaakdatum (nieuwste eerst)"
+        updated_at: "Activiteit (recenste eerst)"
+        popular_asc: "Stemmen voor (minste eerst)"
+        created_at_asc: "Aanmaakdatum (oudste eerst)"
+        updated_at_asc: "Activiteit (oudste eerst)"
     form:
-      title:
-        label: "Geef jouw uitdaging een titel"
       content:
+        description: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
         label: "Licht je uitdaging toe"
-      themes: "thema1, thema2"
-      invert: "alle argumenten omkeren"
-      default_sorting:  'Standaard sortering van ideeën'
+      default_motion_sorting:
+        label: "Standaard sortering van ideeën"
+      description:
+        description: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
+      display_name:
+        description: "Plaats hier de kern van jouw uitdaging"
+      title:
+        description: "Plaats hier de kern van jouw uitdaging"
+        label: "Geef jouw uitdaging een titel"
   activerecord:
     attributes:
       question:

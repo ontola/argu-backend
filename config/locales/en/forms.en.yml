@@ -1,0 +1,153 @@
+en:
+  forms:
+    about:
+      label: "About"
+    attachments:
+      label: "Attachments"
+    attachment_collection:
+      label: "Attachments"
+    audience:
+      label: "Audience"
+    bio:
+      label: "Goal"
+    confirmation_string:
+      description: "Type 'remove' to confirm"
+      label: "Confirmation"
+    content:
+      label: "Content"
+    country_code:
+      label: "Country"
+    coupon:
+      label: "Coupon"
+    coupons:
+      label: "Coupons"
+    coupon_count:
+      label: "Coupon count"
+    cover_photo_attribution:
+      description: "If you do not posess the copyright to a photo, you can name the author and the license here. For example: CC-BY @argu_joep"
+      label: "Copyright"
+    cover_photo:
+      label: "Cover photo"
+    cover_photo_add:
+      label: "Add image"
+    created_at:
+      label: "Created at"
+    creator:
+      label: "Post as"
+    current_password:
+      label: "Current password"
+    custom_placement:
+      label: "Location"
+    default_cover_photo:
+      label: "Cover photo"
+    default_profile_photo:
+      label: "Profile photo"
+    description:
+      description: "Enter a description"
+      label: "Content"
+    dismiss_button:
+      label: "Button text"
+    dismissable:
+      label: "Dismissable"
+    display_name:
+      description: "Enter your title"
+      label: "Title"
+    edge_id:
+      label: "Object"
+    email:
+      description: "email@example.com"
+      label: "Email"
+    ends_at:
+      label: "Ends at"
+    expires_at:
+      label: "Expires at"
+    filename:
+      label: "Filename"
+    follows_count:
+      label: 'Followers'
+    grant_set:
+      label: 'Permission set'
+    grant_set_id:
+      label: 'Permission set'
+    grants:
+      label: "Grants"
+    grant_collection:
+      label: "Grants"
+    group_membership_collection:
+      label: 'Members'
+    group_id:
+      label: 'Group'
+    header_background:
+      label: "Background of top bar"
+    header_text:
+      label: "Text color of top bar"
+    home_placement:
+      label: "Address"
+    is_draft:
+      label: "Draft"
+    is_public:
+      label: "Show profile to non-members"
+    last_accepted:
+      label: "I agree"
+    last_activity_at:
+      label: "Activity"
+    language:
+      label: "Language"
+    locale:
+      label: "Language"
+    map_question:
+      label: "Large map"
+    mark_as_important:
+      label: "Mark as important"
+    name:
+      label: "Name"
+    notify:
+      label: 'Verstuur notificatie naar de plaatser'
+    password_confirmation:
+      description: "Same as above"
+      label: "Confirm password"
+    password:
+      description: "At least 8 characters."
+      label: "Password"
+    path:
+      label: "alias"
+    pinned:
+      label: "Pin"
+    postal_code:
+      label: "Postal code"
+    primary_color:
+      label: "Primary color"
+    primary_container_node_id:
+      label: "Homepage"
+    profile_photo:
+      label: "Profile photo"
+    published_at:
+      label: "Published"
+    remember_me:
+      label: "Remember data"
+    require_location:
+      label: "Location is required"
+    secondary_color:
+      label: "Secondary color"
+    show_feed:
+      label: "Show my activity and my votes on my profile"
+    status:
+      label: 'Status'
+    styled_headers:
+      label: "Use primary color for headings"
+    title:
+      label: "Title"
+    time_zone:
+      label: "Time zone"
+    trash_activity:
+      label: "Explanation"
+    type:
+      label: "Type"
+    untrash_activity:
+      label: "Explanation"
+    upvote_only:
+      label: "Upvote ideas"
+    url:
+      label: "Url"
+    used_coupons:
+      label: "Used coupons"

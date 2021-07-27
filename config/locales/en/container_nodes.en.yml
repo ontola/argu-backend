@@ -1,8 +1,14 @@
 en:
   container_nodes:
     type_new: "New page"
+    form:
+      url:
+        description: "The part of the url following %{iri_prefix}/"
   blogs:
     type_new: "New blog"
+    form:
+      bio:
+        description: "Summarize in one sentence what function the blog has. This text will appear under the name of the forum. There's a maximum of 80 characters."
   forums:
     type_new: "New forum"
   dashboards:

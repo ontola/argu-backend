@@ -1,13 +1,6 @@
 en:
   exports:
     type_new: "New export"
-    empty: "There are no exports yet"
-    create: "Create new export"
-    download: "Download"
-    headers:
-      created_at: "Created at"
-      status: "Status"
-      download: "Download"
     destroy_confirmation: "Are you sure you want to delete this export?"
     status:
       pending: "Waiting for processing"

@@ -7,9 +7,10 @@ en:
         label: "Enter a link to a file or movie:"
       content_source:
         label: "Location of the file"
-    content_source:
-      local: "On my computer"
-      remote: "On the internet"
+    enums:
+      content_source:
+        local: "On my computer"
+        remote: "On the internet"
   image_objects:
     form:
       content:

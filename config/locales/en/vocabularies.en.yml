@@ -1,7 +1,6 @@
 en:
   vocabularies:
     type_new: "New vocabulary"
-  formtastic:
-    labels:
-      vocabulary:
-        tagged_label: "Label for tagged items"
+    form:
+      tagged_label:
+        label: "Label for tagged items"

@@ -23,7 +23,7 @@ class MeasureForm < ApplicationForm
   field :measure_owner, min_count: 1
   field :contact_info
   field :more_info
-  field :comments_allowed
+  field :comments_allowed, input_field: LinkedRails::Form::Field::RadioGroup
 
   footer do
     actor_selector

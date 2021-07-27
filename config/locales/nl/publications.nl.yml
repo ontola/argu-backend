@@ -8,12 +8,3 @@ nl:
       schedule: 'Inplannen'
     follow_type:
       helper: 'Stuur een melding naar alle volgers'
-    publish_in_one_minute: "Wordt binnen een minuut gepubliceerd."
-    is_scheduled: "Publicatie staat gepland op %{date}."
-    is_draft: "Concept versie, nog niet gepubliceerd."
-    confirm_publication: 'Meldingen zullen worden verstuurd door dit te publiceren. Verder gaan?'
-  formtastic:
-    labels:
-      publication:
-        draft: 'Sla op als concept'
-        published_at: 'Publiceer op'

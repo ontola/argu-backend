@@ -7,9 +7,10 @@ nl:
         label: "Voer een link in naar een bestand of filmpje:"
       content_source:
         label: "Locatie van het bestand"
-    content_source:
-      local: "Op mijn computer"
-      remote: "Op het internet"
+    enums:
+      content_source:
+        local: "Op mijn computer"
+        remote: "Op het internet"
   image_objects:
     form:
       content:

@@ -4,7 +4,6 @@ en:
   motions:
     type_new: "New idea"
     title: "Idea"
-    header: "Ideas"
     pros: "pro"
     cons: "con"
     edit: "Edit idea"
@@ -31,39 +30,20 @@ en:
         one: "1  con argument"
         other: "%{count} con arguments"
     form:
-      title:
-        label: "Summarize your idea in one sentence"
       content:
+        description: "Enter details and background information on your idea here."
         label: "Describe your idea in detail"
-      themes: "theme1, theme2"
-      invert: "invert all arguments"
-    mod:
-      edit_moderators:
-        title: 'Moderators of %{title}'
-        remove: 'remove'
-        title_invite: 'Invite moderators'
-        invite: 'Invite'
-        invited: 'Invited'
-        is_mod: 'is already a mod'
-      show_moderation_panel: 'moderator'
+      description:
+        description: "Enter details and background information on your idea here."
+      display_name:
+        description: "Enter the core of your idea here"
+      title:
+        description: "Enter the core of your idea here"
+        label: "Summarize your idea in one sentence"
     call_to_action:
       title: "Do you have a good idea?"
       body: "Do you have a good idea and do you want to convince others?"
       action: "Share your idea"
-
-    #motion types
-    type_social: "Societal"
-    type_political: "Political"
-    type_jurisdictional: "Jurisdictional"
-    type_ecological: "Ecological"
-    type_economical: "Economical"
-    type_technological: "Technological"
-    type_discussion: "In discussion"
-    type_other: "Other"
-    convert:
-      header: "Convert object"
-      body: "This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty."
-      body_2: "USE WITH CAUTION, DATA MIGHT BE LOST"
   pundit:
     motion_policy:
       create_without_question?: "You can post an idea here without a challenge."

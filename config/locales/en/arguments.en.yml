@@ -3,21 +3,40 @@
 en:
   pro_arguments:
     type_new: "New pro"
+    form:
+      content:
+        description: "Details and background information."
+      description:
+        description: "Details and background information."
+      display_name:
+        description: "Summary of your pro"
+      title:
+        description: "Summary of your pro"
   con_arguments:
     type_new: "New con"
+    form:
+      content:
+        description: "Details and background information."
+      description:
+        description: "Details and background information."
+      display_name:
+        description: "Summary of your con"
+      title:
+        description: "Summary of your con"
   arguments:
     type_new: "New argument"
     vote: "vote"
-    header:
-      pro: "pro argument"
-      con: "con argument"
-    tooltips:
-      info: "An argument is a single reason in favor or against an idea."
     form:
-      title:
-        label: "Core of your argument"
       content:
+        description: "Enter details and background information on your argument here."
         label: "Argument details (optional)"
+      description:
+        description: "Enter details and background information on your argument here."
+      display_name:
+        description: "Enter the core of your argument here"
+      title:
+        description: "Enter the core of your argument here"
+        label: "Core of your argument"
       type: "type"
       submit: "Submit argument"
       side:
