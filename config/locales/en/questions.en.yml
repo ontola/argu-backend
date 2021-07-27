@@ -15,6 +15,10 @@ en:
         popular_asc: "Votes in favour (least first)"
         created_at_asc: "Creation date (oldest first)"
         updated_at_asc: "Activity (oldest first)"
+      default_motion_display:
+        default_display: "Default"
+        grid_display: "Grid"
+        table_display: "Table"
     form:
       content:
         description: "Enter details and background information on your challenge here."
@@ -25,6 +29,8 @@ en:
         description: "Enter the core of your challenge here"
       default_motion_sorting:
         label: "Default sorting of ideas"
+      default_motion_display:
+        label: "Default display"
       title:
         description: "Enter the core of your challenge here"
         label: "Give your challenge a fitting title"

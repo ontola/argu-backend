@@ -189,6 +189,8 @@ en:
       label: "Item"
     trashed:
       label: "Trashed"
+    voteableVoteEvent:
+      label: "Vote"
     votesProCount:
       label: "Votes in favour"
   dbo:
@@ -296,6 +298,8 @@ en:
     Widget:
       label: "Widget"
       plural_label: "Widgets"
+    creator:
+      label: "Creator"
     dateCreated:
       label: "Date created"
     email:

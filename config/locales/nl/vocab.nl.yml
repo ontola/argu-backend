@@ -189,6 +189,8 @@ nl:
       label: "Item"
     trashed:
       label: "Verborgen"
+    voteableVoteEvent:
+      label: "Stemming"
     votesProCount:
       label: "Stemmen voor"
   dbo:
@@ -296,6 +298,8 @@ nl:
     Widget:
       label: "Widget"
       plural_label: "Widgets"
+    creator:
+      label: "Plaatser"
     dateCreated:
       label: "Aanmaakdatum"
     email:

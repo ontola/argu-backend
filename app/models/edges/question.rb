@@ -29,6 +29,11 @@ class Question < Discussion
            NS.argu[:defaultSorting],
            default: 0,
            enum: {popular: 0, created_at: 1, updated_at: 2, popular_asc: 3, created_at_asc: 4, updated_at_asc: 5}
+  property :default_motion_display,
+           :integer,
+           NS.argu[:defaultDisplay],
+           default: 0,
+           enum: {default_display: 0, grid_display: 1, table_display: 2}
 
   def expired?
     expires_at.present? && expires_at < Time.current

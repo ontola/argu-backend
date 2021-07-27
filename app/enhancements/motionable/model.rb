@@ -6,6 +6,7 @@ module Motionable
 
     included do
       with_collection :motions,
+                      default_display: ->(parent) { parent.try(:default_motion_display)&.to_s&.sub('_display', '') },
                       default_sortings: ->(parent) { default_motion_sorting_for(parent) },
                       joins: :default_vote_event
     end

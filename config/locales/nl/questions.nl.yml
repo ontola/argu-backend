@@ -15,12 +15,18 @@ nl:
         popular_asc: "Stemmen voor (minste eerst)"
         created_at_asc: "Aanmaakdatum (oudste eerst)"
         updated_at_asc: "Activiteit (oudste eerst)"
+      default_motion_display:
+        default_display: "Standaard"
+        grid_display: "Grid"
+        table_display: "Tabel"
     form:
       content:
         description: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
         label: "Licht je uitdaging toe"
       default_motion_sorting:
         label: "Standaard sortering van ideeën"
+      default_motion_display:
+        label: "Standaard weergave"
       description:
         description: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
       display_name:

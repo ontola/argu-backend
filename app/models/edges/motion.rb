@@ -5,6 +5,7 @@ class Motion < Discussion
 
   enhance Argumentable
   enhance VoteEventable
+  enhance LinkedRails::Enhancements::Tableable
 
   include Edgeable::Content
 
@@ -18,6 +19,11 @@ class Motion < Discussion
   )
   paginates_per 10
   parentable :question, :container_node, :phase
+  with_columns default: [
+    NS.schema.name,
+    NS.schema.creator,
+    NS.argu.voteableVoteEvent
+  ]
 
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}

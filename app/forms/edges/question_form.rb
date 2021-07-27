@@ -16,6 +16,7 @@ class QuestionForm < ApplicationForm
     field :map_question
     field :pinned
     field :default_motion_sorting
+    field :default_motion_display
     field :expires_at
   end
 
