@@ -5,7 +5,7 @@ class PlacementSerializer < RecordSerializer
   attribute :image, predicate: NS.schema.image do |object|
     image =
       if object.placement_type == 'custom'
-        icon = LinkedRails.translate(:class, :icon, object.placeable.class.iri)
+        icon = LinkedRails.translate(:class, :icon, object.placeable.class.iri) if object.placeable
         :"fa-#{icon}" if icon
       elsif object.placement_type == 'home'
         :'fa-home'
