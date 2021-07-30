@@ -42,7 +42,6 @@ module Helpers
     def edit_link
       menu_item(
         :edit,
-        action: ontola_dialog_action(edit_iri(resource)),
         image: 'fa-edit',
         href: edit_iri(resource),
         policy: :update?
