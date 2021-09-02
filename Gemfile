@@ -2,11 +2,9 @@
 
 source 'https://rubygems.org/'
 ruby '2.7.0'
-ruby = '2.7.0'
 
 gem 'active_model_otp'
 gem 'active_record-postgres-constraints'
-gem 'active_response', git: 'https://github.com/ontola/active_response', branch: :master
 gem 'acts_as_follower',
     git: 'https://github.com/tcocca/acts_as_follower.git',
     ref: 'ff4a7d1f8206be13b9b68526a5062611f36509aa'
@@ -29,7 +27,6 @@ gem 'doorkeeper-jwt'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'factory_bot'
 gem 'factory_bot_rails'
-gem 'fast_jsonapi', git: 'https://github.com/fast-jsonapi/fast_jsonapi', ref: '2de80d48896751d30fb410e042fd21a710100423'
 gem 'health_check'
 gem 'http_accept_language'
 gem 'httparty'
@@ -37,8 +34,8 @@ gem 'json-ld'
 gem 'jsonapi-renderer'
 gem 'jwt'
 gem 'kaminari-activerecord'
-gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', ref: '2fd9ca064abed953aae064480281569c7418d785'
-gem 'linked_rails-auth', git: 'https://github.com/ontola/linked_rails-auth', branch: :refactor
+gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', branch: 'new-actions'
+gem 'linked_rails-auth', git: 'https://github.com/ontola/linked_rails-auth', branch: 'new-actions'
 gem 'ltree_hierarchy'
 gem 'money'
 gem 'oauth2'
@@ -54,7 +51,6 @@ gem 'rdf'
 gem 'rdf-n3'
 gem 'rdf-rdfa'
 gem 'rdf-rdfxml'
-gem 'rdf-serializers', git: 'https://github.com/ontola/rdf-serializers'
 gem 'rdf-turtle'
 gem 'rdf-vocab'
 gem 'redis'
