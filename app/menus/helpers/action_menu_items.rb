@@ -92,7 +92,6 @@ module Helpers
     def destroy_link
       menu_item(
         :destroy,
-        action: ontola_dialog_action(delete_iri(resource)),
         href: delete_iri(resource),
         image: 'fa-close',
         policy: :destroy?
