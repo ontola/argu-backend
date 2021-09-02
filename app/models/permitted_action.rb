@@ -5,7 +5,7 @@ class PermittedAction < ApplicationRecord
   RESOURCE_TYPES = %w[Page Forum Question Motion Decision BlogPost ProArgument ConArgument Vote Comment].freeze
   has_many :grant_sets_permitted_actions, dependent: :destroy
   has_many :grant_sets, through: :grant_sets_permitted_actions
-  validates :action, inclusion: {in: ACTIONS}
+  validates :action_name, inclusion: {in: ACTIONS}
 
   def icon
     parent_type == '*' ? 'check' : 'question'
@@ -25,7 +25,7 @@ class PermittedAction < ApplicationRecord
         title: "#{type.underscore}_#{action}",
         resource_type: type,
         parent_type: '*',
-        action: action.split('_').first
+        action_name: action.split('_').first
       )
       grant_sets.each { |grant_set| grant_set.add(permitted_action) }
     end

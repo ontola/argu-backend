@@ -23,7 +23,7 @@ class GrantTreeTest < ActiveSupport::TestCase
       ).group
     )
   end
-  let(:reset_motion_grants) { create(:grant_reset, edge: question, resource_type: 'Motion', action: 'create') }
+  let(:reset_motion_grants) { create(:grant_reset, edge: question, resource_type: 'Motion', action_name: 'create') }
   let(:public_create_motion_grant) do
     create(
       :grant,
@@ -34,22 +34,22 @@ class GrantTreeTest < ActiveSupport::TestCase
   end
 
   test 'administrator group should update Motion' do
-    assert_equal group_ids(motion, resource_type: 'Motion', action: 'update'),
+    assert_equal group_ids(motion, resource_type: 'Motion', action_name: 'update'),
                  [Group::STAFF_ID, argu.groups.first.id]
     forum_manager_group_membership
-    assert_equal group_ids(motion, resource_type: 'Motion', action: 'update'),
+    assert_equal group_ids(motion, resource_type: 'Motion', action_name: 'update'),
                  [Group::STAFF_ID, argu.groups.first.id, forum_manager_group_membership.group.id].sort
   end
 
   test 'excluded group should not post Motion' do
-    assert_equal group_ids(question, resource_type: 'Motion', action: 'create'),
+    assert_equal group_ids(question, resource_type: 'Motion', action_name: 'create'),
                  [Group::STAFF_ID, Group::PUBLIC_ID, argu.groups.first.id]
     reset_motion_grants
-    assert_empty group_ids(question, resource_type: 'Motion', action: 'create')
-    assert_equal group_ids(other_question, resource_type: 'Motion', action: 'create'),
+    assert_empty group_ids(question, resource_type: 'Motion', action_name: 'create')
+    assert_equal group_ids(other_question, resource_type: 'Motion', action_name: 'create'),
                  [Group::STAFF_ID, Group::PUBLIC_ID, argu.groups.first.id].sort
     public_create_motion_grant
-    assert_equal group_ids(question, resource_type: 'Motion', action: 'create'),
+    assert_equal group_ids(question, resource_type: 'Motion', action_name: 'create'),
                  [Group::PUBLIC_ID]
   end
 

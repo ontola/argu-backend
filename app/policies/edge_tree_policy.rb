@@ -52,7 +52,7 @@ class EdgeTreePolicy < RestrictivePolicy
       @granted_paths ||=
         Arel::Nodes::As.new(
           granted_paths_table,
-          (show_only ? filtered_edge_table.where(permitted_actions_table[:action].eq(:show)) : filtered_edge_table)
+          (show_only ? filtered_edge_table.where(permitted_actions_table[:action_name].eq(:show)) : filtered_edge_table)
             .project(
               'path, permitted_actions.resource_type AS resource_type, permitted_actions.parent_type AS parent_type, '\
               'permitted_actions.id AS id'
@@ -75,7 +75,7 @@ class EdgeTreePolicy < RestrictivePolicy
         Arel::Nodes::As.new(
           managed_forum_paths_table,
           filtered_edge_table
-            .where(permitted_actions_table[:action].eq(:update))
+            .where(permitted_actions_table[:action_name].eq(:update))
             .where(permitted_actions_table[:resource_type].eq('Forum'))
             .project('path')
         )
@@ -89,8 +89,8 @@ class EdgeTreePolicy < RestrictivePolicy
     @grant_tree ||= context.grant_tree_for(edgeable_record)
   end
 
-  def granted_group_ids(action)
-    edgeable_policy.try(:granted_group_ids, action) if record.try(:edgeable_record)
+  def granted_group_ids(action_name)
+    edgeable_policy.try(:granted_group_ids, action_name) if record.try(:edgeable_record)
   end
 
   def public_resource?

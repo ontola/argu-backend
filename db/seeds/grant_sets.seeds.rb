@@ -50,7 +50,7 @@ motion_with_question_create = PermittedAction.find_or_create_by!(
   title: 'motion_with_question_create',
   resource_type: 'Motion',
   parent_type: 'Question',
-  action: 'create'
+  action_name: 'create'
 )
 GrantSet.find_by!(title: 'participator').add(motion_with_question_create)
 

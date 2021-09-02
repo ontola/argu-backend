@@ -6,12 +6,9 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Cacheable
   include Broadcastable
 
-  enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Destroyable
-  enhance LinkedRails::Enhancements::Tableable
 
   belongs_to :owner, polymorphic: true, primary_key: :uuid
   belongs_to :permitted_action
@@ -99,7 +96,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   class << self
     def attributes_for_new(opts)
-      action = PermittedAction.find_by!(resource_type: opts[:parent].owner_type, action: :show) if opts[:parent]
+      action = PermittedAction.find_by!(resource_type: opts[:parent].owner_type, action_name: :show) if opts[:parent]
 
       super.merge(
         owner: opts[:parent],

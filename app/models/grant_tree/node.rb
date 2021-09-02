@@ -35,16 +35,16 @@ class GrantTree
     end
 
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-    def granted_group_ids(action: nil, resource_type: nil, parent_type: nil)
-      if action.nil? && resource_type.nil? && parent_type.nil?
+    def granted_group_ids(action_name: nil, resource_type: nil, parent_type: nil)
+      if action_name.nil? && resource_type.nil? && parent_type.nil?
         return permitted_actions.values.map(&:values).flatten.map(&:values).flatten.uniq
       end
 
       parent_type ||= '*'
-      ids = permitted_actions.dig(resource_type.to_s, action.to_s, parent_type.to_s) || []
+      ids = permitted_actions.dig(resource_type.to_s, action_name.to_s, parent_type.to_s) || []
       return ids if parent_type == '*'
 
-      (ids + (permitted_actions.dig(resource_type.to_s, action.to_s, '*') || [])).uniq
+      (ids + (permitted_actions.dig(resource_type.to_s, action_name.to_s, '*') || [])).uniq
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
@@ -71,7 +71,7 @@ class GrantTree
 
     def calculate_permitted_actions(grant_tree) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       grant_tree.grant_resets_in_scope.select { |grant| grant.edge.path == edge.path }.each do |grant_reset|
-        permitted_actions[grant_reset.resource_type][grant_reset.action] = {}
+        permitted_actions[grant_reset.resource_type][grant_reset.action_name] = {}
       end
       grant_tree
         .grants_in_scope
@@ -82,9 +82,9 @@ class GrantTree
         grant_sets[grant.group_id] << grant.grant_set
         grant.permitted_actions.each do |permission|
           permitted_actions[permission.resource_type] ||= {}
-          permitted_actions[permission.resource_type][permission.action] ||= {}
-          permitted_actions[permission.resource_type][permission.action][permission.parent_type] ||= []
-          permitted_actions[permission.resource_type][permission.action][permission.parent_type] << grant.group_id
+          permitted_actions[permission.resource_type][permission.action_name] ||= {}
+          permitted_actions[permission.resource_type][permission.action_name][permission.parent_type] ||= []
+          permitted_actions[permission.resource_type][permission.action_name][permission.parent_type] << grant.group_id
         end
       end
     end

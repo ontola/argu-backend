@@ -118,11 +118,11 @@ class Intervention < Edge # rubocop:disable Metrics/ClassLength
   private
 
   def sync_comments_allowed
-    current_reset = grant_resets.find_by(action: 'create', resource_type: 'Comment')
+    current_reset = grant_resets.find_by(action_name: 'create', resource_type: 'Comment')
     if comments_are_allowed?
       self.grant_resets_attributes = [id: current_reset.id, _destroy: true] if current_reset
     else
-      self.grant_resets_attributes = [action: 'create', resource_type: 'Comment'] unless current_reset
+      self.grant_resets_attributes = [action_name: 'create', resource_type: 'Comment'] unless current_reset
     end
   end
 

@@ -64,7 +64,7 @@ module GrantResettable
           grant_tree
             .granted_group_ids(
               persisted_edge,
-              action: 'create',
+              action_name: 'create',
               resource_type: singular.classify,
               parent_type: self.class.name
             )
@@ -76,7 +76,7 @@ module GrantResettable
         return @grant_resets_for[action][resource_type] if @grant_resets_for[action].key?(resource_type)
 
         @grant_resets_for[action][resource_type] =
-          grant_resets.find_by(action: action, resource_type: resource_type)
+          grant_resets.find_by(action_name: action, resource_type: resource_type)
       end
 
       def remove_grants_for(resource_type, action, group_ids = nil)
@@ -115,7 +115,7 @@ module GrantResettable
       def sync_grant_reset(action, singular)
         if send("reset_#{action}_#{singular}")
           if grant_reset_for(action, singular.classify).nil?
-            grant_resets.create!(action: action, resource_type: singular.classify)
+            grant_resets.create!(action_name: action, resource_type: singular.classify)
           end
         else
           grant_reset_for(action, singular.classify)&.destroy!

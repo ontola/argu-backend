@@ -6,7 +6,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
   subject { create(:question, parent: freetown) }
   let(:group) { create(:group, parent: argu) }
-  let(:reset_motion_grants) { create(:grant_reset, edge: subject, resource_type: 'Motion', action: 'create') }
+  let(:reset_motion_grants) { create(:grant_reset, edge: subject, resource_type: 'Motion', action_name: 'create') }
   let(:create_motion_grant) do
     create(:grant, edge: subject, group_id: group.id, grant_set: GrantSet.for_one_action('Motion', 'create'))
   end

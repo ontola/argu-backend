@@ -93,10 +93,10 @@ class UserContext
         .joins(grant_sets: {grants: {group: :group_memberships}})
         .where(
           resource_type: 'Page',
-          action: 'update',
+          action_name: 'update',
           grants: {edge_id: ActsAsTenant.current_tenant.uuid},
           group_memberships: {member_id: user.profile.id},
-          permitted_actions: {resource_type: 'Page', action: 'update'}
+          permitted_actions: {resource_type: 'Page', action_name: 'update'}
         )
         .any?
   end
