@@ -85,13 +85,37 @@ class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
     }
   end
 
-  def tracking
-    {
-      google_analytics_ua_code: page.google_uac,
-      matomo_hostname: page.matomo_host || ENV['MATOMO_HOST'],
-      matomo_site_id: page.matomo_site_id,
-      tag_manager: page.google_tag_manager
-    }
+  def tracking # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    trackers = []
+
+    if page.google_uac
+      trackers << {
+        type: 'GUA',
+        container_id: page.google_uac
+      }
+    end
+    if page.google_tag_manager
+      trackers << {
+        type: 'GTM',
+        container_id: page.google_tag_manager
+      }
+    end
+    if page.matomo_site_id
+      trackers << {
+        type: 'Matomo',
+        host: page.matomo_host || ENV['MATOMO_HOST'],
+        container_id: page.matomo_site_id
+      }
+    end
+    if page.piwik_pro_site_id
+      trackers << {
+        type: 'PiwikPro',
+        host: page.piwik_pro_host,
+        container_id: page.piwik_pro_site_id
+      }
+    end
+
+    trackers
   end
 
   def manifest_scope

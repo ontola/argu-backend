@@ -60,6 +60,11 @@ en:
         description: "Leave blank to use the default host"
       matomo_site_id:
         label: "Matomo site id"
+      piwik_pro_host:
+        label: "Piwik Pro host"
+        description: "E.g. 'myproject.piwik.pro'"
+      piwik_pro_site_id:
+        label: "Piwik Pro site id"
       shortname:
         label: "Argu URL"
   activerecord:

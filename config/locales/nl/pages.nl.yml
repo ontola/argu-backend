@@ -59,6 +59,11 @@ nl:
         description: "Laat leeg om de standaard host te gebruiken"
       matomo_site_id:
         label: "Matomo site id"
+      piwik_pro_host:
+        label: "Piwik Pro host"
+        description: "Bijvoorbeeld 'mijntraject.piwik.pro'"
+      piwik_pro_site_id:
+        label: "Piwik Pro site id"
       shortname:
         label: "Argu URL"
   activerecord:

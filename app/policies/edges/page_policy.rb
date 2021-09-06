@@ -10,7 +10,7 @@ class PagePolicy < EdgePolicy
   permit_attributes %i[display_name name url iri_prefix locale]
   permit_attributes %i[primary_container_node_id], new_record: false
   permit_attributes %i[confirmation_text], new_record: true
-  permit_attributes %i[matomo_site_id matomo_host google_tag_manager google_uac],
+  permit_attributes %i[matomo_site_id matomo_host piwik_pro_site_id piwik_pro_host google_tag_manager google_uac],
                     grant_sets: %i[staff],
                     new_record: false
 
