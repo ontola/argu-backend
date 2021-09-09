@@ -115,7 +115,7 @@ FactoryBot.define do
       end
       factory :two_fa_user do
         after(:create) do |user|
-          OtpSecret.create!(user: user, active: true)
+          OtpSecret.create!(owner: user, active: true)
         end
       end
     end

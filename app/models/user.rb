@@ -53,7 +53,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
            inverse_of: :publisher,
            foreign_key: 'publisher_id',
            dependent: :restrict_with_exception
-  has_one :otp_secret, dependent: :destroy
+  has_one :otp_secret, dependent: :destroy, foreign_key: :owner_id, inverse_of: :owner
   accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
 
   # Include default devise modules. Others available are:
@@ -225,7 +225,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def otp_secret
-    super || OtpSecret.create!(user: self)
+    super || OtpSecret.create!(owner: self)
   end
 
   def page_count

@@ -6,7 +6,7 @@ class OtpAttempt < LinkedRails::Auth::OtpAttempt
       true
     end
 
-    def user_for_otp(params, user_context)
+    def owner_for_otp(params, user_context)
       return super if params.key?(:session)
 
       user_context.user unless user_context.user.guest?
