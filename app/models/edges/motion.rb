@@ -5,7 +5,6 @@ class Motion < Discussion
 
   enhance Argumentable
   enhance VoteEventable
-  enhance LinkedRails::Enhancements::Tableable
 
   include Edgeable::Content
 

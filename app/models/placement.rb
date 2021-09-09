@@ -3,7 +3,6 @@
 class Placement < ApplicationRecord
   include DelegatedAttributes
   include Parentable
-  enhance LinkedRails::Enhancements::Indexable
 
   belongs_to :forum, primary_key: :uuid
   belongs_to :place, autosave: true

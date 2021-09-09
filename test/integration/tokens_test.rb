@@ -38,7 +38,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     post oauth_token_path, headers: argu_headers(accept: :json)
 
     expect_error_type('invalid_request')
-    expect_error_code('SERVER_ERROR')
+    expect_error_code('MISSING_REQUIRED_PARAMETER')
     assert_response 400
   end
 

@@ -7,7 +7,8 @@ en:
       title: "Looking for good ideas?"
       body: "Are you looking for good ideas to a burning question?"
       action: "Share your challenge"
-    enums:
+  enums:
+    questions:
       default_motion_sorting:
         popular: "Votes in favour (most first)"
         created_at: "Creation date (newest first)"
@@ -19,7 +20,8 @@ en:
         default_display: "Default"
         grid_display: "Grid"
         table_display: "Table"
-    form:
+  forms:
+    questions:
       content:
         description: "Enter details and background information on your challenge here."
         label: "Explain your challenge"

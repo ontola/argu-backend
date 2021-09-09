@@ -60,7 +60,8 @@ class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
       theme: page.template,
       theme_options: template_options,
       tracking: tracking,
-      website_iri: page.iri
+      website_iri: page.iri,
+      websocket_path: 'cable'
     }
   end
 

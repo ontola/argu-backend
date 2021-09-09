@@ -1,7 +1,8 @@
 en:
   offers:
     type_new: "New option"
-    form:
+  forms:
+    offers:
       product_id:
         label: "Select an Idea"
       price:

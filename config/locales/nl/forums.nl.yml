@@ -1,8 +1,8 @@
 # Dutch argument translations
 
 nl:
-  forums:
-    form:
+  forms:
+    forums:
       bio:
         label: "Doel van het forum"
         description: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
@@ -10,6 +10,7 @@ nl:
         label: "Naam van forum"
       shortname:
         label: "URL"
+  forums:
     settings:
       title: "Forum instellingen"
       general: "Algemene instellingen"

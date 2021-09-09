@@ -3,7 +3,6 @@
 class CreativeWork < Edge
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
-  enhance LinkedRails::Enhancements::Menuable
   enhance Trashable
 
   property :display_name, :string, NS.schema.name

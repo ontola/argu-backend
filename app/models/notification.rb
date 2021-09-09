@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
-  enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Updatable
-  enhance LinkedRails::Enhancements::Indexable
 
   include ActivityHelper
   include ActionView::Helpers
@@ -74,6 +72,10 @@ class Notification < ApplicationRecord
 
     def preview_includes
       [operation: :target]
+    end
+
+    def route_key
+      :n
     end
   end
 end

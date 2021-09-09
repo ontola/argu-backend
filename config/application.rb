@@ -16,6 +16,10 @@ require 'linked_rails/constraints/whitelist'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require 'json/ld/api'
+require 'json/ld/context'
+require 'json/ld/reader'
+require 'json/ld/writer'
 require_relative '../lib/tenant_middleware'
 require_relative '../lib/ns'
 require_relative '../lib/acts_as_tenant/sidekiq_with_tenant'
@@ -43,6 +47,7 @@ module Argu
     config.autoload_paths += Dir["#{config.root}/app/services/**/"]
     config.autoload_paths += %W[#{config.root}/app/listeners]
     config.autoload_paths += %W[#{config.root}/app/serializers/base]
+    config.autoload_paths += %W[#{config.root}/app/serializers/menus]
     config.autoload_paths += Dir["#{config.root}/app/policies/**/"]
     config.autoload_paths += Dir["#{config.root}/app/enhancements/**/"]
     Dir.glob("#{config.root}/app/enhancements/**{,/*/**}/*.rb").each { |file| require_dependency file }

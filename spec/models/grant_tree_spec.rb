@@ -63,7 +63,7 @@ RSpec.describe GrantTree, type: :model do
       end
 
       context 'with filters' do
-        let(:method_args) { [motion, action: :destroy, resource_type: motion.owner_type] }
+        let(:method_args) { [motion, action_name: :destroy, resource_type: motion.owner_type] }
 
         it { is_expected.to match_array [Group::STAFF_ID] }
       end

@@ -2,7 +2,6 @@
 
 class LinkedRecord < Edge
   enhance Commentable
-  enhance LinkedRails::Enhancements::Indexable, except: [:Routing]
   include SerializationHelper
 
   property :external_iri, :iri, NS.owl.sameAs

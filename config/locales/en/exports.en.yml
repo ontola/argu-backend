@@ -1,4 +1,8 @@
 en:
+  forms:
+    exports:
+      user:
+        label: "Gebruiker"
   exports:
     type_new: "New export"
     destroy_confirmation: "Are you sure you want to delete this export?"
@@ -8,9 +12,6 @@ en:
       ready: "Available"
       failed: "Error during processing"
     create_helper: "It takes a while to create an export. You will receive an email when it is ready."
-    form:
-      user:
-        label: "Gebruiker"
     formats:
       xls:
         overview_title: "Overview"

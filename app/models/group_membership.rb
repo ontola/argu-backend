@@ -3,11 +3,8 @@
 class GroupMembership < ApplicationRecord
   belongs_to :group
 
-  enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
-  enhance LinkedRails::Enhancements::Tableable
 
   include Parentable
 

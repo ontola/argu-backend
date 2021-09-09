@@ -15,4 +15,8 @@ class SurveyForm < ContainerNodeForm
   footer do
     actor_selector
   end
+
+  hidden do
+    field :is_draft
+  end
 end

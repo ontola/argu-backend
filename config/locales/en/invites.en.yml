@@ -1,6 +1,6 @@
 en:
-  invites:
-    form:
+  forms:
+    invites:
       message:
         label: "Message"
         description: "Enter a message for in the email"

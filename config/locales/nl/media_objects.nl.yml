@@ -1,19 +1,19 @@
 nl:
-  media_objects:
-    form:
+  forms:
+    media_objects:
       content:
         label: "Selecteer een bestand"
       remote_content_url:
         label: "Voer een link in naar een bestand of filmpje:"
       content_source:
         label: "Locatie van het bestand"
-    enums:
-      content_source:
-        local: "Op mijn computer"
-        remote: "Op het internet"
-  image_objects:
-    form:
+    image_objects:
       content:
         label: "Selecteer een bestand"
       remote_content_url:
         label: "Voer een link in naar een bestand of filmpje:"
+  enums:
+    media_objects:
+      content_source:
+        local: "Op mijn computer"
+        remote: "Op het internet"

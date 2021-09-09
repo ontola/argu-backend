@@ -20,7 +20,7 @@ module Argu
 
       module ClassMethods
         def expectations_for(action)
-          %i[json_api].concat(RDF_CONTENT_TYPES).each do |format|
+          %i[json_api].concat(LinkedRails::Renderers.rdf_content_types).each do |format|
             let("expect_#{action}_#{format}") { send("expect_#{action}_serializer") }
             let("expect_#{action}_guest_#{format}") { send("expect_#{action}_guest_serializer") }
             let("expect_#{action}_unauthorized_#{format}") { send("expect_#{action}_unauthorized_serializer") }
@@ -157,7 +157,7 @@ module Argu
           let(:invalid_create_params) { {class_sym => required_keys.index_with { |_k| ' ' }} }
           let(:update_params) { {class_sym => required_keys.index_with { |_k| '12345' }} }
           let(:invalid_update_params) { invalid_create_params }
-          let(:move_params) { {move: {new_parent_id: other_forum.uuid}} }
+          let(:move_params) { {class_sym => {new_parent_id: other_forum.uuid}} }
           let(:destroy_params) { {} }
 
           # Paths
@@ -167,7 +167,7 @@ module Argu
           let(:show_path) { resource_iri(subject).path }
           let(:destroy_path) { "#{resource_iri(subject).path}?destroy=true" }
           let(:edit_path) { edit_iri(show_path).path }
-          let(:shift_path) { new_iri(move_path).path }
+          let(:shift_path) { move_path }
           let(:move_path) { "#{resource_iri(subject).path}/move" }
           let(:update_path) { show_path }
           let(:delete_path) { delete_iri(show_path).path }
@@ -217,7 +217,7 @@ module Argu
         end
 
         def default_formats
-          [:json_api, :hndjson, (RDF_CONTENT_TYPES - [:ttl]).sample]
+          [:json_api, (LinkedRails::Renderers.rdf_content_types - [:ttl]).sample]
         end
 
         def show_formats

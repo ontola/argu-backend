@@ -57,7 +57,7 @@ class AuthorizedController < ApplicationController
   end
 
   def form_action?
-    %w[new edit delete bin unbin shift settings].include?(action_name)
+    current_resource.is_a?(Actions::Item)
   end
 
   def permit_param_key

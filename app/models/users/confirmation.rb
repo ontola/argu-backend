@@ -4,8 +4,6 @@ module Users
   class Confirmation < LinkedRails::Auth::Confirmation
     include UriTemplateHelper
 
-    attr_accessor :email
-
     delegate :confirmed?, to: :email!
 
     def confirm!

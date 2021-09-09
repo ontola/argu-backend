@@ -50,7 +50,7 @@ module ActivePublishable
     end
 
     module ClassMethods
-      def build_new(opts)
+      def build_new(parent: nil, user_context: nil)
         resource = super
         resource.build_argu_publication(
           follow_type: 'reactions'

@@ -16,8 +16,8 @@ class NotificationPolicy < RestrictivePolicy
     raise.new('must be logged in') unless user
   end
 
-  def read?
-    !user.guest?
+  def read_all?
+    true
   end
 
   def show?

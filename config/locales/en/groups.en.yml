@@ -17,7 +17,11 @@ en:
         invite: 'Invite'
         grants: 'Grants'
         advanced: 'Advanced'
-    form:
+    delete:
+      info: "Are you sure you wish to delete the group '%{group}'?"
+      not_allowed: "It's not possible to delete this group."
+  forms:
+    groups:
       name:
         description: "e.g. 'Civilians'"
         label: "Name"
@@ -26,6 +30,3 @@ en:
         label: "Name singular"
       require_2fa:
         label: "Force two factor authentication"
-    delete:
-      info: "Are you sure you wish to delete the group '%{group}'?"
-      not_allowed: "It's not possible to delete this group."

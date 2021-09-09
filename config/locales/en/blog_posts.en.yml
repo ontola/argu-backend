@@ -4,7 +4,8 @@ en:
   blog_posts:
     type_new: "New update"
     unpublished: "Draft"
-    form:
+  forms:
+    blog_posts:
       content:
         description: "Enter details and background information on your update here."
       description:

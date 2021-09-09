@@ -2,7 +2,6 @@
 
 class Order < Edge
   enhance LinkedRails::Enhancements::Creatable
-  enhance LinkedRails::Enhancements::Tableable
   parentable :budget_shop
   after_commit :clear_cart!
   delegate :currency, to: :parent

@@ -3,6 +3,10 @@
 require 'zip'
 
 class ExportsController < ServiceController
+  has_collection_create_action(
+    description: -> { I18n.t('exports.create_helper') }
+  )
+
   private
 
   def authenticated_tree

@@ -23,7 +23,7 @@ RSpec.describe 'Forums', type: :request do
   # let(:expect_get_new_unauthorized_serializer) { expect_unauthorized }
 
   def self.new_formats
-    (RDF_CONTENT_TYPES - %i[ttl n3]).shuffle[1..2]
+    (LinkedRails::Renderers.rdf_content_types - %i[ttl n3]).shuffle[1..2]
   end
 
   def self.edit_formats

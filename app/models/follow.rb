@@ -4,9 +4,7 @@ class Follow < ApplicationRecord
   extend ActsAsFollower::FollowerLib
   extend ActsAsFollower::FollowScopes
 
-  enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
-  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Destroyable
 
   # NOTE: Follows belong to the "followable" interface, and also to followers
@@ -47,9 +45,9 @@ class Follow < ApplicationRecord
   end
 
   class << self
-    def build_new(opts)
-      user = opts[:user_context]&.user
-      user.follows.find_or_initialize_by(followable: opts[:parent])
+    def build_new(parent: nil, user_context: nil)
+      user = user_context&.user
+      user.follows.find_or_initialize_by(followable: parent)
     end
 
     private

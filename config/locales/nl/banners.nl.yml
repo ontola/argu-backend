@@ -1,7 +1,8 @@
 nl:
   banners:
     type_new: 'Nieuwe banner'
-    enums:
+  enums:
+    banners:
       audience:
         guests: 'Gasten'
         users: 'Gebruikers'

@@ -5,8 +5,6 @@ module Singularable
     extend ActiveSupport::Concern
 
     included do
-      enhance LinkedRails::Enhancements::Singularable
-
       try(:before_redis_save, :mark_as_singular)
     end
 

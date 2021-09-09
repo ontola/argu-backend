@@ -15,11 +15,14 @@ class ServiceController < ParentableController
       end
   end
 
-  def activity_options
-    activity_key = "#{action_name}_activity_attributes"
-    return {} if params.dig(model_name, activity_key).blank?
+  def activity_attributes_key
+    "#{action_name}_activity_attributes"
+  end
 
-    params.require(model_name).require(activity_key).permit(:comment, :notify)
+  def activity_options
+    return {} if params.dig(model_name, activity_attributes_key).blank?
+
+    params.require(model_name).require(activity_attributes_key).permit(:comment, :notify)
   end
 
   def current_resource
@@ -73,9 +76,9 @@ class ServiceController < ParentableController
     action_service.commit
   end
 
-  def service_klass
-    "#{action_name.classify}#{controller_name.classify}".safe_constantize ||
-      "#{action_name.classify}Service".constantize
+  def service_klass(action = action_name)
+    "#{action.classify}#{controller_name.classify}".safe_constantize ||
+      "#{action.classify}Service".constantize
   end
 
   # For use with the services options parameter, with sensible defaults

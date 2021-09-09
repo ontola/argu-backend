@@ -5,7 +5,6 @@ class DirectMessage < VirtualResource
 
   parentable :resource
 
-  enhance LinkedRails::Enhancements::Actionable
   enhance LinkedRails::Enhancements::Creatable
 
   attr_accessor :actor, :body, :subject, :email_address, :resource

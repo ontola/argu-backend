@@ -1,18 +1,14 @@
 # frozen_string_literal: true
 
-class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
+class Group < ApplicationRecord
   PUBLIC_ID = -1
   STAFF_ID = -2
 
   enhance ConfirmedDestroyable
-  enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
-  enhance LinkedRails::Enhancements::Menuable
+  enhance LinkedRails::Enhancements::Updatable
   enhance Settingable
   enhance Searchable
-  enhance LinkedRails::Enhancements::Updatable
-  enhance LinkedRails::Enhancements::Tableable
 
   include Parentable
   include Edgeable::PropertyAssociations

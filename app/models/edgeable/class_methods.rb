@@ -27,9 +27,9 @@ module Edgeable
         Edge
       end
 
-      def build_new(opts)
+      def build_new(parent: nil, user_context: nil)
         record = super
-        grant_tree = opts[:user_context]&.grant_tree
+        grant_tree = user_context&.grant_tree
         grant_tree&.cache_node(record.parent.try(:persisted_edge)) if record.parent.try(:persisted_edge)
         record
       end

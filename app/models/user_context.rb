@@ -2,11 +2,11 @@
 
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
-class UserContext
+class UserContext # rubocop:disable Metrics/ClassLength
   attr_accessor :doorkeeper_token, :current_actor
 
   delegate :user, :profile, to: :current_actor
-  delegate :guest?, to: :user
+  delegate :guest?, :id, :otp_active?, to: :user
 
   def initialize(doorkeeper_token: nil, profile: nil, user: nil)
     @doorkeeper_token = doorkeeper_token
@@ -74,6 +74,10 @@ class UserContext
     end
 
     @grant_trees[tree_root.uuid] ||= GrantTree.new(tree_root)
+  end
+
+  def inspect
+    "<UserContext user_id: #{user.id}, profile_id: #{profile.id}>"
   end
 
   def language

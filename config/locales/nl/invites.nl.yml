@@ -1,6 +1,6 @@
 nl:
-  invites:
-    form:
+  forms:
+    invites:
       message:
         label: "Toelichting"
         description: "Schrijf een bericht voor in de email"

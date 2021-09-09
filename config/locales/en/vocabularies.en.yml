@@ -1,6 +1,7 @@
 en:
   vocabularies:
     type_new: "New vocabulary"
-    form:
+  forms:
+    vocabularies:
       tagged_label:
         label: "Label for tagged items"

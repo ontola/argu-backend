@@ -4,7 +4,6 @@ class Incident < Edge
   include Edgeable::Content
   enhance Attachable
   enhance Scenariable
-  enhance LinkedRails::Enhancements::Tableable
 
   with_columns default: [
     NS.schema.name,

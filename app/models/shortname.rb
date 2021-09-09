@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 class Shortname < ApplicationRecord
-  enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
-  enhance LinkedRails::Enhancements::Tableable
 
   include Parentable
 

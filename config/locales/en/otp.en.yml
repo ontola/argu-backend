@@ -1,19 +1,18 @@
 en:
-  otp_attempts:
-    form:
+  forms:
+    otp_attempts:
       otp_attempt:
         helper_text: 'You can find this in the authentication-application you used earlier.'
         label: "Authentication code"
-  otp_secrets:
-    form:
+    otp_secrets:
       otp_attempt:
         label: "Authentication code"
-    properties:
       provision_image:
         description: 'Install a authentication-application and scan this QR code.'
   actions:
     otp_attempts:
       create:
+        label: 'Two factor authentication'
         submit: "Continue"
     otp_secrets:
       create:
@@ -24,11 +23,10 @@ en:
         description: "Are you sure you want to disable the two factor authentication of **%{name}**?"
         submit: "Confirm"
         success: "Two factor authentication is disabled"
-  messages:
-    otp_secrets:
-      invalid: "The authentication code is incorrect."
-      not_activated: "Two factor authentication is not yet activated."
-      already_exists: "Two factor authentication is already activated."
-      create:
-        success: "Welcome back!"
-      expired: "The request expired. Please try logging in again."
+      errors:
+        invalid: "The authentication code is incorrect."
+        not_activated: "Two factor authentication is not yet activated."
+        already_exists: "Two factor authentication is already activated."
+        create:
+          success: "Welcome back!"
+        expired: "The request expired. Please try logging in again."

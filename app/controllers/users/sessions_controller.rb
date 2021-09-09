@@ -2,6 +2,8 @@
 
 module Users
   class SessionsController < LinkedRails::Auth::SessionsController
+    controller_class LinkedRails.session_class
+
     private
 
     def create_execute
@@ -11,6 +13,10 @@ module Users
       current_resource.errors.add(:email, I18n.t('devise.failure.no_password'))
 
       false
+    end
+
+    def interact_as_guest?
+      true
     end
   end
 end

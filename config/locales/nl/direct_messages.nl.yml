@@ -2,7 +2,8 @@ nl:
   direct_messages:
     notice:
       success: "De e-mail wordt verstuurd"
-    form:
+  forms:
+    direct_messages:
       email:
         description: ""
       email_address_id:

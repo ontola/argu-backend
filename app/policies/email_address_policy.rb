@@ -25,14 +25,29 @@ class EmailAddressPolicy < RestrictivePolicy
   end
 
   def confirm?
-    !record.confirmed?
+    return forbid_with_status(NS.schema.CompletedActionStatus, forbid_message('confirm.completed')) if record.confirmed?
+
+    true
   end
 
   def destroy?
-    !record.primary?
+    return forbid_with_message(forbid_message('destroy.primary')) if record.primary?
+
+    true
   end
 
   def make_primary?
-    !record.primary? && (record.confirmed? || !record.user.confirmed?)
+    if record.primary?
+      return forbid_with_status(NS.schema.CompletedActionStatus, forbid_message('make_primary.completed'))
+    end
+    if !record.confirmed? && record.user.confirmed?
+      return forbid_with_message(forbid_message('make_primary.unconfirmed'))
+    end
+
+    true
+  end
+
+  def forbid_message(key)
+    I18n.t("actions.email_addresses.#{key}")
   end
 end

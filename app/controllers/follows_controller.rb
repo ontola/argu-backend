@@ -5,6 +5,10 @@ class FollowsController < AuthorizedController
 
   skip_before_action :check_if_registered, only: :destroy
 
+  has_resource_destroy_action(
+    favorite: true
+  )
+
   private
 
   def create_meta

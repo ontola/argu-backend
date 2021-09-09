@@ -29,11 +29,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   after_action :set_version_header
   after_action :include_resources
 
-  def self.controller_class
-    @controller_class ||=
-      name.sub(/Controller$/, '').classify.safe_constantize || controller_name.classify.safe_constantize
-  end
-
   def redirect_to(*args)
     args[0] = args[0].iri if args[0].respond_to?(:iri)
     args[0] = args[0].to_s if args[0].is_a?(RDF::URI)
@@ -166,5 +161,21 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
     return true if internal_request?
 
     raise "IP #{request.remote_ip} is not allowed to make requests with a service token"
+  end
+
+  class << self
+    def default_create_options(overwrite = {})
+      super.merge(
+        label: -> { I18n.t("#{self.class.actionable_class.name.tableize}.type_new", default: '').presence }
+      ).merge(overwrite)
+    end
+
+    def default_destroy_options(overwrite = {})
+      super.merge(
+        target_url: lambda {
+          resource.try(:singular_resource?) ? resource.singular_iri : resource.iri(destroy: true)
+        }
+      ).merge(overwrite)
+    end
   end
 end

@@ -8,7 +8,6 @@ class ContainerNode < Edge
   enhance Exportable
   enhance Feedable
   enhance Followable
-  enhance LinkedRails::Enhancements::Menuable
   enhance Placeable
   enhance ChildrenPlaceable
   enhance ProfilePhotoable
@@ -16,7 +15,6 @@ class ContainerNode < Edge
   enhance LinkedRails::Enhancements::Updatable
   enhance Widgetable
   enhance Statable
-  enhance LinkedRails::Enhancements::Tableable
   enhance CreativeWorkable
   enhance CustomActionable
   enhance Surveyable
@@ -109,6 +107,12 @@ class ContainerNode < Edge
 
     def iri
       [super, NS.argu[:ContainerNode]]
+    end
+
+    def route_key
+      return '' if self == ContainerNode
+
+      super
     end
   end
 end

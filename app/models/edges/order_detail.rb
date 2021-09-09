@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class OrderDetail < Edge
-  enhance LinkedRails::Enhancements::Tableable
-
   parentable :order
 
   property :offer_id, :linked_edge_id, NS.schema.orderedItem

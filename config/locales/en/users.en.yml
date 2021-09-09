@@ -19,7 +19,10 @@ en:
         destroy: "Destroy"
     registrations:
       confirm_mail_change_notice: "We have send you a mail to the new address. Please confirm the change by clicking the link in this mail."
-    enums:
+    drafts:
+      title: "My drafts"
+  enums:
+    users:
       reactions_email:
         never_reactions_email: 'Never'
         direct_reactions_email: 'Immediately'
@@ -48,9 +51,8 @@ en:
       destroy_strategy:
         expropriate_on_destroy: "Anonymize content"
         remove_on_destroy: "Remove content"
-    drafts:
-      title: "My drafts"
-    form:
+  forms:
+    users:
       decisions_email:
         label: "For official decisions"
       display_name:

@@ -9,6 +9,7 @@ en:
         name: "Collect ideas"
       survey:
         name: "Survey"
-    form:
+  forms:
+    projects:
       current_phase_id:
         label: "Current phase"

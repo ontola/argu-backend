@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ActivePublishable
-  module Action
+  module Controller
     extend ActiveSupport::Concern
 
     included do
@@ -11,7 +11,7 @@ module ActivePublishable
         policy: :publish?,
         http_method: :put,
         image: 'fa-send',
-        url: lambda {
+        target_url: lambda {
           RDF::URI(
             [
               resource.iri,
@@ -22,8 +22,7 @@ module ActivePublishable
               }.to_param
             ].join('?')
           )
-        },
-        condition: -> { !resource.argu_publication&.publish_time_lapsed? }
+        }
       )
     end
   end

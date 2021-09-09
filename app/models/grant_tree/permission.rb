@@ -24,8 +24,11 @@ class GrantTree
         instance_variable_set(
           "@#{action}",
           node
-            .permitted_parent_types(action_name: action, group_id: permission_group.group_id, resource_type: resource_type)
-            .map { |a| a == '*' ? NS.argu[:contentTreeClass] : a.constantize.iri }
+            .permitted_parent_types(
+              action_name: action,
+              group_id: permission_group.group_id,
+              resource_type: resource_type
+            ).map { |a| a == '*' ? NS.argu[:contentTreeClass] : a.constantize.iri }
         )
       end
 

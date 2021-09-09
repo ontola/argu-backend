@@ -17,7 +17,11 @@ nl:
         invite: 'Uitnodigen'
         grants: 'Rechten'
         advanced: 'Geavanceerd'
-    form:
+    delete:
+      info: "Weet je zeker dat je de groep '%{group}' wil verwijderen?"
+      not_allowed: "Het is niet mogelijk om deze groep te verwijderen."
+  forms:
+    groups:
       name:
         description: "bv Burgers"
         label: "Naam"
@@ -26,6 +30,3 @@ nl:
         label: "Naam enkelvoud"
       require_2fa:
         label: "Verplicht tweestapsverificatie"
-    delete:
-      info: "Weet je zeker dat je de groep '%{group}' wil verwijderen?"
-      not_allowed: "Het is niet mogelijk om deze groep te verwijderen."

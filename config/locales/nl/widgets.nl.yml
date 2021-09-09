@@ -1,7 +1,8 @@
 nl:
   widgets:
     type_new: "Nieuwe widget"
-    form:
+  forms:
+    widgets:
       size:
         label: "Breedte"
       position:
@@ -10,7 +11,8 @@ nl:
         label: "Weergave"
       raw_resource_iri:
         label: "Object"
-    enums:
+  enums:
+    widgets:
       view:
         full_view: "Volledig"
         compact_view: "Compact"

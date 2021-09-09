@@ -3,7 +3,6 @@
 class Scenario < Edge
   include Edgeable::Content
   enhance Attachable
-  enhance LinkedRails::Enhancements::Tableable
   with_columns default: [
     NS.schema.name
   ]

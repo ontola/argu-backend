@@ -1,8 +1,8 @@
 # English argument translations
 
 en:
-  forums:
-    form:
+  forms:
+    forums:
       bio:
         label: "Forum goal"
         description: "Summarize in one sentence what function the forum has. This text will appear under the name of the forum. There's a maximum of 80 characters."
@@ -10,6 +10,7 @@ en:
         label: "Forum name"
       shortname:
         label: "URL"
+  forums:
     settings:
       title: "Forum settings"
       general: "General settings"

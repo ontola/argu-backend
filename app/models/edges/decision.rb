@@ -2,10 +2,9 @@
 
 class Decision < Edge
   enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Updatable
   enhance Loggable
   enhance MarkAsImportant
-  enhance LinkedRails::Enhancements::Menuable
-  enhance LinkedRails::Enhancements::Updatable
 
   attribute :display_name
   property :description, :text, NS.schema.text

@@ -1,4 +1,8 @@
 nl:
+  forms:
+    exports:
+      user:
+        label: "Gebruiker"
   exports:
     type_new: "Nieuwe export"
     destroy_confirmation: "Weet je zeker dat je deze export wilt verwijderen?"
@@ -8,9 +12,6 @@ nl:
       done: "Beschikbaar"
       failed: "Fout tijdens verwerking"
     create_helper: "Het duurt even om een export te maken. Je krijgt een mail als hij klaar is."
-    form:
-      user:
-        label: "Gebruiker"
     formats:
       xls:
         overview_title: "Overzicht"

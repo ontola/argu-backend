@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Vote < Edge
+class Vote < Edge # rubocop:disable Metrics/ClassLength
   extend UriTemplateHelper
 
   enhance LinkedRails::Enhancements::Creatable
@@ -98,12 +98,37 @@ class Vote < Edge
       attrs
     end
 
+    def create_image(option, upvote_only = false)
+      return 'fa-arrow-up' if upvote_only
+      return 'fa-plus' unless option
+
+      "fa-#{icon_for_side(option)}"
+    end
+
+    def create_label(association, option, upvote_only = false)
+      return I18n.t('actions.pro_arguments.create_vote.submit') if upvote_only
+      return I18n.t("#{association}.type_new") unless option
+
+      I18n.t("#{association}.instance_type.#{option}")
+    end
+
     def current_vote(parent, user_context)
       return nil if user_context.nil?
 
       Vote
         .where_with_redis(creator: user_context.profile, root_id: ActsAsTenant.current_tenant.uuid)
         .find_by(parent: parent, primary: true)
+    end
+
+    def icon_for_side(side)
+      case side.to_s
+      when 'pro', 'yes'
+        'thumbs-up'
+      when 'neutral', 'other'
+        'pause'
+      when 'con', 'no'
+        'thumbs-down'
+      end
     end
 
     def requested_singular_resource(params, user_context)

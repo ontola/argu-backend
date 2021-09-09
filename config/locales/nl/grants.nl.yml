@@ -1,6 +1,11 @@
 #Dutch grants translations
 
 nl:
+  forms:
+    grants:
+      description: "Je kunt rechten toekennen aan groepen binnen dit forum. Rechten gelden ook voor onderliggende items. De volgende rechten zijn op een hoger niveau toegekend:"
+      group:
+        label: "Group"
   grants:
     type_new: "Nieuw recht"
     empty: "Geen rechten"
@@ -14,10 +19,6 @@ nl:
       edge: "Voor welk forum geldt deze rol?"
     errors:
       taken: "Deze groep heeft al rechten in dit forum. Verwijder dit recht eerst voordat je een nieuwe aanmaakt."
-    form:
-      description: "Je kunt rechten toekennen aan groepen binnen dit forum. Rechten gelden ook voor onderliggende items. De volgende rechten zijn op een hoger niveau toegekend:"
-      group:
-        label: "Group"
   roles:
     type: "Recht"
     plural: "Rechten"

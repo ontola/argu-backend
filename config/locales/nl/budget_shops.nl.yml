@@ -1,7 +1,8 @@
 nl:
   budget_shops:
     type_new: "Nieuw budget"
-    form:
+  forms:
+    budget_shops:
       budget_max:
         label: "Budget"
       currency:

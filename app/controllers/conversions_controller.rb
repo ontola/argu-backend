@@ -3,6 +3,10 @@
 class ConversionsController < ServiceController
   before_action :verify_convertible_edge
 
+  has_collection_create_action(
+    label: -> { I18n.t('actions.conversions.create.label') }
+  )
+
   private
 
   def authorize_action

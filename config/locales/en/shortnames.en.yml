@@ -6,7 +6,8 @@ en:
       from: "From"
       to: "To"
       delete: "Delete"
-    form:
+  forms:
+    shortnames:
       destination:
         description: "Enter the part of the url following %{iri_prefix}/"
         label: "Destination"

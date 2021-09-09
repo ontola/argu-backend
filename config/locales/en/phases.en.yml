@@ -1,7 +1,8 @@
 en:
   phases:
     type_new: "New phase"
-    form:
+  forms:
+    phases:
       order:
         label: "Position"
       time:

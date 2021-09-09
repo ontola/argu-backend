@@ -7,7 +7,8 @@ nl:
       title: "Oplossing nodig?"
       body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
       action: "Deel jouw uitdaging."
-    enums:
+  enums:
+    questions:
       default_motion_sorting:
         popular: "Stemmen voor (meeste eerst)"
         created_at: "Aanmaakdatum (nieuwste eerst)"
@@ -19,7 +20,8 @@ nl:
         default_display: "Standaard"
         grid_display: "Grid"
         table_display: "Tabel"
-    form:
+  forms:
+    questions:
       content:
         description: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
         label: "Licht je uitdaging toe"

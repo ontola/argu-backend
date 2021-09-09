@@ -1,6 +1,18 @@
 #Dutch motions translations
 
 nl:
+  forms:
+    motions:
+      content:
+        description: "Plaats hier de details en achtergrondinformatie van jouw idee."
+        label: "Licht je idee toe"
+      description:
+        description: "Plaats hier de details en achtergrondinformatie van jouw idee."
+      display_name:
+        description: "Plaats hier de kern van jouw idee"
+      title:
+        description: "Plaats hier de kern van jouw idee"
+        label: "Vat je idee samen in één zin."
   motions:
     type_new: "Nieuw idee"
     title: "Idee"
@@ -29,17 +41,6 @@ nl:
         zero: "geen tegenargumenten"
         one: "1  tegenargument"
         other: "%{count} tegenargumenten"
-    form:
-      content:
-        description: "Plaats hier de details en achtergrondinformatie van jouw idee."
-        label: "Licht je idee toe"
-      description:
-        description: "Plaats hier de details en achtergrondinformatie van jouw idee."
-      display_name:
-        description: "Plaats hier de kern van jouw idee"
-      title:
-        description: "Plaats hier de kern van jouw idee"
-        label: "Vat je idee samen in één zin."
     call_to_action:
       title: "Heb jij een goed idee?"
       body: "Heb jij een goed idee en wil je anderen daarvan overtuigen?"

@@ -6,10 +6,9 @@ module Edgeable
 
     included do
       enhance LinkedRails::Enhancements::Creatable
-      enhance Loggable
-      enhance LinkedRails::Enhancements::Menuable
-      enhance Trashable
       enhance LinkedRails::Enhancements::Updatable
+      enhance Loggable
+      enhance Trashable
       enhance Followable
 
       auto_strip_attributes :title, squish: true

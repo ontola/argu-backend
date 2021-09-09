@@ -52,9 +52,9 @@ class GrantTree
       @permission_groups ||= granted_group_ids.map { |id| PermissionGroup.new(id, self) }
     end
 
-    def permitted_parent_types(action: nil, group_id: nil, resource_type: nil)
+    def permitted_parent_types(action_name: nil, group_id: nil, resource_type: nil)
       permitted_actions
-        .dig(resource_type.to_s, action.to_s)
+        .dig(resource_type.to_s, action_name.to_s)
         &.select { |_parent_type, ids| ids.include?(group_id) }
         &.keys || []
     end

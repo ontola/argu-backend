@@ -1,14 +1,12 @@
 en:
   orders:
-    type_new: "new order"
+    type_new: "Finish"
     errors:
       coupon:
         invalid: "Coupon is not valid"
   actions:
     orders:
       create:
-        label: "Finish"
-        submit_label: "Finish"
         success: "Your budget is submitted!"
         errors:
           budget_exceeded: "The budget is exceeded"

@@ -5,12 +5,8 @@ require 'bcrypt'
 class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance ConfirmedDestroyable
   enhance Placeable
-  enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
-  enhance LinkedRails::Enhancements::Menuable
-  enhance LinkedRails::Enhancements::Singularable
   enhance Feedable
   enhance Grantable
 
@@ -155,7 +151,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     Notification.confirmation_reminder.create(
       user: self,
-      url: menu(:profile).iri(fragment: :settings),
+      url: menu(:settings).iri(fragment: :settings),
       permanent: true,
       root_id: root_id,
       send_mail_after: 24.hours.from_now
@@ -356,7 +352,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       User.find(User::ANONYMOUS_ID)
     end
 
-    def build_new(opts)
+    def build_new(parent: nil, user_context: nil)
       resource = super
       resource.build_profile
       resource.language = I18n.locale

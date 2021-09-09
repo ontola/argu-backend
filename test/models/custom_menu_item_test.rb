@@ -21,14 +21,14 @@ class CustomMenuItemTest < ActiveSupport::TestCase
       resource_type: 'Edge',
       resource_id: argu.uuid,
       order: 0,
-      label: 'about.team',
+      label: 'set_language',
       href: 'https://argu.localdev/i/about',
       image: 'fa-info'
     )
   end
 
   test 'team menu item translation' do
-    match = team_menu_item.label.detect { |label| label.to_s == 'Our team' }
+    match = team_menu_item.label.detect { |label| label.to_s == 'Set language' }
     assert match
   end
 

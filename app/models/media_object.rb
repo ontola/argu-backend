@@ -4,11 +4,7 @@ require 'types/file_type'
 
 class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Parentable
-  enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Menuable
   enhance LinkedRails::Enhancements::Creatable
-  enhance LinkedRails::Enhancements::Indexable
-  enhance LinkedRails::Enhancements::Tableable
   enhance Cacheable
   include Broadcastable
 

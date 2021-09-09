@@ -1,7 +1,8 @@
 en:
   banners:
     type_new: 'New banner'
-    enums:
+  enums:
+    banners:
       audience:
         guests: 'Guests'
         users: 'Users'

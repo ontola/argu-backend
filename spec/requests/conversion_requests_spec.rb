@@ -11,6 +11,8 @@ RSpec.describe 'Conversions', type: :request do
   let(:expect_post_create_failed_serializer) { expect_post_create_unauthorized_serializer }
   let(:authorized_user) { staff }
   let(:create_failed_path) { created_resource_path }
+  let(:expect_get_new_unauthorized_serializer) { expect_unauthorized }
+  let(:expect_get_new_guest_serializer) { expect_unauthorized }
   let(:expect_post_create_serializer) { expect_success }
   let(:expect_post_create_json_api) { expect(response.code).to eq('302') }
 

@@ -11,7 +11,8 @@ nl:
     edited_at: "gewijzigd op %{time}"
     more: "Toon meer"
     edit: "Wijzig reactie"
-    form:
+  forms:
+    comments:
       description:
         description: "Plaats een reactie"
   pundit:

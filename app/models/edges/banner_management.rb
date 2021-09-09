@@ -2,9 +2,7 @@
 
 class BannerManagement < Edge
   enhance LinkedRails::Enhancements::Creatable
-  enhance LinkedRails::Enhancements::Menuable
   enhance LinkedRails::Enhancements::Updatable
-  enhance LinkedRails::Enhancements::Tableable
   enhance LinkedRails::Enhancements::Destroyable
   enhance ActivePublishable
   enhance Dismissable

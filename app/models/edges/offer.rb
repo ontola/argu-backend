@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Offer < Edge
-  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
   enhance Buyable

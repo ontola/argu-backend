@@ -152,10 +152,6 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     false
   end
 
-  def publish?
-    !record.argu_publication&.publish_time_lapsed? && update?
-  end
-
   def statistics?
     has_grant?(:update)
   end

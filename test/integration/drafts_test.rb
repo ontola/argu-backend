@@ -59,9 +59,9 @@ class DraftsTest < ActionDispatch::IntegrationTest
     assert_nil motion.argu_publication.published_at
     assert_not motion.is_published?
     Sidekiq::Testing.inline! do
-      patch update_path(motion),
-            headers: argu_headers,
-            params: {motion: {argu_publication_attributes: {draft: 'false'}}}
+      put update_path(motion),
+          headers: argu_headers,
+          params: {motion: {argu_publication_attributes: {draft: 'false'}}}
     end
     assert_not_nil motion.argu_publication.reload.published_at
     assert motion.reload.is_published?
@@ -72,9 +72,9 @@ class DraftsTest < ActionDispatch::IntegrationTest
     assert_nil motion.argu_publication.published_at
     assert_not motion.is_published?
     Sidekiq::Testing.inline! do
-      patch update_path(motion),
-            headers: argu_headers,
-            params: {motion: {argu_publication_attributes: {published_at: Time.current}}}
+      put update_path(motion),
+          headers: argu_headers,
+          params: {motion: {argu_publication_attributes: {published_at: Time.current}}}
     end
     assert_not_nil motion.argu_publication.reload.published_at
     assert motion.reload.is_published?
@@ -85,9 +85,9 @@ class DraftsTest < ActionDispatch::IntegrationTest
     assert_nil motion.argu_publication.published_at
     assert_not motion.is_published?
     Sidekiq::Testing.inline! do
-      patch update_path(motion),
-            headers: argu_headers,
-            params: {motion: {argu_publication_attributes: {draft: 'true'}}}
+      put update_path(motion),
+          headers: argu_headers,
+          params: {motion: {argu_publication_attributes: {draft: 'true'}}}
     end
     assert_nil motion.argu_publication.reload.published_at
     assert_not motion.reload.is_published?
@@ -98,9 +98,9 @@ class DraftsTest < ActionDispatch::IntegrationTest
     assert_nil motion.argu_publication.published_at
     assert_not motion.is_published?
     Sidekiq::Testing.inline! do
-      patch update_path(motion),
-            headers: argu_headers,
-            params: {motion: {display_name: 'new title'}}
+      put update_path(motion),
+          headers: argu_headers,
+          params: {motion: {display_name: 'new title'}}
     end
     assert_equal motion.reload.title, 'New title'
     assert_nil motion.argu_publication.reload.published_at

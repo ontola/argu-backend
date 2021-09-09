@@ -74,9 +74,9 @@ module Argu
         ch_method = method(results[:should] ? :assert_not_equal : :assert_equal)
 
         assert_difference(Hash[differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }]) do
-          patch update_path(record),
-                headers: argu_headers,
-                params: {model_sym => attributes}
+          put update_path(record),
+              headers: argu_headers,
+              params: {model_sym => attributes}
         end
 
         assert_response results[:response]

@@ -60,7 +60,7 @@ class LanguageTest < ActionDispatch::IntegrationTest
   end
 
   def language_form_iri
-    ActsAsTenant.with_tenant(argu) { argu.action(:language).iri }
+    ActsAsTenant.with_tenant(argu) { User.new(singular_resource: true).action(:language).iri }
   end
 
   def language_iri

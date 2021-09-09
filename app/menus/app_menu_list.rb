@@ -45,7 +45,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     menu_item(
       :language,
       label: I18n.t('set_language'),
-      href: ActsAsTenant.current_tenant.action(:language).iri
+      href: User.new(singular_resource: true).action(:language).iri
     )
   end
 
@@ -150,10 +150,10 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   def user_base_items
     [
       menu_item(
-        :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_context.user.menu(:profile).iri
+        :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_context.user.menu(:settings).iri
       ),
       menu_item(
-        :profile, label: I18n.t('profiles.edit.title'), href: user_context.user.menu(:profile).iri(fragment: :profile)
+        :profile, label: I18n.t('profiles.edit.title'), href: user_context.user.menu(:settings).iri(fragment: :profile)
       )
     ]
   end
@@ -172,7 +172,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     menu_item(
       :settings,
       label: I18n.t('users.settings.title'),
-      href: user_context.user.menu(:profile).iri(fragment: :settings)
+      href: user_context.user.menu(:settings).iri(fragment: :settings)
     )
   end
 end

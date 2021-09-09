@@ -1,29 +1,46 @@
 # frozen_string_literal: true
 
-# @note: Common create ready
 class NotificationsController < AuthorizedController
-  skip_before_action :authorize_action, only: :index
+  skip_before_action :authorize_action, only: %i[index read_all]
+  skip_after_action :verify_authorized, only: %i[index read_all]
 
   after_action :update_viewed_time
 
-  def read
-    # rubocop:disable Rails/SkipsModelValidations
-    if policy_scope(Notification)
-         .where(read_at: nil, permanent: false)
-         .update_all(read_at: Time.current)
-      head 200
-    else
-      head 400
-    end
-    # rubocop:enable Rails/SkipsModelValidations
-  end
+  has_resource_update_action(
+    action_path: :read,
+    image: 'fa-check',
+    one_click: true,
+    predicate: NS.ontola[:readAction],
+    type: NS.schema.ReadAction
+  )
+  has_collection_action(
+    :read_all,
+    favorite: true,
+    http_method: :put,
+    image: 'fa-check',
+    one_click: true
+  )
 
   private
 
-  def authorize_action
-    return super unless action_name == 'read'
+  def read_all_execute
+    # rubocop:disable Rails/SkipsModelValidations
+    policy_scope(Notification)
+      .where(read_at: nil, permanent: false)
+      .update_all(read_at: Time.current)
+    # rubocop:enable Rails/SkipsModelValidations
+  end
 
-    authorize Notification, :read?
+  def read_all_success
+    respond_with_resource(
+      meta: read_all_meta
+    )
+  end
+
+  def read_all_meta
+    update_meta + [
+      [NS.sp.Variable, NS.argu[:unread], true, delta_iri(:remove)]
+    ]
   end
 
   def update_execute

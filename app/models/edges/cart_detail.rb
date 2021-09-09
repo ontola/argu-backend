@@ -6,7 +6,6 @@ class CartDetail < Edge
 
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
-  enhance LinkedRails::Enhancements::Indexable
   enhance Singularable
 
   attribute :shop_id

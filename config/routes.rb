@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     enum_values: :enum_values,
     forms: :forms,
     manifests: :manifests,
+    menus: :menus,
     ontologies: :ontologies
   )
   use_linked_rails_auth(
@@ -73,13 +74,6 @@ Rails.application.routes.draw do
   get '/values', to: 'documents#show', name: 'values'
   get '/policy', to: 'documents#show', name: 'policy'
   get '/privacy', to: 'documents#show', name: 'privacy'
-
-  resources :notifications,
-            only: %i[index show],
-            path: 'n' do
-    patch :read, on: :collection
-    include_route_concerns
-  end
 
   root to: 'pages#show'
 
@@ -109,7 +103,8 @@ Rails.application.routes.draw do
   end
 
   resource :pages, path: '' do
-    include_route_concerns(klass: Page)
+    get(:delete, action: :delete, action_key: :destroy)
+    get(:edit, action: :edit, action_key: :update)
   end
   resources :actors, only: :index
   resources :activities, only: :show
@@ -121,16 +116,12 @@ Rails.application.routes.draw do
   get '(*parent_iri)/feed', to: 'feed#index'
   get '(*parent_iri)/grant_sets', to: 'grant_sets#index'
   get '(*parent_iri)/granted', to: 'granted_groups#index'
-  post '(*parent_iri)/o', to: 'pages#create'
-  get '(*parent_iri)/o', to: 'pages#index'
   get '(*parent_iri)/permissions', to: 'grant_trees#show'
-  get '(*parent_iri)/profile', to: 'menus/lists#show', id: 'profile'
   get '(*parent_iri)/search', to: 'search_results#index'
   get '(*parent_iri)/settings', to: 'menus/lists#show', id: 'settings'
   get '(*parent_iri)/statistics', to: 'statistics#show'
   get '(*parent_iri)/taggings', to: 'taggings#index', collection: :taggings
   get '(*parent_iri)/setup', to: 'actions/items#show', id: :setup
-  put 'u/language', to: 'users/languages#update'
 
   linked_resource(Argument)
   linked_resource(Banner)
@@ -163,10 +154,11 @@ Rails.application.routes.draw do
   linked_resource(Invite)
   linked_resource(MediaObject)
   linked_resource(Motion)
-  linked_resource(Move)
+  linked_resource(Notification)
   linked_resource(Offer)
   linked_resource(Order)
   linked_resource(OrderDetail)
+  linked_resource(Page, resource: false)
   linked_resource(Phase)
   linked_resource(Placement)
   linked_resource(PolicyAgreement)
@@ -192,14 +184,10 @@ Rails.application.routes.draw do
   linked_resource(Measure)
 
   ContainerNode.descendants.each do |klass|
-    linked_resource(klass)
+    linked_resource(klass, resource: false)
   end
-  resources :container_nodes, only: %i[index]
-  resources :container_nodes,
-            only: %i[show],
-            path: '' do
-    include_route_concerns(klass: ContainerNode.descendants)
-  end
+  resources :container_nodes, path: :container_nodes, only: %i[index]
+  linked_resource(ContainerNode, collection: false)
 
   mount Sidekiq::Prometheus::Exporter => '/d/sidekiq'
 

@@ -1,32 +1,8 @@
 #Dutch argument translations
 
 nl:
-  pro_arguments:
-    type_new: "Nieuw voordeel"
-    form:
-      content:
-        description: "Details en achtergrondinformatie van jouw argument."
-      description:
-        description: "Details en achtergrondinformatie van jouw argument."
-      display_name:
-        description: "De kern van het voordeel"
-      title:
-        description: "De kern van het voordeel"
-  con_arguments:
-    type_new: "Nieuw nadeel"
-    form:
-      content:
-        description: "Details en achtergrondinformatie van jouw argument."
-      description:
-        description: "Details en achtergrondinformatie van jouw argument."
-      display_name:
-        description: "De kern van het nadeel"
-      title:
-        description: "De kern van het nadeel"
-  arguments:
-    type_new: "Nieuw argument"
-    vote: "Stem"
-    form:
+  forms:
+    arguments:
       content:
         description: "Plaats hier de details en achtergrondinformatie van jouw argument."
         label: "Licht je argument toe (optioneel)"
@@ -42,6 +18,31 @@ nl:
       side:
         pro: "argument voor"
         con: "argument tegen"
+    pro_arguments:
+      content:
+        description: "Details en achtergrondinformatie van jouw argument."
+      description:
+        description: "Details en achtergrondinformatie van jouw argument."
+      display_name:
+        description: "De kern van het voordeel"
+      title:
+        description: "De kern van het voordeel"
+    con_arguments:
+      content:
+        description: "Details en achtergrondinformatie van jouw argument."
+      description:
+        description: "Details en achtergrondinformatie van jouw argument."
+      display_name:
+        description: "De kern van het nadeel"
+      title:
+        description: "De kern van het nadeel"
+  pro_arguments:
+    type_new: "Nieuw voordeel"
+  con_arguments:
+    type_new: "Nieuw nadeel"
+  arguments:
+    type_new: "Nieuw argument"
+    vote: "Stem"
     collection:
       'yes': "Voordelen"
       'no': "Problemen"

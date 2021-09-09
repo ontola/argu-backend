@@ -59,9 +59,11 @@ class IriHelperTest < ActiveSupport::TestCase
   end
 
   test 'should get opts from motion iri' do
+    iri = "https://#{argu.iri_prefix}/m/1?foo=bar&arr[]=1&arr[]=2"
+
     ActsAsTenant.with_tenant(argu) do
       assert_equal(
-        Argu::IRIMapper.opts_from_iri("https://#{argu.iri_prefix}/m/1?foo=bar&arr[]=1&arr[]=2"),
+        Argu::IRIMapper.opts_from_iri(iri),
         {
           action: 'show',
           params: {
@@ -69,6 +71,7 @@ class IriHelperTest < ActiveSupport::TestCase
             foo: 'bar',
             id: '1'
           },
+          iri: iri,
           class: Motion
         }.with_indifferent_access
       )

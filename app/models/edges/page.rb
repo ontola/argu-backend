@@ -13,7 +13,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance Discussable
   enhance Exportable
   enhance Feedable
-  enhance LinkedRails::Enhancements::Menuable
   enhance Placeable
   enhance LinkedRails::Enhancements::Updatable
   enhance Settingable
@@ -231,7 +230,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       find_via_shortname(ARGU_URL)
     end
 
-    def build_new(opts)
+    def build_new(parent: nil, user_context: nil)
       record = super
       record.build_profile
       record
@@ -253,6 +252,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       return super if params.key?(:id)
 
       ActsAsTenant.current_tenant
+    end
+
+    def route_key
+      :o
     end
 
     def update_iris(from, to, scope = nil) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize

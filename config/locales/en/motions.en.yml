@@ -1,6 +1,18 @@
 #English motions translations
 
 en:
+  forms:
+    motions:
+      content:
+        description: "Enter details and background information on your idea here."
+        label: "Describe your idea in detail"
+      description:
+        description: "Enter details and background information on your idea here."
+      display_name:
+        description: "Enter the core of your idea here"
+      title:
+        description: "Enter the core of your idea here"
+        label: "Summarize your idea in one sentence"
   motions:
     type_new: "New idea"
     title: "Idea"
@@ -29,17 +41,6 @@ en:
         zero: "no con arguments"
         one: "1  con argument"
         other: "%{count} con arguments"
-    form:
-      content:
-        description: "Enter details and background information on your idea here."
-        label: "Describe your idea in detail"
-      description:
-        description: "Enter details and background information on your idea here."
-      display_name:
-        description: "Enter the core of your idea here"
-      title:
-        description: "Enter the core of your idea here"
-        label: "Summarize your idea in one sentence"
     call_to_action:
       title: "Do you have a good idea?"
       body: "Do you have a good idea and do you want to convince others?"

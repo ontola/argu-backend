@@ -1,7 +1,8 @@
 en:
   custom_menu_items:
     type_new: "New menu item"
-    form:
+  forms:
+    custom_menu_items:
       raw_label:
         label: "Label"
       raw_href:

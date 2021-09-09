@@ -4,13 +4,13 @@ class UserMenuList < ApplicationMenuList
   include Helpers::FollowMenuItems
   include Helpers::ActionMenuItems
 
-  has_menu :profile,
+  has_menu :settings,
            iri_base: -> { resource.root_relative_iri },
-           menus: -> { profile_menu_items }
+           menus: -> { settings_menu_items }
 
   private
 
-  def profile_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def settings_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     items = []
     items << menu_item(:activity, href: feeds_iri(resource)) if resource == user || resource.show_feed
     if resource == user

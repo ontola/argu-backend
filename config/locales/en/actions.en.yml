@@ -1,7 +1,7 @@
 
 en:
-  custom_actions:
-    form:
+  forms:
+    custom_actions:
       raw_label:
         label: "Label"
       raw_description:
@@ -18,21 +18,24 @@ en:
       DisabledActionStatus: "This action is currently not available"
     default:
       create:
+        label: "New %{type}"
+        success: 'Created successfully'
         submit: "Save"
+      destroy:
+        label: "Delete %{type}"
+        description: "This object and all related data will be permanently removed. This cannot be undone."
+        success: 'Destroyed successfully'
+        submit: "Delete"
       update:
+        label: "Edit"
+        success: 'Updated successfully'
         submit: "Save"
       create_comment:
         label: "Comment"
-      destroy:
-        label: "Destroy"
-        description: "This object and all related data will be permanently removed. This cannot be undone."
-        submit: "Delete"
       move:
         label: "Move"
         description: "All children will be moved along."
         submit: "Move"
-      read:
-        label: "Mark as read"
       publish:
         label: "Publish"
         submit: "Publish"
@@ -45,10 +48,6 @@ en:
         label: "Restore"
         description: "This item will be visible again in public discussion."
         submit: "Restore"
-      send_confirmation:
-        submit: "Send again"
-      make_primary:
-        submit: "Make primary email address"
     access_tokens:
       create:
         label: "Log in"
@@ -79,9 +78,6 @@ en:
         disabled:
           guest: "Sign in to send a message."
           not_allowed: "The poster does not allow contact by email."
-    email_addresses:
-      create:
-        submit: "Add"
     follows:
       destroy:
         submit: "Stop following"

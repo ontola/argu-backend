@@ -9,6 +9,7 @@ nl:
         name: "Ideeën verzamelen"
       survey:
         name: "Enquête"
-    form:
+  forms:
+    projects:
       current_phase_id:
         label: "Huidige fase"

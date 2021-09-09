@@ -2,6 +2,16 @@
 
 class ContainerNodesController < EdgeableController
   prepend_before_action :redirect_generic_shortnames, only: :show
+  ContainerNode.descendants.each do |klass|
+    has_collection_action(
+      "new_#{klass.name.underscore}",
+      **create_collection_options(
+        inherit: false,
+        predicate: NS.ontola[:createAction],
+        root_relative_iri: -> { "#{klass.root_collection.root_relative_iri}/new" }
+      )
+    )
+  end
 
   def show
     return unless policy(requested_resource).show?
@@ -12,7 +22,7 @@ class ContainerNodesController < EdgeableController
   private
 
   def authorize_action
-    authorize(authenticated_resource, :list?) unless action_name == 'index'
+    authorize(authenticated_resource, :list?) unless action_name == 'index' || current_resource!.is_a?(::Actions::Item)
 
     super
   end
@@ -50,5 +60,12 @@ class ContainerNodesController < EdgeableController
     return super unless current_resource.previous_changes.key?(:url)
 
     respond_with_redirect(location: current_resource.iri, reload: true)
+  end
+
+  class << self
+    def inherited(klass)
+      klass.has_resource_update_action
+      super
+    end
   end
 end

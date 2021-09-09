@@ -1,8 +1,23 @@
 en:
-  email_addresses:
-    type_new: "New email address"
-    form:
+  actions:
+    email_addresses:
+      confirm:
+        completed: "This address is already confirmed"
+      create:
+        submit: "Add"
+      destroy:
+        primary: "You cannot delete your primary address"
+      make_primary:
+        completed: "This is already your primary address"
+        unconfirmed: "This address is not yet confirmed"
+        submit: "Make primary email address"
+      send_confirmation:
+        submit: "Send again"
+  forms:
+    email_addresses:
       user:
         label: "User"
+  email_addresses:
+    type_new: "New email address"
     create:
       success: "Email address added to your account. Please confirm the new address by clicking the link we've sent."

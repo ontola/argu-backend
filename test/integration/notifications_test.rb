@@ -37,7 +37,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     argument
     sign_in :guest_user
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => 0) do
-      patch "#{collection_iri(argu, :notifications)}/read"
+      put "#{collection_iri(argu, :notifications)}/read"
       assert_response 401
     end
   end

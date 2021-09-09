@@ -1,6 +1,11 @@
 #English grants translations
 
 en:
+  forms:
+    grants:
+      description: "You can grant certain rights to groups in this forum. Grants also apply to the underlying content. The following grants are defined at a higher level:"
+      group:
+        label: "Groep"
   grants:
     type_new: "New grant"
     empty: "No grants"
@@ -14,10 +19,6 @@ en:
       edge: "For which forum should this role be granted?"
     errors:
       taken: "This group already has a grant on this forum. Please remove this grant before creating a new one."
-    form:
-      description: "You can grant certain rights to groups in this forum. Grants also apply to the underlying content. The following grants are defined at a higher level:"
-      group:
-        label: "Groep"
   roles:
     type: "Grant"
     plural: "Grants"

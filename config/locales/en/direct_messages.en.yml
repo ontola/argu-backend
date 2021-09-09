@@ -2,7 +2,8 @@ en:
   direct_messages:
     notice:
       success: "The mail will be sent"
-    form:
+  forms:
+    direct_messages:
       email:
         description: ""
       email_address_id:

@@ -1,7 +1,8 @@
 nl:
   offers:
     type_new: "Nieuwe optie"
-    form:
+  forms:
+    offers:
       product_id:
         label: "Selecteer een Idee"
       price:

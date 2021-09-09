@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 class Export < ApplicationRecord
-  enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Indexable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
-  enhance LinkedRails::Enhancements::Tableable
   include Parentable
 
   belongs_to :user

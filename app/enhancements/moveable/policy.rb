@@ -5,7 +5,7 @@ module Moveable
     extend ActiveSupport::Concern
 
     included do
-      permit_attributes %i[move_to_edge_id]
+      permit_attributes %i[new_parent_id]
     end
 
     def move?

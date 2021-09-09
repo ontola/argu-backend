@@ -1,8 +1,6 @@
 en:
-  websites:
-    type_new: "New website"
   pages:
-    type_new: "New organization"
+    type_new: "New website"
     show: "Show organization"
     discover_header: "Discover"
     my_pages: "My Argu websites"
@@ -37,7 +35,8 @@ en:
     legal: "By creating this organization you declare having permission to represent the related organisation on Argu, and that you agree to the general terms and conditions."
     limit_reached_amount: "You can create no more than %{amount} organization(s)."
     page_management: "organization management"
-    enums:
+  enums:
+    pages:
       header_background:
         background_primary: "Primary color"
         background_secondary: "Secondary color"
@@ -46,7 +45,8 @@ en:
         text_primary: "Primary color"
         text_secondary: "Secondary color"
         text_auto: "Automatic"
-    form:
+  forms:
+    pages:
       accepted_terms:
         label: "I accept the terms of use"
       google_tag_manager:

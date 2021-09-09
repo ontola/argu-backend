@@ -1,7 +1,7 @@
 
 nl:
-  custom_actions:
-    form:
+  forms:
+    custom_actions:
       raw_label:
         label: "Label"
       raw_description:
@@ -18,21 +18,24 @@ nl:
       DisabledActionStatus: "Deze actie is momenteel niet beschikbaar"
     default:
       create:
+        label: "Voeg %{type} toe"
+        success: 'Succesvol aangemaakt'
         submit: "Opslaan"
+      destroy:
+        label: "Verwijder %{type}"
+        description: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
+        success: 'Succesvol verwijderd'
+        submit: "Verwijder"
       update:
+        label: "Bewerken"
+        success: 'Succesvol opgeslagen'
         submit: "Opslaan"
       create_comment:
         label: "Reageer"
-      destroy:
-        label: "Vernietigen"
-        description: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
-        submit: "Verwijder"
       move:
         label: "Verplaatsen"
         description: "Alle onderliggende items zullen mee verplaatst worden."
         submit: "Verplaats"
-      read:
-        label: "Markeer als gelezen"
       publish:
         label: "Publiceer"
         submit: "Publiceer"
@@ -45,10 +48,6 @@ nl:
         label: "Terugplaatsen"
         description: "Dit object zal weer zichtbaar zijn in de publieke discussie."
         submit: "Plaats terug"
-      send_confirmation:
-        submit: "Verzend opnieuw"
-      make_primary:
-        submit: "Maak primair e-mail adres"
     access_tokens:
       create:
         label: "Inloggen"
@@ -79,9 +78,6 @@ nl:
         disabled:
           guest: "Log in om een bericht te kunnen versturen."
           not_allowed: "De indiener staat contact via e-mail niet toe."
-    email_addresses:
-      create:
-        submit: "Voeg toe"
     follows:
       destroy:
         submit: "Niet meer volgen"

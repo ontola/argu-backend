@@ -18,8 +18,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Uuidable
   include Cacheable
 
-  enhance LinkedRails::Enhancements::Actionable
-  enhance LinkedRails::Enhancements::Indexable
   enhance Grantable
 
   acts_as_followable

@@ -11,7 +11,8 @@ en:
     edited_at: "edited at %{time}"
     more: "Show more"
     edit: "Edit comment"
-    form:
+  forms:
+    comments:
       description:
         description: "Enter your comment"
   pundit:

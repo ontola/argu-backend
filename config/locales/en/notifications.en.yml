@@ -1,8 +1,13 @@
 en:
+  actions:
+    notifications:
+      update:
+        label: "Mark as read"
+      read_all:
+        label: "Mark all as read"
   notifications:
     all: "All notifications"
     settings: "Settings"
-    mark_as_read: "Mark as read"
     receive:
       never: 'Never'
       reactions: 'All items'

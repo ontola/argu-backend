@@ -126,7 +126,13 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_difference 'GroupMembership.count' => 0, 'GroupMembership.active.count' => -1 do
-      delete :destroy, format: :json, params: {id: member.profile.group_memberships.second, root_id: argu.url}
+      delete :destroy,
+             format: :json,
+             params: {
+               id: member.profile.group_memberships.second,
+               root_id: argu.url,
+               use_route: :group_membership
+             }
     end
 
     assert_response :success
@@ -148,7 +154,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
              params: {
                id: group_membership,
                r: settings_iri(freetown, tab: :groups),
-               root_id: argu.url
+               root_id: argu.url,
+               use_route: :group_membership
              }
     end
 

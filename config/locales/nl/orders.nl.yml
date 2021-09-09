@@ -1,14 +1,12 @@
 nl:
   orders:
-    type_new: "Nieuwe bestelling"
+    type_new: "Afronden"
     errors:
       coupon:
         invalid: "Coupon is niet geldig"
   actions:
     orders:
       create:
-        label: "Afronden"
-        submit_label: "Afronden"
         success: "Je budget is ingediend!"
         errors:
           budget_exceeded: "Het budget is overschreden"

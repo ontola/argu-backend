@@ -1,8 +1,13 @@
 nl:
+  actions:
+    notifications:
+      update:
+        label: "Markeer als gelezen"
+      read_all:
+        label: "Markeer alles als gelezen"
   notifications:
     all: "Alle meldingen"
     settings: "Instellingen"
-    mark_as_read: "Markeer als gelezen"
     receive:
       never: 'Nooit meldingen ontvangen'
       reactions: 'Alle items'

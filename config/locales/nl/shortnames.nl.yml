@@ -6,7 +6,8 @@ nl:
       from: "Van"
       to: "Naar"
       delete: "Verwijderen"
-    form:
+  forms:
+    shortnames:
       destination:
         description: "Voer het gedeelte van de url in dat komt na %{iri_prefix}/"
         label: "Bestemming"

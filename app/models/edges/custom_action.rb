@@ -4,7 +4,6 @@ class CustomAction < Edge
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Destroyable
-  enhance LinkedRails::Enhancements::Menuable
   include TranslatableProperties
 
   property :label, :string, NS.schema.name
@@ -59,7 +58,7 @@ class CustomAction < Edge
   end
 
   def target
-    @target ||= LinkedRails.entry_point_class.new(parent: self, url: href)
+    @target ||= LinkedRails.entry_point_class.new(parent: self, target_url: href)
   end
 
   def target_id

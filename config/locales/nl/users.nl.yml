@@ -19,7 +19,10 @@ nl:
         destroy: "Verwijder"
     registrations:
       confirm_mail_change_notice: "We hebben je een mail gestuurd naar het nieuwe adres. Bevestig deze om de wijziging op te slaan."
-    enums:
+    drafts:
+      title: "Mijn concepten"
+  enums:
+    users:
       reactions_email:
         never_reactions_email: 'Nooit'
         direct_reactions_email: 'Onmiddelijk'
@@ -48,9 +51,8 @@ nl:
       destroy_strategy:
         expropriate_on_destroy: "Anonimiseer content"
         remove_on_destroy: "Verwijder content"
-    drafts:
-      title: "Mijn concepten"
-    form:
+  forms:
+    users:
       decisions_email:
         label: "Bij officiele besluiten"
       display_name:

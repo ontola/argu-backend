@@ -3,24 +3,76 @@ nl:
     type_new: "Nieuwe categorie"
   incidents:
     type_new: "Nieuwe gebeurtenis"
-    form:
-      scenarios_count:
-        label: "Scenario's"
   risks:
     type_new: "Nieuw gevaar"
   scenarios:
     type_new: "Nieuw scenario"
   intervention_types:
     type_new: "Nieuw interventietype"
-    form:
-      interventions_count:
-        label: "Interventies in de praktijk"
   interventions:
     type_new: "Nieuwe interventie"
     publish_success: "De interventie is ingediend voor moderatie"
     attachments:
       description: "Hier kunt u interventiemateriaal, zoals flyers, presentaties of effectiviteitsrapporten uploaden. Anderen kunnen dit materiaal dan downloaden"
-    enums:
+  measure_types:
+    type_new: "Nieuwe maatregel"
+    collection_for: "Maatregelen tegen %{parent}"
+    example_of: "Beschermt tegen"
+  measures:
+    type_new: "Maak je eigen voorbeeld"
+    comments_allowed:
+      comments_are_allowed: "Ja"
+      comments_not_allowed: "Nee"
+  actions:
+    interventions:
+      create:
+        description: |
+          Op deze pagina kunt u uw ervaring met veiligheidsinterventies delen. Door uw ervaring te delen, kunnen andere arbo-professionals leren van uw ervaringen. Zo werken we gezamenlijk aan een veilige werkomgeving.
+
+          **Hoe werkt het invulformulier?**
+
+          Om het delen van een interventie zo eenvoudig mogelijk te maken, maken we gebruik van een invulformulier. Dit formulier is onderverdeeld in de volgende categorieën:
+
+          Het invulformulier is verdeeld in de volgende categorieën:
+
+          - een beschrijving van de interventie;
+          - de invoering van de interventie;
+          - de kosten van de interventie;
+          - de effectiviteit van de interventie.
+
+          Het formulier bevat gesloten en open vragen. Graag het verzoek om de vragen zo nauwkeurig mogelijk te beantwoorden, zodat andere arbo-professionals de mogelijkheid hebben uw interventie op de juiste wijze toe te passen in hun eigen organisatie.
+
+          **Heb ik een account nodig?**
+
+          Voor het opslaan en delen van uw interventie hebt u een account nodig. Dit account kunt u zelf op het platform aanmaken. Uw gegevens worden alleen op de website getoond wanneer u dat zelf wenst. U kunt dit per interventie aangeven op het invulformulier. Bij uw account vindt u uw gegevens, eerder ingevoerde interventies en u hebt de mogelijkheid om (onvolledig) ingevulde interventies als concept op te slaan.
+
+          **Let op! Nadat uw interventie is geplaatst wordt deze door ons team op volledigheid gecheckt. U ontvangt een inhoudelijke reactie wanneer uw interventie nog niet volledig genoeg is. U krijgt dan uiteraard de mogelijkheid om uw interventie waar nodig aan te passen.**
+
+          **Mag ik als aanbieder/ontwikkelaar van interventies deze ook op de website plaatsen?**
+
+          Op deze website staat het delen van praktijkervaringen met interventies centraal. Het uitgangspunt is daarom dat de interventie wordt ingediend door het bedrijf dat de interventie heeft toegepast. Een bijdrage vanuit ontwikkelaars wordt alleen opgenomen als de ontwikkelaar kan verwijzen naar ervaringen uit de praktijk.
+    measures:
+      create:
+        description: |
+          Op deze pagina kunt u uw praktijkvoorbeelden delen. Door praktijkvoorbeelden te delen, kunnen anderen leren van uw ervaringen. Door anderen de mogelijkheid te geven om te reageren op het door u ingediende voorbeeld kunt u weer leren van hun vragen en opmerkingen. Zo krijgen we gezamenlijk steeds meer ervaring met maatregelen waarmee mens en milieu worden beschermd tegen ongevallen met gevaarlijke stoffen.
+
+          ### Hoe werkt het invoeren van een praktijkvoorbeeld?
+
+          Om het delen van een praktijkvoorbeelden zo eenvoudig mogelijk te maken, maken we gebruik van een invulformulier. Hoe nauwkeuriger en vollediger u het formulier invult, des te eenvoudiger het is voor anderen om uw praktijkvoorbeelden te vertalen naar hun eigen situatie.
+
+          ### Heb ik een account nodig?
+
+          Voor het opslaan van concepten, het uploaden van bijlagen en het publiceren van een voorbeeld moet u zijn ingelogd. U kunt inloggen nadat u zichzelf heeft geregistreerd. Als u bent ingelogd kunt u bij uw gegevens, concepten en gepubliceerde voorbeelden.
+
+          ### Mag ieder praktijkvoorbeeld worden ingediend?
+
+          Op deze website staat het delen van praktijkvoorbeelden centraal. De gedeelde voorbeelden moeten voor derden toepasbaar zijn, dit betekent dat gebruikers het voorbeeld naar hun eigen situatie moeten kunnen vertalen zonder dat de indiener van het voorbeeld of een andere partij daar aan te pas komt.
+
+          ### Welke voorwaarden zijn verbonden aan het indienen van voorbeelden?
+
+          Door het indienen van een voorbeeld gaat u akkoord met de gebruiksvoorwaarden. Als indiener hoeft u zelf geen eigenaar te zijn van het door u ingediende praktijkvoorbeeld. Wel vragen we u in het formulier om aan te geven wie de eigenaar is van het voorbeeld, dit kan bijvoorbeeld ook de organisatie zijn waar u werkt. Als u voorbeelden plaatst waarvan u zelf niet de eigenaar bent, is het belangrijk dat u heeft gecontroleerd dat u geen inbreuk maakt op de rechten van de eigenaar.
+  enums:
+    interventions:
       plans_and_procedure:
         usability: "De begrijpbaarheid en bruikbaarheid van regels, richtlijnen en procedures"
         planning: "Het goed plannen van werkzaamheden"
@@ -203,7 +255,11 @@ nl:
         nursing: "Verpleging"
         social_services: "Maatschappelijke dienstverlening"
         sport_and_recreation: "Sport en recreatie"
-    form:
+  forms:
+    incidents:
+      scenarios_count:
+        label: "Scenario's"
+    interventions:
       additional_introduction_information:
         helper_text: |
           Denk hierbij aan:
@@ -300,19 +356,13 @@ nl:
         label: "Gereedschap, materiaal en (reserve) onderdelen"
       training_required:
         label: "Is het nodig om een training of opleiding te volgen om deze interventie in te kunnen voeren in een bedrijf?"
-  measure_types:
-    type_new: "Nieuwe maatregel"
-    collection_for: "Maatregelen tegen %{parent}"
-    example_of: "Beschermt tegen"
-    form:
+    intervention_types:
+      interventions_count:
+        label: "Interventies in de praktijk"
+    measure_types:
       measures_count:
         label: "Voorbeelden"
-  measures:
-    type_new: "Maak je eigen voorbeeld"
-    comments_allowed:
-      comments_are_allowed: "Ja"
-      comments_not_allowed: "Nee"
-    form:
+    measures:
       attachment_published_at:
         label: "Publicatiedatum bijlage(s)"
       category_ids:
@@ -345,55 +395,6 @@ nl:
       second_opinion_by:
         description: "Voer een organisatie naam in"
         label: "Door welke organisatie?"
-  actions:
-    interventions:
-      create:
-        description: |
-          Op deze pagina kunt u uw ervaring met veiligheidsinterventies delen. Door uw ervaring te delen, kunnen andere arbo-professionals leren van uw ervaringen. Zo werken we gezamenlijk aan een veilige werkomgeving.
-
-          **Hoe werkt het invulformulier?**
-
-          Om het delen van een interventie zo eenvoudig mogelijk te maken, maken we gebruik van een invulformulier. Dit formulier is onderverdeeld in de volgende categorieën:
-
-          Het invulformulier is verdeeld in de volgende categorieën:
-
-          - een beschrijving van de interventie;
-          - de invoering van de interventie;
-          - de kosten van de interventie;
-          - de effectiviteit van de interventie.
-
-          Het formulier bevat gesloten en open vragen. Graag het verzoek om de vragen zo nauwkeurig mogelijk te beantwoorden, zodat andere arbo-professionals de mogelijkheid hebben uw interventie op de juiste wijze toe te passen in hun eigen organisatie.
-
-          **Heb ik een account nodig?**
-
-          Voor het opslaan en delen van uw interventie hebt u een account nodig. Dit account kunt u zelf op het platform aanmaken. Uw gegevens worden alleen op de website getoond wanneer u dat zelf wenst. U kunt dit per interventie aangeven op het invulformulier. Bij uw account vindt u uw gegevens, eerder ingevoerde interventies en u hebt de mogelijkheid om (onvolledig) ingevulde interventies als concept op te slaan.
-
-          **Let op! Nadat uw interventie is geplaatst wordt deze door ons team op volledigheid gecheckt. U ontvangt een inhoudelijke reactie wanneer uw interventie nog niet volledig genoeg is. U krijgt dan uiteraard de mogelijkheid om uw interventie waar nodig aan te passen.**
-
-          **Mag ik als aanbieder/ontwikkelaar van interventies deze ook op de website plaatsen?**
-
-          Op deze website staat het delen van praktijkervaringen met interventies centraal. Het uitgangspunt is daarom dat de interventie wordt ingediend door het bedrijf dat de interventie heeft toegepast. Een bijdrage vanuit ontwikkelaars wordt alleen opgenomen als de ontwikkelaar kan verwijzen naar ervaringen uit de praktijk.
-    measures:
-      create:
-        description: |
-          Op deze pagina kunt u uw praktijkvoorbeelden delen. Door praktijkvoorbeelden te delen, kunnen anderen leren van uw ervaringen. Door anderen de mogelijkheid te geven om te reageren op het door u ingediende voorbeeld kunt u weer leren van hun vragen en opmerkingen. Zo krijgen we gezamenlijk steeds meer ervaring met maatregelen waarmee mens en milieu worden beschermd tegen ongevallen met gevaarlijke stoffen.
-
-          ### Hoe werkt het invoeren van een praktijkvoorbeeld?
-
-          Om het delen van een praktijkvoorbeelden zo eenvoudig mogelijk te maken, maken we gebruik van een invulformulier. Hoe nauwkeuriger en vollediger u het formulier invult, des te eenvoudiger het is voor anderen om uw praktijkvoorbeelden te vertalen naar hun eigen situatie.
-
-          ### Heb ik een account nodig?
-
-          Voor het opslaan van concepten, het uploaden van bijlagen en het publiceren van een voorbeeld moet u zijn ingelogd. U kunt inloggen nadat u zichzelf heeft geregistreerd. Als u bent ingelogd kunt u bij uw gegevens, concepten en gepubliceerde voorbeelden.
-
-          ### Mag ieder praktijkvoorbeeld worden ingediend?
-
-          Op deze website staat het delen van praktijkvoorbeelden centraal. De gedeelde voorbeelden moeten voor derden toepasbaar zijn, dit betekent dat gebruikers het voorbeeld naar hun eigen situatie moeten kunnen vertalen zonder dat de indiener van het voorbeeld of een andere partij daar aan te pas komt.
-
-          ### Welke voorwaarden zijn verbonden aan het indienen van voorbeelden?
-
-          Door het indienen van een voorbeeld gaat u akkoord met de gebruiksvoorwaarden. Als indiener hoeft u zelf geen eigenaar te zijn van het door u ingediende praktijkvoorbeeld. Wel vragen we u in het formulier om aan te geven wie de eigenaar is van het voorbeeld, dit kan bijvoorbeeld ook de organisatie zijn waar u werkt. Als u voorbeelden plaatst waarvan u zelf niet de eigenaar bent, is het belangrijk dat u heeft gecontroleerd dat u geen inbreuk maakt op de rechten van de eigenaar.
-  forms:
     goal_and_effect:
       label: "Doelen en effecten van de interventie"
       description: "Een interventie wordt ingezet om een doel te bereiken: het voorkomen of verminderen van problemen of risico’s, dan wel het bevorderen van een positieve ontwikkeling. Het is belangrijk om de doelen van uw interventie goed vast te leggen."

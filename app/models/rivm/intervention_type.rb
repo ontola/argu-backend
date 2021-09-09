@@ -8,7 +8,6 @@ class InterventionType < Edge
   enhance Statable
   enhance Interventionable
   enhance RootGrantable
-  enhance LinkedRails::Enhancements::Tableable
 
   parentable :page
   with_columns default: [

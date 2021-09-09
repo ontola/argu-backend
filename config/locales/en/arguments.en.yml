@@ -1,32 +1,8 @@
 #English argument translations
 
 en:
-  pro_arguments:
-    type_new: "New pro"
-    form:
-      content:
-        description: "Details and background information."
-      description:
-        description: "Details and background information."
-      display_name:
-        description: "Summary of your pro"
-      title:
-        description: "Summary of your pro"
-  con_arguments:
-    type_new: "New con"
-    form:
-      content:
-        description: "Details and background information."
-      description:
-        description: "Details and background information."
-      display_name:
-        description: "Summary of your con"
-      title:
-        description: "Summary of your con"
-  arguments:
-    type_new: "New argument"
-    vote: "vote"
-    form:
+  forms:
+    arguments:
       content:
         description: "Enter details and background information on your argument here."
         label: "Argument details (optional)"
@@ -42,6 +18,31 @@ en:
       side:
         pro: "pro argument"
         con: "con argument"
+    pro_arguments:
+      content:
+        description: "Details and background information."
+      description:
+        description: "Details and background information."
+      display_name:
+        description: "Summary of your pro"
+      title:
+        description: "Summary of your pro"
+    con_arguments:
+      content:
+        description: "Details and background information."
+      description:
+        description: "Details and background information."
+      display_name:
+        description: "Summary of your con"
+      title:
+        description: "Summary of your con"
+  pro_arguments:
+    type_new: "New pro"
+  con_arguments:
+    type_new: "New con"
+  arguments:
+    type_new: "New argument"
+    vote: "vote"
     collection:
       'yes': "Advantages"
       'no': "Problems"

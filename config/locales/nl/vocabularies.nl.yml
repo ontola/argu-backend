@@ -1,6 +1,7 @@
 nl:
   vocabularies:
     type_new: "Nieuwe vocabularie"
-    form:
+  forms:
+    vocabularies:
       tagged_label:
         label: "Label voor getagde items"

@@ -2,7 +2,6 @@
 
 class CouponBatch < Edge
   enhance LinkedRails::Enhancements::Creatable
-  enhance LinkedRails::Enhancements::Tableable
   parentable :budget_shop
 
   with_columns default: [
