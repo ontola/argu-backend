@@ -4,7 +4,7 @@ class InvalidateCacheWorker
   include Sidekiq::Worker
 
   def perform(current_version, reindex_search = true)
-    current_cache_version = Argu::Redis.get('argu.cache.version')
+    current_cache_version = Argu::Redis.get('argu.cache.version') || '0'
 
     return if current_version.is_a?(String) && current_cache_version >= current_version
 
