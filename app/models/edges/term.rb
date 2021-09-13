@@ -6,6 +6,7 @@ class Term < Edge
   enhance LinkedRails::Enhancements::Updatable
   enhance CoverPhotoable
   enhance Attachable
+  enhance Orderable
 
   property :display_name, :string, NS.schema.name
   property :description, :text, NS.schema.text
