@@ -217,7 +217,10 @@ module ActiveRecord
 
   class Relation
     def load(&block)
-      exec_queries(&block) unless loaded?
+      unless loaded?
+        @records = exec_queries(&block)
+        @loaded = true
+      end
       @records.select { |record| record.is_a?(Edge) }.each(&:preload_properties)
       @records
         .select { |record| record.respond_to?(:initialize_virtual_attributes, true) }
@@ -225,12 +228,13 @@ module ActiveRecord
       self
     end
 
-    def where(opts = :chain, *rest) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+    def where(*rest) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+      opts = rest.first
       unless klass <= Edge && opts.is_a?(Hash) && opts.present? && (properties = properties_from_opts(opts)).presence
         return super
       end
 
-      properties.reduce(where(opts.except(*properties.keys), *rest)) do |query, condition|
+      properties.reduce(where(opts.except(*properties.keys), *rest[1..])) do |query, condition|
         key = condition.first.to_sym
         value = property_filter_value(key, condition.second)
         base = property_options(name: key)[:preload] == false ? query.joins(:properties) : query

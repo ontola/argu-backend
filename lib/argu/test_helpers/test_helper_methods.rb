@@ -372,19 +372,13 @@ module Argu
           let(:hidden_motion) { holland.descendants.at_depth(4).where(owner_type: 'Motion').first }
         end
 
-        def define_model_spec_objects # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        def define_model_spec_objects
           let(:described_method) do |example|
-            desc =
-              if example.example_group.description.starts_with?('#')
-                example.example_group.parent.description
-              elsif example.example_group.parent.description.starts_with?('#')
-                example.example_group.parent.description
-              elsif example.example_group.parent.parent.description.starts_with?('#')
-                example.example_group.parent.parent.description
-              end
-            return nil unless desc.is_a?(String) && desc != '#initialize'
+            desc = ([example.example_group] + example.example_group.parent_groups)
+                     .map(&:description)
+                     .detect { |name| name.starts_with?('#') }
 
-            desc[1..].to_sym
+            desc[1..].to_sym if desc.is_a?(String) && desc != '#initialize'
           end
         end
 

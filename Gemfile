@@ -4,7 +4,9 @@ source 'https://rubygems.org/'
 ruby '2.7.0'
 
 gem 'active_model_otp'
-gem 'active_record-postgres-constraints'
+gem 'active_record-postgres-constraints',
+    git: 'https://github.com/on-site/active_record-postgres-constraints.git',
+    branch: 'support-rails-6.1'
 gem 'acts_as_follower',
     git: 'https://github.com/tcocca/acts_as_follower.git',
     ref: 'ff4a7d1f8206be13b9b68526a5062611f36509aa'
@@ -21,7 +23,7 @@ gem 'carrierwave-vips'
 gem 'counter_culture'
 gem 'country_select'
 gem 'devise'
-gem 'devise-multi_email'
+gem 'devise-multi_email', git: 'https://github.com/thiagogabriel/devise-multi_email', ref: 'c50aee1'
 gem 'doorkeeper'
 gem 'doorkeeper-jwt'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
@@ -40,11 +42,11 @@ gem 'money'
 gem 'oauth2'
 gem 'oj'
 gem 'pg'
-gem 'public_activity'
+gem 'public_activity', git: 'https://github.com/arthurWD/public_activity', branch: 'rails-6.1'
 gem 'puma', platform: :ruby
 gem 'pundit'
 gem 'rack-attack', '~> 4.3.1'
-gem 'rails'
+gem 'rails', '~> 6.1.0'
 gem 'rails-i18n'
 gem 'rdf'
 gem 'rdf-n3'
@@ -106,7 +108,6 @@ group :development do
   gem 'active_record_query_trace'
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1' # ##!
-  gem 'bullet'
   gem 'meta_request'
   gem 'pry'
   gem 'web-console', '~> 3.5.1'

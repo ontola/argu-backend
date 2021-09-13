@@ -76,19 +76,22 @@ module Edgeable
       private
 
       def has_many_children(association, dependent: :destroy, order: {created_at: :asc}, through: nil) # rubocop:disable Metrics/MethodLength
+        opts = {
+          class_name: association.to_s.classify,
+          foreign_key: :parent_id,
+          inverse_of: :parent,
+          dependent: dependent
+        }
+        opts[:through] = through if through
+
+        # rubocop:disable Rails/InverseOf
         has_many association,
                  -> { order(order).included_properties },
-                 foreign_key: :parent_id,
-                 inverse_of: :parent,
-                 dependent: dependent,
-                 through: through
+                 **opts
         has_many "active_#{association}".to_sym,
                  -> { active.order(order).included_properties },
-                 class_name: association.to_s.classify,
-                 foreign_key: :parent_id,
-                 inverse_of: :parent,
-                 dependent: dependent,
-                 through: through
+                 **opts
+        # rubocop:enable Rails/InverseOf
       end
 
       def term_property(key, predicate, opts)

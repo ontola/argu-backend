@@ -166,7 +166,9 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
 
   test 'properties remain when destroying other page' do
     assert_not_nil freetown.bio
-    second_page.destroy
+    ActsAsTenant.with_tenant(second_page) do
+      second_page.destroy
+    end
     assert_not_nil freetown.reload.bio
   end
 

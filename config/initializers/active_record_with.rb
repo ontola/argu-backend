@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ActiveRecordWith
-  def build_arel(arel)
+  def build_arel(arel = nil)
     result = super
     result.with(with_clause) if with_clause
     result

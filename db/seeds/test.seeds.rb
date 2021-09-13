@@ -37,6 +37,7 @@ FactorySeeder.create(
 
 page = FactorySeeder.create(
   :page,
+  profile: Profile.new,
   id: 0,
   name: 'Argu page',
   url: 'argu',
@@ -44,9 +45,7 @@ page = FactorySeeder.create(
   publisher: staff,
   creator: staff.profile,
   is_published: true,
-  locale: 'en-GB',
-  uuid: 'deadbeef-bfc5-4e68-993f-430037bd5bd3',
-  root_id: 'deadbeef-bfc5-4e68-993f-430037bd5bd3'
+  locale: 'en-GB'
 )
 
 freetown = ActsAsTenant.with_tenant(page) do

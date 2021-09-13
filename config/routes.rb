@@ -112,6 +112,7 @@ Rails.application.routes.draw do
 
   get '(*parent_iri)/attachments', to: 'media_objects#index', defaults: {used_as: :attachment}
   post '(*parent_iri)/attachments', to: 'media_objects#create', defaults: {used_as: :attachment}
+  get '(*parent_iri)/attachments/new', to: 'media_objects#new', action_key: :create, defaults: {used_as: :attachment}
   get '(*parent_iri)/content/:version', to: 'media_object_contents#show'
   get '(*parent_iri)/feed', to: 'feed#index'
   get '(*parent_iri)/grant_sets', to: 'grant_sets#index'
