@@ -59,6 +59,15 @@ module SPI
       )
     end
 
+    test 'guest should post bulk request ontology data' do
+      sign_in guest_user
+
+      bulk_request(
+        resources: ontology_resources,
+        responses: ontology_responses
+      )
+    end
+
     ####################################
     # As User
     ####################################
@@ -176,6 +185,7 @@ module SPI
         assert_equal expectation[:status], resource[:status], "#{iri} should be #{expectation[:status]}"
         assert_equal expectation[:cache], resource[:cache], "#{iri} should be #{expectation[:cache]}"
         type_statement = "\"#{iri}\",\"#{RDF[:type]}\""
+        type_statement += ",\"#{expectation[:type]}" if expectation.key?(:type)
         method = expectation[:include] ? :assert_includes : :refute_includes
         send(method, resource[:body] || '', type_statement)
       end
@@ -192,6 +202,20 @@ module SPI
 
     def dg_current_actor_iri
       "http://#{demogemeente.iri_prefix}/c_a"
+    end
+
+    def ontology_resources
+      [
+        {include: true, iri: NS.argu[:Motion]},
+        {include: true, iri: NS.argu[:markAsImportant]}
+      ]
+    end
+
+    def ontology_responses(opts = {})
+      {
+        NS.argu[:Motion] => {cache: 'public', status: 200, include: true, type: RDF::RDFS.Class},
+        NS.argu[:markAsImportant] => {cache: 'public', status: 200, include: true, type: RDF.Property}
+      }.merge(opts)
     end
 
     def public_resources
