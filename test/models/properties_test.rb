@@ -164,6 +164,14 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
     assert_equal [term2, term1], measure.reload.phases.order(:id)
   end
 
+  test 'property has_many query' do
+    assert_equal Comment.where(parent_comment_id: parent_comment.uuid).count, 0
+    assert_equal Comment.where(parent_comment: parent_comment).count, 0
+    reply1
+    assert_equal Comment.where(parent_comment_id: parent_comment.uuid).count, 1
+    assert_equal Comment.where(parent_comment: parent_comment).count, 1
+  end
+
   test 'properties remain when destroying other page' do
     assert_not_nil freetown.bio
     ActsAsTenant.with_tenant(second_page) do

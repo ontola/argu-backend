@@ -64,6 +64,11 @@ module Edgeable
     end
 
     module ClassMethods
+      def association_property?(name)
+        key = :"#{name}_id"
+        property_options(name: key).present?
+      end
+
       def property_options(filter)
         defined_properties&.detect { |property| filter.all? { |key, value| property[key] == value } }
       end
@@ -235,7 +240,7 @@ module ActiveRecord
       end
 
       properties.reduce(where(opts.except(*properties.keys), *rest[1..])) do |query, condition|
-        key = condition.first.to_sym
+        key = property_filter_key(condition.first)
         value = property_filter_value(key, condition.second)
         base = property_options(name: key)[:preload] == false ? query.joins(:properties) : query
         base
@@ -299,11 +304,21 @@ module ActiveRecord
     end
 
     def properties_from_opts(opts)
-      opts.select { |key, _value| target_class.property?(key) }
+      opts.select { |key, _value| target_class.property?(key) || target_class.association_property?(key) }
+    end
+
+    def property_filter_key(value)
+      association_key = :"#{value}_id"
+      property = property_options(name: association_key)
+
+      return value.to_sym if property.blank? || property[:type] != :linked_edge_id
+
+      association_key
     end
 
     def property_filter_value(key, value)
       property = property_options(name: key)
+      return value.uuid if property[:type] == :linked_edge_id && value.is_a?(Edge)
       return value if property[:enum].blank? || value.is_a?(Integer)
       return value.map { |val| property_filter_value(key, val) } if value.is_a?(Array)
 
