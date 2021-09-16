@@ -29,9 +29,9 @@ module Couponable
     def invalidate_coupon
       Property.find_by!(
         edge: coupon_batch,
-        predicate: NS.argu[:coupons].to_s,
+        predicate: NS.argu[:coupons],
         string: coupon
-      ).update_column(:predicate, NS.argu[:usedCoupons].to_s)
+      ).update_column(:predicate, NS.argu[:usedCoupons])
     end
     # rubocop:enable Rails/SkipsModelValidations
 

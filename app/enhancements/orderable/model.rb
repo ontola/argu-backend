@@ -21,7 +21,7 @@ module Orderable
     def max_order
       return order_scope.maximum(:order) unless is_a?(Edge)
 
-      order_scope.joins(:properties).where(properties: {predicate: NS.argu[:order].to_s}).maximum('properties.integer')
+      order_scope.joins(:properties).where(properties: {predicate: NS.argu[:order]}).maximum('properties.integer')
     end
 
     def order_scope

@@ -49,7 +49,7 @@ class Cart < VirtualResource
       .joins(:edge)
       .where(
         edges: {id: cart_details.map(&:parent_id)},
-        predicate: NS.argu[:price].to_s
+        predicate: NS.argu[:price]
       )
       .pluck(:integer)
   end

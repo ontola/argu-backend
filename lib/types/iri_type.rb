@@ -13,3 +13,19 @@ class IRIType < ActiveRecord::Type::Value
     value.to_s
   end
 end
+
+module QuoteIRI
+  def quote(value)
+    return super unless value.is_a?(RDF::URI)
+
+    super(value.to_s)
+  end
+
+  def type_cast(value)
+    return super unless value.is_a?(RDF::URI)
+
+    super(value.to_s)
+  end
+end
+
+ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.prepend(QuoteIRI)

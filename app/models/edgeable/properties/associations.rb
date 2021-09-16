@@ -98,7 +98,7 @@ module Edgeable
         def property_association_scope(property_opts)
           return -> { order(order: :asc) } if property_opts.nil?
 
-          -> { order(order: :asc).where(predicate: property_opts[:predicate].to_s) }
+          -> { order(order: :asc).where(predicate: property_opts[:predicate]) }
         end
 
         def property_association_source(klass_name, opts, property_opts)
