@@ -116,10 +116,10 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   placeholder_vote_event = placeholder.default_vote_event
   FactorySeeder.create(:vote, parent: placeholder_vote_event)
 
-  forum_motion = FactorySeeder.create(:motion, parent: freetown)
+  forum_motion = FactorySeeder.create_with_shortname(:motion, :freetown_motion, parent: freetown)
   FactorySeeder.create(:pro_argument, parent: forum_motion)
-  question = FactorySeeder.create(:question, parent: freetown)
-  motion = FactorySeeder.create(:motion, parent: question)
+  question = FactorySeeder.create_with_shortname(:question, :freetown_question, parent: freetown)
+  motion = FactorySeeder.create_with_shortname(:motion, :question_motion, parent: question)
   FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: page, name: 'custom'))
   FactorySeeder.create(
     :decision,
@@ -133,22 +133,28 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   FactorySeeder
     .create(:vote, parent: vote_event, creator: profile_hidden_votes, publisher: profile_hidden_votes.profileable)
 
-  argument = FactorySeeder.create(:pro_argument, parent: motion)
+  argument = FactorySeeder.create_with_shortname(:pro_argument, :motion_argument, parent: motion)
   FactorySeeder.create(:vote, parent: argument)
-  comment = FactorySeeder.create(:comment, parent: argument)
-  FactorySeeder.create(:comment, parent: argument, parent_comment_id: comment.uuid)
+  comment = FactorySeeder.create_with_shortname(:comment, :argument_comment, parent: argument)
+  FactorySeeder.create_with_shortname(
+    :comment,
+    :nested_argument_comment,
+    parent: argument,
+    parent_comment_id: comment.uuid
+  )
   FactorySeeder.create(:blog_post, parent: motion)
   blog_post =
     FactorySeeder.create(:blog_post, parent: question)
   FactorySeeder.create(:comment, parent: blog_post)
   FactorySeeder.create(:comment, parent: motion)
 
-  hidden_question = FactorySeeder.create(:question, parent: holland)
+  hidden_question = FactorySeeder.create_with_shortname(:question, :hidden_question, parent: holland)
   FactorySeeder.create(:motion, parent: hidden_question)
 
   trashed_question =
-    FactorySeeder.create(
+    FactorySeeder.create_with_shortname(
       :question,
+      :trashed_question,
       parent: freetown
     )
   TrashService.new(
@@ -156,34 +162,39 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
     options: {user_context: UserContext.new(profile: trashed_question.creator, user: trashed_question.publisher)}
   ).commit
   trashed_motion =
-    FactorySeeder.create(
+    FactorySeeder.create_with_shortname(
       :motion,
+      :trashed_motion,
       parent: trashed_question
     )
   FactorySeeder.create(:pro_argument, parent: trashed_motion)
 
   unpublished_question =
-    FactorySeeder.create(
+    FactorySeeder.create_with_shortname(
       :question,
+      :unpublished_question,
       parent: freetown,
       argu_publication_attributes: {draft: true}
     )
   unpublished_motion =
-    FactorySeeder.create(
+    FactorySeeder.create_with_shortname(
       :motion,
+      :unpublished_motion,
       parent: unpublished_question
     )
   FactorySeeder.create(:pro_argument, parent: unpublished_motion)
 
   expired_question =
-    FactorySeeder.create(
+    FactorySeeder.create_with_shortname(
       :question,
+      :expired_question,
       parent: freetown,
       expires_at: Time.current
     )
   expired_motion =
-    FactorySeeder.create(
+    FactorySeeder.create_with_shortname(
       :motion,
+      :expired_motion,
       parent: expired_question
     )
   FactorySeeder.create(:pro_argument, parent: expired_motion)
@@ -192,7 +203,7 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))
   FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))
 
-  budget = FactorySeeder.create(:budget_shop, parent: freetown, budget_max: 1000)
+  budget = FactorySeeder.create_with_shortname(:budget_shop, :budget_shop, parent: freetown, budget_max: 1000)
   FactorySeeder.create(:offer, parent: budget, product_id: motion.uuid, price: 600)
   FactorySeeder.create(:offer, parent: budget, product_id: expired_motion.uuid, price: 300)
   FactorySeeder.create(:offer, parent: budget, product_id: forum_motion.uuid, price: 200)
@@ -200,11 +211,22 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   batch.update(coupons: %w[COUPON1 COUPON1])
 
   survey_iri = 'https://arthurdingemans.typeform.com/to/E6zdDk?__dangerous-disable-submissions'
-  open_survey = FactorySeeder.create(:survey, parent: freetown, external_iri: survey_iri)
+  open_survey = FactorySeeder.create_with_shortname(
+    :survey,
+    :typeform_survey,
+    parent: freetown,
+    external_iri: survey_iri
+  )
   batch = FactorySeeder.create(:coupon_batch, parent: open_survey)
   batch.update(coupons: %w[COUPON1 COUPON1])
 
-  reward_survey = FactorySeeder.create(:survey, parent: freetown, external_iri: survey_iri, reward: 100)
+  reward_survey = FactorySeeder.create_with_shortname(
+    :survey,
+    :reward_survey,
+    parent: freetown,
+    external_iri: survey_iri,
+    reward: 100
+  )
   batch = FactorySeeder.create(:coupon_batch, parent: reward_survey)
   batch.update(coupons: %w[COUPON1 COUPON1])
 end

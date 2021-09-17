@@ -73,6 +73,17 @@ module Argu
           end
         end
 
+        def create_with_shortname(model_type, shortname, attributes)
+          attributes.merge!(
+            title: "#{shortname}-title",
+            content: "#{shortname}-text"
+          )
+          resource = create(model_type, attributes)
+          Shortname.create!(shortname: shortname, owner: resource, root: resource.root)
+
+          resource
+        end
+
         def create_with_service(model_type, args, attributes) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           traits_with_args = attributes.delete(:traits_with_args) || {}
           klass = model_type.to_s.classify.constantize
@@ -81,7 +92,7 @@ module Argu
           options[:publisher] ||= attributes.delete(:publisher)
           options[:creator] ||= attributes.delete(:creator)
 
-          attributes.merge!(attributes_for(model_type, attributes))
+          attributes = attributes_for(model_type, attributes).merge(attributes).with_indifferent_access
 
           if klass.nested_attributes_options?
             klass.nested_attributes_options.each_key do |association|

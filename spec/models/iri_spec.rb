@@ -64,7 +64,7 @@ RSpec.describe "Iri's", type: :model do
   end
 
   context 'with root' do
-    let(:id) { subject.fragment }
+    let(:id) { subject.try(:url) || subject.fragment }
     let(:url) { url_for([subject.class_name.singularize.to_sym, id: id, protocol: :http]) }
 
     context 'Forum' do
