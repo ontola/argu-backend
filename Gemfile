@@ -37,7 +37,7 @@ gem 'json-ld'
 gem 'jsonapi-renderer'
 gem 'jwt'
 gem 'kaminari-activerecord'
-gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', branch: 'refactor-ontology'
+gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', ref: '2fd9ca064abed953aae064480281569c7418d785'
 gem 'linked_rails-auth', git: 'https://github.com/ontola/linked_rails-auth', branch: :refactor
 gem 'ltree_hierarchy'
 gem 'money'
