@@ -28,13 +28,13 @@ class Argument < Edge
     self
   end
 
+  def options_vocab
+    Vocabulary.upvote_options
+  end
+
   def pro=(value)
     value = false if %w[con false].include?(value)
     @pro = value.to_s == 'pro' || value
-  end
-
-  def upvote_only?
-    true
   end
 
   def upvote(user, profile) # rubocop:disable Metrics/MethodLength
@@ -62,10 +62,6 @@ class Argument < Edge
 
   def auto_upvote
     upvote(publisher, creator)
-  end
-
-  def options_vocab
-    Vocabulary.upvote_options
   end
 
   class << self

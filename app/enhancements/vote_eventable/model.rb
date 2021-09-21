@@ -31,20 +31,16 @@ module VoteEventable
       # rubocop:enable Naming/MemoizedInstanceVariableName
     end
 
+    def options_vocab
+      super || parent.try(:default_options_vocab) || Vocabulary.vote_options
+    end
+
     def previously_changed_relations
       serializer_class = RDF::Serializers.serializer_for(self)
 
       super.merge(
         serializer_class.relationships_to_serialize.slice(:default_vote_event)
       )
-    end
-
-    class_methods do
-      def attributes_for_new(opts)
-        attrs = super
-        attrs[:options_vocab_id] ||= Vocabulary.vote_options&.uuid
-        attrs
-      end
     end
   end
 end

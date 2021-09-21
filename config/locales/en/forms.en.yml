@@ -46,6 +46,8 @@ en:
         label: "Location"
       default_cover_photo:
         label: "Cover photo"
+      default_options_vocab_id:
+        label: "Default vote options"
       default_profile_photo:
         label: "Profile photo"
       description:
@@ -109,6 +111,9 @@ en:
         label: "Name"
       notify:
         label: 'Verstuur notificatie naar de plaatser'
+      options_vocab_id:
+        label: "Vote options"
+        description: "When changing the vote options, previously casted votes will no longer be visible."
       password_confirmation:
         helper_text: "Same as above"
         label: "Confirm password"
@@ -150,8 +155,6 @@ en:
         label: "Type"
       untrash_activity:
         label: "Explanation"
-      upvote_only:
-        label: "Upvote ideas"
       url:
         label: "Url"
       used_coupons:

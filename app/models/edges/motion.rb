@@ -44,10 +44,6 @@ class Motion < Discussion
     parent.owner_type == 'Question' && parent.require_location
   end
 
-  def upvote_only?
-    parent.owner_type == 'Question' && parent.upvote_only?
-  end
-
   class << self
     def order_by_predicate(predicate, direction)
       return super unless predicate == NS.argu[:votesProCount]

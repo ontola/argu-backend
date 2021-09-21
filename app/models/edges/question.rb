@@ -23,7 +23,6 @@ class Question < Discussion
 
   property :map_question, :boolean, NS.argu[:mapQuestion], default: false
   property :require_location, :boolean, NS.argu[:requireLocation], default: false
-  property :upvote_only, :boolean, NS.argu[:upvoteOnly], default: false
   property :default_motion_sorting,
            :integer,
            NS.argu[:defaultSorting],

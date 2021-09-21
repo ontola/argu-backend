@@ -9,6 +9,12 @@ module Motionable
                       display: -> { parent.try(:default_motion_display)&.to_s&.sub('_display', '') },
                       default_sortings: -> { parent.class.default_motion_sorting_for(parent) },
                       joins: :default_vote_event
+
+      property :default_options_vocab_id,
+               :linked_edge_id,
+               NS.argu[:defaultOptionsVocab],
+               association: :default_options_vocab,
+               association_class: 'Vocabulary'
     end
 
     module ClassMethods

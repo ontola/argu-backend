@@ -46,6 +46,8 @@ nl:
         label: "Locatie"
       default_cover_photo:
         label: "Coverfoto"
+      default_options_vocab_id:
+        label: "Standaard stemopties"
       default_profile_photo:
         label: "Profielfoto"
       description:
@@ -109,6 +111,9 @@ nl:
         label: "Naam"
       notify:
         label: 'Verstuur notificatie naar de plaatser'
+      options_vocab_id:
+        label: "Stemopties"
+        description: "Wanneer er nieuwe stemopties worden geselecteerd, zijn al geplaatste stemmen niet langer zichtbaar."
       password_confirmation:
         helper_text: "Zelfde als hierboven"
         label: "Wachtwoord bevestigen"
@@ -150,8 +155,6 @@ nl:
         label: "Type"
       untrash_activity:
         label: "Toelichting"
-      upvote_only:
-        label: "Upvote ideeën"
       url:
         label: "Url"
       used_coupons:
