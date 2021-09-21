@@ -306,6 +306,10 @@ en:
       label: "Creator"
     dateCreated:
       label: "Date created"
+    datePublished:
+      label: "Date published"
+    downloadUrl:
+      label: "Download"
     email:
       label: "Email"
     name:

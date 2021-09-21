@@ -13,7 +13,7 @@ class Export < ApplicationRecord
   parentable :edge
   with_columns default: [
     NS.schema.dateCreated,
-    NS.schema.url,
+    NS.schema.downloadUrl,
     NS.argu[:exportStatus],
     NS.ontola[:destroyAction]
   ]

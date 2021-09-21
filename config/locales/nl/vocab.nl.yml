@@ -306,6 +306,10 @@ nl:
       label: "Plaatser"
     dateCreated:
       label: "Aanmaakdatum"
+    datePublished:
+      label: "Publicatiedatum"
+    downloadUrl:
+      label: "Download"
     email:
       label: "Email"
     name:

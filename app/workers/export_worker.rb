@@ -7,6 +7,7 @@ HIERARCHY = %i[forums questions motions pro_arguments con_arguments comments].fr
 class ExportWorker # rubocop:disable Metrics/ClassLength
   include Sidekiq::Worker
   include StatisticsHelper
+  include DeltaHelper
 
   attr_accessor :export
 
@@ -23,6 +24,7 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
     Bugsnag.notify(e)
     export.failed!
   ensure
+    UserChannel.broadcast_to(export.user, hex_delta([invalidate_resource_delta(export)]))
     DataEvent.publish(export) if export.present?
   end
 
