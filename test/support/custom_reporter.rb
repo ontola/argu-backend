@@ -12,6 +12,12 @@ class CustomReporter < Minitest::Reporters::BaseReporter
     io.sync = true
   end
 
+  def before_suite(test)
+    puts test.name
+
+    super
+  end
+
   def record(test)
     super
     return if test.skipped?
