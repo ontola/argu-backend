@@ -76,6 +76,26 @@ module Helpers
       )
     end
 
+    def move_up_link
+      menu_item(
+        :move_up,
+        action: resource.action(:move_up).iri,
+        href: resource.action(:move_up).iri,
+        image: 'fa-chevron-up',
+        policy: :move_up?
+      )
+    end
+
+    def move_down_link
+      menu_item(
+        :move_down,
+        action: resource.action(:move_down).iri,
+        href: resource.action(:move_down).iri,
+        image: 'fa-chevron-down',
+        policy: :move_down?
+      )
+    end
+
     def statistics_link
       menu_item(
         :statistics,

@@ -11,7 +11,7 @@ Apartment::Tenant.switch('rivm') do
     CustomMenuItem.create!(
       menu_type: :navigations,
       resource: Page.first,
-      order: 0,
+      position: 0,
       label: InterventionType.plural_label,
       href: InterventionType.root_collection.iri
     )

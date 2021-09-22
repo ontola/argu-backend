@@ -39,6 +39,21 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
 
     assert_nil reloaded_motion.description
     assert_nil reloaded_motion.property_manager(NS.schema.text).value
+
+    assert_no_difference('Property.count') do
+      motion.description = 'from method'
+      motion.save
+    end
+    assert_equal 'from method', reloaded_motion.description
+    assert_equal 'from method', reloaded_motion[:description]
+    assert_equal 'from method', reloaded_motion.property_manager(NS.schema.text).value
+
+    assert_no_difference('Property.count') do
+      motion[:description] = 'from array'
+      motion.save
+    end
+    assert_equal 'from array', reloaded_motion.description
+    assert_equal 'from array', reloaded_motion.property_manager(NS.schema.text).value
   end
 
   test 'property array assignment' do

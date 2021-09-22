@@ -28,10 +28,4 @@ class Phase < Edge
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
-
-  private
-
-  def order_scope
-    parent&.phases || Phase.all
-  end
 end

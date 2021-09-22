@@ -16,7 +16,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
   paginates_per 100
-  alias_attribute :order, :position
 
   before_create :set_root
 
@@ -26,9 +25,9 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enum view: {full_view: 0, compact_view: 1, preview_view: 2}
 
   with_columns default: [
+    NS.argu[:order],
     NS.argu[:rawResource],
     NS.ontola[:widgetSize],
-    NS.argu[:order],
     NS.argu[:view],
     NS.ontola[:updateAction],
     NS.ontola[:destroyAction]
@@ -81,10 +80,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   private
-
-  def order_scope
-    parent&.widgets || Widget.all
-  end
 
   def property_shape(iri, predicate)
     @property_shapes ||= {}

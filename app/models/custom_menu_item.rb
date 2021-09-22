@@ -8,9 +8,9 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include TranslatableProperties
 
   with_columns default: [
+    NS.argu[:order],
     NS.schema.name,
     NS.ontola[:href],
-    NS.argu[:order],
     NS.ontola[:updateAction],
     NS.ontola[:destroyAction]
   ]
@@ -18,7 +18,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :edge, primary_key: :uuid, optional: true
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
   belongs_to :parent_menu, class_name: 'CustomMenuItem', inverse_of: :custom_menu_items
-  has_many :custom_menu_items, -> { order(:order) }, foreign_key: :parent_menu_id, inverse_of: :parent_menu
+  has_many :custom_menu_items, -> { order(:position) }, foreign_key: :parent_menu_id, inverse_of: :parent_menu
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
   before_create :set_root
@@ -26,6 +26,16 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   attr_writer :parent
 
   alias edgeable_record resource
+
+  # Make sure the feed menu item remains last
+  def add_to_list_bottom
+    super
+
+    return true unless new_record? && bottom_item&.href&.to_s&.ends_with?('/feed')
+
+    bottom_item.increment_position
+    self.position -= 1
+  end
 
   def href
     super.present? ? RDF::URI(super) : edge&.iri
@@ -94,8 +104,11 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   private
 
-  def order_scope
-    CustomMenuItem.where(resource: resource, menu_type: menu_type).where('custom_menu_items.order < ?', 100)
+  def scope_condition
+    {
+      resource: resource,
+      menu_type: menu_type
+    }
   end
 
   def set_root

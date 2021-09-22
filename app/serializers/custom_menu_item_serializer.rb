@@ -7,7 +7,7 @@ class CustomMenuItemSerializer < Menus::ItemSerializer
   has_one :action, predicate: NS.ontola[:action], polymorphic: true do
     nil
   end
-  attribute :order, predicate: NS.argu[:order]
+  attribute :position, predicate: NS.argu[:order]
   attribute :raw_label, predicate: NS.argu[:menuLabel], datatype: NS.xsd.string do |object|
     object.attribute_in_database(:label)
   end

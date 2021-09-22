@@ -9,6 +9,6 @@ nl:
         label: "URL"
       raw_image:
         label: "Icoon"
-      order:
+      position:
         label: "Positie"
       coupled_to: "Dit menu item is gekoppeld aan %{name}."

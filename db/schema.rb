@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_02_124236) do
+ActiveRecord::Schema.define(version: 2021_09_22_111755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_09_02_124236) do
   create_table "custom_menu_items", force: :cascade do |t|
     t.string "menu_type", null: false
     t.string "resource_type", null: false
-    t.integer "order", null: false
+    t.integer "position", null: false
     t.string "label"
     t.boolean "label_translation", default: false, null: false
     t.string "image"

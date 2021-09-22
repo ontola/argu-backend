@@ -45,10 +45,22 @@ module Edgeable
       self
     end
 
+    def write_attribute(name, value)
+      value = assign_property(name, value) if self.class.property_options(name: name.to_sym)
+
+      super(name, value)
+    end
+
+    def _write_attribute(name, value)
+      value = assign_property(name, value) if self.class.property_options(name: name.to_sym)
+
+      super(name, value)
+    end
+
     private
 
     def assign_property(name, value)
-      property_opts = self.class.property_options(name: name)
+      property_opts = self.class.property_options(name: name.to_sym)
       value = [value] if property_opts[:array] && !value.is_a?(Array)
       property_manager(property_opts[:predicate]).value = value
     end
@@ -82,7 +94,7 @@ module Edgeable
       end
 
       def property_join_string(key)
-        property = property_options(name: key)
+        property = property_options(name: key.to_sym)
         column = "properties.#{connection.quote_string(property[:type].to_s)}"
         where = "properties.predicate = '#{connection.quote_string(property[:predicate].to_s)}'"
         select = "(SELECT DISTINCT edge_id, #{column} AS value FROM properties WHERE #{where})"
@@ -154,12 +166,6 @@ module Edgeable
         end
       end
 
-      def define_property_setter(name)
-        define_method "#{name}=" do |value|
-          super(assign_property(name, value))
-        end
-      end
-
       def initialize_defined_properties
         return if defined_properties && method(:defined_properties).owner == singleton_class
 
@@ -182,7 +188,6 @@ module Edgeable
         else
           enum name => opts[:enum] if opts[:enum].present?
           define_property_getter(options) if opts[:preload] == false
-          define_property_setter(name)
         end
       end
 

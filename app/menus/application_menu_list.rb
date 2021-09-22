@@ -45,7 +45,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
           parent_menu: nil,
           resource_type: resource.class.base_class.name,
           resource_id: resource.uuid
-        ).order(:order).includes(:custom_menu_items, :resource, :edge, :root)
+        ).order(:position).includes(:custom_menu_items, :resource, :edge, :root)
     )
   end
 

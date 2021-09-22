@@ -9,6 +9,6 @@ en:
         label: "URL"
       raw_image:
         label: "Icon"
-      order:
+      position:
         label: "Position"
       coupled_to: "This menu item is coupled to %{name}."

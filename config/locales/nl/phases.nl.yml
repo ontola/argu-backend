@@ -3,7 +3,7 @@ nl:
     type_new: "Nieuwe fase"
   forms:
     phases:
-      order:
+      position:
         label: "Positie"
       time:
         label: "Tijdsaanduiding"

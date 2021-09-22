@@ -18,7 +18,6 @@ class MenusTest < ActionDispatch::IntegrationTest
     CustomMenuItem.create(
       menu_type: 'navigations',
       parent_menu: custom_menu_item,
-      order: 0,
       label: 'child',
       href: 'https://example.com',
       resource_type: 'Edge',
@@ -52,7 +51,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     sequence = expect_sequence(navigations_iri, NS.ontola[:menuItems])
     home_menu_iri = RDF::URI("#{navigations_iri}#home")
     freetown_menu_iri = resource_iri(CustomMenuItem.find_by(edge: freetown))
-    feed_menu_iri = resource_iri(CustomMenuItem.find_by(resource: argu, order: 100))
+    feed_menu_iri = resource_iri(CustomMenuItem.navigations.where(resource: argu).order(:position).last)
     expect_triple(freetown_menu_iri, NS.ontola[:href], freetown.iri)
     expect_triple(feed_menu_iri, NS.ontola[:href], feeds_iri(argu))
     expect_sequence_member(sequence, 0, home_menu_iri)

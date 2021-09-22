@@ -175,7 +175,7 @@ en:
       label: "Draft"
     lastActivityAt:
       label: "Last active"
-    order:
+    position:
       label: "Position"
     orderDetails:
       label: "Details"

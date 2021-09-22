@@ -9,7 +9,6 @@ class CustomMenuItemTest < ActiveSupport::TestCase
       menu_type: 'navigations',
       resource_type: 'Edge',
       resource_id: argu.uuid,
-      order: 0,
       label: 'Custom label',
       href: 'https://argu.localdev/i/about',
       image: 'fa-info'
@@ -20,7 +19,6 @@ class CustomMenuItemTest < ActiveSupport::TestCase
       menu_type: 'navigations',
       resource_type: 'Edge',
       resource_id: argu.uuid,
-      order: 0,
       label: 'set_language',
       href: 'https://argu.localdev/i/about',
       image: 'fa-info'

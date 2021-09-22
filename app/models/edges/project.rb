@@ -23,7 +23,7 @@ class Project < Discussion
       description: description_placeholder,
       is_published: true,
       name: I18n.t('projects.phase_template.survey.name'),
-      order: 1,
+      position: 1,
       publisher: publisher
     )
 
@@ -44,7 +44,7 @@ class Project < Discussion
       description: description_placeholder,
       is_published: true,
       name: I18n.t('projects.phase_template.question.name'),
-      order: 2,
+      position: 2,
       publisher: publisher
     )
     question = CreateEdge.new(
@@ -65,7 +65,7 @@ class Project < Discussion
       description: description_placeholder,
       is_published: true,
       name: I18n.t('projects.phase_template.blog_post.name'),
-      order: 3,
+      position: 3,
       publisher: publisher
     )
     blog_post = CreateEdge.new(

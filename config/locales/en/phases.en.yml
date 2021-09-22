@@ -3,7 +3,7 @@ en:
     type_new: "New phase"
   forms:
     phases:
-      order:
+      position:
         label: "Position"
       time:
         label: "Time"

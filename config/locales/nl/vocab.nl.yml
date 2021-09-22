@@ -175,7 +175,7 @@ nl:
       label: "Concept"
     lastActivityAt:
       label: "Laatst actief"
-    order:
+    position:
       label: "Positie"
     orderDetails:
       label: "Details"
