@@ -36,8 +36,7 @@ module Argu
       module ClassMethods
         def define_page
           let!(:argu) do
-            Page.find_via_shortname('argu') ||
-              create(:page, locale: 'en-GB', url: 'argu', name: 'Argu')
+            Page.find_via_shortname('argu')
           end
         end
 
@@ -56,8 +55,10 @@ module Argu
         end
 
         def define_cairo(name = 'cairo', attributes: {})
+          define_page
+
           let(name) do
-            forum = create_forum({url: name}.merge(attributes))
+            forum = create_forum({url: name, parent: argu}.merge(attributes))
             ActsAsTenant.with_tenant(forum.parent) do
               create(:grant,
                      edge: forum,
@@ -68,25 +69,15 @@ module Argu
           end
         end
 
-        def define_cologne(name = 'cologne', attributes: {})
-          let(name) do
-            forum = create_forum(:populated_forum, {url: name}.merge(attributes))
-            ActsAsTenant.with_tenant(forum.parent) do
-              create(:grant,
-                     edge: forum,
-                     group: create(:group, parent: forum.root),
-                     grant_set: GrantSet.initiator)
-            end
-            forum
-          end
-        end
-
         def define_helsinki(name = 'helsinki', attributes: {}) # rubocop:disable Metrics/MethodLength
+          define_page
+
           let(name) do
             forum = create_forum(
               {
                 url: name,
-                discoverable: false
+                discoverable: false,
+                parent: argu
               }.merge(attributes)
             )
             ActsAsTenant.with_tenant(forum.parent) do
@@ -100,24 +91,15 @@ module Argu
         end
 
         def define_holland(name = 'holland', attributes: {})
-          let(name) do
-            create_forum(
-              :populated_forum,
-              {
-                url: name,
-                initial_public_grant: 'initiator'
-              }.merge(attributes)
-            )
-          end
-        end
+          define_page
 
-        def define_spain(name = 'spain', attributes: {})
           let(name) do
             create_forum(
               :populated_forum,
               {
                 url: name,
-                initial_public_grant: 'spectator'
+                initial_public_grant: 'initiator',
+                parent: argu
               }.merge(attributes)
             )
           end

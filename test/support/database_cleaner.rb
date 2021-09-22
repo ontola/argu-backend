@@ -18,6 +18,8 @@ Tenant.seed_schema('argu', "#{Rails.application.config.host_name}/public_page", 
 
 ActsAsTenant.current_tenant = nil
 
+FactorySeeder.create(:page, locale: 'en-GB', url: 'argu', name: 'Argu')
+
 module ActiveSupport
   class TestCase
     before(:each) do

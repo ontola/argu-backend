@@ -12,27 +12,27 @@ class InterventionsTest < ActionDispatch::IntegrationTest
     Apartment::Tenant.switch! :argu
   end
 
-  let(:argu) do
+  let(:rivm) do
     ActsAsTenant.current_tenant = nil
-    Page.find_via_shortname('argu') ||
-      create(:page, locale: 'en-GB', url: 'argu', name: 'Argu')
+    Page.find_via_shortname('rivm') ||
+      create(:page, locale: 'en-GB', url: 'rivm', name: 'RIVM')
   end
   let(:freetown) do
     create_forum(
       :with_follower,
-      parent: argu,
+      parent: rivm,
       initial_public_grant: 'initiator'
     )
   end
   let(:initiator) { create_initiator(freetown) }
-  let(:intervention_type) { create(:intervention_type, parent: argu) }
+  let(:intervention_type) { create(:intervention_type, parent: rivm) }
 
   test 'initiator should post create draft intervention' do
     sign_in initiator
 
     general_create(
       results: {should: true, response: :created},
-      parent: :argu,
+      parent: :rivm,
       attributes: intervention_attributes(argu_publication_attributes: {draft: true}),
       differences: [['Intervention', 1], ['Intervention.published', 0], ['Activity', 1]]
     )
@@ -43,7 +43,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       results: {should: true, response: :created},
-      parent: :argu,
+      parent: :rivm,
       attributes: intervention_attributes,
       differences: [['Intervention', 1], ['Intervention.published', 1], ['Activity', 2], ['GrantReset', 0]]
     )
@@ -54,7 +54,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       results: {should: true, response: :created},
-      parent: :argu,
+      parent: :rivm,
       attributes: intervention_attributes(comments_allowed: :comments_not_allowed),
       differences: [['Intervention', 1], ['Intervention.published', 1], ['Activity', 2], ['GrantReset', 1]]
     )
@@ -66,7 +66,7 @@ class InterventionsTest < ActionDispatch::IntegrationTest
     assert_equal intervention_type.one_off_costs_score, 0
     general_create(
       results: {should: true, response: :created},
-      parent: :argu,
+      parent: :rivm,
       attributes: intervention_attributes,
       differences: [['Intervention', 1], ['Intervention.published', 1], ['Activity', 2]]
     )
