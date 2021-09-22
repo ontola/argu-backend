@@ -68,6 +68,17 @@ module SPI
       )
     end
 
+    test 'guest should post bulk escape injection' do
+      sign_in guest_user
+
+      bulk_request(
+        resources: injection_resources,
+        responses: injection_responses
+      )
+      assert_not(response.body.include?('</script>'))
+      assert_not(response.body.include?('<script>'))
+    end
+
     ####################################
     # As User
     ####################################
@@ -162,7 +173,7 @@ module SPI
       }
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     def bulk_request(page: argu, resources: bulk_resources, responses: bulk_responses)
       domain = page.iri_prefix.split('/')
       host! domain[0]
@@ -179,18 +190,18 @@ module SPI
 
       responses.each do |iri, expectation|
         resource = response.detect { |r| r[:iri] == iri }
-        raise("No expected response available for #{resource}") if resource.blank?
+        raise("No expected response available for #{iri}. Found #{response.map { |r| r[:iri] }}") if resource.blank?
 
         assert_equal iri.to_s, resource[:iri]
         assert_equal expectation[:status], resource[:status], "#{iri} should be #{expectation[:status]}"
         assert_equal expectation[:cache], resource[:cache], "#{iri} should be #{expectation[:cache]}"
-        type_statement = "\"#{iri}\",\"#{RDF[:type]}\""
+        type_statement = "\"#{expectation[:iri] || iri}\",\"#{RDF[:type]}\""
         type_statement += ",\"#{expectation[:type]}" if expectation.key?(:type)
         method = expectation[:include] ? :assert_includes : :refute_includes
         send(method, resource[:body] || '', type_statement)
       end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     def current_actor
       CurrentActor.new(user: user)
@@ -202,6 +213,31 @@ module SPI
 
     def dg_current_actor_iri
       "http://#{demogemeente.iri_prefix}/c_a"
+    end
+
+    def injection_resources
+      [
+        {include: true, iri: LinkedRails.iri(path: 'argu', query: '</script><script>')},
+        {include: true, iri: LinkedRails.iri(path: 'argu/.bla', query: '</script><script>')},
+        {include: true, iri: LinkedRails.iri(query: '</script><script>')}
+      ]
+    end
+
+    def injection_responses(opts = {}) # rubocop:disable Metrics/MethodLength
+      {
+        LinkedRails.iri(path: 'argu', query: '%3C/script%3E%3Cscript%3E') => {
+          cache: 'public',
+          status: 200,
+          include: true,
+          iri: LinkedRails.iri(path: 'argu')
+        },
+        LinkedRails.iri(path: 'argu/.bla', query: '%3C/script%3E%3Cscript%3E') => {
+          cache: 'private',
+          status: 404,
+          include: true
+        },
+        LinkedRails.iri(query: '%3C/script%3E%3Cscript%3E') => {cache: 'private', status: 404, include: false}
+      }.merge(opts)
     end
 
     def ontology_resources
