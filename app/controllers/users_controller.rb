@@ -8,7 +8,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     label: -> { I18n.t('actions.users.update.label') }
   )
   has_resource_destroy_action(
-    confirmed_destroy_options(
+    **confirmed_destroy_options(
       description: -> { I18n.t('actions.users.destroy.description', name: resource.display_name) },
       form: Users::DestroyForm
     )
@@ -24,7 +24,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     type: NS.schema.UpdateAction
   )
   has_singular_destroy_action(
-    confirmed_destroy_options(
+    **confirmed_destroy_options(
       description: -> { I18n.t('actions.users.destroy.description', name: resource.display_name) },
       form: Users::DestroyForm
     )

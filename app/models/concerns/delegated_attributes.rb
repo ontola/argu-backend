@@ -14,7 +14,7 @@ module DelegatedAttributes
       delegated_attributes.key?(attr)
     end
 
-    def self.delegated_attribute(attr, type, opts = {})
+    def self.delegated_attribute(attr, type, **opts)
       self.delegated_attributes ||= {}
       to = opts.delete(:to)
       self.delegated_attributes[attr.to_s] = to.to_s

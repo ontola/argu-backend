@@ -13,7 +13,7 @@ class BannerDismissal < Edge
     ]
   end
 
-  def self.store_in_redis?(_opts = {})
+  def self.store_in_redis?(**_opts)
     true
   end
 end

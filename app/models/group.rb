@@ -64,7 +64,7 @@ class Group < ApplicationRecord
       .where(edges: {id: edge.self_and_ancestor_ids})
   end
 
-  def iri(opts = {})
+  def iri(**opts)
     return @iri if @iri && opts.empty?
 
     iri ||= ActsAsTenant.with_tenant(page || ActsAsTenant.current_tenant) { super }

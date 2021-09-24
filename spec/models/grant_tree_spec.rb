@@ -10,14 +10,10 @@ RSpec.describe GrantTree, type: :model do
     s = described_instance
     s.cache_node(cache) if try(:cache).present?
     if described_method
-      if defined?(method_args)
-        if method_args.is_a?(Array)
-          s.send(described_method, *method_args)
-        else
-          s.send(described_method, method_args)
-        end
+      if method_args.is_a?(Array)
+        s.send(described_method, *method_args, **method_opts)
       else
-        s.send(described_method)
+        s.send(described_method, method_args, **method_opts)
       end
     else
       s
@@ -27,6 +23,8 @@ RSpec.describe GrantTree, type: :model do
   let(:constructor_args) { root }
   let(:described_instance) { described_class.new(constructor_args) }
   let(:root) { argu }
+  let(:method_args) { [] }
+  let(:method_opts) { {} }
 
   describe '#initialize' do
     context 'with root id' do
@@ -63,7 +61,8 @@ RSpec.describe GrantTree, type: :model do
       end
 
       context 'with filters' do
-        let(:method_args) { [motion, action_name: :destroy, resource_type: motion.owner_type] }
+        let(:method_args) { [motion] }
+        let(:method_opts) { {action_name: :destroy, resource_type: motion.owner_type} }
 
         it { is_expected.to match_array [Group::STAFF_ID] }
       end

@@ -8,7 +8,7 @@ module Argu
       # @param [Hash] options
       # @option options [String] r The url to redirect to after sign in
       # @return [String] the message
-      def initialize(options = {})
+      def initialize(**options)
         if options[:user].reset_password_sent_at.blank? || options[:user].reset_password_sent_at < 1.minute.ago
           options[:user].send_reset_password_token_email
         end

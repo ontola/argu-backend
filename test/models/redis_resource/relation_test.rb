@@ -68,7 +68,7 @@ module RedisResource
 
     private
 
-    def create_vote(user, attrs = {})
+    def create_vote(user, **attrs)
       Vote.create(
         {
           creator: user.profile,

@@ -7,7 +7,7 @@ module ConfirmedDestroyable
     class_methods do
       private
 
-      def confirmed_destroy_options(overwrite = {})
+      def confirmed_destroy_options(**overwrite)
         {
           form: ConfirmedDestroyForm
         }.merge(overwrite)

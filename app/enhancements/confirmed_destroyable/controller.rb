@@ -7,7 +7,7 @@ module ConfirmedDestroyable
     included do
       include ConfirmedDestroyable::DefaultActions
 
-      has_resource_destroy_action(confirmed_destroy_options)
+      has_resource_destroy_action(**confirmed_destroy_options)
     end
 
     private

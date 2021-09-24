@@ -44,7 +44,7 @@ class GrantTree
   # @param [Edge] edge The edge to check
   # @param [Hash] filters The filters the grants should apply to
   # @return [Array<Integer>] A list of group_ids with a grant
-  def granted_group_ids(edge, filters = {})
+  def granted_group_ids(edge, **filters)
     find_or_cache_node(edge).granted_group_ids(**filters)
   end
 
@@ -52,8 +52,8 @@ class GrantTree
   # @param [Edge] edge The edge to check
   # @param [Hash] filters The filters the grants should apply to
   # @return [ActiveRecord::Relation] All groups with a grant
-  def granted_groups(edge, filters = {})
-    Group.where(id: granted_group_ids(edge, filters))
+  def granted_groups(edge, **filters)
+    Group.where(id: granted_group_ids(edge, **filters))
   end
 
   # All grants available for the root
@@ -90,7 +90,7 @@ class GrantTree
   # @param [Edge] edge The edge to check
   # @param [Hash] filters The filters the grants should apply to
   # @return [Array<String>] A list of the permitted parent_types
-  def permitted_parent_types(edge, filters = {})
+  def permitted_parent_types(edge, **filters)
     find_or_cache_node(edge)
       .permitted_parent_types(filters)
   end

@@ -27,12 +27,12 @@ module Parentable
       parent.try(:root) || ancestor(:page)
     end
 
-    def parent_iri(opts = {})
-      parent&.iri(opts)
+    def parent_iri(**opts)
+      parent&.iri(**opts)
     end
 
-    def parent_iri_path(opts = {})
-      split_iri_segments(parent&.root_relative_iri(opts))
+    def parent_iri_path(**opts)
+      split_iri_segments(parent&.root_relative_iri(**opts))
     end
 
     def singular_iri_opts

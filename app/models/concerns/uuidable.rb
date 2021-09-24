@@ -6,7 +6,7 @@ module Uuidable
   included do
     include UUIDHelper
 
-    def initialize(opts = {})
+    def initialize(opts = nil)
       opts ||= {}
       opts[:uuid] ||= SecureRandom.uuid
       self.class.reflect_on_all_associations.each { |a| association(a.name).loaded! } if new_record?

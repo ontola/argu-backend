@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SearchkickMock
-  def reindex(*_args)
+  def reindex(*_args, **_opts)
     super unless Thread.current[:mock_searchkick]
   end
 
@@ -14,7 +14,7 @@ Searchkick::Index.prepend SearchkickMock
 Searchkick::RecordIndexer.prepend SearchkickMock
 
 module ElasticsearchAPIMock
-  def bulk(_arguments = {})
+  def bulk(_arguments= {})
     return super unless Thread.current[:mock_searchkick]
 
     {}

@@ -30,7 +30,9 @@ class MediaObjectSerializer < RecordSerializer
   end
   attribute :remote_content_url,
             predicate: NS.argu[:remoteContentUrl],
-            datatype: NS.xsd.string, &:remote_url
+            datatype: NS.xsd.string do |object|
+    object.remote_url
+  end
   attribute :thumbnail, predicate: NS.schema.thumbnail do |object|
     object.url_for_version('thumbnail')
   end

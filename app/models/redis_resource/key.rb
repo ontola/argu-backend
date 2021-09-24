@@ -23,7 +23,7 @@ module RedisResource
     # @option opts [Uuid] root_id
     # @option opts [Edge] parent
     # @option opts [Integer] parent_id
-    def initialize(opts = {}) # rubocop:disable Metrics/AbcSize
+    def initialize(**opts) # rubocop:disable Metrics/AbcSize
       opts.compact!
       self.user_identifier ||= opts[:user]&.identifier || opts.fetch(:user_identifier, '*')
       self.user = opts[:user] || load_user || nil
@@ -87,7 +87,7 @@ module RedisResource
       def parse(key, user = nil)
         values = key.split('.')
         key = new(
-          Hash[%i[user_identifier root_id owner_type parent_id].map.with_index { |k, i| [k, values[i + 1]] }]
+          **Hash[%i[user_identifier root_id owner_type parent_id].map.with_index { |k, i| [k, values[i + 1]] }]
             .merge(user: user)
         )
         key if key.user.present?

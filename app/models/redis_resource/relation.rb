@@ -31,7 +31,7 @@ module RedisResource
       first
     end
 
-    def initialize(opts = {})
+    def initialize(**opts)
       self.where_clause = {}
       super
     end
@@ -129,7 +129,7 @@ module RedisResource
     end
 
     class << self
-      def where(opts = {})
+      def where(**opts)
         new.where(opts)
       end
     end

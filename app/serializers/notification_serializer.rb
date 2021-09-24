@@ -3,7 +3,9 @@
 class NotificationSerializer < RecordSerializer
   attribute :url_object, predicate: NS.schema.target
   attribute :read_at, predicate: NS.schema.dateRead
-  attribute :unread, predicate: NS.argu[:unread], &:unread
+  attribute :unread, predicate: NS.argu[:unread] do |object|
+    object.unread
+  end
 
   has_one :creator, predicate: NS.schema.creator do |object|
     object.activity&.owner

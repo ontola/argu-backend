@@ -165,13 +165,13 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   end
 
   class << self
-    def default_create_options(overwrite = {})
+    def default_create_options(**overwrite)
       super.merge(
         label: -> { I18n.t("#{self.class.actionable_class.name.tableize}.type_new", default: '').presence }
       ).merge(overwrite)
     end
 
-    def default_destroy_options(overwrite = {})
+    def default_destroy_options(**overwrite)
       super.merge(
         target_url: lambda {
           resource.try(:singular_resource?) ? resource.singular_iri : resource.iri(destroy: true)

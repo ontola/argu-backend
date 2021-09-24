@@ -7,7 +7,7 @@ class VocabularyForm < ContainerNodeForm
   field :tagged_label
   has_one :default_cover_photo
   has_many :attachments
-  has_many :grants, grant_options
+  has_many :grants, **grant_options
 
   with_collection :terms
 end

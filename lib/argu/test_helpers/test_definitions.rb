@@ -3,7 +3,7 @@
 module Argu
   module TestHelpers
     module TestDefinitions
-      def default_create_attributes(_opts = {})
+      def default_create_attributes(**_opts)
         attributes_for(model_sym)
       end
 

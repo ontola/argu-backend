@@ -245,7 +245,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
       .present?
   end
 
-  def iri(opts = {})
+  def iri(**opts)
     return @iri if @iri && opts.empty?
 
     iri ||= ActsAsTenant.with_tenant(root || ActsAsTenant.current_tenant) { super }
@@ -280,8 +280,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parent&.persisted_edge&.path&.split('.')&.map(&:to_i)
   end
 
-  def parent(*args)
-    association(:parent).reader(*args)
+  def parent
+    association(:parent).reader
   end
 
   def ancestor(type) # rubocop:disable Metrics/AbcSize
@@ -335,12 +335,12 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     true
   end
 
-  def root(*args) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
+  def root # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
     return self if root_object? && parent_id.nil? && parent.nil?
     return @root || super if association_cached?(:root)
     return ActsAsTenant.current_tenant if ActsAsTenant.current_tenant&.uuid == root_id
 
-    @root ||= association_cached?(:parent) && parent ? parent.root : association(:root).reader(*args)
+    @root ||= association_cached?(:parent) && parent ? parent.root : association(:root).reader
   end
 
   def root_object?
@@ -358,7 +358,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
       .trashed
   end
 
-  def reload(_opts = {})
+  def reload(**_opts)
     @is_trashed = nil
     @persisted_edge = nil
     @root = nil

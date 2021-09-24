@@ -60,24 +60,24 @@ class ApplicationMenuList < LinkedRails::Menus::List
   end
 
   class << self
-    def has_action_menu(opts = {})
-      has_menu :actions, {
+    def has_action_menu(**opts)
+      has_menu :actions, **{
         image: 'fa-ellipsis-v',
         menus: -> { action_menu_items }
       }.merge(opts)
     end
 
-    def has_follow_menu(opts = {})
+    def has_follow_menu(**opts)
       follow_types = opts.delete(:follow_types)
-      has_menu :follow, {
+      has_menu :follow, **{
         description: I18n.t('notifications.receive.title'),
         image: 'fa-bell-o',
         menus: -> { follow_menu_items(follow_types) }
       }.merge(opts)
     end
 
-    def has_share_menu(opts = {})
-      has_menu :share, {
+    def has_share_menu(**opts)
+      has_menu :share, **{
         image: 'fa-share-alt',
         menus: -> { share_menu_items }
       }.merge(opts)

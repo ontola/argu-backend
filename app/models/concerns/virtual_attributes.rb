@@ -37,7 +37,7 @@ module VirtualAttributes
 
     private
 
-    def virtual_attribute(name, type = Type::Value.new, opts = {})
+    def virtual_attribute(name, type = Type::Value.new, **opts)
       self.virtual_attributes ||= []
       self.virtual_attributes << name
       virtual_attribute_reader(name, opts.delete(:value))

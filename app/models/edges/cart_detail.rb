@@ -81,7 +81,7 @@ class CartDetail < Edge
         CartDetail.new(publisher: user_context.user, parent: parent, shop_id: parent.parent.id)
     end
 
-    def store_in_redis?(_opts = {})
+    def store_in_redis?(**_opts)
       true
     end
 

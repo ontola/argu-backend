@@ -205,7 +205,7 @@ module Argu
         }
       end
 
-      def service_options(opts = {})
+      def service_options(**opts)
         user = create(:user, opts)
         {
           user_context: UserContext.new(user: user, profile: user.profile)

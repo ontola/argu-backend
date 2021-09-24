@@ -24,7 +24,7 @@ class Follow < ApplicationRecord
     update_attribute(:blocked, true) # rubocop:disable Rails/SkipsModelValidations
   end
 
-  def iri(opts = {})
+  def iri(**opts)
     return @iri if @iri && opts.empty?
 
     iri ||= ActsAsTenant.with_tenant(followable&.root || ActsAsTenant.current_tenant) { super }

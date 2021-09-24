@@ -39,7 +39,7 @@ module Edgeable
       property_managers[predicate] ||= Manager.new(self, predicate)
     end
 
-    def reload(_opt = {})
+    def reload(**_opt)
       super
       preload_properties(true)
       self
@@ -172,7 +172,7 @@ module Edgeable
         self.defined_properties = superclass.try(:defined_properties)&.dup || []
       end
 
-      def property(name, type, predicate, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def property(name, type, predicate, **opts) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         initialize_defined_properties
         options = {name: name, type: type, predicate: predicate}.merge(opts)
         defined_properties << options

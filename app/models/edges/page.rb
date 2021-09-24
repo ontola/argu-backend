@@ -110,7 +110,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     [primary_container_node&.iri].compact
   end
 
-  def iri(_opts = {})
+  def iri(**_opts)
     return anonymous_iri if iri_prefix.blank?
 
     @iri ||= RDF::URI("#{Rails.env.test? ? :http : :https}://#{iri_prefix}")

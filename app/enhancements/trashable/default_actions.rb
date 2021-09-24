@@ -2,25 +2,25 @@
 
 module Trashable
   module DefaultActions
-    def has_resource_trash_action(overwrite = {})
+    def has_resource_trash_action(**overwrite)
       has_resource_action(:trash, **trash_resource_options(overwrite))
     end
 
-    def has_singular_trash_action(overwrite = {})
+    def has_singular_trash_action(**overwrite)
       has_singular_action(:trash, **trash_singular_options(overwrite))
     end
 
-    def has_resource_untrash_action(overwrite = {})
+    def has_resource_untrash_action(**overwrite)
       has_resource_action(:untrash, **untrash_resource_options(overwrite))
     end
 
-    def has_singular_untrash_action(overwrite = {})
+    def has_singular_untrash_action(**overwrite)
       has_singular_action(:untrash, **untrash_singular_options(overwrite))
     end
 
     private
 
-    def default_trash_options(overwrite = {})
+    def default_trash_options(**overwrite)
       {
         form: TrashForm,
         http_method: :delete,
@@ -31,7 +31,7 @@ module Trashable
       }.merge(overwrite)
     end
 
-    def default_untrash_options(overwrite = {})
+    def default_untrash_options(**overwrite)
       {
         form: UntrashForm,
         http_method: :put,

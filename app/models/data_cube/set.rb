@@ -4,7 +4,7 @@ module DataCube
   class Set < LinkedRails::Resource
     attr_accessor :description, :dimensions, :label, :measures, :observations, :parent
 
-    def initialize(opts = {})
+    def initialize(**opts)
       super
       observations.map! do |observation|
         Observation.new(

@@ -13,20 +13,20 @@ module RedisResource
       persisted? ? super : true
     end
 
-    def save(opts = {})
-      store_in_redis?(opts) ? store_in_redis : super
+    def save(**opts)
+      store_in_redis?(**opts) ? store_in_redis : super
     end
 
-    def save!(opts = {})
-      store_in_redis?(opts) ? store_in_redis : super
+    def save!(**opts)
+      store_in_redis?(**opts) ? store_in_redis : super
     end
 
     def searchable_should_index?
       super && !store_in_redis?
     end
 
-    def store_in_redis?(opts = {})
-      self.class.store_in_redis?(attributes.merge(publisher: publisher).merge(opts))
+    def store_in_redis?(**opts)
+      self.class.store_in_redis?(**attributes.merge(publisher: publisher).merge(opts))
     end
 
     def trash
@@ -54,15 +54,15 @@ module RedisResource
       # @param [Hash] attributes Filter options for the owners of the edge akin to activerecords' `where`.
       # @see #store_in_redis?(attributes).
       # @return [ActiveRecord::Relation, RedisResource::Relation]
-      def where_with_redis(attributes = {})
-        if store_in_redis?(attributes)
-          RedisResource::EdgeRelation.where(attributes.merge(owner_type: name))
+      def where_with_redis(**attributes)
+        if store_in_redis?(**attributes)
+          RedisResource::EdgeRelation.where(**attributes.merge(owner_type: name))
         else
           where(attributes)
         end
       end
 
-      def store_in_redis?(opts = {})
+      def store_in_redis?(**opts)
         !opts[:skip_redis] && opts[:publisher]&.guest?
       end
     end

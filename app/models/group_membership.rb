@@ -43,7 +43,7 @@ class GroupMembership < ApplicationRecord
 
   attr_accessor :token
 
-  def iri(opts = {})
+  def iri(**opts)
     return @iri if @iri && opts.empty?
 
     iri ||= ActsAsTenant.with_tenant(root || ActsAsTenant.current_tenant) { super }

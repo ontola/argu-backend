@@ -28,7 +28,7 @@ module Argu
           end
         end
 
-        def create_page(opts = {})
+        def create_page(**opts)
           ActsAsTenant.without_tenant { create(:page, opts) }
         end
       end

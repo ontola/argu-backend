@@ -149,7 +149,7 @@ module SPI
       ]
     end
 
-    def bulk_responses(opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def bulk_responses(**opts) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       {
         current_actor_iri => {cache: 'private', status: 200, include: true},
         motion1.iri => {cache: 'public', status: 200, include: true},
@@ -227,7 +227,7 @@ module SPI
       ]
     end
 
-    def injection_responses(opts = {}) # rubocop:disable Metrics/MethodLength
+    def injection_responses(**opts) # rubocop:disable Metrics/MethodLength
       {
         LinkedRails.iri(path: 'argu', query: '%3C/script%3E%3Cscript%3E') => {
           cache: 'public',
@@ -251,7 +251,7 @@ module SPI
       ]
     end
 
-    def ontology_responses(opts = {})
+    def ontology_responses(**opts)
       {
         NS.argu[:Motion] => {cache: 'public', status: 200, include: true, type: RDF::RDFS.Class},
         NS.argu[:markAsImportant] => {cache: 'public', status: 200, include: true, type: RDF.Property}
@@ -267,7 +267,7 @@ module SPI
       ]
     end
 
-    def public_responses(opts = {})
+    def public_responses(**opts)
       {
         "#{argu.iri}/search" => {cache: 'public', status: 200, include: true},
         "#{argu.iri}/search?q=1" => {cache: 'private', status: 200, include: true},
@@ -276,9 +276,9 @@ module SPI
       }.merge(opts)
     end
 
-    def user_responses(opts = {})
+    def user_responses(**opts)
       bulk_responses(
-        {
+        **{
           holland_motion1.iri => {cache: 'private', status: 403, include: true},
           holland_motion2.iri => {cache: 'private', status: 403, include: false},
           resource_iri(holland_motion1.activities.last, root: argu) => {cache: 'private', status: 403, include: true}

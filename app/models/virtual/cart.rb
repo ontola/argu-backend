@@ -28,7 +28,7 @@ class Cart < VirtualResource
       )
   end
 
-  def iri(_opts = {})
+  def iri(**_opts)
     singular_iri
   end
 

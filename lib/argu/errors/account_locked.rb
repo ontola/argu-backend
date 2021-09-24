@@ -8,7 +8,7 @@ module Argu
       # @param [Hash] options
       # @option options [String] redirect_url The url to redirect to after sign in
       # @return [String] the message
-      def initialize(options = {})
+      def initialize(**options)
         @redirect = options[:redirect_url]
 
         message = I18n.t('devise.failure.locked')

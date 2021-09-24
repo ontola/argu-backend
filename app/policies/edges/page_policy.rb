@@ -49,7 +49,7 @@ class PagePolicy < EdgePolicy
     'general'
   end
 
-  def index_children?(raw_klass, opts = {})
+  def index_children?(raw_klass, **opts)
     return show? if [Intervention, Measure].include?(raw_klass)
 
     super

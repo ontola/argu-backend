@@ -4,7 +4,7 @@ module Discussable
   module Policy
     extend ActiveSupport::Concern
 
-    def index_children?(raw_klass, opts = {})
+    def index_children?(raw_klass, **opts)
       return show? if raw_klass == Discussion
 
       super

@@ -94,8 +94,8 @@ module Edgeable
         # rubocop:enable Rails/InverseOf
       end
 
-      def term_property(key, predicate, opts)
-        property key, :linked_edge_id, predicate, opts.merge(association_class: 'Term')
+      def term_property(key, predicate, **opts)
+        property key, :linked_edge_id, predicate, **opts.merge(association_class: 'Term')
       end
     end
   end

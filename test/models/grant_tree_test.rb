@@ -55,7 +55,7 @@ class GrantTreeTest < ActiveSupport::TestCase
 
   private
 
-  def group_ids(edge, opts = {})
-    GrantTree.new(freetown.root).granted_group_ids(edge, opts).sort
+  def group_ids(edge, **opts)
+    GrantTree.new(freetown.root).granted_group_ids(edge, **opts).sort
   end
 end

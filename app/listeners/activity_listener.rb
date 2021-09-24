@@ -8,7 +8,7 @@ class ActivityListener
   # @option opts [Profile] creator The Profile under whose name it was published
   # @option opts [String] comment An optional Comment to explain the action
   # @option opts [Bool] notify Whether to create notifications
-  def initialize(opts = {})
+  def initialize(**opts)
     @publisher = opts[:user_context].user
     @creator = opts[:user_context].profile
     @comment = opts[:comment]

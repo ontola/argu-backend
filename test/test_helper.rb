@@ -107,42 +107,38 @@ module ActionDispatch
       status
     end
 
-    def head(path, *args, **opts)
+    def head(path, **opts)
       process_new_authorization(
         super(
           path.try(:iri)&.path || path,
-          *args,
-          merge_req_opts(**opts)
-          )
-      )
-    end
-
-    def get(path, *args, **opts)
-      process_new_authorization(
-        super(
-          path.try(:iri)&.path || path,
-          *args,
-          merge_req_opts(**opts)
-          )
-      )
-    end
-
-    def post(path, *args, **opts)
-      process_new_authorization(
-        super(
-          path.try(:iri)&.path || path,
-          *args,
           **merge_req_opts(**opts)
           )
       )
     end
 
-    def delete(path, *args, **opts)
+    def get(path, **opts)
       process_new_authorization(
         super(
           path.try(:iri)&.path || path,
-          *args,
-          merge_req_opts(**opts)
+          **merge_req_opts(**opts)
+          )
+      )
+    end
+
+    def post(path, **opts)
+      process_new_authorization(
+        super(
+          path.try(:iri)&.path || path,
+          **merge_req_opts(**opts)
+          )
+      )
+    end
+
+    def delete(path, **opts)
+      process_new_authorization(
+        super(
+          path.try(:iri)&.path || path,
+          **merge_req_opts(**opts)
           )
       )
     end
@@ -153,22 +149,20 @@ module ActionDispatch
       result
     end
 
-    def patch(path, *args, **opts)
+    def patch(path, **opts)
       process_new_authorization(
         super(
           path.try(:iri)&.path || path,
-          *args,
-          merge_req_opts(**opts)
+          **merge_req_opts(**opts)
           )
       )
     end
 
-    def put(path, *args, **opts)
+    def put(path, **opts)
       process_new_authorization(
         super(
           path.try(:iri)&.path || path,
-          *args,
-          merge_req_opts(**opts)
+          **merge_req_opts(**opts)
           )
       )
     end
@@ -206,7 +200,7 @@ end
 module ActionDispatch
   module Integration
     module RequestHelpers
-      def options(path, args = {})
+      def options(path, **args)
         process(:options, path, **args)
       end
     end

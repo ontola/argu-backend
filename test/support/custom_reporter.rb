@@ -6,7 +6,7 @@ class CustomReporter < Minitest::Reporters::BaseReporter
 
   attr_accessor :total_fails
 
-  def initialize(options = {})
+  def initialize(**options)
     self.total_fails = 0
     super
     io.sync = true

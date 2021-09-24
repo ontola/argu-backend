@@ -106,7 +106,7 @@ module Argu
             resource = create_resource(
               klass,
               attributes,
-              options
+              **options
             )
 
             args.each do |trait|
@@ -186,7 +186,7 @@ module Argu
         end
 
         # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-        def create_resource(klass, attributes = {}, options = {})
+        def create_resource(klass, attributes = {}, **options)
           parent_edge = attributes.delete(:parent)
           ActsAsTenant.with_tenant(parent_edge&.root || ActsAsTenant.current_tenant) do
             attributes[:owner_type] = klass.to_s if klass < Edge
@@ -227,7 +227,7 @@ module Argu
               attributes: {},
               options: options
             )
-            service.subscribe(ActivityListener.new(options))
+            service.subscribe(ActivityListener.new(**options))
             service.commit
             nil
           end
@@ -291,7 +291,7 @@ module Argu
               attributes: {},
               options: options
             )
-            service.subscribe(ActivityListener.new(options))
+            service.subscribe(ActivityListener.new(**options))
             service.commit
             resource.reload
           end
@@ -306,7 +306,7 @@ module Argu
               attributes: attributes,
               options: options
             )
-            service.subscribe(ActivityListener.new(options))
+            service.subscribe(ActivityListener.new(**options))
             service.commit
             resource.reload
           end

@@ -83,7 +83,7 @@ class ServiceController < ParentableController
 
   # For use with the services options parameter, with sensible defaults
   # @return [Hash] Defaults with the creator and publisher set to the current profile/user
-  def service_options(options = {})
+  def service_options(**options)
     {
       user_context: user_context
     }.merge(activity_options).merge(options).with_indifferent_access

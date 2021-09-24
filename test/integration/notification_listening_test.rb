@@ -217,7 +217,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     'Notification.joins(:activity).where("key ~ \'*.create|publish\'").count'
   end
 
-  def assert_notifications(count, type, differences = {})
+  def assert_notifications(count, type, **differences)
     assert_difference(differences.merge('Notification.count' => count)) do
       ActsAsTenant.with_tenant(Publication.last.publishable.root) { reset_publication(Publication.last) }
     end

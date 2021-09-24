@@ -26,7 +26,7 @@ class Place < ApplicationRecord
     def find_or_fetch_by(opts = {}, &block)
       opts[:country_code] = opts[:country_code].downcase if opts[:country_code].present?
       opts[:postcode] = opts.delete(:postal_code)&.upcase&.delete(' ')
-      find_by_opts(opts) || create_or_fetch(opts, &block)
+      find_by_opts(**opts) || create_or_fetch(opts, &block)
     end
 
     def find_or_fetch_country(country_code)
@@ -42,7 +42,7 @@ class Place < ApplicationRecord
     def create_or_fetch(opts)
       place =
         if opts[:country_code].present? || opts[:postcode].present?
-          ENV['NOMINATIM_URL'].present? ? fetch(url_for_osm_query(opts)) : new
+          ENV['NOMINATIM_URL'].present? ? fetch(url_for_osm_query(**opts)) : new
         else
           new(opts.slice(:lat, :lon))
         end
@@ -57,7 +57,7 @@ class Place < ApplicationRecord
     # @option opts [String] :country_code
     # @example Place.find_or_fetch_by(postcode: "3583GP", country_code: "nl")
     # @return [Place, nil] {Place} or nil if it doesn't exist yet
-    def find_by_opts(opts = {})
+    def find_by_opts(**opts)
       return if opts[:lat] || opts[:lon]
 
       scope = all
@@ -107,7 +107,7 @@ class Place < ApplicationRecord
     # Will convert :postcode to :postalcode and :country_code to :country
     # @example Place.find_or_fetch_by(postcode: "3583GP", country_code: "nl")
     # @return [String] OSM url with params
-    def url_for_osm_query(params = {})
+    def url_for_osm_query(**params)
       params = {format: 'json', addressdetails: 1, limit: 1, polygon: 0, extratags: 1, namedetails: 1}.merge(params)
       params[:postalcode] = params.delete :postcode
       params[:country] = params.delete :country_code
