@@ -105,7 +105,7 @@ module Argu
         end
       end
 
-      def test_edgeable_policies # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+      def test_edgeable_policies # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
         test_crud_policies
 
         %i[trash follow log invite move convert feed].each do |method|
@@ -121,7 +121,7 @@ module Argu
         test_policy(subject, :destroy, destroy_with_children_results) if direct_child
       end
 
-      def test_policy(subject, action, test_cases) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def test_policy(subject, action, test_cases) # rubocop:disable Metrics/MethodLength
         failures = []
         class_name = self.class.name.gsub('PolicyTest', '')
         test_cases.each do |user, expected|

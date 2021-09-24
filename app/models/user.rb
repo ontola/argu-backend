@@ -19,6 +19,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include RedirectHelper
   include Uuidable
 
+  before_save :adjust_birthday, if: :birthday_changed?
+  before_save :sanitize_redirect_url
+  before_create :build_public_group_membership
   before_destroy :handle_dependencies
   placeable :home
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
@@ -80,10 +83,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   LOGIN_ATTRS = %w[updated_at failed_attempts].freeze
   FAILED_LOGIN_ATTRS = %w[current_sign_in_at last_sign_in_at sign_in_count updated_at].freeze
 
-  before_save :adjust_birthday, if: :birthday_changed?
-  before_create :build_public_group_membership
   validates :about, length: {maximum: 3000}
-  before_save :sanitize_redirect_url
 
   attr_accessor :current_password, :session_id
 
@@ -148,7 +148,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def confirmed?
-    @confirmed ||= email_addresses.where('confirmed_at IS NOT NULL').any?
+    @confirmed ||= email_addresses.where.not(confirmed_at: nil).any?
   end
 
   def create_confirmation_reminder_notification(root_id)

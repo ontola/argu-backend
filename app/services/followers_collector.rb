@@ -20,13 +20,14 @@ class FollowersCollector
   private
 
   def followers
+    notified_user_ids =
+      (@activity&.notifications&.pluck(:user_id) || [])
+        .append(@activity&.audit_data.try(:[], 'user_id') || 0)
+
     User
       .joins(follows: :followable)
       .where(edges: {id: @resource.id})
-      .where(
-        'users.id NOT IN (?)',
-        (@activity&.notifications&.pluck(:user_id) || []).append(@activity&.audit_data.try(:[], 'user_id') || 0)
-      )
+      .where.not('users.id' => notified_user_ids)
       .where('follow_type >= ?', Follow.follow_types[@follow_type])
       .distinct
   end

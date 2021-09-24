@@ -132,7 +132,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     permit_params[:password].present?
   end
 
-  def permit_params(_password = false)
+  def permit_params
     attrs = policy(authenticated_resource || User).permitted_attributes
     pp = params.require(:user).permit(*attrs).to_h
     merge_photo_params(pp)
@@ -146,7 +146,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
   def update_execute
     @email_changed = email_changed?
     if password_required
-      bypass_sign_in(authenticated_resource) if authenticated_resource.update_with_password(permit_params(true))
+      bypass_sign_in(authenticated_resource) if authenticated_resource.update_with_password(permit_params)
     else
       authenticated_resource.update_without_password(permit_params) && authenticated_resource.profile.save
     end

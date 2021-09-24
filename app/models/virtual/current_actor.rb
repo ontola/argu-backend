@@ -42,7 +42,7 @@ class CurrentActor < VirtualResource
   end
 
   def unread_notification_count
-    Pundit.policy_scope(UserContext.new(user: user), Notification).where('read_at is NULL').count
+    Pundit.policy_scope(UserContext.new(user: user), Notification).where(read_at: nil).count
   end
 
   def user_id

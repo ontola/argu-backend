@@ -21,7 +21,7 @@ class ActorsController < ParentableController
   def requested_resource
     return super unless action_name == 'index'
 
-    skip_verify_policy_scoped(true)
+    skip_verify_policy_scoped(sure: true)
 
     @requested_resource ||= LinkedRails::Sequence.new(
       available_actors,

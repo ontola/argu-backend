@@ -5,7 +5,7 @@ class SendActivityNotificationsWorker
 
   COOLDOWN_PERIOD = 4.minutes
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def perform(user_id, delivery_type)
     ActsAsTenant.without_tenant do
       @user = User.find(user_id)
@@ -26,7 +26,7 @@ class SendActivityNotificationsWorker
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   private
 
@@ -88,7 +88,7 @@ class SendActivityNotificationsWorker
         activity: [
           :recipient,
           :trackable,
-          owner: [profileable: :default_profile_photo]
+          {owner: [profileable: :default_profile_photo]}
         ]
       )
       .each { |notification| add_prepared_notification(result, notification) }

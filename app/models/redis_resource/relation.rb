@@ -53,7 +53,7 @@ module RedisResource
 
     private
 
-    def apply_filters(opts) # rubocop:disable Metrics/AbcSize
+    def apply_filters(opts) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
       clear_key if (opts.keys & %i[publisher creator parent parent_id owner_type root_id]).any?
       self.user = user_from_opts(opts)
       %i[parent parent_id owner_type].each do |attr|

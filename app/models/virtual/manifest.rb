@@ -65,7 +65,7 @@ class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
     }
   end
 
-  def preload_iris # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def preload_iris # rubocop:disable Metrics/MethodLength
     [
       LinkedRails.iri,
       LinkedRails.iri(path: 'ns/core').to_s,

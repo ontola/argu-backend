@@ -9,8 +9,8 @@ class Placement < ApplicationRecord
   belongs_to :placeable, polymorphic: true, primary_key: :uuid
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
-  before_save :update_zoom
   before_validation :destruct_if_unneeded
+  before_save :update_zoom
   validate :validate_place, unless: :marked_for_destruction?
 
   enum placement_type: {home: 0, country: 1, custom: 2}
@@ -31,7 +31,7 @@ class Placement < ApplicationRecord
   # @param [String] :path The path the placement should be placed in
   # @param [Array<String>] :sort The order to sort the titles in
   # @return [Placement, nil] {Placement} or nil if no placement is found in the path
-  def self.find_by_path(path, sort) # rubocop:disable Metrics/AbcSize
+  def self.find_by_path(path, sort)
     return if path.nil?
 
     edge_uuids = Edge.where(id: path.split('.')).pluck(:uuid)
@@ -72,7 +72,7 @@ class Placement < ApplicationRecord
   # Validate whether the postal_code and country_code values are allowed and whether they match a {Place}
   # Will fail when a postal_code is provided, while the country_code is blank
   # or when {#Place.find_or_fetch_by} returns nil
-  def validate_place # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def validate_place # rubocop:disable Metrics/AbcSize
     if country_code.blank? && postal_code.present?
       errors.add(:country_code, I18n.t('placements.blank_country'))
     else

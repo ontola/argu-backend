@@ -82,7 +82,7 @@ class ContainerNode < Edge
     true
   end
 
-  def reset_country # rubocop:disable Metrics/MethodLength
+  def reset_country # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     country_code = locale.split('-').second
     return if country_placement&.country_code == country_code
 

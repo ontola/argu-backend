@@ -29,7 +29,7 @@ class EdgeTreePolicy < RestrictivePolicy
       edges_table[:is_published].eq(true).or(edges_table[:creator_id].in(managed_profile_ids))
     end
 
-    def filtered_edge_table # rubocop:disable Metrics/AbcSize
+    def filtered_edge_table
       table = joined_edge_table.where(grants_table[:group_id].in(user.profile.group_ids))
       return table unless grant_tree&.tree_root_id
 

@@ -36,7 +36,7 @@ class LinkedRecord < Edge
 
   def external_body
     body = external_response.body
-    blank_nodes = body.scan(/\[\"(\w*)\"/).flatten.uniq
+    blank_nodes = body.scan(/\["(\w*)"/).flatten.uniq
     replaced_body = blank_nodes.reduce(body) { |result, node| result.gsub(node, "_:#{node}") }
     replaced_body.gsub!('id.openraadsinformatie.nl', 'id.openbesluitvorming.nl')
 

@@ -11,7 +11,7 @@ class EmailAddress < ApplicationRecord
   TEMP_EMAIL_REGEX = /\Achange@me/.freeze
 
   belongs_to :user, inverse_of: :email_addresses
-  scope :confirmed, -> { where('confirmed_at IS NOT NULL') }
+  scope :confirmed, -> { where.not(confirmed_at: nil) }
 
   before_save :remove_other_primaries
   before_save :clear_reset_password_token, if: :primary_changed?

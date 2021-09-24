@@ -17,7 +17,7 @@ module Edgeable
 
     module InstanceOverwrites
       def search_data
-        preload_properties(true)
+        preload_properties(force: true)
         data = super
         data[:path] = path
         data[:published_branch] = !has_unpublished_ancestors?
@@ -50,7 +50,7 @@ module Edgeable
         filter
       end
 
-      def granted_paths(query) # rubocop:disable Metrics/AbcSize
+      def granted_paths(query)
         return [] if query.user_context.blank?
 
         query.user_context

@@ -10,7 +10,7 @@ module Edgeable
         collection.update_all(creator_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
       end
 
-      def attributes_for_new(opts) # rubocop:disable Metrics/MethodLength
+      def attributes_for_new(opts) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         parent = opts[:parent] if opts[:parent].is_a?(Edge)
         attrs = {
           owner_type: name,

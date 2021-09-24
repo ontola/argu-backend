@@ -38,7 +38,7 @@ module ActiveResponseHelper
   end
 
   def index_success_options_rdf
-    skip_verify_policy_scoped(true)
+    skip_verify_policy_scoped(sure: true)
     super
   end
 
@@ -49,7 +49,7 @@ module ActiveResponseHelper
     current_resource.parent.iri
   end
 
-  def redirect_message # rubocop:disable Metrics/AbcSize
+  def redirect_message
     if action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?
       I18n.t('type_publish_success', type: current_resource.class.label.capitalize)
     else

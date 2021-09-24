@@ -3,7 +3,7 @@
 class ConversionPolicy < EdgeTreePolicy
   permit_attributes %i[klass_iri]
 
-  def create? # rubocop:disable Metrics/AbcSize
+  def create?
     return true if record.klass_iri.nil?
     return unless record.edge.try(:convertible_classes)&.include?(record.klass.name.tableize.to_sym)
     return unless Pundit.policy(context, edgeable_record).convert?

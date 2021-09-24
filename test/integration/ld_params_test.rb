@@ -60,7 +60,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
 
   private
 
-  def create_with_ld_params(path, klass, differences, fixture, **params) # rubocop:disable Metrics/AbcSize
+  def create_with_ld_params(path, klass, differences, fixture, **params)
     sign_in administrator
     assert_difference(differences) do
       post path,

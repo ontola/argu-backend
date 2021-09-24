@@ -91,7 +91,7 @@ class UserSerializer < RecordSerializer
        if: method(:service_or_self?),
        options: Hash[
          ActiveSupport::TimeZone.all.uniq(&:tzinfo).map do |value|
-           id = value.tzinfo.name.gsub(%r{Etc\/([A-Z]+)}, 'UTC')
+           id = value.tzinfo.name.gsub(%r{Etc/([A-Z]+)}, 'UTC')
            [value.tzinfo.name, {close_match: NS.dbpedia[id], label: value.to_s}]
          end
        ]

@@ -41,11 +41,11 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   validates :name, presence: true, length: {minimum: 3, maximum: 75}
 
   after_create :tenant_create
-  after_update :tenant_update
   after_create :create_default_groups
   after_create :create_staff_grant
   after_create :create_activity_menu_item
   after_create -> { reindex_tree(async: false) }
+  after_update :tenant_update
   after_update :update_primary_node_menu_item, if: :primary_container_node_id_previously_changed?
 
   attr_writer :iri_prefix
@@ -255,7 +255,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       :o
     end
 
-    def update_iris(from, to, scope = nil) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def update_iris(from, to, scope = nil) # rubocop:disable Metrics/MethodLength
       escaped_from = ApplicationRecord.connection.quote_string(from)
       escaped_to = ApplicationRecord.connection.quote_string(to)
       # rubocop:disable Rails/SkipsModelValidations

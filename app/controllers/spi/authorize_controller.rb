@@ -30,7 +30,7 @@ module SPI
       end
     end
 
-    def resource # rubocop:disable Metrics/AbcSize
+    def resource
       return resource_from_iri(resource_iri_param) if resource_iri_param.present?
 
       case params[:resource_type]

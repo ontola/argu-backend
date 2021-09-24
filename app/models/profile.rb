@@ -67,7 +67,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     profileable.try :email
   end
 
-  def granted_edges(root_id: nil, owner_type: nil, grant_set: nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def granted_edges(root_id: nil, owner_type: nil, grant_set: nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     grant_set ||= %w[spectator participator initiator moderator administrator]
     @granted_edges ||= {}
     @granted_edges[root_id] ||= {}

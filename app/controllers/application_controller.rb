@@ -29,7 +29,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   after_action :set_version_header
   after_action :include_resources
 
-  def redirect_to(*args)
+  def redirect_to(*args) # rubocop:disable Metrics/AbcSize
     args[0] = args[0].iri if args[0].respond_to?(:iri)
     args[0] = args[0].to_s if args[0].is_a?(RDF::URI)
     args[0] = path_with_hostname(args[0]) if args[0].is_a?(String) && args[0].starts_with?('/')
@@ -64,7 +64,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
     }
   end
 
-  def after_sign_in_path_for(resource) # rubocop:disable Metrics/AbcSize
+  def after_sign_in_path_for(resource)
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
       freshdesk_redirect_url
     elsif params[:redirect_url] && argu_iri_or_relative?(params[:redirect_url])

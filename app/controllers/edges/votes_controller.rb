@@ -5,13 +5,13 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   has_collection_create_action(
     image: lambda {
-      Vote.create_image(resource.filter[NS.schema.option]&.first, resource.parent.upvote_only?)
+      Vote.create_image(resource.filter[NS.schema.option]&.first, upvote: resource.parent.upvote_only?)
     },
     label: lambda {
-      Vote.create_label(association, resource.filter[NS.schema.option]&.first, resource.parent.upvote_only?)
+      Vote.create_label(association, resource.filter[NS.schema.option]&.first, upvote: resource.parent.upvote_only?)
     },
     submit_label: lambda {
-      Vote.create_label(association, resource.filter[NS.schema.option]&.first, resource.parent.upvote_only?)
+      Vote.create_label(association, resource.filter[NS.schema.option]&.first, upvote: resource.parent.upvote_only?)
     },
     favorite: lambda {
       resource.filter[NS.schema.option].present? && (
@@ -20,19 +20,19 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     }
   )
   has_resource_trash_action(
-    image: -> { Vote.create_image(resource.option, resource.parent.upvote_only?) },
-    label: -> { Vote.create_label(association, resource.option, resource.parent.upvote_only?) },
-    submit_label: -> { Vote.create_label(association, resource.option, resource.parent.upvote_only?) }
+    image: -> { Vote.create_image(resource.option, upvote: resource.parent.upvote_only?) },
+    label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) },
+    submit_label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) }
   )
   has_singular_destroy_action(
-    image: -> { Vote.create_image(resource.option, resource.parent.upvote_only?) },
-    label: -> { Vote.create_label(association, resource.option, resource.parent.upvote_only?) },
-    submit_label: -> { Vote.create_label(association, resource.option, resource.parent.upvote_only?) }
+    image: -> { Vote.create_image(resource.option, upvote: resource.parent.upvote_only?) },
+    label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) },
+    submit_label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) }
   )
   has_singular_trash_action(
-    image: -> { Vote.create_image(resource.option, resource.parent.upvote_only?) },
-    label: -> { Vote.create_label(association, resource.option, resource.parent.upvote_only?) },
-    submit_label: -> { Vote.create_label(association, resource.option, resource.parent.upvote_only?) }
+    image: -> { Vote.create_image(resource.option, upvote: resource.parent.upvote_only?) },
+    label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) },
+    submit_label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) }
   )
 
   private

@@ -69,7 +69,7 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
         .group_by(&:class)
   end
 
-  def format_value_xls(value) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def format_value_xls(value) # rubocop:disable Metrics/MethodLength
     case value
     when Array
       value.map { |v| format_value_xls(v) }.join(', ')
@@ -120,7 +120,7 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
 
     overview_item_row(sheet, record, hierarchy_depth) if hierarchy_depth.present?
 
-    HIERARCHY[(hierarchy_depth || -1) + 1..-1].reverse.each do |child_type|
+    HIERARCHY[(hierarchy_depth || -1) + 1..].reverse.each do |child_type|
       (record.try(child_type) || []).each { |child| overview_item(sheet, child) }
     end
   end

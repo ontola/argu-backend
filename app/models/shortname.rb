@@ -14,8 +14,8 @@ class Shortname < ApplicationRecord
              primary_key: :uuid,
              class_name: 'Edge'
   before_save :remove_primary_shortname, if: :primary?
-  after_save :update_caches, if: :primary?
   after_destroy :update_caches, if: :primary?
+  after_save :update_caches, if: :primary?
   scope :join_edges, lambda {
     joins("INNER JOIN edges ON edges.uuid = shortnames.owner_id AND shortnames.owner_type = 'Edge'")
   }
@@ -86,7 +86,7 @@ class Shortname < ApplicationRecord
 
   def remove_primary_shortname
     scope = owner.shortnames
-    scope = scope.where('id != ?', id) if id
+    scope = scope.where.not(id: id) if id
     scope.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
   end
 

@@ -8,7 +8,7 @@ class HomePlacementSerializer < PlacementSerializer
     def self.options
       Hash[
         country_options.map do |key, value|
-          [value.upcase.to_sym, label: key, exact_match: NS.argu["Country/#{value}"]]
+          [value.upcase.to_sym, {label: key, exact_match: NS.argu["Country/#{value}"]}]
         end
       ]
     end

@@ -7,7 +7,7 @@ RSpec.describe "Iri's", type: :model do
   include ActionDispatch::Routing::UrlFor
 
   define_spec_objects
-  let(:url) { url_for([subject, protocol: :http]) }
+  let(:url) { url_for([subject, {protocol: :http}]) }
   let(:iri_owner) { subject }
 
   RSpec.shared_examples_for 'iri matches route' do
@@ -43,7 +43,7 @@ RSpec.describe "Iri's", type: :model do
     subject { create(:user).profile }
 
     let(:iri_owner) { subject.profileable }
-    let(:url) { url_for([subject.profileable, protocol: :http]) }
+    let(:url) { url_for([subject.profileable, {protocol: :http}]) }
 
     it_behaves_like 'iri matches route'
   end
@@ -65,7 +65,7 @@ RSpec.describe "Iri's", type: :model do
 
   context 'with root' do
     let(:id) { subject.try(:url) || subject.fragment }
-    let(:url) { url_for([subject.class_name.singularize.to_sym, id: id, protocol: :http]) }
+    let(:url) { url_for([subject.class_name.singularize.to_sym, {id: id, protocol: :http}]) }
 
     context 'Forum' do
       subject { freetown }

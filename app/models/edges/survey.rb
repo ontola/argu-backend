@@ -2,7 +2,7 @@
 
 class Survey < Discussion
   TYPEFORM_MANAGE_TEMPLATE = URITemplate.new('https://admin.typeform.com/form/{typeform_id}/create')
-  TYPEFORM_TEMPLATE = %r{\Ahttps:\/\/(\w*).typeform.com\/to\/(\w*)(\?__dangerous-disable-submissions)?\z}.freeze
+  TYPEFORM_TEMPLATE = %r{\Ahttps://(\w*).typeform.com/to/(\w*)(\?__dangerous-disable-submissions)?\z}.freeze
 
   enhance CouponBatchable
   enhance Settingable

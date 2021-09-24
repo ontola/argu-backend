@@ -3,7 +3,7 @@
 module Gravatar
   module_function
 
-  def gravatar_url(email, **gravatar_options) # rubocop:disable Metrics/AbcSize
+  def gravatar_url(email, **gravatar_options)
     # Default highest rating.
     # Rating can be one of G, PG, R X.
     # If set to nil, the Gravatar default of X will be used.

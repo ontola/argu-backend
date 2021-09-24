@@ -35,7 +35,7 @@ module DataCube
       end
 
       def preview_includes
-        [:observations, data_structure: %i[measures dimensions]]
+        [:observations, {data_structure: %i[measures dimensions]}]
       end
     end
   end

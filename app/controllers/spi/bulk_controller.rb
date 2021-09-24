@@ -87,14 +87,12 @@ module SPI
       200
     end
 
-    def threaded_authorized_resource(resource) # rubocop:disable Metrics/MethodLength
+    def threaded_authorized_resource(resource, &block) # rubocop:disable Metrics/MethodLength
       Thread.new(Apartment::Tenant.current, ActsAsTenant.current_tenant, I18n.locale) do |apartment, tenant, locale|
         ActiveRecord::Base.connection_pool.with_connection do
           Apartment::Tenant.switch(apartment) do
             ActsAsTenant.with_tenant(tenant) do
-              I18n.with_locale(locale) do
-                yield
-              end
+              I18n.with_locale(locale, &block)
             end
           end
         end

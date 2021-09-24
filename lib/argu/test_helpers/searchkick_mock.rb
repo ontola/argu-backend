@@ -14,7 +14,7 @@ Searchkick::Index.prepend SearchkickMock
 Searchkick::RecordIndexer.prepend SearchkickMock
 
 module ElasticsearchAPIMock
-  def bulk(_arguments= {})
+  def bulk(_arguments = {})
     return super unless Thread.current[:mock_searchkick]
 
     {}

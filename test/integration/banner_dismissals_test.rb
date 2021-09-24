@@ -35,16 +35,14 @@ class BannerDismissalsTest < ActionDispatch::IntegrationTest
 
   private
 
-  def assert_difference_success(user_symbol)
+  def assert_difference_success(user_symbol, &block)
     assert_difference(
       'BannerDismissal.count' => 0,
       'Edge.count' => 0,
       'Argu::Redis.keys.count' => 1,
       'Banner.count' => 0,
-      "scoped_banners(#{user_symbol}).count" => -1
-    ) do
-      yield
-    end
+      "scoped_banners(#{user_symbol}).count" => -1, &block
+    )
   end
 
   def scoped_banners(user)

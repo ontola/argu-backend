@@ -41,7 +41,7 @@ module Convertible
       end
     end
 
-    def convert_or_destroy_children(new_model) # rubocop:disable Metrics/MethodLength
+    def convert_or_destroy_children(new_model) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       new_model.displaced_children.each do |child|
         if new_model.is_a?(Comment) && child.is_a?(Comment)
           child.parent_comment ||= new_model

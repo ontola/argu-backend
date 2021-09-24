@@ -4,7 +4,7 @@ module Argu
   module TestHelpers
     module TestResources
       module InstanceMethods
-        def create_forum(*args) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+        def create_forum(*args) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
           attributes = (args.pop if args.last.is_a?(Hash)) || {}
           page = attributes[:parent] || ActsAsTenant.current_tenant || create_page
 

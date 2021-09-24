@@ -6,8 +6,8 @@ class Publication < ApplicationRecord
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
 
-  after_commit :reset
   before_destroy :cancel
+  after_commit :reset
   after_rollback :cancel
 
   validates :creator, :publisher, :channel, presence: true

@@ -21,7 +21,7 @@ module Orderable
       )
     end
 
-    def move_meta # rubocop:disable Metrics/AbcSize
+    def move_meta
       delta = update_meta + invalidate_parent_collections_delta(current_resource)
       delta << invalidate_resource_delta(current_resource.lower_item) if current_resource.lower_item
       delta << invalidate_resource_delta(current_resource.higher_item) if current_resource.higher_item

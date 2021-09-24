@@ -10,7 +10,7 @@ module ActivePublishable
                dependent: :destroy,
                primary_key: :uuid
       has_many :published_publications,
-               -> { where('publications.published_at IS NOT NULL') },
+               -> { where.not('publications.published_at' => nil) },
                class_name: 'Publication',
                foreign_key: :publishable_id,
                primary_key: :uuid

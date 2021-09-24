@@ -19,7 +19,7 @@ class Notification < ApplicationRecord
   enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4, finish_intro: 5}
   virtual_attribute :unread, :boolean, default: false, dependent_on: :read_at, value: ->(r) { r.read_at.blank? }
 
-  def display_name # rubocop:disable Metrics/AbcSize
+  def display_name
     if activity.present?
       activity_string_for(activity, user)
     elsif confirmation_reminder?

@@ -20,7 +20,7 @@ module RedisResource
       )
     end
 
-    def persist(user) # rubocop:disable Metrics/AbcSize
+    def persist(user)
       if Edge.where(publisher: user, owner_type: resource.class.name, parent_id: resource.parent_id).any?
         Argu::Redis.delete(key.key)
         return
@@ -30,7 +30,7 @@ module RedisResource
       service.commit
     end
 
-    def save # rubocop:disable Metrics/AbcSize
+    def save
       resource.created_at ||= Time.current
       store_in_redis
       resource.parent.save! if resource.parent.new_record?

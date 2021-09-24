@@ -8,9 +8,7 @@ class GroupSerializer < RecordSerializer
 
   with_collection :group_membership, predicate: NS.org[:hasMember]
 
-  has_one :organization do |object|
-    object.parent
-  end
+  has_one :organization, &:parent
 
   has_one :creator, predicate: NS.schema.creator do
     nil

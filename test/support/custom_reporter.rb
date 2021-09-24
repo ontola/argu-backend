@@ -41,9 +41,7 @@ class CustomReporter < Minitest::Reporters::BaseReporter
 
   private
 
-  def eta_message # rubocop:disable Metrics/AbcSize
-    progress = count / total_count.to_f
-
+  def eta_message(progress = count / total_count.to_f)
     puts(
       format(
         '%<perc>.2f%% - %<failures>s - ETA: %<time>s',

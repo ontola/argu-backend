@@ -24,7 +24,7 @@ module Edgeable
       class_attribute :defined_properties
     end
 
-    def preload_properties(force = false)
+    def preload_properties(force: false)
       return if !force && (properties_preloaded || !association_cached?(:properties))
 
       self.property_managers = {}
@@ -41,7 +41,7 @@ module Edgeable
 
     def reload(**_opt)
       super
-      preload_properties(true)
+      preload_properties(force: true)
       self
     end
 
@@ -67,7 +67,7 @@ module Edgeable
 
     def initialize_internals_callback
       super
-      preload_properties(true)
+      preload_properties(force: true)
     end
 
     def preload_property(property)
@@ -321,7 +321,7 @@ module ActiveRecord
       association_key
     end
 
-    def property_filter_value(key, value)
+    def property_filter_value(key, value) # rubocop:disable Metrics/CyclomaticComplexity
       property = property_options(name: key)
       return value.uuid if property[:type] == :linked_edge_id && value.is_a?(Edge)
       return value if property[:enum].blank? || value.is_a?(Integer)

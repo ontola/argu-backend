@@ -3,7 +3,7 @@
 class NilClassPolicy < RestrictivePolicy
   attr_reader :user, :record
 
-  def initialize(_user, _record)
+  def initialize(_user, _record) # rubocop:disable Lint/MissingSuper
     raise ActiveRecord::RecordNotFound.new('No resource to authorize')
   end
 

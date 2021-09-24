@@ -35,7 +35,7 @@ class Feed < VirtualResource
     scope = Activity
               .includes(:owner)
               .joins(:trackable, :recipient)
-              .where('edges.owner_type != ?', 'Banner')
+              .where.not('edges.owner_type' => 'Banner')
               .where('edges.owner_type != ? OR recipients_activities.owner_type != ?', 'Vote', 'Argument')
               .where("key ~ '#{self.class.class_key}.update|publish'")
               .where(edges: {is_published: true, trashed_at: nil})

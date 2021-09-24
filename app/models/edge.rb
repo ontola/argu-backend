@@ -154,21 +154,21 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   }
   scope :published, -> { where('edges.is_published = true') }
   scope :unpublished, -> { where('edges.is_published = false') }
-  scope :trashed, -> { where('edges.trashed_at IS NOT NULL') }
-  scope :untrashed, -> { where('edges.trashed_at IS NULL') }
+  scope :trashed, -> { where.not('edges.trashed_at' => nil) }
+  scope :untrashed, -> { where(edges: {trashed_at: nil}) }
   scope :expired, -> { where('edges.expires_at <= statement_timestamp()') }
   scope :active, -> { published.untrashed }
   scope :search_import, -> { published }
 
   validates :parent, presence: true, unless: :root_object?
 
+  after_initialize :set_root_id, if: :new_record?
+  before_save :set_publisher_id
+  before_create :set_confirmed
+  after_create :create_menu_item, if: :create_menu_item?
   before_destroy :reset_persisted_edge
   before_destroy :destroy_children
   before_destroy :destroy_redis_children
-  after_initialize :set_root_id, if: :new_record?
-  before_create :set_confirmed
-  after_create :create_menu_item, if: :create_menu_item?
-  before_save :set_publisher_id
 
   alias_attribute :body, :description
   alias_attribute :content, :description
@@ -205,7 +205,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     association(:children).reader(*args)
   end
 
-  def children_count(association, include_descendants = false)
+  def children_count(association, include_descendants: false)
     return descendants.active.where(owner_type: association.to_s.classify).count if include_descendants
 
     children_counts[association.to_s].to_i || 0
@@ -224,7 +224,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     options = property_options(name: key)
     filtered
       .where(properties: {predicate: options[:predicate].to_s, options[:type] => value})
-      .or(filtered.where('properties.predicate != ?', options[:predicate].to_s))
+      .or(filtered.where.not('properties.predicate' => options[:predicate].to_s))
   end
 
   def has_expired_ancestors?
@@ -284,7 +284,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     association(:parent).reader
   end
 
-  def ancestor(type) # rubocop:disable Metrics/AbcSize
+  def ancestor(type)
     return parent if type.nil?
     return self if owner_type == type.to_s.classify
     return parent.ancestor(type) if !root_object? && association_cached?(:parent)
@@ -395,9 +395,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def parent_by_type(type)
-    if type == :page
+    case type
+    when :page
       root
-    elsif type == :forum
+    when :forum
       tenant = Edge.find_by(id: self_and_ancestor_ids[1])
       tenant&.owner_type == 'Forum' ? tenant : nil
     else

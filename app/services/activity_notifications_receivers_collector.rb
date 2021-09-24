@@ -10,7 +10,7 @@ class ActivityNotificationsReceiversCollector
     t_users = User.arel_table
     User
       .joins(:notifications)
-      .where('last_accepted IS NOT NULL')
+      .where.not(last_accepted: nil)
       .where(t_notifications[:read_at].eq(nil))
       .where(t_users[:notifications_viewed_at].eq(nil)
                .or(t_users[:notifications_viewed_at].lt(t_notifications[:created_at])))

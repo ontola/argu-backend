@@ -13,14 +13,12 @@ module ActsAsTenant
     end
 
     class Server
-      def call(_worker_class, msg, _queue)
+      def call(_worker_class, msg, _queue, &block)
         if msg.key?('acts_as_tenant')
           tenant = Apartment::Tenant.switch('public') { Tenant.find_by!(root_id: msg['acts_as_tenant']) }
           page = Apartment::Tenant.switch(tenant.database_schema) { tenant.page }
 
-          ActsAsTenant.with_tenant(page) do
-            yield
-          end
+          ActsAsTenant.with_tenant(page, &block)
         else
           yield
         end

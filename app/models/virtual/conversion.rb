@@ -22,7 +22,7 @@ class Conversion < VirtualResource
     @edgeable_record ||= edge
   end
 
-  def initialize(edge: nil, klass_iri: nil)
+  def initialize(edge: nil, klass_iri: nil) # rubocop:disable Lint/MissingSuper
     @edge = edge
     @klass_iri = klass_iri
   end

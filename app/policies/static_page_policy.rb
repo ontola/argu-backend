@@ -3,7 +3,7 @@
 class StaticPagePolicy < Struct.new(:user, :static_pages) # rubocop:disable Style/StructInheritance
   attr_reader :context, :record
 
-  def initialize(context, record)
+  def initialize(context, record) # rubocop:disable Lint/MissingSuper
     @context = context
     @record = record
   end

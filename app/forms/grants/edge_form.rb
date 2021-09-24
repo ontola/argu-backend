@@ -14,7 +14,7 @@ module Grants
           sh_in: lambda {
             GrantSet
               .where(root_id: [nil, ActsAsTenant.current_tenant&.uuid])
-              .where('title NOT IN (?)', %i[empty staff motion_create])
+              .where.not(title: %i[empty staff motion_create])
               .map(&:iri)
           }
   end

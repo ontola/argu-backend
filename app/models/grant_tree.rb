@@ -18,10 +18,10 @@ class GrantTree
     {}
   end
 
-  def cache_node(node) # rubocop:disable Metrics/AbcSize
+  def cache_node(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     return cached_node(node) if cached?(node)
 
-    edge = node.is_a?(Edge) ? node : Edge.find_by!(id: node)
+    edge = node.is_a?(Edge) ? node : Edge.find(node)
     ancestor_ids = edge.path.split('.').map(&:to_i) - cached_nodes.keys - [edge.id]
     ancestors = ancestor_ids.present? ? Edge.where(root: tree_root, id: ancestor_ids) : []
     (ancestors + [edge]).sort_by { |e| e.path.length }.each do |ancestor|

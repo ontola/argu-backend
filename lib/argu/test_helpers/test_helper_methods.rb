@@ -28,7 +28,7 @@ module Argu
         end
 
         def cascaded_forum(key, opts)
-          key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
+          key && opts.dig(key, :forum) || opts[:forum] || try(:freetown)
         end
 
         def decoded_token_from_response
@@ -84,7 +84,7 @@ module Argu
           resource
         end
 
-        def create_with_service(model_type, args, attributes) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        def create_with_service(model_type, args, attributes) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
           traits_with_args = attributes.delete(:traits_with_args) || {}
           klass = model_type.to_s.classify.constantize
 

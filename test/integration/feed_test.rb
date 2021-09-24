@@ -63,7 +63,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   private
 
   # Render activity of Motion#create, Motion#publish, 6 comments, 6 public votes and 3 private votes
-  def assert_activity_count(accept: :nq, count: nil, parent: subject) # rubocop:disable Metrics/AbcSize
+  def assert_activity_count(accept: :nq, count: nil, parent: subject)
     case accept
     when :nq
       collection = ActsAsTenant.with_tenant(argu) do

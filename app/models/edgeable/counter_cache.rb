@@ -72,7 +72,7 @@ module Edgeable
         end
       end
 
-      def fix_counts_query(cache_name, conditions) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def fix_counts_query(cache_name, conditions) # rubocop:disable Metrics/MethodLength
         conditions = conditions.dup
         query =
           unscoped

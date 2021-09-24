@@ -25,7 +25,7 @@ class EdgeableController < ServiceController
       "#{action.classify}Edge".constantize
   end
 
-  def update_meta # rubocop:disable Metrics/AbcSize
+  def update_meta
     meta = super
     if current_resource.previously_changed_relations.include?('grant_collection')
       meta.concat(

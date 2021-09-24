@@ -6,7 +6,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
       self.class.name.split('Policy')[0]
     end
 
-    def resolve # rubocop:disable Metrics/AbcSize
+    def resolve
       return scope.none if user.nil?
 
       scope
@@ -181,8 +181,8 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   def has_content_children?
     record
       .children
-      .where('owner_type NOT IN (?)', %w[Vote VoteEvent])
-      .where('publisher_id != ?', record.publisher_id)
+      .where.not(owner_type: %w[Vote VoteEvent])
+      .where.not(publisher_id: record.publisher_id)
       .any?
   end
 

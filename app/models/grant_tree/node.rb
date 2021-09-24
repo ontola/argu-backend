@@ -7,7 +7,7 @@ class GrantTree
 
     attr_accessor :edge, :id, :children, :grant_tree, :parent, :permitted_actions, :grant_sets
 
-    def initialize(edge, parent, grant_tree)
+    def initialize(edge, parent, grant_tree) # rubocop:disable Metrics/AbcSize
       self.edge = edge
       self.parent = parent
       self.id = edge.id
@@ -34,7 +34,7 @@ class GrantTree
         (edge.owner_type == 'VoteEvent' && edge.starts_at > Time.current)
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def granted_group_ids(action_name: nil, resource_type: nil, parent_type: nil)
       if action_name.nil? && resource_type.nil? && parent_type.nil?
         return permitted_actions.values.map(&:values).flatten.map(&:values).flatten.uniq
@@ -46,7 +46,7 @@ class GrantTree
 
       (ids + (permitted_actions.dig(resource_type.to_s, action_name.to_s, '*') || [])).uniq
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     def permission_groups
       @permission_groups ||= granted_group_ids.map { |id| PermissionGroup.new(id, self) }
@@ -69,7 +69,7 @@ class GrantTree
 
     private
 
-    def calculate_permitted_actions(grant_tree) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def calculate_permitted_actions(grant_tree) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
       grant_tree.grant_resets_in_scope.select { |grant| grant.edge.path == edge.path }.each do |grant_reset|
         permitted_actions[grant_reset.resource_type][grant_reset.action_name] = {}
       end

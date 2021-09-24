@@ -134,7 +134,7 @@ class RestrictivePolicy
     record.is_a?(Class) || record.new_record?
   end
 
-  def sanitize_attribute(attr)
+  def sanitize_attribute(attr) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     aliases = record&.class&.try(:attribute_aliases)&.select { |_k, v| attr.to_s == v }&.keys&.map(&:to_sym)
     [attr] + (aliases || [])
   end

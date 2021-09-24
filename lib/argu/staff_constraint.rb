@@ -4,7 +4,7 @@ module Argu
   module StaffConstraint
     module_function
 
-    def matches?(request)
+    def matches?(request) # rubocop:disable Metrics/CyclomaticComplexity
       token = Doorkeeper.authenticate(request)
       return true if token&.scopes&.include?('service') && token.accessible?
       return false unless token&.scopes&.include?('user') && token.accessible?

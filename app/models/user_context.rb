@@ -48,7 +48,7 @@ class UserContext # rubocop:disable Metrics/ClassLength
     doorkeeper_token&.scopes
   end
 
-  def doorkeeper_token_payload # rubocop:disable Metrics/AbcSize
+  def doorkeeper_token_payload # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     return {} if doorkeeper_token&.token.blank?
     return {} if !allow_expired && !doorkeeper_token.accessible?
 
@@ -130,10 +130,10 @@ class UserContext # rubocop:disable Metrics/ClassLength
     @current_actor = authorized_current_actor(new_user, new_user.profile)
   end
 
-  def with_root(root)
+  def with_root(root, &block)
     raise 'no root given' if root.nil?
 
-    ActsAsTenant.with_tenant(root) { yield }
+    ActsAsTenant.with_tenant(root, &block)
   end
 
   private

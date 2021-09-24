@@ -111,7 +111,7 @@ class MarkAsImportantTest < ActionDispatch::IntegrationTest
 
   private
 
-  def create_motion(mark, follow_type) # rubocop:disable Metrics/AbcSize
+  def create_motion(mark, follow_type)
     sign_in moderator
     attributes = attributes_for(:motion)
     attributes[:mark_as_important] = mark unless mark.nil?

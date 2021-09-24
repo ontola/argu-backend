@@ -177,7 +177,7 @@ module SPI
       }
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def bulk_request(page: argu, resources: bulk_resources, responses: bulk_responses)
       domain = page.iri_prefix.split('/')
       host! domain[0]
@@ -194,7 +194,7 @@ module SPI
 
       responses.each do |iri, expectation|
         resource = response.detect { |r| r[:iri] == iri }
-        raise("No expected response available for #{iri}. Found #{response.map { |r| r[:iri] }}") if resource.blank?
+        raise("No expected response available for #{iri}. Found #{response.pluck(:iri)}") if resource.blank?
 
         assert_equal iri.to_s, resource[:iri]
         assert_equal expectation[:status], resource[:status], "#{iri} should be #{expectation[:status]}"
@@ -205,7 +205,7 @@ module SPI
         send(method, resource[:body] || '', type_statement)
       end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     def current_actor
       CurrentActor.new(user: user)

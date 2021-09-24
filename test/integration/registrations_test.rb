@@ -213,7 +213,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     Sidekiq::Testing.inline! do
       # rubocop:disable Rails/SkipsModelValidations
       Notification
-        .where('notification_type != ?', Notification.notification_types[:confirmation_reminder])
+        .where.not(notification_type: Notification.notification_types[:confirmation_reminder])
         .update_all(read_at: Time.current)
       # rubocop:enable Rails/SkipsModelValidations
       travel 2.days do

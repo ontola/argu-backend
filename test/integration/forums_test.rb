@@ -152,7 +152,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     )
     assert_equal "#{updated_holland.parent.iri}/new_url", updated_holland.iri
     updated_holland.custom_actions.map(&:href).all? do |iri|
-      iri.match?(%r{#{Regexp.escape(updated_holland.parent.iri)}\/new_url})
+      iri.match?(%r{#{Regexp.escape(updated_holland.parent.iri)}/new_url})
     end
   end
 

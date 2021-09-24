@@ -15,13 +15,11 @@ module ThreadHelper
     end
   end
 
-  def thread_stub(matcher)
-    stub = lambda do |*args, &block|
-      matcher.call(*args) ? ThreadResult.new(value: block.call(*args)) : UnstubbedThread.new(*args, &block)
+  def thread_stub(matcher, &block)
+    stub = lambda do |*args, &stub_block|
+      matcher.call(*args) ? ThreadResult.new(value: stub_block.call(*args)) : UnstubbedThread.new(*args, &stub_block)
     end
 
-    Thread.stub(:new, stub) do
-      yield
-    end
+    Thread.stub(:new, stub, &block)
   end
 end
