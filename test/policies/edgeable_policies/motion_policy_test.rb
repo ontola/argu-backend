@@ -2,14 +2,15 @@
 
 require 'test_helper'
 class MotionPolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   subject { motion }
   let(:trashed_subject) { trashed_motion }
   let(:expired_subject) { expired_motion }
   let(:unpublished_subject) { unpublished_motion }
   let(:direct_child) { pro_argument }
 
-  generate_edgeable_tests
+  test 'edgeable policies motion' do
+    test_edgeable_policies
+  end
 
   test 'statistics motion' do
     test_policy(subject, :statistics, moderator_plus_results)

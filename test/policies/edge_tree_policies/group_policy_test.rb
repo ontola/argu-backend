@@ -2,12 +2,13 @@
 
 require 'test_helper'
 class GroupPolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) { create(:group, parent: page) }
   let(:undeletable_subject) { create(:group, parent: page, deletable: false) }
   let(:group_member) { create(:group_membership, parent: subject).member.profileable }
 
-  generate_crud_tests
+  test 'crud policies group' do
+    test_crud_policies
+  end
 
   test 'should not destroy undeletable group' do
     test_policy(undeletable_subject, :destroy, staff: false)

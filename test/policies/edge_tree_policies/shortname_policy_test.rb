@@ -2,11 +2,12 @@
 
 require 'test_helper'
 class ShortnamePolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) { create(:discussion_shortname, owner: motion, root_id: motion.root_id, primary: false) }
   let(:primary_subject) { create(:discussion_shortname, owner: motion, root_id: motion.root_id) }
 
-  generate_crud_tests
+  test 'crud policies shortname' do
+    test_crud_policies
+  end
 
   test 'should create primary shortname' do
     test_policy(primary_subject, :create, create_results)

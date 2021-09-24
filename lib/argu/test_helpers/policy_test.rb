@@ -97,6 +97,30 @@ module Argu
         end
       end
 
+      def test_crud_policies
+        direct_child
+
+        %i[create show update destroy].each do |method|
+          test_policy(subject, method, send("#{method}_results"))
+        end
+      end
+
+      def test_edgeable_policies # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+        test_crud_policies
+
+        %i[trash follow log invite move convert feed].each do |method|
+          test_policy(subject, method, send("#{method}_results"))
+        end
+
+        test_policy(unpublished_subject, :show, show_unpublished_results) if unpublished_subject
+        test_policy(expired_subject, :show, show_expired_results) if expired_subject
+        test_policy(expired_subject, :show, show_trashed_results) if trashed_subject
+        test_policy(expired_subject, :create, create_expired_results) if expired_subject
+        test_policy(trashed_subject, :create, create_trashed_results) if trashed_subject
+        direct_child&.update(publisher: create(:user))
+        test_policy(subject, :destroy, destroy_with_children_results) if direct_child
+      end
+
       def test_policy(subject, action, test_cases) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         failures = []
         class_name = self.class.name.gsub('PolicyTest', '')

@@ -54,7 +54,7 @@ module Argu
           end
         end
 
-        def define_cairo(name = 'cairo', attributes: {})
+        def define_cairo(name = 'cairo', attributes: {}) # rubocop:disable Metrics/MethodLength
           define_page
 
           let(name) do
@@ -90,7 +90,7 @@ module Argu
           end
         end
 
-        def define_holland(name = 'holland', attributes: {})
+        def define_holland(name = 'holland', attributes: {}) # rubocop:disable Metrics/MethodLength
           define_page
 
           let(name) do

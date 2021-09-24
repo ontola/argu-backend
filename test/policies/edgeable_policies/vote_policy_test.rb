@@ -3,7 +3,6 @@
 require 'test_helper'
 
 class VotePolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   subject { vote }
   let(:trashed_subject) { trashed_vote }
   let(:expired_subject) { expired_vote }
@@ -16,7 +15,9 @@ class VotePolicyTest < Argu::TestHelpers::PolicyTest
   end
   let(:user_hidden_votes) { create(:user, show_feed: false) }
 
-  generate_edgeable_tests
+  test 'edgeable policies vote' do
+    test_edgeable_policies
+  end
 
   test 'should hide hidden vote' do
     test_policy(hidden_vote, :show, staff_only_results.merge(user_hidden_votes: true))

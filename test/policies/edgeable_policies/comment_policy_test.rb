@@ -2,7 +2,6 @@
 
 require 'test_helper'
 class CommentPolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   subject { comment }
   let(:trashed_subject) { trashed_comment }
   let(:expired_subject) { expired_comment }
@@ -10,7 +9,9 @@ class CommentPolicyTest < Argu::TestHelpers::PolicyTest
   let(:direct_child) { nested_comment }
   let(:expired_blog_post_comment) { create(:comment, parent: blog_post, publisher: creator) }
 
-  generate_edgeable_tests
+  test 'edgeable policies comment' do
+    test_edgeable_policies
+  end
 
   test 'create comment for expired blog_post' do
     test_policy(expired_blog_post_comment, :create, create_results)

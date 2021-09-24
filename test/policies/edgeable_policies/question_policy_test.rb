@@ -2,14 +2,15 @@
 
 require 'test_helper'
 class QuestionPolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   subject { question }
   let(:trashed_subject) { trashed_question }
   let(:expired_subject) { expired_question }
   let(:unpublished_subject) { unpublished_question }
   let(:direct_child) { motion }
 
-  generate_edgeable_tests
+  test 'edgeable policies question' do
+    test_edgeable_policies
+  end
 
   private
 

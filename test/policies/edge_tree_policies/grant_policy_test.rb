@@ -2,13 +2,14 @@
 
 require 'test_helper'
 class GrantPolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) do
     create(:grant, edge: freetown, group: create(:group, parent: page), grant_set: GrantSet.participator)
   end
   let(:group_member) { create(:group_membership, parent: subject.group).member.profileable }
 
-  generate_crud_tests
+  test 'crud policies grant' do
+    test_crud_policies
+  end
 
   private
 

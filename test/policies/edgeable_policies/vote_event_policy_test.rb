@@ -2,14 +2,15 @@
 
 require 'test_helper'
 class VoteEventPolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   subject { vote_event }
   let(:trashed_subject) { trashed_vote_event }
   let(:expired_subject) { expired_vote_event }
   let(:unpublished_subject) { unpublished_vote_event }
   let(:direct_child) { vote }
 
-  generate_edgeable_tests
+  test 'edgeable policies vote event' do
+    test_edgeable_policies
+  end
 
   alias create_results nobody_results
   alias create_expired_results nobody_results

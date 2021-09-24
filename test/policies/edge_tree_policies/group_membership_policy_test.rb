@@ -2,14 +2,15 @@
 
 require 'test_helper'
 class GroupMembershipPolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) { create(:group_membership, parent: create(:group, parent: page), member: group_member.profile) }
   let(:group_member) { create(:user) }
   let(:admin_membership) { page.grants.administrator.first.group.group_memberships.first }
   let(:second_admin_membership) { create(:group_membership, parent: page.grants.administrator.first.group) }
   let(:subject_with_token) { create(:group_membership, parent: page.grants.administrator.first.group, token: 'valid') }
 
-  generate_crud_tests
+  test 'crud policies group_membership' do
+    test_crud_policies
+  end
 
   test 'should not destroy last admin group_membership' do
     test_policy(admin_membership, :destroy, staff: false)

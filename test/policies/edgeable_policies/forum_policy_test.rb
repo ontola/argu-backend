@@ -2,14 +2,15 @@
 
 require 'test_helper'
 class ForumPolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   subject { freetown }
   let(:trashed_subject) { nil }
   let(:expired_subject) { nil }
   let(:unpublished_subject) { nil }
   let(:direct_child) { question }
 
-  generate_edgeable_tests
+  test 'edgeable policies forum' do
+    test_edgeable_policies
+  end
 
   alias create_results staff_only_results
 

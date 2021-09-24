@@ -2,10 +2,11 @@
 
 require 'test_helper'
 class ExportPolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   let(:subject) { create(:export, parent: freetown, user: create(:user)) }
 
-  generate_crud_tests
+  test 'crud policies export' do
+    test_crud_policies
+  end
 
   private
 

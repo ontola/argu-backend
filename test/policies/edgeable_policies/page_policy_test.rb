@@ -2,14 +2,15 @@
 
 require 'test_helper'
 class PagePolicyTest < Argu::TestHelpers::PolicyTest
-  include Argu::TestHelpers::DefaultPolicyTests
   subject { page }
   let(:trashed_subject) { nil }
   let(:expired_subject) { nil }
   let(:unpublished_subject) { nil }
   let(:creator) { page.publisher }
 
-  generate_edgeable_tests
+  test 'edgeable policies page' do
+    test_edgeable_policies
+  end
 
   def feed_results
     super.except(:non_member)
