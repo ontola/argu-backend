@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org/'
-ruby '2.7.0'
+ruby '3.0.2'
 
 gem 'active_model_otp'
 gem 'active_record-postgres-constraints',
@@ -17,7 +17,7 @@ gem 'bcrypt-ruby'
 gem 'bootsnap', require: false
 gem 'bugsnag'
 gem 'bunny'
-gem 'carrierwave'
+gem 'carrierwave', '~> 2.1.1'
 gem 'carrierwave-aws'
 gem 'carrierwave-vips'
 gem 'counter_culture'
@@ -31,12 +31,12 @@ gem 'factory_bot'
 gem 'factory_bot_rails'
 gem 'health_check'
 gem 'httparty'
-gem 'json-ld'
 gem 'jsonapi-renderer'
+gem 'json-ld'
 gem 'jwt'
 gem 'kaminari-activerecord'
-gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', branch: 'new-actions'
-gem 'linked_rails-auth', git: 'https://github.com/ontola/linked_rails-auth', branch: 'new-actions'
+gem 'linked_rails', git: 'https://github.com/ontola/linked_rails', branch: 'hash-arguments'
+gem 'linked_rails-auth', git: 'https://github.com/ontola/linked_rails-auth', branch: 'hash-arguments'
 gem 'ltree_hierarchy'
 gem 'money'
 gem 'oauth2'
@@ -52,6 +52,7 @@ gem 'rdf'
 gem 'rdf-n3'
 gem 'rdf-rdfa'
 gem 'rdf-rdfxml'
+gem 'rdf-serializers', git: 'https://github.com/ontola/rdf-serializers', branch: 'hash-arguments'
 gem 'rdf-turtle'
 gem 'rdf-vocab'
 gem 'redis'
@@ -99,9 +100,9 @@ end
 group :development, :test do
   gem 'brakeman'
   gem 'license_finder'
-  gem 'rubocop'
-  gem 'rubocop-rails'
-  gem 'rubocop-rspec'
+  gem 'rubocop', '~> 0.92.0'
+  gem 'rubocop-rails', '~> 2.5.2'
+  gem 'rubocop-rspec', '~> 1.39.0'
 end
 
 group :development do

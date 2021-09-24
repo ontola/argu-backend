@@ -1,4 +1,4 @@
-FROM ruby:2.7.0-alpine
+FROM ruby:3.0.2-alpine3.13
 
 # Install mozjpeg & libvips
 ARG LIBVIPS_VERSION_MAJOR_MINOR=8.9
