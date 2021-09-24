@@ -89,7 +89,11 @@ module OauthTestHelpers
 
       assert_equal scope, parsed_body['scope']
       assert_equal 'Bearer', parsed_body['token_type']
-      assert_equal ttl, parsed_body['expires_in']
+      if ttl.nil?
+        assert_nil(parsed_body['expires_in'])
+      else
+        assert (ttl - parsed_body['expires_in']).abs < 10
+      end
       assert_not_nil parsed_body['refresh_token'] if refresh_token
       if parsed_body['access_token']
         assert_equal(response.headers['New-Authorization'], parsed_body['access_token'])
