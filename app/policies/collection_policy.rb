@@ -15,6 +15,8 @@ class CollectionPolicy < LinkedRails::CollectionPolicy
 
   def has_unpublished_ancestors?
     parent_policy.try(:has_unpublished_ancestors?)
+  rescue ActiveRecord::RecordNotFound
+    false
   end
 
   private

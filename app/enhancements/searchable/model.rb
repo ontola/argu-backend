@@ -23,7 +23,11 @@ module Searchable
       def reindex(method_name = nil, **options)
         return if Rails.application.config.disable_searchkick
 
-        ActsAsTenant.with_tenant(ActsAsTenant.current_tenant || root) do
+        tenant = ActsAsTenant.current_tenant || try(:root)
+
+        return if tenant.blank?
+
+        ActsAsTenant.with_tenant(tenant) do
           Searchkick::RecordIndexer.new(self).reindex(method_name, **options)
         end
       end

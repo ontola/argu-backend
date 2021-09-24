@@ -3,6 +3,8 @@
 class UserPolicy < RestrictivePolicy
   class Scope < Scope
     def resolve
+      return scope.none unless staff?
+
       scope
     end
   end

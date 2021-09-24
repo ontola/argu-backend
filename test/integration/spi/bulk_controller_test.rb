@@ -134,7 +134,9 @@ module SPI
         {include: true, iri: "#{argu.iri}/wrong_iri"},
         {include: true, iri: "#{argu.iri}/cable"},
         {include: true, iri: resource_iri(motion1.activities.last, root: argu)},
-        {include: true, iri: resource_iri(holland_motion1.activities.last, root: argu)}
+        {include: true, iri: resource_iri(holland_motion1.activities.last, root: argu)},
+        {include: true, iri: "#{argu.iri}/u/search"},
+        {include: true, iri: "#{argu.iri}/u/search?q=1"}
       ]
     end
 
@@ -160,7 +162,9 @@ module SPI
         "#{argu.iri}/wrong_iri" => {cache: 'private', status: 404, include: true},
         "#{argu.iri}/cable" => {cache: 'private', status: 404, include: true},
         resource_iri(motion1.activities.last, root: argu) => {cache: 'public', status: 200, include: true},
-        resource_iri(holland_motion1.activities.last, root: argu) => {cache: 'no-cache', status: 200, include: true}
+        resource_iri(holland_motion1.activities.last, root: argu) => {cache: 'no-cache', status: 200, include: true},
+        "#{argu.iri}/u/search" => {cache: 'private', status: 403, include: true},
+        "#{argu.iri}/u/search?q=1" => {cache: 'private', status: 403, include: true}
       }.merge(opts)
     end
 

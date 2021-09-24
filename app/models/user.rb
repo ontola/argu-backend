@@ -9,6 +9,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Updatable
   enhance Feedable
   enhance Grantable
+  enhance Searchable
 
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable, primary_key: :uuid
   enhance ProfilePhotoable
@@ -64,6 +65,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
                   association_class: Page,
                   default_filters: {},
                   policy_scope: false
+  with_collection :search_results,
+                  association_class: User,
+                  collection_class: SearchResult::Collection
 
   auto_strip_attributes :about, nullify: false
 
@@ -266,6 +270,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     id <= 0
   end
 
+  # Include email in search data. User search is only available for staff.
+  def search_data
+    data = super
+    data[:email] = email
+    data
+  end
+
   def send_devise_notification(notification, *args) # rubocop:disable Metrics/MethodLength
     case notification
     when :reset_password_instructions
@@ -290,6 +301,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def service?
     id == User::SERVICE_ID
+  end
+
+  def searchable_should_index?
+    edges.where(root_id: ActsAsTenant.current_tenant.uuid).any?
   end
 
   private

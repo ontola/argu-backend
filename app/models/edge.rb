@@ -18,6 +18,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Cacheable
 
   enhance Grantable
+  enhance Transferable
 
   acts_as_followable
   has_ltree_hierarchy
