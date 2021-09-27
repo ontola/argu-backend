@@ -26,13 +26,6 @@ module Placeable
     end
 
     module ClassMethods
-      def attributes_from_filters(filters)
-        custom_placement_attributes = Placement.attributes_from_filters(filters)
-        return super if custom_placement_attributes.blank?
-
-        super.merge(custom_placement_attributes: custom_placement_attributes.merge(placement_type: 'custom'))
-      end
-
       def define_placement_associations(type)
         class_name = type == :home ? 'HomePlacement' : 'Placement'
         has_one "#{type}_placement".to_sym,
