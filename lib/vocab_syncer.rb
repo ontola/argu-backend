@@ -134,8 +134,10 @@ class VocabSyncer # rubocop:disable Metrics/ClassLength
 
     def update_term(term, options, index)
       term.assign_attributes(
+        color: options[:color],
         description: options[:description],
         display_name: options[:label],
+        icon: font_awesome_iri("fa-#{options[:icon]}"),
         position: index + 1
       )
 
