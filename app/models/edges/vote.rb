@@ -10,7 +10,7 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
   enhance Singularable
   include RedisResource::Concern
 
-  property :option, :integer, NS.schema.option, default: 3, enum: {no: 0, yes: 1, other: 2, abstain: 3}
+  property :option_id, :linked_edge_id, NS.schema.option, association_class: 'Term'
   property :comment_id, :linked_edge_id, NS.argu[:explanation]
   attribute :primary, :boolean, default: true
 
@@ -24,13 +24,21 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
   parentable :pro_argument, :con_argument, :vote_event
 
   filterable NS.schema.option => {
-    values: Vote.options,
-    counter_cache: {yes: :votes_pro, other: :votes_neutral, no: :votes_con}
+    filter: lambda do |scope, values|
+      scope.where(option_id: option_ids_from_values(values))
+    end,
+    values_in: -> { collection.parent.options_vocab&.term_collection&.iri }
   }
-  counter_cache votes_pro: {confirmed: true, option: Vote.options[:yes]},
-                votes_con: {confirmed: true, option: Vote.options[:no]},
-                votes_neutral: {confirmed: true, option: Vote.options[:other]},
-                votes: {confirmed: true}
+  counter_cache(
+    lambda do
+      option_ids = Property.where(predicate: NS.schema.option).distinct.pluck(:linked_edge_id)
+      option_ids.reduce(default_cache_opts) do |opts, option_id|
+        opts.merge(
+          option_id => {confirmed: true, option_id: option_id}
+        )
+      end
+    end
+  )
   delegate :voteable, to: :parent
 
   validates :creator, :option, presence: true
@@ -41,7 +49,7 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
 
   # Needed for ActivityListener#audit_data
   def display_name
-    "#{option} vote for #{parent.display_name}"
+    "#{option&.display_name} vote for #{parent.display_name}"
   end
 
   def pinned_at
@@ -96,20 +104,6 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
       attrs
     end
 
-    def create_image(option, upvote: false)
-      return 'fa-arrow-up' if upvote
-      return 'fa-plus' unless option
-
-      "fa-#{icon_for_side(option)}"
-    end
-
-    def create_label(association, option, upvote: false)
-      return I18n.t('actions.pro_arguments.create_vote.submit') if upvote
-      return I18n.t("#{association}.type_new") unless option
-
-      I18n.t("#{association}.instance_type.#{option}")
-    end
-
     def current_vote(parent, user_context)
       return nil if user_context.nil?
 
@@ -118,15 +112,12 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
         .find_by(parent: parent, primary: true)
     end
 
-    def icon_for_side(side)
-      case side.to_s
-      when 'pro', 'yes'
-        'thumbs-up'
-      when 'neutral', 'other'
-        'pause'
-      when 'con', 'no'
-        'thumbs-down'
-      end
+    def default_cache_opts
+      {votes: {confirmed: true}}
+    end
+
+    def option_ids_from_values(values)
+      Edge.where(fragment: values.map { |value| Term.fragment_from_iri(value) }).distinct.pluck(:uuid)
     end
 
     def requested_singular_resource(params, user_context)

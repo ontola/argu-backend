@@ -146,15 +146,16 @@ class CounterCacheTest < ActiveSupport::TestCase
 
   test 'update count when changing vote' do
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
-    voter = motion
-              .default_vote_event
-              .votes
-              .joins(:properties)
-              .find_by(properties: {predicate: NS.schema.option.to_s, integer: 1})
+    yes_term = motion.default_vote_event.option_record!(NS.argu[:yes])
+    voter = motion.default_vote_event.votes.joins(:properties).find_by(
+      properties: {
+        predicate: NS.schema.option.to_s, linked_edge: yes_term
+      }
+    )
               .publisher
     CreateVote.new(
       motion.default_vote_event,
-      attributes: {option: :no},
+      attributes: {option: NS.argu[:no]},
       options: service_options(publisher: voter)
     ).commit
     assert_counts(motion.default_vote_event, votes_pro: 1, votes_con: 3, votes_neutral: 2)
@@ -166,7 +167,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
     CreateVote.new(
       motion.default_vote_event,
-      attributes: {option: :no},
+      attributes: {option: NS.argu[:no]},
       options: service_options(publisher: unconfirmed)
     ).commit
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
@@ -178,8 +179,26 @@ class CounterCacheTest < ActiveSupport::TestCase
 
   def assert_counts(record, counts)
     record.reload
-    counts.each do |klass, count|
-      assert_equal count, record.children_count(klass), "wrong #{klass} count: #{record.children_counts}"
+    counts.each do |key, count|
+      counter_key = key_for_counter(record, key)
+      assert_equal(
+        count,
+        record.children_count(counter_key),
+        "Wrong #{counter_key}(#{key}) count: #{record.children_counts}"
+      )
+    end
+  end
+
+  def key_for_counter(record, key)
+    case key
+    when :votes_pro
+      record.option_record(NS.argu[:yes]).uuid
+    when :votes_con
+      record.option_record(NS.argu[:no]).uuid
+    when :votes_neutral
+      record.option_record(NS.argu[:other]).uuid
+    else
+      key
     end
   end
 end

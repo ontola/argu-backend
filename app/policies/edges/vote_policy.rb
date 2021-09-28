@@ -12,7 +12,7 @@ class VotePolicy < EdgePolicy
     end
   end
 
-  permit_attributes %i[option]
+  permit_attributes %i[option option_id]
 
   def create?
     return super unless record.parent.is_a?(VoteEvent) && record.parent.starts_at > Time.current
@@ -31,6 +31,10 @@ class VotePolicy < EdgePolicy
   end
 
   private
+
+  def create_expired?
+    forbid_with_status(NS.ontola[:ExpiredActionStatus], 'Voting is no longer possible')
+  end
 
   def is_creator?
     return current_session? if record.creator_id == User::GUEST_ID

@@ -8,9 +8,7 @@ module DeltaHelper
     return [] if resource.try(:counter_cache_options).blank?
 
     if resource.is_a?(Vote)
-      %i[votes votes_pro votes_neutral votes_con].map do |class_name|
-        counter_column_delta(resource, class_name)
-      end
+      resource.parent.vote_counts(delta_iri(:replace))
     else
       [counter_column_delta(resource, resource.class_name)]
     end

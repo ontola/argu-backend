@@ -1,43 +1,10 @@
 # frozen_string_literal: true
 
-class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
+class VotesController < EdgeableController
   skip_before_action :verify_setup
 
-  has_collection_create_action(
-    image: lambda {
-      Vote.create_image(resource.filter[NS.schema.option]&.first, upvote: resource.parent.upvote_only?)
-    },
-    label: lambda {
-      Vote.create_label(association, resource.filter[NS.schema.option]&.first, upvote: resource.parent.upvote_only?)
-    },
-    submit_label: lambda {
-      Vote.create_label(association, resource.filter[NS.schema.option]&.first, upvote: resource.parent.upvote_only?)
-    },
-    one_click: true,
-    favorite: lambda {
-      resource.filter[NS.schema.option].present? && (
-        !resource.parent.upvote_only? || resource.filter[NS.schema.option] == %i[yes]
-      )
-    }
-  )
-  has_resource_trash_action(
-    image: -> { Vote.create_image(resource.option, upvote: resource.parent.upvote_only?) },
-    label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) },
-    one_click: true,
-    submit_label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) }
-  )
-  has_singular_destroy_action(
-    image: -> { Vote.create_image(resource.option, upvote: resource.parent.upvote_only?) },
-    label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) },
-    one_click: true,
-    submit_label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) }
-  )
-  has_singular_trash_action(
-    image: -> { Vote.create_image(resource.option, upvote: resource.parent.upvote_only?) },
-    label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) },
-    one_click: true,
-    submit_label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) }
-  )
+  has_singular_destroy_action
+  has_singular_trash_action
 
   private
 
@@ -132,6 +99,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def unmodified?
-    create_service.resource.persisted? && !create_service.resource.option_changed?
+    create_service.resource.persisted? && !create_service.resource.option_id_changed?
   end
 end

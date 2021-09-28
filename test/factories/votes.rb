@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :vote do
-    add_attribute(:option) { :yes }
+    add_attribute(:option) { NS.argu[:yes] }
   end
 end

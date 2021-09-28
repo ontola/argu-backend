@@ -27,7 +27,7 @@ module Users
       params.key?(:user) ? :user : controller_name.singularize
     end
 
-    def send_confirmation_mail(user, guest_votes) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def send_confirmation_mail(user, guest_votes) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       if guest_votes&.count&.positive?
         SendEmailWorker.perform_async(
           :confirm_votes,
@@ -35,7 +35,7 @@ module Users
           token_url: user_confirmation_url(user),
           motions: guest_votes.map do |guest_vote|
             m = guest_vote.resource.ancestor(:motion)
-            {display_name: m.display_name, url: m.iri, option: guest_vote.resource.option} if m
+            {display_name: m.display_name, url: m.iri, option: guest_vote.resource.option&.display_name} if m
           end.compact
         )
       elsif user.password.present?

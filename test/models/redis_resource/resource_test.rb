@@ -99,7 +99,7 @@ module RedisResource
         {
           creator: user.profile,
           publisher: user,
-          option: :yes,
+          option: motion.default_vote_event.option_record!(NS.argu[:yes]),
           parent: motion.default_vote_event,
           root_id: motion.root_id
         }.merge(attrs)

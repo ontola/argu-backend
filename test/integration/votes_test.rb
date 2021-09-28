@@ -111,11 +111,11 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 0,
                       'Edge.count' => 0,
                       'Argu::Redis.keys.count' => 1,
-                      'vote_event.reload.children_count(:votes_pro)' => 0) do
+                      'vote_event.reload.pro_count' => 0) do
       Sidekiq::Testing.inline! do
         post vote_event.collection_iri(:votes),
              params: {
-               vote: {option: :yes}
+               vote: {option: NS.argu[:yes]}
              },
              headers: argu_headers(accept: :json)
       end
@@ -131,13 +131,10 @@ class VotesTest < ActionDispatch::IntegrationTest
     expect(vote_event.votes.length).to be 1
     assert_difference('Vote.count' => 0,
                       'Edge.count' => 0,
-                      'vote_event.reload.children_count(:votes_con)' => 0) do
+                      'vote_event.reload.con_count' => 0) do
       Sidekiq::Testing.inline! do
-        post vote_event.collection_iri(
-          :votes,
-          type: :paginated,
-          filter: {NS.schema.option => :no}
-        ),
+        post vote_event.collection_iri(:votes, type: :paginated),
+             params: {vote: {option_id: vote_event.option_record!(NS.argu[:no]).uuid}},
              headers: argu_headers(accept: :nq)
       end
     end
@@ -149,7 +146,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     post closed_question_motion.default_vote_event.collection_iri(:votes),
          params: {
-           vote: {option: :no}
+           vote: {option: NS.argu[:no]}
          },
          headers: argu_headers(accept: :json_api)
     assert_response 403
@@ -162,7 +159,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     post future_vote_event.collection_iri(:votes),
          params: {
-           vote: {option: :no}
+           vote: {option: NS.argu[:no]}
          },
          headers: argu_headers(accept: :json_api)
     assert_response 403
@@ -176,17 +173,17 @@ class VotesTest < ActionDispatch::IntegrationTest
     guest_vote
     get iri_without_id, headers: argu_headers(accept: :json_api)
     assert_response 200
-    assert_equal primary_resource['attributes']['option'], NS.argu[:yes]
+    assert_equal primary_resource['attributes']['option'], resource_iri(vote_event.option_record(NS.argu[:yes]))
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
       post vote_event.collection_iri(:votes),
-           params: {vote: {option: :no}},
+           params: {vote: {option: NS.argu[:no]}},
            headers: argu_headers(accept: :json_api)
     end
     assert_response 201
-    assert_equal primary_resource['attributes']['option'], NS.argu[:no]
+    assert_equal primary_resource['attributes']['option'], resource_iri(vote_event.option_record!(NS.argu[:no]))
     get iri_without_id, headers: argu_headers(accept: :json_api)
     assert_response 200
-    assert_equal primary_resource['attributes']['option'], NS.argu[:no]
+    assert_equal primary_resource['attributes']['option'], resource_iri(vote_event.option_record!(NS.argu[:no]))
   end
 
   test 'guest should delete destroy argument vote' do
@@ -232,10 +229,10 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
-                      'vote_event.reload.children_count(:votes_pro)' => 0) do
+                      'vote_event.reload.pro_count' => 0) do
       post vote_event.collection_iri(:votes),
            params: {
-             vote: {option: :yes}
+             vote: {option: NS.argu[:yes]}
            },
            headers: argu_headers(accept: :json)
     end
@@ -254,10 +251,10 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
                       'Argu::Redis.keys.count' => 0,
-                      'vote_event.reload.children_count(:votes_pro)' => 1) do
+                      'vote_event.reload.pro_count' => 1) do
       post vote_event.collection_iri(:votes),
            params: {
-             vote: {option: :yes}
+             vote: {option: NS.argu[:yes]}
            },
            headers: argu_headers(accept: :json)
     end
@@ -271,11 +268,11 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
-                      'argument.reload.children_count(:votes_pro)' => 1) do
+                      'argument.reload.pro_count' => 1) do
       post argument.collection_iri(:votes),
            params: {
              vote: {
-               option: :yes
+               option: NS.argu[:yes]
              }
            },
            headers: argu_headers(accept: :json)
@@ -291,11 +288,12 @@ class VotesTest < ActionDispatch::IntegrationTest
     expect(vote_event.votes.length).to be 1
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
-                      'vote_event.reload.children_count(:votes_con)' => 0,
-                      'vote_event.reload.children_count(:votes_pro)' => 1) do
+                      'vote_event.reload.con_count' => 0,
+                      'vote_event.reload.pro_count' => 1) do
       Sidekiq::Testing.inline! do
         post(
-          vote_event.collection_iri(:votes, filter: {NS.schema.option => :yes}),
+          vote_event.collection_iri(:votes),
+          params: {vote: {option_id: vote_event.option_record!(NS.argu[:yes]).uuid}},
           headers: argu_headers(accept: :nq)
         )
       end
@@ -309,11 +307,11 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
-                      'vote_event.reload.children_count(:votes_pro)' => 1) do
+                      'vote_event.reload.pro_count' => 1) do
       post vote_event.collection_iri(:votes),
            params: {
              vote: {
-               option: :yes
+               option: NS.argu[:yes]
              }
            },
            headers: argu_headers(accept: :json_api)
@@ -321,7 +319,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 201
     assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.yes?
+    assert_equal assigns(:create_service).resource.option.exact_match, NS.argu[:yes]
   end
 
   test 'user should not post create json_api on closed vote_event' do
@@ -330,12 +328,12 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_difference('Vote.count' => 0,
                       'Edge.count' => 0,
-                      'vote_event.reload.children_count(:votes_pro)' => 0,
-                      'closed_vote_event.reload.children_count(:votes_pro)' => 0) do
+                      'vote_event.reload.pro_count' => 0,
+                      'closed_vote_event.reload.pro_count' => 0) do
       post closed_vote_event.collection_iri(:votes),
            params: {
              vote: {
-               option: :yes
+               option: NS.argu[:yes]
              }
            },
            headers: argu_headers(accept: :json_api)
@@ -350,11 +348,11 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     assert_difference('Vote.count' => 0,
-                      'vote_event.children_count(:votes_pro)' => 0) do
+                      'vote_event.pro_count' => 0) do
       post vote_event.collection_iri(:votes),
            params: {
              vote: {
-               option: :yes
+               option: NS.argu[:yes]
              }
            },
            headers: argu_headers(accept: :json)
@@ -368,11 +366,11 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     assert_difference('Vote.count' => 0,
-                      'vote_event.children_count(:votes_pro)' => 0) do
+                      'vote_event.pro_count' => 0) do
       post vote_event.collection_iri(:votes),
            params: {
              vote: {
-               option: :yes
+               option: NS.argu[:yes]
              }
            },
            headers: argu_headers(accept: :nq)
@@ -388,12 +386,12 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 1,
                       'Vote.untrashed.count' => 0,
                       'Activity.count' => 0,
-                      'vote_event.reload.children_count(:votes_pro)' => -1,
-                      'vote_event.reload.children_count(:votes_con)' => 1) do
+                      'vote_event.reload.pro_count' => -1,
+                      'vote_event.reload.con_count' => 1) do
       post vote_event.collection_iri(:votes),
            params: {
              vote: {
-               option: :no
+               option: NS.argu[:no]
              }
            },
            headers: argu_headers(accept: :json)
@@ -409,14 +407,14 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 0,
                       'Vote.active.count' => -1,
                       'Edge.count' => 0,
-                      'vote_event.reload.children_count(:votes_pro)' => -1) do
+                      'vote_event.reload.pro_count' => -1) do
       delete vote, headers: argu_headers(accept: :json)
     end
 
     assert_difference('Vote.count' => 0,
                       'Edge.active.count' => 0,
                       'Edge.count' => 0,
-                      'vote_event.reload.children_count(:votes_pro)' => 0) do
+                      'vote_event.reload.pro_count' => 0) do
       delete vote, headers: argu_headers(accept: :json)
     end
 
@@ -429,7 +427,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 0,
                       'Vote.active.count' => -1,
                       'Edge.count' => 0,
-                      'argument.reload.children_count(:votes_pro)' => -1) do
+                      'argument.reload.pro_count' => -1) do
       delete argument_vote, headers: argu_headers(accept: :json)
     end
 
@@ -443,7 +441,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 0,
                       'Vote.active.count' => -1,
                       'Edge.count' => 0,
-                      'argument.reload.children_count(:votes_pro)' => -1) do
+                      'argument.reload.pro_count' => -1) do
       delete argument_vote.iri.path, headers: argu_headers(accept: :nq)
     end
 
@@ -457,7 +455,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 0,
                       'Vote.active.count' => -1,
                       'Edge.count' => 0,
-                      'argument.reload.children_count(:votes_pro)' => -1) do
+                      'argument.reload.pro_count' => -1) do
       delete argument_vote.iri.path, headers: argu_headers(accept: :n3)
     end
 
@@ -470,13 +468,10 @@ class VotesTest < ActionDispatch::IntegrationTest
     expect(vote_event.votes.length).to be 1
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
-                      'vote_event.reload.children_count(:votes_con)' => 1) do
+                      'vote_event.reload.con_count' => 1) do
       Sidekiq::Testing.inline! do
-        post vote_event.collection_iri(
-          :votes,
-          type: :paginated,
-          filter: {NS.schema.option => :no}
-        ),
+        post vote_event.collection_iri(:votes, type: :paginated),
+             params: {vote: {option_id: vote_event.option_record!(NS.argu[:no]).uuid}},
              headers: argu_headers(accept: :nq)
       end
     end
@@ -489,10 +484,10 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
-                      'vote_event.reload.children_count(:votes_pro)' => 1) do
+                      'vote_event.reload.pro_count' => 1) do
       Sidekiq::Testing.inline! do
         post vote_event.collection_iri(:votes),
-             params: {vote: {option: :yes}},
+             params: {vote: {option: NS.argu[:yes]}},
              headers: argu_headers(accept: :nq)
       end
     end

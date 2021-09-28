@@ -1,6 +1,13 @@
 #Dutch votes translations
 
 nl:
+  actions:
+    votes:
+      create:
+        errors:
+          expired: "Stemmen is niet langer mogelijk"
+      trash:
+        description: "Klik om je stem te verwijderen"
   votes:
     score: "score"
     header:

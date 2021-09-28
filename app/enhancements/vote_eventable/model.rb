@@ -9,6 +9,12 @@ module VoteEventable
 
       after_create :create_default_vote_event
       after_convert :create_default_vote_event
+
+      property :options_vocab_id,
+               :linked_edge_id,
+               NS.argu[:optionsVocab],
+               association: :options_vocab,
+               association_class: 'Vocabulary'
     end
 
     def create_default_vote_event
@@ -23,6 +29,22 @@ module VoteEventable
           root_id: root.uuid
         )
       # rubocop:enable Naming/MemoizedInstanceVariableName
+    end
+
+    def previously_changed_relations
+      serializer_class = RDF::Serializers.serializer_for(self)
+
+      super.merge(
+        serializer_class.relationships_to_serialize.slice(:default_vote_event)
+      )
+    end
+
+    class_methods do
+      def attributes_for_new(opts)
+        attrs = super
+        attrs[:options_vocab_id] ||= Vocabulary.vote_options&.uuid
+        attrs
+      end
     end
   end
 end

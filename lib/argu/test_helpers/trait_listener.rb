@@ -162,11 +162,11 @@ module Argu
 
       private
 
-      def create_normal_vote(edge, side)
+      def create_normal_vote(parent, side)
         service =
           CreateVote.new(
-            edge,
-            attributes: vote_attrs(side),
+            parent,
+            attributes: vote_attrs(parent, side),
             options: service_options
           )
         service.commit
@@ -184,14 +184,14 @@ module Argu
       end
 
       def create_redis_vote(edge, side)
-        service = CreateVote.new(edge, attributes: vote_attrs(side), options: guest_service_options)
+        service = CreateVote.new(edge, attributes: vote_attrs(edge, side), options: guest_service_options)
         service.commit
       end
 
       def create_hidden_vote(edge, side)
         service = CreateVote.new(
           edge,
-          attributes: vote_attrs(side),
+          attributes: vote_attrs(edge, side),
           options: service_options(show_feed: false)
         )
         service.commit
@@ -212,9 +212,9 @@ module Argu
         }
       end
 
-      def vote_attrs(side)
+      def vote_attrs(parent, side)
         {
-          option: side
+          option_id: parent.option_record!(NS.argu[side]).uuid
         }
       end
     end

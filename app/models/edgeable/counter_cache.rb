@@ -19,10 +19,19 @@ module Edgeable
     def counter_cache_names
       return [class_name] if self.class.counter_cache_options == true
 
-      matches = self.class.counter_cache_options.select do |_, conditions|
-        conditions.all? { |key, value| send("#{key}_before_type_cast") == value }
+      current_counter_caches.map { |name, _options| name.to_s }
+    end
+
+    def current_counter_caches
+      options = self.class.counter_cache_options
+      options = options.dup.call if options.respond_to?(:call)
+
+      options.select do |_, conditions|
+        conditions.all? do |key, value|
+          resolved_value = value.respond_to?(:call) ? value.dup.call : value
+          send("#{key}_before_type_cast") == resolved_value
+        end
       end
-      matches.map { |name, _options| name.to_s }
     end
 
     def decrement_counter_caches # rubocop:disable Metrics/AbcSize
@@ -53,10 +62,13 @@ module Edgeable
       def fix_counts
         return unless class_variable_defined?(:@@counter_cache_options)
 
-        if counter_cache_options == true
+        opts = counter_cache_options
+        opts = opts.dup.call if opts.respond_to?(:call)
+
+        if opts == true
           fix_counts_with_options
         else
-          counter_cache_options.map { |options| fix_counts_with_options(*options) }.flatten
+          opts.map { |options| fix_counts_with_options(*options) }.flatten
         end
       end
 
@@ -72,7 +84,7 @@ module Edgeable
         end
       end
 
-      def fix_counts_query(cache_name, conditions) # rubocop:disable Metrics/MethodLength
+      def fix_counts_query(cache_name, conditions) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         conditions = conditions.dup
         query =
           unscoped
@@ -81,11 +93,11 @@ module Edgeable
             .joins(:parent)
             .select('parents_edges.id, parents_edges.parent_id, COUNT(parents_edges.id) AS count, ' \
                     "CAST(COALESCE(parents_edges.children_counts -> '#{connection.quote_string(cache_name.to_s)}', "\
-                    "'0') AS integer) AS #{connection.quote_string(cache_name.to_s)}_count")
+                    "'0') AS integer) AS \"#{connection.quote_string(cache_name.to_s)}_count\"")
             .reorder('parents_edges.id ASC')
         return query if conditions.nil?
 
-        query.where(conditions)
+        query.where(conditions.transform_values { |v| v.respond_to?(:call) ? v.dup.call : v })
       end
 
       def fix_counts_with_options(cache_name = nil, conditions = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

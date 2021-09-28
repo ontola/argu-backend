@@ -10,8 +10,11 @@ class VoteSerializer < EdgeSerializer
   end
 
   attribute :primary, predicate: NS.argu[:primaryVote]
+  has_one :option, predicate: NS.schema.option do
+    nil
+  end
   attribute :option, predicate: NS.schema.option do |object|
-    NS.argu[object.option || :abstain]
+    object.option&.iri || NS.argu[:abstain]
   end
   attribute :display_name, predicate: NS.schema.name, unless: method(:export_scope?)
 end

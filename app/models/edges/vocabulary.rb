@@ -41,11 +41,19 @@ class Vocabulary < Edge
 
   class << self
     def terms_iri(url, **opts)
-      find_via_shortname(url)&.term_collection(opts)&.iri
+      active.find_via_shortname(url)&.term_collection(opts)&.iri
     end
 
     def route_key
       :vocab
+    end
+
+    def upvote_options
+      active.find_via_shortname('upvoteOptions')
+    end
+
+    def vote_options
+      active.find_via_shortname('voteOptions')
     end
   end
 end

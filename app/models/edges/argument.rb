@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Argument < Edge
-  VOTE_OPTIONS = [:yes].freeze unless defined?(VOTE_OPTIONS)
-
   enhance ActivePublishable
   enhance Commentable
   enhance Convertible
@@ -43,7 +41,7 @@ class Argument < Edge
     service = CreateVote.new(
       self,
       attributes: {
-        option: :yes,
+        option: NS.argu[:yes],
         creator: profile
       },
       options: {
@@ -64,6 +62,10 @@ class Argument < Edge
 
   def auto_upvote
     upvote(publisher, creator)
+  end
+
+  def options_vocab
+    Vocabulary.upvote_options
   end
 
   class << self

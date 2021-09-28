@@ -199,7 +199,7 @@ module Users
       sign_in user
       assert_not user.confirmed?
       assert_difference('Edge.where(confirmed: true).count' => 2,
-                        'motion.default_vote_event.reload.children_count(:votes_pro)' => 1) do
+                        'motion.default_vote_event.reload.pro_count' => 1) do
         Sidekiq::Testing.inline! do
           put user_confirmation_path(confirmation_token: user.confirmation_token)
         end

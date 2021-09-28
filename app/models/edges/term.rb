@@ -39,4 +39,20 @@ class Term < Edge
   def rdf_type
     parent.term_type.presence || super
   end
+
+  class << self
+    def from_iri(iri)
+      term_id = fragment_from_iri(iri)
+
+      find_by!(fragment: term_id) if term_id
+    end
+
+    def fragment_from_iri(iri)
+      return false unless iri.to_s.starts_with?(LinkedRails.iri)
+
+      match = iri_template.match(iri.to_s.split(LinkedRails.iri).last)
+
+      match.captures.first if match.present?
+    end
+  end
 end

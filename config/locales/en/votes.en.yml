@@ -1,6 +1,13 @@
 #English votes translations
 
 en:
+  actions:
+    votes:
+      create:
+        errors:
+          expired: "Voting no longer possible"
+      trash:
+        description: "Click to remove your vote"
   votes:
     score: "score"
     collection:

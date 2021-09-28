@@ -8,20 +8,8 @@ class VoteEvent < Edge
   property :starts_at, :datetime, NS.schema.startDate
   delegate :upvote_only?, to: :parent
 
-  def con_count
-    children_count(:votes_con)
-  end
-
   def display_name
     'Argu voting'
-  end
-
-  def neutral_count
-    children_count(:votes_neutral)
-  end
-
-  def pro_count
-    children_count(:votes_pro)
   end
 
   def to_param
@@ -30,5 +18,9 @@ class VoteEvent < Edge
 
   def voteable
     parent
+  end
+
+  def options_vocab
+    parent&.options_vocab
   end
 end

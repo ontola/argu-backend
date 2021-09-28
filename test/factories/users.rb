@@ -86,7 +86,7 @@ FactoryBot.define do
         ActsAsTenant.with_tenant(motion.root) do
           CreateVote.new(
             motion.default_vote_event,
-            attributes: {option: :yes},
+            attributes: {option: NS.argu[:yes]},
             options: {
               user_context: UserContext.new(
                 profile: user.profile,
@@ -97,7 +97,7 @@ FactoryBot.define do
           trashed = Motion.trashed.first
           CreateVote.new(
             trashed.default_vote_event,
-            attributes: {option: :yes},
+            attributes: {option: NS.argu[:yes]},
             options: {
               user_context: UserContext.new(
                 profile: user.profile,

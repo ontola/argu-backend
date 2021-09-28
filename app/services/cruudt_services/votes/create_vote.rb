@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class CreateVote < CreateEdge
+  def initialize(parent, attributes: {}, options: {})
+    attributes[:option_id] ||= option_id_from_iri(parent, attributes.delete(:option))
+
+    super
+  end
+
   private
 
   def after_save
@@ -13,7 +19,7 @@ class CreateVote < CreateEdge
     Vote
       .where_with_redis(
         root_id: ActsAsTenant.current_tenant.uuid,
-        option: Vote.filter_options[NS.schema.option][:values][attributes[:option]],
+        option_id: attributes[:option_id],
         publisher: user,
         primary: true
       ).find_by(parent: parent)
@@ -21,5 +27,9 @@ class CreateVote < CreateEdge
 
   def initialize_edge(parent, attributes)
     existing_edge(parent, attributes) || super
+  end
+
+  def option_id_from_iri(parent, iri)
+    parent.option_record(iri).uuid if iri.present?
   end
 end

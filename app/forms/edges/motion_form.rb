@@ -23,6 +23,7 @@ class MotionForm < ApplicationForm
 
   group :advanced, label: -> { I18n.t('forms.advanced') } do
     field :mark_as_important, description: -> { mark_as_important_label }
+    field :options_vocab_id, min_count: 1, sh_in: -> { Vocabulary.root_collection.iri }
     field :pinned
     field :expires_at
   end

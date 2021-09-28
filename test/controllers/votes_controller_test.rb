@@ -40,18 +40,22 @@ class VotesControllerTest < ActionController::TestCase
   end
 
   test 'should get index votes of vote_event with filter' do
+    option_term = vote_event.option_record!(NS.argu[:yes])
     get :index,
         params: {
           format: :json_api,
           parent_iri: parent_iri_for(vote_event),
-          'filter[]' => 'http://schema.org/option=yes'
+          'filter[]' => "http://schema.org/option=#{option_term.iri}"
         }
     assert_response 200
 
     expect_relationship('unfiltered_collection')
 
-    included_votes = vote_event.votes.joins(:publisher).where(option: :yes, users: {show_feed: true})
+    included_votes = vote_event.votes.joins(:publisher).where(
+      option: option_term,
+      users: {show_feed: true}
+    )
     expect_view_members(expect_default_view, included_votes.count)
-    expect_not_included(vote_event.votes.where(option: :no))
+    expect_not_included(vote_event.votes.where(option: vote_event.option_record!(NS.argu[:no])))
   end
 end

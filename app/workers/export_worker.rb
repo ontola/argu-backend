@@ -69,15 +69,17 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
         .group_by(&:class)
   end
 
-  def format_value_xls(value) # rubocop:disable Metrics/MethodLength
+  def format_value_xls(value) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     case value
     when Array
       value.map { |v| format_value_xls(v) }.join(', ')
     when Hash
       if value[:type] == NS.ontola[:Collection]
         value[:totalCount]
-      elsif value[:iri].present?
-        Spreadsheet::Link.new(value[:iri].to_s)
+      elsif (value[:iri] || value[:id]).present?
+        Spreadsheet::Link.new((value[:iri] || value[:id]).to_s)
+      elsif value[:data].present?
+        format_value_xls(value[:data])
       end
     when RDF::URI, RDF::DynamicURI
       Spreadsheet::Link.new(value.to_s)
@@ -156,9 +158,9 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
       retracted_label(record),
       measures[NS.argu[:usersCount]],
       measures[NS.argu[:contributionsCount]],
-      record.try(:default_vote_event)&.children_count(:votes_pro),
-      record.try(:default_vote_event)&.children_count(:votes_neutral),
-      record.try(:default_vote_event)&.children_count(:votes_con)
+      record.try(:default_vote_event)&.pro_count,
+      record.try(:default_vote_event)&.neutral_count,
+      record.try(:default_vote_event)&.con_count
     ]
   end
 

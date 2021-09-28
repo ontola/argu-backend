@@ -30,6 +30,7 @@ class VoteTest < ActiveSupport::TestCase
     Vote.create!(
       parent: motion.default_vote_event,
       creator: user.profile,
+      option: motion.default_vote_event.option_record!(NS.argu[:yes]),
       publisher: user,
       root_id: motion.default_vote_event.root_id
     )

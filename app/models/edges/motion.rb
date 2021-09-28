@@ -33,8 +33,6 @@ class Motion < Discussion
   validates :title, presence: true
   validates :creator, presence: true
 
-  VOTE_OPTIONS = %i[yes other no].freeze unless defined?(VOTE_OPTIONS)
-
   def as_json(options = {})
     super((options || {}).merge(
       methods: %i[display_name],
