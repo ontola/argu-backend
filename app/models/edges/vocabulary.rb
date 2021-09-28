@@ -9,6 +9,7 @@ class Vocabulary < Edge
   enhance RootGrantable
   include Shortnameable
 
+  property :system, :boolean, NS.argu[:system]
   property :display_name, :string, NS.schema.name
   property :description, :text, NS.schema.text
   property :tagged_label, :text, NS.argu[:taggedLabel]
@@ -31,9 +32,7 @@ class Vocabulary < Edge
     end
 
     def terms_iri(url, **opts)
-      Vocabulary.find_via_shortname!(url).term_collection(opts).iri
-    rescue ActiveRecord::RecordNotFound
-      raise("System vocabulary #{url} not found")
+      find_via_shortname(url)&.term_collection(opts)&.iri
     end
 
     def route_key

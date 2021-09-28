@@ -1,7 +1,76 @@
 en:
-  vocabularies:
-    type_new: "New vocabulary"
   forms:
     vocabularies:
       tagged_label:
         label: "Label for tagged items"
+  vocabularies:
+    type_new: "New vocabulary"
+    errors:
+      system: "This vocabulary cannot be updated"
+    system:
+      form_fields:
+        label: "Field types"
+        terms:
+          -
+            label: "Small text"
+            exact_match: "https://ns.ontola.io/form#TextInput"
+          -
+            label: "Large text"
+            exact_match: "https://ns.ontola.io/form#TextAreaInput"
+          -
+            label: "Formatted text"
+            exact_match: "https://ns.ontola.io/form#MarkdownInput"
+          -
+            label: "Number"
+            exact_match: "https://ns.ontola.io/form#NumberInput"
+          -
+            label: "Single checkbox"
+            exact_match: "https://ns.ontola.io/form#CheckboxInput"
+          -
+            label: "Checkboxes group"
+            exact_match: "https://ns.ontola.io/form#CheckboxGroup"
+          -
+            label: "Radio group"
+            exact_match: "https://ns.ontola.io/form#RadioGroup"
+          -
+            label: "Dropdown selector"
+            exact_match: "https://ns.ontola.io/form#SelectInput"
+          -
+            label: "Toggle buttons"
+            exact_match: "https://ns.ontola.io/form#ToggleButtonGroup"
+          -
+            label: "Color"
+            exact_match: "https://ns.ontola.io/form#ColorInput"
+          -
+            label: "Date"
+            exact_match: "https://ns.ontola.io/form#DateInput"
+          -
+            label: "Date and time"
+            exact_match: "https://ns.ontola.io/form#DateTimeInput"
+          -
+            label: "Money amount"
+            exact_match: "https://ns.ontola.io/form#MoneyInput"
+          -
+            label: "Icon"
+            exact_match: "https://ns.ontola.io/form#IconInput"
+          -
+            label: "Location"
+            exact_match: "https://ns.ontola.io/form#LocationInput"
+          -
+            label: "Slider"
+            exact_match: "https://ns.ontola.io/form#SliderInput"
+          -
+            label: "Email"
+            exact_match: "https://ns.ontola.io/form#EmailInput"
+          -
+            label: "Password"
+            exact_match: "https://ns.ontola.io/form#PasswordInput"
+          -
+            label: "Multiple emails"
+            exact_match: "https://ns.ontola.io/form#MultipleEmailInput"
+          -
+            label: "File"
+            exact_match: "https://ns.ontola.io/form#FileInput"
+          -
+            label: "Postal code range"
+            exact_match: "https://ns.ontola.io/form#PostalRangeInput"

@@ -363,6 +363,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def should_broadcast_changes
+    return false unless super
+
     keys = previous_changes.keys
     return true if keys.length != LOGIN_ATTRS.length && keys.length != FAILED_LOGIN_ATTRS.length
 

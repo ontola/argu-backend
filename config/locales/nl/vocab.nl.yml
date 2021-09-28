@@ -151,8 +151,8 @@ nl:
       label: "Thread"
       plural_label: "Threads"
     Vocabulary:
-      label: "Vocabularie"
-      plural_label: "Vocabularies"
+      label: "Vocabulaire"
+      plural_label: "Vocabulaires"
     Vote:
       label: "Stem"
       plural_label: "Stemmen"

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'vocab_syncer'
+
 class Page < Edge # rubocop:disable Metrics/ClassLength
   ARGU_URL = 'argu'
 
@@ -44,6 +46,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   after_create :create_default_groups
   after_create :create_staff_grant
   after_create :create_activity_menu_item
+  after_create :create_system_vocabs
   after_create -> { reindex_tree(async: false) }
   after_update :tenant_update
   after_update :update_primary_node_menu_item, if: :primary_container_node_id_previously_changed?
@@ -199,6 +202,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
     grant = Grant.new(grant_set: GrantSet.staff, edge: self, group: staff_group)
     grant.save!(validate: false)
+  end
+
+  def create_system_vocabs
+    ActsAsTenant.with_tenant(self) do
+      VocabSyncer.sync_page if Group.public.present?
+    end
   end
 
   def tenant_update

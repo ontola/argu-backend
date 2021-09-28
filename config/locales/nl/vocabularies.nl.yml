@@ -1,7 +1,76 @@
 nl:
-  vocabularies:
-    type_new: "Nieuwe vocabularie"
   forms:
     vocabularies:
       tagged_label:
         label: "Label voor getagde items"
+  vocabularies:
+    type_new: "Nieuwe vocabulaire"
+    errors:
+      system: "Deze vocabulaire kan niet worden aangepast"
+    system:
+      form_fields:
+        label: "Veld types"
+        terms:
+          -
+            label: "Korte tekst"
+            exact_match: "https://ns.ontola.io/form#TextInput"
+          -
+            label: "Lange tekst"
+            exact_match: "https://ns.ontola.io/form#TextAreaInput"
+          -
+            label: "Tekst met opmaak"
+            exact_match: "https://ns.ontola.io/form#MarkdownInput"
+          -
+            label: "Nummer"
+            exact_match: "https://ns.ontola.io/form#NumberInput"
+          -
+            label: "Losse checkbox"
+            exact_match: "https://ns.ontola.io/form#CheckboxInput"
+          -
+            label: "Checkbox groep"
+            exact_match: "https://ns.ontola.io/form#CheckboxGroup"
+          -
+            label: "Radio groep"
+            exact_match: "https://ns.ontola.io/form#RadioGroup"
+          -
+            label: "Dropdown"
+            exact_match: "https://ns.ontola.io/form#SelectInput"
+          -
+            label: "Toggle knoppen"
+            exact_match: "https://ns.ontola.io/form#ToggleButtonGroup"
+          -
+            label: "Kleur"
+            exact_match: "https://ns.ontola.io/form#ColorInput"
+          -
+            label: "Datum"
+            exact_match: "https://ns.ontola.io/form#DateInput"
+          -
+            label: "Datum en tijd"
+            exact_match: "https://ns.ontola.io/form#DateTimeInput"
+          -
+            label: "Geldbedrag"
+            exact_match: "https://ns.ontola.io/form#MoneyInput"
+          -
+            label: "Icoontje"
+            exact_match: "https://ns.ontola.io/form#IconInput"
+          -
+            label: "Locatie"
+            exact_match: "https://ns.ontola.io/form#LocationInput"
+          -
+            label: "Slider"
+            exact_match: "https://ns.ontola.io/form#SliderInput"
+          -
+            label: "Email"
+            exact_match: "https://ns.ontola.io/form#EmailInput"
+          -
+            label: "Wachtwoord"
+            exact_match: "https://ns.ontola.io/form#PasswordInput"
+          -
+            label: "Meerdere emails"
+            exact_match: "https://ns.ontola.io/form#MultipleEmailInput"
+          -
+            label: "Bestand"
+            exact_match: "https://ns.ontola.io/form#FileInput"
+          -
+            label: "Postcode range"
+            exact_match: "https://ns.ontola.io/form#PostalRangeInput"
