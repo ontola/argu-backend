@@ -373,3 +373,6 @@ nl:
       label: "Opties"
     path:
       label: "Predicate"
+  skos:
+    exactMatch:
+      label: "Externe iri"

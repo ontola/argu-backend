@@ -10,6 +10,7 @@ class Term < Edge
 
   property :display_name, :string, NS.schema.name
   property :description, :text, NS.schema.text
+  property :exact_match, :iri, NS.skos.exactMatch
   with_columns default: [
     NS.argu[:order],
     NS.schema.name,
