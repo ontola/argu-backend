@@ -12,7 +12,7 @@ class Vocabulary < Edge
   property :system, :boolean, NS.argu[:system]
   property :display_name, :string, NS.schema.name
   property :description, :text, NS.schema.text
-  property :tagged_label, :text, NS.argu[:taggedLabel]
+  property :tagged_label, :string, NS.argu[:taggedLabel]
   with_columns default: [
     NS.schema.name,
     NS.ontola[:updateAction],
