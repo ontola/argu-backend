@@ -9,6 +9,12 @@ class TermPolicy < EdgePolicy
     super
   end
 
+  def trash?
+    return forbid_with_message('vocabularies.errors.system') if record.parent&.system?
+
+    super
+  end
+
   def destroy?
     return forbid_with_message('vocabularies.errors.system') if record.parent&.system?
 

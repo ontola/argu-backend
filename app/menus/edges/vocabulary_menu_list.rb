@@ -11,7 +11,7 @@ class VocabularyMenuList < ApplicationMenuList
     [
       copy_share_link(resource.iri),
       edit_link,
-      destroy_link
+      *trash_and_destroy_links(include_destroy: false)
     ]
   end
 end

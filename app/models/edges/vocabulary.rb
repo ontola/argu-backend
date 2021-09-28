@@ -2,7 +2,7 @@
 
 class Vocabulary < Edge
   enhance LinkedRails::Enhancements::Creatable
-  enhance LinkedRails::Enhancements::Destroyable
+  enhance Trashable
   enhance LinkedRails::Enhancements::Updatable
   enhance CoverPhotoable
   enhance Attachable
@@ -25,6 +25,8 @@ class Vocabulary < Edge
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
   validates :url, presence: true
+
+  after_trash -> { shortname.update(primary: false) }
 
   class << self
     def default_collection_display

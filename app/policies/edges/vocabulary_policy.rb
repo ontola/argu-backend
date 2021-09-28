@@ -9,6 +9,12 @@ class VocabularyPolicy < EdgePolicy
     super
   end
 
+  def trash?
+    return forbid_with_message(I18n.t('vocabularies.errors.system')) if record.system?
+
+    super
+  end
+
   def destroy?
     return forbid_with_message(I18n.t('vocabularies.errors.system')) if record.system?
 

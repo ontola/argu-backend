@@ -2,7 +2,7 @@
 
 class Term < Edge
   enhance LinkedRails::Enhancements::Creatable
-  enhance LinkedRails::Enhancements::Destroyable
+  enhance Trashable
   enhance LinkedRails::Enhancements::Updatable
   enhance CoverPhotoable
   enhance Attachable
