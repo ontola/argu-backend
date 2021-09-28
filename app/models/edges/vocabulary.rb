@@ -30,6 +30,12 @@ class Vocabulary < Edge
       :table
     end
 
+    def terms_iri(url, **opts)
+      Vocabulary.find_via_shortname!(url).term_collection(opts).iri
+    rescue ActiveRecord::RecordNotFound
+      raise("System vocabulary #{url} not found")
+    end
+
     def route_key
       :vocab
     end

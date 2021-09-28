@@ -9,6 +9,7 @@ class SurveyPolicy < EdgePolicy
     tabs = %i[participate submission]
     if update?
       tabs.push(:coupon_batches) if record.has_reward?
+      tabs.push(:form) if record.action_body
       tabs.push(:typeform) if record.external_iri
       tabs.push(:submissions)
     end

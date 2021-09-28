@@ -105,8 +105,10 @@ module Helpers
       )
     end
 
-    def trash_and_destroy_links
-      resource.is_trashed? ? [untrash_link, destroy_link] : [trash_link, destroy_link]
+    def trash_and_destroy_links(include_destroy: true)
+      return resource.is_trashed? ? [untrash_link, destroy_link] : [trash_link, destroy_link] if include_destroy
+
+      [resource.is_trashed? ? untrash_link : trash_link]
     end
 
     def destroy_link

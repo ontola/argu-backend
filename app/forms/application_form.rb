@@ -29,7 +29,7 @@ class ApplicationForm < LinkedRails::Form
     def term_field(key, url, **opts)
       field key, **{
         datatype: NS.xsd.string,
-        sh_in: -> { collection_iri(Vocabulary.new(url: url).root_relative_iri, :terms, **opts[:sh_in_opts]) }
+        sh_in: -> { Vocabulary.terms_iri(url, **opts[:sh_in_opts] || {}) }
       }.merge(**opts.except(:sh_in_opts))
     end
 

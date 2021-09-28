@@ -42,6 +42,12 @@ en:
     CustomAction:
       label: "Action"
       plural_label: "Actions"
+    CustomForm:
+      label: "Form"
+      plural_label: "Forms"
+    CustomFormField:
+      label: "Field"
+      plural_label: "Fields"
     Dashboard:
       label: "Dashboard"
       plural_label: "Dashboards"
@@ -169,6 +175,8 @@ en:
       label: "Usage"
     followsCount:
       label: "Followers"
+    formFieldType:
+      label: "Field type"
     grantSet:
       label: "Grant set"
     interventionsCount:
@@ -224,10 +232,24 @@ en:
       label: "Audience"
     destroyAction:
       label: "Destroy"
+    helperText:
+      label: "Helper text"
     href:
       label: "Url"
     makePrimaryAction:
       label: "Make primary"
+    maxCount:
+      label: "Maximum count defined by"
+    maxInclusive:
+      label: "Maximum value defined by"
+    maxLength:
+      label: "Maximum length defined by"
+    minCount:
+      label: "Minimum count defined by"
+    minInclusive:
+      label: "Minimum value defined by"
+    minLength:
+      label: "Minimum length defined by"
     publishAction:
       label: "Publish"
     relevance:
@@ -236,6 +258,8 @@ en:
       label: "Confirm"
     settingsMenu:
       label: "Settings"
+    shIn:
+      label: "Options defined by"
     text:
       label: "Text"
     updateAction:
@@ -328,3 +352,24 @@ en:
       label: "Upload date"
     url:
       label: "Url"
+  sh:
+    datatype:
+      label: "Datatype"
+    maxCount:
+      label: "Maximum count"
+    maxInclusive:
+      label: "Maximum value"
+    maxLength:
+      label: "Maximum length"
+    minCount:
+      label: "Minimum count"
+    minInclusive:
+      label: "Minimum value"
+    minLength:
+      label: "Minimum length"
+    pattern:
+      label: "Regex pattern"
+    in:
+      label: "Options"
+    path:
+      label: "Predicate"

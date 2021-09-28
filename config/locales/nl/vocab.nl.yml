@@ -42,6 +42,12 @@ nl:
     CustomAction:
       label: "Action"
       plural_label: "Actions"
+    CustomForm:
+      label: "Formulier"
+      plural_label: "Formulieren"
+    CustomFormField:
+      label: "Veld"
+      plural_label: "Velden"
     Dashboard:
       label: "Dashboard"
       plural_label: "Dashboards"
@@ -169,6 +175,8 @@ nl:
       label: "Gebruik"
     followsCount:
       label: "Volgers"
+    formFieldType:
+      label: "Veldtype"
     grantSet:
       label: "Rechtenset"
     interventionsCount:
@@ -224,10 +232,24 @@ nl:
       label: "Publiek"
     destroyAction:
       label: "Verwijderen"
+    helperText:
+      label: "Hulptekst"
     href:
       label: "Url"
     makePrimaryAction:
       label: "Maak primair"
+    maxCount:
+      label: "Maximaal aantal bepaalt door"
+    maxInclusive:
+      label: "Maximale waarde bepaalt door"
+    maxLength:
+      label: "Maximale lengte bepaalt door"
+    minCount:
+      label: "Minimaal aantal bepaalt door"
+    minInclusive:
+      label: "Minimale waarde bepaalt door"
+    minLength:
+      label: "Minimale lengte bepaalt door"
     publishAction:
       label: "Publiceer"
     relevance:
@@ -236,6 +258,8 @@ nl:
       label: "Bevestigen"
     settingsMenu:
       label: "Instellingen"
+    shIn:
+      label: "Opties bepaalt door"
     text:
       label: "Tekst"
     updateAction:
@@ -328,3 +352,24 @@ nl:
       label: "Upload datum"
     url:
       label: "Url"
+  sh:
+    datatype:
+      label: "Data type"
+    maxCount:
+      label: "Maximaal aantal"
+    maxInclusive:
+      label: "Maximale waarde"
+    maxLength:
+      label: "Maximale lengte"
+    minCount:
+      label: "Minimaal aantal"
+    minInclusive:
+      label: "Minimale waarde"
+    minLength:
+      label: "Minimale lengte"
+    pattern:
+      label: "Regex patroon"
+    in:
+      label: "Opties"
+    path:
+      label: "Predicate"

@@ -139,6 +139,8 @@ Rails.application.routes.draw do
   linked_resource(CouponBatch)
   linked_resource(CreativeWork)
   linked_resource(CustomAction)
+  linked_resource(CustomForm)
+  linked_resource(CustomFormField)
   linked_resource(CustomMenuItem)
   linked_resource(Decision)
   linked_resource(DirectMessage)

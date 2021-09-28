@@ -10,7 +10,7 @@ class MeasureForm < ApplicationForm
              max_count: 999,
              sh_in_opts: {
                page_size: 99,
-               'sort%5B%5D': 'http%3A%2F%2Fschema.org%2Fname=asc'
+               sort: ['http%3A%2F%2Fschema.org%2Fname=asc']
              }
   term_field :category_ids,
              :categorieen,
