@@ -20,9 +20,6 @@ nl:
     example_of: "Beschermt tegen"
   measures:
     type_new: "Maak je eigen voorbeeld"
-    comments_allowed:
-      comments_are_allowed: "Ja"
-      comments_not_allowed: "Nee"
   actions:
     interventions:
       create:
@@ -255,6 +252,9 @@ nl:
         nursing: "Verpleging"
         social_services: "Maatschappelijke dienstverlening"
         sport_and_recreation: "Sport en recreatie"
+    comments_allowed:
+      comments_are_allowed: "Ja"
+      comments_not_allowed: "Nee"
   forms:
     incidents:
       scenarios_count:
