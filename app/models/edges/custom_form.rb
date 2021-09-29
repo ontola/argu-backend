@@ -3,6 +3,7 @@
 class CustomForm < Edge
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
+  enhance RootGrantable
   enhance Trashable
 
   property :display_name, :string, NS.schema.name
