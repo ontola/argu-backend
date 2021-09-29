@@ -74,3 +74,32 @@ en:
           -
             label: "Postal code range"
             exact_match: "https://ns.ontola.io/form#PostalRangeInput"
+      vote_options:
+        label: "Vote options"
+        terms:
+          -
+            color: "#547f4b"
+            icon: "thumbs-up"
+            label: "Agree"
+            description: "Click to vote in favour"
+            exact_match: "https://argu.co/ns/core#yes"
+          -
+            color: "#707070"
+            icon: "pause"
+            label: "Other"
+            description: "Click to vote neutral"
+            exact_match: "https://argu.co/ns/core#other"
+          -
+            color: "#863d3d"
+            icon: "thumbs-down"
+            label: "Disagree"
+            description: "Click to vote against"
+            exact_match: "https://argu.co/ns/core#no"
+      upvote_options:
+        label: "Upvote options"
+        terms:
+          -
+            color: "#547f4b"
+            icon: "arrow-up"
+            label: "Upvote"
+            exact_match: "https://argu.co/ns/core#yes"

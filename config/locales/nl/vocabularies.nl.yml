@@ -74,3 +74,32 @@ nl:
           -
             label: "Postcode range"
             exact_match: "https://ns.ontola.io/form#PostalRangeInput"
+      vote_options:
+        label: "Stemopties"
+        terms:
+          -
+            color: "#547f4b"
+            icon: "thumbs-up"
+            label: "Voor"
+            description: "Klik om voor te stemmen"
+            exact_match: "https://argu.co/ns/core#yes"
+          -
+            color: "#707070"
+            icon: "pause"
+            label: "Anders"
+            description: "Klik om neutraal te stemmen"
+            exact_match: "https://argu.co/ns/core#other"
+          -
+            color: "#863d3d"
+            icon: "thumbs-down"
+            label: "Tegen"
+            description: "Klik om tegen te stemmen"
+            exact_match: "https://argu.co/ns/core#no"
+      upvote_options:
+        label: "Upvote opties"
+        terms:
+          -
+            color: "#547f4b"
+            icon: "arrow-up"
+            label: "Upvote"
+            exact_match: "https://argu.co/ns/core#yes"
