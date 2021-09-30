@@ -68,8 +68,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            'no votes to test'
 
     assert_difference('Motion.count' => -1, 'Question.count' => 1, 'VoteEvent.count' => -1, 'Argument.count' => -6,
-                      'Vote.count' => -6, 'Activity.count' => 1, 'BlogPost.count' => 0,
-                      'MediaObject.count' => 0, 'Comment.count' => 6, 'Edge.count' => -7) do
+                      'Vote.count' => -12, 'Activity.count' => 1, 'BlogPost.count' => 0,
+                      'MediaObject.count' => 0, 'Comment.count' => 6, 'Edge.count' => -13) do
       post conversions_iri(record),
            params: {
              conversion: {
@@ -109,8 +109,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     record = question_motion
 
     assert_difference('Motion.count' => -1, 'VoteEvent.count' => -1, 'Question.count' => 1, 'Argument.count' => -6,
-                      'Vote.count' => -6, 'Activity.count' => 1, 'BlogPost.count' => 0,
-                      'Comment.count' => 6, 'Edge.count' => -7) do
+                      'Vote.count' => -12, 'Activity.count' => 1, 'BlogPost.count' => 0,
+                      'Comment.count' => 6, 'Edge.count' => -13) do
       post conversions_iri(record),
            params: {
              conversion: {

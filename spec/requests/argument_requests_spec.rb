@@ -8,7 +8,7 @@ RSpec.describe 'Arguments', type: :request do
   let(:table_sym) { :pro_arguments }
   let(:update_params) { {pro_argument: required_keys.index_with { |_k| '12345' }} }
   let(:invalid_update_params) { {pro_argument: required_keys.index_with { |_k| ' ' }} }
-  let(:create_differences) { {"#{subject.class}.count" => 1, 'Activity.count' => 1} }
+  let(:create_differences) { {"#{subject.class}.count" => 1, 'Vote.count' => 1, 'Activity.count' => 2} }
 
   context 'with motion parent' do
     subject { argument }

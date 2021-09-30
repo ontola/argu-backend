@@ -57,7 +57,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
   test 'service should create notifications for new argument' do
     updated_at = motion.updated_at
     last_activity_at = motion.last_activity_at
-    assert_difference('Argument.count' => 1, 'Activity.count' => 2, 'Notification.count' => 1) do
+    assert_difference('Argument.count' => 1, 'Vote.count' => 1, 'Activity.count' => 3, 'Notification.count' => 1) do
       ActsAsTenant.with_tenant(motion.root) do
         service = CreateProArgument.new(
           motion,

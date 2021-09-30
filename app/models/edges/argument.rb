@@ -20,6 +20,8 @@ class Argument < Edge
   paginates_per 5
   parentable :motion
 
+  after_create :auto_upvote
+
   attr_reader :pro
 
   alias pro? pro
@@ -56,6 +58,12 @@ class Argument < Edge
 
   def voteable
     self
+  end
+
+  private
+
+  def auto_upvote
+    upvote(publisher, creator)
   end
 
   class << self
