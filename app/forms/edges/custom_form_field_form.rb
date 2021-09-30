@@ -29,7 +29,9 @@ class CustomFormFieldForm < ApplicationForm
     field :max_length, if: has_type(type)
   end
   field :min_inclusive, min_count: 1, if: has_type(:SliderInput)
+  field :min_inclusive_label, if: has_type(:SliderInput)
   field :max_inclusive, min_count: 1, if: has_type(:SliderInput)
+  field :max_inclusive_label, if: has_type(:SliderInput)
   field :min_inclusive, if: has_type(:NumberInput)
   field :max_inclusive, if: has_type(:NumberInput)
   field :min_count

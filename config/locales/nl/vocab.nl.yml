@@ -242,12 +242,16 @@ nl:
       label: "Maximaal aantal bepaalt door"
     maxInclusive:
       label: "Maximale waarde bepaalt door"
+    maxInclusiveLabel:
+      label: "Label maximale waarde"
     maxLength:
       label: "Maximale lengte bepaalt door"
     minCount:
       label: "Minimaal aantal bepaalt door"
     minInclusive:
       label: "Minimale waarde bepaalt door"
+    minInclusiveLabel:
+      label: "Label minimale waarde"
     minLength:
       label: "Minimale lengte bepaalt door"
     publishAction:

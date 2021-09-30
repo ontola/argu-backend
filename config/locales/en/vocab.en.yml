@@ -242,12 +242,16 @@ en:
       label: "Maximum count defined by"
     maxInclusive:
       label: "Maximum value defined by"
+    maxInclusiveLabel:
+      label: "Maximum value label"
     maxLength:
       label: "Maximum length defined by"
     minCount:
       label: "Minimum count defined by"
     minInclusive:
       label: "Minimum value defined by"
+    minInclusiveLabel:
+      label: "Minimum value label"
     minLength:
       label: "Minimum length defined by"
     publishAction:

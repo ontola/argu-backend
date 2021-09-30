@@ -18,8 +18,10 @@ class CustomFormField < Edge
   property :min_count_prop, :iri, NS.ontola[:minCount]
   property :max_inclusive, :integer, NS.sh.maxInclusive
   property :max_inclusive_prop, :iri, NS.ontola[:maxInclusive]
+  property :max_inclusive_label, :string, NS.ontola[:maxInclusiveLabel]
   property :min_inclusive, :integer, NS.sh.minInclusive
   property :min_inclusive_prop, :iri, NS.ontola[:minInclusive]
+  property :min_inclusive_label, :string, NS.ontola[:minInclusiveLabel]
   property :max_length, :integer, NS.sh.maxLength
   property :max_length_prop, :iri, NS.ontola[:maxLength]
   property :min_length, :integer, NS.sh.minLength
