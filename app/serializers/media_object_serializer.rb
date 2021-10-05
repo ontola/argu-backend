@@ -53,13 +53,14 @@ class MediaObjectSerializer < RecordSerializer
   end
 
   class << self
-    def copy_action_statements(object, _params) # rubocop:disable Metrics/AbcSize
+    def copy_action_statements(object, _params) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       action_iri = ontola_copy_action(object.iri)
       target_iri = RDF::URI("#{action_iri}#entrypoint")
       [
-        RDF::Statement.new(action_iri, RDF[:type], NS.argu[:CopyAction]),
+        RDF::Statement.new(action_iri, RDF[:type], NS.schema.Action),
         RDF::Statement.new(action_iri, NS.schema.name, I18n.t('menus.default.copy')),
         RDF::Statement.new(action_iri, NS.schema.target, target_iri),
+        RDF::Statement.new(action_iri, NS.ontola[:oneClick], true),
         RDF::Statement.new(target_iri, RDF[:type], NS.schema.EntryPoint),
         RDF::Statement.new(target_iri, NS.schema.name, I18n.t('menus.default.copy')),
         RDF::Statement.new(target_iri, NS.schema.image, font_awesome_iri('clipboard'))
