@@ -29,6 +29,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   let!(:user) { create(:user) }
   let!(:user_without_password) { create(:user, :no_password) }
   let(:application) { create(:application) }
+  let(:staff) { create(:user, :staff) }
 
   ####################################
   # WITHOUT CREDENTIALS
@@ -131,6 +132,19 @@ class TokensTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post_token_password(redirect: freetown.iri.path)
+    end
+  end
+
+  test 'Staff should post create token with redirect_url' do
+    sign_in guest_user
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      post_token_password(
+        name: staff.email,
+        redirect: freetown.iri.path,
+        results: {
+          scope: 'user staff'
+        }
+      )
     end
   end
 

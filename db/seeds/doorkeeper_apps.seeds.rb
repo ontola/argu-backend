@@ -6,7 +6,7 @@ argu_app = Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application
   app.owner_type = 'Profile'
   app.owner_id = Profile::COMMUNITY_ID
   app.redirect_uri = 'http://example.com/'
-  app.scopes = 'guest user'
+  app.scopes = 'guest user staff'
 end
 argu_app.save(validate: false)
 # rubocop:disable Rails/SkipsModelValidations
@@ -18,7 +18,7 @@ Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application::AFE_ID) d
   app.owner_type = 'Profile'
   app.owner_id = Profile::COMMUNITY_ID
   app.redirect_uri = 'http://example.com/'
-  app.scopes = 'guest user'
+  app.scopes = 'guest user staff'
 end.save(validate: false)
 Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application::SERVICE_ID) do |app|
   app.id = Doorkeeper::Application::SERVICE_ID

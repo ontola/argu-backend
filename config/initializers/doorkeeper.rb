@@ -80,7 +80,7 @@ Doorkeeper.configure do
   # For more information go to
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
   default_scopes  :guest
-  optional_scopes :user
+  optional_scopes :user, :staff
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then
@@ -259,6 +259,12 @@ module Doorkeeper
   module OAuth
     class PasswordAccessTokenRequest < BaseRequest
       private
+
+      def build_scopes
+        scopes = super
+        scopes.add(:staff) if resource_owner&.user&.is_staff?
+        scopes
+      end
 
       def validate_client
         client.present?
