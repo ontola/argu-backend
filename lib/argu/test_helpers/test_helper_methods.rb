@@ -73,11 +73,16 @@ module Argu
           end
         end
 
-        def create_with_shortname(model_type, shortname, attributes)
+        def create_with_name(model_type, shortname, attributes)
           attributes.merge!(
             title: "#{shortname}-title",
             content: "#{shortname}-text"
           )
+
+          create_with_shortname(model_type, shortname, attributes)
+        end
+
+        def create_with_shortname(model_type, shortname, attributes)
           resource = create(model_type, attributes)
           Shortname.create!(shortname: shortname, owner: resource, root: resource.root)
 
