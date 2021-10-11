@@ -3,7 +3,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-raise 'NOMINATIM_KEY is empty, please edit your .env' if ENV['NOMINATIM_KEY'].nil?
+# raise 'NOMINATIM_KEY is empty, please edit your .env' if ENV['NOMINATIM_KEY'].nil?
 
 load(Dir[Rails.root.join('db/seeds/doorkeeper_apps.seeds.rb')][0])
 
@@ -51,8 +51,8 @@ if current_tenant == 'argu'
       initial_public_grant: 'participator',
       root_id: ActsAsTenant.current_tenant.root_id,
       url: 'nederland',
-      creator: User.find_via_shortname!('staff_account').profile,
-      publisher: User.find_via_shortname!('staff_account'),
+      creator: staff.profile,
+      publisher: staff,
       parent: ActsAsTenant.current_tenant
     )
     forum.grants.new(group_id: Group::PUBLIC_ID, grant_set: GrantSet.participator)
