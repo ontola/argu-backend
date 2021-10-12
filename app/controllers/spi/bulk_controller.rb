@@ -8,6 +8,10 @@ module SPI
 
     private
 
+    def allowed_external_host?(iri)
+      ActsAsTenant.current_tenant.allowed_external_sources.any? { |source| iri.to_s.start_with?(source) }
+    end
+
     def authorized_resources
       grant_tree = user_context.grant_tree_for(ActsAsTenant.current_tenant)
       grant_tree.grants_in_scope
@@ -29,12 +33,16 @@ module SPI
       handle_resource_error(opts, e)
     end
 
-    def log_resource_error(error)
+    def log_resource_error(error, iri)
       super
 
       return if error_status(error) < 500
 
       Bugsnag.notify(error) do |report|
+        report.add_metadata(
+          :resource,
+          {iri: iri}
+        )
         Bugsnag.configuration.middleware.run(report)
       end
     end
@@ -42,7 +50,6 @@ module SPI
     def resource_request(iri)
       req = super
       req.env['User-Context'] = user_context
-      Bugsnag.configuration.set_request_data(:rack_env, req.env)
       req
     end
 
@@ -61,7 +68,7 @@ module SPI
 
     def response_for_wrong_host(opts)
       iri = opts[:iri]
-      return super unless ActsAsTenant.current_tenant.allowed_external_sources.any? { |source| iri.start_with?(source) }
+      return super unless allowed_external_host?(iri)
 
       include = opts[:include].to_s == 'true'
 
@@ -87,8 +94,13 @@ module SPI
       200
     end
 
+    def resource_thread(&block)
+      Thread.new(Apartment::Tenant.current, ActsAsTenant.current_tenant, I18n.locale, request.env, &block)
+    end
+
     def threaded_authorized_resource(resource, &block) # rubocop:disable Metrics/MethodLength
-      Thread.new(Apartment::Tenant.current, ActsAsTenant.current_tenant, I18n.locale) do |apartment, tenant, locale|
+      resource_thread do |apartment, tenant, locale, env|
+        Bugsnag.configuration.set_request_data(:rack_env, env)
         ActiveRecord::Base.connection_pool.with_connection do
           Apartment::Tenant.switch(apartment) do
             ActsAsTenant.with_tenant(tenant) do
