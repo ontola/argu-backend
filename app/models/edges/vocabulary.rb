@@ -8,6 +8,9 @@ class Vocabulary < Edge
   enhance Attachable
   enhance RootGrantable
   include Shortnameable
+  collection_options(
+    display: :table
+  )
 
   property :system, :boolean, NS.argu[:system]
   property :display_name, :string, NS.schema.name
@@ -18,7 +21,7 @@ class Vocabulary < Edge
     NS.ontola[:updateAction],
     NS.ontola[:destroyAction]
   ]
-  with_collection :terms, default_title: ->(r) { r.display_name }
+  with_collection :terms, title: -> { parent.display_name }
 
   parentable :page
 
@@ -29,10 +32,6 @@ class Vocabulary < Edge
   after_trash -> { shortname.update(primary: false) }
 
   class << self
-    def default_collection_display
-      :table
-    end
-
     def terms_iri(url, **opts)
       find_via_shortname(url)&.term_collection(opts)&.iri
     end

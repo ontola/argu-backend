@@ -36,7 +36,9 @@ class Activity < PublicActivity::Activity
              primary_key: :uuid,
              foreign_key: :recipient_edge_id
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
-
+  collection_options(
+    route_key: :feed
+  )
   validates :key, presence: true
   validates :comment, length: {maximum: 5000}
   validates :trackable, :recipient, :owner,

@@ -8,7 +8,7 @@ class InviteForm < ApplicationForm
         max_count: 5000,
         pattern: /(#{RegexHelper::SINGLE_EMAIL.source},?\s?)+/
   field :message, max_length: 5000
-  field :group_id, sh_in: -> { collection_iri(nil, :groups) }
+  field :group_id, sh_in: -> { ::Group.collection_iri }
   field :redirect_url
 
   hidden do

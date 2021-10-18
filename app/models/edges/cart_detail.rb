@@ -8,6 +8,9 @@ class CartDetail < Edge
   enhance LinkedRails::Enhancements::Destroyable
   enhance Singularable
 
+  collection_options(
+    default_filters: {}
+  )
   attribute :shop_id
   parentable :budget_shop, :offer
 
@@ -60,10 +63,6 @@ class CartDetail < Edge
         parent: opts[:parent].is_a?(Cart) ? opts[:parent].parent : opts[:parent],
         shop_id: opts[:parent]&.parent&.id
       )
-    end
-
-    def default_filters
-      {}
     end
 
     def include_in_collection?

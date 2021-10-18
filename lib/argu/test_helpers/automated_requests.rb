@@ -161,7 +161,7 @@ module Argu
           let(:destroy_params) { {} }
 
           # Paths
-          let(:index_path) { collection_iri(subject_parent, table_sym).path }
+          let(:index_path) { subject_parent.collection_iri(table_sym, root: argu).path }
           let(:create_path) { index_path }
           let(:new_path) { new_iri(create_path).path }
           let(:show_path) { resource_iri(subject).path }
@@ -177,29 +177,25 @@ module Argu
           # Non existing paths
           let(:non_existing_id) { -99 }
           let(:non_existing_index_path) do
-            collection_iri(
-              expand_uri_template("#{parent_table_sym}_iri", id: non_existing_id, root_id: argu.url),
-              table_sym,
-              root: argu
-            ).path
+            subject.class.collection_root_relative_iri(parent_iri: %w[argu non_existing_id])
           end
           let(:non_existing_create_path) { non_existing_index_path }
           let(:non_existing_new_path) { new_iri(non_existing_create_path).path }
           let(:non_existing_show_path) do
-            expand_uri_template("#{table_sym}_iri", id: non_existing_id, root_id: argu.url)
+            expand_uri_template("#{table_sym}_iri", id: non_existing_id, parent_iri: ['argu'], root_id: 'argu')
           end
           let(:non_existing_destroy_path) do
-            expand_uri_template("#{table_sym}_iri", id: -99, root_id: argu.url, destroy: true)
+            expand_uri_template("#{table_sym}_iri", id: -99, destroy: true, parent_iri: ['argu'], root_id: 'argu')
           end
-          let(:non_existing_edit_path) { edit_iri(non_existing_show_path, root: argu).path }
-          let(:non_existing_shift_path) { new_iri(non_existing_move_path, root: argu).path }
+          let(:non_existing_edit_path) { edit_iri(non_existing_show_path).path }
+          let(:non_existing_shift_path) { new_iri(non_existing_move_path).path }
           let(:non_existing_move_path) do
             expand_uri_template(:moves_iri, parent_iri: split_iri_segments(non_existing_show_path))
           end
           let(:non_existing_update_path) { non_existing_show_path }
-          let(:non_existing_delete_path) { delete_iri(non_existing_show_path, root: argu).path }
+          let(:non_existing_delete_path) { delete_iri(non_existing_show_path).path }
           let(:non_existing_trash_path) { non_existing_show_path }
-          let(:non_existing_untrash_path) { untrash_iri(non_existing_show_path, root: argu).path }
+          let(:non_existing_untrash_path) { untrash_iri(non_existing_show_path).path }
 
           # Result paths
           let(:parent_path) { subject_parent.iri.path }

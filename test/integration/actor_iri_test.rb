@@ -59,7 +59,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
 
   def post_motion(should, expected_actor = nil, actor = nil)
     assert_difference('Motion.count', should ? 1 : 0) do
-      post collection_iri(freetown, :motions),
+      post freetown.collection_iri(:motions),
            params: {
              actor_iri: actor,
              motion: attributes_for(:motion)

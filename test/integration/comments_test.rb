@@ -26,7 +26,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
     subject
     assert_difference('Comment.count' => 1,
                       'Property.where(predicate: "https://argu.co/ns/core#inReplyTo").count' => 1) do
-      post collection_iri(subject, :comments),
+      post subject.collection_iri(:comments),
            params: {comment: {body: 'My opinion'}},
            headers: argu_headers(accept: :json)
     end
@@ -41,14 +41,14 @@ class CommentsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     filter = {
-      CGI.escape(NS.argu[:pdfPositionX]) => 1,
-      CGI.escape(NS.argu[:pdfPositionY]) => 2,
-      CGI.escape(NS.argu[:pdfPage]) => 3
+      NS.argu[:pdfPositionX] => 1,
+      NS.argu[:pdfPositionY] => 2,
+      NS.argu[:pdfPage] => 3
     }
     motion
 
     assert_difference('Comment.count' => 1, 'Activity.count' => 1) do
-      post collection_iri(motion, :comments, type: :paginated, filter: filter),
+      post motion.collection_iri(:comments, type: :paginated, filter: filter),
            headers: argu_headers(accept: :nq),
            params: {comment: default_create_attributes}
 

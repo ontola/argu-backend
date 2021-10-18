@@ -117,7 +117,7 @@ class MarkAsImportantTest < ActionDispatch::IntegrationTest
     attributes[:mark_as_important] = mark unless mark.nil?
 
     assert_difference('Motion.count', 1) do
-      post collection_iri(freetown, :motions), params: {motion: attributes}
+      post freetown.collection_iri(:motions), params: {motion: attributes}
     end
     ActsAsTenant.with_tenant(argu) { PublicationsWorker.drain }
     assert_equal Motion.last.argu_publication.follow_type, follow_type

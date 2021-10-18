@@ -4,16 +4,15 @@ class Offer < Edge
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
   enhance Buyable
+  collection_options(
+    display: :grid
+  )
 
   parentable :budget_shop
 
   delegate :display_name, :description, :default_cover_photo, to: :product, allow_nil: true
 
   class << self
-    def default_collection_display
-      :grid
-    end
-
     def iri
       NS.schema.Offer
     end

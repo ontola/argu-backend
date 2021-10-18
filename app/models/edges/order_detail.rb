@@ -2,6 +2,9 @@
 
 class OrderDetail < Edge
   parentable :order
+  collection_options(
+    display: :table
+  )
 
   property :offer_id, :linked_edge_id, NS.schema.orderedItem, association: :offer, association_class: 'Edge'
   after_create :follow_product
@@ -18,10 +21,6 @@ class OrderDetail < Edge
   end
 
   class << self
-    def default_collection_display
-      :table
-    end
-
     def iri
       NS.schema.OrderItem
     end

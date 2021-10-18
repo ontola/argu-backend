@@ -67,7 +67,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     case accept
     when :nq
       collection = ActsAsTenant.with_tenant(argu) do
-        feed(parent).activity_collection.iri
+        feed(parent).collection_iri(:activities)
       end
       view = rdf_body.query([collection, NS.ontola[:pages]]).first.object
       expect_triple(view, NS.as[:totalItems], count)

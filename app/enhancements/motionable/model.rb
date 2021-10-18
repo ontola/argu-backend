@@ -6,8 +6,8 @@ module Motionable
 
     included do
       with_collection :motions,
-                      default_display: ->(parent) { parent.try(:default_motion_display)&.to_s&.sub('_display', '') },
-                      default_sortings: ->(parent) { default_motion_sorting_for(parent) },
+                      display: -> { parent.try(:default_motion_display)&.to_s&.sub('_display', '') },
+                      default_sortings: -> { parent.class.default_motion_sorting_for(parent) },
                       joins: :default_vote_event
     end
 
@@ -19,6 +19,8 @@ module Motionable
           sorting
         ]
       end
+
+      private
 
       def default_motion_sorting_opts(parent) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
         return {key: NS.argu[:lastActivityAt], direction: :desc} unless parent.try(:default_motion_sorting)

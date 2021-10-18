@@ -21,7 +21,7 @@ class CustomFormFieldForm < ApplicationForm
   %i[CheckboxGroup RadioGroup SelectInput ToggleButtonGroup].each do |type|
     field :sh_in,
           if: has_type(type),
-          sh_in: -> { Vocabulary.root_collection.iri },
+          sh_in: -> { Vocabulary.collection_iri },
           min_count: 1
   end
   %i[EmailInput PasswordInput TextAreaInput MarkdownInput TextInput].each do |type|

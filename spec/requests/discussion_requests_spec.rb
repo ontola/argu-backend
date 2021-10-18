@@ -5,18 +5,11 @@ require 'rails_helper'
 RSpec.describe 'Discussions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
-  let(:table_sym) { :discussions }
-
-  context 'for page' do
-    let(:subject_parent) { argu }
-    let(:non_existing_index_path) { '/non_existing/discussions' }
-
-    it_behaves_like 'get index', skip: %i[unauthorized]
-  end
+  let(:index_path) { subject_parent.collection_iri(:discussions).path }
+  let(:non_existing_index_path) { '/non_existing/discussions' }
+  let(:subject_parent) { freetown }
 
   context 'for discoverable forum' do
-    let(:subject_parent) { freetown }
-
     it_behaves_like 'get index'
   end
 

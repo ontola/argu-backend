@@ -7,9 +7,10 @@ module Orderable
     included do
       include ActiveRecord::Acts::List::InstanceMethods
 
-      self.default_sortings = [{key: NS.argu[:order], direction: :asc}]
-
       acts_as_list touch_on_update: false
+      collection_options(
+        default_sortings: [{key: NS.argu[:order], direction: :asc}]
+      )
 
       if self < Edge
         property(:position, :integer, NS.argu[:order])
@@ -56,7 +57,7 @@ module Orderable
     private
 
     class_methods do
-      def sort_options(collection)
+      def sort_options(_collection)
         [NS.argu[:order]] + super
       end
     end

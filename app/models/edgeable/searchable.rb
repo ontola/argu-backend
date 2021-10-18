@@ -9,7 +9,8 @@ module Edgeable
 
       with_collection :search_results,
                       association_class: Edge,
-                      collection_class: SearchResult::Collection
+                      collection_class: SearchResult::Collection,
+                      route_key: :search
 
       include InstanceOverwrites
       extend ClassOverwrites

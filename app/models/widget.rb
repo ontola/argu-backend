@@ -5,6 +5,9 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Parentable
   include Cacheable
   include Broadcastable
+  collection_options(
+    display: :table
+  )
 
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
@@ -110,7 +113,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def create_blog_posts(owner)
-      blog_posts_iri = collection_iri(owner, :blog_posts, type: :infinite)
+      blog_posts_iri = owner.collection_iri(:blog_posts, type: :infinite)
       Widget.create!(
         widget_type: :discussions,
         owner: owner,
@@ -121,7 +124,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def create_discussions(owner)
-      discussions_iri = collection_iri(owner, :discussions, display: :grid, type: :infinite)
+      discussions_iri = owner.collection_iri(:discussions, display: :grid, type: :infinite)
       Widget.create!(
         widget_type: :discussions,
         owner: owner,
@@ -192,10 +195,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         permitted_action: PermittedAction.find_by!(title: 'topic_create'),
         resource_iri: [[custom_action.iri(fragment: 'EntryPoint'), nil]]
       )
-    end
-
-    def default_collection_display
-      :table
     end
 
     def preview_includes

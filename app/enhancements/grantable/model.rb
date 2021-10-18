@@ -4,6 +4,10 @@ module Grantable
   module Model
     extend ActiveSupport::Concern
 
+    included do
+      with_collection :grants
+    end
+
     def granted_sets_iri
       base_iri = is_a?(Edge) ? persisted_edge&.iri : ActsAsTenant.current_tenant&.iri
 

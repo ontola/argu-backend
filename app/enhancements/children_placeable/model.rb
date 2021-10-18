@@ -19,7 +19,7 @@ module ChildrenPlaceable
     end
 
     def children_placements_iri
-      collection_iri(self, :placements)
+      collection_iri(:children_placements)
     end
   end
 end

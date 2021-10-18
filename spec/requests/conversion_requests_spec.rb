@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Conversions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:new_path) { new_iri(conversions_iri(subject).path).path }
-  let(:create_path) { collection_iri(subject, :conversions).path }
+  let(:create_path) { subject.collection_iri(:conversions).path }
   let(:invalid_create_params) { {conversion: {klass_iri: Argument.iri}} }
   let(:created_resource_path) { Edge.find_by(uuid: subject.uuid).iri.path }
   let(:expect_post_create_failed_serializer) { expect_post_create_unauthorized_serializer }

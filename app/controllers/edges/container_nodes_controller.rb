@@ -8,7 +8,7 @@ class ContainerNodesController < EdgeableController
       **create_collection_options(
         inherit: false,
         predicate: NS.ontola[:createAction],
-        root_relative_iri: -> { "#{klass.root_collection.root_relative_iri}/new" }
+        root_relative_iri: -> { "#{klass.collection_root_relative_iri}/new" }
       )
     )
   end

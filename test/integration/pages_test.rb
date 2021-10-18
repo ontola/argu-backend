@@ -40,7 +40,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'guest should not get new' do
     sign_in :guest_user
 
-    get new_iri(nil, :pages, root: argu)
+    get new_iri(Page.collection_iri(root: argu).path)
 
     assert_disabled_form
   end
@@ -49,7 +49,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in :guest_user
 
     assert_no_difference('Page.count') do
-      post collection_iri(argu, :pages),
+      post Page.collection_iri(root: argu),
            params: {
              page: {
                name: 'Utrecht Two',
@@ -76,7 +76,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'user should get new' do
     sign_in user
 
-    get new_iri(nil, :pages, root: argu)
+    get new_iri(Page.collection_iri(root: argu).path)
 
     assert_enabled_form
   end
@@ -89,7 +89,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       'Page.count' => 1,
       "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
     ) do
-      post collection_iri(argu, :pages),
+      post Page.collection_iri(root: argu),
            params: {
              page: {
                name: 'Utrecht Two',
@@ -108,7 +108,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       'Page.count' => 1,
       "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
     ) do
-      post collection_iri(argu, :pages),
+      post Page.collection_iri(root: argu),
            params: {
              page: {
                name: 'Utrecht Two',
@@ -124,7 +124,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_difference('Page.count', 0) do
-      post collection_iri(argu, :pages),
+      post Page.collection_iri(root: argu),
            params: {
              page: {
                name: 'a',
@@ -265,7 +265,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'administrator should get new' do
     sign_in administrator
 
-    get new_iri(nil, :pages, root: argu)
+    get new_iri(Page.collection_iri(root: argu).path)
 
     assert_disabled_form(error: I18n.t('pages.limit_reached_amount', amount: 1))
   end
@@ -274,7 +274,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_no_difference('Page.count') do
-      post collection_iri(argu, :pages),
+      post Page.collection_iri(root: argu),
            params: {
              page: {
                name: 'Utrecht Two',
@@ -332,7 +332,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'staff should be able to create a page' do
     sign_in staff
 
-    post collection_iri(argu, :pages),
+    post Page.collection_iri(root: argu),
          params: {
            page: {
              name: 'Utrecht Two',
@@ -347,7 +347,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Page.count' => 0) do
-      post collection_iri(argu, :pages),
+      post Page.collection_iri(root: argu),
            params: {
              page: {
                name: 'Name',
@@ -362,7 +362,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Page.count' => 0) do
-      post collection_iri(argu, :pages),
+      post Page.collection_iri(root: argu),
            params: {
              page: {
                name: 'Name'

@@ -30,12 +30,12 @@ class SurveyMenuList < ApplicationMenuList
         :coupon_batches,
         image: 'fa-link',
         label: I18n.t('argu.CouponBatch.label'),
-        href: collection_iri(resource, :coupon_batches)
+        href: resource.collection_iri(:coupon_batches)
       ),
       setting_item(
         :submissions,
         label: I18n.t('argu.Submission.plural_label'),
-        href: collection_iri(resource, :submissions, display: :table)
+        href: resource.collection_iri(:submissions, display: :table)
       ),
       setting_item(:form, href: resource.action_body, image: 'fa-edit'),
       setting_item(:typeform, href: resource.manage_iri, image: 'fa-external-link')

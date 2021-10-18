@@ -28,7 +28,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   test 'guest should head cairo discussions collection' do
     sign_in guest_user
 
-    head cairo.discussion_collection, headers: argu_headers(accept: :nq)
+    head resource_iri(cairo.discussion_collection, root: cairo.root), headers: argu_headers(accept: :nq)
 
     expect_response(403, page: cairo.root)
   end
@@ -122,7 +122,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   test 'guest should head freetown discussions collection' do
     sign_in guest_user
 
-    head freetown.discussion_collection, headers: argu_headers(accept: :nq)
+    head resource_iri(freetown.discussion_collection, root: freetown.root), headers: argu_headers(accept: :nq)
 
     expect_response(200)
   end
@@ -196,7 +196,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   test 'user should head cairo discussions collection' do
     sign_in user
 
-    head cairo.discussion_collection, headers: argu_headers(accept: :nq)
+    head resource_iri(cairo.discussion_collection, root: cairo.root), headers: argu_headers(accept: :nq)
 
     expect_response(403, page: cairo.root)
   end
@@ -220,7 +220,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   test 'user should head freetown discussions collection' do
     sign_in user
 
-    head freetown.discussion_collection, headers: argu_headers(accept: :nq)
+    head resource_iri(freetown.discussion_collection, root: freetown.root), headers: argu_headers(accept: :nq)
 
     expect_response(200)
   end
@@ -279,7 +279,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   test 'spectator should head cairo discussions collection' do
     sign_in spectator
 
-    head cairo.discussion_collection, headers: argu_headers(accept: :nq)
+    head resource_iri(cairo.discussion_collection, root: cairo.root), headers: argu_headers(accept: :nq)
 
     expect_response(200, page: cairo.root)
   end

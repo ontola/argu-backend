@@ -43,10 +43,6 @@ class SearchResult
       :grid
     end
 
-    def iri_template_name
-      :search_results_iri
-    end
-
     def iri_opts
       opts = super
       opts[:q] = q if q.present?
@@ -113,10 +109,6 @@ class SearchResult
 
       def iri
         NS.ontola[:SearchResult]
-      end
-
-      def iri_template_keys
-        @iri_template_keys ||= super + %i[match q]
       end
     end
   end

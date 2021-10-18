@@ -91,12 +91,11 @@ RSpec.describe SearchResult, type: :model do
 
   def search_result(**opts)
     SearchResult::Collection.new(
-      {
-        association_class: Edge,
+      **SearchResult.default_collection_options.merge(
         parent: parent,
         q: q,
         user_context: user_context
-      }.merge(opts)
+      ).merge(opts)
     )
   end
 

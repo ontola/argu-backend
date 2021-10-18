@@ -61,7 +61,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in moderator
 
     assert_difference('Group.count', 0) do
-      post collection_iri(argu, :groups),
+      post Group.collection_iri(root: argu),
            params: {
              group: {
                group_id: group.id,
@@ -106,7 +106,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_difference('Group.count' => 1, 'Grant.count' => 0) do
-      post collection_iri(argu, :groups),
+      post Group.collection_iri(root: argu),
            params: {
              group: {
                name: 'Test group',
@@ -121,7 +121,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_difference('Group.count' => 1, 'Grant.count' => 1) do
-      post collection_iri(argu, :groups),
+      post Group.collection_iri(root: argu),
            params: {
              group: {
                name: 'Test group',

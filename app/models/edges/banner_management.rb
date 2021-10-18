@@ -7,6 +7,9 @@ class BannerManagement < Edge
   enhance ActivePublishable
   enhance Dismissable
 
+  collection_options(
+    display: :table
+  )
   with_columns default: [
     NS.schema.text,
     NS.ontola[:audience],
@@ -36,10 +39,6 @@ class BannerManagement < Edge
   end
 
   class << self
-    def default_collection_display
-      :table
-    end
-
     def form_class
       BannerForm
     end

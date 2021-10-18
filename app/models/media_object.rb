@@ -12,6 +12,9 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :forum, primary_key: :uuid
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
+  collection_options(
+    display: :table
+  )
 
   mount_uploader :content, MediaObjectUploader, mount_on: :content_uid
   with_columns default: [
@@ -190,10 +193,6 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         MediaObjectUploader::PORTABLE_DOCUMENT_TYPES +
         MediaObjectUploader::PRESENTATION_TYPES +
         MediaObjectUploader::SPREADSHEET_TYPES
-    end
-
-    def default_collection_display
-      :table
     end
   end
 end

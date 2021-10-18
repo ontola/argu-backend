@@ -12,7 +12,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance ConfirmedDestroyable
   enhance CoverPhotoable
   enhance LinkedRails::Enhancements::Creatable
-  enhance Discussable
   enhance Exportable
   enhance Feedable
   enhance Placeable
@@ -26,7 +25,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   enhance Bannerable
 
   property :primary_container_node_id, :linked_edge_id, NS.foaf[:homepage], association_class: 'Edge'
-  has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   has_one :tenant, dependent: :destroy, foreign_key: :root_id, primary_key: :uuid, inverse_of: :page
   has_many :descendant_shortnames,

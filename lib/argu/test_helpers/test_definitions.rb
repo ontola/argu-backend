@@ -154,7 +154,7 @@ module Argu
       end
 
       def create_path(parent)
-        collection_iri(parent, model_name.tableize).path
+        parent.collection_iri(model_name.tableize).path
       end
 
       def record_path(record)

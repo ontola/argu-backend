@@ -14,6 +14,10 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
     NS.ontola[:updateAction],
     NS.ontola[:destroyAction]
   ]
+  collection_options(
+    association_scope: :navigations,
+    display: :table
+  )
   belongs_to :resource, polymorphic: true, primary_key: :uuid
   belongs_to :edge, primary_key: :uuid, optional: true
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
@@ -123,10 +127,6 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
       }
     end
 
-    def default_collection_display
-      :table
-    end
-
     def info
       where(menu_type: :info)
     end
@@ -137,10 +137,6 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def navigations
       where(menu_type: :navigations)
-    end
-
-    def root_collection_opts
-      super.merge(association_scope: :navigations)
     end
 
     def valid_parent?(_klass)

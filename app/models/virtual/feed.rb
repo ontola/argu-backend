@@ -4,8 +4,9 @@ class Feed < VirtualResource
   attr_accessor :parent
 
   with_collection :activities,
-                  part_of: :parent,
-                  default_type: :infinite
+                  page_size: 10,
+                  part_of: -> { parent.parent },
+                  type: :infinite
 
   def activities
     @activities ||=

@@ -172,7 +172,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
         format: :nq
 
     assert_response :success
-    view = expect_triple(group.group_membership_collection.iri, NS.ontola[:pages], nil).objects.first
+    view = expect_triple(group.collection_iri(:group_memberships), NS.ontola[:pages], nil).objects.first
     expect_triple(view, NS.as[:totalItems], 1)
   end
 end

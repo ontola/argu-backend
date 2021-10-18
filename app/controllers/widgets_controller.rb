@@ -8,11 +8,11 @@ class WidgetsController < ServiceController
   end
 
   def redirect_location
-    parent_resource.widget_collection.iri
+    parent_resource.collection_iri(:widgets)
   end
 
   def invalidate_parent_collections_delta(resource)
-    super + [[resource.parent.widget_collection.iri, NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]]
+    super + [[resource.parent.collection_iri(:widgets), NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]]
   end
 
   def update_success

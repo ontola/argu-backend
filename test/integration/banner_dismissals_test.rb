@@ -13,7 +13,7 @@ class BannerDismissalsTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     assert_difference_success(:guest_user) do
       Sidekiq::Testing.inline! do
-        post collection_iri(banner, :banner_dismissals), headers: argu_headers
+        post banner.collection_iri(:banner_dismissals), headers: argu_headers
       end
     end
 
@@ -25,7 +25,7 @@ class BannerDismissalsTest < ActionDispatch::IntegrationTest
     sign_in user
     assert_difference_success(:user) do
       Sidekiq::Testing.inline! do
-        post collection_iri(banner, :banner_dismissals), headers: argu_headers
+        post banner.collection_iri(:banner_dismissals), headers: argu_headers
       end
     end
 

@@ -13,7 +13,7 @@ Apartment::Tenant.switch('rivm') do
       resource: Page.first,
       position: 0,
       label: InterventionType.plural_label,
-      href: InterventionType.root_collection.iri
+      href: InterventionType.collection_iri
     )
   end
 end

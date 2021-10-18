@@ -46,7 +46,7 @@ class PagesController < EdgeableController
   end
 
   def redirect_location
-    return new_iri(nil, :pages) unless authenticated_resource.persisted?
+    return new_iri(Page.collection_iri.path) unless authenticated_resource.persisted?
 
     settings_iri(authenticated_resource)
   end

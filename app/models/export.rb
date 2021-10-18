@@ -11,6 +11,9 @@ class Export < ApplicationRecord
   enum status: {pending: 0, processing: 1, done: 2, failed: -1}
   mount_uploader :zip, ExportUploader
   parentable :edge
+  collection_options(
+    display: :table
+  )
   with_columns default: [
     NS.schema.dateCreated,
     NS.schema.downloadUrl,
@@ -38,10 +41,6 @@ class Export < ApplicationRecord
         edge: opts[:parent],
         user: opts[:user_context]&.user
       }
-    end
-
-    def default_collection_display
-      :table
     end
   end
 end

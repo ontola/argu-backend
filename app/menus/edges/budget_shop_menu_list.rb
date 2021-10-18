@@ -32,7 +32,7 @@ class BudgetShopMenuList < ApplicationMenuList
       :coupon_batches,
       image: 'fa-link',
       label: CouponBatch.label,
-      href: collection_iri(resource, :coupon_batches),
+      href: resource.collection_iri(:coupon_batches),
       policy: :edit?
     )
   end
@@ -42,7 +42,7 @@ class BudgetShopMenuList < ApplicationMenuList
       :orders_links,
       image: 'fa-list-alt',
       label: Order.plural_label,
-      href: collection_iri(resource, :orders),
+      href: resource.collection_iri(:orders),
       policy: :edit?
     )
   end

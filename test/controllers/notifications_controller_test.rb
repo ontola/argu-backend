@@ -21,7 +21,7 @@ class NotificationsControllerTest < ActionController::TestCase
 
     assert_response 200
 
-    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
     expect_triple(view, NS.as[:totalItems], 0)
   end
 
@@ -37,7 +37,7 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200, format: :nq
-    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
     expect_triple(view, NS.as[:totalItems], 4)
   end
 
@@ -49,7 +49,7 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200
-    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
     expect_triple(view, NS.as[:totalItems], 5)
   end
 
@@ -65,7 +65,7 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200
-    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
     expect_triple(view, NS.as[:totalItems], 0)
   end
 
@@ -78,7 +78,7 @@ class NotificationsControllerTest < ActionController::TestCase
     get :index, format: :nq
 
     assert_response 200
-    view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
     expect_triple(view, NS.as[:totalItems], 4)
   end
 

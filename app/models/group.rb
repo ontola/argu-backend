@@ -20,11 +20,16 @@ class Group < ApplicationRecord
   accepts_nested_attributes_for :grants, reject_if: :all_blank
   alias_attribute :display_name, :name
 
+  collection_options(
+    association: :groups,
+    parent: -> { ActsAsTenant.current_tenant }
+  )
   with_collection :grants
   with_collection :group_memberships
   with_collection :search_results,
                   association_class: Group,
-                  collection_class: SearchResult::Collection
+                  collection_class: SearchResult::Collection,
+                  route_key: :search
 
   with_columns settings: [
     NS.schema.name,
@@ -97,13 +102,6 @@ class Group < ApplicationRecord
 
     def public
       Group.find_by(id: Group::PUBLIC_ID)
-    end
-
-    def root_collection_opts
-      super.merge(
-        association: :groups,
-        parent: ActsAsTenant.current_tenant
-      )
     end
 
     def route_key

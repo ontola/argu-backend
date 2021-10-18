@@ -5,8 +5,6 @@ require 'rails_helper'
 RSpec.describe 'Motions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
-  let(:created_resource_path) { "#{subject.class.last.iri.path}?start_motion_tour=true" }
-
   context 'with question parent' do
     subject { motion }
 

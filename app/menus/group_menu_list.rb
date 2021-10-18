@@ -11,17 +11,27 @@ class GroupMenuList < ApplicationMenuList
 
   def settings_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     [
-      setting_item(:members, href: collection_iri(resource, :group_memberships, display: :settingsTable)),
+      setting_item(:members, href: resource.collection_iri(:group_memberships, display: :settingsTable)),
       setting_item(
         :email_invite,
-        href: collection_iri(resource, :tokens, token_type: :email, group_id: resource.id, display: :settingsTable)
+        href: iri_from_template(
+          :tokens_collection_iri,
+          token_type: :email,
+          group_id: resource.id,
+          display: :settingsTable
+        )
       ),
       setting_item(
         :bearer_invite,
-        href: collection_iri(resource, :tokens, token_type: :bearer, group_id: resource.id, display: :settingsTable)
+        href: iri_from_template(
+          :tokens_collection_iri,
+          token_type: :bearer,
+          group_id: resource.id,
+          display: :settingsTable
+        )
       ),
       setting_item(:general, href: edit_iri(resource)),
-      setting_item(:grants, href: collection_iri(resource, :grants, display: :settingsTable)),
+      setting_item(:grants, href: resource.collection_iri(:grants, display: :settingsTable)),
       setting_item(:delete, href: delete_iri(resource))
     ]
   end

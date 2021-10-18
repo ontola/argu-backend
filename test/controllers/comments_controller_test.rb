@@ -32,7 +32,7 @@ class CommentsControllerTest < ActionController::TestCase
     expect_relationship('part_of')
 
     expect_default_view
-    expect_included(collection_iri(argument, :comments, page: 1))
+    expect_included(argument.collection_iri(:comments, page: 1))
     expect_not_included(argument.comments.trashed.map(&:iri))
   end
 
@@ -57,7 +57,7 @@ class CommentsControllerTest < ActionController::TestCase
     expect_relationship('part_of')
 
     expect_default_view
-    expect_included(collection_iri(blog_post, :comments, page: 1))
+    expect_included(blog_post.collection_iri(:comments, page: 1))
     expect_not_included(blog_post.comments.trashed.map(&:iri))
   end
 

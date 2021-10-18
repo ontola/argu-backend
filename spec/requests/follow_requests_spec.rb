@@ -11,7 +11,7 @@ RSpec.describe 'Follows', type: :request do
 
   subject { create(:follow, follower: staff, followable: freetown) }
 
-  let(:create_path) { collection_iri(freetown, :follows) }
+  let(:create_path) { freetown.collection_iri(:follows) }
   let(:subject_parent) { subject.followable }
   let(:create_params) { {follow_type: 'reactions'} }
   let(:expect_delete_destroy_json_api) { expect(response.code).to eq('200') }

@@ -25,10 +25,10 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'guest should get index' do
     argument
     sign_in :guest_user
-    get collection_iri(argu, :notifications)
+    get Notification.collection_iri(root: argu)
     assert_response 200
     ActsAsTenant.with_tenant(argu) do
-      view = expect_triple(Notification.root_collection.iri, NS.ontola[:pages], nil).objects.first
+      view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
       expect_triple(view, NS.as[:totalItems], 0)
     end
   end
@@ -37,7 +37,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     argument
     sign_in :guest_user
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => 0) do
-      put "#{collection_iri(argu, :notifications)}/read"
+      put "#{Notification.collection_iri(root: argu)}/read"
       assert_response 401
     end
   end
@@ -50,7 +50,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'follower should get index as nq' do
     argument
     sign_in follower
-    get collection_iri(argu, :notifications), headers: argu_headers(accept: :nq)
+    get Notification.collection_iri(root: argu), headers: argu_headers(accept: :nq)
     assert_response 200
   end
 

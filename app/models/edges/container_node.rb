@@ -30,6 +30,9 @@ class ContainerNode < Edge
   property :locale, :string, NS.argu[:locale], default: 'nl-NL'
   property :show_header, :boolean, NS.argu[:showHeader], default: true
 
+  collection_options(
+    route_key: :container_nodes
+  )
   with_columns settings: [
     NS.schema.name,
     NS.argu[:followsCount],
@@ -55,6 +58,10 @@ class ContainerNode < Edge
 
   def self.inherited(klass)
     klass.enhance LinkedRails::Enhancements::Creatable
+    klass.collection_options(
+      route_key: klass.route_key.to_sym
+    )
+
     super
   end
 

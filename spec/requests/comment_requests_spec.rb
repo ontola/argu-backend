@@ -18,7 +18,7 @@ RSpec.describe 'Comments', type: :request do
   context 'with comment parent' do
     subject { nested_comment }
 
-    let(:index_path) { collection_iri(subject.parent_comment, table_sym).path }
+    let(:index_path) { subject.parent_comment.collection_iri(:comments).path }
 
     it_behaves_like 'requests'
   end

@@ -18,7 +18,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
     expect_relationship('part_of')
 
     expect_default_view
-    expect_included(collection_iri(motion, :con_arguments, page: 1))
+    expect_included(motion.collection_iri(:con_arguments, page: 1))
     expect_not_included(motion.con_arguments.trashed.map(&:iri))
     expect_not_included(motion.pro_arguments.trashed.map(&:iri))
     expect_not_included(motion.pro_arguments.map(&:iri))

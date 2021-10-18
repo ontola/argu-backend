@@ -23,6 +23,9 @@ class Placement < ApplicationRecord
   alias parent placeable
   attr_writer :coordinates
 
+  collection_options(
+    page_size: 100
+  )
   parentable :user, :edge
 
   # Returns a {Placement} in a #path
@@ -102,10 +105,6 @@ class Placement < ApplicationRecord
     # Hands over ownership of a collection to the Community user
     def expropriate(collection)
       collection.update_all(publisher_id: User::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
-    end
-
-    def default_per_page
-      100
     end
 
     def preview_includes

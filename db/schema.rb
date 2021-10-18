@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(version: 2021_10_22_075319) do
     t.datetime "start_date"
     t.datetime "end_date"
     t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps, where: '(member_id <> 0)'
+    t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps, where: '(member_id <> 0)'
   end
 
   create_table "groups", id: :serial, force: :cascade do |t|

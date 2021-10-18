@@ -51,7 +51,7 @@ module Helpers
     def export_link
       menu_item(
         :export,
-        href: collection_iri(resource, :exports),
+        href: resource.collection_iri(:exports),
         image: 'fa-cloud-download',
         policy: :create_child?,
         policy_resource: resource.export_collection(user_context: user_context)

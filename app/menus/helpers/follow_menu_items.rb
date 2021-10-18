@@ -24,7 +24,7 @@ module Helpers
         if type == :never
           follow&.iri
         else
-          collection_iri(resource, :follows, follow_type: type)
+          resource.collection_iri(:follows, follow_type: type)
         end
       image = follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o'
       action = resource.action(:"follow_#{type}", user_context)

@@ -24,6 +24,6 @@ class GroupsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api}
     assert_response 200
 
-    expect_included(collection_iri(argu, :groups, page: 1))
+    expect_included(Group.collection_iri(root: argu, page: 1))
   end
 end

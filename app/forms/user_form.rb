@@ -19,7 +19,7 @@ class UserForm < ApplicationForm
 
   group :email_address_section, label: -> { EmailAddress.plural_label } do
     resource :email_addresses_table,
-             url: -> { collection_iri(nil, :email_addresses, display: :settingsTable) }
+             url: -> { EmailAddress.collection_iri(display: :settingsTable) }
   end
 
   group :privacy_section, label: -> { I18n.t('actions.users.privacy.label') } do

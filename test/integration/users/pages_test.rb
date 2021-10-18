@@ -13,7 +13,7 @@ module Users
     test 'guest should not get index of user' do
       sign_in :guest_user
 
-      get collection_iri(user, :pages, root: other_page)
+      get user.collection_iri(:favorite_pages, root: other_page)
 
       assert_not_authorized
     end
@@ -26,7 +26,7 @@ module Users
     test 'user should get index' do
       sign_in user
 
-      get collection_iri(user, :pages, root: other_page)
+      get user.collection_iri(:favorite_pages, root: other_page)
       assert_response :success
       expect_triple(requested_iri, NS.as[:totalItems], 1)
     end
@@ -39,7 +39,7 @@ module Users
     test 'administrator should get index' do
       sign_in administrator
 
-      get collection_iri(administrator, :pages, root: other_page)
+      get administrator.collection_iri(:favorite_pages, root: other_page)
       assert_response :success
       expect_triple(requested_iri, NS.as[:totalItems], 2)
     end
@@ -47,7 +47,7 @@ module Users
     test 'administrator should not get index of other user' do
       sign_in administrator
 
-      get collection_iri(user, :pages, root: other_page)
+      get user.collection_iri(:favorite_pages, root: other_page)
       assert_response :forbidden
     end
   end

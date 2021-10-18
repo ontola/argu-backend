@@ -28,6 +28,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
   has_many :exports, dependent: :destroy
   has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
+  has_many :grants, through: :profile
   has_many :notifications, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   # User content
@@ -70,7 +71,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
                   policy_scope: false
   with_collection :search_results,
                   association_class: User,
-                  collection_class: SearchResult::Collection
+                  collection_class: SearchResult::Collection,
+                  route_key: :search
 
   auto_strip_attributes :about, nullify: false
 

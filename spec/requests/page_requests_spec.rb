@@ -10,7 +10,7 @@ RSpec.describe 'Pages', type: :request do
     nominatim_netherlands
     settings_iri(subject).path
   end
-  let(:index_path) { collection_iri(argu, table_sym).path }
+  let(:index_path) { Page.collection_iri(root: argu).path }
   let(:non_existing_show_path) { '/non_existing' }
   let(:non_existing_destroy_path) { non_existing_show_path }
   let(:non_existing_edit_path) { settings_iri(non_existing_show_path).path }

@@ -75,6 +75,12 @@ class InterventionsTest < ActionDispatch::IntegrationTest
 
   private
 
+  def create_path(parent)
+    return super unless [:rivm, rivm].include?(parent)
+
+    Intervention.collection_iri(root: rivm).path
+  end
+
   def intervention_attributes(**opts) # rubocop:disable Metrics/MethodLength
     {
       parent_id: intervention_type.id,

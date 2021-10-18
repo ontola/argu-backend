@@ -38,7 +38,7 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('part_of')
 
     expect_default_view
-    expect_included(collection_iri(holland, :motions, page: 1))
+    expect_included(holland.collection_iri(:motions, page: 1))
     expect_not_included(question.motions.map(&:iri))
     expect_not_included(holland.motions.trashed.map(&:iri))
   end
@@ -58,15 +58,14 @@ class MotionsControllerTest < ActionController::TestCase
     default_view = expect_default_view
     current_time = CGI.parse(default_view['id'])['before[]'].first.split('=').last
     expect_included(
-      collection_iri(
-        holland,
+      holland.collection_iri(
         :motions,
         type: :infinite,
-        'before%5B%5D': %W[
-          #{CGI.escape(NS.argu[:pinnedAt])}=#{LinkedRails::Collection::Sorting::DATE_TIME_MIN.iso8601(6)}
-          #{CGI.escape(NS.argu[:lastActivityAt])}=#{current_time}
-          #{CGI.escape(NS.ontola[:primaryKey])}=-2147483648
-        ]
+        before: {
+          NS.argu[:pinnedAt] => LinkedRails::Collection::Sorting::DATE_TIME_MIN.iso8601(6),
+          NS.argu[:lastActivityAt] => current_time,
+          NS.ontola[:primaryKey] => -2_147_483_648
+        }
       )
     )
     expect_not_included(question.motions.map(&:iri))

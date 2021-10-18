@@ -3,7 +3,9 @@
 class CouponBatch < Edge
   enhance LinkedRails::Enhancements::Creatable
   parentable :budget_shop, :survey
-
+  collection_options(
+    display: :table
+  )
   with_columns default: [
     NS.schema.name,
     NS.argu[:couponCount],
@@ -30,11 +32,5 @@ class CouponBatch < Edge
 
   def should_broadcast_changes
     false
-  end
-
-  class << self
-    def default_collection_display
-      :table
-    end
   end
 end

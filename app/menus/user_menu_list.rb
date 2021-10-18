@@ -15,7 +15,7 @@ class UserMenuList < ApplicationMenuList
     items << menu_item(:activity, href: feeds_iri(resource)) if resource == user || resource.show_feed
     if resource == user
       items.concat [
-        menu_item(:notifications, href: Notification.root_collection.iri),
+        menu_item(:notifications, href: Notification.collection_iri),
         menu_item(:drafts, label: I18n.t('users.drafts.title'), href: drafts_iri),
         menu_item(:profile, label: I18n.t('menus.default.profile'), href: resource.action(:profile).iri),
         menu_item(:settings, label: I18n.t('menus.default.settings'), href: edit_iri(resource))

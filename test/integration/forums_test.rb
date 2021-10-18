@@ -212,7 +212,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Forum.count' => 1, 'Placement.count' => 2, 'Place.count' => 1, 'CustomAction.count' => 3) do
-      post collection_iri(argu, :forums),
+      post argu.collection_iri(:forums),
            params: {
              forum: {
                name: 'New forum',
@@ -236,7 +236,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('OpenDataPortal.count' => 1) do
-      post collection_iri(argu, :open_data_portals), params: {
+      post argu.collection_iri(:open_data_portals), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
@@ -323,7 +323,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('Forum.count' => 1, 'Widget.discussions.count' => 1) do
-      post collection_iri(argu, :forums), params: {
+      post argu.collection_iri(:forums), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
@@ -339,7 +339,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('OpenDataPortal.count' => 1, 'Widget.discussions.count' => 0) do
-      post collection_iri(argu, :open_data_portals), params: {
+      post argu.collection_iri(:open_data_portals), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',

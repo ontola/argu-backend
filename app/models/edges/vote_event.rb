@@ -32,10 +32,6 @@ class VoteEvent < Edge
     fragment || 'default'
   end
 
-  def vote_collection_iri_opts
-    iri_opts.slice(:vote_event_id, :motion_id)
-  end
-
   def voteable
     parent
   end

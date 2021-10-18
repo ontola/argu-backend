@@ -108,7 +108,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Argu::Redis.keys.count' => 1,
                       'vote_event.reload.children_count(:votes_pro)' => 0) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes),
+        post vote_event.collection_iri(:votes),
              params: {
                vote: {option: :yes}
              },
@@ -128,7 +128,11 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 0,
                       'vote_event.reload.children_count(:votes_con)' => 0) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes, type: :paginated, filter: {CGI.escape(NS.schema.option) => :no}),
+        post vote_event.collection_iri(
+          :votes,
+          type: :paginated,
+          filter: {NS.schema.option => :no}
+        ),
              headers: argu_headers(accept: :nq)
       end
     end
@@ -138,7 +142,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'guest should post not create vote for closed motion' do
     sign_in guest_user
-    post collection_iri(closed_question_motion.default_vote_event, :votes),
+    post closed_question_motion.default_vote_event.collection_iri(:votes),
          params: {
            vote: {option: :no}
          },
@@ -156,7 +160,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert_equal primary_resource['attributes']['option'], NS.argu[:yes]
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
-      post collection_iri(vote_event, :votes),
+      post vote_event.collection_iri(:votes),
            params: {vote: {option: :no}},
            headers: argu_headers(accept: :json_api)
     end
@@ -211,7 +215,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
                       'vote_event.reload.children_count(:votes_pro)' => 0) do
-      post collection_iri(vote_event, :votes),
+      post vote_event.collection_iri(:votes),
            params: {
              vote: {option: :yes}
            },
@@ -233,7 +237,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 1,
                       'Argu::Redis.keys.count' => 0,
                       'vote_event.reload.children_count(:votes_pro)' => 1) do
-      post collection_iri(vote_event, :votes),
+      post vote_event.collection_iri(:votes),
            params: {
              vote: {option: :yes}
            },
@@ -250,7 +254,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
                       'argument.reload.children_count(:votes_pro)' => 1) do
-      post collection_iri(argument, :votes),
+      post argument.collection_iri(:votes),
            params: {
              vote: {
                option: :yes
@@ -273,7 +277,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'vote_event.reload.children_count(:votes_pro)' => 1) do
       Sidekiq::Testing.inline! do
         post(
-          collection_iri(vote_event, :votes, filter: {CGI.escape(NS.schema.option) => :yes}),
+          vote_event.collection_iri(:votes, filter: {NS.schema.option => :yes}),
           headers: argu_headers(accept: :nq)
         )
       end
@@ -288,7 +292,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
                       'vote_event.reload.children_count(:votes_pro)' => 1) do
-      post collection_iri(vote_event, :votes),
+      post vote_event.collection_iri(:votes),
            params: {
              vote: {
                option: :yes
@@ -310,7 +314,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 0,
                       'vote_event.reload.children_count(:votes_pro)' => 0,
                       'closed_vote_event.reload.children_count(:votes_pro)' => 0) do
-      post collection_iri(closed_vote_event, :votes),
+      post closed_vote_event.collection_iri(:votes),
            params: {
              vote: {
                option: :yes
@@ -329,7 +333,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_difference('Vote.count' => 0,
                       'vote_event.children_count(:votes_pro)' => 0) do
-      post collection_iri(vote_event, :votes),
+      post vote_event.collection_iri(:votes),
            params: {
              vote: {
                option: :yes
@@ -347,7 +351,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_difference('Vote.count' => 0,
                       'vote_event.children_count(:votes_pro)' => 0) do
-      post collection_iri(vote_event, :votes),
+      post vote_event.collection_iri(:votes),
            params: {
              vote: {
                option: :yes
@@ -368,7 +372,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Activity.count' => 0,
                       'vote_event.reload.children_count(:votes_pro)' => -1,
                       'vote_event.reload.children_count(:votes_con)' => 1) do
-      post collection_iri(vote_event, :votes),
+      post vote_event.collection_iri(:votes),
            params: {
              vote: {
                option: :no
@@ -450,7 +454,11 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 1,
                       'vote_event.reload.children_count(:votes_con)' => 1) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes, type: :paginated, filter: {CGI.escape(NS.schema.option) => :no}),
+        post vote_event.collection_iri(
+          :votes,
+          type: :paginated,
+          filter: {NS.schema.option => :no}
+        ),
              headers: argu_headers(accept: :nq)
       end
     end
@@ -465,7 +473,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                       'Edge.count' => 1,
                       'vote_event.reload.children_count(:votes_pro)' => 1) do
       Sidekiq::Testing.inline! do
-        post collection_iri(vote_event, :votes),
+        post vote_event.collection_iri(:votes),
              params: {vote: {option: :yes}},
              headers: argu_headers(accept: :nq)
       end

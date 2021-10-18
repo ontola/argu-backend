@@ -6,8 +6,8 @@ RSpec.describe 'Forums', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:authorized_user) { staff }
 
-  let(:index_path) { collection_iri(subject_parent, :forums).path }
-  let(:non_existing_index_path) { collection_iri(non_existing_id, :forums).path }
+  let(:index_path) { subject_parent.collection_iri(:forums).path }
+  let(:non_existing_index_path) { '/non_existing/forums' }
 
   let(:create_params) { {forum: attributes_for(class_sym).merge(url: 'new_forum')} }
   let(:create_differences) { {'Forum.count' => 1} }
@@ -19,8 +19,6 @@ RSpec.describe 'Forums', type: :request do
 
   let(:update_differences) { {'Forum.count' => 0} }
   let(:destroy_differences) { {'Forum.count' => -1} }
-  # let(:expect_get_new_guest_serializer) { expect_unauthorized }
-  # let(:expect_get_new_unauthorized_serializer) { expect_unauthorized }
 
   def self.new_formats
     (LinkedRails::Renderers.rdf_content_types - %i[ttl n3]).shuffle[1..2]

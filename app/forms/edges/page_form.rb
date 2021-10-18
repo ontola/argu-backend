@@ -6,7 +6,7 @@ class PageForm < ApplicationForm
   field :primary_container_node_id,
         datatype: NS.xsd.string,
         max_count: 1,
-        sh_in: -> { collection_iri(nil, :container_nodes) }
+        sh_in: -> { ContainerNode.collection_iri }
   field :locale
 
   group :theme,

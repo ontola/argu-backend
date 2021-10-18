@@ -10,8 +10,6 @@ module RootGrantable
 
       attr_writer :initial_public_grant
 
-      with_collection :grants
-
       private
 
       def create_default_grant

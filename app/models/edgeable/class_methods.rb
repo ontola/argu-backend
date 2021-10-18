@@ -63,10 +63,6 @@ module Edgeable
         end
       end
 
-      def root_collection_opts
-        super.merge(parent: ActsAsTenant.current_tenant)
-      end
-
       def sort_options(collection)
         return [NS.schema.dateCreated] if collection.type == :infinite
 
@@ -96,6 +92,10 @@ module Edgeable
 
       def term_property(key, predicate, **opts)
         property key, :linked_edge_id, predicate, **opts.merge(association_class: 'Term')
+      end
+
+      def valid_collection_option?(key)
+        super || key == :counter_cache_column
       end
     end
   end

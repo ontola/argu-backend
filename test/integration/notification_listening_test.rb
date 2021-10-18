@@ -26,7 +26,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for follower of Forum
     assert_difference('Motion.count' => 1, 'Notification.count' => 0) do
-      post collection_iri(freetown, :motions),
+      post freetown.collection_iri(:motions),
            params: {motion: attributes_for(:motion)}
     end
 
@@ -62,7 +62,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for follower of Forum
     assert_difference('Question.count' => 1, 'Notification.count' => 0) do
-      post collection_iri(freetown, :questions),
+      post freetown.collection_iri(:questions),
            params: {question: attributes_for(:question)}
     end
 
@@ -90,7 +90,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     # Notification for creator and follower of Motion
     assert_difference('Argument.count' => 1, 'Notification.count' => 2) do
       Sidekiq::Testing.inline! do
-        post collection_iri(motion, :pro_arguments),
+        post motion.collection_iri(:pro_arguments),
              params: {
                pro_argument: attributes_for(:argument)
              }
@@ -120,7 +120,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     # Notification for creator and follower of Argument
     assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
       Sidekiq::Testing.inline! do
-        post collection_iri(argument, :comments),
+        post argument.collection_iri(:comments),
              params: {comment: attributes_for(:comment)}
       end
     end
@@ -138,7 +138,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     # Notification for creator and follower of BlogPost
     assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
       Sidekiq::Testing.inline! do
-        post collection_iri(blog_post, :comments),
+        post blog_post.collection_iri(:comments),
              params: {comment: attributes_for(:comment)}
       end
     end
@@ -156,7 +156,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     # Notification for creator and follower of Motion
     assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
       Sidekiq::Testing.inline! do
-        post collection_iri(motion, :comments),
+        post motion.collection_iri(:comments),
              params: {comment: attributes_for(:comment)}
       end
     end
@@ -178,7 +178,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     # Notification for creator and follower of Argument and of parent comment
     assert_difference('Comment.count' => 1, 'Notification.count' => 3) do
       Sidekiq::Testing.inline! do
-        post collection_iri(argument, :comments),
+        post argument.collection_iri(:comments),
              params: {comment: attributes_for(:comment).merge(parent_comment_id: comment.uuid)}
       end
     end
@@ -197,7 +197,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('BlogPost.count' => 1) do
-      post collection_iri(question, :blog_posts),
+      post question.collection_iri(:blog_posts),
            params: {
              blog_post: attributes_for(:blog_post)
            }

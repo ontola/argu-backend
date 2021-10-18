@@ -103,32 +103,32 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       setting_item(
         :container_nodes,
         label: I18n.t('pages.settings.menu.container_nodes'),
-        href: collection_iri(ActsAsTenant.current_tenant, :container_nodes, display: :settingsTable)
+        href: ContainerNode.collection_iri(display: :settingsTable)
       ),
       setting_item(
         :groups,
         label: I18n.t('pages.settings.menu.groups'),
-        href: collection_iri(ActsAsTenant.current_tenant, :groups, display: :settingsTable)
+        href: Group.collection_iri(display: :settingsTable)
       ),
       setting_item(
         :shortnames,
         label: I18n.t('pages.settings.menu.shortnames'),
-        href: collection_iri(ActsAsTenant.current_tenant, :shortnames, display: :settingsTable)
+        href: Shortname.collection_iri(display: :settingsTable)
       ),
       setting_item(
         :custom_menu_items,
         label: CustomMenuItem.plural_label,
-        href: collection_iri(ActsAsTenant.current_tenant, :custom_menu_items)
+        href: CustomMenuItem.collection_iri
       ),
       setting_item(
         :banners,
         label: Banner.plural_label,
-        href: collection_iri(ActsAsTenant.current_tenant, :banner_managements)
+        href: BannerManagement.collection_iri
       ),
       setting_item(
         :vocabularies,
         label: Vocabulary.plural_label,
-        href: collection_iri(ActsAsTenant.current_tenant, :vocabularies, display: :table)
+        href: Vocabulary.collection_iri(display: :table)
       ),
       setting_item(:delete, href: delete_iri(resource))
     ]
@@ -149,12 +149,8 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
 
   def user_base_items
     [
-      menu_item(
-        :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_context.user.menu(:settings).iri
-      ),
-      menu_item(
-        :profile, label: I18n.t('profiles.edit.title'), href: user_context.user.menu(:settings).iri(fragment: :profile)
-      )
+      menu_item(:show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_context.user.iri),
+      menu_item(:profile, label: I18n.t('profiles.edit.title'), href: user_context.user.iri(fragment: :profile))
     ]
   end
 
@@ -172,7 +168,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     menu_item(
       :settings,
       label: I18n.t('users.settings.title'),
-      href: user_context.user.menu(:settings).iri(fragment: :settings)
+      href: user_context.user.iri(fragment: :settings)
     )
   end
 end

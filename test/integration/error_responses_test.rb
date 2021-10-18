@@ -10,7 +10,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'guest should get 401' do
     sign_in create_guest_user
-    post collection_iri(motion, :pro_arguments),
+    post motion.collection_iri(:pro_arguments),
          params: {
            pro_argument: {
              pro: true,
@@ -31,7 +31,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   test 'user should get 404 when not allowed' do
     sign_in user
     tenant_from(cairo)
-    post collection_iri(cairo, :motions),
+    post cairo.collection_iri(:motions),
          params: {
            motion: {
              title: 'Motion title',
@@ -51,7 +51,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 422 with empty body' do
     sign_in user
-    post collection_iri(motion, :pro_arguments),
+    post motion.collection_iri(:pro_arguments),
          params: {},
          headers: argu_headers(accept: :json_api)
 
@@ -69,7 +69,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 422 with empty data' do
     sign_in user
-    post collection_iri(motion, :pro_arguments),
+    post motion.collection_iri(:pro_arguments),
          params: {
            pro_argument: {}
          },
@@ -89,7 +89,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 400 with wrong type' do
     sign_in user
-    post collection_iri(motion, :pro_arguments),
+    post motion.collection_iri(:pro_arguments),
          params: {
            motion: {
              pro: true,
@@ -113,7 +113,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 400 with missing attributes' do
     sign_in user
-    post collection_iri(motion, :pro_arguments),
+    post motion.collection_iri(:pro_arguments),
          params: {
            pro_argument: {}
          },
@@ -133,7 +133,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 422 with multiple wrong fields' do
     sign_in user
-    post collection_iri(freetown, :questions),
+    post freetown.collection_iri(:questions),
          params: {
            question: {
              bla: 'bla'

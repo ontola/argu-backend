@@ -20,6 +20,13 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance Grantable
   enhance Transferable
 
+  collection_options(
+    default_filters: {
+      NS.argu[:trashed] => [false],
+      NS.argu[:isDraft] => [false]
+    },
+    parent: -> { ActsAsTenant.current_tenant }
+  )
   acts_as_followable
   has_ltree_hierarchy
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
@@ -179,11 +186,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   acts_as_sequenced scope: :root_id, column: :fragment
 
-  self.default_filters = {
-    NS.argu[:trashed] => [false],
-    NS.argu[:isDraft] => [false]
-  }
-
   attr_writer :root
 
   alias user publisher
@@ -211,6 +213,12 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return descendants.active.where(owner_type: association.to_s.classify).count if include_descendants
 
     children_counts[association.to_s].to_i || 0
+  end
+
+  def collection_iri(collection, **opts)
+    opts[:root] ||= root
+
+    super
   end
 
   def display_name

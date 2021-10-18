@@ -12,7 +12,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   test 'guest should not post create direct_message' do
     sign_in :guest_user
 
-    post collection_iri(argu, :direct_messages),
+    post DirectMessage.collection_iri(root: argu),
          params: {direct_message: valid_params}
     assert_not_a_user
   end
@@ -24,7 +24,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
 
   test 'user should not post create direct_message' do
     sign_in user
-    post collection_iri(argu, :direct_messages),
+    post DirectMessage.collection_iri(root: argu),
          params: {direct_message: valid_params, actor_iri: resource_iri(administrator, root: argu)}
     assert_not_authorized
   end
@@ -56,7 +56,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
 
   test 'administrator should not post create direct_message with unconfirmed e-mail' do
     sign_in administrator
-    post collection_iri(argu, :direct_messages),
+    post DirectMessage.collection_iri(root: argu),
          params: {
            direct_message: valid_params.merge(email_address_id: unconfirmed_email.iri),
            actor_iri: resource_iri(administrator, root: argu)
@@ -66,7 +66,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
 
   test 'administrator should not post create direct_message with other email' do
     sign_in administrator
-    post collection_iri(argu, :direct_messages),
+    post DirectMessage.collection_iri(root: argu),
          params: {
            direct_message: valid_params.merge(email_address_id: user.primary_email_record.iri),
            actor_iri: resource_iri(administrator, root: argu)
@@ -77,14 +77,14 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   test 'administrator should not post create direct_message with missing body' do
     sign_in administrator
 
-    post collection_iri(argu, :direct_messages),
+    post DirectMessage.collection_iri(root: argu),
          params: {direct_message: valid_params.except(:body), actor_iri: resource_iri(administrator, root: argu)}
     assert_response :unprocessable_entity
   end
 
   test 'administrator should not post create direct_message with missing subject' do
     sign_in administrator
-    post collection_iri(argu, :direct_messages),
+    post DirectMessage.collection_iri(root: argu),
          params: {direct_message: valid_params.except(:subject), actor_iri: resource_iri(administrator, root: argu)}
     assert_response :unprocessable_entity
   end
@@ -109,7 +109,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     )
 
     sign_in administrator
-    post collection_iri(motion, :direct_messages),
+    post motion.collection_iri(:direct_messages),
          params: {direct_message: valid_params, actor_iri: resource_iri(actor, root: argu)}
     assert_response :created
     assert_email_sent(skip_sidekiq: true)

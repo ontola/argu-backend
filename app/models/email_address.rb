@@ -18,6 +18,9 @@ class EmailAddress < ApplicationRecord
   before_save { |user| user.email = email.downcase if email.present? }
   before_update :send_confirmation_instructions, if: :email_changed?
 
+  collection_options(
+    default_sortings: [{key: NS.schema.email, direction: :asc}]
+  )
   with_columns settings: [
     NS.schema.email,
     NS.ontola[:makePrimaryAction],
@@ -28,8 +31,6 @@ class EmailAddress < ApplicationRecord
     ->(scope) { scope.where.not(confirmed_at: nil) },
     ->(scope) { scope.where(confirmed_at: nil) }
   )
-
-  self.default_sortings = [{key: NS.schema.email, direction: :asc}]
 
   validate :dont_update_confirmed_email
   validates :email,

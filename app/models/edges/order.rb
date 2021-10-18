@@ -5,6 +5,9 @@ class Order < Edge
   enhance Couponable
   parentable :budget_shop
   after_commit :clear_cart!
+  collection_options(
+    display: :table
+  )
   delegate :currency, to: :parent
   attr_accessor :cart
 
@@ -48,10 +51,6 @@ class Order < Edge
       super.merge(
         cart: opts[:parent]&.cart_for(opts[:user_context])
       )
-    end
-
-    def default_collection_display
-      :table
     end
 
     def interact_as_guest?

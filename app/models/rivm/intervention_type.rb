@@ -8,7 +8,13 @@ class InterventionType < Edge
   enhance Statable
   enhance Interventionable
   enhance RootGrantable
-
+  collection_options(
+    default_sortings: [
+      {key: NS.argu[:interventionsCount], direction: :desc}
+    ],
+    display: :table,
+    page_size: 30
+  )
   parentable :page
   with_columns default: [
     NS.schema.name,
@@ -19,7 +25,6 @@ class InterventionType < Edge
   property :recurring_costs_score, :integer, NS.rivm[:recurringCostsScore], default: 0
   property :security_improved_score, :integer, NS.rivm[:securityImprovedScore], default: 0
 
-  self.default_sortings = [{key: NS.argu[:interventionsCount], direction: :desc}]
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
 
@@ -44,14 +49,6 @@ class InterventionType < Edge
 
     def iri_namespace
       NS.rivm
-    end
-
-    def default_collection_display
-      :table
-    end
-
-    def default_per_page
-      30
     end
 
     def route_key

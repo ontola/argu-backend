@@ -147,7 +147,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   def general_create(response: :created, differences: {'Shortname.count' => 1}, attrs: nil)
     attrs ||= shortname_attributes
     assert_difference(differences) do
-      post collection_iri(argu, :shortnames, root: argu), params: attrs
+      post Shortname.collection_iri(root: argu), params: attrs
       assert_response response
     end
   end

@@ -26,7 +26,7 @@ class MediaObjectsControllerTest < ActionController::TestCase
     expect_relationship('part_of')
 
     expect_default_view
-    expect_included(collection_iri(motion, :attachments, page: 1))
+    expect_included(motion.collection_iri(:attachments, page: 1))
   end
 
   test 'should get index media_objects of motion page 1' do
