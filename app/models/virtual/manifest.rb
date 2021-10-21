@@ -81,7 +81,7 @@ class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
 
   def serviceworker
     {
-      src: "#{page.iri}/sw.js?manifestLocation=#{Rack::Utils.escape("#{page.iri}/manifest.json")}",
+      src: '/sw.js',
       scope: manifest_scope
     }
   end
