@@ -16,13 +16,13 @@ end
 
 module QuoteIRI
   def quote(value)
-    return super unless value.is_a?(RDF::URI)
+    return super unless value.is_a?(RDF::URI) || value.is_a?(URI)
 
     super(value.to_s)
   end
 
   def type_cast(value)
-    return super unless value.is_a?(RDF::URI)
+    return super unless value.is_a?(RDF::URI) || value.is_a?(URI)
 
     super(value.to_s)
   end
