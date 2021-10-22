@@ -9,7 +9,7 @@ class Survey < Discussion
 
   include Edgeable::Content
 
-  property :external_iri, :string, NS.argu[:externalIRI]
+  property :external_iri, :iri, NS.argu[:externalIRI]
   property :action_body, :iri, NS.ll[:actionBody]
   property :reward, :integer, NS.argu[:reward], default: 0
   parentable :container_node, :page, :phase
@@ -54,10 +54,16 @@ class Survey < Discussion
   end
 
   def typeform_account
-    external_iri&.match(Survey::TYPEFORM_TEMPLATE).try(:[], 1)
+    typeform_tuple[1]
   end
 
   def typeform_id
-    external_iri&.match(Survey::TYPEFORM_TEMPLATE).try(:[], 2)
+    typeform_tuple[2]
+  end
+
+  private
+
+  def typeform_tuple
+    external_iri&.to_s&.match(Survey::TYPEFORM_TEMPLATE) || []
   end
 end
