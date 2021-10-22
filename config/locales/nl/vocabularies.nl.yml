@@ -74,6 +74,9 @@ nl:
           -
             label: "Postcode range"
             exact_match: "https://ns.ontola.io/form#PostalRangeInput"
+          -
+            label: "Swipe item"
+            exact_match: "https://ns.ontola.io/form#SwipeInput"
       vote_options:
         label: "Stemopties"
         terms:
