@@ -14,7 +14,7 @@ class CustomFormFieldForm < ApplicationForm
              :formFields,
              min_count: 1,
              sh_in_opts: {page_size: 99}
-  field :position
+  has_one :default_cover_photo, if: has_type(:SwipeInput)
   field :display_name
   field :description
   field :helper_text

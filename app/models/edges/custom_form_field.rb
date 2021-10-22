@@ -3,6 +3,7 @@
 class CustomFormField < Edge
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
+  enhance CoverPhotoable
   enhance Trashable
   enhance Orderable
 
