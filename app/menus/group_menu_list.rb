@@ -4,6 +4,7 @@ class GroupMenuList < ApplicationMenuList
   include SettingsHelper
 
   has_menu :settings,
+           image: 'fa-ellipsis-v',
            iri_base: -> { resource.root_relative_iri },
            menus: -> { settings_menu_items }
 

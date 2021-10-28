@@ -34,8 +34,7 @@ class Group < ApplicationRecord
   with_columns settings: [
     NS.schema.name,
     NS.org[:hasMember],
-    NS.ontola[:settingsMenu],
-    NS.ontola[:destroyAction]
+    NS.ontola[:settingsMenu]
   ]
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
