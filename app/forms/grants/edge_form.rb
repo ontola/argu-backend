@@ -6,7 +6,7 @@ module Grants
           datatype: NS.xsd.string,
           max_count: 1,
           input_field: LinkedRails::Form::Field::SelectInput,
-          sh_in: -> { [::Group.public.iri].concat(ActsAsTenant.current_tenant.groups.map(&:iri)) }
+          sh_in: -> { ::Group.root_collection.search_result_collection.iri }
     field :grant_set_id,
           datatype: NS.xsd.string,
           max_count: 1,
