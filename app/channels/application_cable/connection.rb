@@ -13,7 +13,9 @@ module ApplicationCable
     end
 
     def connect
-      self.current_user = find_verified_user
+      ActsAsTenant.with_tenant(current_tenant) do
+        self.current_user = find_verified_user
+      end
     end
 
     private
