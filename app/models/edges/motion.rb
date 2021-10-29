@@ -5,6 +5,7 @@ class Motion < Discussion
 
   enhance Argumentable
   enhance VoteEventable
+  enhance Offerable
 
   include Edgeable::Content
 

@@ -82,7 +82,7 @@ module Edgeable
           return if property.nil?
 
           property_opts = klass.send(:property_options, name: property)
-          raise "Options for #{property} not found" if property_opts.nil?
+          raise "Options for #{property} not found for #{klass}" if property_opts.nil?
 
           property_opts
         end
