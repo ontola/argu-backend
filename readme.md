@@ -9,10 +9,11 @@ Check the [devproxy](https://bitbucket.org/arguweb/devproxy) for most of the doc
 - `git clone https://gitlab.com/ontola/apex`
 - `git submodule update`
 - Run the other services (database, front-end, etc.). Use the [devproxy](https://bitbucket.org/arguweb/devproxy).
-- Install ruby 2.6.1 (preferably using rvm or rbenv) and bundle
+- Install `ruby` (preferably using `asdf`)
 - Setup the .env, also using devproxy. Requires Nominatim & Mapbox.
 - `bundle install`. If you're on a mac and have `pg_config` errors install postgres `brew install postgresql`, and imagemagick with `brew link --force imagemagick@6`
 - `bundle exec rake db:setup`
+- `bundle exec rake db:seed:single[argu]` (optionally repeat with `rivm`)
 - `bundle exec rails s -b 0.0.0.0 -p 3000`
 - `RAILS_ENV=staging bundle exec rails s -b 0.0.0.0 -p 3000` if you want more performance and less debugging
 
