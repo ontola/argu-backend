@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BudgetShop < Discussion
-  enhance Offerable
+  enhance Shopable
   enhance CouponBatchable
 
   include Edgeable::Content

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Offerable
+module Shopable
   module Model
     extend ActiveSupport::Concern
 
