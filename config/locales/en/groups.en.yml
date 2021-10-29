@@ -9,6 +9,8 @@ en:
       name_singular: "User"
     members: 'Members'
     description: "You can grant certain rights to groups. Members of these groups will for example be allowed to edit content on your forums."
+    errors:
+      confirmation_required: "As member of the group %{group_name}, confirming your email address is required."
     settings:
       title: "Group settings"
       menu:

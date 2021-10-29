@@ -177,6 +177,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       name: 'Admins',
       name_singular: 'Admin',
       page: self,
+      require_confirmation: true,
       deletable: false
     )
     group.grants << Grant.new(grant_set: GrantSet.administrator, edge: self)

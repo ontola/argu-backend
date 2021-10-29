@@ -9,6 +9,8 @@ nl:
       name_singular: "Gebruiker"
     members: 'Leden'
     description: "Je kan rechten verlenen aan groepen. Leden van deze groepen kunnen dan bijvoorbeeld content aanpassen."
+    errors:
+      confirmation_required: "Als lid van de groep %{group_name} moet je je email bevestigen voordat je deze actie kan uitvoeren."
     settings:
       title: "Groepsinstellingen"
       menu:

@@ -27,10 +27,16 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   ####################################
   let(:unconfirmed_administrator) { create_administrator(freetown, create(:unconfirmed_user)) }
 
+  test 'unconfirmed administrator should not post create' do
+    sign_in unconfirmed_administrator
+
+    post_motion(false, unconfirmed_administrator, nil, :unprocessable_entity)
+  end
+
   test 'unconfirmed administrator should not post create as page' do
     sign_in unconfirmed_administrator
 
-    post_motion(true, unconfirmed_administrator, argu.iri)
+    post_motion(false, unconfirmed_administrator, nil, :unprocessable_entity)
   end
 
   ####################################
@@ -57,7 +63,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
 
   private
 
-  def post_motion(should, expected_actor = nil, actor = nil)
+  def post_motion(should, expected_actor = nil, actor = nil, status = nil)
     assert_difference('Motion.count', should ? 1 : 0) do
       post freetown.collection_iri(:motions),
            params: {
@@ -65,7 +71,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
              motion: attributes_for(:motion)
            }
     end
-    should ? assert_response(:created) : assert_not_authorized
+    assert_response(status || (should ? :created : :forbidden))
     assert_equal(expected_actor.profile, Motion.last.creator) if should
   end
 end

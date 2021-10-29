@@ -6,6 +6,7 @@ class AuthorizedController < ApplicationController
 
   before_action :verify_terms_accepted, only: %i[update create]
   before_action :verify_setup, only: %i[update create]
+  before_action :verify_confirmed_email, if: :verify_confirmed_email?
   before_bugsnag_notify :add_errors_tab
 
   active_response :index, :show
@@ -87,6 +88,28 @@ class AuthorizedController < ApplicationController
 
   def setup_finished?
     current_user.finished_intro?
+  end
+
+  def verify_confirmed_email # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    return if current_user.guest? || current_user.confirmed? || current_user.profile.groups.confirmation_required.empty?
+
+    error = I18n.t(
+      'groups.errors.confirmation_required',
+      group_name: current_user.profile.groups.confirmation_required.first.name
+    )
+
+    active_response_block do
+      respond_with_invalid_resource(
+        errors: {
+          base: [error]
+        },
+        notice: error
+      )
+    end
+  end
+
+  def verify_confirmed_email?
+    UNSAFE_METHODS.include?(request.method)
   end
 
   def verify_setup

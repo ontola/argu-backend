@@ -20,6 +20,8 @@ class Group < ApplicationRecord
   accepts_nested_attributes_for :grants, reject_if: :all_blank
   alias_attribute :display_name, :name
 
+  scope :confirmation_required, -> { where(require_confirmation: true) }
+
   collection_options(
     association: :groups,
     parent: -> { ActsAsTenant.current_tenant }
