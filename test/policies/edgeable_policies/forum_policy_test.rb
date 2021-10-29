@@ -12,9 +12,11 @@ class ForumPolicyTest < Argu::TestHelpers::PolicyTest
     test_edgeable_policies
   end
 
-  alias create_results staff_only_results
-
   private
+
+  def create_results
+    nobody_results.merge(administrator: true, staff: true)
+  end
 
   def destroy_results
     nobody_results.merge(administrator: true, staff: true)
