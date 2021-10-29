@@ -422,8 +422,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def requested_single_resource(params, user_context)
-      # @todo Remove shortname check (https://gitlab.com/ontola/core/-/issues/741)
-      resource = (/[a-zA-Z]/i =~ params[:id]).present? ? Shortname.find_resource(params[:id]) : super
+      resource = super
 
       show_anonymous_user = user_context&.guest? && resource.present? && !resource.is_public?
       return AnonymousUser.new(id: params[:id]) if show_anonymous_user
