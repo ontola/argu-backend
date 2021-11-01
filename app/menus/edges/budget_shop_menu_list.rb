@@ -30,6 +30,7 @@ class BudgetShopMenuList < ApplicationMenuList
   def coupon_batch_links
     menu_item(
       :coupon_batches,
+      dialog: true,
       image: 'fa-link',
       label: CouponBatch.label,
       href: resource.collection_iri(:coupon_batches),
@@ -40,6 +41,7 @@ class BudgetShopMenuList < ApplicationMenuList
   def orders_links
     menu_item(
       :orders_links,
+      dialog: true,
       image: 'fa-list-alt',
       label: Order.plural_label,
       href: resource.collection_iri(:orders),

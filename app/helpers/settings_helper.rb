@@ -8,6 +8,7 @@ module SettingsHelper
       container_nodes: 'cubes',
       custom_menu_items: 'bars',
       delete: 'trash',
+      edit: 'pencil-square-o',
       grants: 'suitcase',
       groups: 'group',
       emails: 'envelope',

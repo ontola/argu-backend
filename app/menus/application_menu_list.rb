@@ -52,6 +52,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
   def widgets_link
     menu_item(
       :widgets,
+      dialog: true,
       href: resource.collection_iri(:widgets),
       image: 'fa-th',
       policy: :create_child?,

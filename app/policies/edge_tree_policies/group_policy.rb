@@ -16,7 +16,7 @@ class GroupPolicy < EdgeTreePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i[members invite general grants advanced] if edgeable_policy.update?
+    tabs.concat %i[members invite edit grants advanced] if edgeable_policy.update?
     tabs.concat %i[email_invite bearer_invite delete] if edgeable_policy.update?
     tabs
   end

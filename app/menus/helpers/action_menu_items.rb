@@ -5,6 +5,7 @@ module Helpers
     def contact_link
       menu_item(
         :contact,
+        dialog: true,
         image: 'fa-send-o',
         href: new_iri(resource, :direct_messages),
         policy: :contact?
@@ -32,6 +33,7 @@ module Helpers
     def new_update_link
       menu_item(
         :new_update,
+        dialog: true,
         image: 'fa-bullhorn',
         href: new_iri(resource, :blog_posts),
         policy: :create_child?,
@@ -42,6 +44,7 @@ module Helpers
     def edit_link
       menu_item(
         :edit,
+        dialog: true,
         image: 'fa-edit',
         href: edit_iri(resource),
         policy: :update?
@@ -51,6 +54,7 @@ module Helpers
     def export_link
       menu_item(
         :export,
+        dialog: true,
         href: resource.collection_iri(:exports),
         image: 'fa-cloud-download',
         policy: :create_child?,
@@ -61,6 +65,7 @@ module Helpers
     def convert_link
       menu_item(
         :convert,
+        dialog: true,
         image: 'fa-retweet',
         href: new_iri(resource, :conversions),
         policy: :convert?
@@ -70,6 +75,7 @@ module Helpers
     def move_link
       menu_item(
         :move,
+        dialog: true,
         image: 'fa-sitemap',
         href: "#{resource.iri}/move",
         policy: :move?
@@ -99,6 +105,7 @@ module Helpers
     def statistics_link
       menu_item(
         :statistics,
+        dialog: true,
         image: 'fa-bar-chart-o',
         href: statistics_iri(resource),
         policy: :statistics?
@@ -114,6 +121,7 @@ module Helpers
     def destroy_link
       menu_item(
         :destroy,
+        dialog: true,
         href: delete_iri(resource),
         image: 'fa-close',
         policy: :destroy?
@@ -123,7 +131,7 @@ module Helpers
     def untrash_link
       menu_item(
         :untrash,
-        action: ontola_dialog_action(untrash_iri(resource)),
+        dialog: true,
         href: untrash_iri(resource),
         image: 'fa-eye',
         policy: :untrash?
@@ -133,7 +141,7 @@ module Helpers
     def trash_link
       menu_item(
         :trash,
-        action: ontola_dialog_action(trash_iri(resource)),
+        dialog: true,
         href: trash_iri(resource),
         image: 'fa-trash',
         policy: :trash?

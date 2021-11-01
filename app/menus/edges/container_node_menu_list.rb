@@ -24,6 +24,7 @@ class ContainerNodeMenuList < ApplicationMenuList
   def edit_link
     menu_item(
       :edit,
+      dialog: true,
       image: 'fa-gear',
       label: I18n.t('menus.default.settings'),
       href: edit_iri(resource),

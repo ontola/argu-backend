@@ -150,7 +150,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     get settings_iri(granted_group)
-    assert_group_settings_shown granted_group, :general
+    assert_group_settings_shown granted_group, :edit
 
     %i[members email_invite bearer_invite grants delete].each do |tab|
       get settings_iri(granted_group, tab: tab)
