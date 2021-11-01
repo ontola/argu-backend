@@ -165,9 +165,22 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   end
 
   class << self
+    def create_action_label # rubocop:disable: Metrics/MethodLength
+      lambda do
+        if self.class.actionable_class.enhanced_with?(ActivePublishable)
+          if resource.parent.try(:save_children_as_draft?)
+            I18n.t('publications.instance_type.draft')
+          else
+            I18n.t('publications.instance_type.direct')
+          end
+        end
+      end
+    end
+
     def default_create_options(**overwrite)
       super.merge(
-        label: -> { I18n.t("#{self.class.actionable_class.name.tableize}.type_new", default: '').presence }
+        label: -> { I18n.t("#{self.class.actionable_class.name.tableize}.type_new", default: '').presence },
+        submit_label: create_action_label
       ).merge(overwrite)
     end
 

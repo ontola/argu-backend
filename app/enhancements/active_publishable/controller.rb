@@ -25,5 +25,16 @@ module ActivePublishable
         }
       )
     end
+
+    def create_success
+      return super if resource_was_published?
+
+      respond_with_redirect(
+        location: create_success_location,
+        meta: create_meta,
+        notice: active_response_success_message,
+        status: :created
+      )
+    end
   end
 end

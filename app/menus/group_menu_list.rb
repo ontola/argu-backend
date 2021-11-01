@@ -11,7 +11,7 @@ class GroupMenuList < ApplicationMenuList
 
   private
 
-  def settings_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def settings_menu_items # rubocop:disable Metrics/MethodLength
     [
       setting_item(
         :members,

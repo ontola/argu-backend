@@ -12,7 +12,6 @@ class Publication < ApplicationRecord
 
   validates :creator, :publisher, :channel, presence: true
 
-  attribute :draft, :boolean
   enum follow_type: {news: 2, reactions: 3}
 
   alias edgeable_record publishable
@@ -28,28 +27,19 @@ class Publication < ApplicationRecord
   end
 
   def draft
-    return attributes['draft'] unless attributes['draft'].nil?
+    return @draft unless @draft.nil?
 
     !publishable&.is_published? || false
   end
 
   def draft=(value)
-    self.published_at = Time.current if draft && value.to_s == 'false'
+    @draft = value.to_s == 'true'
+
+    self.published_at ||= Time.current unless @draft
   end
 
   def publish_time_lapsed?
     published_at.present? && published_at <= 10.seconds.from_now
-  end
-
-  def publish_type
-    @publish_type ||=
-      if published_at.nil?
-        'draft'
-      elsif published_at <= 10.seconds.from_now
-        'direct'
-      else
-        'schedule'
-      end
   end
 
   private

@@ -25,7 +25,7 @@ module ActivePublishable
       attr_writer :is_draft
 
       def is_draft
-        @is_draft ||= new_record? || published_publications.empty?
+        argu_publication&.draft
       end
       alias_method :is_draft?, :is_draft
 
@@ -53,6 +53,7 @@ module ActivePublishable
       def build_new(parent: nil, user_context: nil)
         resource = super
         resource.build_argu_publication(
+          draft: parent.try(:save_children_as_draft?) || false,
           follow_type: 'reactions'
         )
         resource
