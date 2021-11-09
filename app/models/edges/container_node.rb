@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
+class ContainerNode < Edge
   include DeltaHelper
 
   enhance ConfirmedDestroyable
@@ -81,10 +81,6 @@ class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
 
   def iri_template_name
     :container_nodes_iri
-  end
-
-  def save_children_as_draft?
-    true
   end
 
   private

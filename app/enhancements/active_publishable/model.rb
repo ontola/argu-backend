@@ -53,7 +53,7 @@ module ActivePublishable
       def build_new(parent: nil, user_context: nil)
         resource = super
         resource.build_argu_publication(
-          draft: parent.try(:save_children_as_draft?) || false,
+          draft: save_as_draft?(parent),
           follow_type: 'reactions'
         )
         resource
@@ -61,6 +61,10 @@ module ActivePublishable
 
       def is_publishable?
         true
+      end
+
+      def save_as_draft?(parent)
+        parent.is_a?(ContainerNode)
       end
     end
   end

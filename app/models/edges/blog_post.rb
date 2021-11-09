@@ -20,5 +20,9 @@ class BlogPost < Edge
     def route_key
       :posts
     end
+
+    def save_as_draft?(_parent)
+      true
+    end
   end
 end

@@ -168,7 +168,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
     def create_action_label # rubocop:disable: Metrics/MethodLength
       lambda do
         if self.class.actionable_class.enhanced_with?(ActivePublishable)
-          if resource.parent.try(:save_children_as_draft?)
+          if self.class.actionable_class.save_as_draft?(resource.parent)
             I18n.t('publications.instance_type.draft')
           else
             I18n.t('publications.instance_type.direct')
