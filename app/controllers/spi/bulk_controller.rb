@@ -47,6 +47,14 @@ module SPI
       end
     end
 
+    def resource_body_with_same_as(resource, iri)
+      body = resource_body(resource)
+      return body if iri.to_s == resource.iri.to_s
+      return body if body.include?(iri.to_s)
+
+      "#{value_to_hex(iri, NS.owl.sameAs, resource.iri)}\n#{body}"
+    end
+
     def resource_request(iri)
       req = super
       req.env['User-Context'] = user_context
@@ -59,7 +67,7 @@ module SPI
 
       resource_response(
         iri,
-        body: include && status == 200 ? resource_body(resource) : nil,
+        body: include && status == 200 ? resource_body_with_same_as(resource, iri) : nil,
         cache: resource_cache_control(resource.try(:cacheable?), status, resource_policy),
         language: I18n.locale,
         status: status
