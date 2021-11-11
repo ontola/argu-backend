@@ -19,7 +19,6 @@ module Placeable
         [parent.children_placements_iri, NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate]]
       ]
     end
-    alias removed_delta added_delta
 
     def requires_location?
       false

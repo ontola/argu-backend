@@ -23,7 +23,6 @@ class CartDetail < Edge
     data.concat(cart_delta(user_context))
     data
   end
-  alias removed_delta added_delta
 
   def shop
     parent.parent
