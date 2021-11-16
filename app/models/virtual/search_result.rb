@@ -2,6 +2,7 @@
 
 class SearchResult < VirtualResource
   collection_options(
+    association_base: -> { Query.new(self) },
     association_class: Edge,
     collection_class: SearchResult::Collection,
     iri_template_keys: %i[q match],

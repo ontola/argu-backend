@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContainerNode < Edge
+class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
   include DeltaHelper
 
   enhance ConfirmedDestroyable
@@ -31,6 +31,7 @@ class ContainerNode < Edge
   property :show_header, :boolean, NS.argu[:showHeader], default: true
 
   collection_options(
+    display: :settingsTable,
     route_key: :container_nodes
   )
   with_columns settings: [

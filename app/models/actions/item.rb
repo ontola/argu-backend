@@ -11,10 +11,6 @@ module Actions
     end
 
     class << self
-      def app_action_list_class
-        PageActionList
-      end
-
       def app_action_list(_user_context); end
     end
   end

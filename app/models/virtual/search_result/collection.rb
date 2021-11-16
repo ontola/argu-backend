@@ -10,10 +10,6 @@ class SearchResult
       []
     end
 
-    def association_base
-      @association_base ||= Query.new(self)
-    end
-
     def cacheable?
       q.blank?
     end
