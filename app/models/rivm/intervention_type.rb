@@ -55,6 +55,10 @@ class InterventionType < Edge
       :interventie_types
     end
 
+    def save_as_draft?(_parent)
+      true
+    end
+
     def sort_options(collection)
       return super if collection.type == :infinite
 

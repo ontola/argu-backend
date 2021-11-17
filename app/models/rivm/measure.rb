@@ -65,5 +65,9 @@ class Measure < Edge
     def route_key
       :voorbeelden
     end
+
+    def save_as_draft?(_parent)
+      true
+    end
   end
 end

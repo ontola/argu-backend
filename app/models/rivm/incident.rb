@@ -17,5 +17,9 @@ class Incident < Edge
     def iri_namespace
       NS.rivm
     end
+
+    def save_as_draft?(_parent)
+      true
+    end
   end
 end
