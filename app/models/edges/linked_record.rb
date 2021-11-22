@@ -15,7 +15,7 @@ class LinkedRecord < Edge
   def external_statements
     external_body + [
       RDF::Statement.new(
-        external_iri.to_s,
+        external_iri,
         RDF::OWL.sameAs,
         iri
       )

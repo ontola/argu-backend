@@ -80,10 +80,11 @@ module SPI
 
       include = opts[:include].to_s == 'true'
 
-      response_from_request(
+      response_from_resource(
         include,
-        LinkedRecord.requested_single_resource({iri: iri}, user_context).iri
-      ).merge(iri: iri)
+        iri,
+        LinkedRecord.requested_single_resource({iri: iri}, user_context)
+      )
     end
 
     def resource_cache_control(cacheable, status, resource_policy)

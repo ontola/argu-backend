@@ -79,6 +79,26 @@ module SPI
       assert_not(response.body.include?('<script>'))
     end
 
+    test 'guest should post bulk request for linked_record' do
+      sign_in guest_user
+
+      bulk_request(resources: linked_record_resources, responses: linked_record_responses)
+    end
+
+    test 'guest should post bulk request for whitelisted linked_record' do
+      linked_record_stub(dg_motion1)
+      argu.update(allowed_external_sources: [demogemeente.iri])
+      sign_in guest_user
+
+      bulk_request(resources: linked_record_resources, responses: whitelisted_linked_record_responses)
+
+      statements = JSON.parse(body).first['body'].split("\n").map { |s| JSON.parse(s) }
+      linked_iri = "http://argu.localtest/argu/resource?iri=#{CGI.escape(dg_motion1.iri)}"
+      assert_equal(statements.map(&:first).uniq.sort, [linked_iri, dg_motion1.iri.to_s])
+      body.include?("\\\"#{linked_iri}\\\",\\\"#{NS.owl.sameAs}\\\",\\\"#{dg_motion1.iri}\\\"")
+      body.include?("\\\"#{dg_motion1.iri}\\\",\\\"#{NS.owl.sameAs}\\\",\\\"#{linked_iri}\\\"")
+    end
+
     ####################################
     # As User
     ####################################
@@ -241,6 +261,37 @@ module SPI
           include: true
         },
         LinkedRails.iri(query: '%3C/script%3E%3Cscript%3E') => {cache: 'private', status: 404, include: false}
+      }.merge(opts)
+    end
+
+    def linked_record_resources
+      [
+        {include: true, iri: dg_motion1.iri}
+      ]
+    end
+
+    def linked_record_responses(**opts)
+      {
+        dg_motion1.iri => {cache: 'private', status: 404, include: false}
+      }.merge(opts)
+    end
+
+    def linked_record_stub(record)
+      serializer_options = RDF::Serializers::Renderers.transform_opts(
+        {include: record&.try(:preview_includes)},
+        {}
+      )
+      body = RDF::Serializers.serializer_for(record).new(record, serializer_options).send(:render_hndjson)
+
+      stub_request(:get, record.iri).to_return(
+        status: 200,
+        body: body
+      )
+    end
+
+    def whitelisted_linked_record_responses(**opts)
+      {
+        dg_motion1.iri => {cache: 'no-cache', status: 200, include: true}
       }.merge(opts)
     end
 
