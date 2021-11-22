@@ -160,15 +160,6 @@ module SPI
       ]
     end
 
-    def bulk_resources_demogemeente
-      [
-        {include: true, iri: demogemeente.iri},
-        {include: true, iri: dg_current_actor_iri},
-        {include: true, iri: dg_motion1.iri},
-        {include: false, iri: 'https://example.com'}
-      ]
-    end
-
     def bulk_responses(**opts) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       {
         current_actor_iri => {cache: 'private', status: 200, include: true},
@@ -186,6 +177,15 @@ module SPI
         "#{argu.iri}/u/search" => {cache: 'private', status: 403, include: true},
         "#{argu.iri}/u/search?q=1" => {cache: 'private', status: 403, include: true}
       }.merge(opts)
+    end
+
+    def bulk_resources_demogemeente
+      [
+        {include: true, iri: demogemeente.iri},
+        {include: true, iri: dg_current_actor_iri},
+        {include: true, iri: dg_motion1.iri},
+        {include: false, iri: 'https://example.com'}
+      ]
     end
 
     def bulk_responses_demogemeente
@@ -313,6 +313,8 @@ module SPI
       [
         {include: true, iri: "#{argu.iri}/search"},
         {include: true, iri: "#{argu.iri}/search?q=1"},
+        {include: true, iri: "#{freetown.iri}/search"},
+        {include: true, iri: "#{freetown.iri}/search?q=1"},
         {include: true, iri: "#{argu.iri}/ns/core"},
         {include: true, iri: resource_iri(MotionForm.new, root: argu)}
       ]
@@ -322,6 +324,8 @@ module SPI
       {
         "#{argu.iri}/search" => {cache: 'public', status: 200, include: true},
         "#{argu.iri}/search?q=1" => {cache: 'private', status: 200, include: true},
+        "#{freetown.iri}/search" => {cache: 'public', status: 200, include: true},
+        "#{freetown.iri}/search?q=1" => {cache: 'private', status: 200, include: true},
         "#{argu.iri}/ns/core" => {cache: 'public', status: 200, include: true},
         resource_iri(MotionForm.new, root: argu) => {cache: 'public', status: 200, include: true}
       }.merge(opts)

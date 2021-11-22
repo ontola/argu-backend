@@ -29,8 +29,10 @@ class Group < ApplicationRecord
   with_collection :grants
   with_collection :group_memberships
   with_collection :search_results,
+                  association_base: -> { SearchResult::Query.new(self) },
                   association_class: Group,
                   collection_class: SearchResult::Collection,
+                  iri_template_keys: %i[q match],
                   route_key: :search
 
   with_columns settings: [

@@ -71,7 +71,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
                   policy_scope: false
   with_collection :search_results,
                   association_class: User,
+                  association_base: -> { SearchResult::Query.new(self) },
                   collection_class: SearchResult::Collection,
+                  iri_template_keys: %i[q match],
                   route_key: :search
 
   auto_strip_attributes :about, nullify: false

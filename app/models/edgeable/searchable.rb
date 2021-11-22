@@ -8,8 +8,10 @@ module Edgeable
       enhance ::Searchable
 
       with_collection :search_results,
+                      association_base: -> { SearchResult::Query.new(self) },
                       association_class: Edge,
                       collection_class: SearchResult::Collection,
+                      iri_template_keys: %i[q match],
                       route_key: :search
 
       include InstanceOverwrites
