@@ -1,4 +1,3 @@
-
 nl:
   forms:
     custom_actions:
@@ -23,7 +22,8 @@ nl:
         submit: "Opslaan"
       destroy:
         label: "Verwijder %{type}"
-        description: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
+        description: "Dit object en alle bijbehorende data zal permanent verwijderd\
+          \ worden. Deze actie is niet ongedaan te maken."
         success: 'Succesvol verwijderd'
         submit: "Verwijder"
       update:
@@ -42,7 +42,8 @@ nl:
         description: "Concept versie, nog niet gepubliceerd."
       trash:
         label: "Verwijderen"
-        description: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."
+        description: "Dit object zal niet zichtbaar zijn in de publieke discussie.\
+          \ Deze actie is ongedaan te maken."
         submit: "Verwijder"
       untrash:
         label: "Terugplaatsen"
@@ -65,15 +66,20 @@ nl:
     conversions:
       create:
         label: "Omzetten"
-        description: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
+        description: "Hiermee is een object van type te veranderen. Associaties worden\
+          \ soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde\
+          \ associaties leeg zijn."
         submit: "Zet om"
+        sbumit: Converteren
     dashboards:
       create:
         description: "Een dashboard kan widgets bevatten."
     direct_messages:
       create:
         label: "Verstuur bericht"
-        description: "Verstuur een e-mail naar %{creator}, de plaatser van dit item. Als hij of zij reageert op de e-mail, dan komt het antwoord direct in jouw mailbox en kan je het gesprek buiten dit platform verder voeren."
+        description: "Verstuur een e-mail naar %{creator}, de plaatser van dit item.\
+          \ Als hij of zij reageert op de e-mail, dan komt het antwoord direct in\
+          \ jouw mailbox en kan je het gesprek buiten dit platform verder voeren."
         submit: "Verstuur"
         disabled:
           guest: "Log in om een bericht te kunnen versturen."
@@ -116,7 +122,9 @@ nl:
         submit: "Opslaan"
       notifications:
         label: "Meldingen"
-        description: "Wanneer wil je een email ontvangen over items die je volgt? Beheerders van een organisatie kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt."
+        description: "Wanneer wil je een email ontvangen over items die je volgt?\
+          \ Beheerders van een organisatie kunnen items als 'belangrijk' markeren.\
+          \ Denk bijvoorbeeld aan een besluit over een discussie die je volgt."
         submit: "Opslaan"
       setup:
         label: "Welkom!"
@@ -129,7 +137,8 @@ nl:
         submit: "Opslaan"
       destroy:
         label: "Account verwijderen"
-        description: "Weet je zeker dat je **%{name}** wil verwijderen? De content geplaatst door dit account wordt geanonimiseerd."
+        description: "Weet je zeker dat je **%{name}** wil verwijderen? De content\
+          \ geplaatst door dit account wordt geanonimiseerd."
     setups:
       update:
         label: "Welkom!"
@@ -139,7 +148,8 @@ nl:
         label: "Nieuwe website"
       destroy:
         label: "Vernietigen"
-        description: "Weet je zeker dat je de volledige organisatie permanent wil verwijderen? Deze actie is niet ongedaan te maken."
+        description: "Weet je zeker dat je de volledige organisatie permanent wil\
+          \ verwijderen? Deze actie is niet ongedaan te maken."
         submit: "Verwijder"
     passwords:
       create:
@@ -150,5 +160,6 @@ nl:
     unlocks:
       create:
         label: 'Je account is vergrendeld'
-        description: 'Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je je account kunt ontgrendelen.'
+        description: 'Vul je e-mailadres in en wij zullen jou een mail sturen met
+          een link waarmee je jouw account kunt ontgrendelen.'
         submit: "Verstuur"
