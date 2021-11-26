@@ -5,6 +5,7 @@ require 'test_helper'
 class TenantFinderTest < ActiveSupport::TestCase
   define_freetown
   let!(:demogemeente) { create(:page, iri_prefix: 'demogemeente.nl/test', url: 'demogemeente') }
+  let!(:secondary_shortname) { create(:shortname, primary: false, shortname: 'secondary', owner: argu)}
   let!(:upcase_page) { create(:page, iri_prefix: 'example.com/Upcase') }
 
   before do
@@ -25,6 +26,10 @@ class TenantFinderTest < ActiveSupport::TestCase
 
   test 'should find tenant by forum iri with upcase page shortname' do
     assert_equal TenantFinder.from_url(freetown_iri.to_s.gsub("/#{argu.url}/", "/#{argu.url.upcase}/")), argu
+  end
+
+  test 'should find tenant by forum iri with secondary shortname' do
+    assert_equal TenantFinder.from_url(freetown_iri.to_s.gsub('freetown', 'secondary')), argu
   end
 
   test 'should find tenant by invalid iri' do
