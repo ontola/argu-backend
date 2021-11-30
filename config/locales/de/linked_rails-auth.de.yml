@@ -1,0 +1,18 @@
+de:
+  forms:
+    access_tokens:
+      email:
+        label: E-Mail
+    otp_attempts:
+      helper_text: >-
+        Diesen finden Sie in der Authentifizierungsanwendung, die Sie zuvor
+        verwendet haben.
+      label: Authentifizierungs-Code
+    otp_secrets:
+      provision_image:
+        description: >-
+          Installieren Sie eine Authentifizierungsanwendung und scannen Sie
+          diesen QR-Code.
+    sessions:
+      email:
+        label: E-Mail

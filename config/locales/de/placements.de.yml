@@ -1,0 +1,4 @@
+de:
+  placements:
+    blank_country: Wir können Ihre Postleitzahl nicht ohne ein Land finden
+    postal_with_county_not_found: Postleitzahl in Kombination mit dem ausgewählten Land wurde nicht gefunden

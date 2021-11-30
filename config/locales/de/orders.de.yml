@@ -1,0 +1,16 @@
+de:
+  orders:
+    plural: Bestellungen
+    type: Bestellung
+    type_new: Fertigstellen
+    errors:
+      coupon:
+        invalid: Coupon ist nicht gültig
+  actions:
+    orders:
+      create:
+        success: Ihr Budget ist eingereicht!
+        errors:
+          budget_exceeded: Das Budget ist überschritten
+          cart_empty: Noch keine Artikel ausgewählt
+          submitted: Sie haben bereits ein Budget eingereicht

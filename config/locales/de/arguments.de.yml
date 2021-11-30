@@ -1,0 +1,66 @@
+de:
+  forms:
+    arguments:
+      content:
+        description: >-
+          Geben Sie hier Details und Hintergrundinformationen zu Ihrem Argument
+          ein.
+        label: Details zum Argument (optional)
+      description:
+        description: >-
+          Geben Sie hier Details und Hintergrundinformationen zu Ihrem Argument
+          an.
+      display_name:
+        description: Geben Sie hier den Kern Ihres Arguments an
+      title:
+        description: Geben Sie hier den Kern Ihres Arguments ein
+        label: Kern Ihres Arguments
+      type: eingeben
+      submit: Argument einreichen
+      side:
+        pro: Pro-Argument
+        con: Gegenargument
+    pro_arguments:
+      content:
+        description: Details und Hintergrundinformationen.
+      description:
+        description: Einzelheiten und Hintergrundinformationen.
+      display_name:
+        description: Zusammenfassung Ihrer Pro
+      title:
+        description: Zusammenfassung der Pro-Argumente
+    con_arguments:
+      content:
+        description: Details und Hintergrundinformationen.
+      description:
+        description: Details und Hintergrundinformationen.
+      display_name:
+        description: Zusammenfassung Ihrer Argumente
+      title:
+        description: Zusammenfassung Ihrer Argumente
+  pro_arguments:
+    type_new: Neues Pro
+  con_arguments:
+    type_new: Neues Argument
+  arguments:
+    type_new: Neues Argument
+    vote: Abstimmung
+    collection:
+      'yes': Vorteile
+      'no': Probleme
+      new:
+        'yes': Vorteil hinzufügen
+        'no': Problem hinzufügen
+  activerecord:
+    errors:
+      models:
+        arguments:
+          attributes:
+            title:
+              blank: You need to add a title for your argument.
+            forum:
+              different: The argument and it's motion must belong to the same forum
+    attributes:
+      argument:
+        title: Titel
+        body: Inhalt

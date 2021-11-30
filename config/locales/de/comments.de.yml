@@ -1,0 +1,22 @@
+de:
+  comments:
+    type_new: Neuer Kommentar
+    menu:
+      zero: Kommentare
+      one: Kommentare%{count})
+      other: Kommentare%{count})
+    placeholder: >-
+      Platzieren Sie Ihre Kommentare hier. Bitte halten Sie Ihre Kommentare
+      sachlich und freundlich :)
+    empty:
+      name: Platzieren Sie Ihren Kommentar
+    edited_at: bearbeitet um %{time}
+    more: Mehr anzeigen
+    edit: Kommentar bearbeiten
+  forms:
+    comments:
+      description:
+        description: Gib deinen Kommentar ein
+  pundit:
+    comment_policy:
+      create?: Sie sind nicht berechtigt, mit diesem Konto einen Kommentar abzugeben.

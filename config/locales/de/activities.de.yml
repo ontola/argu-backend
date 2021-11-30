@@ -1,0 +1,47 @@
+de:
+  activities:
+    votes:
+      create: '%{owner} %{side} %{parent}'
+      ':yes': ist für
+      ':no': ist dagegen
+      other: ist neutral gegenüber
+    decisions:
+      approved: '%{owner} bestanden %{parent}'
+      rejected: '%{owner} abgelehnt %{parent}'
+      create: >-
+        %{owner} hat einen Entscheidungsentwurf im Bereich
+        %{parent}veröffentlicht
+      update: '%{owner} aktualisiert eine Entscheidung über %{parent}'
+    default:
+      convert: '%{owner} umgewandelt %{subject} in eine %{type}'
+      create: '%{owner} veröffentlicht eine %{type} in %{parent}'
+      publish: '%{owner} posted a %{type} in %{parent}'
+      destroy: '%{owner} gelöscht %{subject}'
+      trash: '%{owner} verworfen %{subject}'
+      untrash: '%{owner} untrashed %{subject}'
+      update: '%{owner} aktualisiert %{subject}'
+    arguments:
+      create: '%{owner} hat einen Entwurf für ein %{type} %{side} %{parent}erstellt'
+      ':yes': zugunsten von
+      ':no': gegen
+    pro_arguments:
+      create: '%{owner} hat einen Entwurf für ein %{type} %{side} %{parent}erstellt'
+      ':yes': dafür
+      ':no': gegen
+    con_arguments:
+      create: '%{owner} hat einen Entwurf gepostet %{type} %{side} %{parent}'
+      ':yes': dafür
+      ':no': gegen
+    blog_posts:
+      create: '%{owner} hat einen Entwurf erstellt %{type} in %{parent}'
+    motions:
+      create: '%{owner} erstellte einen Entwurf für %{type} in %{parent}'
+    questions:
+      create: '%{owner} erstellte einen Entwurf für %{type} in %{parent}'
+    comments:
+      create: '%{owner} posted a draft %{type} to %{parent}'
+      publish: '%{owner} antwortete auf %{parent}'
+      destroy: '%{owner} löschte eine %{type} für %{parent}'
+      trash: '%{owner} löschte ein %{subject} für %{parent}'
+      untrash: '%{owner} löschte ein %{subject} für %{parent}'
+      update: '%{owner} aktualisierte ein %{subject} für %{parent}'

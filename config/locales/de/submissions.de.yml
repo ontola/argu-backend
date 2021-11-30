@@ -1,0 +1,6 @@
+de:
+  submissions:
+    type_new: Neue Antwort
+    status:
+      submission_active: Aktiv
+      submission_completed: Abgeschlossen

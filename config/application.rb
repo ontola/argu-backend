@@ -96,8 +96,8 @@ module Argu
     ############################
 
     config.time_zone = 'UTC'
-    I18n.available_locales = %i[nl en]
-    config.i18n.available_locales = %i[nl en]
+    I18n.available_locales = %i[de nl en]
+    config.i18n.available_locales = %i[de nl en]
     config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}')]
     config.i18n.enforce_available_locales = true
     I18n.enforce_available_locales = true

@@ -1,0 +1,6 @@
+de:
+  question_answers:
+    destroy:
+      confirmation: >-
+        Damit wird dieser Gedanke von seiner Frage entkoppelt, diese können zu
+        einem späteren Zeitpunkt wieder gekoppelt werden.

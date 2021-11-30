@@ -1,0 +1,13 @@
+de:
+  linked_rails:
+    status:
+      '400': Fehler in der Anfrage
+      '401': Sie müssen eingeloggt sein, um diese Aktion durchzuführen.
+      '403': Diese Seite ist nicht verfügbar.
+      '404': Der Artikel wurde nicht gefunden. Versuchen Sie, die Seite neu zu laden.
+      '429': >-
+        Sie stellen zu viele Anfragen, bitte versuchen Sie es später noch
+        einmal.
+      '500': >-
+        Auf unserer Seite ist etwas schief gelaufen, bitte versuchen Sie es
+        später noch einmal.

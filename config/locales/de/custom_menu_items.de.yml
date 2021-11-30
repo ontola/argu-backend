@@ -1,0 +1,14 @@
+de:
+  custom_menu_items:
+    type_new: Neuer Menüpunkt
+  forms:
+    custom_menu_items:
+      raw_label:
+        label: Bezeichnung
+      raw_href:
+        label: URL
+      raw_image:
+        label: Symbol
+      position:
+        label: Standort
+      coupled_to: Dieser Menüpunkt ist an %{name} gekoppelt.

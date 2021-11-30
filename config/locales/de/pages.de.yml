@@ -1,0 +1,90 @@
+de:
+  pages:
+    type_new: Neue Website
+    show: Organisation anzeigen
+    discover_header: Entdecken Sie
+    my_pages: Meine Argu-Webseiten
+    settings:
+      title: Einstellungen der Organisation
+      menu:
+        return: Ansicht %{resource}
+        general: Allgemein
+        profile: Profil der Organisation
+        advanced: Fortgeschrittene
+        groups: Gruppen
+        grants: Erlaubnisse
+        forums: Foren
+        container_nodes: Bestandteile
+        shortnames: Weiterleitungen
+      managers:
+        owner: Besitzer
+        about_owner: >-
+          Benutzer besitzen eine Organisation. Benutzer können mehrere
+          Organisationen besitzen, aber eine Organisation kann nur einen
+          einzigen Besitzer haben.
+        title: Gruppen
+        about_managers: >-
+          Einige Gruppen haben Verwaltungsrechte. Mitglieder können Gruppen
+          verwalten und Inhalte im Namen der Organisation veröffentlichen. Sie
+          können auch über ihren eigenen Namen abstimmen und zuvor eingestellte
+          Beiträge löschen.
+      forums:
+        get_one: >-
+          Möchten Sie ein Forum für Ihre Organisation einrichten? Bitte <a
+          href="mailto:info@argu.co">kontaktieren Sie uns</a> für die
+          Möglichkeiten.
+      advanced:
+        delete:
+          forum_owner: >-
+            Diese Seite besitzt ein oder mehrere Foren. Löschen Sie diese oder
+            kontaktieren Sie Argu, bevor Sie fortfahren.
+    management:
+      title: Verwaltung von Organisationen
+      managed_current_out_of_max: '%{current} von max %{max} Organisation(en) verwaltet.'
+      owner: Besitzer
+    display: Organisation anzeigen
+    create: Eine Organisation erstellen
+    legal: >-
+      Indem Sie diese Organisation anlegen, erklären Sie, dass Sie die Erlaubnis
+      haben, die betreffende Organisation auf Argu zu vertreten, und dass Sie
+      mit den allgemeinen Geschäftsbedingungen einverstanden sind.
+    limit_reached_amount: Sie können nicht mehr als %{amount} Organisation(en) anlegen.
+    page_management: Verwaltung der Organisation
+  enums:
+    pages:
+      header_background:
+        background_primary: Primäre Farbe
+        background_secondary: Sekundäre Farbe
+        background_white: Weiß
+      header_text:
+        text_primary: Primäre Farbe
+        text_secondary: Sekundäre Farbe
+        text_auto: Automatisch
+  forms:
+    pages:
+      accepted_terms:
+        label: Ich akzeptiere die Nutzungsbedingungen
+      google_tag_manager:
+        label: Google Tag Manager
+      google_uac:
+        label: Google UA-Code
+      last_accepted:
+        label: Ich akzeptiere die Nutzungsbedingungen
+      matomo_host:
+        label: Matomo-Host
+        description: Leer lassen, um den Standard-Host zu verwenden
+      matomo_site_id:
+        label: Matomo-Site-ID
+      piwik_pro_host:
+        label: Piwik Pro-Host
+        description: z.B. 'meinprojekt.piwik.pro'
+      piwik_pro_site_id:
+        label: Piwik-Pro-Site-ID
+      shortname:
+        label: URL argumentieren
+  activerecord:
+    attributes:
+      page:
+        name: Name
+        shortname: URL argumentieren
+        f_delete: Löschen

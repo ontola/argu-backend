@@ -1,0 +1,161 @@
+de:
+  forms:
+    staff_only: Nur Personal
+    advanced: Fortgeschrittene
+    theme:
+      label: Thema
+      description: Bitte laden Sie die Seite neu, nachdem Sie das Thema geändert haben.
+    default:
+      about:
+        label: Über
+      attachments:
+        label: Anhänge
+      attachment_collection:
+        label: Anhänge
+      audience:
+        label: Publikum
+      bio:
+        label: Ziel
+      confirmation_string:
+        description: Zum Bestätigen 'entfernen' eingeben
+        label: Bestätigen Sie
+      content:
+        label: Inhalt
+      country_code:
+        label: Land
+      coupon:
+        label: Coupon
+      coupons:
+        label: Gutscheine
+      coupon_count:
+        label: Anzahl der Gutscheine
+      cover_photo_attribution:
+        description: >-
+          Wenn Sie das Copyright für ein Foto nicht besitzen, können Sie hier
+          den Urheber und die Lizenz angeben. Zum Beispiel: CC-BY @argu_joep
+        label: Urheberrecht
+      cover_photo:
+        label: Foto abdecken
+      cover_photo_add:
+        label: Bild hinzufügen
+      created_at:
+        label: Erstellt am
+      creator:
+        label: Posten als
+      current_password:
+        label: Aktuelles Passwort
+      custom_placement:
+        label: Standort
+      default_cover_photo:
+        label: Titelbild
+      default_profile_photo:
+        label: Profil-Foto
+      description:
+        description: Eine Beschreibung eingeben
+        label: Inhalt
+      dismiss_button:
+        label: Text der Schaltfläche
+      dismissable:
+        label: Entfernbar
+      display_name:
+        description: Geben Sie Ihren Titel ein
+        label: Titel
+      edge_id:
+        label: Objekt
+      email:
+        description: email@example.com
+        label: E-Mail
+      ends_at:
+        label: Endet am
+      expires_at:
+        label: Läuft ab am
+      filename:
+        label: Dateiname
+      follows_count:
+        label: Follower
+      grant_set:
+        label: Erlaubnissatz
+      grant_set_id:
+        label: Berechtigungssatz
+      grants:
+        label: Erlaubt
+      grant_collection:
+        label: Erlaubnisse
+      group_membership_collection:
+        label: Mitglieder
+      group_id:
+        label: Gruppe
+      header_background:
+        label: Hintergrund der oberen Leiste
+      header_text:
+        label: Textfarbe der oberen Leiste
+      home_placement:
+        label: Adresse
+      is_draft:
+        label: Entwurf
+      is_public:
+        label: Profil für Nicht-Mitglieder anzeigen
+      last_accepted:
+        label: Ich stimme zu
+      last_activity_at:
+        label: Aktivität
+      language:
+        label: Sprache
+      locale:
+        label: Sprache
+      map_question:
+        label: Große Karte
+      mark_as_important:
+        label: Als wichtig markieren
+      name:
+        label: Name
+      notify:
+        label: Benachrichtigung über die Platzierung erteilen
+      password_confirmation:
+        description: Dasselbe wie oben
+        label: Bestätigen Sie das Passwort
+      password:
+        description: Mindestens 8 Zeichen.
+        label: Kennwort
+      path:
+        label: alias
+      pinned:
+        label: Pin
+      postal_code:
+        label: Postleitzahl
+      primary_color:
+        label: Primäre Farbe
+      primary_container_node_id:
+        label: Startseite
+      profile_photo:
+        label: Profilbild
+      published_at:
+        label: Veröffentlicht
+      remember_me:
+        label: Daten merken
+      require_location:
+        label: Standort ist erforderlich
+      secondary_color:
+        label: Sekundäre Farbe
+      show_feed:
+        label: Meine Aktivität und meine Stimmen in meinem Profil anzeigen
+      status:
+        label: Status
+      styled_headers:
+        label: Primärfarbe für Überschriften verwenden
+      title:
+        label: Titel
+      time_zone:
+        label: Zeitzone
+      trash_activity:
+        label: Erläuterung
+      type:
+        label: Typ
+      untrash_activity:
+        label: Erläuterung
+      upvote_only:
+        label: Upvote Ideen
+      url:
+        label: Url
+      used_coupons:
+        label: Verwendete Coupons

@@ -1,0 +1,7 @@
+de:
+  follows:
+    status:
+      never: Sie erhalten keine Benachrichtigungen für%{item}".
+      decisions: Sie erhalten Benachrichtigungen über Entscheidungen zu%{item}".
+      news: Sie erhalten Benachrichtigungen über wichtige Neuigkeiten zu%{item}'.
+      reactions: Sie erhalten Benachrichtigungen für alle Antworten zu%{item}'.

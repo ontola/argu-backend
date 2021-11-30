@@ -1,0 +1,19 @@
+de:
+  widgets:
+    type_new: Neues Widget
+  forms:
+    widgets:
+      size:
+        label: Breite
+      position:
+        label: Standort
+      view:
+        label: Ansicht
+      raw_resource_iri:
+        label: Objekt
+  enums:
+    widgets:
+      view:
+        full_view: Volledig
+        compact_view: Kompakt
+        preview_view: Vorschau

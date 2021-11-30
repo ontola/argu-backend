@@ -1,0 +1,6 @@
+de:
+  coupon_batches:
+    type_new: Neue Gutscheine
+    errors:
+      coupon:
+        invalid: Coupon ist nicht gültig

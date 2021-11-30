@@ -1,0 +1,15 @@
+de:
+  banners:
+    type_new: Neue Fahne
+  enums:
+    banners:
+      audience:
+        guests: Gäste
+        users: Benutzer
+        members: Mitglieder
+        everyone: Alle
+  banner_managements:
+    type: Banner
+    plural: Banner
+  banner_dismissals:
+    type: Entlassung

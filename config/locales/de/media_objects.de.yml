@@ -1,0 +1,19 @@
+de:
+  forms:
+    media_objects:
+      content:
+        label: Wählen Sie eine Datei
+      remote_content_url:
+        label: 'Geben Sie einen Link zu einer Datei oder einem Film ein:'
+      content_source:
+        label: Speicherort der Datei
+    image_objects:
+      content:
+        label: Wählen Sie eine Datei
+      remote_content_url:
+        label: 'Geben Sie einen Link zu einer Datei oder einem Film ein:'
+  enums:
+    media_objects:
+      content_source:
+        local: Auf meinem Computer
+        remote: Im Internet

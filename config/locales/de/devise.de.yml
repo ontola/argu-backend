@@ -1,0 +1,125 @@
+de:
+  errors:
+    messages:
+      expired: abgelaufen ist, fordern Sie bitte eine neue an.
+      not_found: nicht gefunden
+      already_confirmed: wurde bereits bestätigt, versuchen Sie, sich anzumelden.
+      not_locked: wurde nicht gesperrt
+      should_match: sollte übereinstimmen
+      extension_whitelist_error: Dieser Dateityp kann nicht hochgeladen werden.
+      not_saved:
+        one: >-
+          1 Fehler führte dazu, dass %{resource} nicht gespeichert werden
+          konnte:
+        other: >-
+          %{count} Fehler haben dazu geführt, dass die %{resource} nicht
+          gespeichert werden konnte:
+  devise:
+    failure:
+      already_authenticated: Sie sind bereits authentifiziert.
+      unauthenticated: Sie müssen sich authentifizieren, bevor Sie fortfahren können.
+      unconfirmed: Sie müssen Ihr Konto bestätigen, bevor Sie fortfahren können.
+      locked: Ihr Konto ist gesperrt.
+      invalid_token: Ungültiges Authentifizierungs-Token.
+      timeout: Ihre Sitzung ist abgelaufen, melden Sie sich an, um fortzufahren.
+      inactive: Ihr Konto wurde nicht aktiviert.
+      invalid: >-
+        Wir konnten keinen Benutzer mit dieser Kombination aus E-Mail und
+        Passwort finden.
+      invalid_email: Wir konnten keinen Benutzer mit dieser E-Mail-Adresse finden.
+      invalid_password: Ungültiges Passwort.
+      invalid_username: Es konnte kein Benutzer mit diesem Namen gefunden werden.
+      no_password: >-
+        Ihr Konto hat noch kein Passwort. Wir haben Ihnen gerade eine neue
+        E-Mail geschickt, um ein Passwort festzulegen.
+      user:
+        not_found_in_database: >-
+          Wir konnten keinen Benutzer mit dieser Kombination aus E-Mail und
+          Passwort finden.
+    sessions:
+      signed_in: Willkommen zurück!
+      signed_out: Sie haben sich erfolgreich abgemeldet.
+    passwords:
+      send_instructions: >-
+        Sie werden in Kürze eine E-Mail mit Anweisungen zum Zurücksetzen Ihres
+        Passworts erhalten.
+      updated: Ihr Passwort wurde erfolgreich aktualisiert. Sie sind jetzt eingeloggt.
+      updated_not_active: Ihr Passwort wurde erfolgreich aktualisiert.
+      send_paranoid_instructions: >-
+        Wenn Ihre E-Mail-Adresse bereits in unserer Datenbank vorhanden ist,
+        erhalten Sie in wenigen Minuten einen Link zum Zurücksetzen Ihres
+        Passworts.
+      no_token: >-
+        Sie können auf diese Seite nicht zugreifen, ohne dass Sie eine E-Mail
+        zum Zurücksetzen des Passworts erhalten haben. Bitte überprüfen Sie die
+        eingegebene Adresse.
+      edit:
+        header: Passwort ändern
+        submit: Speichern
+      set:
+        header: Wählen Sie ein Passwort
+      new:
+        header: Haben Sie Ihr Passwort vergessen?
+        helper: >-
+          Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen eine E-Mail mit
+          einem Link, über den Sie ein neues Passwort eingeben können.
+        submit: Anweisungen zum Zurücksetzen senden
+    confirmations:
+      send: Bestätigungsmail senden
+      send_instructions: >-
+        Sie erhalten innerhalb weniger Minuten eine E-Mail mit Anweisungen zur
+        Bestätigung Ihres Kontos.
+      send_paranoid_instructions: >-
+        Wenn Ihre E-Mail-Adresse bereits in unserer Datenbank vorhanden ist,
+        erhalten Sie einen Link zur Bestätigung Ihres Kontos.
+      confirmed: Ihr Konto wurde bestätigt.
+      invalid_email: '%{email} existiert nicht oder gehört zu einem anderen Benutzer.'
+      set_password:
+        header: Wählen Sie ein Passwort
+        button: Passwort festlegen
+      edit:
+        header: Bestätigungslink erneut senden
+        submit: Bestätigungslink senden
+    registrations:
+      signed_up: Willkommen bei argu! Sie haben sich soeben angemeldet.
+      signed_up_but_unconfirmed: >-
+        Eine Bestätigungs-E-Mail wurde an Ihre eingegebene E-Mail-Adresse
+        gesendet. Öffnen Sie den Link, um Ihr Konto zu bestätigen.
+      signed_up_but_inactive: >-
+        Sie haben sich neu angemeldet, aber Sie können sich nicht einloggen, da
+        Ihr Konto deaktiviert wurde.
+      signed_up_but_locked: >-
+        Sie haben sich erfolgreich neu angemeldet, können sich aber nicht
+        einloggen, da Ihr Konto gesperrt wurde.
+      updated: Ihr Konto wurde aktualisiert.
+      update_needs_confirmation: >-
+        Möchten Sie Ihre E-Mail-Adresse bestätigen? Wir haben eine
+        Bestätigungs-E-Mail verschickt.
+      destroyed: Ihr Konto wurde gelöscht. Wir hoffen, Sie bald wiederzusehen!
+      password_confirmation:
+        header: Ihr Passwort wurde aktualisiert.
+    unlocks:
+      send_instructions: >-
+        Sie werden in wenigen Minuten eine E-Mail mit Anweisungen zur
+        Freischaltung Ihres Kontos erhalten.
+      unlocked: Ihr Konto wurde freigeschaltet. Melden Sie sich an, um fortzufahren.
+      send_paranoid_instructions: >-
+        Wenn Ihr Konto existiert, erhalten Sie in wenigen Minuten eine E-Mail
+        mit Anweisungen zum Freischalten Ihres Kontos.
+      new:
+        header: Ihr Konto ist gesperrt
+        helper: >-
+          Geben Sie Ihre E-Mail-Adresse ein und Sie erhalten einen Link, um Ihr
+          Konto zu entsperren.
+        submit: Anweisungen zum Freischalten senden
+    omniauth_callbacks:
+      success: Erfolgreiche Verbindung mit einem %{kind}.
+      failure: Es war leider nicht möglich, Ihr %{kind} wegen %{reason} zu koppeln.
+    activerecord:
+      attributes:
+        user:
+          login: E-Mail oder Benutzername
+  intro:
+    initial:
+      headers:
+        shortname: Herzlich willkommen!

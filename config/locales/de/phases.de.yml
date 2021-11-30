@@ -1,0 +1,9 @@
+de:
+  phases:
+    type_new: Neue Phase
+  forms:
+    phases:
+      position:
+        label: Standort
+      time:
+        label: Zeit

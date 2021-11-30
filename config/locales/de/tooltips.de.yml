@@ -1,0 +1,6 @@
+de:
+  tooltips:
+    motion:
+      vote_pro_count: Anzahl der Ja-Stimmen
+      vote_con_count: Anzahl der Gegenstimmen
+      vote_neutral_count: Anzahl der neutralen Stimmen

@@ -1,0 +1,63 @@
+de:
+  forms:
+    grants:
+      description: >-
+        Sie können Gruppen in diesem Forum bestimmte Rechte gewähren. Die Rechte
+        gelten auch für den zugrunde liegenden Inhalt. Die folgenden Rechte sind
+        auf einer höheren Ebene definiert:
+      group:
+        label: Groep
+  grants:
+    type_new: Neue Berechtigung
+    empty: Keine Rechte
+    new: Neue Förderungen zuweisen
+    inherited: Diese Rolle wird von der %{type}geerbt
+    all_forums: Alle Foren
+    other: Andere
+    labels:
+      role: Welche Rolle möchten Sie zuweisen?
+      group: Welcher Gruppe möchten Sie diese Rolle zuweisen?
+      edge: Für welches Forum soll diese Rolle gewährt werden?
+    errors:
+      taken: >-
+        Diese Gruppe hat bereits eine Berechtigung für dieses Forum. Bitte
+        entfernen Sie diese Berechtigung, bevor Sie eine neue erstellen.
+  roles:
+    type: Grant
+    plural: Erlaubnisse
+    description: Die Berechtigungen gelten auch für den zugrunde liegenden Inhalt.
+    label: 'Mitglieder dieser Gruppe können:'
+    in_current_forum: Im Forum %{forum}
+    in_all_forums: In allen Foren
+    empty: keine
+    may: können
+    types:
+      empty: keine zusätzliche Rolle
+      none: nichts sehen
+      spectator: nur lesen
+      participator: teilnehmen
+      initiator: initiieren
+      moderator: moderieren
+      administrator: verwalten
+      staff: Mitarbeiter
+    descriptions:
+      spectator: >-
+        Damit können Sie Inhalte lesen. Es ist nicht möglich, eigene Reaktionen
+        zu posten.
+      participator: >-
+        Hier können Sie auf Inhalte reagieren, die von Moderatoren gepostet
+        wurden. Benutzer können selbst keine neuen Themen erstellen.
+      initiator: >-
+        Hier können Sie sowohl auf Themen anderer reagieren als auch selbst neue
+        Themen erstellen.
+      moderator: >-
+        Neben dem Reagieren und dem Starten neuer Themen ermöglicht dies auch
+        die Möglichkeit, Inhalte anderer zu bearbeiten und zu löschen.
+      administrator: >-
+        Der fortgeschrittenste Satz von Berechtigungen. Damit können Sie alles
+        lesen und bearbeiten.
+      staff: Mitarbeiter von Ontola
+  grant_resets:
+    label: Wer darf Ideen posten?
+    default: Forum-Einstellungen verwenden
+    manual: Manuelle Einstellungen

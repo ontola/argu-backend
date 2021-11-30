@@ -1,0 +1,25 @@
+de:
+  actions:
+    email_addresses:
+      confirm:
+        completed: Diese Adresse ist bereits bestätigt
+      create:
+        submit: hinzufügen
+      destroy:
+        primary: Sie können Ihre primäre Adresse nicht löschen
+      make_primary:
+        completed: Dies ist bereits Ihre primäre Adresse
+        unconfirmed: Diese Adresse ist noch nicht bestätigt
+        submit: Primär-E-Mail-Adresse erstellen
+      send_confirmation:
+        submit: Erneut senden
+  forms:
+    email_addresses:
+      user:
+        label: Benutzer
+  email_addresses:
+    type_new: Neue E-Mail-Adresse
+    create:
+      success: >-
+        E-Mail-Adresse zu Ihrem Konto hinzugefügt. Bitte bestätigen Sie die neue
+        Adresse, indem Sie auf den Link klicken, den wir Ihnen geschickt haben.
