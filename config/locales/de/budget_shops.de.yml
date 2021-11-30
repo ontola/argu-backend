@@ -1,0 +1,9 @@
+de:
+  budget_shops:
+    type_new: Neuer Haushalt
+  forms:
+    budget_shops:
+      budget_max:
+        label: Haushalt
+      currency:
+        label: Referat

@@ -1,0 +1,93 @@
+de:
+  users:
+    type: Benutzer
+    plural: Benutzer
+    guest: Gast-Benutzer
+    anonymous: Anonym
+    settings:
+      title: Benutzer-Einstellungen
+      menu:
+        general: Allgemein
+        profile: Profil
+        authentication: Authentifizierung
+        notifications: Benachrichtigungen
+        privacy: Datenschutz
+        advanced: Fortgeschrittene
+        emails: E-Mail-Adressen
+        destroy: Zerstören
+    registrations:
+      confirm_mail_change_notice: >-
+        Wir haben Ihnen eine Mail an die neue Adresse geschickt. Bitte
+        bestätigen Sie die Änderung, indem Sie den Link in dieser Mail
+        anklicken.
+    drafts:
+      title: Meine Entwürfe
+  enums:
+    users:
+      reactions_email:
+        never_reactions_email: Niemals
+        direct_reactions_email: Unmittelbar
+        daily_reactions_email: Täglich
+        weekly_reactions_email: Wöchentlich
+      news_email:
+        never_news_email: Niemals
+        direct_news_email: Unmittelbar
+        daily_news_email: Täglich
+        weekly_news_email: Wöchentlich
+      decisions_email:
+        never_decisions_email: Niemals
+        direct_decisions_email: Unmittelbar
+        daily_decisions_email: Täglich
+        weekly_decisions_email: Wöchentlich
+      memberships_email:
+        never_memberships_email: Niemals
+        direct_memberships_email: Unmittelbar
+        daily_memberships_email: Täglich
+        weekly_memberships_email: Wöchentlich
+      created_email:
+        never_created_email: Niemals
+        direct_created_email: Unmittelbar
+        daily_created_email: Täglich
+        weekly_created_email: Wöchentlich
+      destroy_strategy:
+        expropriate_on_destroy: Anonymisierung von Inhalten
+        remove_on_destroy: Inhalte entfernen
+  forms:
+    users:
+      decisions_email:
+        label: Für offizielle Entscheidungen
+      display_name:
+        description: ''
+        helper_text: >-
+          Legen Sie fest, wie Sie für andere sichtbar sein sollen. Die meisten
+          Leute verwenden ihren echten Namen.
+        label: Name
+      email:
+        description: email@example.com
+      has_analytics:
+        description: >-
+          Wir verwenden Bugsnag, um über Fehler in Ihrem Browser informiert zu
+          werden und diese zu beheben. Wir verwenden Matomo, um zu analysieren,
+          wie die Website genutzt wird, damit wir die Benutzerfreundlichkeit
+          verbessern können.
+        label: Browserdienste aktivieren
+      is_public:
+        description: >-
+          Wenn Sie diese Option aktivieren, wird Ihr Name für Gastbenutzer durch
+          "Anonym" ersetzt. Auf diese Weise wird Ihr Name nicht von
+          Suchmaschinen indiziert. Registrierte Benutzer können Ihr Profil und
+          Ihren Namen immer sehen.
+      news_email:
+        label: Für wichtige Artikel
+      reactions_email:
+        label: Für neue Einträge
+      shortname:
+        description: >-
+          Keine Leerzeichen. Nur Buchstaben, Zahlen und _. Beginnen Sie mit
+          einem Buchstaben.
+        label: Benutzername
+      url:
+        helper_text: >-
+          Sie können Ihren Benutzernamen nicht mehr ändern, nachdem Sie ihn
+          festgelegt haben.
+        label: Benutzername

@@ -1,0 +1,28 @@
+de:
+  actions:
+    notifications:
+      update:
+        label: Als gelesen markieren
+      read_all:
+        label: Alle als gelesen markieren
+  notifications:
+    all: Alle Benachrichtigungen
+    settings: Einstellungen
+    receive:
+      never: Niemals
+      reactions: Alle Artikel
+      news: Wichtige Artikel
+      decisions: Nur offizielle Entscheidungen
+      title: 'Erhalten Sie Benachrichtigungen für:'
+    permanent:
+      confirm_account:
+        one: >-
+          Bitte bestätigen Sie Ihre Stimme, indem Sie auf den Link klicken, den
+          wir an %{email}gesendet haben.
+        other: >-
+          Bitte bestätigen Sie Ihre %{count} Stimmen, indem Sie auf den Link
+          klicken, den wir an %{email}geschickt haben.
+    unsubscribe:
+      success: Sie erhalten keine Benachrichtigungen mehr für%{item}'.
+      failed: Du erhältst noch keine Benachrichtigungen für%{item}'.
+    changed_successfully: Ihre Benachrichtigungseinstellungen wurden aktualisiert

@@ -1,0 +1,22 @@
+de:
+  forms:
+    exports:
+      user:
+        label: Gebruiker
+  exports:
+    type_new: Neuer Export
+    destroy_confirmation: Sind Sie sicher, dass Sie diesen Export löschen wollen?
+    status:
+      pending: Wartet auf Bearbeitung
+      processing: In Bearbeitung
+      ready: Verfügbar
+      failed: Fehler bei der Verarbeitung
+    create_helper: >-
+      Die Erstellung eines Exports dauert eine Weile. Sie erhalten eine E-Mail,
+      wenn er fertig ist.
+    formats:
+      xls:
+        overview_title: Übersicht
+        path: Hierarchie
+        title: '%{type} Titel'
+        description: '%{type} inhoud'

@@ -1,0 +1,9 @@
+de:
+  search:
+    type: Suche
+    title: Suchergebnisse für %{q}
+    placeholder: Geben Sie eine Suchanfrage ein
+    results_found:
+      zero: Keine Ergebnisse gefunden
+      one: Ein Ergebnis gefunden
+      other: '%{count} Ergebnisse gefunden'

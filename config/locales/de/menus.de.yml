@@ -1,0 +1,60 @@
+de:
+  menus:
+    copy_successful: '%{url}" in die Zwischenablage kopiert'
+    default:
+      2fa: Zwei-Faktor-Authentifizierung
+      authentication: Authentifizierung
+      facebook: Facebook
+      twitter: Twitter
+      linked_in: LinkedIn
+      google_plus: Google+
+      email: E-Mail
+      whatsapp: Whatsapp
+      share: Teilen
+      copy: Link kopieren
+      no_social_media: Das Teilen auf sozialen Medien ist nur in öffentlichen Foren möglich
+      not_published: Sie können nur veröffentlichte Artikel teilen
+      follow: Benachrichtigungen
+      follow_header: 'Erhalten Sie Benachrichtigungen für:'
+      never: Niemals Benachrichtigungen erhalten
+      reactions: Alle Artikel
+      news: Wichtige Artikel
+      invite: Einladen
+      email_invite: Per E-Mail einladen
+      bearer_invite: Per Link einladen
+      meetings: Begegnungen
+      questions: Fragen
+      motions: Anträge
+      notifications: Benachrichtigungen
+      settings: Einstellungen
+      typeform: Verwalten
+      participate: Senden
+      submission: Antwort
+      new_component: Seite hinzufügen
+      new_forum: Neues Forum
+      new_open_data_portal: Neues Datenportal
+      new_blog: Neuer Blog
+      actions: Menü
+      comments:
+        zero: Kommentare
+        one: Kommentare%{count})
+        other: Kommentare%{count})
+      activity: Feed
+      new_update: Neues Update
+      edit: Bearbeiten
+      statistics: Statistik
+      trash: Löschen
+      untrash: Untrash
+      destroy: Dauerhaft löschen
+      take_decision: Entscheidung treffen
+      contact: Kontakt-Poster
+      overview: Übersicht
+      profile: Profil
+      new_discussion: Neue Diskussion
+      new_motion: Neuer Antrag
+      new_question: Neue Frage
+      move: Antrag
+      search: Suche
+      general: Allgemein
+      grants: Erlaubnisse
+      delete: Löschen

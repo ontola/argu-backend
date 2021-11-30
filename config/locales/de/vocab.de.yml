@@ -1,0 +1,394 @@
+de:
+  argu:
+    Argument:
+      description: >-
+        Ein Argument ist ein einzelner Grund, der für oder gegen eine Idee
+        spricht.
+      icon: Argument
+      label: Argument
+      plural_label: Argumente
+    Blog:
+      label: Blog
+      plural_label: Blogs
+    BlogPost:
+      description: >-
+        Ein Blogpost ist eine Nachricht oder ein Artikel, in dem etwas geteilt
+        wird.
+      icon: Megafon
+      label: Aktualisieren
+      plural_label: Aktualisierungen
+    BudgetShop:
+      icon: Einkaufswagen
+      label: Haushalt
+      plural_label: Budgets
+    CartDetail:
+      label: Ausgewählte Option
+      plural_label: Ausgewählte Optionen
+    Comment:
+      description: >-
+        Ein Kommentar ist eine schriftliche Antwort oder Anmerkung zu einer
+        Sache.
+      icon: Kommentar
+      label: Kommentar
+      plural_label: Kommentare
+    ConArgument:
+      description: Ein Gegenargument ist ein Grund, gegen etwas zu sein.
+      icon: minus
+      label: Contra
+      plural_label: Nachteile
+    ContainerNode:
+      label: Bestandteil
+      plural_label: Bestandteile
+    Conversion:
+      label: Umrechnung
+      plural_label: Umrechnungen
+    CouponBatch:
+      label: Gutscheine
+      plural_label: Gutscheine
+    CustomAction:
+      label: Aktion
+      plural_label: Aktionen
+    CustomForm:
+      label: Formular
+      plural_label: Formulare
+    CustomFormField:
+      label: Feld
+      plural_label: Felder
+    Dashboard:
+      label: Dashboard
+      plural_label: Dashboards
+    Decision:
+      icon: Speerspitze
+      label: Entscheidung
+      plural_label: Beschlüsse
+    DirectMessage:
+      label: Nachricht
+      plural_label: Meldungen
+    Discussion:
+      label: Thema
+      plural_label: Themen
+    EmailAddress:
+      label: E-Mail Adresse
+      plural_label: E-Mail-Adressen
+    Export:
+      label: Ausfuhr
+      plural_label: Ausfuhren
+    Follow:
+      label: Abonnement
+      plural_label: Abonnements
+    Form:
+      label: Forum
+      plural_label: Foren
+    Grant:
+      label: Grant
+      plural_label: Erlaubnisse
+    GroupMembership:
+      label: Mitglied
+      plural_label: Mitglieder
+    Group:
+      label: Gruppe
+      plural_label: Gruppen
+    Invite:
+      label: Einladen
+      plural_label: Einladungen
+    Motion:
+      description: >-
+        Eine Idee ist ein Vorschlag, über den man abstimmen und Pro- oder
+        Kontra-Argumente hinzufügen kann.
+      icon: Glühbirne-o
+      label: Idee
+      plural_label: Ideen
+    Move:
+      label: Bewegung
+      plural_label: Bewegungen
+    Notification:
+      label: Benachrichtigung
+      plural_label: Benachrichtigungen
+    OpenDataPortal:
+      label: Datenportal
+      plural_label: Datenportale
+    Order:
+      type: Bestellung
+      plural_label: Bestellungen
+    Page:
+      label: Organisation
+      plural_label: Organisationen
+    Phase:
+      icon: Kalender-o
+      label: Phase
+      plural_label: Phasen
+    Placement:
+      label: Standort
+      plural_label: Standorte
+    ProArgument:
+      description: Ein Pro-Argument ist ein Grund, für etwas zu sein.
+      icon: plus
+      label: Pro
+      plural_label: Pro
+    Project:
+      icon: Rakete
+      label: Projekt
+      plural_label: Projekte
+    Publication:
+      label: Veröffentlichung
+      plural_label: Veröffentlichungen
+    Question:
+      description: >-
+        Eine Herausforderung ist ein Problem oder eine Frage, zu der Menschen
+        ihre Ideen einreichen können.
+      icon: Frage
+      label: Herausforderung
+      plural_label: Herausforderungen
+    Shortname:
+      label: Weiterleiten
+      plural_label: Weiterleitungen
+    Submission:
+      icon: Bleistift
+      label: Antwort
+      plural_label: Antworten
+    SubmissionData:
+      label: Daten
+    Survey:
+      icon: Liste-ul
+      label: Umfrage
+      plural_label: Umfragen
+    Term:
+      label: Begriff
+      plural_label: Begriffe
+    Topic:
+      description: Ein Thema ist eine allgemeine Diskussion über ein bestimmtes Thema.
+      icon: Kommentare
+      label: Thema
+      plural_label: Themen
+    Vocabulary:
+      label: Wortschatz
+      plural_label: Vokabeln
+    Vote:
+      label: Abstimmen
+      plural_label: Abstimmungen
+    VoteEvent:
+      label: Ereignis abstimmen
+      plural_label: Abstimmungsereignisse
+    alias:
+      label: Alias
+    confirmed:
+      label: Bestätigt
+    copyUrl:
+      label: Kopieren
+    couponCount:
+      label: Zählen
+    exportStatus:
+      label: Status
+    expiresAt:
+      label: Verfallsdatum
+    fileUsage:
+      label: Verwendung
+    followsCount:
+      label: Follower
+    formFieldType:
+      label: Feldtyp
+    grantSet:
+      label: Zuschussmenge
+    interventionsCount:
+      label: Eingriffe
+    isDraft:
+      label: Entwurf
+    lastActivityAt:
+      label: Zuletzt aktiv
+    position:
+      label: Standort
+    orderDetails:
+      label: Einzelheiten
+    pdfPage:
+      label: Seite
+    pinned:
+      label: Angepinnt
+    price:
+      label: Preis
+    view:
+      label: Ansicht
+    rawResource:
+      label: Hilfsmittel
+    shortnameable:
+      label: Artikel
+    submissionData:
+      label: Daten
+    submissionStatus:
+      label: Status
+    trashed:
+      label: Verworfen
+    voteableVoteEvent:
+      label: Abstimmen
+    votesProCount:
+      label: Ja-Stimmen
+  dbo:
+    filename:
+      label: Dateiname
+  foaf:
+    name:
+      label: Naam
+  ontola:
+    Banner:
+      label: Banner
+      plural_label: Banner
+    MenuItem:
+      label: Menüpunkt
+      plural_label: Menüpunkte
+    OtpSecret:
+      label: Zwei-Faktor-Authentifizierung
+    SearchResult:
+      label: Suchergebnis
+    audience:
+      label: Publikum
+    destroyAction:
+      label: Zerstören
+    helperText:
+      label: Hilfstext
+    href:
+      label: Url
+    makePrimaryAction:
+      label: Primär machen
+    maxCount:
+      label: Maximale Anzahl definiert durch
+    maxInclusive:
+      label: Maximalwert definiert durch
+    maxInclusiveLabel:
+      label: Maximalwert-Etikett
+    maxLength:
+      label: Maximale Länge definiert durch
+    minCount:
+      label: Mindestanzahl definiert durch
+    minInclusive:
+      label: Mindestwert definiert durch
+    minInclusiveLabel:
+      label: Etikett für Mindestwert
+    minLength:
+      label: Minimale Länge definiert durch
+    publishAction:
+      label: veröffentlichen
+    relevance:
+      label: Relevanz
+    sendConfirmationAction:
+      label: Bestätigen Sie
+    settingsMenu:
+      label: Einstellungen
+    shIn:
+      label: Optionen definiert durch
+    text:
+      label: Text
+    updateAction:
+      label: Aktualisieren
+    widgetSize:
+      label: Größe
+  org:
+    hasMember:
+      label: Mitglieder
+    member:
+      label: Mitglied
+  rivm:
+    Category:
+      label: Kategorie
+      plural_label: Kategorien
+    Incident:
+      label: Vorfälle
+      plural_label: Vorfälle
+    Intervention:
+      label: Intervention
+      plural_label: Interventionen
+    InterventionType:
+      label: Art der Intervention
+      plural_label: Arten der Intervention
+    Measure:
+      label: Maßnahme
+      plural_label: Maßnahmen
+    MeasureType:
+      label: Art der Maßnahme
+      plural_label: Arten von Maßnahmen
+    Risk:
+      label: Risiko
+      plural_label: Risiken
+    Scenario:
+      label: Szenario
+      plural_label: Szenarien
+    categories:
+      label: Kategorien
+    oneOffCostsScore:
+      label: Kosten
+    recurringCostsScore:
+      label: Wiederkehrende Kosten
+    securityImprovedScore:
+      label: Verbesserung
+  schema:
+    CreativeWork:
+      label: Dokument
+      plural_label: Dokumente
+    GeoCoordinates:
+      label: Standort
+      plural_label: Standorte
+    ImageObject:
+      icon: datei-bilder-o
+      label: Bild
+      plural_label: Bilder
+    MediaObject:
+      description: >-
+        Ein Anhang ist eine Datei, die an ein Dokument angehängt wurde, um
+        weitere Informationen zu liefern.
+      icon: Datei
+      label: Anhang
+      plural_label: Anhänge
+    Offer:
+      label: Option
+      plural_label: Optionen
+    Person:
+      label: Person
+      plural_label: Personen
+    Thing:
+      label: Sache
+      plural_label: Dinge
+    Widget:
+      label: Widget
+      plural_label: Widgets
+    creator:
+      label: Ersteller
+    dateCreated:
+      label: Datum der Erstellung
+    datePublished:
+      label: Datum der Veröffentlichung
+    downloadUrl:
+      label: Herunterladen
+    email:
+      label: E-Mail
+    name:
+      label: Name
+    option:
+      label: Option
+    orderedItem:
+      label: Bestellter Artikel
+    uploadDate:
+      label: Datum des Uploads
+    url:
+      label: Url
+  sh:
+    datatype:
+      label: Datentyp
+    maxCount:
+      label: Maximale Anzahl
+    maxInclusive:
+      label: Maximaler Wert
+    maxLength:
+      label: Maximale Länge
+    minCount:
+      label: Minimale Anzahl
+    minInclusive:
+      label: Minimaler Wert
+    minLength:
+      label: Minimale Länge
+    pattern:
+      label: Regex-Muster
+    in:
+      label: Optionen
+    path:
+      label: Prädikat
+  skos:
+    exactMatch:
+      label: Externes iri

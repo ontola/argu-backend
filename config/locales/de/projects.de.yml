@@ -1,0 +1,17 @@
+de:
+  projects:
+    type_new: Neues Projekt
+    phase_template:
+      description_placeholder: >-
+        Klicken Sie auf das Menü auf der rechten Seite und dann auf
+        "Bearbeiten", um den Titel und diesen Text zu ändern.
+      blog_post:
+        name: Rückmeldung
+      question:
+        name: Ideen sammeln
+      survey:
+        name: Umfrage
+  forms:
+    projects:
+      current_phase_id:
+        label: Aktuelle Phase

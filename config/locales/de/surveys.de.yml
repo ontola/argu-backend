@@ -1,0 +1,23 @@
+de:
+  surveys:
+    type_new: Neue Umfrage
+  enums:
+    surveys:
+      form_type:
+        local: Eigenes Formular
+        remote: Formular
+  forms:
+    surveys:
+      action_body:
+        label: Formular
+      external_iri:
+        description: https://[benutzername].typeform.com/to/[umfrageId]
+        helper_text: >-
+          Weitere Informationen zur Erstellung von Umfragen finden Sie unter
+          [unser Helpdesk] (https://argu.co/argu/t/10509)
+        label: Typeform url
+      form_type:
+        label: Typ
+      reward:
+        helper_text: Wie viel erhalten die Teilnehmer an dieser Umfrage?
+        label: Belohnung

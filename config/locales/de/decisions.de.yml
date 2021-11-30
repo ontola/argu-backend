@@ -1,0 +1,13 @@
+de:
+  decisions:
+    type_new: Treffen Sie eine Entscheidung
+    menu: Entscheidung treffen
+    explanation: Diese Entscheidung erläutern
+    motion:
+      approved: Idee wird genehmigt
+      rejected: Idee wird abgelehnt
+  enums:
+    decisions:
+      state:
+        approved: Genehmigen
+        rejected: Ablehnen

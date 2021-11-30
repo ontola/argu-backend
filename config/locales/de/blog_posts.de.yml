@@ -1,0 +1,18 @@
+de:
+  blog_posts:
+    type_new: Neues Update
+    unpublished: Entwurf
+  forms:
+    blog_posts:
+      content:
+        description: >-
+          Geben Sie hier Details und Hintergrundinformationen zu Ihrer
+          Aktualisierung ein.
+      description:
+        description: >-
+          Geben Sie hier Details und Hintergrundinformationen zu Ihrer
+          Aktualisierung ein.
+      display_name:
+        description: Geben Sie hier den Kern Ihres Updates ein
+      title:
+        description: Geben Sie hier den Kern Ihrer Aktualisierung ein

@@ -1,0 +1,36 @@
+de:
+  groups:
+    type_new: Gruppe hinzufügen
+    new: Gruppe hinzufügen
+    public:
+      name: Öffentlich
+      name_singular: Benutzer
+    members: Mitglieder
+    description: >-
+      Sie können Gruppen bestimmte Rechte zugestehen. Mitglieder dieser Gruppen
+      dürfen zum Beispiel Inhalte in Ihren Foren bearbeiten.
+    errors:
+      confirmation_required: >-
+        Als Mitglied der Gruppe %{group_name} ist die Bestätigung Ihrer
+        E-Mail-Adresse erforderlich.
+    settings:
+      title: Einstellungen der Gruppe
+      menu:
+        general: Allgemein
+        members: Mitglieder
+        invite: Einladen
+        grants: Erlaubnisse
+        advanced: Fortgeschrittene
+    delete:
+      info: Sind Sie sicher, dass Sie die Gruppe%{group}' löschen möchten?
+      not_allowed: Es ist nicht möglich, diese Gruppe zu löschen.
+  forms:
+    groups:
+      name:
+        description: z.B. 'Zivilisten'
+        label: Name
+      name_singular:
+        description: z.B. 'Zivilist'
+        label: Einzigartiger Name
+      require_2fa:
+        label: Zwei-Faktor-Authentifizierung erzwingen

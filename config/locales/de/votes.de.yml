@@ -1,0 +1,23 @@
+de:
+  votes:
+    score: Bewertung
+    collection:
+      votes: '%{count} Stimmen'
+      ':yes': '%{count} stimmt zu'
+      ':no': '%{count} stimmt nicht zu'
+      other: '%{count} andere'
+    alerts:
+      success: Vielen Dank für Ihre Stimme!
+      failed: Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.
+      trashed: Stimme erfolgreich gelöscht
+    instance_type:
+      pro: Zustimmen
+      ':yes': Zustimmen
+      neutral: Andere
+      other: Andere
+      con: Ablehnen
+      ':no': Ablehnen
+    type_new: Neue Abstimmung
+    disabled:
+      expired: Abstimmen ist nicht mehr möglich
+      unauthorized: Sie dürfen nicht über diesen Punkt abstimmen
