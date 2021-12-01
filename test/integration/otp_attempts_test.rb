@@ -8,7 +8,7 @@ class OtpAttemptsTest < ActionDispatch::IntegrationTest
   include JWTHelper
 
   define_freetown
-  let(:subject) { user.otp_secret }
+  let(:subject) { user.otp_secret! }
   let(:guest_user) { create_guest_user }
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
@@ -127,7 +127,7 @@ class OtpAttemptsTest < ActionDispatch::IntegrationTest
     otp_attempt: nil,
     otp_time: Time.current
   )
-    otp_attempt ||= session_user.otp_secret.otp_code(time: otp_time)
+    otp_attempt ||= session_user.otp_secret!.otp_code(time: otp_time)
 
     @session = session || sign_payload({user_id: session_user.id, exp: session_exp.to_i}, 'HS512')
     general_create(

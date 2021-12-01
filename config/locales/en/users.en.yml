@@ -60,7 +60,7 @@ en:
         helper_text: "Set how you will be visible to others. Most people use their real name."
         label: "Name"
       email:
-        description: "email@example.com"
+        placeholder: "email@example.com"
       has_analytics:
         description: "We use Bugsnag to get notified of and help fix errors in your browser. We use Matomo to analyze how the website is used, so we can improve the user experience."
         label: "Enable browser services"

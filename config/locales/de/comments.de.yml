@@ -16,7 +16,7 @@ de:
   forms:
     comments:
       description:
-        description: Gib deinen Kommentar ein
+        placeholder: Gib deinen Kommentar ein
   pundit:
     comment_policy:
       create?: Sie sind nicht berechtigt, mit diesem Konto einen Kommentar abzugeben.

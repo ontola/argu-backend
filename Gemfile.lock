@@ -37,10 +37,9 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 2462ed2440d331aac83006f3c03b594812fdc0df
-  branch: collections-dsl
+  revision: 21d941f372d636b0dc1cdcd536a78a0b7182ff82
   specs:
-    linked_rails (0.0.3)
+    linked_rails (0.0.4)
       active_response (~> 0.0.2)
       kaminari-activerecord
       pundit
@@ -51,15 +50,16 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails-auth
-  revision: 3f56e4328811e69788388a59e197d82997403b08
+  revision: 98221183c18d95f04a58587d66c4ae578bbe1ef5
   specs:
-    linked_rails-auth (0.0.3)
+    linked_rails-auth (0.0.4)
       active_model_otp
       devise
       doorkeeper
       doorkeeper-jwt
       jwt
       rails
+      rfc-822
       rqrcode
 
 GIT
@@ -307,7 +307,7 @@ GEM
     fugit (1.5.2)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
-    globalid (0.5.2)
+    globalid (1.0.0)
       activesupport (>= 5.0)
     haml (5.2.2)
       temple (>= 0.8.0)
@@ -631,9 +631,9 @@ GEM
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.2.2)
-      actionpack (>= 4.0)
-      activesupport (>= 4.0)
+    sprockets-rails (3.4.1)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     ssrf_filter (1.0.7)
     stackprof (0.2.17)

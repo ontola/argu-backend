@@ -7,10 +7,10 @@ nl:
   forms:
     blog_posts:
       content:
-        description: "Licht je update hier toe."
+        placeholder: "Licht je update hier toe."
       description:
-        description: "Licht je update hier toe."
+        placeholder: "Licht je update hier toe."
       display_name:
-        description: "Plaats de kern van de update"
+        placeholder: "Plaats de kern van de update"
       title:
-        description: "Plaats de kern van de update"
+        placeholder: "Plaats de kern van de update"

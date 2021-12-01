@@ -235,8 +235,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     otp_secret&.active?
   end
 
-  def otp_secret
-    super || OtpSecret.create!(owner: self)
+  def otp_secret!
+    otp_secret || OtpSecret.create!(owner: self)
   end
 
   def page_count
@@ -433,7 +433,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def requested_singular_resource(_params, user_context)
-      user_context.user
+      user_context&.user
     end
 
     def route_key

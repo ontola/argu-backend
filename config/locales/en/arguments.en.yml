@@ -4,14 +4,14 @@ en:
   forms:
     arguments:
       content:
-        description: "Enter details and background information on your argument here."
+        placeholder: "Enter details and background information on your argument here."
         label: "Argument details (optional)"
       description:
-        description: "Enter details and background information on your argument here."
+        placeholder: "Enter details and background information on your argument here."
       display_name:
-        description: "Enter the core of your argument here"
+        placeholder: "Enter the core of your argument here"
       title:
-        description: "Enter the core of your argument here"
+        placeholder: "Enter the core of your argument here"
         label: "Core of your argument"
       type: "type"
       submit: "Submit argument"

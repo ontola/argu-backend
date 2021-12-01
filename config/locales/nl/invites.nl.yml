@@ -3,10 +3,10 @@ nl:
     invites:
       message:
         label: "Toelichting"
-        description: "Schrijf een bericht voor in de email"
+        placeholder: "Schrijf een bericht voor in de email"
       addresses:
         label: "Email adressen"
-        description: "Voer een of meerdere email adressen in"
+        placeholder: "Voer een of meerdere email adressen in"
       group_id:
         label: "Aan welke groep wil je deze mensen toevoegen?"
       redirect_url:

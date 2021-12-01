@@ -63,7 +63,7 @@ de:
           Leute verwenden ihren echten Namen.
         label: Name
       email:
-        description: email@example.com
+        placeholder: email@example.com
       has_analytics:
         description: >-
           Wir verwenden Bugsnag, um über Fehler in Ihrem Browser informiert zu

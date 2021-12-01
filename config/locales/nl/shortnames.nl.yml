@@ -9,7 +9,7 @@ nl:
   forms:
     shortnames:
       destination:
-        description: "Voer het gedeelte van de url in dat komt na %{iri_prefix}/"
+        placeholder: "Voer het gedeelte van de url in dat komt na %{iri_prefix}/"
         label: "Bestemming"
       shortname:
         description: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."

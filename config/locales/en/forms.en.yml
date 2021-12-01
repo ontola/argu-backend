@@ -17,7 +17,7 @@ en:
       bio:
         label: "Goal"
       confirmation_string:
-        description: "Type 'remove' to confirm"
+        placeholder: "Type 'remove' to confirm"
         label: "Confirmation"
       content:
         label: "Content"
@@ -49,19 +49,19 @@ en:
       default_profile_photo:
         label: "Profile photo"
       description:
-        description: "Enter a description"
+        placeholder: "Enter a description"
         label: "Content"
       dismiss_button:
         label: "Button text"
       dismissable:
         label: "Dismissable"
       display_name:
-        description: "Enter your title"
+        placeholder: "Enter your title"
         label: "Title"
       edge_id:
         label: "Object"
       email:
-        description: "email@example.com"
+        placeholder: "email@example.com"
         label: "Email"
       ends_at:
         label: "Ends at"
@@ -110,10 +110,9 @@ en:
       notify:
         label: 'Verstuur notificatie naar de plaatser'
       password_confirmation:
-        description: "Same as above"
+        helper_text: "Same as above"
         label: "Confirm password"
       password:
-        description: "At least 8 characters."
         label: "Password"
       path:
         label: "alias"

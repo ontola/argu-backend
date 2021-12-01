@@ -5,14 +5,14 @@ de:
   forms:
     blog_posts:
       content:
-        description: >-
+        placeholder: >-
           Geben Sie hier Details und Hintergrundinformationen zu Ihrer
           Aktualisierung ein.
       description:
-        description: >-
+        placeholder: >-
           Geben Sie hier Details und Hintergrundinformationen zu Ihrer
           Aktualisierung ein.
       display_name:
-        description: Geben Sie hier den Kern Ihres Updates ein
+        placeholder: Geben Sie hier den Kern Ihres Updates ein
       title:
-        description: Geben Sie hier den Kern Ihrer Aktualisierung ein
+        placeholder: Geben Sie hier den Kern Ihrer Aktualisierung ein

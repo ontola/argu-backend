@@ -60,7 +60,7 @@ nl:
         helper_text: "Stel in hoe je zichtbaar bent voor anderen. De meesten mensen gebruiken hun echte naam."
         label: "Naam"
       email:
-        description: "email@example.com"
+        placeholder: "email@example.com"
       has_analytics:
         description: "We gebruiken Bugsnag om fouten in je browser te detecteren en op te lossen. We gebruiken Matomo om geanonimiseerd op te slaan hoe de website wordt gebruikt, zodat we hem sneller kunnen verbeteren."
         label: "Activeer browser diensten"

@@ -7,10 +7,10 @@ en:
   forms:
     blog_posts:
       content:
-        description: "Enter details and background information on your update here."
+        placeholder: "Enter details and background information on your update here."
       description:
-        description: "Enter details and background information on your update here."
+        placeholder: "Enter details and background information on your update here."
       display_name:
-        description: "Enter the core of your update here"
+        placeholder: "Enter the core of your update here"
       title:
-        description: "Enter the core of your update here"
+        placeholder: "Enter the core of your update here"

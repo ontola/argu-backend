@@ -23,18 +23,18 @@ en:
   forms:
     questions:
       content:
-        description: "Enter details and background information on your challenge here."
+        placeholder: "Enter details and background information on your challenge here."
         label: "Explain your challenge"
       description:
-        description: "Enter details and background information on your challenge here."
+        placeholder: "Enter details and background information on your challenge here."
       display_name:
-        description: "Enter the core of your challenge here"
+        placeholder: "Enter the core of your challenge here"
       default_motion_sorting:
         label: "Default sorting of ideas"
       default_motion_display:
         label: "Default display"
       title:
-        description: "Enter the core of your challenge here"
+        placeholder: "Enter the core of your challenge here"
         label: "Give your challenge a fitting title"
   activerecord:
     attributes:

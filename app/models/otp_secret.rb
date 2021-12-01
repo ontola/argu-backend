@@ -6,6 +6,10 @@ class OtpSecret < LinkedRails::Auth::OtpSecret
   end
 
   class << self
+    def interact_as_guest?
+      true
+    end
+
     def owner_for_otp(params, user_context)
       return super if params.key?(:session)
 

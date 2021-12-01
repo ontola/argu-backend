@@ -4,14 +4,14 @@ en:
   forms:
     motions:
       content:
-        description: "Enter details and background information on your idea here."
+        placeholder: "Enter details and background information on your idea here."
         label: "Describe your idea in detail"
       description:
-        description: "Enter details and background information on your idea here."
+        placeholder: "Enter details and background information on your idea here."
       display_name:
-        description: "Enter the core of your idea here"
+        placeholder: "Enter the core of your idea here"
       title:
-        description: "Enter the core of your idea here"
+        placeholder: "Enter the core of your idea here"
         label: "Summarize your idea in one sentence"
   motions:
     type_new: "New idea"

@@ -2,14 +2,14 @@ de:
   forms:
     motions:
       content:
-        description: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Idee ein.
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Idee ein.
         label: Beschreiben Sie Ihre Idee im Detail
       description:
-        description: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Idee an.
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Idee an.
       display_name:
-        description: Geben Sie hier den Kern Ihrer Idee an
+        placeholder: Geben Sie hier den Kern Ihrer Idee an
       title:
-        description: Geben Sie hier den Kern Ihrer Idee ein
+        placeholder: Geben Sie hier den Kern Ihrer Idee ein
         label: Fassen Sie Ihre Idee in einem Satz zusammen
   motions:
     type_new: Neue Idee

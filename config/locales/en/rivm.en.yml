@@ -393,7 +393,7 @@ en:
       second_opinion:
         label: "Dit voorbeeld is door een andere organisatie gecontroleerd"
       second_opinion_by:
-        description: "Voer een organisatie naam in"
+        placeholder: "Voer een organisatie naam in"
         label: "Door welke organisatie?"
     goal_and_effect:
       label: "Doelen en effecten van de interventie"

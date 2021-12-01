@@ -14,7 +14,7 @@ en:
   forms:
     comments:
       description:
-        description: "Enter your comment"
+        placeholder: "Enter your comment"
   pundit:
     comment_policy:
       create?: "You are not allowed to submit a comment with this account."

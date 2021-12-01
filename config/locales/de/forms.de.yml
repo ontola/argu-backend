@@ -17,7 +17,7 @@ de:
       bio:
         label: Ziel
       confirmation_string:
-        description: Zum Bestätigen 'entfernen' eingeben
+        placeholder: Zum Bestätigen 'entfernen' eingeben
         label: Bestätigen Sie
       content:
         label: Inhalt
@@ -51,19 +51,19 @@ de:
       default_profile_photo:
         label: Profil-Foto
       description:
-        description: Eine Beschreibung eingeben
+        placeholder: Eine Beschreibung eingeben
         label: Inhalt
       dismiss_button:
         label: Text der Schaltfläche
       dismissable:
         label: Entfernbar
       display_name:
-        description: Geben Sie Ihren Titel ein
+        placeholder: Geben Sie Ihren Titel ein
         label: Titel
       edge_id:
         label: Objekt
       email:
-        description: email@example.com
+        placeholder: email@example.com
         label: E-Mail
       ends_at:
         label: Endet am
@@ -112,10 +112,9 @@ de:
       notify:
         label: Benachrichtigung über die Platzierung erteilen
       password_confirmation:
-        description: Dasselbe wie oben
+        helper_text: Dasselbe wie oben
         label: Bestätigen Sie das Passwort
       password:
-        description: Mindestens 8 Zeichen.
         label: Kennwort
       path:
         label: alias

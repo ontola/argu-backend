@@ -21,22 +21,22 @@ de:
   forms:
     questions:
       content:
-        description: >-
+        placeholder: >-
           Geben Sie hier Details und Hintergrundinformationen zu Ihrer
           Herausforderung ein.
         label: Erläutern Sie Ihre Herausforderung
       description:
-        description: >-
+        placeholder: >-
           Geben Sie hier Details und Hintergrundinformationen zu Ihrer
           Herausforderung an.
       display_name:
-        description: Geben Sie hier den Kern Ihrer Herausforderung ein
+        placeholder: Geben Sie hier den Kern Ihrer Herausforderung ein
       default_motion_sorting:
         label: Standard-Sortierung der Ideen
       default_motion_display:
         label: Standard-Anzeige
       title:
-        description: Geben Sie hier den Kern Ihrer Herausforderung ein
+        placeholder: Geben Sie hier den Kern Ihrer Herausforderung ein
         label: Geben Sie Ihrer Herausforderung einen passenden Titel
   activerecord:
     attributes:

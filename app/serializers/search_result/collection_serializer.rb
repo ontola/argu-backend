@@ -2,7 +2,7 @@
 
 class SearchResult
   class CollectionSerializer < ::CollectionSerializer
-    attribute :placeholder, predicate: NS.ontola[:placeholder]
+    attribute :placeholder, predicate: NS.form[:placeholder]
     attribute :took, predicate: NS.argu[:took]
     attribute :query, predicate: NS.ontola[:query] do |object|
       object.q || ''

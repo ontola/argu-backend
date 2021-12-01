@@ -2,18 +2,18 @@ de:
   forms:
     arguments:
       content:
-        description: >-
+        placeholder: >-
           Geben Sie hier Details und Hintergrundinformationen zu Ihrem Argument
           ein.
         label: Details zum Argument (optional)
       description:
-        description: >-
+        placeholder: >-
           Geben Sie hier Details und Hintergrundinformationen zu Ihrem Argument
           an.
       display_name:
-        description: Geben Sie hier den Kern Ihres Arguments an
+        placeholder: Geben Sie hier den Kern Ihres Arguments an
       title:
-        description: Geben Sie hier den Kern Ihres Arguments ein
+        placeholder: Geben Sie hier den Kern Ihres Arguments ein
         label: Kern Ihres Arguments
       type: eingeben
       submit: Argument einreichen

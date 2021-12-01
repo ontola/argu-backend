@@ -9,7 +9,7 @@ en:
   forms:
     shortnames:
       destination:
-        description: "Enter the part of the url following %{iri_prefix}/"
+        placeholder: "Enter the part of the url following %{iri_prefix}/"
         label: "Destination"
       shortname:
         description: "No spaces. Only letters, numbers and _. Start with a letter."

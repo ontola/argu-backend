@@ -4,14 +4,14 @@ nl:
   forms:
     arguments:
       content:
-        description: "Plaats hier de details en achtergrondinformatie van jouw argument."
+        placeholder: "Plaats hier de details en achtergrondinformatie van jouw argument."
         label: "Licht je argument toe (optioneel)"
       description:
-        description: "Plaats hier de details en achtergrondinformatie van jouw argument."
+        placeholder: "Plaats hier de details en achtergrondinformatie van jouw argument."
       display_name:
-        description: "Plaats hier de kern van jouw argument"
+        placeholder: "Plaats hier de kern van jouw argument"
       title:
-        description: "Plaats hier de kern van jouw argument"
+        placeholder: "Plaats hier de kern van jouw argument"
         label: "Kern van jouw argument"
       type: "type"
       submit: "argument plaatsen"

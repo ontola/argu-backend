@@ -17,7 +17,7 @@ nl:
       bio:
         label: "Doel"
       confirmation_string:
-        description: "Type 'verwijder' om te bevestigen"
+        placeholder: "Type 'verwijder' om te bevestigen"
         label: "Bevestiging"
       content:
         label: "Inhoud"
@@ -49,19 +49,19 @@ nl:
       default_profile_photo:
         label: "Profielfoto"
       description:
-        description: "Voer een beschrijving in"
+        placeholder: "Voer een beschrijving in"
         label: "Inhoud"
       dismiss_button:
         label: "Knoptekst"
       dismissable:
         label: "Sluitbaar"
       display_name:
-        description: "Voer een titel in"
+        placeholder: "Voer een titel in"
         label: "Titel"
       edge_id:
         label: "Object"
       email:
-        description: "email@voorbeeld.nl"
+        placeholder: "email@voorbeeld.nl"
         label: "Email"
       ends_at:
         label: "Eindigen op"
@@ -110,10 +110,9 @@ nl:
       notify:
         label: 'Verstuur notificatie naar de plaatser'
       password_confirmation:
-        description: "Zelfde als hierboven"
+        helper_text: "Zelfde als hierboven"
         label: "Wachtwoord bevestigen"
       password:
-        description: "Minimaal 8 karakters."
         label: "Wachtwoord"
       path:
         label: "alias"
