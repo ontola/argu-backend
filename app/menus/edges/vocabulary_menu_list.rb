@@ -13,10 +13,32 @@ class VocabularyMenuList < ApplicationMenuList
     ]
   end
 
+  def edit_form_link
+    return if resource.custom_form.blank?
+
+    menu_item(
+      :edit_form,
+      image: 'fa-edit',
+      href: resource.custom_form.iri,
+      policy: :update?
+    )
+  end
+
+  def property_definitions_link
+    menu_item(
+      :property_definitions,
+      image: 'fa-edit',
+      href: resource.collection_iri(:property_definitions),
+      policy: :update?
+    )
+  end
+
   def tabs_menu_items
     [
       terms_link,
-      edit_link
+      edit_link,
+      property_definitions_link,
+      edit_form_link
     ]
   end
 

@@ -7,7 +7,7 @@ class CustomForm < Edge
   enhance Trashable
 
   property :display_name, :string, NS.schema.name
-  parentable :page
+  parentable :page, :vocabulary
   validates :display_name, presence: true
 
   with_collection :custom_form_fields,

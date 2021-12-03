@@ -23,6 +23,8 @@ class Vocabulary < Edge
            default: 0,
            enum: {default_display: 0, grid_display: 1, table_display: 2, card_display: 3}
 
+  has_one :custom_form,
+          foreign_key: :parent_id
   with_columns default: [
     NS.schema.name,
     NS.ontola[:updateAction],
@@ -38,6 +40,25 @@ class Vocabulary < Edge
   validates :display_name, presence: true, length: {maximum: 110}
 
   after_trash -> { shortname.update(primary: false) }
+  after_create :create_form
+
+  private
+
+  def create_form
+    CreateEdge.new(
+      self,
+      attributes: {
+        owner_type: 'CustomForm',
+        display_name: 'Form',
+      },
+      options: {
+        user_context: UserContext.new(
+          user: publisher,
+          profile: creator
+        )
+      }
+    ).commit
+  end
 
   class << self
     def terms_iri(url, **opts)
