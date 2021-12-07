@@ -20,22 +20,22 @@ nl:
         con: "argument tegen"
     pro_arguments:
       content:
-        description: "Details en achtergrondinformatie van jouw argument."
+        placeholder: "Details en achtergrondinformatie van jouw argument."
       description:
-        description: "Details en achtergrondinformatie van jouw argument."
+        placeholder: "Details en achtergrondinformatie van jouw argument."
       display_name:
-        description: "De kern van het voordeel"
+        placeholder: "De kern van het voordeel"
       title:
-        description: "De kern van het voordeel"
+        placeholder: "De kern van het voordeel"
     con_arguments:
       content:
-        description: "Details en achtergrondinformatie van jouw argument."
+        placeholder: "Details en achtergrondinformatie van jouw argument."
       description:
-        description: "Details en achtergrondinformatie van jouw argument."
+        placeholder: "Details en achtergrondinformatie van jouw argument."
       display_name:
-        description: "De kern van het nadeel"
+        placeholder: "De kern van het nadeel"
       title:
-        description: "De kern van het nadeel"
+        placeholder: "De kern van het nadeel"
   pro_arguments:
     type_new: "Nieuw voordeel"
   con_arguments:

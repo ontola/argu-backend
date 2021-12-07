@@ -22,22 +22,22 @@ de:
         con: Gegenargument
     pro_arguments:
       content:
-        description: Details und Hintergrundinformationen.
+        placeholder: Details und Hintergrundinformationen.
       description:
-        description: Einzelheiten und Hintergrundinformationen.
+        placeholder: Einzelheiten und Hintergrundinformationen.
       display_name:
-        description: Zusammenfassung Ihrer Pro
+        placeholder: Zusammenfassung Ihrer Pro
       title:
-        description: Zusammenfassung der Pro-Argumente
+        placeholder: Zusammenfassung der Pro-Argumente
     con_arguments:
       content:
-        description: Details und Hintergrundinformationen.
+        placeholder: Details und Hintergrundinformationen.
       description:
-        description: Details und Hintergrundinformationen.
+        placeholder: Details und Hintergrundinformationen.
       display_name:
-        description: Zusammenfassung Ihrer Argumente
+        placeholder: Zusammenfassung Ihrer Argumente
       title:
-        description: Zusammenfassung Ihrer Argumente
+        placeholder: Zusammenfassung Ihrer Argumente
   pro_arguments:
     type_new: Neues Pro
   con_arguments:

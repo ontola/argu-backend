@@ -11,7 +11,7 @@ en:
       action_body:
         label: "Form"
       external_iri:
-        description: "https://[userName].typeform.com/to/[surveyId]"
+        placeholder: "https://[userName].typeform.com/to/[surveyId]"
         helper_text: "See [our helpdesk](https://argu.co/argu/t/10509) for more information about creating surveys"
         label: "Typeform url"
       form_type:

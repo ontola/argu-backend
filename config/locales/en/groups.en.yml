@@ -25,10 +25,10 @@ en:
   forms:
     groups:
       name:
-        description: "e.g. 'Civilians'"
+        placeholder: "e.g. 'Civilians'"
         label: "Name"
       name_singular:
-        description: "e.g. 'Civilian'"
+        placeholder: "e.g. 'Civilian'"
         label: "Name singular"
       require_2fa:
         label: "Force two factor authentication"

@@ -20,22 +20,22 @@ en:
         con: "con argument"
     pro_arguments:
       content:
-        description: "Details and background information."
+        placeholder: "Details and background information."
       description:
-        description: "Details and background information."
+        placeholder: "Details and background information."
       display_name:
-        description: "Summary of your pro"
+        placeholder: "Summary of your pro"
       title:
-        description: "Summary of your pro"
+        placeholder: "Summary of your pro"
     con_arguments:
       content:
-        description: "Details and background information."
+        placeholder: "Details and background information."
       description:
-        description: "Details and background information."
+        placeholder: "Details and background information."
       display_name:
-        description: "Summary of your con"
+        placeholder: "Summary of your con"
       title:
-        description: "Summary of your con"
+        placeholder: "Summary of your con"
   pro_arguments:
     type_new: "New pro"
   con_arguments:

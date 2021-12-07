@@ -27,10 +27,10 @@ de:
   forms:
     groups:
       name:
-        description: z.B. 'Zivilisten'
+        placeholder: z.B. 'Zivilisten'
         label: Name
       name_singular:
-        description: z.B. 'Zivilist'
+        placeholder: z.B. 'Zivilist'
         label: Einzigartiger Name
       require_2fa:
         label: Zwei-Faktor-Authentifizierung erzwingen

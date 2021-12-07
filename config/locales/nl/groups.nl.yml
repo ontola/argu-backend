@@ -25,10 +25,10 @@ nl:
   forms:
     groups:
       name:
-        description: "bv Burgers"
+        placeholder: "bv Burgers"
         label: "Naam"
       name_singular:
-        description: "bv Burger"
+        placeholder: "bv Burger"
         label: "Naam enkelvoud"
       require_2fa:
         label: "Verplicht tweestapsverificatie"
