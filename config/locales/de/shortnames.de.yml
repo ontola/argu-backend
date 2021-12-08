@@ -12,7 +12,7 @@ de:
   forms:
     shortnames:
       destination:
-        placeholder: Geben Sie den Teil der Url ein, der auf %{iri_prefix} folgt.
+        description: "Geben Sie den Teil der Url ein, der auf %{iri_prefix}/ folgt."
         label: Ziel
       shortname:
         description: >-
