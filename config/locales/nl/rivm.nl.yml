@@ -261,7 +261,7 @@ nl:
         label: "Scenario's"
     interventions:
       additional_introduction_information:
-        helper_text: |
+        description: |
           Denk hierbij aan:
             • De nodige overleggen of trainingen;
             • De nodige inzet van (externe) adviseurs;
@@ -285,12 +285,12 @@ nl:
       continuous:
         label: "Is de interventie doorlopend of heeft deze een vaste einddatum?"
       cost_explanation:
-        helper_text: "Denk hierbij bijvoorbeeld aan personeelskosten, aanschafkosten, etc."
+        description: "Denk hierbij bijvoorbeeld aan personeelskosten, aanschafkosten, etc."
         label: "Geef een toelichting waar deze kosten uit bestaan."
       default_profile_photo:
         label: "Bedrijfslogo"
       description:
-        helper_text: |
+        description: |
           Neem hier in ieder geval de volgende onderdelen in op:
             • Wat zijn de activiteiten van het bedrijf?
             • Wat houdt de interventie in?
@@ -306,7 +306,7 @@ nl:
       ergonomics:
         label: "Ergonomie"
       goal:
-        helper_text: |
+        description: |
           Probeer het doel of de doelen zo specifiek en helder mogelijk te verwoorden.
           Neem hier ook bij mee:
             • Wat is de doelgroep van de interventie?
@@ -372,18 +372,18 @@ nl:
         label: "Reacties toestaan"
         description: "Wilt u reacties op uw Voorbeeld toestaan?"
       contact_info:
-        helper_text: "Hier kan een telefoonnummer, website of e-mailadres worden geplaatst."
+        description: "Hier kan een telefoonnummer, website of e-mailadres worden geplaatst."
         label: "Contactinformatie"
       description:
-        helper_text: "Beschrijf het voorbeeld, of geef een samenvatting van de toegevoegde pdf in minder dan 20.000 tekens."
+        description: "Beschrijf het voorbeeld, of geef een samenvatting van de toegevoegde pdf in minder dan 20.000 tekens."
         label: "Beschrijving"
       display_name:
-        description: "Voeg hier de titel in van het voorbeeld?"
+        placeholder: "Voeg hier de titel in van het voorbeeld"
       measure_owner:
-        helper_text: "Wat is de naam van de organisatie van de makers?"
+        description: "Wat is de naam van de organisatie van de makers?"
         label: "Eigenaar"
       more_info:
-        helper_text: "Plaats een link naar een website waar meer informatie over dit voorbeeld te vinden is."
+        description: "Plaats een link naar een website waar meer informatie over dit voorbeeld te vinden is."
         label: "Meer info link"
       parent_id:
         label: "Onder welke op deze website beschreven maatregelen is dit voorbeeld in te delen?"
