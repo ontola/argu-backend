@@ -9,13 +9,11 @@ class SurveyMenuList < ApplicationMenuList
   has_action_menu
   has_follow_menu
   has_share_menu
-  has_menu :settings,
-           iri_base: -> { resource.root_relative_iri },
-           menus: -> { settings_menu_items }
+  has_tabs_menu
 
   private
 
-  def settings_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def tabs_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     submission = resource.submission_for(user_context)
     submission_item =
       if submission
@@ -38,14 +36,13 @@ class SurveyMenuList < ApplicationMenuList
         href: resource.collection_iri(:submissions, display: :table)
       ),
       setting_item(:form, href: resource.action_body, image: 'fa-edit'),
-      setting_item(:typeform, href: resource.manage_iri, image: 'fa-external-link')
+      edit_link,
+      external_link
     ]
   end
 
   def action_menu_items
     [
-      edit_link,
-      external_link,
       move_link,
       new_update_link,
       copy_share_link(resource.iri),

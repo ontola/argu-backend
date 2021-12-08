@@ -1,6 +1,6 @@
 de:
   comments:
-    type_new: Neuer Kommentar
+    type_new: Antwort
     menu:
       zero: Kommentare
       one: Kommentare%{count})

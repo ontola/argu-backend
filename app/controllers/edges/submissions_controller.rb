@@ -41,7 +41,7 @@ class SubmissionsController < EdgeableController
     super + [
       invalidate_resource_delta(current_resource),
       invalidate_resource_delta(current_resource.action(:submit)),
-      invalidate_resource_delta(parent_resource.menu(:settings))
+      invalidate_resource_delta(parent_resource.menu(:tabs))
     ]
   end
 

@@ -13,6 +13,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     submit_label: lambda {
       Vote.create_label(association, resource.filter[NS.schema.option]&.first, upvote: resource.parent.upvote_only?)
     },
+    one_click: true,
     favorite: lambda {
       resource.filter[NS.schema.option].present? && (
         !resource.parent.upvote_only? || resource.filter[NS.schema.option] == %i[yes]
@@ -22,16 +23,19 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   has_resource_trash_action(
     image: -> { Vote.create_image(resource.option, upvote: resource.parent.upvote_only?) },
     label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) },
+    one_click: true,
     submit_label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) }
   )
   has_singular_destroy_action(
     image: -> { Vote.create_image(resource.option, upvote: resource.parent.upvote_only?) },
     label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) },
+    one_click: true,
     submit_label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) }
   )
   has_singular_trash_action(
     image: -> { Vote.create_image(resource.option, upvote: resource.parent.upvote_only?) },
     label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) },
+    one_click: true,
     submit_label: -> { Vote.create_label(association, resource.option, upvote: resource.parent.upvote_only?) }
   )
 

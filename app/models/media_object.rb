@@ -194,5 +194,9 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         MediaObjectUploader::PRESENTATION_TYPES +
         MediaObjectUploader::SPREADSHEET_TYPES
     end
+
+    def iri
+      NS.schema.MediaObject
+    end
   end
 end

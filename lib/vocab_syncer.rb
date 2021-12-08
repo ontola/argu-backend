@@ -75,7 +75,8 @@ class VocabSyncer # rubocop:disable Metrics/ClassLength
     def current_hash
       @current_hash ||=
         file_hash('config/locales/nl/vocabularies.nl.yml') +
-        file_hash('config/locales/en/vocabularies.en.yml')
+        file_hash('config/locales/en/vocabularies.en.yml') +
+        file_hash('config/locales/en/vocabularies.de.yml')
     end
 
     def file_hash(file_name)

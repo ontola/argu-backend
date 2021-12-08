@@ -49,6 +49,14 @@ class ApplicationMenuList < LinkedRails::Menus::List
     )
   end
 
+  def tabs_menu_items
+    [
+      comments_link,
+      edit_link,
+      activity_link
+    ]
+  end
+
   def widgets_link
     menu_item(
       :widgets,
@@ -58,6 +66,11 @@ class ApplicationMenuList < LinkedRails::Menus::List
       policy: :create_child?,
       policy_resource: resource.widget_collection
     )
+  end
+
+  def item_without_image(item)
+    item&.image = nil
+    item
   end
 
   class << self
@@ -81,6 +94,12 @@ class ApplicationMenuList < LinkedRails::Menus::List
       has_menu :share, **{
         image: 'fa-share-alt',
         menus: -> { share_menu_items }
+      }.merge(opts)
+    end
+
+    def has_tabs_menu(**opts)
+      has_menu :tabs, **{
+        menus: -> { tabs_menu_items.map(&method(:item_without_image)) }
       }.merge(opts)
     end
   end

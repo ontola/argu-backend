@@ -2,6 +2,14 @@
 
 module Helpers
   module ActionMenuItems
+    def comments_link
+      menu_item(
+        :comments,
+        label: Comment.plural_label,
+        href: resource.collection_iri(:comments)
+      )
+    end
+
     def contact_link
       menu_item(
         :contact,

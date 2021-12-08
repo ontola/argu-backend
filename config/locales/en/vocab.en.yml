@@ -110,6 +110,7 @@ en:
       label: "Phase"
       plural_label: "Phases"
     Placement:
+      icon: "map-marker"
       label: "Location"
       plural_label: "Locations"
     ProArgument:
@@ -321,7 +322,7 @@ en:
       plural_label: "Images"
     MediaObject:
       description: 'An attachment is a file which has been appended to a document to provide more information.'
-      icon: "file"
+      icon: "paperclip"
       label: "Attachment"
       plural_label: "Attachments"
     Offer:

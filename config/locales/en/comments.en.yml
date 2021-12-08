@@ -1,6 +1,6 @@
 en:
   comments:
-    type_new: "New comment"
+    type_new: "Reply"
     menu:
       zero: "Comments"
       one: "Comments (%{count})"

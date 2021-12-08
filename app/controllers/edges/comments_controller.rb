@@ -5,13 +5,17 @@ class CommentsController < EdgeableController
 
   private
 
+  def comments_tab
+    authenticated_resource.parent.iri(fragment: :comments)
+  end
+
   def redirect_location
     return super unless action_name == 'create' && authenticated_resource.persisted?
 
-    authenticated_resource.parent.iri
+    comments_tab
   end
 
   def destroy_success_location
-    authenticated_resource.parent.iri
+    comments_tab
   end
 end

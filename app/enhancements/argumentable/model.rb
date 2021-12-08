@@ -13,6 +13,19 @@ module Argumentable
       accepts_nested_attributes_for :con_arguments
       attribute :invert_arguments, :boolean
 
+      def argument_columns
+        @argument_columns ||= LinkedRails::PropertyQuery.new(
+          iri: argument_columns_iri,
+          force_render: true,
+          target_node: iri,
+          path: NS.argu[:arguments]
+        )
+      end
+
+      def argument_columns_iri
+        LinkedRails.iri(path: root_relative_iri, fragment: 'arguments')
+      end
+
       def invert_arguments
         false
       end
@@ -25,6 +38,12 @@ module Argumentable
             a.update pro: !a.pro
           end
         end
+      end
+    end
+
+    module ClassMethods
+      def preview_includes
+        super + [:argument_columns]
       end
     end
   end

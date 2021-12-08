@@ -1,6 +1,6 @@
 nl:
   comments:
-    type_new: "Nieuwe reactie"
+    type_new: "Reageer"
     menu:
       zero: "Reacties"
       one: "Reacties (%{count})"

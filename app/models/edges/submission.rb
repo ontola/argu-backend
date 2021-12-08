@@ -29,7 +29,7 @@ class Submission < Edge
   def added_delta
     [
       invalidate_resource_delta(parent.submission_collection.action(:create)),
-      invalidate_resource_delta(parent.menu(:settings))
+      invalidate_resource_delta(parent.menu(:tabs))
     ]
   end
 

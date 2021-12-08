@@ -266,6 +266,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     encrypted_password.present? || password.present? || password_confirmation.present?
   end
 
+  def rdf_type
+    return super unless guest?
+
+    NS.ontola[:GuestUser]
+  end
+
   def requires_2fa?
     profile.groups.where(require_2fa: true).any? if profile
   end

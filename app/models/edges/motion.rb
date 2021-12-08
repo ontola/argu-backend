@@ -12,6 +12,9 @@ class Motion < Discussion
   alias_attribute :content, :description
   alias_attribute :title, :display_name
 
+  collection_options(
+    call_to_action: -> { I18n.t('motions.call_to_action.title') }
+  )
   convertible(
     questions: %i[activities media_objects],
     topics: %i[activities media_objects],

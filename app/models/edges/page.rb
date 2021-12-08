@@ -52,6 +52,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   attr_writer :iri_prefix
 
   with_collection :container_nodes
+  with_collection :custom_forms
   with_collection :custom_menu_items, association: :navigations_menu_items, association_class: CustomMenuItem
   with_collection :blogs
   with_collection :forums

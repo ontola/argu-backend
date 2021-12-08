@@ -110,6 +110,7 @@ nl:
       label: "Fase"
       plural_label: "Fases"
     Placement:
+      icon: "map-marker"
       label: "Locatie"
       plural_label: "Locaties"
     ProArgument:
@@ -321,7 +322,7 @@ nl:
       plural_label: "Plaatjes"
     MediaObject:
       description: 'Een bijlage is een bestand dat bij een document gevoegd is om meer informatie te verschaffen.'
-      icon: "file"
+      icon: "paperclip"
       label: "Bijlage"
       plural_label: "Bijlages"
     Offer:

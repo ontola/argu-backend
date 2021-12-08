@@ -4,7 +4,7 @@ de:
       description: >-
         Ein Argument ist ein einzelner Grund, der für oder gegen eine Idee
         spricht.
-      icon: Argument
+      icon: argument
       label: Argument
       plural_label: Argumente
     Blog:
@@ -14,11 +14,11 @@ de:
       description: >-
         Ein Blogpost ist eine Nachricht oder ein Artikel, in dem etwas geteilt
         wird.
-      icon: Megafon
+      icon: bullhorn
       label: Aktualisieren
       plural_label: Aktualisierungen
     BudgetShop:
-      icon: Einkaufswagen
+      icon: shopping-cart
       label: Haushalt
       plural_label: Budgets
     CartDetail:
@@ -28,7 +28,7 @@ de:
       description: >-
         Ein Kommentar ist eine schriftliche Antwort oder Anmerkung zu einer
         Sache.
-      icon: Kommentar
+      icon: comment
       label: Kommentar
       plural_label: Kommentare
     ConArgument:
@@ -58,7 +58,7 @@ de:
       label: Dashboard
       plural_label: Dashboards
     Decision:
-      icon: Speerspitze
+      icon: gavel
       label: Entscheidung
       plural_label: Beschlüsse
     DirectMessage:
@@ -95,7 +95,7 @@ de:
       description: >-
         Eine Idee ist ein Vorschlag, über den man abstimmen und Pro- oder
         Kontra-Argumente hinzufügen kann.
-      icon: Glühbirne-o
+      icon: lightbulb-o
       label: Idee
       plural_label: Ideen
     Move:
@@ -114,10 +114,11 @@ de:
       label: Organisation
       plural_label: Organisationen
     Phase:
-      icon: Kalender-o
+      icon: calendar-o
       label: Phase
       plural_label: Phasen
     Placement:
+      icon: map-marker
       label: Standort
       plural_label: Standorte
     ProArgument:
@@ -126,7 +127,7 @@ de:
       label: Pro
       plural_label: Pro
     Project:
-      icon: Rakete
+      icon: rocket
       label: Projekt
       plural_label: Projekte
     Publication:
@@ -136,20 +137,20 @@ de:
       description: >-
         Eine Herausforderung ist ein Problem oder eine Frage, zu der Menschen
         ihre Ideen einreichen können.
-      icon: Frage
+      icon: question
       label: Herausforderung
       plural_label: Herausforderungen
     Shortname:
       label: Weiterleiten
       plural_label: Weiterleitungen
     Submission:
-      icon: Bleistift
+      icon: pencil
       label: Antwort
       plural_label: Antworten
     SubmissionData:
       label: Daten
     Survey:
-      icon: Liste-ul
+      icon: list-ul
       label: Umfrage
       plural_label: Umfragen
     Term:
@@ -157,7 +158,7 @@ de:
       plural_label: Begriffe
     Topic:
       description: Ein Thema ist eine allgemeine Diskussion über ein bestimmtes Thema.
-      icon: Kommentare
+      icon: comments
       label: Thema
       plural_label: Themen
     Vocabulary:
@@ -326,14 +327,14 @@ de:
       label: Standort
       plural_label: Standorte
     ImageObject:
-      icon: datei-bilder-o
+      icon: file-image-o
       label: Bild
       plural_label: Bilder
     MediaObject:
       description: >-
         Ein Anhang ist eine Datei, die an ein Dokument angehängt wurde, um
         weitere Informationen zu liefern.
-      icon: Datei
+      icon: paperclip
       label: Anhang
       plural_label: Anhänge
     Offer:

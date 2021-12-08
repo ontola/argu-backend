@@ -23,7 +23,7 @@ class Survey < Discussion
 
   def added_delta
     super + [
-      invalidate_resource_delta(menu(:settings))
+      invalidate_resource_delta(menu(:tabs))
     ]
   end
 

@@ -94,7 +94,10 @@ module SPI
 
       statements = JSON.parse(body).first['body'].split("\n").map { |s| JSON.parse(s) }
       linked_iri = "http://argu.localtest/argu/resource?iri=#{CGI.escape(dg_motion1.iri)}"
-      assert_equal(statements.map(&:first).uniq.sort, [linked_iri, dg_motion1.iri.to_s])
+      assert_equal(
+        statements.map(&:first).uniq.sort.filter { |subject| subject.start_with?('http') },
+        [linked_iri, dg_motion1.argument_columns_iri.to_s, dg_motion1.iri.to_s]
+      )
       body.include?("\\\"#{linked_iri}\\\",\\\"#{NS.owl.sameAs}\\\",\\\"#{dg_motion1.iri}\\\"")
       body.include?("\\\"#{dg_motion1.iri}\\\",\\\"#{NS.owl.sameAs}\\\",\\\"#{linked_iri}\\\"")
     end
