@@ -15,7 +15,7 @@ de:
     default:
       convert: '%{owner} umgewandelt %{subject} in eine %{type}'
       create: '%{owner} veröffentlicht eine %{type} in %{parent}'
-      publish: '%{owner} posted a %{type} in %{parent}'
+      publish: "%{owner} hat einen %{type} in %{parent} platziert"
       destroy: '%{owner} gelöscht %{subject}'
       trash: '%{owner} verworfen %{subject}'
       untrash: '%{owner} untrashed %{subject}'
