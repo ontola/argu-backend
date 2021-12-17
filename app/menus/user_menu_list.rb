@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class UserMenuList < ApplicationMenuList
-  include Helpers::FollowMenuItems
-  include Helpers::ActionMenuItems
-
   has_menu :settings,
            iri_base: -> { resource.root_relative_iri },
            menus: -> { settings_menu_items }

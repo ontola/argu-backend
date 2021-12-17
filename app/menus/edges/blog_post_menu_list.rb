@@ -2,8 +2,6 @@
 
 class BlogPostMenuList < ApplicationMenuList
   include SettingsHelper
-  include Helpers::ShareMenuItems
-  include Helpers::ActionMenuItems
 
   has_action_menu
   has_share_menu

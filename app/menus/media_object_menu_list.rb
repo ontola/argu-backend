@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class MediaObjectMenuList < ApplicationMenuList
-  include Helpers::ActionMenuItems
-
   has_action_menu
 
   private

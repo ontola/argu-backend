@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class CreativeWorkMenuList < ApplicationMenuList
-  include Helpers::ShareMenuItems
-  include Helpers::ActionMenuItems
-
   has_action_menu
   has_share_menu
 

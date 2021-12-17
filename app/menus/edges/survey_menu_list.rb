@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class SurveyMenuList < ApplicationMenuList
-  include Helpers::FollowMenuItems
-  include Helpers::ShareMenuItems
-  include Helpers::ActionMenuItems
   include SettingsHelper
 
   has_action_menu

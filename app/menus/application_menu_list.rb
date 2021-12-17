@@ -5,6 +5,9 @@ class ApplicationMenuList < LinkedRails::Menus::List
   include Rails.application.routes.url_helpers
   include UriTemplateHelper
   include LinkedRails::Helpers::OntolaActionsHelper
+  include Helpers::FollowMenuItems
+  include Helpers::ShareMenuItems
+  include Helpers::ActionMenuItems
 
   delegate :user, to: :user_context
 

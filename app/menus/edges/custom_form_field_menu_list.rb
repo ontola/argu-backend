@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class CustomFormFieldMenuList < ApplicationMenuList
-  include Helpers::FollowMenuItems
-  include Helpers::ShareMenuItems
-  include Helpers::ActionMenuItems
-
   has_action_menu
   has_share_menu
 

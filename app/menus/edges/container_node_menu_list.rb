@@ -2,9 +2,6 @@
 
 class ContainerNodeMenuList < ApplicationMenuList
   include SettingsHelper
-  include Helpers::ActionMenuItems
-  include Helpers::FollowMenuItems
-  include Helpers::ShareMenuItems
 
   private
 

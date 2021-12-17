@@ -2,10 +2,6 @@
 
 class MotionMenuList < ApplicationMenuList
   include SettingsHelper
-  include Helpers::FollowMenuItems
-  include Helpers::ShareMenuItems
-  include Helpers::ActionMenuItems
-
   has_action_menu
   has_follow_menu
   has_share_menu

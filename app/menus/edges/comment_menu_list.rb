@@ -2,8 +2,6 @@
 
 class CommentMenuList < ApplicationMenuList
   include SettingsHelper
-  include Helpers::FollowMenuItems
-  include Helpers::ActionMenuItems
 
   has_action_menu
   has_follow_menu follow_types: %i[reactions never]

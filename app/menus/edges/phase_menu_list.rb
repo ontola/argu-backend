@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class PhaseMenuList < ApplicationMenuList
-  include Helpers::ActionMenuItems
-
   has_action_menu
 
   private
