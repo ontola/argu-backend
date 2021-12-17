@@ -39,13 +39,26 @@ class Question < Discussion
     expires_at.present? && expires_at < Time.current
   end
 
-  def rdf_type
-    return super unless map_question?
+  def location_query
+    return nil unless map_question?
 
-    [super, NS.argu[:MapQuestion]]
+    @location_query ||= LinkedRails::PropertyQuery.new(
+      iri: location_query_iri,
+      force_render: true,
+      target_node: iri,
+      path: NS.schema.location
+    )
+  end
+
+  def location_query_iri
+    LinkedRails.iri(path: root_relative_iri, fragment: 'location')
   end
 
   class << self
+    def preview_includes
+      super + [:location_query]
+    end
+
     def route_key
       :q
     end

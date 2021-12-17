@@ -31,8 +31,18 @@ class QuestionMenuList < ApplicationMenuList
     )
   end
 
+  def location_link
+    return nil unless resource.map_question?
+
+    menu_item(
+      :location,
+      href: resource.location_query_iri
+    )
+  end
+
   def tabs_menu_items
     [
+      location_link,
       motions_link,
       comments_link,
       edit_link,
