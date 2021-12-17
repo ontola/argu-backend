@@ -16,6 +16,7 @@ class Vocabulary < Edge
   property :display_name, :string, NS.schema.name
   property :description, :text, NS.schema.text
   property :tagged_label, :string, NS.argu[:taggedLabel]
+  property :term_type, :iri, NS.argu[:termType]
   with_columns default: [
     NS.schema.name,
     NS.ontola[:updateAction],

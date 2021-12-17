@@ -5,6 +5,7 @@ class VocabularyForm < ContainerNodeForm
   field :url
   field :description, datatype: NS.fhir[:markdown]
   field :tagged_label
+  field :term_type
   has_one :default_cover_photo
   has_many :attachments
   has_many :grants, **grant_options

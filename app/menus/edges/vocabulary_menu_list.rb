@@ -2,14 +2,29 @@
 
 class VocabularyMenuList < ApplicationMenuList
   has_action_menu
+  has_tabs_menu
 
   private
 
   def action_menu_items
     [
       copy_share_link(resource.iri),
-      edit_link,
       *trash_and_destroy_links(include_destroy: false)
     ]
+  end
+
+  def tabs_menu_items
+    [
+      terms_link,
+      edit_link
+    ]
+  end
+
+  def terms_link
+    menu_item(
+      :terms,
+      image: 'fa-list',
+      href: resource.collection_iri(:terms)
+    )
   end
 end

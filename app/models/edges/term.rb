@@ -35,4 +35,8 @@ class Term < Edge
   validates :display_name, presence: true, length: {maximum: 110}
 
   delegate :tagged_label, to: :parent
+
+  def rdf_type
+    parent.term_type.presence || super
+  end
 end
