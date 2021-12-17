@@ -28,6 +28,12 @@ class Discussion < Edge
       ->(scope) { scope.where(trashed_at: nil) }
     )
   )
+  with_columns default: [
+    NS.schema.name,
+    NS.schema.creator,
+    NS.argu[:lastActivityAt],
+    NS.argu[:followsCount]
+  ]
   paginates_per 12
   placeable :custom
 
