@@ -35,8 +35,6 @@ class CreateEdge < CreateService
     klass = resource_klass(attributes)
     edge = parent.build_child(klass, user_context: user_context)
     edge.created_at = attributes.with_indifferent_access[:created_at]
-    edge.publisher = publisher
-    edge.creator = creator
     edge
   end
 

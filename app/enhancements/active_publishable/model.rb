@@ -53,8 +53,10 @@ module ActivePublishable
       def build_new(parent: nil, user_context: nil)
         resource = super
         resource.build_argu_publication(
+          creator: user_context&.profile,
           draft: save_as_draft?(parent),
-          follow_type: 'reactions'
+          follow_type: 'reactions',
+          publisher: user_context&.user
         )
         resource
       end

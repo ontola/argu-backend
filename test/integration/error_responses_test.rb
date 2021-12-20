@@ -165,7 +165,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
                    json_api_errors(
                      status: 'Unprocessable Entity',
                      source: {'parameter' => 'display_name'},
-                     message: 'Display name is too short (minimum is 5 characters)',
+                     message: 'Display name is too short (minimum is 4 characters)',
                      code: 'VALUE_TOO_SHORT'
                    )
                  ].flatten

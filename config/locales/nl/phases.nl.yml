@@ -5,5 +5,7 @@ nl:
     phases:
       position:
         label: "Positie"
+      resource_type:
+        label: "Type"
       time:
         label: "Tijdsaanduiding"

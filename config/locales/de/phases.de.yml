@@ -5,5 +5,7 @@ de:
     phases:
       position:
         label: Standort
+      resource_type:
+        label: Typ
       time:
         label: Zeit

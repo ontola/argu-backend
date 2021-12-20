@@ -5,5 +5,7 @@ en:
     phases:
       position:
         label: "Position"
+      resource_type:
+        label: "Type"
       time:
         label: "Time"

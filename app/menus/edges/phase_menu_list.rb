@@ -8,7 +8,6 @@ class PhaseMenuList < ApplicationMenuList
   def action_menu_items
     [
       edit_link,
-      widgets_link,
       copy_share_link(resource.iri),
       *trash_and_destroy_links
     ]

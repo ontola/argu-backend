@@ -13,7 +13,7 @@ class Topic < Discussion
   )
 
   validates :description, presence: true, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
-  validates :display_name, presence: true, length: {minimum: 5, maximum: 110}
+  validates :display_name, presence: true, length: {minimum: 4, maximum: 110}
   validates :creator, presence: true
 
   class << self

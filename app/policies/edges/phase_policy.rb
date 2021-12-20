@@ -2,6 +2,7 @@
 
 class PhasePolicy < EdgePolicy
   permit_attributes %i[display_name description time order]
+  permit_attributes %i[resource_type], new_record: true
 
   delegate :show?, to: :parent_policy
   delegate :update?, to: :parent_policy

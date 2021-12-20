@@ -17,18 +17,25 @@ class Vocabulary < Edge
   property :description, :text, NS.schema.text
   property :tagged_label, :string, NS.argu[:taggedLabel]
   property :term_type, :iri, NS.argu[:termType]
+  property :default_term_display,
+           :integer,
+           NS.argu[:defaultDisplay],
+           default: 0,
+           enum: {default_display: 0, grid_display: 1, table_display: 2, card_display: 3}
+
   with_columns default: [
     NS.schema.name,
     NS.ontola[:updateAction],
     NS.ontola[:destroyAction]
   ]
-  with_collection :terms, title: -> { parent.display_name }
+  with_collection :terms,
+                  display: -> { parent.default_term_display&.to_s&.sub('_display', '') },
+                  title: -> { parent.display_name }
 
   parentable :page
 
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
-  validates :url, presence: true
 
   after_trash -> { shortname.update(primary: false) }
 
