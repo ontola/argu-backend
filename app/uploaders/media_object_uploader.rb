@@ -10,7 +10,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   AUDIO_TYPES = %w[audio/mpeg audio/mp4 audio/m4a audio/ogg audio/aac].freeze
   DOCUMENT_TYPES = %w[application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
                       application/vnd.oasis.opendocument.text application/epub+zip text/plain].freeze
-  IMAGE_TYPES = %w[image/jpeg image/png image/webp].freeze
+  IMAGE_TYPES = %w[image/jpeg image/png image/webp image/svg+xml].freeze
   PORTABLE_DOCUMENT_TYPES = %w[application/pdf].freeze
   PRESENTATION_TYPES = %w[application/vnd.oasis.opendocument.presentation application/powerpoint
                           application/vnd.openxmlformats-officedocument.presentationml.presentation
