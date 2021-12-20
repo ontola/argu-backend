@@ -9,6 +9,8 @@ class ApplicationRecord < ActiveRecord::Base
 
   self.abstract_class = true
 
+  collection_options(page_size: 12)
+
   class << self
     def sort_options(_collection)
       []
