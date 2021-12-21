@@ -36,7 +36,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path, headers: argu_headers(accept: :nq)
 
     assert_response 200
-    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:info))
+    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:session))
   end
 
   test 'Guest should get show page menu with custom item' do
@@ -70,7 +70,7 @@ class MenusTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:user))
-    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:info))
+    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:session))
   end
 
   private

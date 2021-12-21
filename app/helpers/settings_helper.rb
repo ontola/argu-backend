@@ -5,6 +5,7 @@ module SettingsHelper
     {
       general: 'gear',
       advanced: 'gears',
+      drafts: 'file',
       container_nodes: 'cubes',
       custom_menu_items: 'bars',
       delete: 'trash',
@@ -26,6 +27,7 @@ module SettingsHelper
       bearer_invite: 'link',
       email_invite: 'send',
       vocabularies: 'tags',
+      settings: 'gear',
       submissions: 'list-ul',
       submission: 'pencil',
       participate: 'pencil'

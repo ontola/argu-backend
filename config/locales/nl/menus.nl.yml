@@ -4,6 +4,7 @@ nl:
     default:
       2fa: "Tweestapsverificatie"
       authentication: "Authenticatie"
+      drafts: "Concepten"
       facebook: "Facebook"
       twitter: "Twitter"
       linked_in: "LinkedIn"

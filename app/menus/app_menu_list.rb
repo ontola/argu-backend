@@ -8,10 +8,8 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   include SettingsHelper
   include LanguageHelper
 
-  has_menu :info,
-           label: LinkedRails.translations(-> { I18n.t('about.info') }),
-           image: 'fa-info',
-           menus: -> { info_menu_items }
+  has_menu :session,
+           menus: -> { session_menu_items }
   has_menu :user,
            label: -> { user_context.user.display_name },
            image: -> { user_context.user.default_profile_photo.thumbnail },
@@ -21,6 +19,8 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   has_menu :settings,
            iri_base: -> { ActsAsTenant.current_tenant.root_relative_iri },
            menus: -> { setting_menu_items }
+  has_menu :manage,
+           menus: -> { manage_menu_items }
 
   def iri_template
     uri_template('menu_lists_iri')
@@ -35,8 +35,11 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
         .includes(:default_profile_photo, :shortname)
   end
 
-  def info_menu_items
-    custom_menu_items(:info, ActsAsTenant.current_tenant)
+  def session_menu_items
+    [
+      language_menu_item,
+      sign_out_menu_item
+    ]
   end
 
   def language_menu_item
@@ -49,15 +52,8 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def navigations_menu_items # rubocop:disable Metrics/MethodLength
+  def manage_menu_items
     [
-      menu_item(
-        :home,
-        image: ActsAsTenant.current_tenant.home_menu_image,
-        label: ActsAsTenant.current_tenant.home_menu_label,
-        href: ActsAsTenant.current_tenant.iri
-      ),
-      *custom_menu_items(:navigations, ActsAsTenant.current_tenant),
       menu_item(
         :settings,
         image: 'fa-gear',
@@ -66,6 +62,18 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
         policy_resource: ActsAsTenant.current_tenant
       ),
       new_container_node_item
+    ]
+  end
+
+  def navigations_menu_items
+    [
+      menu_item(
+        :home,
+        image: ActsAsTenant.current_tenant.home_menu_image,
+        label: ActsAsTenant.current_tenant.home_menu_label,
+        href: ActsAsTenant.current_tenant.iri
+      ),
+      *custom_menu_items(:navigations, ActsAsTenant.current_tenant)
     ]
   end
 
@@ -147,28 +155,28 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def user_base_items
+  def user_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     [
-      menu_item(:show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_context.user.iri),
-      menu_item(:profile, label: I18n.t('profiles.edit.title'), href: user_context.user.iri(fragment: :profile))
+      menu_item(
+        :notifications,
+        href: user_context.user.iri(fragment: :notifications),
+        image: "fa-#{tab_icons[:notifications]}"
+      ),
+      menu_item(
+        :drafts,
+        href: user_context.user.iri(fragment: :drafts),
+        image: "fa-#{tab_icons[:drafts]}"
+      ),
+      menu_item(
+        :settings,
+        href: user_context.user.iri(fragment: :settings),
+        image: "fa-#{tab_icons[:settings]}"
+      ),
+      menu_item(
+        :profile,
+        href: user_context.user.iri,
+        image: "fa-#{tab_icons[:profile]}"
+      )
     ]
-  end
-
-  def user_menu_items
-    return [language_menu_item] if user_context.user.guest?
-
-    items = user_base_items
-    items << user_settings_item
-    items << language_menu_item
-    items << sign_out_menu_item
-    items
-  end
-
-  def user_settings_item
-    menu_item(
-      :settings,
-      label: I18n.t('users.settings.title'),
-      href: user_context.user.iri(fragment: :settings)
-    )
   end
 end

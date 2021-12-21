@@ -4,6 +4,7 @@ de:
     default:
       2fa: Zwei-Faktor-Authentifizierung
       authentication: Authentifizierung
+      drafts: Entwürfe
       facebook: Facebook
       twitter: Twitter
       linked_in: LinkedIn
