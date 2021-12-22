@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'sidekiq/prometheus/exporter'
-
 ####
 # Routes
 # a: arguments
@@ -191,8 +189,6 @@ Rails.application.routes.draw do
   end
   resources :container_nodes, path: :container_nodes, only: %i[index]
   linked_resource(ContainerNode, collection: false)
-
-  mount Sidekiq::Prometheus::Exporter => '/d/sidekiq'
 
   match '*path', to: 'static_pages#not_found', via: :all
 end

@@ -425,6 +425,8 @@ GEM
     parser (3.0.2.0)
       ast (~> 2.4.1)
     pg (1.2.3)
+    prometheus_exporter (1.0.1)
+      webrick
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -594,8 +596,6 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-prometheus-exporter (0.1.15)
-      sidekiq (>= 3.3.1)
     sidekiq-scheduler (3.1.0)
       e2mmap
       redis (>= 3, < 5)
@@ -672,6 +672,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    webrick (1.7.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -742,6 +743,7 @@ DEPENDENCIES
   oauth2
   oj
   pg
+  prometheus_exporter
   pry
   public_activity!
   puma
@@ -773,7 +775,6 @@ DEPENDENCIES
   searchkick
   sequenced
   sidekiq
-  sidekiq-prometheus-exporter
   sidekiq-scheduler
   simplecov
   spreadsheet
