@@ -17,7 +17,7 @@ module SPI
       grant_tree.grants_in_scope
       grant_tree.grant_resets_in_scope
 
-      super.map(&:join).map(&:value)
+      super
     end
 
     def authorized_resource(opts)
@@ -101,31 +101,6 @@ module SPI
       raise(Argu::Errors::Forbidden.new(query: :show?)) unless resource_policy.show?
 
       200
-    end
-
-    def resource_thread(&block)
-      Thread.new(Apartment::Tenant.current, ActsAsTenant.current_tenant, I18n.locale, request.env, &block)
-    end
-
-    def threaded_authorized_resource(resource, &block) # rubocop:disable Metrics/MethodLength
-      resource_thread do |apartment, tenant, locale, env|
-        Bugsnag.configuration.set_request_data(:rack_env, env)
-        ActiveRecord::Base.connection_pool.with_connection do
-          Apartment::Tenant.switch(apartment) do
-            ActsAsTenant.with_tenant(tenant) do
-              I18n.with_locale(locale, &block)
-            end
-          end
-        end
-      rescue StandardError, ScriptError => e
-        handle_resource_error(resource, e)
-      end
-    end
-
-    def timed_authorized_resource(resource)
-      threaded_authorized_resource(resource) do
-        super
-      end
     end
   end
 end
