@@ -35,6 +35,8 @@ class LinkedRecord < Edge
   end
 
   def external_body
+    return [] unless external_iri.present?
+
     body = external_response.body
     blank_nodes = body.scan(/\["(\w*)"/).flatten.uniq
     replaced_body = blank_nodes.reduce(body) { |result, node| result.gsub(node, "_:#{node}") }
@@ -45,7 +47,7 @@ class LinkedRecord < Edge
 
   def external_response
     @external_response ||= HTTParty.get(
-      external_iri,
+      external_iri.to_s,
       headers: {
         'ACCEPT' => 'application/hex+x-ndjson; charset=utf-8',
         'ACCEPT_LANGUAGE' => language,
