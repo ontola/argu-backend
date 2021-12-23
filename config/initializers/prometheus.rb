@@ -2,6 +2,9 @@
 
 unless Rails.env.test? || ENV['DISABLE_PROMETHEUS']
   require 'prometheus_exporter/middleware'
+  require 'prometheus_exporter/metric'
+
+  PrometheusExporter::Metric::Base.default_prefix = "apex"
 
   # This reports stats per request like HTTP status and timings
   Rails.application.middleware.unshift PrometheusExporter::Middleware
