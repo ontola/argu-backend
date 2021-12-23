@@ -3,7 +3,7 @@
 require 'benchmark'
 
 module SPI
-  class BulkController < LinkedRails::BulkController
+  class BulkController < LinkedRails::BulkController # rubocop:disable Metrics/ClassLength
     alias_attribute :pundit_user, :user_context
 
     private
@@ -17,7 +17,11 @@ module SPI
       grant_tree.grants_in_scope
       grant_tree.grant_resets_in_scope
 
-      super.map(&:join).map(&:value)
+      process_in_threads(
+        params
+          .require(:resources)
+          .map { |param| resource_params(param) }
+      )
     end
 
     def authorized_resource(opts)
@@ -33,6 +37,12 @@ module SPI
       handle_resource_error(opts, e)
     end
 
+    def available_connections
+      stats = ActiveRecord::Base.connection_pool.stat
+
+      stats[:size] - stats[:busy] - stats[:waiting]
+    end
+
     def log_resource_error(error, iri)
       super
 
@@ -45,6 +55,16 @@ module SPI
         )
         Bugsnag.configuration.middleware.run(report)
       end
+    end
+
+    def process_in_threads(resources)
+      result = []
+      until resources.empty?
+        process_count = [[available_connections, 1].max, (ENV['RAILS_MAX_THREADS'] || 5).to_i].min
+        process_set = resources.shift(process_count)
+        result.concat(process_set.map(&method(:timed_authorized_resource)).each(&:join).map(&:value))
+      end
+      result
     end
 
     def resource_body_with_same_as(resource, iri)
@@ -110,15 +130,15 @@ module SPI
     def threaded_authorized_resource(resource, &block) # rubocop:disable Metrics/MethodLength
       resource_thread do |apartment, tenant, locale, env|
         Bugsnag.configuration.set_request_data(:rack_env, env)
-        ActiveRecord::Base.connection_pool.with_connection do
-          Apartment::Tenant.switch(apartment) do
-            ActsAsTenant.with_tenant(tenant) do
-              I18n.with_locale(locale, &block)
-            end
+        Apartment::Tenant.switch(apartment) do
+          ActsAsTenant.with_tenant(tenant) do
+            I18n.with_locale(locale, &block)
           end
         end
       rescue StandardError, ScriptError => e
         handle_resource_error(resource, e)
+      ensure
+        ActiveRecord::Base.clear_active_connections!
       end
     end
 
