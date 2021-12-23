@@ -55,7 +55,9 @@ class LinkedRecord < Edge
   end
 
   class << self
-    def requested_single_resource(params, user_context)
+    def requested_single_resource(params, user_context) # rubocop:disable Metrics/MethodLength
+      return if params[:iri].blank?
+
       record =
         LinkedRecord.find_or_initialize_by(
           external_iri: params[:iri],
