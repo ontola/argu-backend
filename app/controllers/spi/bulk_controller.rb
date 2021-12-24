@@ -43,6 +43,10 @@ module SPI
       stats[:size] - stats[:busy] - stats[:waiting]
     end
 
+    def client
+      PrometheusExporter::Client.default
+    end
+
     def log_resource_error(error, iri)
       super
 

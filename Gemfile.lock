@@ -37,8 +37,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: bff5ecaafe13ca7a000590d94c22cad35081d3d6
-  branch: renders
+  revision: d52b01a6bad4b77ae897d4beea72d90fcbcf79e1
+  branch: prometheus
   specs:
     linked_rails (0.0.4)
       active_response (~> 0.0.2)
