@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'benchmark'
+require 'prometheus_exporter/client'
 
 module SPI
   class BulkController < LinkedRails::BulkController # rubocop:disable Metrics/ClassLength
@@ -41,6 +42,10 @@ module SPI
       stats = ActiveRecord::Base.connection_pool.stat
 
       stats[:size] - stats[:busy] - stats[:waiting]
+    end
+
+    def client
+      PrometheusExporter::Client.default unless ENV['DISABLE_PROMETHEUS']
     end
 
     def log_resource_error(error, iri)
