@@ -178,7 +178,8 @@ ActiveRecord::Schema.define(version: 2021_12_28_144303) do
     t.text "description"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps, where: '(member_id <> 0)'
+    t.index ["start_date", "end_date", "group_id", "member_id"], name: "index_group_memberships_full"
+    t.index ["start_date", "end_date"], name: "index_group_memberships_on_start_date_and_end_date"
     t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps, where: '(member_id <> 0)'
   end
 
@@ -289,6 +290,7 @@ ActiveRecord::Schema.define(version: 2021_12_28_144303) do
     t.string "resource_type", null: false
     t.string "parent_type", null: false
     t.string "action_name", null: false
+    t.index ["action_name", "resource_type"], name: "index_permitted_actions_on_action_name_and_resource_type"
     t.index ["action_name"], name: "index_permitted_actions_on_action_name"
     t.index ["parent_type"], name: "index_permitted_actions_on_parent_type"
     t.index ["resource_type"], name: "index_permitted_actions_on_resource_type"
@@ -393,6 +395,7 @@ ActiveRecord::Schema.define(version: 2021_12_28_144303) do
     t.boolean "primary", default: true, null: false
     t.index "lower((shortname)::text)", name: "index_shortnames_on_unscoped_shortname", unique: true, where: "(root_id IS NULL)"
     t.index "lower((shortname)::text), root_id", name: "index_shortnames_on_scoped_shortname", unique: true
+    t.index ["owner_id", "primary"], name: "index_shortnames_on_owner_id_and_primary"
     t.index ["root_id"], name: "index_shortnames_on_root_id"
   end
 
