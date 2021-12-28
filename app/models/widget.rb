@@ -14,7 +14,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Destroyable
   enhance Orderable
 
-  belongs_to :owner, polymorphic: true, primary_key: :uuid
+  belongs_to :owner, class_name: 'Edge', primary_key: :uuid
   belongs_to :permitted_action
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid

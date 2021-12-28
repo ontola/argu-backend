@@ -6,7 +6,7 @@ class WidgetPolicy < EdgeTreePolicy
       return scope.none if user.nil?
 
       scope
-        .joins("JOIN edges ON edges.uuid = widgets.owner_id AND widgets.owner_type = 'Edge'")
+        .joins(:owner)
         .with(granted_paths(show_only: false))
         .where("(#{path_filter}) @> edges.path")
     end

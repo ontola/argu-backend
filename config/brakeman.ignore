@@ -3,13 +3,13 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "2c34e1aa4e0dd3da221d9705170a737e9fabed38e0244c1062d8d6d27152d4a3",
+      "fingerprint": "a1aa271eec29b721f7319b33f23cbcc920e37762e9eb3c8aa164eb1117ea1846",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/policies/widget_policy.rb",
       "line": 11,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "scope.joins(\"JOIN edges ON edges.uuid = widgets.owner_id AND widgets.owner_type = 'Edge'\").with(granted_paths(:show_only => false)).where(\"(#{path_filter}) @> edges.path\")",
+      "code": "scope.joins(:owner).with(granted_paths(:show_only => false)).where(\"(#{path_filter}) @> edges.path\")",
       "render_path": null,
       "location": {
         "type": "method",
@@ -27,7 +27,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/virtual/feed.rb",
-      "line": 40,
+      "line": 41,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Activity.includes(:owner).joins(:trackable, :recipient).where.not(\"edges.owner_type\" => \"Banner\").where(\"edges.owner_type != ? OR recipients_activities.owner_type != ?\", \"Vote\", \"Argument\").where(\"key ~ '#{self.class.class_key}.update|publish'\")",
       "render_path": null,
@@ -41,6 +41,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-09-28 10:06:14 +0200",
-  "brakeman_version": "5.1.1"
+  "updated": "2021-12-29 11:36:30 +0100",
+  "brakeman_version": "5.2.0"
 }

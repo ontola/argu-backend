@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_20_094734) do
+ActiveRecord::Schema.define(version: 2021_12_28_135104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -475,7 +475,6 @@ ActiveRecord::Schema.define(version: 2021_12_20_094734) do
 
   create_table "widgets", force: :cascade do |t|
     t.integer "widget_type", null: false
-    t.string "owner_type", null: false
     t.text "resource_iri", null: false, array: true
     t.integer "size", default: 1, null: false
     t.integer "position", null: false
@@ -483,7 +482,6 @@ ActiveRecord::Schema.define(version: 2021_12_20_094734) do
     t.integer "permitted_action_id", null: false
     t.uuid "root_id", null: false
     t.integer "view", default: 0, null: false
-    t.index ["owner_id", "owner_type"], name: "index_widgets_on_owner_id_and_owner_type"
   end
 
   add_foreign_key "activities", "edges", column: "recipient_edge_id", primary_key: "uuid"
@@ -518,4 +516,5 @@ ActiveRecord::Schema.define(version: 2021_12_20_094734) do
   add_foreign_key "placements", "profiles", column: "creator_id"
   add_foreign_key "placements", "users", column: "publisher_id"
   add_foreign_key "publications", "edges", column: "publishable_id", primary_key: "uuid"
+  add_foreign_key "widgets", "edges", column: "owner_id", primary_key: "uuid"
 end
