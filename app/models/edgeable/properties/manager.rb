@@ -18,8 +18,8 @@ module Edgeable
         properties.map(&:linked_edge)
       end
 
-      def preload
-        @value = properties.any? ? current_value : default_value
+      def preload(new_record: false)
+        @value = !new_record && properties.any? ? current_value : default_value
         sync_property(@value) unless @value.nil?
       end
 

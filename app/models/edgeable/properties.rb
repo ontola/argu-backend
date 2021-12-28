@@ -24,13 +24,13 @@ module Edgeable
       class_attribute :defined_properties
     end
 
-    def preload_properties(force: false)
+    def preload_properties(force: false, new_record: false)
       return if !force && (properties_preloaded || !association_cached?(:properties))
 
       self.property_managers = {}
 
       defined_properties&.each do |p|
-        preload_property(p) unless p[:preload] == false
+        preload_property(p, new_record: new_record) unless p[:preload] == false
       end
       self.properties_preloaded = true
     end
@@ -67,11 +67,11 @@ module Edgeable
 
     def initialize_internals_callback
       super
-      preload_properties(force: true)
+      preload_properties(force: true, new_record: true)
     end
 
-    def preload_property(property)
-      property_manager(property[:predicate]).preload
+    def preload_property(property, new_record: false)
+      property_manager(property[:predicate]).preload(new_record: new_record)
       clear_attribute_change(property[:name])
     end
 
