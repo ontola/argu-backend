@@ -32,14 +32,6 @@ class Comment < Edge
 
   attr_accessor :is_processed
 
-  def build_child(klass, user_context: nil)
-    return super unless klass == Comment
-
-    child = klass.build_new(parent: parent, user_context: user_context)
-    child.parent_comment_id = uuid
-    child
-  end
-
   def deleted?
     body.blank? || body == '[DELETED]'
   end
@@ -76,8 +68,11 @@ class Comment < Edge
 
   class << self
     def attributes_for_new(opts)
+      return super unless opts[:parent].is_a?(Comment)
+
       attrs = super
-      attrs[:parent_comment_id] = opts[:parent].uuid if opts[:parent].is_a?(Comment)
+      attrs[:parent] = opts[:parent].parent
+      attrs[:parent_comment_id] = opts[:parent].uuid
       attrs
     end
 
