@@ -16,10 +16,6 @@ class VoteEvent < Edge
     'Argu voting'
   end
 
-  def iri_opts
-    super.merge(id: to_param)
-  end
-
   def neutral_count
     children_count(:votes_neutral)
   end

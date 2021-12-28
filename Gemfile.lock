@@ -37,8 +37,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 6e1d840a8d53ad1df48f5254fd658aeca3afa445
-  branch: renders
+  revision: 7e3a6f13b43eb8a05034993f37605f22ae5d1990
+  branch: collection-performance
   specs:
     linked_rails (0.0.4)
       active_response (~> 0.0.2)
@@ -313,8 +313,6 @@ GEM
     haml (5.2.2)
       temple (>= 0.8.0)
       tilt
-    hamster (3.0.0)
-      concurrent-ruby (~> 1.0)
     hashdiff (1.0.1)
     hashie (4.1.0)
     health_check (3.1.0)
@@ -346,10 +344,10 @@ GEM
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
     jwt (2.3.0)
-    kaminari-activerecord (1.2.1)
+    kaminari-activerecord (1.2.2)
       activerecord
-      kaminari-core (= 1.2.1)
-    kaminari-core (1.2.1)
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     license_finder (6.14.1)
       bundler
       rubyzip (>= 1, < 3)
@@ -482,8 +480,7 @@ GEM
     rainbow (3.0.0)
     rake (13.0.6)
     rbtree (0.4.4)
-    rdf (3.1.15)
-      hamster (~> 3.0)
+    rdf (3.2.1)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (3.1.0)
       rdf (~> 3.1)
@@ -507,8 +504,8 @@ GEM
     rdf-turtle (3.1.3)
       ebnf (~> 2.1)
       rdf (~> 3.1, >= 3.1.8)
-    rdf-vocab (3.1.14)
-      rdf (~> 3.1, >= 3.1.12)
+    rdf-vocab (3.2.0)
+      rdf (~> 3.2)
     rdf-xsd (3.1.1)
       rdf (~> 3.1)
       rexml (~> 3.2)
@@ -685,7 +682,7 @@ GEM
     yard (0.9.26)
     yard-activesupport-concern (0.0.1)
       yard (>= 0.8)
-    zeitwerk (2.5.1)
+    zeitwerk (2.5.3)
 
 PLATFORMS
   ruby

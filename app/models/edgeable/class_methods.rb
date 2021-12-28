@@ -90,6 +90,14 @@ module Edgeable
         # rubocop:enable Rails/InverseOf
       end
 
+      def ids_for_iris(scope)
+        scope
+          .left_joins(:shortname)
+          .skip_preloading!
+          .select('edges.uuid', 'edges.fragment', 'shortnames.shortname')
+          .map(&:to_param)
+      end
+
       def term_property(key, predicate, **opts)
         property key, :linked_edge_id, predicate, **opts.merge(association_class: 'Term')
       end

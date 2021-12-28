@@ -51,6 +51,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   attr_writer :iri_prefix
 
+  collection_options(
+    include_members: true
+  )
+
   with_collection :container_nodes
   with_collection :custom_forms
   with_collection :custom_menu_items, association: :navigations_menu_items, association_class: CustomMenuItem
@@ -241,10 +245,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       record = super
       record.build_profile
       record
-    end
-
-    def include_in_collection?
-      true
     end
 
     def menu_class

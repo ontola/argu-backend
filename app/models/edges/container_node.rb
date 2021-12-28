@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
+class ContainerNode < Edge
   include DeltaHelper
 
   enhance ConfirmedDestroyable
@@ -74,10 +74,6 @@ class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
 
   def hide_header
     !show_header
-  end
-
-  def iri_opts
-    {id: url}
   end
 
   def iri_template_name

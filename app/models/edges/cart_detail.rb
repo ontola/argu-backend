@@ -9,7 +9,8 @@ class CartDetail < Edge
   enhance Singularable
 
   collection_options(
-    default_filters: {}
+    default_filters: {},
+    include_members: true
   )
   attribute :shop_id
   parentable :budget_shop, :offer
@@ -62,10 +63,6 @@ class CartDetail < Edge
         parent: opts[:parent].is_a?(Cart) ? opts[:parent].parent : opts[:parent],
         shop_id: opts[:parent]&.parent&.id
       )
-    end
-
-    def include_in_collection?
-      true
     end
 
     def singular_route_key

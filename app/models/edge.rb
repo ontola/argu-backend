@@ -267,10 +267,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     "#{owner_type.constantize.model_name.route_key}_iri"
   end
 
-  def iri_opts
-    {id: url || fragment}
-  end
-
   def is_child_of?(edge)
     ancestor_ids.include?(edge.id)
   end
@@ -360,6 +356,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # @return [Array] The ids of (persisted) ancestors, including self if persisted
   def self_and_ancestor_ids
     persisted_edge.path.split('.').map(&:to_i)
+  end
+
+  def to_param
+    url || fragment
   end
 
   def trashed_ancestors
