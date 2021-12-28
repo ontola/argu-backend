@@ -8,14 +8,14 @@ module Shortnameable
 
     has_one :shortname,
             -> { where(primary: true) },
-            as: 'owner',
             dependent: :destroy,
+            foreign_key: :owner_id,
             inverse_of: :owner,
             autosave: true,
             primary_key: :uuid
     has_many :shortnames,
-             as: 'owner',
              dependent: :destroy,
+             foreign_key: :owner_id,
              inverse_of: :owner,
              primary_key: :uuid
     accepts_nested_attributes_for :shortname, :shortnames

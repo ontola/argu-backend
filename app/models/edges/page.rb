@@ -83,7 +83,8 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :live_updates, :boolean, NS.ontola[:liveUpdates], default: false
 
   def all_shortnames
-    @all_shortnames = Shortname.join_edges.where(shortnames: {root_id: nil}, edges: {root_id: uuid}).pluck(:shortname)
+    @all_shortnames ||=
+      Shortname.joins(:owner).where(shortnames: {root_id: nil}, edges: {root_id: uuid}).pluck(:shortname)
   end
 
   def build_profile(*options)

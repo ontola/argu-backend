@@ -4,7 +4,7 @@ class ShortnamePolicy < EdgeTreePolicy
   class Scope < Scope
     def resolve
       scope
-        .join_edges
+        .joins(:owner)
         .where(primary: false)
         .where('COALESCE(shortnames.root_id, edges.root_id) = ?', ActsAsTenant.current_tenant.uuid)
     end

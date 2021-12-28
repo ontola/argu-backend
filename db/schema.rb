@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_28_135104) do
+ActiveRecord::Schema.define(version: 2021_12_28_144303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -386,7 +386,6 @@ ActiveRecord::Schema.define(version: 2021_12_28_135104) do
 
   create_table "shortnames", id: :serial, force: :cascade do |t|
     t.string "shortname", null: false
-    t.string "owner_type", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.uuid "owner_id", null: false
@@ -394,7 +393,6 @@ ActiveRecord::Schema.define(version: 2021_12_28_135104) do
     t.boolean "primary", default: true, null: false
     t.index "lower((shortname)::text)", name: "index_shortnames_on_unscoped_shortname", unique: true, where: "(root_id IS NULL)"
     t.index "lower((shortname)::text), root_id", name: "index_shortnames_on_scoped_shortname", unique: true
-    t.index ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, where: "(\"primary\" IS TRUE)"
     t.index ["root_id"], name: "index_shortnames_on_root_id"
   end
 
@@ -516,5 +514,6 @@ ActiveRecord::Schema.define(version: 2021_12_28_135104) do
   add_foreign_key "placements", "profiles", column: "creator_id"
   add_foreign_key "placements", "users", column: "publisher_id"
   add_foreign_key "publications", "edges", column: "publishable_id", primary_key: "uuid"
+  add_foreign_key "shortnames", "edges", column: "owner_id", primary_key: "uuid"
   add_foreign_key "widgets", "edges", column: "owner_id", primary_key: "uuid"
 end

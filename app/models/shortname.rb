@@ -7,7 +7,7 @@ class Shortname < ApplicationRecord
   include Parentable
 
   belongs_to :owner,
-             polymorphic: true,
+             class_name: 'Edge',
              primary_key: :uuid,
              optional: false
   belongs_to :root,
@@ -16,9 +16,6 @@ class Shortname < ApplicationRecord
   before_save :remove_primary_shortname, if: :primary?
   after_destroy :update_caches, if: :primary?
   after_save :update_caches, if: :primary?
-  scope :join_edges, lambda {
-    joins("INNER JOIN edges ON edges.uuid = shortnames.owner_id AND shortnames.owner_type = 'Edge'")
-  }
 
   with_columns settings: [
     NS.argu[:alias],
@@ -51,7 +48,7 @@ class Shortname < ApplicationRecord
   def display_name; end
 
   def edgeable_record
-    owner.is_a?(Edge) ? owner.root : owner
+    owner.root
   end
 
   def owner
@@ -91,8 +88,6 @@ class Shortname < ApplicationRecord
   end
 
   def update_caches
-    owner.try(:cache_iri_path!)
-
     return unless update_iris?
 
     new_path = owner.iri.path
