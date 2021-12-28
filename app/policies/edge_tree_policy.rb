@@ -18,11 +18,18 @@ class EdgeTreePolicy < RestrictivePolicy
     private
 
     %i[edges grant_sets grant_sets_permitted_actions granted_paths grants
-       managed_forum_paths permitted_actions widgets].each do |table_name|
+       groups group_memberships managed_forum_paths permitted_actions widgets].each do |table_name|
       define_method "#{table_name}_table" do
         instance_variable_get(:"@#{table_name}_table") ||
           instance_variable_set(:"@#{table_name}_table", Arel::Table.new(table_name))
       end
+    end
+
+    def active_group_memberships_filter # rubocop:disable Metrics/AbcSize
+      groups_table[:id]
+        .eq(group_memberships_table[:group_id])
+        .and(group_memberships_table[:start_date].lteq(Time.current))
+        .and(group_memberships_table[:end_date].eq(nil).or(group_memberships_table[:end_date].gteq(Time.current)))
     end
 
     def active_or_creator
@@ -30,7 +37,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def filtered_edge_table
-      table = joined_edge_table.where(grants_table[:group_id].in(user.profile.group_ids))
+      table = joined_edge_table.where(group_memberships_table[:member_id].eq(user.profile.id))
       return table unless grant_tree&.tree_root_id
 
       table
@@ -66,6 +73,9 @@ class EdgeTreePolicy < RestrictivePolicy
         .join(grant_sets_table).on(grant_sets_table[:id].eq(grants_table[:grant_set_id]))
         .join(grant_sets_permitted_actions_table)
         .on(grant_sets_table[:id].eq(grant_sets_permitted_actions_table[:grant_set_id]))
+        .join(groups_table).on(groups_table[:id].eq(grants_table[:group_id]))
+        .join(group_memberships_table)
+        .on(active_group_memberships_filter)
         .join(permitted_actions_table)
         .on(permitted_actions_table[:id].eq(grant_sets_permitted_actions_table[:permitted_action_id]))
     end
