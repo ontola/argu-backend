@@ -5,12 +5,10 @@ module Uuidable
 
   included do
     include UUIDHelper
+    before_save :set_uuid
 
-    def initialize(opts = nil)
-      opts ||= {}
-      opts[:uuid] ||= SecureRandom.uuid
-      self.class.reflect_on_all_associations.each { |a| association(a.name).loaded! } if new_record?
-      super
+    def set_uuid
+      self.uuid ||= SecureRandom.uuid
     end
   end
 end
