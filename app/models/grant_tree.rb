@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
-class GrantTree
+class GrantTree # rubocop:disable Metrics/ClassLength
+  NODE_ATTRIBUTES = %i[id parent_id path is_published expires_at trashed_at].freeze
+  ID_POSITION = 0
+  PARENT_ID_POSITION = 1
+  PATH_POSITION = 2
+  IS_PUBLISHED_POSITION = 3
+  EXPIRES_AT_POSITION = 4
+  TRASHED_AT_POSITION = 5
+
   include UUIDHelper
 
   ANY_ROOT = :any
@@ -18,17 +26,18 @@ class GrantTree
     {}
   end
 
-  def cache_node(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-    return cached_node(node) if cached?(node)
+  def cache_node(edge_id) # rubocop:disable Metrics/AbcSize
+    return cached_node(edge_id) if cached?(edge_id)
 
-    edge = node.is_a?(Edge) ? node : Edge.find(node)
-    ancestor_ids = edge.path.split('.').map(&:to_i) - cached_nodes.keys - [edge.id]
-    ancestors = ancestor_ids.present? ? Edge.where(root: tree_root, id: ancestor_ids) : []
-    (ancestors + [edge]).sort_by { |e| e.path.length }.each do |ancestor|
-      cached_nodes[ancestor.id] =
-        ancestor.parent_id.nil? ? root_node(ancestor) : find_or_cache_node(ancestor.parent_id).add_child(ancestor)
+    edge = edge_id.is_a?(Edge) ? edge_id : Edge.find(edge_id)
+
+    ancestor_ids = cached?(edge.parent_id) ? [edge.id] : edge.self_and_ancestor_ids.reject(&method(:cached?))
+    branch_attributes = Edge.where(root: tree_root, id: ancestor_ids).pluck(*NODE_ATTRIBUTES)
+    branch_attributes.sort_by { |attrs| attrs[PATH_POSITION].count('.') }.each do |attrs|
+      cached_nodes[attrs[ID_POSITION]] = build_node(attrs)
     end
-    cached_node(node)
+
+    cached_node(edge.id)
   end
 
   # Checks whether the edge or any of its ancestors is expired
@@ -119,6 +128,21 @@ class GrantTree
 
   private
 
+  def build_node(attrs)
+    return root_node if attrs[PARENT_ID_POSITION].nil?
+
+    parent_node = cached_node(attrs[PARENT_ID_POSITION])
+    raise('Parent node not found') if parent_node.blank?
+
+    parent_node.add_child(
+      id: attrs[ID_POSITION],
+      path: attrs[PATH_POSITION],
+      is_published: attrs[IS_PUBLISHED_POSITION],
+      expires_at: attrs[EXPIRES_AT_POSITION],
+      trashed_at: attrs[TRASHED_AT_POSITION]
+    )
+  end
+
   def cached_node(edge)
     raise 'UUID given' if uuid?(edge)
 
@@ -128,18 +152,19 @@ class GrantTree
   # Checks whether the edge is in the current tree
   # @param [Edge, Integer] edge The edge or an edge_id to check
   def cached?(edge)
-    cached_node(edge).present?
+    cached_nodes.key?(edge.is_a?(Edge) ? edge.id : edge)
   end
 
   def find_or_cache_node(edge)
     cached_node(edge) || cache_node(edge) || raise('Edge not found')
   end
 
-  def root_node(node = nil) # rubocop:disable Metrics/AbcSize
+  def root_node
     return cached_node(tree_root.id) if cached?(tree_root.id)
-    raise SecurityError.new('Node with different root given') if node.root_id != tree_root_id
 
-    @tree_root ||= node if node.present?
-    cached_nodes[tree_root.id] = Node.new(tree_root, nil, self)
+    cached_nodes[tree_root.id] = Node.new(
+      grant_tree: self,
+      **tree_root.slice(%i[expires_at id is_published trashed_at path])
+    )
   end
 end

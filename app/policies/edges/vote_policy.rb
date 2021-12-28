@@ -14,6 +14,12 @@ class VotePolicy < EdgePolicy
 
   permit_attributes %i[option]
 
+  def create?
+    return super unless record.parent.is_a?(VoteEvent) && record.parent.starts_at > Time.current
+
+    false
+  end
+
   def show?
     return if has_unpublished_ancestors? && !show_unpublished?
 

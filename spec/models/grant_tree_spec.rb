@@ -154,7 +154,7 @@ RSpec.describe GrantTree, type: :model do
       let(:method_args) { root }
       let(:cache) { other_page_forum }
 
-      it { expect { subject }.to raise_error SecurityError }
+      it { is_expected.to be false }
     end
   end
 end

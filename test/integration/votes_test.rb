@@ -66,6 +66,11 @@ class VotesTest < ActionDispatch::IntegrationTest
            parent: motion,
            expires_at: 1.day.from_now)
   end
+  let(:future_vote_event) do
+    create(:vote_event,
+           parent: motion,
+           starts_at: 1.day.from_now)
+  end
   let(:closed_vote_event) do
     create(:vote_event,
            parent: motion,
@@ -143,6 +148,19 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'guest should post not create vote for closed motion' do
     sign_in guest_user
     post closed_question_motion.default_vote_event.collection_iri(:votes),
+         params: {
+           vote: {option: :no}
+         },
+         headers: argu_headers(accept: :json_api)
+    assert_response 403
+    current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(closed_question_motion.default_vote_event) }
+    get current_vote, headers: argu_headers(accept: :json_api)
+    assert_equal parsed_body['data']['attributes']['option'], NS.argu[:abstain].to_s
+  end
+
+  test 'guest should post not create vote for future motion' do
+    sign_in guest_user
+    post future_vote_event.collection_iri(:votes),
          params: {
            vote: {option: :no}
          },
