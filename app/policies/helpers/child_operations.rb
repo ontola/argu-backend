@@ -26,8 +26,8 @@ module ChildOperations
     verdict
   end
 
-  def child_instance(parent, klass, **opts)
-    parent.build_child(klass, **opts)
+  def child_instance(parent, klass, user_context: nil)
+    user_context.build_child(parent, klass)
   end
 
   # Initialises a child of the type {raw_klass} with the given {attrs} and checks
