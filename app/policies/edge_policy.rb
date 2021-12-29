@@ -47,7 +47,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
         persisted_edge,
         action_name: action_name,
         resource_type: check_class,
-        parent_type: record&.parent&.owner_type
+        parent_type: parent_type
       )
   end
 
@@ -199,6 +199,12 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def parent_policy(type = nil)
     Pundit.policy(context, record.ancestor(type))
+  end
+
+  def parent_type
+    return record.parent&.owner_type if record&.association_cached?(:parent)
+
+    record && Edge.where(id: record&.parent_id).pluck(:owner_type).first
   end
 
   def show_unpublished?
