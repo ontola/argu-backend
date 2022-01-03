@@ -19,35 +19,18 @@ class UserContext # rubocop:disable Metrics/ClassLength
     @profile = profile
     @user = user
     @language = language
-    @lookup_map = {}
     @grant_trees = {}
     @child_cache = ChildCache.new
   end
 
-  def build_child(parent, klass)
-    cached_child(parent, klass) || cache_child(parent, klass)
+  %w[cache export service].each do |scope|
+    define_method("#{scope}_scope?") do
+      doorkeeper_scopes&.include?(scope)
+    end
   end
 
   def current_actor
     @current_actor ||= authorized_current_actor(@user || user_from_token, @profile)
-  end
-
-  def cache_key(ident, key, val)
-    return val if ident.nil?
-
-    @lookup_map[ident] ||= {}
-    @lookup_map[ident][key] = val
-    val
-  end
-
-  def cache_scope?
-    doorkeeper_scopes&.include? 'cache'
-  end
-
-  def check_key(ident, key)
-    return if ident.nil?
-
-    @lookup_map.dig(ident, key)
   end
 
   def doorkeeper_scopes
@@ -63,10 +46,6 @@ class UserContext # rubocop:disable Metrics/ClassLength
     return {} unless allow_expired
 
     decode_token(doorkeeper_token.token, exp_leeway: 1.year.to_i)
-  end
-
-  def export_scope?
-    doorkeeper_scopes&.include? 'export'
   end
 
   def grant_tree
@@ -110,10 +89,6 @@ class UserContext # rubocop:disable Metrics/ClassLength
 
   def profile=(new_profile)
     @current_actor = authorized_current_actor(user, new_profile)
-  end
-
-  def service_scope?
-    doorkeeper_scopes&.include? 'service'
   end
 
   def session_id

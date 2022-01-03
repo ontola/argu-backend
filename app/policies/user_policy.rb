@@ -8,8 +8,6 @@ class UserPolicy < RestrictivePolicy
       scope
     end
   end
-  include ChildOperations
-
   permit_nested_attributes %i[home_placement email_addresses]
   permit_attributes %i[password password_confirmation current_password time_zone language]
   permit_attributes %i[display_name about show_feed is_public finished_intro]

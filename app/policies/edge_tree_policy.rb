@@ -91,7 +91,6 @@ class EdgeTreePolicy < RestrictivePolicy
         )
     end
   end
-  include ChildOperations
   delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?, :has_grant_set?,
            :persisted_edge, :spectator?, :participator?, :moderator?, :administrator?, :staff?, to: :edgeable_policy
 

@@ -17,7 +17,6 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
         .where(granted_path_type_filter)
     end
   end
-  include ChildOperations
 
   permit_attributes %i[expires_at], grant_sets: %i[moderator administrator staff]
   permit_attributes %i[creator], creator: true, new_record: true

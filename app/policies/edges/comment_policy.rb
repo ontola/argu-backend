@@ -32,8 +32,4 @@ class CommentPolicy < EdgePolicy
 
     has_grant?(:create)
   end
-
-  def valid_child?(klass)
-    klass == Comment || super
-  end
 end

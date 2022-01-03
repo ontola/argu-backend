@@ -76,10 +76,4 @@ class PagePolicy < EdgePolicy
 
     forbid_with_message(I18n.t('pages.limit_reached_amount', amount: max))
   end
-
-  def valid_child?(klass)
-    return true if klass == Shortname
-
-    super
-  end
 end

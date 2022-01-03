@@ -39,10 +39,4 @@ class GroupPolicy < EdgeTreePolicy
   def default_tab
     'members'
   end
-
-  def valid_child?(klass)
-    return true if klass == Grant
-
-    super
-  end
 end
