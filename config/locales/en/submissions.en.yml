@@ -1,6 +1,6 @@
 en:
   submissions:
-    type_new: "New response"
+    type_new: "Fill in survey"
     status:
       submission_active: "Active"
       submission_completed: "Completed"

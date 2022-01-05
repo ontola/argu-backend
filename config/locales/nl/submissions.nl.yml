@@ -1,6 +1,6 @@
 nl:
   submissions:
-    type_new: "Nieuwe reactie"
+    type_new: "Enquête invullen"
     status:
       submission_active: "Actief"
       submission_completed: "Afgerond"
