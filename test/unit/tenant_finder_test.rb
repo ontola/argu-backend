@@ -5,7 +5,7 @@ require 'test_helper'
 class TenantFinderTest < ActiveSupport::TestCase
   define_freetown
   let!(:demogemeente) { create(:page, iri_prefix: 'demogemeente.nl/test', url: 'demogemeente') }
-  let!(:secondary_shortname) { create(:shortname, primary: false, shortname: 'secondary', owner: argu)}
+  let!(:secondary_shortname) { create(:shortname, primary: false, shortname: 'secondary', owner: argu) }
   let!(:upcase_page) { create(:page, iri_prefix: 'example.com/Upcase') }
 
   before do

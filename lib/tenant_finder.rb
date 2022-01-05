@@ -10,16 +10,17 @@ class TenantFinder
     end
 
     def from_request(request)
-      new(request.host, request.port, request.path).tenant
+      new(request.host, request.port, request.path, request.get_header('HTTP_WEBSITE_IRI')).tenant
     end
   end
 
   include UUIDHelper
 
-  def initialize(host, port, path)
+  def initialize(host, port, path, website_iri = nil)
     @host = host
     @port = port
     @path = path.downcase
+    @website_iri = website_iri
   end
 
   def tenant
@@ -35,7 +36,7 @@ class TenantFinder
 
   def find_tenant
     ActsAsTenant.without_tenant do
-      tenant_by_prefix || tenant_by_uuid || tenant_by_shortname
+      tenant_by_website_iri || tenant_by_prefix || tenant_by_uuid || tenant_by_shortname
     end
   end
 
@@ -74,6 +75,10 @@ class TenantFinder
 
   def tenant_by_uuid
     Tenant.find_by(root_id: iri_suffix) if uuid?(iri_suffix)
+  end
+
+  def tenant_by_website_iri
+    Tenant.find_by(iri_prefix: @website_iri) if @website_iri
   end
 
   def uri_with_suffix
