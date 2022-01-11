@@ -1,6 +1,8 @@
 de:
+  enums:
+    submissions:
+      status:
+        submission_active: Aktiv
+        submission_completed: Abgeschlossen
   submissions:
     type_new: Umfrage ausfüllen
-    status:
-      submission_active: Aktiv
-      submission_completed: Abgeschlossen
