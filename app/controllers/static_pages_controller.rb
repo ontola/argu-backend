@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StaticPagesController < AuthorizedController
-  include UriTemplateHelper
+  include URITemplateHelper
 
   skip_after_action :verify_authorized, only: :not_found
 

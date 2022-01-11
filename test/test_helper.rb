@@ -54,7 +54,7 @@ module ActiveSupport
     include TestHelper
     include FactoryBot::Syntax::Methods
     include SidekiqMinitestSupport
-    include Argu::TestHelpers::IriHelpers
+    include Argu::TestHelpers::IRIHelpers
     include Argu::TestHelpers::TestHelperMethods
     include Argu::TestHelpers::TestMocks
     include Argu::TestHelpers::TestDefinitions
@@ -85,7 +85,7 @@ end
 
 module ActionDispatch
   class IntegrationTest
-    include Argu::TestHelpers::IriHelpers
+    include Argu::TestHelpers::IRIHelpers
     include Argu::TestHelpers::TestHelperMethods
     include Argu::TestHelpers::TestMocks
     include SidekiqMinitestSupport

@@ -3,7 +3,7 @@
 class ApplicationMenuList < LinkedRails::Menus::List
   include ActionDispatch::Routing
   include Rails.application.routes.url_helpers
-  include UriTemplateHelper
+  include URITemplateHelper
   include LinkedRails::Helpers::OntolaActionsHelper
   include Helpers::FollowMenuItems
   include Helpers::ShareMenuItems

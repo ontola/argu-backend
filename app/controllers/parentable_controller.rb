@@ -5,5 +5,5 @@
 #
 # Subclassed models are assumed to have `Parentable` included.
 class ParentableController < AuthorizedController
-  include UriTemplateHelper
+  include URITemplateHelper
 end

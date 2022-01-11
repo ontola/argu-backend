@@ -26,6 +26,8 @@ class SubmissionPolicy < EdgePolicy
   end
 
   def is_creator?
-    current_session?
+    return current_session? if record.creator_id == User::GUEST_ID
+
+    record.publisher_id == user.id
   end
 end

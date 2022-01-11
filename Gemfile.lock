@@ -37,8 +37,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 7e3a6f13b43eb8a05034993f37605f22ae5d1990
-  branch: collection-performance
+  revision: ce7e4c8e68fec20bb031653a8ecc0f9f1580242a
+  branch: zeitwerk
   specs:
     linked_rails (0.0.4)
       active_response (~> 0.0.2)

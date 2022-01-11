@@ -33,26 +33,16 @@ module Argu
     config.aws_url = "https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com"
     config.jwt_encryption_method = :hs512
 
+    config.autoloader = :zeitwerk
     config.autoload_paths += %w[lib lib/input_fields]
-    [:controllers, :forms, :menus, :models, 'models/menus', :policies, :serializers].each do |type|
-      config.autoload_paths += %W[#{config.root}/app/#{type}/container_nodes]
-      config.autoload_paths += %W[#{config.root}/app/#{type}/edges]
-      config.autoload_paths += %W[#{config.root}/app/#{type}/rivm]
+    %i[controllers forms menus models policies serializers].each do |type|
+      config.autoload_paths << "app/#{type}/container_nodes"
+      config.autoload_paths << "app/#{type}/edges"
+      config.autoload_paths << "app/#{type}/virtual"
+      config.autoload_paths << "app/#{type}/rivm"
     end
-    config.autoload_paths += %W[#{config.root}/app/models/menus]
-    config.autoload_paths += %W[#{config.root}/app/models/virtual]
-    config.autoload_paths += %W[#{config.root}/app/adapters]
-    config.autoload_paths += %W[#{config.root}/app/responders]
-    config.autoload_paths += %W[#{config.root}/app/services]
-    config.autoload_paths += Dir["#{config.root}/app/services/**/"]
-    config.autoload_paths += %W[#{config.root}/app/listeners]
-    config.autoload_paths += %W[#{config.root}/app/serializers/base]
-    config.autoload_paths += %W[#{config.root}/app/serializers/menus]
-    config.autoload_paths += Dir["#{config.root}/app/policies/**/"]
-    config.autoload_paths += Dir["#{config.root}/app/enhancements/**/"]
-    Dir.glob("#{config.root}/app/enhancements/**{,/*/**}/*.rb").each { |file| require_dependency file }
-
-    config.paths['app/views'].unshift(Rails.root.join('lib/app/views'))
+    config.autoload_paths << 'app/policies/edge_tree_policies'
+    config.autoload_paths += Dir["#{config.root}/app/services/cruudt_services/**/"]
 
     config.active_job.queue_adapter = :sidekiq
     ENV['REDIS_URL'] = ENV['REDIS_URL'].presence ||

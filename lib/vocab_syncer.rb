@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class VocabSyncer # rubocop:disable Metrics/ClassLength
-  extend UriTemplateHelper
+  extend URITemplateHelper
 
   HASH_KEY = 'argu.seeds.vocabularies.hash'
 

@@ -5,7 +5,7 @@ module Votable
     extend ActiveSupport::Concern
 
     included do
-      extend UriTemplateHelper
+      extend URITemplateHelper
 
       with_collection :votes, predicate: NS.argu[:votes]
 

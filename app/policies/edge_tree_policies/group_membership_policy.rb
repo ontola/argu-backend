@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GroupMembershipPolicy < EdgeTreePolicy
-  include UriTemplateHelper
+  include URITemplateHelper
 
   class Scope < Scope
     def resolve

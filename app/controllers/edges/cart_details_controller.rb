@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CartDetailsController < EdgeableController
-  extend UriTemplateHelper
+  extend URITemplateHelper
   include LinkedRails::Enhancements::Destroyable::Controller
   has_singular_create_action(
     image: font_awesome_iri('shopping-cart')

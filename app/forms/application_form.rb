@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationForm < LinkedRails::Form
-  extend UriTemplateHelper
+  extend URITemplateHelper
   include Cacheable
 
   class << self

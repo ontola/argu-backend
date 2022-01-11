@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class InterventionSerializer < ContentEdgeSerializer
-  extend UriTemplateHelper
+  extend URITemplateHelper
 
   attribute :communicate_action, predicate: NS.argu[:communicateAction] do |object|
     new_iri(object, :direct_messages) if object.contact_allowed?

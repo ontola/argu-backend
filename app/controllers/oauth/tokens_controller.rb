@@ -4,7 +4,7 @@ module Oauth
   class TokensController < LinkedRails::Auth::AccessTokensController
     include JWTHelper
     include RedisResourcesHelper
-    include UriTemplateHelper
+    include URITemplateHelper
     skip_before_action :current_actor, :set_locale
     skip_around_action :time_zone
     controller_class LinkedRails.access_token_class

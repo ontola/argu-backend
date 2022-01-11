@@ -2,7 +2,7 @@
 
 class MediaObjectSerializer < RecordSerializer
   extend LinkedRails::Helpers::OntolaActionsHelper
-  extend UriTemplateHelper
+  extend URITemplateHelper
   include Parentable::Serializer
 
   attribute :type, predicate: RDF[:type] do |object|

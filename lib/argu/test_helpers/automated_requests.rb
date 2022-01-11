@@ -5,7 +5,7 @@ Dir[Rails.root.join('spec/shared_examples/*.rb')].sort.each { |f| require f }
 module Argu
   module TestHelpers
     module AutomatedRequests
-      include UriTemplateHelper
+      include URITemplateHelper
 
       def self.included(base)
         base.extend(ClassMethods)

@@ -4,7 +4,7 @@ module Policies
   module AttributeConditions
     extend ActiveSupport::Concern
     included do
-      extend UriTemplateHelper
+      extend URITemplateHelper
     end
 
     private

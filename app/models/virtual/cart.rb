@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Cart < VirtualResource
-  extend UriTemplateHelper
+  extend URITemplateHelper
 
   enhance Singularable
   include Parentable

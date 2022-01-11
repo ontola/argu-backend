@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CommentsController < EdgeableController
-  include UriTemplateHelper
+  include URITemplateHelper
 
   private
 

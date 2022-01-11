@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module UsersHelper
-  include UriTemplateHelper
+  include URITemplateHelper
 
   def accept_terms_param
     (params[:accept_terms] || params[permit_param_key].try(:[], :accept_terms)).to_s == 'true'

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FollowsController < AuthorizedController
-  include UriTemplateHelper
+  include URITemplateHelper
 
   skip_before_action :check_if_registered, only: :destroy
 

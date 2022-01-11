@@ -3,8 +3,8 @@
 # Additional helpers only for RSpec
 module Argu
   module TestHelpers
-    module IriHelpers
-      include UriTemplateHelper
+    module IRIHelpers
+      include URITemplateHelper
       def new_iri(parent, collection = nil, **opts)
         parent.instance_variable_set(:@iri, nil) if parent.instance_variable_get(:@iri)
         ActsAsTenant.with_tenant(opts.delete(:root) || ActsAsTenant.current_tenant || parent.try(:root)) do

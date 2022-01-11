@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Vote < Edge # rubocop:disable Metrics/ClassLength
-  extend UriTemplateHelper
+  extend URITemplateHelper
 
   enhance LinkedRails::Enhancements::Creatable
   enhance Trashable

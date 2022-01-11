@@ -33,7 +33,7 @@ WebMock.disable_net_connect!(
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
-  config.include Argu::TestHelpers::IriHelpers
+  config.include Argu::TestHelpers::IRIHelpers
   config.include Argu::TestHelpers::TestHelperMethods
   config.include Argu::TestHelpers::RspecHelpers
   config.include Argu::TestHelpers::TestMocks

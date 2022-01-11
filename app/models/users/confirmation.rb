@@ -2,7 +2,7 @@
 
 module Users
   class Confirmation < LinkedRails::Auth::Confirmation
-    include UriTemplateHelper
+    include URITemplateHelper
 
     delegate :confirmed?, to: :email!
 

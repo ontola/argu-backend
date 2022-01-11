@@ -2,7 +2,7 @@
 
 class UserSerializer < RecordSerializer
   extend LanguageHelper
-  extend UriTemplateHelper
+  extend URITemplateHelper
 
   def self.service_or_self?(object, opts)
     opts[:scope]&.service_scope? || self?(object, opts)

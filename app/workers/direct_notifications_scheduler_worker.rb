@@ -2,7 +2,7 @@
 
 class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
   include Sidekiq::Worker
-  include UriTemplateHelper
+  include URITemplateHelper
 
   def perform
     ActsAsTenant.without_tenant do

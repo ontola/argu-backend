@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
-  extend UriTemplateHelper
+  extend URITemplateHelper
   include Parentable
   include Cacheable
   include Broadcastable
