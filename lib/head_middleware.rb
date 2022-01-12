@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../app/helpers/oauth_helper'
+
 class HeadMiddleware
   INVALID_STATUS_CODE = -1
   include LinkedRails::Auth::AuthHelper

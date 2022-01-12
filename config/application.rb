@@ -23,6 +23,7 @@ require 'json/ld/writer'
 require_relative '../lib/tenant_middleware'
 require_relative '../lib/ns'
 require_relative '../lib/acts_as_tenant/sidekiq_with_tenant'
+require_relative '../lib/head_middleware'
 
 module Argu
   class Application < Rails::Application
@@ -79,7 +80,7 @@ module Argu
     config.middleware.use Rack::Deflater
     config.middleware.use TenantMiddleware
     config.middleware.use LinkedRails::Middleware::LinkedDataParams
-    config.assets.enabled = false
+    config.middleware.use HeadMiddleware
 
     ############################
     # I18n & locales

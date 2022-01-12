@@ -145,11 +145,10 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
 
   def update_execute
     @email_changed = email_changed?
-    if password_required
-      bypass_sign_in(authenticated_resource) if authenticated_resource.update_with_password(permit_params)
-    else
-      authenticated_resource.update_without_password(permit_params) && authenticated_resource.profile.save
-    end
+
+    method = password_required ? :update_with_password : :update_without_password
+
+    authenticated_resource.send(method, permit_params) && authenticated_resource.profile.save
   end
 
   def valid_locale?

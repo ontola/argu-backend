@@ -5,7 +5,7 @@ ruby '3.0.2'
 
 gem 'active_model_otp'
 gem 'active_record-postgres-constraints',
-    git: 'https://github.com/on-site/active_record-postgres-constraints.git',
+    git: 'https://github.com/arthurWD/active_record-postgres-constraints',
     branch: 'support-rails-6.1'
 gem 'acts_as_follower',
     git: 'https://github.com/tcocca/acts_as_follower.git',
@@ -13,7 +13,6 @@ gem 'acts_as_follower',
 gem 'acts_as_list'
 gem 'acts_as_tenant', git: 'https://github.com/ErwinM/acts_as_tenant', ref: '1ba28'
 gem 'auto_strip_attributes'
-gem 'bcrypt-ruby'
 gem 'bootsnap', require: false
 gem 'bugsnag'
 gem 'bunny'
@@ -47,19 +46,22 @@ gem 'public_activity', git: 'https://github.com/arthurWD/public_activity', branc
 gem 'puma', platform: :ruby
 gem 'pundit'
 gem 'rack-attack', '~> 4.3.1'
-gem 'rails', '~> 6.1.0'
+gem 'rails', '~> 7'
 gem 'rails-i18n'
 gem 'rdf'
 gem 'rdf-n3'
 gem 'rdf-rdfa'
 gem 'rdf-rdfxml'
-gem 'rdf-serializers', git: 'https://github.com/ontola/rdf-serializers'
+gem 'rdf-serializers', git: 'https://github.com/ontola/rdf-serializers', branch: 'rails-7'
 gem 'rdf-turtle'
 gem 'rdf-vocab'
 gem 'redis'
 gem 'rest-client'
 gem 'rfc-822'
-gem 'ros-apartment', require: 'apartment'
+gem 'ros-apartment',
+    git: 'https://github.com/StefSchenkelaars/apartment',
+    ref: 'aa9facf367574335c087fcbd7505bb1dbff16352',
+    require: 'apartment'
 gem 'rqrcode'
 gem 'rubyzip'
 gem 'searchkick'
@@ -67,7 +69,6 @@ gem 'sequenced'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'spreadsheet'
-gem 'sprockets', '~> 3'
 gem 'tzinfo-data'
 gem 'uri_template'
 gem 'video_info'
@@ -84,7 +85,7 @@ group :test do
   gem 'minitest'
   gem 'minitest-bang'
   gem 'minitest-have_tag'
-  gem 'minitest-rails'
+  gem 'minitest-rails', git: 'https://github.com/fabiolnm/minitest-rails'
   gem 'minitest-reporters'
   gem 'mocha'
   gem 'rack-test'
@@ -108,10 +109,9 @@ end
 group :development do
   gem 'active_record_query_trace'
   gem 'better_errors'
-  gem 'binding_of_caller', '>= 0.7.3.pre1' # ##!
-  gem 'meta_request'
+  gem 'binding_of_caller'
   gem 'pry'
-  gem 'web-console', '~> 3.5.1'
+  gem 'web-console'
   gem 'yard'
   gem 'yard-activesupport-concern'
 end

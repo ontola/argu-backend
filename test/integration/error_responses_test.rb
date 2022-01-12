@@ -59,10 +59,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Unprocessable Entity',
-                   message: "param is missing or the value is empty: pro_argument\n"\
-                            "Did you mean?  parent_iri\n"\
-                            "               action\n"\
-                            '               controller',
+                   message: 'param is missing or the value is empty: pro_argument',
                    code: 'PARAMETER_MISSING'
                  )
   end
@@ -79,10 +76,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Unprocessable Entity',
-                   message: "param is missing or the value is empty: pro_argument\n"\
-                            "Did you mean?  parent_iri\n"\
-                            "               action\n"\
-                            '               controller',
+                   message: 'param is missing or the value is empty: pro_argument',
                    code: 'PARAMETER_MISSING'
                  )
   end
@@ -102,11 +96,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Unprocessable Entity',
-                   message: "param is missing or the value is empty: pro_argument\n"\
-                            "Did you mean?  parent_iri\n"\
-                            "               motion\n"\
-                            "               action\n"\
-                            '               controller',
+                   message: 'param is missing or the value is empty: pro_argument',
                    code: 'PARAMETER_MISSING'
                  )
   end
@@ -123,10 +113,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Unprocessable Entity',
-                   message: "param is missing or the value is empty: pro_argument\n"\
-                            "Did you mean?  parent_iri\n"\
-                            "               action\n"\
-                            '               controller',
+                   message: 'param is missing or the value is empty: pro_argument',
                    code: 'PARAMETER_MISSING'
                  )
   end

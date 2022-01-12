@@ -6,12 +6,12 @@ module Discussable
 
     included do
       has_many :discussions,
-               -> { where(owner_type: Discussion.direct_descendants.map(&:to_s)) },
+               -> { where(owner_type: Discussion.subclasses.map(&:to_s)) },
                class_name: 'Edge',
                foreign_key: :parent_id,
                inverse_of: :parent
       has_many :active_discussions,
-               -> { active.where(owner_type: Discussion.direct_descendants.map(&:to_s)) },
+               -> { active.where(owner_type: Discussion.subclasses.map(&:to_s)) },
                class_name: 'Edge',
                foreign_key: :parent_id,
                inverse_of: :parent

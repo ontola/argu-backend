@@ -87,7 +87,11 @@ module OauthTestHelpers
     else
       assert_response 200
 
-      assert_equal scope, parsed_body['scope']
+      if scope.nil?
+        assert_nil parsed_body['scope']
+      else
+        assert_equal scope, parsed_body['scope']
+      end
       assert_equal 'Bearer', parsed_body['token_type']
       if ttl.nil?
         assert_nil(parsed_body['expires_in'])

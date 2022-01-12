@@ -62,12 +62,16 @@ class Phase < Edge
     }
   end
 
-  def resource_from_type(type)
+  def resource_from_type(type) # rubocop:disable Metrics/AbcSize
     klass = type.to_s.classify.constantize
     child = build_child(klass, user_context: UserContext.new(user: publisher, profile: creator))
     child.assign_attributes(**resource_attributes)
-    child.try(:argu_publication)&.draft = true
-    child.try(:argu_publication)&.published_at = nil
+    if child.class.enhanced_with?(ActivePublishable)
+      child.try(:argu_publication)&.draft = true
+      child.try(:argu_publication)&.published_at = nil
+    else
+      child.is_published = true
+    end
     child
   end
 end

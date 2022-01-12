@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module OauthHelper
-  include LanguageHelper
-
   private
 
   def create_guest_user
