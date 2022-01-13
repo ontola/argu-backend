@@ -10,6 +10,7 @@ require_relative '../lib/argu/redis'
 require_relative '../lib/argu/i18n_error_handler'
 require 'rails/all'
 require 'linked_rails/middleware/linked_data_params'
+require 'linked_rails/middleware/error_handling'
 require 'linked_rails/constraints/whitelist'
 
 # Require the gems listed in Gemfile, including any gems
@@ -33,6 +34,7 @@ module Argu
     config.origin = "https://#{Rails.application.config.host_name}"
     config.aws_url = "https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com"
     config.jwt_encryption_method = :hs512
+    config.action_controller.default_protect_from_forgery = true
 
     config.autoloader = :zeitwerk
     config.autoload_paths += %w[lib lib/input_fields]
@@ -76,9 +78,10 @@ module Argu
     # Middlewares
     ############################
 
+    config.middleware.insert_after ActionDispatch::DebugExceptions, LinkedRails::Middleware::ErrorHandling
+    config.middleware.insert_after ActionDispatch::DebugExceptions, TenantMiddleware
     # config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
-    config.middleware.use TenantMiddleware
     config.middleware.use LinkedRails::Middleware::LinkedDataParams
     config.middleware.use HeadMiddleware
 

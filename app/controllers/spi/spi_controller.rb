@@ -14,7 +14,7 @@ module SPI
     private
 
     def handle_error(error)
-      error_mode(error)
+      Rails.logger.error(error)
       error_response_json_api(error)
     end
   end

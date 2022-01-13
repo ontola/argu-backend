@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class GroupMembershipsControllerTest < ActionController::TestCase
+class GroupMembershipsControllerTest < ActionDispatch::IntegrationTest
   define_freetown
   define_freetown('freetown2')
   let!(:group) { create(:group, parent: argu) }
@@ -26,12 +26,11 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user_not_accepted
 
     assert_difference 'GroupMembership.count' => 1 do
-      post :create,
+      post single_forum_group.collection_iri(:group_memberships, root: argu),
+           headers: argu_headers(accept: :json),
            params: {
-             parent_iri: parent_iri_for(single_forum_group),
              token: '1234567890'
-           },
-           format: :json
+           }
     end
 
     assert_response :created
@@ -45,7 +44,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'user should not get show' do
     sign_in user
 
-    get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
+    get member.profile.group_memberships.second, params: {root_id: argu.url}
 
     assert_not_authorized
   end
@@ -54,7 +53,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, params: {parent_iri: parent_iri_for(group)}, format: :json
+      post group.collection_iri(:group_memberships, root: argu),
+           headers: argu_headers(accept: :json)
     end
 
     assert_not_authorized
@@ -65,7 +65,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, params: {parent_iri: parent_iri_for(group), token: '1234567890'}, format: :json
+      post group.collection_iri(:group_memberships, root: argu),
+           headers: argu_headers(accept: :json)
     end
 
     assert_not_authorized
@@ -76,7 +77,9 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_difference 'GroupMembership.count' => 1 do
-      post :create, params: {parent_iri: parent_iri_for(single_forum_group), token: '1234567890'}, format: :json
+      post single_forum_group.collection_iri(:group_memberships, root: argu),
+           headers: argu_headers(accept: :json),
+           params: {token: '1234567890'}
     end
     assert_equal user.reload.following_type(freetown), 'never'
 
@@ -89,7 +92,9 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'member should get show' do
     sign_in member
 
-    get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}, format: :nq
+    get member.profile.group_memberships.second,
+        headers: argu_headers(accept: :nq),
+        params: {root_id: argu.url}
 
     assert_response :success
   end
@@ -98,7 +103,9 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
     create(:grant, edge: freetown, group: group)
 
-    get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}, format: :nq
+    get member.profile.group_memberships.second,
+        headers: argu_headers(accept: :nq),
+        params: {root_id: argu.url}
 
     assert_response :success
   end
@@ -107,7 +114,9 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
     create(:grant, edge: argu, group: group)
 
-    get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}, format: :nq
+    get member.profile.group_memberships.second,
+        headers: argu_headers(accept: :nq),
+        params: {root_id: argu.url}
 
     assert_response :success
   end
@@ -115,9 +124,9 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'member should get show with r' do
     sign_in member
 
-    get :show,
-        format: :nq,
-        params: {id: member.profile.group_memberships.second, r: freetown.iri.path, root_id: argu.url}
+    get member.profile.group_memberships.second,
+        headers: argu_headers(accept: :nq),
+        params: {r: freetown.iri.path, root_id: argu.url}
 
     assert_response :success
   end
@@ -126,10 +135,9 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_difference 'GroupMembership.count' => 0, 'GroupMembership.active.count' => -1 do
-      delete :destroy,
-             format: :json,
+      delete member.profile.group_memberships.second,
+             headers: argu_headers(accept: :json),
              params: {
-               id: member.profile.group_memberships.second,
                root_id: argu.url,
                use_route: :group_membership
              }
@@ -149,10 +157,9 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     group_membership = create(:group_membership, parent: group)
 
     assert_difference 'GroupMembership.count' => 0, 'GroupMembership.active.count' => -1 do
-      delete :destroy,
-             format: :json,
+      delete group_membership,
+             headers: argu_headers(accept: :json),
              params: {
-               id: group_membership,
                r: settings_iri(freetown, tab: :groups),
                root_id: argu.url,
                use_route: :group_membership
@@ -165,14 +172,11 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'administrator should get index' do
     sign_in administator
 
-    get :index,
-        params: {
-          parent_iri: parent_iri_for(group)
-        },
-        format: :nq
+    get group.collection_iri(:group_memberships, root: argu),
+        headers: argu_headers(accept: :nq)
 
     assert_response :success
-    view = expect_triple(group.collection_iri(:group_memberships), NS.ontola[:pages], nil).objects.first
+    view = expect_triple(group.collection_iri(:group_memberships, root: argu), NS.ontola[:pages], nil).objects.first
     expect_triple(view, NS.as[:totalItems], 1)
   end
 end
