@@ -21,7 +21,7 @@ class GrantTree
     end
 
     def permissions
-      PermittedAction::RESOURCE_TYPES.map do |permission|
+      GrantReset.resource_types.keys.map do |permission|
         Permission.new(self, node, permission)
       end
     end

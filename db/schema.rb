@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_28_144303) do
+ActiveRecord::Schema.define(version: 2022_01_17_155814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -136,10 +136,14 @@ ActiveRecord::Schema.define(version: 2021_12_28_144303) do
   end
 
   create_table "grant_resets", force: :cascade do |t|
-    t.string "resource_type", null: false
-    t.string "action_name", null: false
     t.uuid "edge_id", null: false
-    t.index ["edge_id", "resource_type", "action_name"], name: "index_grant_resets_on_edge_id_and_resource_type_and_action_name", unique: true
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
+    t.integer "action_name", null: false
+    t.integer "resource_type", null: false
+    t.index ["action_name"], name: "index_grant_resets_on_action_name"
+    t.index ["edge_id", "action_name", "resource_type"], name: "index_grant_resets_on_edge_id_and_action_name_and_resource_type"
+    t.index ["resource_type"], name: "index_grant_resets_on_resource_type"
   end
 
   create_table "grant_sets", force: :cascade do |t|
@@ -289,7 +293,7 @@ ActiveRecord::Schema.define(version: 2021_12_28_144303) do
     t.string "title"
     t.string "resource_type", null: false
     t.string "parent_type", null: false
-    t.string "action_name", null: false
+    t.integer "action_name", null: false
     t.index ["action_name", "resource_type"], name: "index_permitted_actions_on_action_name_and_resource_type"
     t.index ["action_name"], name: "index_permitted_actions_on_action_name"
     t.index ["parent_type"], name: "index_permitted_actions_on_parent_type"

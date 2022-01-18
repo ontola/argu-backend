@@ -2,7 +2,7 @@
 
 class GrantTree
   class PermissionSerializer < BaseSerializer
-    PermittedAction::ACTIONS.each do |action|
+    GrantReset.action_names.each_key do |action|
       attribute action, predicate: NS.argu["#{action}Permission"]
       attribute "#{action}_tooltip", predicate: NS.argu["#{action}PermissionTooltip"]
 

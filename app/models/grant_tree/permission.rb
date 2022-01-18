@@ -17,7 +17,7 @@ class GrantTree
       {group_id: permission_group.group_id, edge_id: node.id, resource_type: resource_type}
     end
 
-    PermittedAction::ACTIONS.each do |action|
+    GrantReset.action_names.each_key do |action|
       define_method action do
         return instance_variable_get("@#{action}") if instance_variable_defined?("@#{action}")
 

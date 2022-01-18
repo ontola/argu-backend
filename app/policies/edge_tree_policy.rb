@@ -59,12 +59,18 @@ class EdgeTreePolicy < RestrictivePolicy
       @granted_paths ||=
         Arel::Nodes::As.new(
           granted_paths_table,
-          (show_only ? filtered_edge_table.where(permitted_actions_table[:action_name].eq(:show)) : filtered_edge_table)
+          granted_paths_base(show_only: show_only)
             .project(
               'path, permitted_actions.resource_type AS resource_type, permitted_actions.parent_type AS parent_type, '\
               'permitted_actions.id AS id'
             )
         )
+    end
+
+    def granted_paths_base(show_only:)
+      return filtered_edge_table unless show_only
+
+      filtered_edge_table.where(permitted_actions_table[:action_name].eq(PermittedAction.action_names[:show]))
     end
 
     def joined_edge_table # rubocop:disable Metrics/AbcSize
@@ -85,7 +91,7 @@ class EdgeTreePolicy < RestrictivePolicy
         Arel::Nodes::As.new(
           managed_forum_paths_table,
           filtered_edge_table
-            .where(permitted_actions_table[:action_name].eq(:update))
+            .where(permitted_actions_table[:action_name].eq(PermittedAction.action_names[:update]))
             .where(permitted_actions_table[:resource_type].eq('Forum'))
             .project('path')
         )
