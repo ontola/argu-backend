@@ -115,7 +115,6 @@ Rails.application.routes.draw do
   get '(*parent_iri)/feed', to: 'feed#index'
   get '(*parent_iri)/grant_sets', to: 'grant_sets#index'
   get '(*parent_iri)/granted', to: 'granted_groups#index'
-  get '(*parent_iri)/permissions', to: 'grant_trees#show'
   get '(*parent_iri)/search', to: 'search_results#index'
   get '(*parent_iri)/settings', to: 'menus/lists#show', id: 'settings'
   get '(*parent_iri)/statistics', to: 'statistics#show'
@@ -150,6 +149,10 @@ Rails.application.routes.draw do
     post '', action: :destroy, on: :member
   end
   linked_resource(Grant)
+  linked_resource(GrantReset)
+  singular_linked_resource(GrantTree::Node)
+  linked_resource(GrantTree::Permission, nested: true)
+  linked_resource(GrantTree::PermissionGroup, nested: true)
   linked_resource(GroupMembership)
   linked_resource(Group)
   linked_resource(Invite)

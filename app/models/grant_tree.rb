@@ -49,6 +49,10 @@ class GrantTree # rubocop:disable Metrics/ClassLength
     find_or_cache_node(edge).expired?
   end
 
+  def find_or_cache_node(edge)
+    cached_node(edge) || cache_node(edge) || raise('Edge not found')
+  end
+
   # Find the ids of all groups with a grant as specified in the filters
   # @param [Edge] edge The edge to check
   # @param [Hash] filters The filters the grants should apply to
@@ -153,10 +157,6 @@ class GrantTree # rubocop:disable Metrics/ClassLength
   # @param [Edge, Integer] edge The edge or an edge_id to check
   def cached?(edge)
     cached_nodes.key?(edge.is_a?(Edge) ? edge.id : edge)
-  end
-
-  def find_or_cache_node(edge)
-    cached_node(edge) || cache_node(edge) || raise('Edge not found')
   end
 
   def root_node

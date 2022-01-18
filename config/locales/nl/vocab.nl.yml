@@ -168,6 +168,26 @@ nl:
       label: "Kopieer"
     couponCount:
       label: "Aantal"
+    createBlogPostPermission:
+      label: "Updates"
+    createCommentPermission:
+      label: "Reacties"
+    createConArgumentPermission:
+      label: "Nadelen"
+    createForumPermission:
+      label: "Forums"
+    createMotionPermission:
+      label: "Moties"
+    createPermission:
+      label: "Aanmaken"
+    createProArgumentPermission:
+      label: "Voordelen"
+    createQuestionPermission:
+      label: "Uitdagingen"
+    createVotePermission:
+      label: "Stemmen"
+    destroyPermission:
+      label: "Verwijderen"
     exportStatus:
       label: "Status"
     expiresAt:
@@ -180,6 +200,8 @@ nl:
       label: "Veldtype"
     grantSet:
       label: "Rechtenset"
+    group:
+      label: "Groep"
     interventionsCount:
       label: "Interventies"
     isDraft:
@@ -196,6 +218,12 @@ nl:
       label: "Vastgezet"
     price:
       label: "Prijs"
+    showPermission:
+      label: "Bekijken"
+    updatePermission:
+      label: "Bewerken"
+    trashPermission:
+      label: "Verbergen"
     view:
       label: "Weergave"
     rawResource:
@@ -206,6 +234,8 @@ nl:
       label: "Data"
     submissionStatus:
       label: "Status"
+    target:
+      label: "Doelwit"
     trashed:
       label: "Verborgen"
     voteableVoteEvent:

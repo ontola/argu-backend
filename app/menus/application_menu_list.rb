@@ -71,6 +71,15 @@ class ApplicationMenuList < LinkedRails::Menus::List
     )
   end
 
+  def permissions_link
+    menu_item(
+      :permissions,
+      image: 'fa-suitcase',
+      href: resource.grant_tree_node(user_context).iri,
+      policy: :staff?
+    )
+  end
+
   def item_without_image(item)
     item&.image = nil
     item

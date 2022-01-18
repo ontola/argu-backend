@@ -19,6 +19,22 @@ en:
       edge: "For which forum should this role be granted?"
     errors:
       taken: "This group already has a grant on this forum. Please remove this grant before creating a new one."
+  permissions:
+    description: "Here you can see the active permissions for this resource and its (nested) children. Grants always trickle down to children, but you can retract certain permissions granted on a higher level."
+    label: "Permissions"
+  menus:
+    grants:
+      children:
+        collection: 'Permitted replies'
+        item: 'Replies'
+      grant_resets:
+        collection: 'Retracted permissions'
+        item: 'Retract permissions'
+      grants:
+        item: 'Grant permissions'
+      resource:
+        collection: 'Permissions for this resource'
+        item: 'Resource'
   roles:
     type: "Grant"
     plural: "Grants"
@@ -44,7 +60,3 @@ en:
       moderator: "Besides reacting and starting new topics, this also enables the ability to edit and delete content of others."
       administrator: "The most advanced set of grants. This allows you to read and edit everything."
       staff: "Employees of Ontola"
-  grant_resets:
-    label: "Who may post ideas?"
-    default: "Use forum settings"
-    manual: "Manual settings"

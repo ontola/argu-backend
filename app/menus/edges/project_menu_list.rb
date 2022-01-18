@@ -12,6 +12,7 @@ class ProjectMenuList < ApplicationMenuList
       edit_link,
       move_link,
       new_update_link,
+      permissions_link,
       copy_share_link(resource.iri),
       *trash_and_destroy_links
     ]

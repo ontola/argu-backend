@@ -22,6 +22,22 @@ de:
       taken: >-
         Diese Gruppe hat bereits eine Berechtigung für dieses Forum. Bitte
         entfernen Sie diese Berechtigung, bevor Sie eine neue erstellen.
+  permissions:
+    description: Hier sehen Sie die aktiven Berechtigungen für diese Ressource und ihre (verschachtelten) Kinder. Zuschüsse werden immer an Kinder weitergegeben, aber Sie können bestimmte Berechtigungen zurückziehen, die auf einer höheren Ebene erteilt wurden.
+    label: Berechtigungen
+  menus:
+    grants:
+      children:
+        collection: Erlaubte Erwiderungs
+        item: Erwiderungs
+      grant_resets:
+        collection: Zuschuss zurückziehen
+        item: Zurückgezogene Zuwendungen
+      grants:
+        item: Rechte gewähren
+      resource:
+        collection: Berechtigungen für diese Ressource
+        item: Ressource
   roles:
     type: Grant
     plural: Erlaubnisse
@@ -57,7 +73,3 @@ de:
         Der fortgeschrittenste Satz von Berechtigungen. Damit können Sie alles
         lesen und bearbeiten.
       staff: Mitarbeiter von Ontola
-  grant_resets:
-    label: Wer darf Ideen posten?
-    default: Forum-Einstellungen verwenden
-    manual: Manuelle Einstellungen

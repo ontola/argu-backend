@@ -13,5 +13,9 @@ module Grantable
 
       RDF::URI("#{base_iri}/grant_sets") if base_iri
     end
+
+    def grant_tree_node(user_context)
+      @grant_tree_node ||= user_context&.grant_tree&.find_or_cache_node(self)
+    end
   end
 end

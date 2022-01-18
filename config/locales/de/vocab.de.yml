@@ -178,6 +178,26 @@ de:
       label: Kopieren
     couponCount:
       label: Zählen
+    createBlogPostPermission:
+      label: Updates
+    createCommentPermission:
+      label: Kommentare
+    createConArgumentPermission:
+      label: Nachteile
+    createForumPermission:
+      label: Forums
+    createMotionPermission:
+      label: Ideen
+    createPermission:
+      label: Erstellen
+    createProArgumentPermission:
+      label: Pro
+    createQuestionPermission:
+      label: Herausforderungen
+    createVotePermission:
+      label: Abstimmungen
+    destroyPermission:
+      label: Zerstören
     exportStatus:
       label: Status
     expiresAt:
@@ -190,6 +210,8 @@ de:
       label: Feldtyp
     grantSet:
       label: Zuschussmenge
+    group:
+      label: Gruppe
     interventionsCount:
       label: Eingriffe
     isDraft:
@@ -206,6 +228,14 @@ de:
       label: Angepinnt
     price:
       label: Preis
+    showPermission:
+      label: Anzeigen
+    updatePermission:
+      label: Bearbeiten
+    target:
+      label: Ziel
+    trashPermission:
+      label: Löschen
     view:
       label: Ansicht
     rawResource:

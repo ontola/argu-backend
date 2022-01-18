@@ -19,6 +19,22 @@ nl:
       edge: "Voor welk forum geldt deze rol?"
     errors:
       taken: "Deze groep heeft al rechten in dit forum. Verwijder dit recht eerst voordat je een nieuwe aanmaakt."
+  permissions:
+    description: "Hier kan je alle actieve rechten zien voor dit object en de onderliggende objecten. Rechten seipelen altijd door naar beneden, maar je kan bepaalde rechten die hoger zijn toegekend intrekken."
+    label: "Rechten"
+  menus:
+    grants:
+      children:
+        collection: 'Toegestane reacties'
+        item: 'Reacties'
+      grant_resets:
+        collection: 'Ingetrokken rechten'
+        item: 'Rechten intrekken'
+      grants:
+        item: 'Rechten toekennen'
+      resource:
+        collection: 'Rechten voor dit object'
+        item: 'Object'
   roles:
     type: "Recht"
     plural: "Rechten"
@@ -44,7 +60,3 @@ nl:
       moderator: "Naast reageren en onderwerpen starten kan je hiermee ook sommige reacties van anderen aanpassen of verwijderen."
       administrator: "De hoogst mogelijke rechtenset. Hiermee kan alles worden bewerkt en bekeken."
       staff: "Medewerkers van Ontola"
-  grant_resets:
-    label: "Wie mogen ideeën plaatsen?"
-    default: "Gebruik forum instellingen"
-    manual: "Handmatig instellen"

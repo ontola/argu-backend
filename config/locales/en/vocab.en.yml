@@ -168,6 +168,26 @@ en:
       label: "Copy"
     couponCount:
       label: "Count"
+    createBlogPostPermission:
+      label: "Updates"
+    createCommentPermission:
+      label: "Comments"
+    createConArgumentPermission:
+      label: "Cons"
+    createForumPermission:
+      label: "Forums"
+    createMotionPermission:
+      label: "Motions"
+    createPermission:
+      label: "Create"
+    createProArgumentPermission:
+      label: "Pros"
+    createQuestionPermission:
+      label: "Questions"
+    createVotePermission:
+      label: "Votes"
+    destroyPermission:
+      label: "Destroy"
     exportStatus:
       label: "Status"
     expiresAt:
@@ -180,6 +200,8 @@ en:
       label: "Field type"
     grantSet:
       label: "Grant set"
+    group:
+      label: "Group"
     interventionsCount:
       label: "Interventions"
     isDraft:
@@ -196,6 +218,12 @@ en:
       label: "Pinned"
     price:
       label: "Price"
+    showPermission:
+      label: "Show"
+    trashPermission:
+      label: "Trash"
+    updatePermission:
+      label: "Update"
     view:
       label: "View"
     rawResource:

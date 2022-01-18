@@ -5,13 +5,14 @@ class ContainerNodeMenuList < ApplicationMenuList
 
   private
 
-  def action_menu_items
+  def action_menu_items # rubocop:disable Metrics/MethodLength
     [
       activity_link,
       search_link,
       statistics_link,
       export_link,
       widgets_link,
+      permissions_link,
       copy_share_link(resource.iri),
       destroy_link,
       edit_link

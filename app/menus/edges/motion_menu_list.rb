@@ -16,6 +16,7 @@ class MotionMenuList < ApplicationMenuList
       convert_link,
       move_link,
       statistics_link,
+      permissions_link,
       export_link,
       contact_link,
       copy_share_link(resource.iri),

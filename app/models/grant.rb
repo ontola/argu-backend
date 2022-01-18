@@ -22,11 +22,19 @@ class Grant < ApplicationRecord
 
   scope :custom, -> { where('group_id > 0') }
 
-  with_columns settings: [
-    NS.schema.name,
-    NS.argu[:grantSet],
-    NS.ontola[:destroyAction]
-  ]
+  with_columns(
+    settings: [
+      NS.argu[:target],
+      NS.argu[:grantSet],
+      NS.ontola[:destroyAction]
+    ],
+    grant_tree: [
+      NS.argu[:group],
+      NS.argu[:target],
+      NS.argu[:grantSet],
+      NS.ontola[:destroyAction]
+    ]
+  )
 
   validates :grant_set, presence: true
   validates :group, presence: true
@@ -37,6 +45,12 @@ class Grant < ApplicationRecord
     define_method "#{role}?" do
       grant_set.title == role
     end
+  end
+
+  def added_delta
+    super + [
+      [NS.sp.Variable, RDF.type, NS.argu['GrantTree::PermissionGroup'], NS.ontola[:invalidate]]
+    ]
   end
 
   def display_name
@@ -56,9 +70,9 @@ class Grant < ApplicationRecord
   alias edgeable_record parent
 
   def parent_collections(user_context)
-    [group, edge].map do |parent|
+    [group, edge, edge.grant_tree_node(user_context)].flatten.map do |parent|
       parent_collections_for(parent, user_context)
-    end.flatten
+    end.flatten + [edge.grant_tree_node(user_context).permission_group_collection]
   end
 
   def grant_set=(value)
@@ -71,12 +85,15 @@ class Grant < ApplicationRecord
   end
 
   class << self
-    def attributes_for_new(opts)
+    def attributes_for_new(opts) # rubocop:disable Metrics/MethodLength
       attrs = super.merge(
         grant_set: GrantSet.participator
       )
       parent = opts[:parent]
-      if parent.is_a?(Group)
+      case parent
+      when GrantTree::Node
+        attrs[:edge] = parent.edgeable_record
+      when Group
         attrs[:group] = parent
       else
         attrs[:edge] = parent
