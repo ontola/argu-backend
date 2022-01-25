@@ -124,24 +124,24 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :vote_events
   has_many_children :votes
   has_many :threads,
-           -> { where(parent_comment_id: nil).included_properties.order('edges.created_at ASC') },
+           -> { where(parent_comment_id: nil).order('edges.created_at ASC') },
            class_name: 'Comment',
            foreign_key: :parent_id,
            inverse_of: :parent
   has_one :top_comment,
-          -> { active.order(created_at: :asc).included_properties },
+          -> { active.order(created_at: :asc) },
           class_name: 'Comment',
           foreign_key: :parent_id,
           inverse_of: :parent,
           dependent: :destroy
   has_one :last_decision,
-          -> { order(created_at: :desc).included_properties },
+          -> { order(created_at: :desc) },
           class_name: 'Decision',
           foreign_key: :parent_id,
           inverse_of: :parent,
           dependent: :destroy
   has_one :last_published_decision,
-          -> { published.order(created_at: :desc).included_properties },
+          -> { published.order(created_at: :desc) },
           class_name: 'Decision',
           foreign_key: :parent_id,
           inverse_of: :parent,
@@ -153,14 +153,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
           inverse_of: :parent,
           dependent: :destroy
 
-  default_scope -> { included_properties }
-  scope :included_properties, lambda {
-    if klass.skipped_properties.present?
-      includes(:properties).where.not(properties: {predicate: klass.skipped_properties})
-    else
-      includes(:properties)
-    end
-  }
   scope :published, -> { where('edges.is_published = true') }
   scope :unpublished, -> { where('edges.is_published = false') }
   scope :trashed, -> { where.not('edges.trashed_at' => nil) }
@@ -227,14 +219,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def expired?
     expires_at? && expires_at < Time.current
-  end
-
-  def self.filter_property(scope, key, value)
-    filtered = scope.references(:properties)
-    options = property_options(name: key)
-    filtered
-      .where(properties: {predicate: options[:predicate].to_s, options[:type] => value})
-      .or(filtered.where.not('properties.predicate' => options[:predicate].to_s))
   end
 
   def has_expired_ancestors?

@@ -82,10 +82,10 @@ module Edgeable
 
         # rubocop:disable Rails/InverseOf
         has_many association,
-                 -> { order(order).included_properties },
+                 -> { order(order) },
                  **opts
         has_many "active_#{association}".to_sym,
-                 -> { active.order(order).included_properties },
+                 -> { active.order(order) },
                  **opts
         # rubocop:enable Rails/InverseOf
       end
