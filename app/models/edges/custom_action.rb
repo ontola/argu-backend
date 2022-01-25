@@ -6,9 +6,9 @@ class CustomAction < Edge
   enhance LinkedRails::Enhancements::Destroyable
   include TranslatableProperties
 
-  property :label, :string, NS.schema.name
-  property :description, :text, NS.schema.text
-  property :submit_label, :string, NS.argu[:submitLabel]
+  property :raw_label, :string, NS.schema.name
+  property :raw_description, :text, NS.schema.text
+  property :raw_submit_label, :string, NS.argu[:submitLabel]
   property :href, :text, NS.schema.url
 
   parentable :container_node
@@ -18,11 +18,11 @@ class CustomAction < Edge
   end
 
   def description
-    translate_property(super)
+    translate_property(raw_description)
   end
 
   def display_name
-    translate_property(label)
+    translate_property(raw_label)
   end
 
   def form; end
@@ -33,24 +33,12 @@ class CustomAction < Edge
 
   def image; end
 
-  def raw_label=(value)
-    self.label = value
-  end
-
-  def raw_description=(value)
-    self.description = value
-  end
-
-  def raw_submit_label=(value)
-    self.submit_label = value
-  end
-
   def searchable_should_index?
     false
   end
 
   def submit_label
-    translate_property(super)
+    translate_property(raw_submit_label)
   end
 
   def tag

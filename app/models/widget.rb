@@ -141,9 +141,9 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         publisher: User.service,
         parent: owner,
         href: new_iri(owner, :motions),
-        label: 'motions.call_to_action.title',
-        description: 'motions.call_to_action.body',
-        submit_label: 'motions.type_new'
+        raw_label: 'motions.call_to_action.title',
+        raw_description: 'motions.call_to_action.body',
+        raw_submit_label: 'motions.type_new'
       )
 
       Widget.create!(
@@ -162,9 +162,9 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         publisher: User.service,
         parent: owner,
         href: new_iri(owner, :questions),
-        label: 'questions.call_to_action.title',
-        description: 'questions.call_to_action.body',
-        submit_label: 'questions.type_new'
+        raw_label: 'questions.call_to_action.title',
+        raw_description: 'questions.call_to_action.body',
+        raw_submit_label: 'questions.type_new'
       )
 
       Widget.create!(
@@ -183,9 +183,9 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         publisher: User.service,
         parent: owner,
         href: new_iri(owner, :topics),
-        label: 'topics.call_to_action.title',
-        description: 'topics.call_to_action.body',
-        submit_label: 'topics.type_new'
+        raw_label: 'topics.call_to_action.title',
+        raw_description: 'topics.call_to_action.body',
+        raw_submit_label: 'topics.type_new'
       )
 
       Widget.create!(
