@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_17_155814) do
+ActiveRecord::Schema.define(version: 2022_01_20_100703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2022_01_17_155814) do
     t.boolean "primary"
     t.integer "attachments_count", default: 0, null: false
     t.string "session_id"
+    t.json "cached_properties", default: {}, null: false
     t.index ["is_published"], name: "index_edges_on_is_published"
     t.index ["owner_type"], name: "index_edges_on_owner_type"
     t.index ["parent_id", "creator_id"], name: "index_edges_on_parent_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"

@@ -19,6 +19,18 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
   let(:term1) { create(:term, parent: vocabulary) }
   let(:term2) { create(:term, parent: vocabulary) }
 
+  test 'default properties' do
+    assert_equal(
+      create(:page).properties.where(predicate: NS.ontola[:template]).pluck(:string),
+      %w[default]
+    )
+
+    assert_equal(
+      create(:page, template: 'test').properties.where(predicate: NS.ontola[:template]).pluck(:string),
+      %w[test]
+    )
+  end
+
   test 'property assignment' do
     motion
     name_id = motion.property_manager(NS.schema.name).send(:properties).first.id

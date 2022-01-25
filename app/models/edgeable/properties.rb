@@ -4,6 +4,10 @@ require 'types/iri_type'
 
 module Edgeable
   module Properties
+    CACHE_ALL_SQL = 'UPDATE edges SET cached_properties = json_props.props '\
+                    'FROM json_props WHERE json_props.edge_id = edges.uuid'
+    CACHE_SINGLE_SQL = "#{CACHE_ALL_SQL} AND edges.uuid = $1"
+
     extend ActiveSupport::Concern
 
     included do
@@ -17,6 +21,7 @@ module Edgeable
                class_name: 'Property',
                primary_key: :linked_edge_id,
                dependent: :destroy
+      before_save :build_default_properties
 
       attr_accessor :properties_preloaded
       attr_accessor :property_managers
@@ -24,8 +29,14 @@ module Edgeable
       class_attribute :defined_properties
     end
 
+    def cache_properties
+      binds = [ActiveRecord::Relation::QueryAttribute.new('uuid', uuid, ActiveRecord::Type::Text.new)]
+
+      Edge.connection.exec_query(Edge.cache_properties_query, 'SQL', binds, prepare: true)
+    end
+
     def preload_properties(force: false, new_record: false)
-      return if !force && (properties_preloaded || !association_cached?(:properties))
+      return if !force && properties_preloaded
 
       self.property_managers = {}
 
@@ -63,6 +74,10 @@ module Edgeable
       property_opts = self.class.property_options(name: name.to_sym)
       value = [value] if property_opts[:array] && !value.is_a?(Array)
       property_manager(property_opts[:predicate]).value = value
+    end
+
+    def build_default_properties
+      property_managers.each_value(&:build_default_property)
     end
 
     def initialize_internals_callback
@@ -113,6 +128,16 @@ module Edgeable
           defined_properties
             &.select { |property| property[:preload] == false }
             &.map { |property| property[:predicate].to_s }
+      end
+
+      def cache_properties
+        connection.execute(cache_properties_query(all: true))
+      end
+
+      def cache_properties_query(all: false)
+        scope = Edge.all.with(Property.with_array_props).with(Property.with_json_props)
+
+        scope.to_sql.sub(Edge.all.to_sql, all ? CACHE_ALL_SQL : CACHE_SINGLE_SQL)
       end
 
       private
@@ -238,7 +263,7 @@ module ActiveRecord
       self
     end
 
-    def where(*rest) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+    def where(*rest) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       opts = rest.first
       unless klass <= Edge && opts.is_a?(Hash) && opts.present? && (properties = properties_from_opts(opts)).presence
         return super
@@ -247,8 +272,7 @@ module ActiveRecord
       properties.reduce(where(opts.except(*properties.keys), *rest[1..])) do |query, condition|
         key = property_filter_key(condition.first)
         value = property_filter_value(key, condition.second)
-        base = property_options(name: key)[:preload] == false ? query.joins(:properties) : query
-        base
+        query
           .joins(target_class.property_join_string(key))
           .where(target_class.property_filter_string(key, value), *(value.is_a?(Array) ? value.compact : value))
       end

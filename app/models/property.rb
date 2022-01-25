@@ -2,7 +2,7 @@
 
 require 'types/iri_type'
 
-class Property < ApplicationRecord
+class Property < ApplicationRecord # rubocop:disable Metrics/ClassLength
   MAX_STR_LEN = 255
   TYPE_COLUMNS = %w[boolean string text datetime integer iri linked_edge_id].freeze
   TRANSLATABLE_COLUMNS = %w[string text].freeze
@@ -17,10 +17,14 @@ class Property < ApplicationRecord
   validate :validate_page_root_id
 
   attribute :iri, IRIType.new
+  after_save :cache_properties
+  after_destroy :cache_properties
 
   default_scope lambda {
     ActsAsTenant.current_tenant ? where(root_id: ActsAsTenant.current_tenant.uuid) : all
   }
+
+  delegate :cache_properties, to: :edge
 
   def raw_value
     attributes[type.to_s]
@@ -78,6 +82,57 @@ class Property < ApplicationRecord
         predicate: statement.predicate,
         column_for_term(statement.object) => statement.object.to_s
       )
+    end
+
+    def with_array_props
+      @with_array_props ||=
+        Arel::Nodes::As.new(
+          array_props_table,
+          arel_table.group(arel_table[:edge_id], arel_table[:predicate]).project(with_array_props_select)
+        )
+    end
+
+    def with_json_props
+      @with_json_props ||=
+        Arel::Nodes::As.new(
+          json_props_table,
+          array_props_table.group(array_props_table[:edge_id]).project(with_json_props_select)
+        )
+    end
+
+    private
+
+    def array_props_table
+      @array_props_table ||= Arel::Table.new(:array_props)
+    end
+
+    def array_props_to_json(column)
+      Arel::Nodes::NamedFunction.new('to_json', [arel_table[column]])
+    end
+
+    def json_props_table
+      @json_props_table ||= Arel::Table.new(:json_props)
+    end
+
+    def with_array_props_select
+      [
+        arel_table[:edge_id],
+        arel_table[:predicate],
+        Arel::Nodes::NamedFunction.new(
+          'json_agg',
+          [arel_table.coalesce(TYPE_COLUMNS.map(&method(:array_props_to_json)))]
+        ).as('value')
+      ]
+    end
+
+    def with_json_props_select
+      [
+        array_props_table[:edge_id],
+        Arel::Nodes::NamedFunction.new(
+          'json_object_agg',
+          [array_props_table[:predicate], array_props_table[:value]]
+        ).as('props')
+      ]
     end
   end
 end

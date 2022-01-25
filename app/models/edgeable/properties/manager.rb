@@ -3,7 +3,7 @@
 module Edgeable
   module Properties
     class Manager
-      attr_accessor :dirty, :instance, :predicate
+      attr_accessor :dirty, :instance, :is_default, :predicate
       attr_reader :value
 
       alias dirty? dirty
@@ -14,12 +14,16 @@ module Edgeable
         self.predicate = predicate
       end
 
+      def build_default_property
+        build_property(options[:default], 0) if is_default
+      end
+
       def linked_edges
         properties.map(&:linked_edge)
       end
 
       def preload(new_record: false)
-        @value = !new_record && properties.any? ? current_value : default_value
+        @value = !new_record && cached_properties.present? ? current_value : default_value
         sync_property(@value) unless @value.nil?
       end
 
@@ -50,17 +54,27 @@ module Edgeable
         )
       end
 
+      def cached_properties
+        return unless instance.attributes.include?('cached_properties')
+
+        instance.cached_properties[predicate.to_s]
+      end
+
       def current_value
-        array? ? properties.map(&:value) : properties.first&.value
+        array? ? cached_properties : cached_properties.first
       end
 
       def default_value
         return array? ? [] : nil if options[:default].nil?
 
-        build_property(options[:default], 0).value
+        self.is_default = true
+
+        options[:default]
       end
 
       def initialize_properties
+        self.is_default = false
+
         (value.is_a?(Array) ? value : [value]).map.with_index do |val, ind|
           build_property(val, ind)
         end

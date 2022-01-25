@@ -39,7 +39,9 @@ class InterventionType < Edge
   private
 
   def average_score(predicate)
-    descendants.active.joins(:properties).where(properties: {predicate: predicate.to_s}).average(:integer).to_f * 100
+    descendants.active.average(
+      "((cached_properties ->> '#{ApplicationRecord.connection.quote_string(predicate)}')::json->>0)::int"
+    ).to_f * 100
   end
 
   class << self
