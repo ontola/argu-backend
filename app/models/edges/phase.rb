@@ -31,7 +31,9 @@ class Phase < Edge
            NS.argu[:resource],
            association_class: 'Edge'
   accepts_nested_attributes_for :resource
-  attr_reader :resource_type
+  attr_accessor :resource_type
+
+  after_create :create_resource
 
   enum resource_type: {
     survey: 0,
@@ -46,13 +48,13 @@ class Phase < Edge
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
-  validates :resource, presence: true
-
-  def resource_type=(type)
-    self.resource ||= resource_from_type(type) if type
-  end
+  validates :resource_type, presence: true, on: :create
 
   private
+
+  def create_resource
+    update(resource: resource_from_type(resource_type)) if resource_type
+  end
 
   def resource_attributes
     {
@@ -63,7 +65,7 @@ class Phase < Edge
     }
   end
 
-  def resource_from_type(type) # rubocop:disable Metrics/AbcSize
+  def resource_from_type(type) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     klass = type.to_s.classify.constantize
     child = build_child(klass, user_context: UserContext.new(user: publisher, profile: creator))
     child.assign_attributes(**resource_attributes)
@@ -74,6 +76,7 @@ class Phase < Edge
       child.is_published = true
     end
     child.url = SecureRandom.send(:choose, [*'A'..'Z', *'a'..'z'], 16) if child.is_a?(ContainerNode)
+    child.save!
     child
   end
 end
