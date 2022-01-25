@@ -40,7 +40,8 @@ class Phase < Edge
     topic: 3,
     budget_shop: 4,
     blog_post: 5,
-    vocabulary: 6
+    vocabulary: 6,
+    dashboard: 7
   }
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
@@ -72,6 +73,7 @@ class Phase < Edge
     else
       child.is_published = true
     end
+    child.url = SecureRandom.send(:choose, [*'A'..'Z', *'a'..'z'], 16) if child.is_a?(ContainerNode)
     child
   end
 end

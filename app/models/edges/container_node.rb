@@ -41,7 +41,7 @@ class ContainerNode < Edge
     NS.ontola[:destroyAction]
   ]
 
-  parentable :page
+  parentable :page, :phase
   placeable :country, :custom
 
   after_save :reset_country

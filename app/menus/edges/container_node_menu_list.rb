@@ -29,4 +29,19 @@ class ContainerNodeMenuList < ApplicationMenuList
       policy: :update?
     )
   end
+
+  def tabs_menu_items
+    [
+      dashboard_link,
+      widgets_link
+    ]
+  end
+
+  def dashboard_link
+    menu_item(
+      :dashboard,
+      label: I18n.t('argu.Dashboard.label'),
+      href: resource.iri
+    )
+  end
 end
