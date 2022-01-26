@@ -94,7 +94,7 @@ module Edgeable
         scope
           .left_joins(:shortname)
           .skip_preloading!
-          .select('edges.uuid', 'edges.fragment', 'shortnames.shortname')
+          .select('edges.uuid', 'edges.fragment', 'shortnames.shortname AS preloaded_url')
           .map(&:to_param)
       end
 

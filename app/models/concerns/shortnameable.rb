@@ -49,6 +49,8 @@ module Shortnameable
 
   # @return [String, nil] The shortname of the model or nil
   def url
+    return preloaded_url if attributes.key?('preloaded_url')
+
     if super.nil? && shortname && !shortname.destroyed?
       current_url = shortname.shortname
       self[:url] = current_url
