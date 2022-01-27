@@ -17,10 +17,10 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   has_menu :navigations,
            menus: -> { navigations_menu_items }
   has_menu :settings,
+           image: -> { font_awesome_iri('cogs') },
+           label: -> { I18n.t('menus.default.manage') },
            iri_base: -> { ActsAsTenant.current_tenant.root_relative_iri },
            menus: -> { setting_menu_items }
-  has_menu :manage,
-           menus: -> { manage_menu_items }
 
   def iri_template
     uri_template('menu_lists_iri')
@@ -52,19 +52,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def manage_menu_items
-    [
-      menu_item(
-        :settings,
-        image: 'fa-gear',
-        href: settings_iri(ActsAsTenant.current_tenant),
-        policy: :update?,
-        policy_resource: ActsAsTenant.current_tenant
-      ),
-      new_container_node_item
-    ]
-  end
-
   def navigations_menu_items
     [
       menu_item(
@@ -85,19 +72,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       image: record.try(:default_profile_photo),
       policy: :show?,
       policy_resource: record
-    )
-  end
-
-  def new_container_node_item
-    menu_item(
-      :new_component,
-      image: 'fa-plus',
-      policy: :create_child?,
-      policy_resource: Forum.root_collection(user_context: user_context),
-      href: LinkedRails.iri(
-        path: "#{ContainerNode.root_collection.root_relative_iri}/actions",
-        query: 'title=Nieuwe%20pagina'
-      )
     )
   end
 
