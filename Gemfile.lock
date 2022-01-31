@@ -45,7 +45,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: bc80a6d1e32cd904daa9de4e2c0ba75a35ac18c5
+  revision: 3dcf04cea7aaebd29bc0f7edf973d6c1dd880147
   branch: refactor-includes
   specs:
     linked_rails (0.0.4)
@@ -448,7 +448,7 @@ GEM
     public_suffix (4.0.6)
     puma (5.5.2)
       nio4r (~> 2.0)
-    pundit (2.1.1)
+    pundit (2.2.0)
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.6.0)
@@ -519,8 +519,8 @@ GEM
     rdf-turtle (3.2.0)
       ebnf (~> 2.3)
       rdf (~> 3.2)
-    rdf-vocab (3.2.0)
-      rdf (~> 3.2)
+    rdf-vocab (3.2.1)
+      rdf (~> 3.2, >= 3.2.4)
     rdf-xsd (3.2.0)
       rdf (~> 3.2)
       rexml (~> 3.2)
