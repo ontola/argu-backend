@@ -24,7 +24,7 @@ class Feed < VirtualResource
     ActsAsTenant.current_tenant.uuid
   end
 
-  delegate :root_relative_iri, to: :parent
+  delegate :iri, :root_relative_iri, to: :parent
 
   def root
     @root ||= Page.find_by(uuid: root_id)
