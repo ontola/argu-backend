@@ -299,6 +299,8 @@ de:
       label: veröffentlichen
     relevance:
       label: Relevanz
+    requiresIntro:
+      label: Name erforderlich
     sendConfirmationAction:
       label: Bestätigen Sie
     settingsMenu:

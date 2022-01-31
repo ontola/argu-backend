@@ -289,6 +289,8 @@ nl:
       label: "Publiceer"
     relevance:
       label: "Relevantie"
+    requiresIntro:
+      label: "Naam verplicht"
     sendConfirmationAction:
       label: "Bevestigen"
     settingsMenu:

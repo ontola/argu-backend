@@ -287,6 +287,8 @@ en:
       label: "Publish"
     relevance:
       label: "Relevance"
+    requiresIntro:
+      label: "Name required"
     sendConfirmationAction:
       label: "Confirm"
     settingsMenu:

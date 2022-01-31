@@ -23,6 +23,7 @@ class PageForm < ApplicationForm
   end
   group :staff,
         label: -> { I18n.t('forms.staff_only') } do
+    field :requires_intro
     field :matomo_site_id
     field :matomo_host
     field :piwik_pro_site_id
