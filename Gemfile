@@ -59,8 +59,7 @@ gem 'redis'
 gem 'rest-client'
 gem 'rfc-822'
 gem 'ros-apartment',
-    git: 'https://github.com/StefSchenkelaars/apartment',
-    ref: 'aa9facf367574335c087fcbd7505bb1dbff16352',
+    git: 'https://github.com/rails-on-services/apartment',
     require: 'apartment'
 gem 'rqrcode'
 gem 'rubyzip'
