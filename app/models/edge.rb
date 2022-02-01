@@ -407,8 +407,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def set_root_id
     if root_object?
       uuid = SecureRandom.uuid
-      self.uuid = uuid
-      self.root_id = uuid
+      self.uuid ||= uuid
+      self.root_id = self.uuid
     else
       self.root_id ||= parent&.root_id
     end

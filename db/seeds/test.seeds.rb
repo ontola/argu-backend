@@ -45,7 +45,9 @@ page = FactorySeeder.create(
   publisher: staff,
   creator: staff.profile,
   is_published: true,
-  locale: 'en-GB'
+  locale: 'en-GB',
+  root_id: 'deadbeef-bfc5-4e68-993f-430037bd5bd3',
+  uuid: 'deadbeef-bfc5-4e68-993f-430037bd5bd3'
 )
 
 freetown = ActsAsTenant.with_tenant(page) do

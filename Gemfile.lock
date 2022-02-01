@@ -45,7 +45,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 3dcf04cea7aaebd29bc0f7edf973d6c1dd880147
+  revision: b0141f0dad06dc0cfa8c0c476faa9df4b2493719
   branch: refactor-includes
   specs:
     linked_rails (0.0.4)
@@ -398,7 +398,7 @@ GEM
       rake
     mini_magick (4.11.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.7.1)
+    mini_portile2 (2.8.0)
     minitest (5.15.0)
     minitest-bang (1.0.4)
       minitest (>= 4.7.5)
@@ -422,8 +422,8 @@ GEM
     net_http_timeout_errors (0.3.5)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.13.1)
-      mini_portile2 (~> 2.7.0)
+    nokogiri (1.13.3)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)

@@ -9,12 +9,14 @@ class CreatePage < CreateEdge
   private
 
   def initialize_edge(_parent, attributes)
-    Page.new(
-      created_at: attributes.with_indifferent_access[:created_at],
+    attrs = {
       publisher: publisher,
       creator: creator,
       profile: Profile.new
+    }.merge(
+      attributes.with_indifferent_access.slice(:created_at, :uuid, :root_id)
     )
+    Page.new(attrs)
   end
 
   def object_attributes=(_obj); end
