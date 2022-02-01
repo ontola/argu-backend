@@ -18,6 +18,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Broadcastable
   include RedirectHelper
   include Uuidable
+  include DependentAssociations
 
   before_save :adjust_birthday, if: :birthday_changed?
   before_save :sanitize_redirect_url
@@ -325,25 +326,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.birthday = Date.new(birthday.year, 7, 1)
   end
 
-  def dependent_associations
-    (Edge.descendants.map(&:to_s).map(&:tableize) + %w[uploaded_media_objects content_placements])
-  end
-
-  def destroy_dependencies
-    dependent_associations.each do |association|
-      try(association)&.destroy_all
-    end
-  end
-
-  # Sets the dependent foreign relations to the Community profile
-  def expropriate_dependencies
-    dependent_associations.each do |association|
-      try(association)
-        &.model
-        &.expropriate(try(association))
-    end
-  end
-
   def follow_ancestors(followable, ancestor_type)
     followable.ancestors.where(owner_type: self.class.followable_classes).find_each do |ancestor|
       follow(ancestor, ancestor_type)
@@ -391,6 +373,11 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       resource.build_profile
       resource.language = I18n.locale
       resource
+    end
+
+    def dependent_associations
+      @dependent_associations ||= Edge.descendants.map(&:to_s).map(&:tableize) +
+        %w[uploaded_media_objects content_placements]
     end
 
     def community

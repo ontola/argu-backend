@@ -2,6 +2,7 @@
 
 class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Uuidable
+  include DependentAssociations
 
   # Currently hardcoded to User (whilst it can also be a Profile)
   # to make the mailer implementation more efficient
@@ -122,20 +123,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     id <= 0
   end
 
-  private
-
-  # Sets the dependent foreign relations to the Community profile
-  def anonymize_dependencies
-    ActsAsTenant.without_tenant do
-      (Edge.descendants.map(&:to_s).map(&:tableize) +
-        %w[activities uploaded_media_objects unscoped_group_memberships placements]).each do |association|
-        try(association)
-          &.model
-          &.anonymize(try(association))
-      end
-    end
-  end
-
   class << self
     def anonymous
       Profile.find(Profile::ANONYMOUS_ID)
@@ -143,6 +130,11 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def community
       Profile.find(Profile::COMMUNITY_ID)
+    end
+
+    def dependent_associations
+      @dependent_associations ||= Edge.descendants.map(&:to_s).map(&:tableize) +
+        %w[activities uploaded_media_objects unscoped_group_memberships placements]
     end
 
     def guest
