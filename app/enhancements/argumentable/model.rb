@@ -14,6 +14,8 @@ module Argumentable
       attribute :invert_arguments, :boolean
 
       def argument_columns
+        return if argument_columns_iri.blank?
+
         @argument_columns ||= LinkedRails::PropertyQuery.new(
           iri: argument_columns_iri,
           force_render: true,
@@ -23,7 +25,7 @@ module Argumentable
       end
 
       def argument_columns_iri
-        LinkedRails.iri(path: root_relative_iri, fragment: 'arguments')
+        LinkedRails.iri(path: root_relative_iri, fragment: 'arguments') unless anonymous_iri?
       end
 
       def invert_arguments
@@ -38,12 +40,6 @@ module Argumentable
             a.update pro: !a.pro
           end
         end
-      end
-    end
-
-    module ClassMethods
-      def preview_includes
-        super + [:argument_columns]
       end
     end
   end

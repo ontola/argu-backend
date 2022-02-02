@@ -196,9 +196,5 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         resource_iri: [[custom_action.iri(fragment: 'EntryPoint'), nil]]
       )
     end
-
-    def preview_includes
-      super + %i[resource_sequence property_shapes]
-    end
   end
 end

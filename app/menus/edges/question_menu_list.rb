@@ -33,7 +33,7 @@ class QuestionMenuList < ApplicationMenuList
   end
 
   def location_link
-    return nil unless resource.map_question?
+    return nil unless resource.map_question? && location_query_iri
 
     menu_item(
       :location,

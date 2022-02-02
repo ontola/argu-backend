@@ -26,7 +26,6 @@ class ActorsController < ParentableController
     @requested_resource ||= LinkedRails::Sequence.new(
       available_actors,
       id: index_iri,
-      member_includes: CurrentActor.preview_includes,
       scope: false
     )
   end

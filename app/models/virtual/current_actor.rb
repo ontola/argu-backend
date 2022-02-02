@@ -48,10 +48,4 @@ class CurrentActor < VirtualResource
   def user_id
     user&.id
   end
-
-  class << self
-    def preview_includes
-      %i[default_profile_photo actor user]
-    end
-  end
 end

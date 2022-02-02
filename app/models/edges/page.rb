@@ -252,7 +252,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     end
 
     def preview_includes
-      super + %i[default_profile_photo] - %w[navigations_menu settings_menu]
+      super + %i[default_profile_photo]
     end
 
     def requested_single_resource(params, _user_context)

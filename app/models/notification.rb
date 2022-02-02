@@ -68,10 +68,6 @@ class Notification < ApplicationRecord
       {user: user_context&.user || User.new(show_feed: true)}
     end
 
-    def preview_includes
-      [operation: :target]
-    end
-
     def route_key
       :n
     end

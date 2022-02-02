@@ -4,7 +4,7 @@ class CustomMenuItemSerializer < Menus::ItemSerializer
   attribute :action, predicate: NS.ontola[:action] do
     nil
   end
-  has_one :action, predicate: NS.ontola[:action], polymorphic: true do
+  has_one :action, predicate: NS.ontola[:action] do
     nil
   end
   attribute :position, predicate: NS.argu[:order]

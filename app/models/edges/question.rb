@@ -51,14 +51,10 @@ class Question < Discussion
   end
 
   def location_query_iri
-    LinkedRails.iri(path: root_relative_iri, fragment: 'location')
+    LinkedRails.iri(path: root_relative_iri, fragment: 'location') unless anonymous_iri?
   end
 
   class << self
-    def preview_includes
-      super + [:location_query]
-    end
-
     def route_key
       :q
     end

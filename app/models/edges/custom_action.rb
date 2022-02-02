@@ -68,10 +68,4 @@ class CustomAction < Edge
   def translation_key
     :default
   end
-
-  class << self
-    def preview_includes
-      %i[target]
-    end
-  end
 end
