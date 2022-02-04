@@ -4,7 +4,7 @@
 en:
   status:
     s_400:
-      header: "Bad request (400 Bad Request)"
+      header: "Error in request"
       body: "The request made cannot be fulfilled because it contains bad syntax, check your URL parameters or refresh the page that linked to this resource."
       reference_link_url: "https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error"
       reference_link_body: "Click here to learn more about HTTP & status 400 :)"
@@ -25,5 +25,5 @@ en:
       reference_link_url: "https://en.wikipedia.org/wiki/HTTP_422"
       reference_link_body: "Click here to learn more about HTTP & status 422 :)"
     s_500:
-      header: "Server error"
+      header: "Something went wrong on our side, please try again later"
       body: "Something went wrong on our side. Error information has been collected and sent automatically. We'll try to fix the issue as soon as possible. Please try again later."
