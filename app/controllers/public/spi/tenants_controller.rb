@@ -11,7 +11,7 @@ module Public
         info = Tenant.pluck(:database_schema, :iri_prefix)
 
         render json: {
-          schemas: info.transpose.first.uniq,
+          schemas: info.transpose.first&.uniq,
           sites: info.map { |i| {name: i.first, location: "https://#{i.second}"} }
         }
       end
