@@ -35,7 +35,7 @@ build:
     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
     - docker run --network host --env APARTMENT_DISABLE_INIT=true --env DISABLE_PROMETHEUS=true --env POSTGRESQL_ADDRESS=localhost --env POSTGRESQL_DATABASE=test --env RAILS_ENV=production  --env REDIS_URL=$REDIS_URL --env SECRET_KEY_BASE=secret --env DEVISE_SECRET=secret $CI_REGISTRY_IMAGE:latest ./bin/rails runner "puts 'succeeded'"
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latestzza
 
 productionTagManual:
   stage: manualTag

@@ -1,10 +1,10 @@
-FROM ruby:3.0.2-alpine3.13
+FROM ruby:3.1-alpine3.15
 
 # Install mozjpeg & libvips
-ARG LIBVIPS_VERSION_MAJOR_MINOR=8.9
-ARG LIBVIPS_VERSION_PATCH=1
+ARG LIBVIPS_VERSION_MAJOR_MINOR=8.12
+ARG LIBVIPS_VERSION_PATCH=2
 ARG MOZJPEG_VERSION="v3.3.1"
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.11/community" >> /etc/apk/repositories && \
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.15/community" >> /etc/apk/repositories && \
     apk update && \
     apk upgrade && \
     apk add --update \
@@ -18,12 +18,13 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.11/community" >> /etc/apk/repo
     \
     echo 'Install mozjpeg' && \
     cd /tmp && \
-    git clone git://github.com/mozilla/mozjpeg.git && \
+    git clone --depth 50 git://github.com/mozilla/mozjpeg.git && \
     cd /tmp/mozjpeg && \
     git checkout ${MOZJPEG_VERSION} && \
-    autoreconf -fiv && ./configure --prefix=/usr && make install && \
-    \
-    echo 'Install libvips' && \
+    cd /tmp/mozjpeg && \
+    autoreconf -fiv && ./configure --prefix=/usr --with-java=no && make install || ls -lah /tmp/mozjpeg && cat /tmp/mozjpeg/config.log
+
+RUN echo 'Install libvips' && \
     wget -O- https://github.com/libvips/libvips/releases/download/v${LIBVIPS_VERSION_MAJOR_MINOR}.${LIBVIPS_VERSION_PATCH}/vips-${LIBVIPS_VERSION_MAJOR_MINOR}.${LIBVIPS_VERSION_PATCH}.tar.gz | tar xzC /tmp && \
     cd /tmp/vips-${LIBVIPS_VERSION_MAJOR_MINOR}.${LIBVIPS_VERSION_PATCH} && \
     ./configure --prefix=/usr \
