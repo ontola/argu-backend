@@ -421,6 +421,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
       show_anonymous_user = user_context&.guest? && resource.present? && !resource.is_public?
       return AnonymousUser.new(id: params[:id]) if show_anonymous_user
+      return guest(user_context.session_id, user_context.language) if params[:id].to_i == GUEST_ID
 
       resource
     end
