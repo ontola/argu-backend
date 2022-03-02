@@ -107,7 +107,16 @@ class Property < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def array_props_to_json(column)
-      Arel::Nodes::NamedFunction.new('to_json', [arel_table[column]])
+      Arel::Nodes::NamedFunction.new('to_json', [cast_property(column)])
+    end
+
+    def cast_property(column)
+      case column
+      when 'datetime'
+        Arel::Nodes::NamedFunction.new('CAST', [arel_table[column].as('timestamptz')])
+      else
+        arel_table[column]
+      end
     end
 
     def json_props_table

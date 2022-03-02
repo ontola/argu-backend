@@ -7,6 +7,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   define_cairo
   let(:guest_user) { create_guest_user }
   let(:other_guest_user) { create_guest_user(session_id: 'other_id') }
+  let(:timezone_user) { create(:user, time_zone: 'America/Juneau') }
   let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown) }
   let(:closed_question_motion) { create(:motion, parent: closed_question) }
   let(:closed_question_argument) { create(:pro_argument, parent: closed_question_motion) }
@@ -247,6 +248,23 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'user should post create for motion json' do
     sign_in user
+    vote_event
+    assert_difference('Vote.count' => 1,
+                      'Edge.count' => 1,
+                      'Argu::Redis.keys.count' => 0,
+                      'vote_event.reload.pro_count' => 1) do
+      post vote_event.collection_iri(:votes),
+           params: {
+             vote: {option: NS.argu[:yes]}
+           },
+           headers: argu_headers(accept: :json)
+    end
+
+    assert_response 201
+  end
+
+  test 'user with other timezone should post create for motion json' do
+    sign_in timezone_user
     vote_event
     assert_difference('Vote.count' => 1,
                       'Edge.count' => 1,
