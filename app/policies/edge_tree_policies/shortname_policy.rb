@@ -15,20 +15,20 @@ class ShortnamePolicy < EdgeTreePolicy
   delegate :show?, to: :edgeable_policy
 
   def update?
-    return unless valid_owner_type?
-    return if record.primary?
+    return forbid_with_message(I18n.t('actions.shortnames.create.errors.invalid_type')) unless valid_owner_type?
+    return forbid_with_message(I18n.t('actions.shortnames.update.errors.primary')) if record.primary?
 
     edgeable_policy.update?
   end
 
   def create?
-    return unless valid_owner_type?
+    return forbid_with_message(I18n.t('actions.shortnames.create.errors.invalid_type')) unless valid_owner_type?
 
     edgeable_policy.update?
   end
 
   def destroy?
-    return if record.primary?
+    return forbid_with_message(I18n.t('actions.shortnames.destroy.errors.primary')) if record.primary?
 
     edgeable_policy.update?
   end

@@ -17,7 +17,7 @@ class VotePolicy < EdgePolicy
   def create?
     return super unless record.parent.is_a?(VoteEvent) && record.parent.starts_at > Time.current
 
-    false
+    forbid_with_message(I18n.t('actions.votes.create.errors.not_started'))
   end
 
   def show?
@@ -33,7 +33,7 @@ class VotePolicy < EdgePolicy
   private
 
   def create_expired?
-    forbid_with_status(NS.ontola[:ExpiredActionStatus], 'Voting is no longer possible')
+    forbid_with_status(NS.ontola[:ExpiredActionStatus], I18n.t('actions.votes.create.errors.finished'))
   end
 
   def is_creator?

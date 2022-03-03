@@ -59,6 +59,13 @@ de:
     blogs:
       create:
         description: Halten Sie die Leute durch Blogbeiträge auf dem Laufenden.
+    cart_details:
+      create:
+        errors:
+          already_added: Dieser Artikel ist bereits in Ihrem Warenkorb enthalten
+      show:
+        errors:
+          no_parent: Ein Elternteil fehlt
     confirmations:
       create:
         label: Bestätigungslink erneut senden
@@ -73,7 +80,13 @@ de:
           Hier können Sie einen Objekttyp in einen anderen umwandeln.
           Assoziationen können geändert werden. Es ist möglich, dass eine
           Umwandlung nicht möglich ist, weil einige Assoziationen leer sind.
-        sbumit: Konvertieren
+        submit: Konvertieren
+        errors:
+          invalid_class: Keine Umwandlung in diesen Typ erlaubt
+    current_actors:
+      create:
+        errors:
+          unconfirmed: Dieses Konto ist nicht bestätigt
     dashboards:
       create:
         description: Ein Dashboard kann Widgets enthalten.
@@ -95,6 +108,13 @@ de:
     forums:
       create:
         description: Ein Ort für Diskussionen der anderen Art.
+    group_memberships:
+      create:
+        errors:
+          invalid_token: Ungültiges Token. Bitte versuchen Sie es erneut.
+      destroy:
+        errors:
+          last_admin: Das letzte Mitglied kann nicht aus der Administratorgruppe entfernt werden
     pro_arguments:
       create_vote:
         submit: Höher bewerten
@@ -120,6 +140,16 @@ de:
     policy_agreements:
       create:
         submit: Akzeptieren
+    shortnames:
+      create:
+        errors:
+          invalid_type: Kann keinen Kurznamen für diesen Typ hinzufügen.
+      update:
+        errors:
+          primary: Primärkurznamen können nicht aktualisiert werden.
+      destroy:
+        errors:
+          primary: Primäre Kurznamen können nicht entfernt werden.
     users:
       update:
         label: Einstellungen
@@ -147,6 +177,11 @@ de:
         description: >-
           Sind Sie sicher, dass Sie **%{name}** entfernen möchten? Der von diesem
           Konto gepostete Inhalt wird anonymisiert.
+    votes:
+      create:
+        errors:
+          not_started: Abstimmen ist noch nicht möglich
+          finished: Abstimmen ist nicht mehr möglich
     setups:
       update:
         label: Herzlich willkommen!
@@ -166,6 +201,10 @@ de:
         submit: Senden Sie
       update:
         label: Ihr Passwort festlegen
+    placements:
+      create:
+        errors:
+          wrong_type: Bei diesem Elternteil nicht möglich
     unlocks:
       create:
         label: Ihr Konto ist gesperrt

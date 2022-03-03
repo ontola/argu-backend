@@ -55,6 +55,13 @@ en:
     blogs:
       create:
         description: "Keep people informed through blog posts."
+    cart_details:
+      create:
+        errors:
+          already_added: "This item is already added to your cart"
+      show:
+        errors:
+          no_parent: "Parent is missing"
     confirmations:
       create:
         label: "Send confirmation link again"
@@ -66,7 +73,13 @@ en:
       create:
         label: "Convert"
         description: "This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty."
-        sbumit: "Convert"
+        submit: "Convert"
+        errors:
+          invalid_class: "No allowed to convert to this type"
+    current_actors:
+      create:
+        errors:
+          unconfirmed: "This account is not confirmed"
     dashboards:
       create:
         description: "A dashboard can contain widgets."
@@ -84,6 +97,13 @@ en:
     forums:
       create:
         description: "A place for different kind of discussions."
+    group_memberships:
+      create:
+        errors:
+          invalid_token: "Invalid token. Please try again."
+      destroy:
+        errors:
+          last_admin: "Cannot remove the last member from the admin group"
     pro_arguments:
       create_vote:
         submit: "Upvote"
@@ -109,6 +129,16 @@ en:
     policy_agreements:
       create:
         submit: "Accept"
+    shortnames:
+      create:
+        errors:
+          invalid_type: "Cannot add shortname for this type."
+      update:
+        errors:
+          primary: "Cannot update primary shortnames."
+      destroy:
+        errors:
+          primary: "Cannot remove primary shortnames."
     users:
       update:
         label: "Settings"
@@ -130,6 +160,11 @@ en:
       destroy:
         label: "Remove account"
         description: "Are you sure you want to remove **%{name}**? The content posted by this account will be anonymized."
+    votes:
+      create:
+        errors:
+          not_started: "Voting is not yet possible"
+          finished: "Voting is no longer possible"
     setups:
       update:
         label: "Welcome!"
@@ -147,6 +182,10 @@ en:
         submit: "Send"
       update:
         label: "Set your password"
+    placements:
+      create:
+        errors:
+          wrong_type: "Not possible for this parent"
     unlocks:
       create:
         label: 'Your account is locked'

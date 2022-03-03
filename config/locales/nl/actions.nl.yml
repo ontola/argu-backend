@@ -55,6 +55,13 @@ nl:
     blogs:
       create:
         description: "Houd mensen op de hoogte via blog posts."
+    cart_details:
+      create:
+        errors:
+          already_added: "Dit item is al geselecteerd"
+      show:
+        errors:
+          no_parent: "Parent ontbreekt"
     confirmations:
       create:
         label: "Bevestigingslink opnieuw versturen"
@@ -67,6 +74,12 @@ nl:
         label: "Omzetten"
         description: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
         submit: "Zet om"
+        errors:
+          invalid_class: "No allowed to convert to this type"
+    current_actors:
+      create:
+        errors:
+          unconfirmed: "Dit account is nog niet bevestigd"
     dashboards:
       create:
         description: "Een dashboard kan widgets bevatten."
@@ -84,6 +97,13 @@ nl:
     forums:
       create:
         description: "Een verzamelplaats voor verschillende soorten discussies."
+    group_memberships:
+      create:
+        errors:
+          invalid_token: "Token is niet correct. Probeer het opnieuw."
+      destroy:
+        errors:
+          last_admin: "Je kan het laatste lid van een admin groep niet verwijderen."
     pro_arguments:
       create_vote:
         submit: "Upvote"
@@ -102,6 +122,16 @@ nl:
       create:
         label: "Inloggen of registeren"
         submit: "Bevestig"
+    shortnames:
+      create:
+        errors:
+          invalid_type: "Je kan geen alias aanmaken voor dit type."
+      update:
+        errors:
+          primary: "Je kan primaire aliases niet aanpassen."
+      destroy:
+        errors:
+          primary: "Je kan primaire aliases niet verwijderen."
     submissions:
       create:
         label: "Enquête invullen"
@@ -130,6 +160,11 @@ nl:
       destroy:
         label: "Account verwijderen"
         description: "Weet je zeker dat je **%{name}** wil verwijderen? De content geplaatst door dit account wordt geanonimiseerd."
+    votes:
+      create:
+        errors:
+          not_started: "Stemmen is nog niet mogelijk"
+          finished: "Stemmen is niet langer mogelijk"
     setups:
       update:
         label: "Welkom!"
@@ -147,6 +182,10 @@ nl:
         submit: "Verstuur"
       update:
         label: "Stel je wachtwoord in"
+    placements:
+      create:
+        errors:
+          wrong_type: "Niet mogelijk voor deze parent"
     unlocks:
       create:
         label: 'Je account is vergrendeld'

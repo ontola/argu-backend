@@ -22,7 +22,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    return false if record.group.grants.administrator.present? && record.group.group_memberships.count <= 1
+    return forbid_with_message(I18n.t('actions.group_memberships.destroy.errors.last_admin')) if last_admin?
 
     group_member? || edgeable_policy.update?
   end
@@ -33,9 +33,15 @@ class GroupMembershipPolicy < EdgeTreePolicy
     record.member == user.profile
   end
 
+  def last_admin?
+    record.group.grants.administrator.present? && record.group.group_memberships.count <= 1
+  end
+
   def valid_token?
     return if record.token.blank?
 
-    Argu::API.service_api.verify_token(record.token, record.group_id)
+    return true if Argu::API.service_api.verify_token(record.token, record.group_id)
+
+    forbid_with_message(I18n.t('actions.group_memberships.create.errors.invalid_token'))
   end
 end

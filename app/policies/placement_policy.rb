@@ -17,7 +17,7 @@ class PlacementPolicy < RestrictivePolicy
   permit_attributes %i[coordinates lat lon placement_type zoom_level]
 
   def show?
-    return unless record.placeable_type == 'Edge'
+    return forbid_with_message(I18n.t('actions.placements.create.errors.wrong_type')) unless valid_type?
 
     placeable_policy.show?
   end
@@ -26,5 +26,9 @@ class PlacementPolicy < RestrictivePolicy
 
   def placeable_policy
     @placeable_policy ||= Pundit.policy(context, record.placeable)
+  end
+
+  def valid_type?
+    record.placeable_type == 'Edge'
   end
 end
