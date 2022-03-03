@@ -31,7 +31,16 @@ class VoteEventsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('part_of')
-    expect_view_members(expect_default_view, 2)
+    expect_not_included(
+      vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri)
+    )
+  end
+
+  test 'should get index vote_events of motion page 1' do
+    get :index, params: {format: :json_api, parent_iri: parent_iri_for(motion), page: 1}
+    assert_response 200
+
+    expect_view_members(primary_resource, 2)
 
     expect_not_included(
       vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri)

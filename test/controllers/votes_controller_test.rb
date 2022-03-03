@@ -28,14 +28,13 @@ class VotesControllerTest < ActionController::TestCase
     get :index,
         params: {
           format: :json_api,
-          parent_iri: parent_iri_for(vote_event)
+          parent_iri: parent_iri_for(vote_event),
+          page: 1
         }
     assert_response 200
 
-    expect_relationship('part_of')
-
     included_votes = vote_event.votes.joins(:publisher).where(users: {show_feed: true})
-    expect_view_members(expect_default_view, included_votes.count)
+    expect_view_members(primary_resource, included_votes.count)
     expect_not_included(vote_event.votes.joins(:publisher).where(users: {show_feed: false}).map(&:iri))
   end
 
@@ -45,7 +44,8 @@ class VotesControllerTest < ActionController::TestCase
         params: {
           format: :json_api,
           parent_iri: parent_iri_for(vote_event),
-          'filter[]' => "http://schema.org/option=#{option_term.iri}"
+          'filter[]' => "http://schema.org/option=#{option_term.iri}",
+          page: 1
         }
     assert_response 200
 
@@ -55,7 +55,7 @@ class VotesControllerTest < ActionController::TestCase
       option: option_term,
       users: {show_feed: true}
     )
-    expect_view_members(expect_default_view, included_votes.count)
+    expect_view_members(primary_resource, included_votes.count)
     expect_not_included(vote_event.votes.where(option: vote_event.option_record!(NS.argu[:no])))
   end
 end

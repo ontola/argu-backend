@@ -67,10 +67,9 @@ class FeedTest < ActionDispatch::IntegrationTest
     case accept
     when :nq
       collection = ActsAsTenant.with_tenant(argu) do
-        feed(parent).collection_iri(:activities)
+        feed(parent).collection_iri(:activities, type: :paginated)
       end
-      view = rdf_body.query([collection, NS.ontola[:pages]]).first.object
-      expect_triple(view, NS.as[:totalItems], count)
+      expect_triple(collection, NS.as[:totalItems], count)
     else
       raise 'Wrong format'
     end
@@ -87,7 +86,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   def visit_freetown_feed(accept: :nq, count: 7)
     init_content([subject, unpublished_motion, unpublished_motion_argument, trashed_motion])
 
-    get feeds_iri(freetown),
+    get feeds_iri(freetown, type: :paginated),
         headers: argu_headers(accept: accept)
 
     assert_response 200
@@ -98,7 +97,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   def visit_motion_feed(accept: :nq)
     init_content
 
-    get feeds_iri(subject), headers: argu_headers(accept: accept)
+    get feeds_iri(subject, type: :paginated), headers: argu_headers(accept: accept)
 
     assert_response 200
 

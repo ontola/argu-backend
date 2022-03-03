@@ -45,7 +45,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 4892fb88987d0b138fbb62e50148534b72bd51bc
+  revision: 709ee7652e42da920b66cb345845ad8d53ee964f
   branch: refactor-includes
   specs:
     linked_rails (0.0.4)

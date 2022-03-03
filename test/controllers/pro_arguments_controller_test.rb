@@ -29,12 +29,6 @@ class ProArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('part_of')
-
-    expect_default_view
-    expect_included(motion.collection_iri(:pro_arguments, page: 1))
-    expect_not_included(motion.pro_arguments.trashed.map(&:iri))
-    expect_not_included(motion.con_arguments.trashed.map(&:iri))
-    expect_not_included(motion.con_arguments.map(&:iri))
   end
 
   test 'should get index arguments of motion with page=1' do

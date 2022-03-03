@@ -94,10 +94,15 @@ module SPI
 
       statements = JSON.parse(body).first['body'].split("\n").map { |s| JSON.parse(s) }
       linked_iri = "http://argu.localtest/argu/resource?iri=#{CGI.escape(dg_motion1.iri)}"
-      assert_equal(
-        statements.map(&:first).uniq.sort.filter { |subject| subject.start_with?('http') },
-        [linked_iri, dg_motion1.argument_columns_iri.to_s, dg_motion1.iri.to_s]
-      )
+      included_records = statements.map(&:first).uniq.sort.filter { |subject| subject.start_with?('http') }
+      expected_includes = ActsAsTenant.with_tenant(demogemeente) do
+        [
+          linked_iri,
+          dg_motion1.iri.to_s,
+          dg_motion1.argument_columns_iri.to_s
+        ]
+      end
+      assert_equal(included_records, expected_includes)
       body.include?("\\\"#{linked_iri}\\\",\\\"#{NS.owl.sameAs}\\\",\\\"#{dg_motion1.iri}\\\"")
       body.include?("\\\"#{dg_motion1.iri}\\\",\\\"#{NS.owl.sameAs}\\\",\\\"#{linked_iri}\\\"")
     end
@@ -280,16 +285,21 @@ module SPI
     end
 
     def linked_record_stub(record)
+      stub_request(:get, record.iri).to_return(
+        status: 200,
+        body: linked_record_stub_body(record)
+      )
+    end
+
+    def linked_record_stub_body(record)
       serializer_options = RDF::Serializers::Renderers.transform_opts(
         {include: record&.try(:preview_includes)},
         {}
       )
-      body = RDF::Serializers.serializer_for(record).new(record, serializer_options).send(:render_hndjson)
 
-      stub_request(:get, record.iri).to_return(
-        status: 200,
-        body: body
-      )
+      ActsAsTenant.with_tenant(demogemeente) do
+        RDF::Serializers.serializer_for(record).new(record, serializer_options).send(:render_hndjson)
+      end
     end
 
     def whitelisted_linked_record_responses(**opts)

@@ -172,11 +172,10 @@ class GroupMembershipsControllerTest < ActionDispatch::IntegrationTest
   test 'administrator should get index' do
     sign_in administator
 
-    get group.collection_iri(:group_memberships, root: argu),
+    get group.collection_iri(:group_memberships, root: argu, page: 1),
         headers: argu_headers(accept: :nq)
 
     assert_response :success
-    view = expect_triple(group.collection_iri(:group_memberships, root: argu), NS.ontola[:pages], nil).objects.first
-    expect_triple(view, NS.as[:totalItems], 1)
+    expect_triple(group.collection_iri(:group_memberships, root: argu, page: 1), NS.as[:totalItems], 1)
   end
 end

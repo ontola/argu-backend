@@ -24,4 +24,10 @@ class AnonymousUser < User
   def iri_template_name
     :users_iri
   end
+
+  class << self
+    def preview_includes
+      %i[default_profile_photo]
+    end
+  end
 end

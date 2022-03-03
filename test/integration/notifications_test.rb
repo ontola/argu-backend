@@ -25,12 +25,9 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'guest should get index' do
     argument
     sign_in :guest_user
-    get Notification.collection_iri(root: argu)
+    get Notification.collection_iri(root: argu, type: :paginated)
     assert_response 200
-    ActsAsTenant.with_tenant(argu) do
-      view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
-      expect_triple(view, NS.as[:totalItems], 0)
-    end
+    expect_triple(Notification.collection_iri(root: argu, type: :paginated), NS.as[:totalItems], 0)
   end
 
   test 'guest should not mark as read' do

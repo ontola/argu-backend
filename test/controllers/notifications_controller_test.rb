@@ -17,12 +17,11 @@ class NotificationsControllerTest < ActionController::TestCase
     followed_content(unconfirmed)
     sign_in :guest_user
 
-    get :index, format: :nq
+    get :index, format: :nq, params: {type: :paginated}
 
     assert_response 200
 
-    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
-    expect_triple(view, NS.as[:totalItems], 0)
+    expect_triple(Notification.collection_iri(type: :paginated), NS.as[:totalItems], 0)
   end
 
   ####################################
@@ -34,11 +33,11 @@ class NotificationsControllerTest < ActionController::TestCase
     sign_in unconfirmed
     followed_content(unconfirmed)
 
-    get :index, format: :nq
+    get :index, format: :nq, params: {type: :paginated}
 
-    assert_response 200, format: :nq
-    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
-    expect_triple(view, NS.as[:totalItems], 4)
+    assert_response 200
+
+    expect_triple(Notification.collection_iri(type: :paginated), NS.as[:totalItems], 4)
   end
 
   test 'unconfirmed user with notifications and redis_vote should get index' do
@@ -46,11 +45,37 @@ class NotificationsControllerTest < ActionController::TestCase
     sign_in unconfirmed
     followed_content(unconfirmed)
 
-    get :index, format: :nq
+    get :index, format: :nq, params: {type: :paginated}
 
     assert_response 200
-    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
-    expect_triple(view, NS.as[:totalItems], 5)
+    expect_triple(Notification.collection_iri(type: :paginated), NS.as[:totalItems], 5)
+  end
+
+  test 'unconfirmed user with notifications and redis_vote should get index with before' do
+    unconfirmed_vote
+    sign_in unconfirmed
+    followed_content(unconfirmed)
+
+    get :index, format: :nq, params: {'before[]' => {NS.schema.dateCreated => 1.day.from_now.utc.iso8601(6)}.to_param}
+
+    assert_response 200
+    expect_triple(*member_triple(0))
+    expect_triple(*member_triple(1))
+    expect_triple(*member_triple(2))
+    expect_triple(*member_triple(3))
+    expect_triple(*member_triple(4))
+    refute_triple(*member_triple(5))
+  end
+
+  test 'unconfirmed user with notifications and redis_vote should not get newer notifications' do
+    unconfirmed_vote
+    sign_in unconfirmed
+    followed_content(unconfirmed)
+
+    get :index, format: :nq, params: {'before[]' => {NS.schema.dateCreated => 1.day.ago.utc.iso8601(6)}.to_param}
+
+    assert_response 200
+    refute_triple(*member_triple(0))
   end
 
   ####################################
@@ -62,11 +87,10 @@ class NotificationsControllerTest < ActionController::TestCase
   test 'user without notifications should get index no content' do
     sign_in user
 
-    get :index, format: :nq
+    get :index, format: :nq, params: {type: :paginated}
 
     assert_response 200
-    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
-    expect_triple(view, NS.as[:totalItems], 0)
+    expect_triple(Notification.collection_iri(type: :paginated), NS.as[:totalItems], 0)
   end
 
   test 'user with notifications should get index nq' do
@@ -75,11 +99,10 @@ class NotificationsControllerTest < ActionController::TestCase
 
     sleep(1.second)
 
-    get :index, format: :nq
+    get :index, format: :nq, params: {type: :paginated}
 
     assert_response 200
-    view = expect_triple(Notification.collection_iri, NS.ontola[:pages], nil).objects.first
-    expect_triple(view, NS.as[:totalItems], 4)
+    expect_triple(Notification.collection_iri(type: :paginated), NS.as[:totalItems], 4)
   end
 
   private
@@ -96,5 +119,10 @@ class NotificationsControllerTest < ActionController::TestCase
       end
     end
     create(:vote, parent: parent.default_vote_event)
+  end
+
+  def member_triple(index)
+    view = expect_triple(nil, RDF.type, NS.ontola[:InfiniteView]).subjects.first
+    [RDF::URI("#{view}#members"), RDF["_#{index}"], nil]
   end
 end

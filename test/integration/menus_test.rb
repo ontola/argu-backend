@@ -33,16 +33,16 @@ class MenusTest < ActionDispatch::IntegrationTest
   test 'Guest should get show application menu' do
     sign_in :guest_user
 
-    get menus_path, headers: argu_headers(accept: :nq)
+    get menus_path(:navigations), headers: argu_headers(accept: :nq)
 
     assert_response 200
-    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:session))
+    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:navigations))
   end
 
   test 'Guest should get show page menu with custom item' do
     sign_in create_guest_user
 
-    get "/#{argu.url}/menus", headers: argu_headers(accept: :nq)
+    get menus_path(:navigations), headers: argu_headers(accept: :nq)
 
     assert_response 200
 
@@ -66,11 +66,10 @@ class MenusTest < ActionDispatch::IntegrationTest
   ####################################
   test 'User should get show application menu' do
     sign_in user
-    get menus_path, headers: argu_headers(accept: :nq)
+    get menus_path(:navigations), headers: argu_headers(accept: :nq)
 
     assert_response 200
-    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:user))
-    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:session))
+    expect_resource_type(NS.ontola[:MenuItem], iri: menu_url(:navigations))
   end
 
   private
@@ -79,7 +78,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     RDF::URI(["#{argu.iri}/menus/#{tag}", fragment].compact.join('#'))
   end
 
-  def menus_path
-    "#{argu.iri}/menus"
+  def menus_path(tag)
+    "#{argu.iri}/menus/#{tag}"
   end
 end
