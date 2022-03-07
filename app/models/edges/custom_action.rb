@@ -46,7 +46,7 @@ class CustomAction < Edge
   end
 
   def target
-    @target ||= LinkedRails.entry_point_class.new(parent: self, target_url: href)
+    @target ||= LinkedRails.entry_point_class.new(parent: self, target_url: RDF::URI(href)) if href
   end
 
   def target_id
@@ -55,5 +55,11 @@ class CustomAction < Edge
 
   def translation_key
     :default
+  end
+
+  class << self
+    def iri
+      NS.schema.Action
+    end
   end
 end
