@@ -221,6 +221,25 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
     assert_nil reply1.reload.parent_comment
   end
 
+  test 'property with timezone' do
+    current_hour = Time.current.hour
+    Time.use_zone('Hawaii') do
+      timezone_hour = Time.current.hour
+      assert_not_equal(current_hour, timezone_hour)
+      vote_event = reloaded_vote_event
+      assert_equal(timezone_hour, vote_event.starts_at.hour)
+      cached_value = vote_event.cached_properties[NS.schema.startDate.to_s].first
+      assert(cached_value.ends_with?('+00:00'))
+      assert_includes(cached_value, "T#{current_hour.to_s.rjust(2, '0')}")
+      raw_value = vote_event
+                    .properties
+                    .find_by(predicate: NS.schema.startDate)
+                    .read_attribute_before_type_cast(:datetime)
+      assert_equal(current_hour, raw_value.hour)
+    end
+    assert_equal(current_hour, reloaded_vote_event.starts_at.hour)
+  end
+
   private
 
   def reloaded_intervention
@@ -229,5 +248,9 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
 
   def reloaded_motion
     Edge.find_by(uuid: motion.uuid)
+  end
+
+  def reloaded_vote_event
+    reloaded_motion.default_vote_event
   end
 end
