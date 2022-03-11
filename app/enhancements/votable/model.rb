@@ -27,7 +27,7 @@ module Votable
         children_count(option_record(NS.argu[:yes])&.uuid)
       end
 
-      def vote_counts(graph = NS.ll[:supplant])
+      def vote_counts(graph = NS.ld[:supplant])
         sequence_iri = RDF::Node.new
         [[iri, NS.opengov[:count], sequence_iri, graph], [sequence_iri, RDF.type, RDF.Seq, graph]] +
           vote_options.flat_map.with_index { |option, index| vote_count(option, index, sequence_iri) }

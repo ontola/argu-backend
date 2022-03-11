@@ -326,10 +326,10 @@ class UsersTest < ActionDispatch::IntegrationTest
         display_name: 'new name'
       }
     }
-    expect_triple(user.iri, NS.argu[:hasAnalytics], true, NS.ll[:replace])
-    expect_triple(user.iri, NS.argu[:votesPublic], false, NS.ll[:replace])
-    expect_triple(user.iri, NS.argu[:public], false, NS.ll[:replace])
-    expect_triple(user.iri, NS.schema.name, 'new name', NS.ll[:replace])
+    expect_triple(user.iri, NS.argu[:hasAnalytics], true, NS.ld[:replace])
+    expect_triple(user.iri, NS.argu[:votesPublic], false, NS.ld[:replace])
+    expect_triple(user.iri, NS.argu[:public], false, NS.ld[:replace])
+    expect_triple(user.iri, NS.schema.name, 'new name', NS.ld[:replace])
     assert_response :success
     assert_equal 'new name', user.reload.display_name
   end
