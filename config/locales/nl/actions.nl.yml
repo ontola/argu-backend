@@ -1,5 +1,10 @@
 
 nl:
+  collections:
+    container_nodes:
+      action_dialog: "Welk instrument wil je inzetten?"
+    discussions:
+      action_dialog: "Welk instrument wil je inzetten?"
   forms:
     custom_actions:
       raw_label:
@@ -55,6 +60,9 @@ nl:
     blogs:
       create:
         description: "Houd mensen op de hoogte via blog posts."
+    budget_shops:
+      create:
+        description: "Laat mensen een budget verdelen."
     cart_details:
       create:
         errors:
@@ -62,6 +70,11 @@ nl:
       show:
         errors:
           no_parent: "Parent ontbreekt"
+    con_arguments:
+      create_vote:
+        submit: "Upvote"
+      destroy_vote:
+        submit: "Upvote"
     confirmations:
       create:
         label: "Bevestigingslink opnieuw versturen"
@@ -104,16 +117,23 @@ nl:
       destroy:
         errors:
           last_admin: "Je kan het laatste lid van een admin groep niet verwijderen."
+    motions:
+      create:
+        description: "Ontdek hoe mensen denken over een bepaald idee."
+    policy_agreements:
+      create:
+        submit: "Accepteer"
     pro_arguments:
       create_vote:
         submit: "Upvote"
       destroy_vote:
         submit: "Upvote"
-    con_arguments:
-      create_vote:
-        submit: "Upvote"
-      destroy_vote:
-        submit: "Upvote"
+    projects:
+      create:
+        description: "Betrek mensen over een langere periode."
+    questions:
+      create:
+        description: "Deel een vraagstuk, verzamel ideeën en neem een besluit."
     registrations:
       create:
         label: "Registreren"
@@ -136,9 +156,12 @@ nl:
       create:
         label: "Enquête invullen"
         submit: "Start"
-    policy_agreements:
+    surveys:
       create:
-        submit: "Accepteer"
+        description: "Stel een lijst samen van gesloten en open vragen."
+    topics:
+      create:
+        description: "Start een gesprek over een bepaald onderwerp."
     users:
       update:
         label: "Instellingen"

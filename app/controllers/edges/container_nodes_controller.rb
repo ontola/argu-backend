@@ -7,8 +7,13 @@ class ContainerNodesController < EdgeableController
       "new_#{klass.name.underscore}",
       **create_collection_options(
         inherit: false,
+        object: lambda {
+          resource.parent.build_child(klass, user_context: user_context)
+        },
         predicate: NS.ontola[:createAction],
-        root_relative_iri: -> { "#{klass.collection_root_relative_iri}/new" }
+        root_relative_iri: lambda {
+          "#{klass.collection_root_relative_iri}/new"
+        }
       )
     )
   end

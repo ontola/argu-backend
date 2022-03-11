@@ -38,6 +38,10 @@ class Discussion < Edge
   placeable :custom
 
   class << self
+    def action_dialog(collection)
+      RDF::URI("#{collection.parent.collection_iri(:discussions)}/actions") if self == Discussion
+    end
+
     def inherited(klass)
       klass.send(:counter_cache, true)
       super

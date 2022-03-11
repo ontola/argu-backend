@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class QuestionsController < DiscussionsController
+  has_collection_create_action(
+    svg: RDF::URI('https://dptr8y9slmfgv.cloudfront.net/argu/Question.svg')
+  )
+
   private
 
   def changes_triples

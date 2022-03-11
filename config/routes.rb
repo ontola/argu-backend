@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   end
 
   use_linked_rails(
+    actions: :actions,
     bulk: 'spi/bulk',
     current_user: :actors,
     enum_values: :enum_values,

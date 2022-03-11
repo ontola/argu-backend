@@ -1,5 +1,10 @@
 
 en:
+  collections:
+    container_nodes:
+      action_dialog: "Which instrument do you want to use?"
+    discussions:
+      action_dialog: "Which instrument do you want to use?"
   forms:
     custom_actions:
       raw_label:
@@ -55,6 +60,9 @@ en:
     blogs:
       create:
         description: "Keep people informed through blog posts."
+    budget_shops:
+      create:
+        description: "Let people divide a budget."
     cart_details:
       create:
         errors:
@@ -62,6 +70,11 @@ en:
       show:
         errors:
           no_parent: "Parent is missing"
+    con_arguments:
+      create_vote:
+        submit: "Upvote"
+      destroy_vote:
+        submit: "Upvote"
     confirmations:
       create:
         label: "Send confirmation link again"
@@ -104,16 +117,23 @@ en:
       destroy:
         errors:
           last_admin: "Cannot remove the last member from the admin group"
+    motions:
+      create:
+        description: "Find out how people think about a certain idea."
+    policy_agreements:
+      create:
+        submit: "Accept"
     pro_arguments:
       create_vote:
         submit: "Upvote"
       destroy_vote:
         submit: "Upvote"
-    con_arguments:
-      create_vote:
-        submit: "Upvote"
-      destroy_vote:
-        submit: "Upvote"
+    projects:
+      create:
+        description: "Involve people over a longer period of time."
+    questions:
+      create:
+        description: "Share an issue, collect ideas and make a decision."
     registrations:
       create:
         label: "Sign up"
@@ -122,13 +142,6 @@ en:
       create:
         label: "Sign in or register"
         submit: "Confirm"
-    submissions:
-      create:
-        label: "Fill in survey"
-        submit: "Start"
-    policy_agreements:
-      create:
-        submit: "Accept"
     shortnames:
       create:
         errors:
@@ -139,6 +152,16 @@ en:
       destroy:
         errors:
           primary: "Cannot remove primary shortnames."
+    submissions:
+      create:
+        label: "Fill in survey"
+        submit: "Start"
+    surveys:
+      create:
+        description: "Compile a list of closed and open questions."
+    topics:
+      create:
+        description: "Start a conversation about a particular topic."
     users:
       update:
         label: "Settings"

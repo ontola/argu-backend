@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContainerNode < Edge
+class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
   include DeltaHelper
 
   enhance ConfirmedDestroyable
@@ -103,6 +103,10 @@ class ContainerNode < Edge
   end
 
   class << self
+    def action_dialog(collection)
+      RDF::URI("#{collection.parent.collection_iri(:container_nodes)}/actions") if self == ContainerNode
+    end
+
     def attributes_for_new(opts)
       attrs = super
       attrs[:locale] = ActsAsTenant.current_tenant.locale

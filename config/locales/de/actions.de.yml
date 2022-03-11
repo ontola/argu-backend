@@ -1,5 +1,10 @@
 
 de:
+  collections:
+    container_nodes:
+      action_dialog: Welches Instrument möchten Sie verwenden?
+    discussions:
+      action_dialog: Welches Instrument möchten Sie verwenden?
   forms:
     custom_actions:
       raw_label:
@@ -59,6 +64,9 @@ de:
     blogs:
       create:
         description: Halten Sie die Leute durch Blogbeiträge auf dem Laufenden.
+    budget_shops:
+      create:
+        description: Lassen Sie die Leute ein Budget aufteilen.
     cart_details:
       create:
         errors:
@@ -66,6 +74,11 @@ de:
       show:
         errors:
           no_parent: Ein Elternteil fehlt
+    con_arguments:
+      create_vote:
+        submit: Hochstimmen
+      destroy_vote:
+        submit: Hochstimmen
     confirmations:
       create:
         label: Bestätigungslink erneut senden
@@ -115,16 +128,23 @@ de:
       destroy:
         errors:
           last_admin: Das letzte Mitglied kann nicht aus der Administratorgruppe entfernt werden
+    motions:
+      create:
+        description: Finden Sie heraus, wie Menschen über eine bestimmte Idee denken.
+    policy_agreements:
+      create:
+        submit: Akzeptieren
     pro_arguments:
       create_vote:
         submit: Höher bewerten
       destroy_vote:
         submit: Höher bewerten
-    con_arguments:
-      create_vote:
-        submit: Hochstimmen
-      destroy_vote:
-        submit: Hochstimmen
+    projects:
+      create:
+        description: Menschen über einen längeren Zeitraum einbeziehen.
+    questions:
+      create:
+        description: Teilen Sie ein Problem, sammeln Sie Ideen und treffen Sie eine Entscheidung.
     registrations:
       create:
         label: Anmelden
@@ -133,13 +153,6 @@ de:
       create:
         label: Anmelden oder registrieren
         submit: Bestätigen Sie
-    submissions:
-      create:
-        label: Umfrage ausfüllen
-        submit: starten
-    policy_agreements:
-      create:
-        submit: Akzeptieren
     shortnames:
       create:
         errors:
@@ -150,6 +163,16 @@ de:
       destroy:
         errors:
           primary: Primäre Kurznamen können nicht entfernt werden.
+    submissions:
+      create:
+        label: Umfrage ausfüllen
+        submit: starten
+    surveys:
+      create:
+        description: Erstellen Sie eine Liste mit geschlossenen und offenen Fragen.
+    topics:
+      create:
+        description: Beginnen Sie ein Gespräch über ein bestimmtes Thema.
     users:
       update:
         label: Einstellungen
