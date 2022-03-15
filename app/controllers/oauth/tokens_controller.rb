@@ -11,6 +11,12 @@ module Oauth
 
     private
 
+    def cleanup_token
+      token = authorize_response.token
+      yield
+      token.destroy
+    end
+
     def handle_new_token
       super
       process_previous_token(authorize_response)
@@ -38,12 +44,20 @@ module Oauth
       )
     end
 
+    def redirect_to_otp_attempt
+      cleanup_token do
+        super
+      end
+    end
+
     def redirect_to_otp_secret
-      add_exec_action_header(
-        headers,
-        ontola_snackbar_action('2fa is verplicht')
-      )
-      super
+      cleanup_token do
+        add_exec_action_header(
+          headers,
+          ontola_snackbar_action('2fa is verplicht')
+        )
+        super
+      end
     end
 
     def token_with_errors(exception)

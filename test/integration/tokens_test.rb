@@ -202,7 +202,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   ####################################
   test 'User with 2fa should post create token' do
     sign_in guest_user
-    assert_difference('Doorkeeper::AccessToken.count', 1) do
+    assert_difference('Doorkeeper::AccessToken.count', 0) do
       assert_nil(
         post_token_password(
           name: two_fa_user.email,
