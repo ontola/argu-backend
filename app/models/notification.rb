@@ -33,25 +33,11 @@ class Notification < ApplicationRecord
   end
 
   def url_object
-    href = activity.present? ? activity.trackable.root_relative_iri.to_s : url
-    href = path_with_hostname(href) if href.start_with?('/')
-    RDF::DynamicURI(href)
-  end
+    return activity.trackable.iri if activity.present?
+    return if url.blank?
+    return LinkedRails.iri(path: url) if url.start_with?('/')
 
-  def image
-    if activity.present?
-      activity.owner.profileable.default_profile_photo.url(:avatar)
-    else
-      ActionController::Base.helpers.asset_path('assets/favicons/default/favicon-192x192.png', skip_pipeline: true)
-    end
-  end
-
-  def resource
-    activity.trackable if activity.present?
-  end
-
-  def renderable?
-    activity.present?
+    RDF::URI(url)
   end
 
   def set_notification_type
@@ -59,8 +45,6 @@ class Notification < ApplicationRecord
 
     self.notification_type = activity.follow_type.singularize.to_sym
   end
-
-  scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
 
   class << self
     def attributes_for_new(opts)

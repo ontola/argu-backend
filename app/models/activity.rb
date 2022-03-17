@@ -46,8 +46,6 @@ class Activity < PublicActivity::Activity
 
   alias edgeable_record trackable
 
-  scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
-
   before_create :touch_edges
 
   attr_accessor :notify

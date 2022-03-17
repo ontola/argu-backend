@@ -178,8 +178,6 @@ module Users
     ####################################
     # As user
     ####################################
-    let(:user) { create(:unconfirmed_user) }
-
     test 'user should get show confirmation' do
       sign_in user
       get user_confirmation_path(confirmation_token: user.confirmation_token)
@@ -198,8 +196,11 @@ module Users
 
       sign_in user
       assert_not user.confirmed?
-      assert_difference('Edge.where(confirmed: true).count' => 2,
-                        'motion.default_vote_event.reload.pro_count' => 1) do
+      assert_difference(
+        'Edge.where(confirmed: true).count' => 2,
+        'motion.default_vote_event.reload.pro_count' => 1,
+        'Notification.confirmation_reminder.count' => -1
+      ) do
         Sidekiq::Testing.inline! do
           put user_confirmation_path(confirmation_token: user.confirmation_token)
         end
