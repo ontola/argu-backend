@@ -27,6 +27,11 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   placeable :home
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
+  has_many :drafts,
+           -> { where(is_published: false) },
+           class_name: 'Edge',
+           foreign_key: :publisher_id,
+           inverse_of: :publisher
   has_many :exports, dependent: :destroy
   has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
   has_many :grants, through: :profile

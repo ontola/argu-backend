@@ -22,6 +22,9 @@ de:
         other: >-
           Bitte bestätigen Sie Ihre %{count} Stimmen, indem Sie auf den Link
           klicken, den wir an %{email}geschickt haben.
+      drafts_reminder:
+        one: Sie haben einen unveröffentlichten Entwurf
+        other: Sie haben unveröffentlichte Entwürfe
     unsubscribe:
       success: Sie erhalten keine Benachrichtigungen mehr für%{item}'.
       failed: Du erhältst noch keine Benachrichtigungen für%{item}'.

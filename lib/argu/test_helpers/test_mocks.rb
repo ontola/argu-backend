@@ -3,7 +3,7 @@
 module Argu
   module TestHelpers
     module TestMocks
-      def create_email_mock(template, email, options) # rubocop:disable Metrics/MethodLength
+      def create_email_mock(template, email, **options) # rubocop:disable Metrics/MethodLength
         email_only = options.delete(:email_only)
         tenant = options.delete(:tenant) || :argu
         recipient =
@@ -14,8 +14,8 @@ module Argu
               email: {
                 template: template,
                 recipient: recipient,
-                options: options
-              }
+                options: options.presence
+              }.compact
             }
           )
       end

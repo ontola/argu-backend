@@ -25,12 +25,12 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     # Notification for follower of Forum
-    assert_difference('Motion.count' => 1, 'Notification.count' => 0) do
+    assert_difference('Motion.count' => 1, 'Notification.count' => 1, 'Notification.drafts_reminder.count' => 1) do
       post freetown.collection_iri(:motions),
            params: {motion: attributes_for(:motion)}
     end
 
-    assert_notifications(1, 'reaction', 'Motion.published.count' => 1)
+    assert_notifications(0, 'reaction', 'Motion.published.count' => 1, 'Notification.drafts_reminder.count' => -1)
 
     assert_difference('Motion.trashed.count' => 1, create_notification_count => -1) do
       delete Motion.last
@@ -61,12 +61,12 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     # Notification for follower of Forum
-    assert_difference('Question.count' => 1, 'Notification.count' => 0) do
+    assert_difference('Question.count' => 1, 'Notification.count' => 1, 'Notification.drafts_reminder.count' => 1) do
       post freetown.collection_iri(:questions),
            params: {question: attributes_for(:question)}
     end
 
-    assert_notifications(1, 'reaction', 'Question.published.count' => 1)
+    assert_notifications(0, 'reaction', 'Question.published.count' => 1, 'Notification.drafts_reminder.count' => -1)
 
     assert_difference('Question.trashed.count' => 1, create_notification_count => -1) do
       delete Question.last
@@ -196,7 +196,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
   test 'staff should create and trash blog_post with notifications' do
     sign_in staff
 
-    assert_difference('BlogPost.count' => 1) do
+    assert_difference('BlogPost.count' => 1, 'Notification.count' => 2, 'Notification.drafts_reminder.count' => 1) do
       post question.collection_iri(:blog_posts),
            params: {
              blog_post: attributes_for(:blog_post)
@@ -204,7 +204,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     end
 
     # Notification for creator, follower and news_follower of Question
-    assert_notifications(3, 'news')
+    assert_notifications(2, 'news', 'Notification.drafts_reminder.count' => -1)
 
     assert_difference('BlogPost.trashed.count' => 1, create_notification_count => -3) do
       delete BlogPost.last

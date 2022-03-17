@@ -22,6 +22,7 @@ module ActivePublishable
       accepts_nested_attributes_for :argu_publication
       validates :argu_publication, presence: true
       before_validation :build_default_publication
+      after_create :create_drafts_reminder
       attr_writer :is_draft
 
       def is_draft
@@ -45,6 +46,18 @@ module ActivePublishable
           creator: creator,
           publisher: publisher,
           published_at: Time.current
+        )
+      end
+
+      def create_drafts_reminder
+        return if !is_draft || publisher.notifications.drafts_reminder.any?
+
+        Notification.drafts_reminder.create(
+          user: publisher,
+          url: publisher.menu(:settings).iri(fragment: :drafts),
+          permanent: true,
+          root_id: ActsAsTenant.current_tenant,
+          send_mail_after: 24.hours.from_now
         )
       end
     end

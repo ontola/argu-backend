@@ -23,6 +23,8 @@ class Publication < ApplicationRecord
     publishable.publish!
     return unless publishable.is_published
 
+    reset_drafts_reminder
+
     publish("publish_#{publishable.model_name.singular}_successful", publishable)
   end
 
@@ -59,6 +61,12 @@ class Publication < ApplicationRecord
 
     cancel if job_id.present?
     schedule
+  end
+
+  def reset_drafts_reminder
+    return if publishable.publisher.drafts.present?
+
+    publishable.publisher.notifications.drafts_reminder.first&.destroy
   end
 
   # Create a PublicationsWorker and save it's job id

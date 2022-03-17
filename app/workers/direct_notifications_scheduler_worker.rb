@@ -31,10 +31,7 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
           .create_email(
             notification.notification_type,
             notification.user,
-            token_url: iri_from_template(
-              :user_confirmation,
-              confirmation_token: notification.user.primary_email_record.confirmation_token
-            )
+            **notification.mailer_options
           )
       end
     end

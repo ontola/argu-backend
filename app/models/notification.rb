@@ -17,16 +17,23 @@ class Notification < ApplicationRecord
   collection_options(
     type: :infinite
   )
+
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
-  enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4, finish_intro: 5}
+  enum notification_type: {
+    link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4,
+    finish_intro: 5, drafts_reminder: 6
+  }
   virtual_attribute :unread, :boolean, default: false, dependent_on: :read_at, value: ->(r) { r.read_at.blank? }
 
-  def display_name
+  def display_name # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     if activity.present?
       activity_string_for(activity, user)
     elsif confirmation_reminder?
       vote_count = user.edges.joins(:parent).where(owner_type: 'Vote', parents_edges: {owner_type: 'VoteEvent'}).count
       I18n.t('notifications.permanent.confirm_account', count: vote_count, email: user.email)
+    elsif drafts_reminder?
+      drafts_count = user.drafts.count
+      I18n.t('notifications.permanent.drafts_reminder', count: drafts_count)
     else
       title
     end
@@ -38,6 +45,20 @@ class Notification < ApplicationRecord
     return LinkedRails.iri(path: url) if url.start_with?('/')
 
     RDF::URI(url)
+  end
+
+  def mailer_options # rubocop:disable Metrics/MethodLength
+    case notification_type&.to_sym
+    when :confirmation_reminder
+      {
+        token_url: iri_from_template(
+          :user_confirmation,
+          confirmation_token: user.primary_email_record.confirmation_token
+        )
+      }
+    else
+      {}
+    end
   end
 
   def set_notification_type
