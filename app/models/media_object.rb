@@ -131,7 +131,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def url_for_version(version)
-    RDF::DynamicURI(path_with_hostname("#{root_relative_iri}/content/#{version}"))
+    RDF::DynamicURI(path_with_hostname("#{root_relative_iri}/content/#{version}?version=#{updated_at.to_i}"))
   end
 
   private
