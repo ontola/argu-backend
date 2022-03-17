@@ -17,6 +17,8 @@ en:
       other: "%{count} other"
     alerts:
       success: "Thanks for your vote!"
+      login_to_succeed: "Please login to confirm your vote!"
+      confirm_to_succeed: "Don't forget to confirm your vote!"
       failed: "Something went wrong, please try again."
       trashed: "Vote deleted successfully"
     instance_type:

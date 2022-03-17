@@ -8,6 +8,8 @@ de:
       other: '%{count} andere'
     alerts:
       success: Vielen Dank für Ihre Stimme!
+      login_to_succeed: Melden Sie sich an, um Ihre Stimme zu bestätigen!
+      confirm_to_succeed: Vergessen Sie nicht, Ihre Stimme zu bestätigen!
       failed: Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.
       trashed: Stimme erfolgreich gelöscht
     instance_type:

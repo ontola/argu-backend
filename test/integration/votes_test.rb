@@ -141,6 +141,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 201
+    expect_ontola_action(snackbar: 'Please login to confirm your vote!')
   end
 
   test 'guest should post not create vote for closed motion' do
@@ -241,6 +242,21 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
+  test 'unconfirmed should post create for motion nq' do
+    sign_in unconfirmed
+
+    assert_difference('Vote.count' => 1,
+                      'Edge.count' => 1,
+                      'vote_event.reload.pro_count' => 0) do
+      post vote_event.collection_iri(:votes, type: :paginated),
+           params: {vote: {option_id: vote_event.option_record!(NS.argu[:no]).uuid}},
+           headers: argu_headers(accept: :nq)
+    end
+
+    assert_response 201
+    expect_ontola_action(snackbar: "Don't forget to confirm your vote!")
+  end
+
   ####################################
   # As User
   ####################################
@@ -318,6 +334,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 201
+    expect_ontola_action(snackbar: 'Thanks for your vote!')
   end
 
   test 'user should post create json_api' do

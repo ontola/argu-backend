@@ -11,7 +11,7 @@ class VotesController < EdgeableController
   def active_response_success_message
     case action_name
     when 'create'
-      I18n.t('votes.alerts.success')
+      create_success_message
     when 'trash', 'destroy'
       I18n.t('votes.alerts.trashed')
     else
@@ -43,6 +43,13 @@ class VotesController < EdgeableController
   def create_success
     super
     broadcast_vote_counts
+  end
+
+  def create_success_message
+    return I18n.t('votes.alerts.login_to_succeed') if current_user.guest?
+    return I18n.t('votes.alerts.confirm_to_succeed') unless current_user.confirmed?
+
+    I18n.t('votes.alerts.success')
   end
 
   def current_resource

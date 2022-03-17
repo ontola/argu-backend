@@ -21,6 +21,8 @@ nl:
       other: "%{count} stemmen geen van beide"
     alerts:
       success: "Bedankt voor je stem!"
+      login_to_succeed: "Log in om je stem te bevestigen!"
+      confirm_to_succeed: "Vergeet je stem niet te bevestigen!"
       failed: "Er is iets fout gegaan, probeer het opnieuw."
       trashed: "Stem succesvol verwijderd"
     instance_type:
