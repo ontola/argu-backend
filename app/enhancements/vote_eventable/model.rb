@@ -15,6 +15,7 @@ module VoteEventable
                NS.argu[:optionsVocab],
                association: :options_vocab,
                association_class: 'Vocabulary'
+      delegate :option_record, to: :default_vote_event
     end
 
     def create_default_vote_event
