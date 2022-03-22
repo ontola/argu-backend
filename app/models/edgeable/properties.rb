@@ -36,6 +36,7 @@ module Edgeable
     end
 
     def preload_properties(force: false, new_record: false)
+      return unless attributes.include?('uuid')
       return if !force && properties_preloaded
 
       self.property_managers = {}
