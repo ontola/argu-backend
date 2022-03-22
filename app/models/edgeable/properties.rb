@@ -19,7 +19,9 @@ module Edgeable
                dependent: :destroy
       has_many :linked_properties,
                class_name: 'Property',
-               primary_key: :linked_edge_id,
+               inverse_of: :linked_edge,
+               primary_key: :uuid,
+               foreign_key: :linked_edge_id,
                dependent: :destroy
       before_save :build_default_properties
 
