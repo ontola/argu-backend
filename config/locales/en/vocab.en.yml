@@ -200,6 +200,8 @@ en:
       label: "Field type"
     grantSet:
       label: "Grant set"
+    grantedGroups:
+      label: "Access"
     group:
       label: "Group"
     interventionsCount:

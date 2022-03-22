@@ -210,6 +210,8 @@ de:
       label: Feldtyp
     grantSet:
       label: Zuschussmenge
+    grantedGroups:
+      label: Zugriff
     group:
       label: Gruppe
     interventionsCount:

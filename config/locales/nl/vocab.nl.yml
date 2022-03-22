@@ -200,6 +200,8 @@ nl:
       label: "Veldtype"
     grantSet:
       label: "Rechtenset"
+    grantedGroups:
+      label: "Toegang"
     group:
       label: "Groep"
     interventionsCount:

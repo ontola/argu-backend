@@ -36,6 +36,8 @@ class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
   )
   with_columns settings: [
     NS.schema.name,
+    RDF.type,
+    NS.argu[:grantedGroups],
     NS.argu[:followsCount],
     NS.ontola[:updateAction],
     NS.ontola[:destroyAction]
