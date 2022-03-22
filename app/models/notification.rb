@@ -56,6 +56,8 @@ class Notification < ApplicationRecord
           confirmation_token: user.primary_email_record.confirmation_token
         )
       }
+    when :drafts_reminder
+      {drafts_url: drafts_iri}
     else
       {}
     end

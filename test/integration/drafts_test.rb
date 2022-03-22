@@ -89,7 +89,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
       end
     end
 
-    create_email_mock('drafts_reminder', other_user.email)
+    create_email_mock('drafts_reminder', other_user.email, drafts_url: drafts_iri)
 
     Sidekiq::Testing.inline! do
       # rubocop:disable Rails/SkipsModelValidations
