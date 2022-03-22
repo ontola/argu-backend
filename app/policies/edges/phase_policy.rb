@@ -12,10 +12,14 @@ class PhasePolicy < EdgePolicy
   end
 
   def trash?
+    return forbid_with_message('actions.phases.destroy.errors.current_phase') if record.current_phase?
+
     parent_policy.update?
   end
 
   def destroy?
+    return forbid_with_message('actions.phases.destroy.errors.current_phase') if record.current_phase?
+
     parent_policy.update?
   end
 end

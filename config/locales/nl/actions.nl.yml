@@ -120,6 +120,10 @@ nl:
     motions:
       create:
         description: "Ontdek hoe mensen denken over een bepaald idee."
+    phases:
+      destroy:
+        errors:
+          current_phase: "Dit is de huidige fase. Deze kan je niet verwijderen."
     policy_agreements:
       create:
         submit: "Accepteer"

@@ -131,6 +131,10 @@ de:
     motions:
       create:
         description: Finden Sie heraus, wie Menschen über eine bestimmte Idee denken.
+    phases:
+      destroy:
+        errors:
+          current_phase: Das ist die aktuelle Phase. Sie können dies nicht entfernen.
     policy_agreements:
       create:
         submit: Akzeptieren

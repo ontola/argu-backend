@@ -50,6 +50,10 @@ class Phase < Edge
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :resource_type, presence: true, on: :create
 
+  def current_phase?
+    parent&.current_phase == self
+  end
+
   private
 
   def create_resource

@@ -120,6 +120,10 @@ en:
     motions:
       create:
         description: "Find out how people think about a certain idea."
+    phases:
+      destroy:
+        errors:
+          current_phase: "This is the current phase. You can not delete this phase."
     policy_agreements:
       create:
         submit: "Accept"
