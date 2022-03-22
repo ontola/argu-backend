@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_01_100651) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_03_22_103507) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -26,8 +25,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.ltree "key"
     t.text "parameters"
     t.string "recipient_type", null: false
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.json "audit_data"
     t.string "comment"
     t.uuid "trackable_edge_id"
@@ -61,8 +60,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.string "name"
     t.string "title"
     t.text "contents"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["name"], name: "index_documents_on_name"
   end
 
@@ -71,15 +70,15 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.integer "parent_id"
     t.string "owner_type"
     t.ltree "path"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "pinned_at", precision: 6
-    t.datetime "last_activity_at", precision: 6
-    t.datetime "trashed_at", precision: 6
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "pinned_at"
+    t.datetime "last_activity_at"
+    t.datetime "trashed_at"
     t.boolean "is_published", default: false
     t.hstore "children_counts", default: {}
     t.integer "follows_count", default: 0, null: false
-    t.datetime "expires_at", precision: 6
+    t.datetime "expires_at"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.boolean "confirmed", default: false, null: false
     t.uuid "root_id", null: false
@@ -106,8 +105,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.boolean "primary", default: false, null: false
     t.string "unconfirmed_email"
     t.string "confirmation_token"
-    t.datetime "confirmed_at", precision: 6
-    t.datetime "confirmation_sent_at", precision: 6
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.index ["email"], name: "index_email_addresses_on_email", unique: true
   end
 
@@ -115,8 +114,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.integer "user_id", null: false
     t.integer "status", default: 0, null: false
     t.string "zip"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.uuid "edge_id", null: false
     t.index ["edge_id"], name: "index_exports_on_edge_id"
   end
@@ -126,8 +125,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.integer "follower_id", null: false
     t.string "follower_type", default: "User", null: false
     t.boolean "blocked", default: false, null: false
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean "send_email", default: false
     t.integer "follow_type", default: 30, null: false
     t.uuid "followable_id", null: false
@@ -138,8 +137,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
 
   create_table "grant_resets", force: :cascade do |t|
     t.uuid "edge_id", null: false
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer "action_name", null: false
     t.integer "resource_type", null: false
     t.index ["action_name"], name: "index_grant_resets_on_action_name"
@@ -164,8 +163,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
   create_table "grants", id: :serial, force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "role"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "grant_set_id"
     t.uuid "edge_id", null: false
     t.index ["edge_id"], name: "index_grants_on_edge_id"
@@ -177,12 +176,12 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
   create_table "group_memberships", id: :serial, force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "member_id", null: false
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string "title"
     t.text "description"
-    t.datetime "start_date", precision: 6
-    t.datetime "end_date", precision: 6
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.index ["start_date", "end_date", "group_id", "member_id"], name: "index_group_memberships_full"
     t.index ["start_date", "end_date"], name: "index_group_memberships_on_start_date_and_end_date"
     t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps, where: '(member_id <> 0)'
@@ -190,8 +189,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
 
   create_table "groups", id: :serial, force: :cascade do |t|
     t.string "name", default: "", null: false
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string "name_singular", null: false
     t.boolean "deletable", default: true
     t.uuid "root_id", null: false
@@ -210,9 +209,9 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.string "content_uid"
     t.string "title"
     t.text "description"
-    t.datetime "date_created", precision: 6
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "date_created"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "filename"
     t.hstore "content_attributes"
     t.string "remote_url"
@@ -226,14 +225,14 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
   create_table "notifications", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "activity_id"
-    t.datetime "read_at", precision: 6
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "read_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string "title"
     t.string "url"
     t.integer "notification_type", null: false
     t.boolean "permanent", default: false, null: false
-    t.datetime "send_mail_after", precision: 6
+    t.datetime "send_mail_after"
     t.uuid "root_id", null: false
     t.index ["activity_id"], name: "index_notifications_on_activity_id"
     t.index ["root_id"], name: "index_notifications_on_root_id"
@@ -247,8 +246,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.string "token", null: false
     t.integer "expires_in", null: false
     t.text "redirect_uri", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "revoked_at", precision: 6
+    t.datetime "created_at", null: false
+    t.datetime "revoked_at"
     t.string "scopes"
     t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
   end
@@ -258,8 +257,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.string "token", null: false
     t.string "refresh_token"
     t.integer "expires_in"
-    t.datetime "revoked_at", precision: 6
-    t.datetime "created_at", precision: 6, null: false
+    t.datetime "revoked_at"
+    t.datetime "created_at", null: false
     t.string "scopes"
     t.string "resource_owner_id"
     t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
@@ -272,8 +271,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.string "secret", null: false
     t.text "redirect_uri", null: false
     t.string "scopes", default: "", null: false
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer "owner_id"
     t.string "owner_type"
     t.boolean "confidential", default: true, null: false
@@ -282,8 +281,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
   end
 
   create_table "otp_secrets", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "owner_id", null: false
     t.string "otp_secret_key", null: false
     t.boolean "active", default: false
@@ -309,8 +308,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.text "about"
     t.integer "creator_id", null: false
     t.integer "publisher_id", null: false
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer "placement_type", null: false
     t.uuid "placeable_id", null: false
     t.uuid "forum_id"
@@ -341,8 +340,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.string "name", limit: 255, default: ""
     t.text "about", default: ""
     t.string "picture", limit: 255, default: ""
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "is_public", default: true
     t.boolean "are_votes_public", default: true
     t.string "profileable_type"
@@ -353,14 +352,14 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
   end
 
   create_table "properties", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.uuid "edge_id", null: false
     t.string "predicate", null: false
     t.boolean "boolean"
     t.string "string"
     t.text "text"
-    t.datetime "datetime", precision: 6
+    t.datetime "datetime"
     t.bigint "integer"
     t.uuid "linked_edge_id"
     t.integer "order", default: 0, null: false
@@ -376,7 +375,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
 
   create_table "publications", id: :serial, force: :cascade do |t|
     t.string "job_id"
-    t.datetime "published_at", precision: 6
+    t.datetime "published_at"
     t.string "channel"
     t.integer "creator_id", null: false
     t.integer "publisher_id"
@@ -393,8 +392,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
 
   create_table "shortnames", id: :serial, force: :cascade do |t|
     t.string "shortname", null: false
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.uuid "owner_id", null: false
     t.uuid "root_id"
     t.boolean "primary", default: true, null: false
@@ -425,15 +424,15 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.string "email", limit: 255, default: ""
     t.string "encrypted_password", limit: 255, default: ""
     t.string "reset_password_token", limit: 255
-    t.datetime "reset_password_sent_at", precision: 6
-    t.datetime "remember_created_at", precision: 6
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.integer "sign_in_count", default: 0
-    t.datetime "current_sign_in_at", precision: 6
-    t.datetime "last_sign_in_at", precision: 6
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip", limit: 255
     t.string "last_sign_in_ip", limit: 255
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "unconfirmed_email", limit: 255
     t.boolean "finished_intro", default: false
     t.text "redirect_url"
@@ -445,13 +444,13 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.integer "created_email", default: 1, null: false
     t.boolean "created_mobile", default: true, null: false
     t.string "confirmation_token"
-    t.datetime "confirmed_at", precision: 6
-    t.datetime "confirmation_sent_at", precision: 6
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.string "first_name"
     t.string "middle_name"
     t.string "last_name"
     t.date "birthday"
-    t.datetime "last_accepted", precision: 6
+    t.datetime "last_accepted"
     t.boolean "has_analytics", default: true
     t.text "omni_info"
     t.integer "gender"
@@ -461,8 +460,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
     t.string "country", default: "NL"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
-    t.datetime "locked_at", precision: 6
-    t.datetime "notifications_viewed_at", precision: 6
+    t.datetime "locked_at"
+    t.datetime "notifications_viewed_at"
     t.integer "decisions_email", default: 3, null: false
     t.integer "news_email", default: 3, null: false
     t.integer "reactions_email", default: 3, null: false
@@ -521,6 +520,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_100651) do
   add_foreign_key "placements", "places"
   add_foreign_key "placements", "profiles", column: "creator_id"
   add_foreign_key "placements", "users", column: "publisher_id"
+  add_foreign_key "properties", "edges", column: "linked_edge_id", primary_key: "uuid"
+  add_foreign_key "properties", "edges", primary_key: "uuid"
   add_foreign_key "publications", "edges", column: "publishable_id", primary_key: "uuid"
   add_foreign_key "shortnames", "edges", column: "owner_id", primary_key: "uuid"
   add_foreign_key "widgets", "edges", column: "owner_id", primary_key: "uuid"
