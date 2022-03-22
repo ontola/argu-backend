@@ -57,7 +57,7 @@ de:
       decisions_email:
         label: Für offizielle Entscheidungen
       display_name:
-        description: ''
+        placeholder: ''
         helper_text: >-
           Legen Sie fest, wie Sie für andere sichtbar sein sollen. Die meisten
           Leute verwenden ihren echten Namen.

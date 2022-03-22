@@ -56,7 +56,7 @@ en:
       decisions_email:
         label: "For official decisions"
       display_name:
-        description: ""
+        placeholder: ""
         helper_text: "Set how you will be visible to others. Most people use their real name."
         label: "Name"
       email:
