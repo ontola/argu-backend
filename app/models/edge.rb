@@ -25,6 +25,13 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
       NS.argu[:trashed] => [false],
       NS.argu[:isDraft] => [false]
     },
+    title: lambda {
+      if filter[NS.argu[:isDraft]]&.first.to_s == 'true'
+        I18n.t('edges.collection.drafts')
+      else
+        association_class.plural_label
+      end
+    },
     parent: -> { ActsAsTenant.current_tenant }
   )
   acts_as_followable
@@ -33,11 +40,16 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   filterable(
     NS.argu[:trashed] => boolean_filter(
       ->(scope) { scope.where.not(trashed_at: nil) },
-      ->(scope) { scope.where(trashed_at: nil) }
+      ->(scope) { scope.where(trashed_at: nil) },
+      visible: lambda {
+        !collection.parent.is_a?(Edge) ||
+          collection.user_context.has_grant_set?(collection.parent, %i[moderator administrator staff])
+      }
     ),
     NS.argu[:isDraft] => boolean_filter(
       ->(scope) { scope.where(is_published: false) },
-      ->(scope) { scope.where(is_published: true) }
+      ->(scope) { scope.where(is_published: true) },
+      visible: false
     )
   )
 

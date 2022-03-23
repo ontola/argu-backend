@@ -69,12 +69,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def has_grant_set?(grant_set)
-    return false if grant_tree.nil?
-
-    grant_tree
-      .grant_sets(persisted_edge, group_ids: user.profile.group_ids)
-      .map(&:title)
-      .include?(grant_set.to_s)
+    user_context.has_grant_set?(persisted_edge, grant_set)
   end
 
   def convert?

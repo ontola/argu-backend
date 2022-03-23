@@ -62,6 +62,17 @@ class UserContext # rubocop:disable Metrics/ClassLength
     @grant_trees[tree_root.uuid] ||= GrantTree.new(tree_root)
   end
 
+  def has_grant_set?(edge, grant_set)
+    return false if grant_tree.nil?
+
+    return grant_set.any? { |set| has_grant_set?(edge, set) } if grant_set.is_a?(Array)
+
+    grant_tree
+      .grant_sets(edge, group_ids: user.profile.group_ids)
+      .map(&:title)
+      .include?(grant_set.to_s)
+  end
+
   def inspect
     "<UserContext user_id: #{user.id}, profile_id: #{profile.id}>"
   end

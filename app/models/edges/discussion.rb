@@ -21,11 +21,11 @@ class Discussion < Edge
   filterable(
     NS.argu[:pinned] => boolean_filter(
       ->(scope) { scope.where.not(pinned_at: nil) },
-      ->(scope) { scope.where(pinned_at: nil) }
-    ),
-    NS.argu[:trashed] => boolean_filter(
-      ->(scope) { scope.where.not(trashed_at: nil) },
-      ->(scope) { scope.where(trashed_at: nil) }
+      ->(scope) { scope.where(pinned_at: nil) },
+      visible: lambda {
+        !collection.parent.is_a?(Edge) ||
+          collection.user_context.has_grant_set?(collection.parent, %i[moderator administrator staff])
+      }
     )
   )
   with_columns default: [
