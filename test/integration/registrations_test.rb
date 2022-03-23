@@ -87,7 +87,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       put user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_response :success
-    assert_email_sent(skip_sidekiq: true)
   end
 
   test 'should post create with redirect_url' do
@@ -97,16 +96,13 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'should post create nl' do
     sign_in guest_user
-    assert_difference(
-      worker_count_string('RedisResourceWorker') => 1,
-      worker_count_string('SendEmailWorker') => 1
-    ) do
+    assert_difference(worker_count_string('RedisResourceWorker') => 1) do
       create_user_with_locale(:nl)
     end
-    assert_email_sent
   end
 
   test 'should post create without password' do
+    create_email_mock('set_password', 'test@example.com', token_url: /.+/)
     sign_in guest_user
     assert_difference('User.count' => 1,
                       'EmailAddress.where(confirmed_at: nil).count' => 1) do
@@ -123,6 +119,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_equal User.last.email, 'test@example.com'
     assert_equal parsed_body['data']['attributes']['email'], 'test@example.com'
     assert_equal parsed_body['data']['relationships']['email_addresses']['data'].count, 1
+    assert_email_sent
   end
 
   test 'should post create without password and transfer and persist guest votes' do
@@ -157,9 +154,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
         assert_response 201
       end
     end
+    assert_email_sent(skip_sidekiq: true)
 
     delete sign_out_path
 
+    create_email_mock('password_changed', 'test@example.com')
     assert_difference('EmailAddress.where(confirmed_at: nil).count' => -1,
                       'Edge.where(confirmed: true).count' => 3) do
       put user_password_path,
@@ -174,7 +173,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal response.header['Location'], '/argu/u/session/new'
     assert_not User.last.encrypted_password == ''
-    assert_email_sent(skip_sidekiq: true)
+    assert_email_sent
   end
 
   test 'should post create transfer guest votes' do
@@ -517,6 +516,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_not_nil User.last.last_sign_in_ip
     assert_not_nil User.last.last_sign_in_at
     assert User.last.accepted_terms?
+    assert_email_sent
   end
 
   def create_user_with_locale(locale, &block)

@@ -18,9 +18,15 @@ WebMock.disable_net_connect!(
 )
 
 module SidekiqMinitestSupport
-  def after_teardown
+  def teardown
+    mail_workers = Sidekiq::Worker.jobs.select { |j| j['class'] == 'SendEmailWorker' }
     Sidekiq::Worker.clear_all
-    super
+
+    assert_equal(
+      0,
+      mail_workers.count,
+      "Found #{mail_workers.count} unexpected mail(s): #{mail_workers.map { |opts| opts['args'].first }}"
+    )
   end
 end
 

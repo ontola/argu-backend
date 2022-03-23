@@ -372,6 +372,8 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should not put update password with current password' do
+    create_email_mock('password_changed', user.email)
+
     sign_in user
     password = user.encrypted_password
     put resource_iri(user, root: argu), params: {
@@ -383,6 +385,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_not_equal password, user.reload.encrypted_password
     expect_ontola_action(snackbar: 'Changes saved successfully')
+
+    assert_email_sent
   end
 
   test 'user should update and remove profile_photo and cover_photo' do

@@ -55,6 +55,12 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should not post create direct_message with unconfirmed e-mail' do
+    ActsAsTenant.with_tenant(argu) do
+      create_email_mock('confirm_secondary', administrator.email, email: 'unconfirmed@argu.co', token_url: /.+/)
+      unconfirmed_email
+      assert_email_sent
+    end
+
     sign_in administrator
     post motion.collection_iri(:direct_messages),
          params: {
