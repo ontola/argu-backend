@@ -32,7 +32,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   enum content_source: {local: 0, remote: 1}
   enum used_as: {content_photo: 0, cover_photo: 1, profile_photo: 2, attachment: 3}
-  filterable NS.argu[:fileUsage] => {values: MediaObject.used_as}
+
   counter_culture :about,
                   column_name: proc { |model|
                     model.attachment? ? 'attachments_count' : nil
