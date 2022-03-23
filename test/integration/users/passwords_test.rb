@@ -30,10 +30,14 @@ module Users
     end
 
     test 'guest should post create password for existing email' do
+      create_email_mock('reset_password_instructions', user.email, token_url: /.+/)
+
       sign_in :guest_user
       post user_password_path, params: {user: {email: user.email}}
       expect_ontola_action(snackbar: 'You will receive an email shortly with instructions to reset your password.')
       assert_response :created
+
+      assert_email_sent
     end
 
     test 'guest should not get edit password without token' do
@@ -95,6 +99,8 @@ module Users
     end
 
     test 'guest should put update password' do
+      create_email_mock('password_changed', user.email)
+
       sign_in :guest_user
       assert_not user.confirmed?
       put user_password_path,
@@ -108,6 +114,7 @@ module Users
       assert_response :success
       assert_not_equal user.encrypted_password, user.reload.encrypted_password
       assert user.confirmed?
+      assert_email_sent
 
       expect_ontola_action(snackbar: 'Your password has been updated successfully')
     end
@@ -122,10 +129,14 @@ module Users
     end
 
     test 'user should not post create password for non-existing email' do
+      create_email_mock('reset_password_instructions', user.email, token_url: /.+/)
+
       sign_in user
       post user_password_path, params: {user: {email: 'wrong@email.com'}}
       assert_response :created
       assert_equal(response.headers['Location'], '/argu/u/session/new')
+
+      assert_email_sent
     end
 
     test 'user should post create password for existing email' do
@@ -186,6 +197,8 @@ module Users
     end
 
     test 'user should put update password' do
+      create_email_mock('password_changed', user.email)
+
       sign_in user
       put user_password_path,
           params: {
@@ -197,6 +210,8 @@ module Users
           }
       assert_response :success
       assert_not_equal user.encrypted_password, user.reload.encrypted_password
+
+      assert_email_sent
     end
 
     private

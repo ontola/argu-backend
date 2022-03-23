@@ -128,7 +128,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
               )
         )
       profile.save!(validate: false)
-      profile.profileable.update(encrypted_password: '')
+      profile.profileable.update_column(:encrypted_password, '') # rubocop:disable Rails/SkipsModelValidations
       profile
     end
   end

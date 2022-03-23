@@ -304,6 +304,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     when :unlock_instructions
       SendEmailWorker
         .perform_async(notification, id, token_url: iri_from_template(:user_unlock, unlock_token: args.first))
+    when :password_change
+      SendEmailWorker.perform_async(:password_changed, id)
     else
       raise "Trying to send a Devise #{notification} mail"
     end
