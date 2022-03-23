@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class ExportSerializer < RecordSerializer
-  attribute :download_url, predicate: NS.schema.downloadUrl do |object|
-    object.zip.url
-  end
+  attribute :download_url, predicate: NS.schema.downloadUrl
   attribute :status, predicate: NS.argu[:exportStatus]
   has_one :user, predicate: NS.schema.creator
   has_one :edge, predicate: NS.schema.object
