@@ -33,7 +33,8 @@ module Actions
           NS.schema.CompletedActionStatus,
           NS.ontola[:ExpiredActionStatus],
           NS.ontola[:DisabledActionStatus]
-        ]
+        ],
+        visible: false
       }
     )
 
