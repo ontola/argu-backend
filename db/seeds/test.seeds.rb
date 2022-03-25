@@ -10,7 +10,10 @@ Apartment::Tenant.switch('public') do
 end
 
 Apartment::Tenant.drop('argu') if ApplicationRecord.connection.schema_exists?('argu')
-Tenant.setup_schema('argu', "#{Rails.application.config.host_name}/first_page", 'first_page')
+
+Sidekiq::Testing.inline! do
+  Tenant.setup_schema('argu', "#{Rails.application.config.host_name}/first_page", 'first_page')
+end
 
 Apartment::Tenant.switch!('argu')
 ActsAsTenant.current_tenant.update(url: 'first_page')
@@ -35,21 +38,23 @@ FactorySeeder.create(
   email: 'unconfirmed@example.com'
 )
 
-page = FactorySeeder.create(
-  :page,
-  active_branch: true,
-  profile: Profile.new,
-  id: 0,
-  name: 'Argu page',
-  url: 'argu',
-  iri_prefix: 'argu.localtest/argu',
-  publisher: staff,
-  creator: staff.profile,
-  is_published: true,
-  locale: 'en-GB',
-  root_id: 'deadbeef-bfc5-4e68-993f-430037bd5bd3',
-  uuid: 'deadbeef-bfc5-4e68-993f-430037bd5bd3'
-)
+page = Sidekiq::Testing.inline! do
+  FactorySeeder.create(
+    :page,
+    active_branch: true,
+    profile: Profile.new,
+    id: 0,
+    name: 'Argu page',
+    url: 'argu',
+    iri_prefix: 'argu.localtest/argu',
+    publisher: staff,
+    creator: staff.profile,
+    is_published: true,
+    locale: 'en-GB',
+    root_id: 'deadbeef-bfc5-4e68-993f-430037bd5bd3',
+    uuid: 'deadbeef-bfc5-4e68-993f-430037bd5bd3'
+  )
+end
 
 freetown = ActsAsTenant.with_tenant(page) do
   FactorySeeder.create_forum(
@@ -71,18 +76,20 @@ holland = ActsAsTenant.with_tenant(page) do
   )
 end
 
-other_page = FactorySeeder.create(
-  :page,
-  active_branch: true,
-  publisher: staff,
-  creator: staff.profile,
-  is_published: true,
-  name: 'Other page',
-  primary_color: '#800000',
-  url: 'other_page',
-  locale: 'en-GB',
-  iri_prefix: 'argu.localtest/other_page'
-)
+other_page = Sidekiq::Testing.inline! do
+  FactorySeeder.create(
+    :page,
+    active_branch: true,
+    publisher: staff,
+    creator: staff.profile,
+    is_published: true,
+    name: 'Other page',
+    primary_color: '#800000',
+    url: 'other_page',
+    locale: 'en-GB',
+    iri_prefix: 'argu.localtest/other_page'
+  )
+end
 ActsAsTenant.with_tenant(other_page) do
   FactorySeeder.create_forum(
     parent: other_page,

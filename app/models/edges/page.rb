@@ -210,7 +210,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   def create_system_vocabs
     ActsAsTenant.with_tenant(self) do
-      VocabSyncer.sync_page if Group.public.present?
+      VocabSyncWorker.perform_async if Group.public.present?
     end
   end
 

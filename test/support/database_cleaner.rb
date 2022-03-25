@@ -14,11 +14,13 @@ DatabaseCleaner.strategy = :transaction
 
 load(Dir[Rails.root.join('db/seeds/doorkeeper_apps.seeds.rb')][0])
 
-Tenant.seed_schema('argu', "#{Rails.application.config.host_name}/public_page", 'public_page')
+Sidekiq::Testing.inline! do
+  Tenant.seed_schema('argu', "#{Rails.application.config.host_name}/public_page", 'public_page')
 
-ActsAsTenant.current_tenant = nil
+  ActsAsTenant.current_tenant = nil
 
-FactorySeeder.create(:page, locale: 'en-GB', url: 'argu', name: 'Argu')
+  FactorySeeder.create(:page, locale: 'en-GB', url: 'argu', name: 'Argu')
+end
 
 module ActiveSupport
   class TestCase
