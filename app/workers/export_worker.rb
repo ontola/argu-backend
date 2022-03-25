@@ -25,7 +25,6 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
     export.failed!
   ensure
     UserChannel.broadcast_to(export.user, hex_delta([invalidate_resource_delta(export)]))
-    DataEvent.publish(export) if export.present?
   end
 
   private

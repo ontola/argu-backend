@@ -187,7 +187,6 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     amazing_print (1.4.0)
-    amq-protocol (2.3.2)
     ansi (1.5.0)
     ast (2.4.2)
     auto_strip_attributes (2.6.0)
@@ -225,9 +224,6 @@ GEM
     bundler-audit (0.9.0.1)
       bundler (>= 1.2.0, < 3)
       thor (~> 1.0)
-    bunny (2.19.0)
-      amq-protocol (~> 2.3, >= 2.3.1)
-      sorted_set (~> 1, >= 1.0.2)
     carrierwave (2.1.1)
       activemodel (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -515,8 +511,7 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    rbtree (0.4.4)
-    rdf (3.2.7)
+    rdf (3.2.8)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (3.2.0)
       rdf (~> 3.2)
@@ -619,7 +614,6 @@ GEM
     sequenced (3.2.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
-    set (1.0.2)
     sidekiq (6.4.0)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -641,9 +635,6 @@ GEM
     sixarm_ruby_unaccent (1.2.0)
     sort_alphabetical (1.1.0)
       unicode_utils (>= 1.2.2)
-    sorted_set (1.0.3)
-      rbtree
-      set (~> 1.0)
     sparql (3.2.0)
       builder (~> 3.2)
       ebnf (~> 2.2)
@@ -732,7 +723,6 @@ DEPENDENCIES
   brakeman
   bugsnag
   bundler-audit
-  bunny
   carrierwave (~> 2.1.1)
   carrierwave-aws
   carrierwave-vips

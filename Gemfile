@@ -16,7 +16,6 @@ gem 'auto_strip_attributes'
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap', require: false
 gem 'bugsnag'
-gem 'bunny'
 gem 'carrierwave', '~> 2.1.1'
 gem 'carrierwave-aws'
 gem 'carrierwave-vips'
