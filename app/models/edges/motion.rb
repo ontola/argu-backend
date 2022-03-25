@@ -31,7 +31,6 @@ class Motion < Discussion
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 110}
   validates :title, presence: true
-  validates :creator, presence: true
 
   def as_json(options = {})
     super((options || {}).merge(

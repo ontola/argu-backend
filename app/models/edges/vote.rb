@@ -41,7 +41,7 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
   )
   delegate :voteable, to: :parent
 
-  validates :creator, :option, presence: true
+  validates :option, presence: true
 
   def cacheable?
     false

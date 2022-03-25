@@ -11,7 +11,6 @@ class Argument < Edge
 
   validates :description, presence: false, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {maximum: 75}
-  validates :creator, presence: true
 
   convertible comments: %i[activities]
   counter_cache true

@@ -14,7 +14,6 @@ class BlogPost < Edge
 
   validates :description, presence: true, length: {minimum: 2, maximum: 50_000}
   validates :display_name, presence: true, length: {minimum: 2, maximum: 110}
-  validates :creator, presence: true
 
   class << self
     def route_key

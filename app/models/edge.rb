@@ -180,6 +180,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :search_import, -> { published }
 
   validates :parent, presence: true, unless: :root_object?
+  validates :creator, :publisher, presence: true
 
   after_initialize :set_root_id, if: :new_record?
   before_save :set_publisher_id

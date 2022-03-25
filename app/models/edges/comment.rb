@@ -28,7 +28,6 @@ class Comment < Edge
   filterable NS.argu[:pdfPage] => {values: []}
 
   validates :description, presence: true, allow_nil: false, length: {in: 4..5000}
-  validates :creator, presence: true
 
   attr_accessor :is_processed
 

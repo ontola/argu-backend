@@ -16,7 +16,6 @@ class Question < Discussion
 
   validates :description, presence: true, length: {minimum: 5, maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :display_name, presence: true, length: {minimum: 4, maximum: 110}
-  validates :creator, presence: true
   # TODO: validate expires_at
 
   custom_grants_for :motions, :create
