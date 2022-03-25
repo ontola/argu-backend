@@ -69,7 +69,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def has_grant_set?(grant_set)
-    user_context.has_grant_set?(persisted_edge, grant_set)
+    user_context.has_grant_set?(persisted_edge, grant_set) if persisted_edge
   end
 
   def convert?
