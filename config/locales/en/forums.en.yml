@@ -5,7 +5,7 @@ en:
     forums:
       bio:
         label: "Forum goal"
-        description: "Summarize in one sentence what function the forum has. This text will appear under the name of the forum. There's a maximum of 80 characters."
+        description: "Describe what the forum is for. This text appears below the name of the forum."
       naam:
         label: "Forum name"
       shortname:

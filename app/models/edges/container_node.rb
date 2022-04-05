@@ -56,7 +56,7 @@ class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
   auto_strip_attributes :bio, nullify: false
   validates :url, presence: true, length: {minimum: 4, maximum: 75}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
-  validates :bio, length: {maximum: 260}
+  validates :bio, length: {maximum: 5_000}
   validates :bio_long, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
 
   def self.inherited(klass)

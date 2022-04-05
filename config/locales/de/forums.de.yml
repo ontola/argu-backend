@@ -4,9 +4,7 @@ de:
       bio:
         label: Ziel des Forums
         description: >-
-          Fassen Sie in einem Satz zusammen, welche Funktion das Forum hat.
-          Dieser Text wird unter dem Namen des Forums erscheinen. Es gibt ein
-          Maximum von 80 Zeichen.
+          Beschreiben Sie, wofür das Forum gedacht ist. Dieser Text erscheint unter dem Namen des Forums.
       naam:
         label: Name des Forums
       shortname:
