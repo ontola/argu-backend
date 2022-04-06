@@ -16,7 +16,8 @@ module Edgeable
       has_many :properties,
                primary_key: :uuid,
                autosave: true,
-               dependent: :destroy
+               dependent: :destroy,
+               inverse_of: :edge
       has_many :linked_properties,
                class_name: 'Property',
                inverse_of: :linked_edge,

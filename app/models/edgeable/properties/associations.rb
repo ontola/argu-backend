@@ -49,6 +49,7 @@ module Edgeable
             through: property_association_reference(name),
             class_name: klass_name,
             dependent: opts[:dependent],
+            primary_key: :uuid,
             source: property_association_source(klass_name, opts, property_opts)
           )
           property_association_dependency(name, opts[:dependent]) if opts[:dependent]
@@ -67,11 +68,13 @@ module Edgeable
 
         def property_association_options(opts)
           foreign_key = opts.key?(:foreign_key_property) ? :edge_id : :linked_edge_id
+          inverse_of = opts.key?(:foreign_key_property) ? :edge : :linked_edge
 
           {
             class_name: 'Property',
             dependent: property_reference_dependency(opts[:dependent]),
             foreign_key: foreign_key,
+            inverse_of: inverse_of,
             primary_key: opts[:primary_key] || :uuid
           }
         end

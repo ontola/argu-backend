@@ -7,8 +7,8 @@ class Property < ApplicationRecord # rubocop:disable Metrics/ClassLength
   TYPE_COLUMNS = %w[boolean string text datetime integer iri linked_edge_id].freeze
   TRANSLATABLE_COLUMNS = %w[string text].freeze
 
-  belongs_to :edge, primary_key: :uuid
-  belongs_to :linked_edge, class_name: 'Edge', primary_key: :uuid
+  belongs_to :edge, primary_key: :uuid, inverse_of: :properties
+  belongs_to :linked_edge, class_name: 'Edge', primary_key: :uuid, inverse_of: :linked_properties
   belongs_to :user, foreign_key: :integer # rubocop:disable Rails/InverseOf
   belongs_to :group, foreign_key: :integer # rubocop:disable Rails/InverseOf
   belongs_to :root, primary_key: :uuid, class_name: 'Edge'
@@ -17,6 +17,7 @@ class Property < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validate :validate_page_root_id
 
   attribute :iri, IRIType.new
+  after_commit :sync_linked_edge_id
   after_save :cache_properties
   after_destroy :cache_properties
 
@@ -56,6 +57,13 @@ class Property < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def parse_value(value)
     options[:enum] && options[:enum][value.try(:to_sym)] || value
+  end
+
+  def sync_linked_edge_id
+    return unless type.to_sym == :linked_edge_id && linked_edge_id.nil?
+
+    linked_id = edge.send(options[:name])
+    update(linked_edge_id: linked_id) if linked_id
   end
 
   def validate_page_root_id
