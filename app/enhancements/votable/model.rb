@@ -7,6 +7,10 @@ module Votable
     included do
       with_collection :votes
 
+      def default_vote_event
+        self
+      end
+
       def con_count
         children_count(option_record(NS.argu[:no])&.uuid)
       end
@@ -35,6 +39,10 @@ module Votable
 
       def vote_options_iri
         options_vocab&.term_collection&.default_view&.members_iri
+      end
+
+      def voteable
+        self
       end
 
       private

@@ -23,10 +23,6 @@ class Argument < Edge
 
   alias pro? pro
 
-  def default_vote_event
-    self
-  end
-
   def options_vocab
     Vocabulary.upvote_options
   end
@@ -51,10 +47,6 @@ class Argument < Edge
       raise 'Failed to upvote'
     end
     service.commit
-  end
-
-  def voteable
-    self
   end
 
   private
