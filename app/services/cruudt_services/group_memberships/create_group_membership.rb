@@ -8,8 +8,4 @@ class CreateGroupMembership < CreateService
     attributes[:start_date] ||= Time.current
     super
   end
-
-  private
-
-  def object_attributes=(obj); end
 end

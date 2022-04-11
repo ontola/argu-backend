@@ -14,7 +14,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     @user_context = options[:user_context]
     prepare_attributes
     assign_attributes
-    set_nested_associations
+    prepare_nested_associations(resource)
     subscribe_listeners
   end
 
@@ -77,6 +77,12 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     resource.assign_attributes(@attributes)
   end
 
+  # Method to set attributes on a nested model.
+  # @note This should be used for attributes that are consistent across all the associations.
+  # @see {prepare_nested_associations}
+  # @param [ActiveRecord::Base] obj The model on which the attributes should be set
+  def assign_nested_attributes(_, _); end
+
   def creator
     profile
   end
@@ -116,22 +122,17 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     service_action
   end
 
-  # Calls object_attributes= for each association that has been declared as `accepts_nested_attributes_for`
+  # Calls assign_nested_attributes for each association that has been declared as `accepts_nested_attributes_for`
   # @author Fletcher91 <thom@argu.co>
-  # @note Requires `object_attributes=` to be overridden in the child class.
-  def set_nested_associations # rubocop:disable Metrics/MethodLength
-    return unless resource.try(:nested_attributes_options?)
+  # @note Requires `assign_nested_attributes` to be overridden in the child class.
+  def prepare_nested_associations(object)
+    return unless object.try(:nested_attributes_options?)
 
-    resource.nested_attributes_options.each_key do |association|
-      next if association == :edge
-
-      association_instance = resource.public_send(association)
-      if association_instance.respond_to?(:length)
-        association_instance.each do |record|
-          self.object_attributes = record
-        end
-      elsif association_instance.respond_to?(:save)
-        self.object_attributes = association_instance
+    object.nested_attributes_options.each_key do |association|
+      inst = object.public_send(association)
+      (inst.respond_to?(:each) ? inst : [inst].compact).each do |record|
+        assign_nested_attributes(object, record)
+        prepare_nested_associations(record)
       end
     end
   end
@@ -152,12 +153,6 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
       with: :update_successful
     )
   end
-
-  # Method to set attributes on a nested model.
-  # @note This should be used for attributes that are consistent across all the associations.
-  # @see {set_nested_associations}
-  # @param [ActiveRecord::Base] obj The model on which the attributes should be set
-  def object_attributes=(obj); end
 
   def prepare_attributes
     return unless resource.is_a?(Edge)

@@ -13,7 +13,7 @@ class CreateGroup < CreateService
 
   private
 
-  def object_attributes=(obj)
-    obj.group = resource
+  def assign_nested_attributes(parent, obj)
+    obj.group = parent
   end
 end

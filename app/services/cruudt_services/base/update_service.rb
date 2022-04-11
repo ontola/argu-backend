@@ -14,8 +14,6 @@ class UpdateService < ApplicationService
 
   private
 
-  def object_attributes=(_obj); end
-
   def service_action
     :update
   end

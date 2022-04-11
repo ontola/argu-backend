@@ -19,5 +19,5 @@ class CreatePage < CreateEdge
     Page.new(attrs)
   end
 
-  def object_attributes=(_obj); end
+  def assign_nested_attributes(_parent, _obj); end
 end
