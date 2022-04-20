@@ -35,6 +35,13 @@ module Edgeable
         record
       end
 
+      def class_by_iri(iri)
+        descendants.detect do |klass|
+          iris = klass.iri.is_a?(Array) ? klass.iri : [klass.iri]
+          iris.any? { |klass_iri| klass_iri.to_s == iri }
+        end
+      end
+
       def collection_from_parent_name(parent, params)
         return :tagging_collection if params[:collection] == :taggings
         return :favorite_page_collection if parent.is_a?(User)

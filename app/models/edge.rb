@@ -50,7 +50,13 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
       ->(scope) { scope.where(is_published: false) },
       ->(scope) { scope.where(is_published: true) },
       visible: false
-    )
+    ),
+    NS.rdfv.type => {
+      filter: lambda do |scope, values|
+        scope.where(owner_type: values.map(&method(:class_by_iri)).map(&:to_s))
+      end,
+      visible: false
+    }
   )
 
   belongs_to :parent,
