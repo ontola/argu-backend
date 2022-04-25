@@ -57,7 +57,7 @@ class Notification < ApplicationRecord
         )
       }
     when :drafts_reminder
-      {drafts_url: drafts_iri}
+      {drafts_url: iri_from_template(:user_sign_in, redirect_url: drafts_iri.to_s)}
     else
       {}
     end

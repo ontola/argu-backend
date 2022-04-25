@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class DraftsTest < ActionDispatch::IntegrationTest
+  DRAFTS_IRI = 'http://argu.localtest/argu/u/session/new?redirect_url=http%3A%2F%2Fargu.localtest%2Fargu%2Fedges%3Ffilter%255B%255D%3Dhttps%25253A%25252F%25252Fargu.co%25252Fns%25252Fcore%252523isDraft%253Dtrue'
+
   define_freetown
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
@@ -89,7 +91,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
       end
     end
 
-    create_email_mock('drafts_reminder', other_user.email, drafts_url: drafts_iri)
+    create_email_mock('drafts_reminder', other_user.email, drafts_url: DRAFTS_IRI)
 
     Sidekiq::Testing.inline! do
       # rubocop:disable Rails/SkipsModelValidations
