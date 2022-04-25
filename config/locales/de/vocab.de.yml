@@ -218,6 +218,8 @@ de:
       label: Entwurf
     lastActivityAt:
       label: Zuletzt aktiv
+    optionsVocab:
+      label: Optionen
     position:
       label: Standort
     orderDetails:

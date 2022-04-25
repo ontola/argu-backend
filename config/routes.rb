@@ -178,6 +178,7 @@ Rails.application.routes.draw do
   linked_resource(Phase)
   linked_resource(Placement)
   linked_resource(PolicyAgreement)
+  linked_resource(Poll)
   linked_resource(ProArgument)
   linked_resource(Profile)
   linked_resource(Project)

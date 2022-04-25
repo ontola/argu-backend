@@ -6,6 +6,7 @@ class Forum < ContainerNode
   enhance Inviteable
   enhance Motionable
   enhance Questionable
+  enhance Pollable
   enhance SwipeToolable
   enhance Topicable
 

@@ -208,6 +208,8 @@ en:
       label: "Draft"
     lastActivityAt:
       label: "Last active"
+    optionsVocab:
+      label: "Options"
     position:
       label: "Position"
     orderDetails:

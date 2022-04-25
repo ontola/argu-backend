@@ -38,7 +38,7 @@ module Votable
       end
 
       def vote_options_iri
-        options_vocab&.term_collection&.default_view&.members_iri
+        options_vocab&.collection_iri(:terms, page: 1)
       end
 
       def voteable

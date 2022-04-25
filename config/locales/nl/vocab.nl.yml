@@ -210,6 +210,8 @@ nl:
       label: "Laatst actief"
     position:
       label: "Positie"
+    optionsVocab:
+      label: "Opties"
     orderDetails:
       label: "Details"
     pdfPage:
