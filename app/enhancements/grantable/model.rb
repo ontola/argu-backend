@@ -11,7 +11,7 @@ module Grantable
     def granted_sets_iri
       base_iri = is_a?(Edge) ? persisted_edge&.iri : ActsAsTenant.current_tenant&.iri
 
-      RDF::URI("#{base_iri}/grant_sets") if base_iri
+      RDF::URI("#{base_iri}/grant_sets") if base_iri&.uri?
     end
 
     def grant_tree_node(user_context)
