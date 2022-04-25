@@ -7,10 +7,10 @@ class QuestionsController < DiscussionsController
 
   private
 
-  def changes_triples
+  def changes_triples(resource)
     return super unless motion_collection_changed?
 
-    super + [[current_resource.collection_iri(:motions), NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]]
+    super + [[resource.collection_iri(:motions), NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]]
   end
 
   def motion_collection_changed?

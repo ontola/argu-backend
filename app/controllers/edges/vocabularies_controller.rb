@@ -3,10 +3,10 @@
 class VocabulariesController < EdgeableController
   private
 
-  def changes_triples
+  def changes_triples(resource)
     return super unless term_collection_changed?
 
-    super + [[current_resource.collection_iri(:terms), NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]]
+    super + [[resource.collection_iri(:terms), NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]]
   end
 
   def term_collection_changed?
