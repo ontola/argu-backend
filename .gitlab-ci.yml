@@ -26,7 +26,7 @@ build:
   image: docker:18.09.8
   services:
     - docker:18.09.8-dind
-    - postgres:11
+    - postgres:12
   before_script:
     - cp config/database.docker.yml config/database.yml
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY" --password-stdin
@@ -80,7 +80,7 @@ spec:
   stage: test
   services:
     - redis:6
-    - postgres:11
+    - postgres:12
     - name: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
       alias: elasticsearch
       command: [ "bin/elasticsearch", "-Expack.security.enabled=false", "-Ediscovery.type=single-node" ]
@@ -92,7 +92,7 @@ test:
   stage: test
   services:
     - redis:6
-    - postgres:11
+    - postgres:12
     - name: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
       alias: elasticsearch
       command: [ "bin/elasticsearch", "-Expack.security.enabled=false", "-Ediscovery.type=single-node" ]
