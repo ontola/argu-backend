@@ -77,7 +77,7 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
     assert_difference('Property.count' => 0) do
       intervention.update!(communication: %i[open_communication communication_processed])
     end
-    assert_equal %w[open_communication communication_processed], reloaded_intervention.communication
+    assert_equal %w[communication_processed open_communication], reloaded_intervention.communication.sort
     assert_equal prop_id, intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
 
     assert_difference('Property.count' => -1) do
