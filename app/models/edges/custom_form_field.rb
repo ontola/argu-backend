@@ -28,9 +28,12 @@ class CustomFormField < Edge
   property :min_length, :integer, NS.sh.minLength
   property :min_length_prop, :iri, NS.ontola[:minLength]
   property :pattern, :string, NS.sh.pattern
-  property :sh_in, :iri, NS.sh.in
-  property :sh_in_prop, :iri, NS.ontola[:shIn]
   property :predicate, :iri, NS.argu[:predicate]
+  property :options_vocab_id,
+           :linked_edge_id,
+           NS.argu[:optionsVocab],
+           association_class: 'Vocabulary'
+  accepts_nested_attributes_for :options_vocab
 
   validates :form_field_type, presence: true
   validates :display_name, presence: true
@@ -59,6 +62,16 @@ class CustomFormField < Edge
   class << self
     def attributes_for_new(opts)
       super.merge(max_count: 1)
+    end
+
+    def build_new(parent: nil, user_context: nil)
+      resource = super
+      resource.build_options_vocab(
+        creator: user_context&.profile,
+        display_name: I18n.t('sh.in.label'),
+        publisher: user_context&.user
+      )
+      resource
     end
   end
 end

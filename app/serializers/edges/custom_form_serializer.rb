@@ -6,6 +6,8 @@ class CustomFormSerializer < EdgeSerializer
   statements :field_statements
 
   def self.field_statements(object, _params) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    return [] unless object.persisted?
+
     pages_iri = RDF::URI("#{object.iri}#pages")
     page_iri = RDF::URI("#{object.iri}#page")
     groups_iri = RDF::URI("#{object.iri}#groups")

@@ -19,10 +19,10 @@ class CustomFormFieldForm < ApplicationForm
   field :description
   field :helper_text
   %i[CheckboxGroup RadioGroup SelectInput ToggleButtonGroup].each do |type|
-    field :sh_in,
-          if: has_type(type),
-          sh_in: -> { Vocabulary.collection_iri },
-          min_count: 1
+    has_one :options_vocab,
+            if: has_type(type),
+            form: Vocabularies::OptionsVocabForm,
+            min_count: 1
   end
   %i[EmailInput PasswordInput TextAreaInput MarkdownInput TextInput].each do |type|
     field :min_length, if: has_type(type)
@@ -39,5 +39,10 @@ class CustomFormFieldForm < ApplicationForm
 
   group :advanced, label: -> { I18n.t('forms.advanced') } do
     field :predicate
+  end
+
+  hidden do
+    has_one :options_vocab,
+            min_count: 1
   end
 end

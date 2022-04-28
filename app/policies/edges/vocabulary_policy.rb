@@ -2,6 +2,7 @@
 
 class VocabularyPolicy < EdgePolicy
   permit_attributes %i[display_name description tagged_label term_type default_term_display]
+  permit_nested_attributes %i[terms]
 
   def update?
     return forbid_with_message(I18n.t('vocabularies.errors.system')) if record.system?
