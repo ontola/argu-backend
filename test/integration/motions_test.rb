@@ -223,6 +223,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
   test 'staff should trash invalid draft' do
     sign_in staff
     draft_motion.properties.destroy_all
+    draft_motion.update(cached_properties: {})
+    draft_motion.cache_properties
     assert_not draft_motion.reload.valid?
     assert_difference('Motion.count' => 0, 'Motion.trashed.count' => 1, 'Activity.count' => 1) do
       delete draft_motion
@@ -240,6 +242,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
   test 'staff should destroy invalid motion' do
     sign_in staff
     motion_with_placement.properties.destroy_all
+    motion_with_placement.update(cached_properties: {})
+    motion_with_placement.cache_properties
     assert_not motion_with_placement.reload.valid?
     assert_difference('Motion.count' => -1, 'Activity.count' => 1) do
       delete motion_with_placement.iri(destroy: true)
