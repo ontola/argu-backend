@@ -10,11 +10,16 @@ class Survey < Discussion
   include Edgeable::Content
 
   property :external_iri, :iri, NS.argu[:externalIRI]
-  property :action_body, :iri, NS.ll[:actionBody]
   property :reward, :integer, NS.argu[:reward], default: 0
+  property :action_body_id,
+           :linked_edge_id,
+           NS.argu[:actionBody],
+           association_class: 'CustomForm'
+  accepts_nested_attributes_for :action_body
+
   parentable :container_node, :page, :phase
   with_collection :submissions
-  enum form_type: {remote: 0, local: 1}
+  enum form_type: {local: 0, remote: 1}
   attr_writer :form_type
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
@@ -36,7 +41,7 @@ class Survey < Discussion
   end
 
   def form_type
-    action_body.present? ? :local : :remote
+    external_iri.present? ? :remote : :local
   end
 
   def manage_iri
@@ -65,5 +70,18 @@ class Survey < Discussion
 
   def typeform_tuple
     external_iri&.to_s&.match(Survey::TYPEFORM_TEMPLATE) || []
+  end
+
+  class << self
+    def build_new(parent: nil, user_context: nil)
+      resource = super
+      resource.build_action_body(
+        creator: user_context&.profile,
+        display_name: I18n.t('argu.CustomForm.label'),
+        parent: resource,
+        publisher: user_context&.user
+      )
+      resource
+    end
   end
 end

@@ -19,3 +19,6 @@ nl:
       reward:
         helper_text: "Hoeveel ontvangen deelnemers aan deze enquête?"
         label: "Beloning"
+  menus:
+    surveys:
+      fields: "Vragen"

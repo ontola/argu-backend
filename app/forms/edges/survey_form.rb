@@ -18,10 +18,6 @@ class SurveyForm < ContainerNodeForm
   field :display_name
   field :description, datatype: NS.fhir[:markdown]
   field :form_type, input_field: LinkedRails::Form::Field::ToggleButtonGroup, min_count: 1
-  field :action_body,
-        sh_in: -> { CustomForm.collection_iri },
-        if: [is_local],
-        min_count: 1
   field :external_iri, if: [is_remote], min_count: 1
   field :reward, input_field: MoneyInput
   has_one :default_cover_photo
@@ -37,6 +33,7 @@ class SurveyForm < ContainerNodeForm
   end
 
   hidden do
+    has_one :action_body
     field :is_draft
   end
 end

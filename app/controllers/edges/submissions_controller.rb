@@ -3,7 +3,7 @@
 class SubmissionsController < EdgeableController
   has_resource_action(
     :submit,
-    form: -> { resource.parent.action_body },
+    form: -> { resource.parent.action_body.iri },
     http_method: :put,
     policy: :update?,
     target_url: -> { resource.iri('submission%5Bstatus%5D': :submission_completed) }

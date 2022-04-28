@@ -32,7 +32,12 @@ class SurveyMenuList < ApplicationMenuList
         label: I18n.t('argu.Submission.plural_label'),
         href: resource.collection_iri(:submissions, display: :table)
       ),
-      setting_item(:form, href: resource.action_body, image: 'fa-edit'),
+      setting_item(
+        :form,
+        label: I18n.t('menus.surveys.fields'),
+        href: resource.action_body.collection_iri(:custom_form_fields),
+        image: 'fa-edit'
+      ),
       edit_link,
       external_link
     ]

@@ -21,3 +21,6 @@ de:
       reward:
         helper_text: Wie viel erhalten die Teilnehmer an dieser Umfrage?
         label: Belohnung
+  menus:
+    surveys:
+      fields: Fragen

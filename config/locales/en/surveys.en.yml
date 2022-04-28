@@ -19,3 +19,6 @@ en:
       reward:
         helper_text: "How much will participants of this survey receive?"
         label: "Reward"
+  menus:
+    surveys:
+      fields: "Questions"

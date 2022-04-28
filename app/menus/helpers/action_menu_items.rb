@@ -95,7 +95,7 @@ module Helpers
         :move_up,
         action: resource.action(:move_up).iri,
         href: resource.action(:move_up).iri,
-        image: 'fa-chevron-up',
+        image: 'fa-arrow-up',
         policy: :move_up?
       )
     end
@@ -105,7 +105,7 @@ module Helpers
         :move_down,
         action: resource.action(:move_down).iri,
         href: resource.action(:move_down).iri,
-        image: 'fa-chevron-down',
+        image: 'fa-arrow-down',
         policy: :move_down?
       )
     end

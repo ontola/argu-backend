@@ -8,11 +8,10 @@ class CustomFormFieldMenuList < ApplicationMenuList
 
   def action_menu_items
     [
-      move_up_link,
-      move_down_link,
       edit_link,
-      copy_share_link(resource.iri),
-      *trash_and_destroy_links(include_destroy: false)
+      *trash_and_destroy_links(include_destroy: false),
+      move_up_link,
+      move_down_link
     ]
   end
 end
