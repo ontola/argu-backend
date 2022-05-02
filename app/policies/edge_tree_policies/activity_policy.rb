@@ -5,53 +5,30 @@ class ActivityPolicy < EdgeTreePolicy
     def resolve
       return scope.none if user.nil?
 
-      @scope = @scope.where(root_id: grant_tree.tree_root_id) if grant_tree&.tree_root_id&.present?
-      return @scope if staff?
-
-      s = filter_unpublished_and_unmanaged(@scope)
-      s = filter_inaccessible_forums(s)
-      filter_private_votes(s)
+      filter_active_branches(filter_granted_edges(scope))
     end
 
     private
 
-    # Trackable should be placed in one of the forums available to the current user
-    def filter_inaccessible_forums(scope)
+    # A grant should be present for the trackable
+    def filter_granted_edges(scope)
       scope
-        .joins(:trackable, :recipient)
-        .with(granted_paths)
-        .where(granted_path_type_filter(:recipients_activities))
-    end
-
-    # If trackable is a vote, its profile should have public votes
-    def filter_private_votes(scope)
-      activities = Activity.arel_table
-      users = User.arel_table
-      scope
-        .joins('INNER JOIN "profiles" ON "profiles"."id" = "activities"."owner_id"')
-        .joins('LEFT JOIN "users" ON "users"."uuid" = "profiles"."profileable_id" '\
-               'AND "profiles"."profileable_type" = \'User\'')
-        .where(activities[:key].not_eq('vote.create').or(users[:show_feed].eq(true)))
-    end
-
-    # Trackable should be published OR be created by one of the managed profiles OR be placed in a managed forum
-    def filter_unpublished_and_unmanaged(scope) # rubocop:disable Metrics/MethodLength
-      scope
-        .with(managed_forum_paths)
         .joins(:trackable)
+        .with(granted_paths)
+        .where(granted_path_type_filter(:activities))
+    end
+
+    # Trackable should be in an active branch
+    def filter_active_branches(scope)
+      scope
         .joins(
-          'LEFT JOIN edges AS ancestors ON ancestors.path @> edges.path AND ancestors.id != edges.id AND '\
-          'ancestors.root_id = edges.root_id AND (ancestors.is_published = false OR ancestors.trashed_at IS NOT NULL)'
+          'LEFT JOIN edges AS inactive ON inactive.path @> edges.path AND inactive.id != edges.id AND '\
+          'inactive.root_id = edges.root_id AND (inactive.is_published = false OR inactive.trashed_at IS NOT NULL)'
         )
         .where(
-          '(edges.is_published = true AND ancestors.id IS NULL) OR activities.owner_id IN (:profile_ids) OR '\
-          '(SELECT array_agg(path) FROM managed_forum_paths) @> edges.path',
-          profile_ids: managed_profile_ids
+          inactive: {id: nil},
+          edges: {is_published: true, trashed_at: nil}
         )
-    end
-
-    def staff?
-      grant_tree.nil? ? user.is_staff? : super
     end
   end
 

@@ -23,13 +23,13 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "5c962ba1c7212f124cf0818676f449b0a97b5aa41a77d065c082d227f484d48b",
+      "fingerprint": "b3068cfad54f52da3e188a03aaf68b5f3813d915f560d3d9fb7c921810acda5b",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/virtual/feed.rb",
-      "line": 41,
+      "line": 38,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Activity.includes(:owner).joins(:trackable, :recipient).where.not(\"edges.owner_type\" => \"Banner\").where(\"edges.owner_type != ? OR recipients_activities.owner_type != ?\", \"Vote\", \"Argument\").where(\"key ~ '#{self.class.class_key}.update|publish'\")",
+      "code": "Activity.includes(:owner).where(\"key ~ '#{self.class.class_key}.update|publish'\")",
       "render_path": null,
       "location": {
         "type": "method",
@@ -41,6 +41,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-12-29 11:36:30 +0100",
-  "brakeman_version": "5.2.0"
+  "updated": "2022-05-16 11:35:10 +0200",
+  "brakeman_version": "5.2.1"
 }

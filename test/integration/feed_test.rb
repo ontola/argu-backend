@@ -51,7 +51,7 @@ class FeedTest < ActionDispatch::IntegrationTest
 
   test 'staff should get forum/feed nq' do
     sign_in staff
-    visit_freetown_feed(accept: :nq, count: 8)
+    visit_freetown_feed(accept: :nq)
   end
 
   test 'staff should get motion/feed nq' do

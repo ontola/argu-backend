@@ -33,19 +33,13 @@ class Feed < VirtualResource
   private
 
   def activity_base
-    scope = Activity
-              .includes(:owner)
-              .joins(:trackable, :recipient)
-              .where.not('edges.owner_type' => 'Banner')
-              .where('edges.owner_type != ? OR recipients_activities.owner_type != ?', 'Vote', 'Argument')
-              .where("key ~ '#{self.class.class_key}.update|publish'")
-              .where(edges: {is_published: true, trashed_at: nil})
-    scope = scope.where(edges: {root_id: root_id}) if root_id
-    scope
+    Activity
+      .includes(:owner)
+      .where("key ~ '#{self.class.class_key}.update|publish'")
   end
 
   def edge_activities
-    activity_base.where(edges: {root_id: parent.root_id}).where('edges.path <@ ?', parent.path)
+    activity_base.joins(:trackable).where(edges: {root_id: parent.root_id}).where('edges.path <@ ?', parent.path)
   end
 
   def user_activities
