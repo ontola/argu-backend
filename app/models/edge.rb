@@ -308,7 +308,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     persisted = self
     persisted = persisted.parent until persisted.persisted? || persisted.parent.nil?
     persisted = persisted.root unless persisted.persisted?
-    @persisted_edge = persisted if persisted.persisted?
+    @persisted_edge = persisted if persisted&.persisted?
   end
 
   def persisted_edge=(edge)

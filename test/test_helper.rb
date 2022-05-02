@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
-ENV['RAILS_ENV'] = 'test'
-require File.expand_path('../config/environment', __dir__)
-require 'rails/test_help'
-require 'minitest/rails'
-require 'mocha/minitest'
-require 'model_test_base'
-require 'wisper/minitest/assertions'
-require 'simplecov'
-require 'fakeredis'
-require 'sidekiq/testing'
-require 'minitest/pride'
-require 'minitest/reporters'
-require 'webmock/minitest'
-require 'rspec/matchers'
-require 'rspec/expectations'
+require 'unit_test_helper'
 
-require 'support/custom_reporter'
+require 'sidekiq/testing'
 require 'argu/test_helpers/searchkick_mock'
 require 'support/database_cleaner'
 
@@ -24,23 +10,12 @@ Sidekiq::Testing.server_middleware do |chain|
   chain.add ActsAsTenant::Sidekiq::Server
 end
 
-Minitest::Reporters.use! unless ENV['RM_INFO']
-
 DatabaseCleaner.strategy = :transaction
 WebMock.disable_net_connect!(
   allow: [
     ENV['ELASTICSEARCH_URL']
   ]
 )
-
-module TestHelper
-  include RSpec::Expectations
-  include RSpec::Matchers
-  Sidekiq::Testing.fake!
-  Minitest::Reporters.use! unless ENV['RM_INFO']
-
-  MiniTest.after_run { FileUtils.rm_rf(Rails.root.join('public/photos/[^.]*')) }
-end
 
 module SidekiqMinitestSupport
   def after_teardown
@@ -56,6 +31,7 @@ module ActiveSupport
     include SidekiqMinitestSupport
     include Argu::TestHelpers::IRIHelpers
     include Argu::TestHelpers::TestHelperMethods
+    include Argu::TestHelpers::SliceHelperMethods
     include Argu::TestHelpers::TestMocks
     include Argu::TestHelpers::TestDefinitions
     include Argu::TestHelpers::TestAssertions
@@ -87,6 +63,7 @@ module ActionDispatch
   class IntegrationTest
     include Argu::TestHelpers::IRIHelpers
     include Argu::TestHelpers::TestHelperMethods
+    include Argu::TestHelpers::SliceHelperMethods
     include Argu::TestHelpers::TestMocks
     include SidekiqMinitestSupport
 

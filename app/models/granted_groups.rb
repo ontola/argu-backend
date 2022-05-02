@@ -8,6 +8,10 @@ class GrantedGroups < LinkedRails::Sequence
   end
 
   class << self
+    def iri
+      RDF[:Seq]
+    end
+
     def requested_resource(opts, user_context)
       return unless collection_action?(opts)
 

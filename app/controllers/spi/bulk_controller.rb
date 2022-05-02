@@ -5,6 +5,9 @@ require 'prometheus_exporter/client'
 
 module SPI
   class BulkController < LinkedRails::BulkController # rubocop:disable Metrics/ClassLength
+    include LinkedRails::EmpJSON::Records
+    include LinkedRails::EmpJSON::Primitives
+
     alias_attribute :pundit_user, :user_context
 
     private
@@ -72,12 +75,19 @@ module SPI
       result
     end
 
-    def resource_body_with_same_as(resource, iri)
-      body = resource_body(resource)
-      return body if iri.to_s == resource.iri.to_s
-      return body if body.include?(iri.to_s)
+    def resource_hash_with_same_as(resource, iri) # rubocop:disable Metrics/AbcSize
+      hash = resource_hash(resource)
 
-      "#{value_to_hex(iri, NS.owl.sameAs, resource.iri)}\n#{body}"
+      if iri.to_s != resource.iri.to_s && !hash.keys.include?(iri.to_s)
+        create_record(hash, iri)
+        hash[iri.to_s][NS.owl.sameAs.to_s] = object_to_value(resource.iri)
+      end
+
+      hash
+    end
+
+    def resource_body_with_same_as(resource, iri)
+      Oj.fast_generate(resource_hash_with_same_as(resource, iri))
     end
 
     def resource_request(iri)

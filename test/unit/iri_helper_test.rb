@@ -4,8 +4,8 @@ require 'test_helper'
 
 class IriHelperTest < ActiveSupport::TestCase
   define_freetown
-  let!(:example_page) { create(:page, iri_prefix: 'example.com') }
-  let!(:example) { create_forum(parent: example_page, url: :example) }
+  let(:example_page) { create(:page, iri_prefix: 'example.com') }
+  let(:example) { create_forum(parent: example_page, url: :example) }
   let(:question) { create(:question, parent: freetown) }
   let(:user) { create(:user) }
 

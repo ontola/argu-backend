@@ -45,7 +45,8 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 860079f00e0385d91e89b75c6e7ec2d91d1d6405
+  revision: b7a0f591aac057b646d1ba9da2b143f21cf4f198
+  branch: empathy
   specs:
     linked_rails (0.0.4)
       active_response (~> 0.0.2)
@@ -72,7 +73,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/rdf-serializers
-  revision: ef10c737fe37023bc2dd2fbe5017758d2b74fc6a
+  revision: 7e8eabb0e01426cc707997883ac3dde453bc918b
   branch: refactor-includes
   specs:
     rdf-serializers (0.0.11)
@@ -442,7 +443,7 @@ GEM
     net_http_timeout_errors (0.3.5)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.13.4)
+    nokogiri (1.13.5)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth2 (1.4.7)

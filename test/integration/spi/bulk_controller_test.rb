@@ -21,6 +21,7 @@ module SPI
     let(:spectator) { create_spectator(holland) }
     let(:administrator) { create_administrator(argu) }
     let(:voter) { create(:user, show_feed: false) }
+    let(:budget_shop) { create(:budget_shop, parent: freetown) }
 
     let(:demogemeente) { create(:page, url: 'demogemeente', iri_prefix: 'demogemeente.nl') }
     let(:demogemeente_forum) do
@@ -79,6 +80,29 @@ module SPI
       assert_not(response.body.include?('<script>'))
     end
 
+    test 'voter should post bulk request for singular resources' do
+      sign_in voter
+
+      current_vote = ActsAsTenant.with_tenant(argu) { current_vote_iri(hidden_vote1.parent) }
+      cart_detail = ActsAsTenant.with_tenant(argu) { CartDetail.new(parent: budget_shop).singular_iri }
+      singular_resources = [{include: true, iri: current_vote}, {include: true, iri: cart_detail}]
+      singular_resource_responses = {
+        current_vote => {cache: 'private', status: 200, include: true},
+        cart_detail => {cache: 'private', status: 200, include: true}
+      }
+      bulk_request(
+        resources: singular_resources,
+        responses: singular_resource_responses
+      )
+      vote_slice = JSON.parse(JSON.parse(body).first['body'])
+      expect_slice_attribute(vote_slice, current_vote, NS.owl.sameAs, hidden_vote1.iri)
+      cart_detail_slice = JSON.parse(JSON.parse(body).second['body'])
+      blank_node = RDF::Node.new(cart_detail_slice.keys.first.split(':').last)
+      expect_slice_attribute(cart_detail_slice, cart_detail, NS.owl.sameAs, blank_node)
+      actions = [RDF::URI("#{cart_detail}/new"), RDF::URI("#{cart_detail}/grants/new")]
+      expect_slice_attribute(cart_detail_slice, blank_node, NS.ontola[:createAction], actions)
+    end
+
     test 'guest should post bulk request for linked_record' do
       sign_in guest_user
 
@@ -92,19 +116,19 @@ module SPI
 
       bulk_request(resources: linked_record_resources, responses: whitelisted_linked_record_responses)
 
-      statements = JSON.parse(body).first['body'].split("\n").map { |s| JSON.parse(s) }
-      linked_iri = "http://argu.localtest/argu/resource?iri=#{CGI.escape(dg_motion1.iri)}"
-      included_records = statements.map(&:first).uniq.sort.filter { |subject| subject.start_with?('http') }
+      slice = JSON.parse(JSON.parse(body).first['body'])
+      linked_iri = URI("http://argu.localtest/argu/resource?iri=#{CGI.escape(dg_motion1.iri)}")
+      included_records = slice.keys.uniq.sort.filter { |subject| subject.start_with?('http') }
       expected_includes = ActsAsTenant.with_tenant(demogemeente) do
         [
-          linked_iri,
+          linked_iri.to_s,
           dg_motion1.iri.to_s,
           dg_motion1.argument_columns_iri.to_s
         ]
       end
       assert_equal(included_records, expected_includes)
-      body.include?("\\\"#{linked_iri}\\\",\\\"#{NS.owl.sameAs}\\\",\\\"#{dg_motion1.iri}\\\"")
-      body.include?("\\\"#{dg_motion1.iri}\\\",\\\"#{NS.owl.sameAs}\\\",\\\"#{linked_iri}\\\"")
+      expect_slice_attribute(slice, linked_iri, NS.owl.sameAs, dg_motion1.iri)
+      expect_slice_attribute(slice, dg_motion1.iri, NS.owl.sameAs, linked_iri)
     end
 
     ####################################
@@ -227,10 +251,20 @@ module SPI
         assert_equal iri.to_s, resource[:iri]
         assert_equal expectation[:status], resource[:status], "#{iri} should be #{expectation[:status]}"
         assert_equal expectation[:cache], resource[:cache], "#{iri} should be #{expectation[:cache]}"
-        type_statement = "\"#{expectation[:iri] || iri}\",\"#{RDF[:type]}\""
-        type_statement += ",\"#{expectation[:type]}" if expectation.key?(:type)
-        method = expectation[:include] ? :assert_includes : :refute_includes
-        send(method, resource[:body] || '', type_statement)
+
+        assertion_method = expectation[:include] ? :assert_not_nil : :assert_nil
+        positive = expectation[:include] ? '' : ' not'
+
+        send(assertion_method, resource[:body], "Resource was#{positive} present in body")
+
+        next unless assertion_method == :assert_not_nil
+
+        body = JSON.parse(resource[:body])
+        record = body[iri.to_s]
+        send(assertion_method, record, "Resource #{iri}#{positive} present in data")
+
+        types = record[NS.rdfv.type.to_s]
+        send(assertion_method, types.is_a?(Array) ? types : [types], expectation[:type]) if expectation[:type]
       end
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
