@@ -213,7 +213,7 @@ module Argu
         end
 
         def default_formats
-          [:json_api, (LinkedRails::Renderers.rdf_content_types - [:ttl]).sample]
+          %i[empjson]
         end
 
         def show_formats
@@ -245,23 +245,23 @@ module Argu
         end
 
         def new_formats
-          default_formats - [:json_api]
+          default_formats
         end
 
         def edit_formats
-          default_formats - [:json_api]
+          default_formats
         end
 
         def delete_formats
-          default_formats - [:json_api]
+          default_formats
         end
 
         def move_formats
-          default_formats - [:json_api]
+          default_formats
         end
 
         def shift_formats
-          default_formats - [:json_api]
+          default_formats
         end
       end
     end
