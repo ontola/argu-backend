@@ -25,6 +25,10 @@ class CartDetail < Edge
     data
   end
 
+  def cacheable?
+    false
+  end
+
   def shop
     parent.parent
   end
