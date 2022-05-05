@@ -10,7 +10,7 @@ argu_app = Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application
 end
 argu_app.save(validate: false)
 # rubocop:disable Rails/SkipsModelValidations
-argu_app.update_columns(uid: ENV['ARGU_APP_ID'], secret: ENV['ARGU_APP_SECRET']) if ENV['ARGU_APP_ID']
+argu_app.update_columns(uid: ENV['LIBRO_CLIENT_ID'], secret: ENV['LIBRO_CLIENT_SECRET']) if ENV['LIBRO_CLIENT_ID']
 # rubocop:enable Rails/SkipsModelValidations
 Doorkeeper::Application.find_or_create_by(id: Doorkeeper::Application::AFE_ID) do |app|
   app.id = Doorkeeper::Application::AFE_ID
