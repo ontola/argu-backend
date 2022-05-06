@@ -36,7 +36,7 @@ module VoteEventable
       super || parent.try(:default_options_vocab) || Vocabulary.vote_options
     end
 
-    def previously_changed_relations(depth = 0)
+    def previously_changed_relations(inverted = nil)
       serializer_class = RDF::Serializers.serializer_for(self)
 
       super.merge(

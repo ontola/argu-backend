@@ -47,6 +47,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
            publisher: creator,
            parent: question)
   end
+  let(:motion_placement) { motion_with_placement.placements.first }
   let(:guest_user) { create_guest_user }
   let(:other_guest_user) { create_guest_user(session_id: 'other_id') }
   let(:guest_vote) do
@@ -165,13 +166,14 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
   test 'creator should put update motion change latlon' do
     sign_in creator
+    place_id = motion_placement.place.id
 
     general_update(
       results: {should: true, response: :success},
       record: :motion_with_placement,
       attributes: {
         custom_placement_attributes: {
-          id: motion_with_placement.placements.first.id,
+          id: motion_placement.id,
           lat: 2.0,
           lon: 2.0
         }
@@ -179,9 +181,17 @@ class MotionsTest < ActionDispatch::IntegrationTest
       differences: [['Motion', 0], ['Placement', 0], ['Place', 1], ['Activity', 1]]
     )
 
-    motion_with_placement.reload
-    assert_equal 2, motion_with_placement.placements.first.lat
-    assert_equal 2, motion_with_placement.placements.first.lon
+    motion_placement.reload
+    assert_not_equal(motion_placement.place.id, place_id)
+    assert_equal 2, motion_placement.lat
+    assert_equal 2, motion_placement.lon
+
+    expect_triple(resource_iri(motion_placement), NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate])
+    place_iri = resource_iri(motion_placement.place, root: argu)
+    expect_triple(place_iri, NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate])
+    vote_event_iri = resource_iri(motion_with_placement.default_vote_event)
+    expect_triple(vote_event_iri, NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate])
+    refute_triple(resource_iri(motion_with_placement), NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate])
   end
 
   test 'creator should put update motion remove latlon' do
@@ -192,7 +202,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       record: :motion_with_placement,
       attributes: {
         custom_placement_attributes: {
-          id: motion_with_placement.placements.first.id,
+          id: motion_placement.id,
           _destroy: 'true'
         }
       },
