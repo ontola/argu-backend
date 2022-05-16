@@ -45,7 +45,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: f4914139b16865555298cd32d59717d5b24c62c6
+  revision: c366fc7c690a851e19a7ad5e243e8e282cb09611
   branch: empathy
   specs:
     linked_rails (0.0.4)
@@ -386,7 +386,7 @@ GEM
       xml-simple (~> 1.1.5)
     link_header (0.0.8)
     logger (1.5.0)
-    loofah (2.17.0)
+    loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     ltree_hierarchy (1.0.0)
@@ -443,7 +443,7 @@ GEM
     net_http_timeout_errors (0.3.5)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.13.5)
+    nokogiri (1.13.6)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth2 (1.4.7)

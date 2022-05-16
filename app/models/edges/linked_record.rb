@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class LinkedRecord < Edge
-  enhance Commentable
   include SerializationHelper
 
   property :external_iri, :iri, NS.owl.sameAs
@@ -13,20 +12,12 @@ class LinkedRecord < Edge
   end
 
   def external_statements
-    external_body + [
-      RDF::Statement.new(
-        external_iri,
-        RDF::OWL.sameAs,
-        iri
-      )
-    ]
+    external_body
   end
 
   def iri_opts
     {iri: external_iri}
   end
-
-  def rdf_type; end
 
   private
 
@@ -65,8 +56,8 @@ class LinkedRecord < Edge
           creator: Profile.community,
           publisher: User.community
         )
-      record.access_token = user_context.doorkeeper_token&.token
-      record.language = user_context.user.language
+      record.access_token = user_context&.doorkeeper_token&.token
+      record.language = user_context&.user&.language
       record
     end
   end

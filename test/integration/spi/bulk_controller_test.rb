@@ -127,8 +127,7 @@ module SPI
         ]
       end
       assert_equal(included_records, expected_includes)
-      expect_slice_attribute(slice, linked_iri, NS.owl.sameAs, dg_motion1.iri)
-      expect_slice_attribute(slice, dg_motion1.iri, NS.owl.sameAs, linked_iri)
+      expect_slice_attribute(slice, linked_iri, NS.argu[:linkedRecord], dg_motion1.iri)
     end
 
     ####################################
