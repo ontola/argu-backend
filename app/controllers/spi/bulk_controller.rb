@@ -78,7 +78,7 @@ module SPI
     def resource_hash_with_same_as(resource, iri) # rubocop:disable Metrics/AbcSize
       hash = resource_hash(resource)
 
-      if iri.to_s != resource.iri.to_s && !hash.keys.include?(iri.to_s)
+      if iri.to_s != "#{ActsAsTenant.current_tenant.iri}/" && resource.iri.to_s && !hash.keys.include?(iri.to_s)
         create_record(hash, iri)
         hash[iri.to_s][NS.owl.sameAs.to_s] = object_to_value(resource.iri)
       end
