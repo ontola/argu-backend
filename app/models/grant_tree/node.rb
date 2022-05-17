@@ -17,6 +17,12 @@ class GrantTree
     with_collection :grant_resets,
                     policy_scope: false
 
+    def initialize(**opts)
+      @mutex = Mutex.new
+
+      super
+    end
+
     # Adds a child to this node
     # @param [Hash] attrs The attributes of the Node to add
     # @return [Node] The child that was added
@@ -154,15 +160,17 @@ class GrantTree
     end
 
     def perform_calculations # rubocop:disable Metrics/AbcSize
-      return if @calculations_performed
+      @mutex.synchronize do
+        return if @calculations_performed
 
-      self.grant_sets = parent.present? ? dup_grant_sets(parent) : {}
-      self.grants = parent.present? ? parent.grants.dup : []
-      self.permitted_actions = parent.present? ? parent.permitted_actions.deep_dup : {}
-      apply_grant_resets
-      apply_new_grants
+        self.grant_sets = parent.present? ? dup_grant_sets(parent) : {}
+        self.grants = parent.present? ? parent.grants.dup : []
+        self.permitted_actions = parent.present? ? parent.permitted_actions.deep_dup : {}
+        apply_grant_resets
+        apply_new_grants
 
-      @calculations_performed = true
+        @calculations_performed = true
+      end
     end
 
     class << self
