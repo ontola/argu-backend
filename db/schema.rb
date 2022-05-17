@@ -373,6 +373,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_22_103507) do
     t.index ["root_id"], name: "index_properties_on_root_id"
   end
 
+  create_table "property_definitions", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.uuid "vocabulary_id", null: false
+    t.string "predicate", null: false
+    t.integer "property_type", null: false
+  end
+
   create_table "publications", id: :serial, force: :cascade do |t|
     t.string "job_id"
     t.datetime "published_at"
@@ -522,6 +530,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_22_103507) do
   add_foreign_key "placements", "users", column: "publisher_id"
   add_foreign_key "properties", "edges", column: "linked_edge_id", primary_key: "uuid"
   add_foreign_key "properties", "edges", primary_key: "uuid"
+  add_foreign_key "property_definitions", "edges", column: "vocabulary_id", primary_key: "uuid"
   add_foreign_key "publications", "edges", column: "publishable_id", primary_key: "uuid"
   add_foreign_key "shortnames", "edges", column: "owner_id", primary_key: "uuid"
   add_foreign_key "widgets", "edges", column: "owner_id", primary_key: "uuid"

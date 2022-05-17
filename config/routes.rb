@@ -170,6 +170,7 @@ Rails.application.routes.draw do
   linked_resource(ProArgument)
   linked_resource(Profile)
   linked_resource(Project)
+  linked_resource(PropertyDefinition)
   linked_resource(Publication)
   linked_resource(Question)
   linked_resource(Shortname)

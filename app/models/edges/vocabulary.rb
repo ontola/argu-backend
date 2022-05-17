@@ -25,6 +25,10 @@ class Vocabulary < Edge
 
   has_one :custom_form,
           foreign_key: :parent_id
+  has_many :property_definitions,
+           primary_key: :uuid,
+           dependent: :destroy
+
   with_columns default: [
     NS.schema.name,
     NS.ontola[:updateAction],
@@ -33,6 +37,7 @@ class Vocabulary < Edge
   with_collection :terms,
                   display: -> { parent.default_term_display&.to_s&.sub('_display', '') },
                   title: -> { parent.display_name }
+  with_collection :property_definitions
 
   parentable :page
 
