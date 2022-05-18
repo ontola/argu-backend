@@ -13,6 +13,7 @@ gem 'acts_as_follower',
 gem 'acts_as_list'
 gem 'acts_as_tenant', git: 'https://github.com/ErwinM/acts_as_tenant', ref: '1ba28'
 gem 'auto_strip_attributes'
+gem 'aws-sdk-s3', require: false
 gem 'bootsnap', require: false
 gem 'bugsnag'
 gem 'bunny'
@@ -62,6 +63,7 @@ gem 'ros-apartment',
     git: 'https://github.com/rails-on-services/apartment',
     require: 'apartment'
 gem 'rqrcode'
+gem 'ruby-vips'
 gem 'rubyzip'
 gem 'searchkick'
 gem 'sequenced'

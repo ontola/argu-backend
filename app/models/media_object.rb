@@ -16,19 +16,23 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     display: :table
   )
 
-  mount_uploader :content, MediaObjectUploader, mount_on: :content_uid
+  mount_uploader :content_old, MediaObjectUploader, mount_on: :content_uid
+  has_one_attached :content do |attachable|
+    MediaObjectUploader::IMAGE_VERSIONS.each do |type, opts|
+      attachable.variant(
+        type,
+        opts[:strategy] => [opts[:w], opts[:h]],
+        format: :jpeg,
+        saver: MediaObjectUploader::CONVERSION_OPTIONS.merge(opts[:conversion_opts] || {})
+      )
+    end
+  end
+
   with_columns default: [
     NS.dbo[:filename],
     NS.schema.uploadDate,
     NS.argu[:copyUrl]
   ]
-
-  attribute :content, FileType.new
-  validates :url, presence: true
-
-  validates_integrity_of :content
-  validates_processing_of :content
-  validates_download_of :content
 
   enum content_source: {local: 0, remote: 1}
   enum used_as: {content_photo: 0, cover_photo: 1, profile_photo: 2, attachment: 3}
@@ -53,22 +57,12 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
              :intervention, :intervention_type, :measure, :page
   alias_attribute :display_name, :title
 
-  # Hands over publication of a collection to the Community profile
-  def self.anonymize(collection)
-    collection.update_all(creator_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
-  end
-
-  # Hands over ownership of a collection to the Community user
-  def self.expropriate(collection)
-    collection.update_all(publisher_id: User::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
-  end
-
   def allowed_content_types
     content.content_type_white_list
   end
 
   def content=(val)
-    super unless val.is_a?(String)
+    super unless val.is_a?(String) && val.include?('http')
   end
 
   def content_source
@@ -76,6 +70,8 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def content_type
+    return 'image/png' if gravatar_url?
+
     content&.content_type
   rescue Aws::S3::Errors::NotFound
     Bugsnag.notify(RuntimeError.new("Aws::S3::Errors::NotFound: #{id}")) unless Rails.env.staging?
@@ -86,17 +82,24 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   delegate :embed_url, to: :video_info, allow_nil: true
 
+  def gravatar_url?
+    content.blank? && profile_photo?
+  end
+
   def parent
     about
   end
 
   def remote_content_url=(url)
     self.remote_url = url
-    video_info ? super(video_info.thumbnail) : super
+
+    image_url = video_info ? video_info.thumbnail : url
+
+    content.attach(io: URI.open(image_url), filename: video_info&.title || url.split('/').last)
   end
 
   def thumbnail
-    url_for_environment(:icon)
+    public_url_for_version(:icon)
   end
 
   def thumbnail_or_icon # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
@@ -126,23 +129,35 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     video_info ? 'video' : content_type&.split('/')&.first
   end
 
-  def url(*args)
-    RDF::DynamicURI(type == 'video' ? remote_url : content.url(*args)).presence
+  # Generates the variant if not present yet
+  def private_url_for_version(type)
+    return gravatar_url if gravatar_url?
+
+    return if content.blank?
+
+    return RDF::URI(content.url) if type == :content
+
+    RDF::URI(content.variant(type.to_sym).processed.url)
   end
 
-  def url_for_version(version)
+  def public_url_for_version(version = :content)
     RDF::DynamicURI(path_with_hostname("#{root_relative_iri}/content/#{version}?version=#{updated_at.to_i}"))
   end
 
   private
 
+  def gravatar_url
+    email = about.is_a?(Page) ? 'anonymous' : "#{about_type}_#{about_id}@gravatar.argu.co"
+    RDF::URI(Gravatar.gravatar_url(email, size: '128x128', default: 'identicon'))
+  end
+
   def set_file_name
-    new_filename = video_info&.title || content&.file.try(:original_filename)
+    new_filename = video_info&.title || content&.filename
 
     self.filename = new_filename if new_filename
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
   def set_publisher_and_creator
     if creator.nil? && creator_id.nil? && about.present?
       self.creator = about.is_a?(Edge) ? about.creator : about.profile
@@ -151,28 +166,18 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     self.publisher = about.is_a?(Edge) ? about.publisher : creator.profileable
   end
-
-  def url_for_environment(type)
-    url = content.url(type)
-    return url && RDF::DynamicURI(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
-    return if content.file.blank?
-
-    if File.exist?(content.file.path)
-      RDF::DynamicURI(content.url(:icon))
-    else
-      path = icon.path.gsub(File.expand_path(content.root), '')
-      RDF::DynamicURI("#{Rails.application.config.aws_url}#{path}")
-    end
-  end
-  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   def video_info
-    return unless remote_url.present? && VideoInfo.usable?(remote_url)
-
-    @video_info ||= VideoInfo.new(remote_url)
+    @video_info ||= VideoInfo.new(remote_url) if VideoInfo.usable?(remote_url)
   end
 
   class << self
+    # Hands over publication of a collection to the Community profile
+    def anonymize(collection)
+      collection.update_all(creator_id: Profile::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
+    end
+
     def attributes_for_new(opts)
       super.merge(
         about: opts[:parent]
@@ -193,6 +198,11 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         MediaObjectUploader::PORTABLE_DOCUMENT_TYPES +
         MediaObjectUploader::PRESENTATION_TYPES +
         MediaObjectUploader::SPREADSHEET_TYPES
+    end
+
+    # Hands over ownership of a collection to the Community user
+    def expropriate(collection)
+      collection.update_all(publisher_id: User::COMMUNITY_ID) # rubocop:disable Rails/SkipsModelValidations
     end
 
     def iri

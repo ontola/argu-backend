@@ -194,5 +194,10 @@ Rails.application.routes.draw do
   resources :container_nodes, path: :container_nodes, only: %i[index]
   linked_resource(ContainerNode, collection: false)
 
-  match '*path', to: 'static_pages#not_found', via: :all
+  match '*path',
+        to: 'not_found#show',
+        via: :all,
+        constraints: lambda { |req|
+          req.path.exclude? 'rails/active_storage'
+        }
 end

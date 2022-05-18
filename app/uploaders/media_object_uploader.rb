@@ -41,16 +41,6 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     box: {if: :is_image?, w: 568, h: 400, strategy: :resize_to_limit},
     cover: {if: :is_image?, w: 1500, h: 2000, strategy: :resize_to_limit, conversion_opts: {quality: 100}}
   }.freeze
-  IMAGE_VERSIONS.each do |type, opts|
-    version type, if: opts[:if] do
-      process convert: ['jpeg', CONVERSION_OPTIONS.merge(opts[:conversion_opts] || {})]
-      process opts[:strategy] => [opts[:w], opts[:h]]
-
-      def full_filename(for_file)
-        super.sub(/#{EXTENSION_REGEX}/i, '.jpg')
-      end
-    end
-  end
 
   def aws_acl
     public_content? ? 'public-read' : 'private'
@@ -73,18 +63,6 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
 
   def cover_photo?(_file = nil)
     model.cover_photo?
-  end
-
-  def default_url(*_args)
-    return unless profile_photo?
-
-    email =
-      if model.about.is_a?(Page)
-        'anonymous'
-      else
-        "#{model.about_type}_#{model.about_id}@gravatar.argu.co"
-      end
-    Gravatar.gravatar_url(email, size: '128x128', default: 'identicon')
   end
 
   def extension

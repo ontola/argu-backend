@@ -21,13 +21,10 @@ module ProfilePhotoable
                                     update_only: true,
                                     reject_if: proc { |attrs|
                                       attrs['content'].blank? &&
-                                        attrs['content_cache'].blank? &&
-                                        attrs['remove_content'] != '1' &&
                                         attrs['remote_content_url'].blank?
                                     }
 
       before_validation :build_profile_photo, if: :require_profile_photo?
-      before_save :remove_marked_profile_photo
     end
 
     def build_profile_photo
@@ -47,10 +44,6 @@ module ProfilePhotoable
       when Forum
         {publisher: publisher, creator: creator, forum: self}
       end
-    end
-
-    def remove_marked_profile_photo
-      default_profile_photo.save if default_profile_photo&.remove_content
     end
 
     private

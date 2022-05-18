@@ -204,7 +204,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
     page.reload
     assert_equal 1, page.media_objects.count
-    assert_equal 'profile_photo.png', page.default_profile_photo.content_identifier
+    assert_equal 'profile_photo.png', page.default_profile_photo.content.filename.to_s
   end
 
   test 'administrator should put update page add latlon' do

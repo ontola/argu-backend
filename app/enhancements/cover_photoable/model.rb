@@ -20,8 +20,6 @@ module CoverPhotoable
                                     update_only: true,
                                     reject_if: proc { |attrs|
                                       attrs['content'].blank? &&
-                                        attrs['content_cache'].blank? &&
-                                        attrs['remove_content'] != '1' &&
                                         attrs['remote_content_url'].blank?
                                     }
     end

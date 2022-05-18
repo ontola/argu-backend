@@ -12,3 +12,5 @@ schedule:
     cron: '0 0 * * *'
   WeeklyNotificationsSchedulerWorker:
     cron: '0 0 * * 0'
+  PurgeUnattachedBlobsWorker:
+    cron: '0 0 * * *'

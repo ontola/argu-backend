@@ -6,7 +6,7 @@ class ImageObject < MediaObject
   end
 
   def invalidation_statements
-    super.concat(MediaObjectUploader::IMAGE_VERSIONS.keys.map { |v| url_for_version(v) })
+    super.concat(MediaObjectUploader::IMAGE_VERSIONS.keys.map { |v| public_url_for_version(v) })
   end
 
   class << self

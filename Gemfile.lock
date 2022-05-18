@@ -725,6 +725,7 @@ DEPENDENCIES
   acts_as_tenant!
   addressable
   auto_strip_attributes
+  aws-sdk-s3
   better_errors
   binding_of_caller
   bootsnap
@@ -795,6 +796,7 @@ DEPENDENCIES
   rubocop (~> 0.92.0)
   rubocop-rails (~> 2.5.2)
   rubocop-rspec (~> 1.39.0)
+  ruby-vips
   rubyzip
   searchkick
   sequenced

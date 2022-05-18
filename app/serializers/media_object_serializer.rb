@@ -15,7 +15,7 @@ class MediaObjectSerializer < RecordSerializer
     end
   end
   attribute :content, predicate: NS.schema.contentUrl do |object|
-    object.url_for_version('content') if object.persisted?
+    object.public_url_for_version('content') if object.persisted?
   end
   attribute :content_type,
             predicate: NS.schema.encodingFormat,
@@ -32,7 +32,7 @@ class MediaObjectSerializer < RecordSerializer
             predicate: NS.argu[:remoteContentUrl],
             datatype: NS.xsd.string, &:remote_url
   attribute :thumbnail, predicate: NS.schema.thumbnail do |object|
-    object.url_for_version('thumbnail')
+    object.public_url_for_version('thumbnail')
   end
   attribute :position_y,
             predicate: NS.ontola[:imagePositionY],
@@ -48,7 +48,7 @@ class MediaObjectSerializer < RecordSerializer
 
   MediaObjectUploader::IMAGE_VERSIONS.each do |format, opts|
     attribute format, predicate: NS.ontola[:"imgUrl#{opts[:w]}x#{opts[:h]}"] do |object|
-      object.url_for_version(format)
+      object.public_url_for_version(format)
     end
   end
 

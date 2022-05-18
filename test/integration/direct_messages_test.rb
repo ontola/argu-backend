@@ -100,7 +100,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
       actor: {
         display_name: expected_actor.display_name,
         iri: resource_iri(expected_actor, root: argu),
-        thumbnail: expected_actor.default_profile_photo.thumbnail
+        thumbnail: ActsAsTenant.with_tenant(argu) { expected_actor.default_profile_photo.thumbnail }
       },
       body: 'body',
       email: administrator.email,

@@ -8,11 +8,11 @@ class PageForm < ApplicationForm
         max_count: 1,
         sh_in: -> { ContainerNode.collection_iri }
   field :locale
+  has_one :default_profile_photo, min_count: 0
 
   group :theme,
         label: -> { I18n.t('forms.theme.label') },
         description: -> { I18n.t('forms.theme.description') } do
-    has_one :default_profile_photo, min_count: 0
     field :primary_color,
           input_field: LinkedRails::Form::Field::ColorInput
     field :secondary_color,

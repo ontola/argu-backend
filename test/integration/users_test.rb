@@ -405,8 +405,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 'name', user.reload.display_name
     assert_equal 2, user.media_objects.reload.count
-    assert_equal('profile_photo.png', user.default_profile_photo.content_identifier)
-    assert_equal('cover_photo.jpg', user.default_cover_photo.content_identifier)
+    assert_equal('profile_photo.png', user.default_profile_photo.content.filename.to_s)
+    assert_equal('cover_photo.jpg', user.default_cover_photo.content.filename.to_s)
 
     assert_equal(response.headers['Location'], resource_iri(user, root: argu))
 
@@ -415,14 +415,13 @@ class UsersTest < ActionDispatch::IntegrationTest
           user: {
             default_profile_photo_attributes: {
               id: user.default_profile_photo.id,
-              content_cache: '',
-              used_as: :profile_photo,
-              remove_content: '1'
+              _destroy: 'true'
             }
           }
         }
+    assert_response :success
     assert_equal 'name', user.reload.display_name
-    assert_nil(user.default_profile_photo.content_identifier)
+    assert_nil(user.default_profile_photo.content.filename)
   end
 
   test 'user should create place and placement on update with postal_code and country code' do

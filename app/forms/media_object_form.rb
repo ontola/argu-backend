@@ -17,7 +17,7 @@ class MediaObjectForm < ApplicationForm
 
   include LinkedRails::Policy::AttributeConditions
   field :content_source, input_field: LinkedRails::Form::Field::ToggleButtonGroup, min_count: 1
-  field :content, if: [is_local], min_count: 1
+  field :content, if: [is_local], min_count: 1, input_field: LinkedRails::Form::Field::FileInput
   field :remote_content_url, if: [is_remote], min_count: 1
 
   hidden do

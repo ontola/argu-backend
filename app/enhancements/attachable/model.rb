@@ -17,8 +17,6 @@ module Attachable
                                     allow_destroy: true,
                                     reject_if: proc { |attrs|
                                       attrs['content'].blank? &&
-                                        attrs['content_cache'].blank? &&
-                                        attrs['remove_content'] != '1' &&
                                         attrs['remote_content_url'].blank? &&
                                         attrs['description'].blank?
                                     }

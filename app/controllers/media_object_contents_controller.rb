@@ -32,18 +32,18 @@ class MediaObjectContentsController < ParentableController
     redirect_to(url_for_version || raise(ActiveRecord::RecordNotFound))
   end
 
-  def url_for_version # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def url_for_version # rubocop:disable Metrics/AbcSize
     raise(ActiveRecord::RecordNotFound) unless parent_from_params.is_a?(MediaObject)
 
+    expires_in ActiveStorage.service_urls_expire_in
+
     case params[:version].to_sym
-    when :content
-      parent_from_params.content.url
     when :thumbnail
-      parent_from_params.thumbnail
+      parent_from_params.private_url_for_version(:icon)
     when *MediaObjectUploader::IMAGE_VERSIONS.keys
-      parent_from_params.content.url(params[:version])
+      parent_from_params.private_url_for_version(params[:version])
     else
-      parent_from_params.url
+      parent_from_params.private_url_for_version(:content)
     end
   end
 end

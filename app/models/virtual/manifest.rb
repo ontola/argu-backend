@@ -21,6 +21,13 @@ class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
     '#eef0f2'
   end
 
+  def csp_entries
+    {
+      connectSrc: [ActiveStorage::Blob.service.try(:bucket)&.url].compact,
+      scriptSrc: [ActiveStorage::Blob.service.try(:bucket)&.url].compact
+    }
+  end
+
   def dir
     :rtl
   end
@@ -47,7 +54,10 @@ class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
   def ontola # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     {
       allowed_external_sources: page.allowed_external_sources,
+      blob_preview_iri: LinkedRails.iri(path: 'rails/active_storage/blobs/redirect/{signed_id}/preview'),
+      blob_upload_iri: LinkedRails.iri(path: 'rails/active_storage/direct_uploads'),
       css_class: page.template,
+      csp: csp_entries,
       header_background: page.header_background.sub('background_', ''),
       header_text: page.header_text.sub('text_', ''),
       preconnect: [
