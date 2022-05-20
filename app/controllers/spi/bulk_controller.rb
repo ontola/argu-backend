@@ -10,6 +10,10 @@ module SPI
 
     alias_attribute :pundit_user, :user_context
 
+    def resource_body(resource)
+      resource_serializer(resource).send(:instrumented_render_emp_json)
+    end
+
     private
 
     def allowed_external_host?(iri)
@@ -139,15 +143,24 @@ module SPI
     end
 
     def resource_thread(&block)
-      Thread.new(Apartment::Tenant.current, ActsAsTenant.current_tenant, I18n.locale, request.env, &block)
+      Thread.new(
+        Apartment::Tenant.current,
+        ActsAsTenant.current_tenant,
+        I18n.locale,
+        request.env,
+        OpenTelemetry::Context.current,
+        &block
+      )
     end
 
     def threaded_authorized_resource(resource, &block) # rubocop:disable Metrics/MethodLength
-      resource_thread do |apartment, tenant, locale, env|
-        Bugsnag.configuration.set_request_data(:rack_env, env)
-        Apartment::Tenant.switch(apartment) do
-          ActsAsTenant.with_tenant(tenant) do
-            I18n.with_locale(locale, &block)
+      resource_thread do |apartment, tenant, locale, env, context|
+        OpenTelemetry::Context.with_current(context) do
+          Bugsnag.configuration.set_request_data(:rack_env, env)
+          Apartment::Tenant.switch(apartment) do
+            ActsAsTenant.with_tenant(tenant) do
+              I18n.with_locale(locale, &block)
+            end
           end
         end
       rescue StandardError, ScriptError => e

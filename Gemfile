@@ -117,6 +117,10 @@ end
 
 group :staging, :development do
   gem 'flamegraph'
+  gem 'opentelemetry-exporter-otlp'
+  gem 'opentelemetry-instrumentation-all'
+  # gem 'opentelemetry-instrumentation-rails'
+  gem 'opentelemetry-sdk'
   gem 'rack-mini-profiler', require: false
   gem 'stackprof'
 end

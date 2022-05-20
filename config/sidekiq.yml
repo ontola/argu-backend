@@ -1,6 +1,8 @@
 user: deploy
 production:
-  :concurrency: 4
+  :concurrency: 1
+staging:
+  :concurrency: 1
 :queues:
   - default
   - searchkick
