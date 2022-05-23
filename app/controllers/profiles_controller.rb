@@ -11,9 +11,7 @@ class ProfilesController < AuthorizedController
   end
 
   def permit_params
-    pm = params.require(:profile).permit(*policy(@profile || authenticated_resource).permitted_attributes).to_h
-    merge_photo_params(pm)
-    pm
+    params.require(:profile).permit(*policy(@profile || authenticated_resource).permitted_attributes).to_h
   end
 
   def redirect_url

@@ -5,7 +5,7 @@ module Followable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :follows
+      with_collection :follows, association: :followings
     end
 
     def follow_iri(follow_type)

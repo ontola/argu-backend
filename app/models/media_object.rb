@@ -5,6 +5,7 @@ require 'types/file_type'
 class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Parentable
   enhance LinkedRails::Enhancements::Creatable
+  enhance LinkedRails::Enhancements::Destroyable
   enhance Cacheable
   include Broadcastable
 
@@ -31,7 +32,8 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   with_columns default: [
     NS.dbo[:filename],
     NS.schema.uploadDate,
-    NS.argu[:copyUrl]
+    NS.argu[:copyUrl],
+    NS.ontola[:destroyAction]
   ]
 
   enum content_source: {local: 0, remote: 1}

@@ -6,8 +6,8 @@ module Dismissable
 
     included do
       attribute :dismiss_action
-      has_many :banner_dismissals
-      with_collection :banner_dismissals
+      with_collection :banner_dismissals,
+                      association_base: -> { Banner.none }
     end
 
     def dismiss_button=(_val)

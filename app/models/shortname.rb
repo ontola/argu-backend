@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Shortname < ApplicationRecord
+class Shortname < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
 
@@ -17,6 +17,9 @@ class Shortname < ApplicationRecord
   after_destroy :update_caches, if: :primary?
   after_save :update_caches, if: :primary?
 
+  collection_options(
+    display: :settingsTable
+  )
   with_columns settings: [
     NS.argu[:alias],
     NS.argu[:shortnameable],
@@ -41,7 +44,7 @@ class Shortname < ApplicationRecord
               message: I18n.t('profiles.should_start_with_capital')
             }
 
-  attr_reader :destination
+  attr_accessor :destination
 
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i.freeze
 
@@ -60,7 +63,7 @@ class Shortname < ApplicationRecord
   end
 
   def parent_collections(user_context)
-    [self.class.root_collection(user_context: user_context)]
+    super + [self.class.root_collection(user_context: user_context)]
   end
 
   def path
@@ -103,14 +106,26 @@ class Shortname < ApplicationRecord
   class << self
     def attributes_for_new(opts)
       {
+        destination: opts[:parent]&.iri&.to_s&.split(LinkedRails.iri.to_s)&.last,
         primary: false,
-        owner: opts[:parent],
+        owner: opts[:parent] || ActsAsTenant.current_tenant,
         root: ActsAsTenant.current_tenant
       }
     end
 
     def find_resource(shortname, root_id = nil)
       Shortname.where(root_id: root_id).find_by('lower(shortname) = lower(?)', shortname).try(:owner)
+    end
+
+    def requested_index_resource(params, user_context)
+      if params[:shortname]&.key?(:destination)
+        collection_from_parent(
+          index_collection_params(params, user_context)
+            .merge(parent_iri: params.require(:shortname).require(:destination))
+        )
+      else
+        super
+      end
     end
   end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLength
+  include NestedAttributesHelper
+
   skip_before_action :verify_setup
 
   has_singular_update_action
@@ -135,7 +137,6 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
   def permit_params
     attrs = policy(authenticated_resource || User).permitted_attributes
     pp = params.require(:user).permit(*attrs).to_h
-    merge_photo_params(pp)
     merge_placement_params(pp, User)
   end
 

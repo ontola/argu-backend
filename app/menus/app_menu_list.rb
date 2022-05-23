@@ -95,7 +95,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       setting_item(
         :shortnames,
         label: I18n.t('pages.settings.menu.shortnames'),
-        href: Shortname.collection_iri(display: :settingsTable)
+        href: Shortname.collection_iri
       ),
       setting_item(
         :custom_menu_items,

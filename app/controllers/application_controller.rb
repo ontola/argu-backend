@@ -9,7 +9,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   include ActiveResponseHelper
   include RedirectHelper
   include JsonAPIHelper
-  include NestedAttributesHelper
   include UsersHelper
   include PublicActivity::StoreController
   include DeltaHelper

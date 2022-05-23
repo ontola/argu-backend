@@ -21,14 +21,6 @@ class PagesController < EdgeableController
     respond_with_redirect(location: authenticated_resource.iri, reload: true)
   end
 
-  def permit_params
-    return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
-
-    @_permit_params = super
-    merge_photo_params(@_permit_params)
-    @_permit_params
-  end
-
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
 

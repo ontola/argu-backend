@@ -42,5 +42,9 @@ class BannerManagement < Edge
     def form_class
       BannerForm
     end
+
+    def save_as_draft?(_parent)
+      true
+    end
   end
 end

@@ -33,6 +33,8 @@ module Shortnameable
     validate :validate_no_duplicate_shortname
 
     attribute :url, :string
+
+    with_collection :shortnames
   end
 
   # Useful to test whether a model is shortnameable

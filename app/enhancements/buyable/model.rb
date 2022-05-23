@@ -11,7 +11,10 @@ module Buyable
       validates :price, presence: true
       validates :product_id, presence: true
 
-      with_collection :cart_details
+      with_collection(
+        :cart_details,
+        association_base: -> { [] }
+      )
 
       delegate :currency, to: :parent
 

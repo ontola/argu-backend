@@ -35,7 +35,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
         File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'
       )
     )
-    assert File.exist?(Motion.last.default_cover_photo.content.cover.file.path)
+    assert_equal 'cover_photo.jpg', Motion.last.default_cover_photo.content.filename.to_s
   end
 
   test 'post create motion with attachments as nquads' do

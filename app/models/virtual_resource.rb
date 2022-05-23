@@ -7,6 +7,10 @@ class VirtualResource
   include LinkedRails::Model
   include ApplicationModel
 
+  collection_options(
+    association_base: -> { [] }
+  )
+
   def anonymous_iri?
     true
   end

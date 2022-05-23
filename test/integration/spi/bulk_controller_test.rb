@@ -99,7 +99,11 @@ module SPI
       cart_detail_slice = JSON.parse(JSON.parse(body).second['body'])
       blank_node = RDF::Node.new(cart_detail_slice.keys.first.split(':').last)
       expect_slice_attribute(cart_detail_slice, cart_detail, NS.owl.sameAs, blank_node)
-      actions = [RDF::URI("#{cart_detail}/new"), RDF::URI("#{cart_detail}/grants/new")]
+      actions = [
+        RDF::URI("#{cart_detail}/new"),
+        RDF::URI("#{cart_detail}/shortnames/new"),
+        RDF::URI("#{cart_detail}/grants/new")
+      ]
       expect_slice_attribute(cart_detail_slice, blank_node, NS.ontola[:createAction], actions)
     end
 
