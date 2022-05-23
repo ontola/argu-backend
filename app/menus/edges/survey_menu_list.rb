@@ -10,15 +10,28 @@ class SurveyMenuList < ApplicationMenuList
 
   private
 
-  def tabs_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    submission = resource.submission_for(user_context)
-    submission_item =
-      if submission
-        setting_item(:submission, href: submission.iri)
-      else
-        setting_item(:participate, href: resource.submission_collection.action(:create).iri)
-      end
+  def form_item
+    return if resource.action_body.blank?
 
+    setting_item(
+      :form,
+      label: I18n.t('menus.surveys.fields'),
+      href: resource.action_body.collection_iri(:custom_form_fields),
+      image: 'fa-edit'
+    )
+  end
+
+  def submission_item
+    submission = resource.submission_for(user_context)
+
+    if submission
+      setting_item(:submission, href: submission.iri)
+    else
+      setting_item(:participate, href: resource.submission_collection.action(:create).iri)
+    end
+  end
+
+  def tabs_menu_items # rubocop:disable Metrics/MethodLength
     [
       submission_item,
       setting_item(
@@ -32,12 +45,7 @@ class SurveyMenuList < ApplicationMenuList
         label: I18n.t('argu.Submission.plural_label'),
         href: resource.collection_iri(:submissions, display: :table)
       ),
-      setting_item(
-        :form,
-        label: I18n.t('menus.surveys.fields'),
-        href: resource.action_body.collection_iri(:custom_form_fields),
-        image: 'fa-edit'
-      ),
+      form_item,
       edit_link,
       external_link
     ]
