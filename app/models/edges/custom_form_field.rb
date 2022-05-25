@@ -36,7 +36,6 @@ class CustomFormField < Edge
   accepts_nested_attributes_for :options_vocab
 
   validates :form_field_type, presence: true
-  validates :display_name, presence: true
   validates :description, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
   validates :helper_text, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
 

@@ -17,7 +17,12 @@ class CustomFormFieldForm < ApplicationForm
   has_one :default_cover_photo, if: has_type(:SwipeInput)
   field :display_name
   field :description
-  field :helper_text
+  %i[TextInput TextAreaInput MarkdownInput NumberInput CheckboxInput CheckboxGroup RadioGroup SelectInput
+     ToggleButtonGroup ColorInput DateInput DateTimeInput MoneyInput IconInput LocationInput SliderInput EmailInput
+     PasswordInput MultipleEmailInput FileInput PostalRangeInput].each do |type|
+    field :helper_text,
+          if: has_type(type)
+  end
   %i[CheckboxGroup RadioGroup SelectInput ToggleButtonGroup].each do |type|
     has_one :options_vocab,
             if: has_type(type),
