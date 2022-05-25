@@ -10,7 +10,7 @@ class Survey < Discussion
   include Edgeable::Content
 
   property :external_iri, :iri, NS.argu[:externalIRI]
-  property :reward, :integer, NS.argu[:reward], default: 0
+  property :coupon_required, :boolean, NS.argu[:couponRequired], default: false
   property :action_body_id,
            :linked_edge_id,
            NS.argu[:actionBody],
@@ -30,14 +30,6 @@ class Survey < Discussion
     super + [
       invalidate_resource_delta(menu(:tabs))
     ]
-  end
-
-  def currency
-    'EUR'
-  end
-
-  def has_reward?
-    reward.positive?
   end
 
   def form_type

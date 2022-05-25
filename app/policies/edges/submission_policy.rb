@@ -11,10 +11,6 @@ class SubmissionPolicy < EdgePolicy
     is_creator?
   end
 
-  def reward?
-    record.parent.has_reward?
-  end
-
   def show?
     super || new_record? || is_creator?
   end

@@ -16,9 +16,8 @@ nl:
         label: "Typeform url"
       form_type:
         label: "Type"
-      reward:
-        helper_text: "Hoeveel ontvangen deelnemers aan deze enquête?"
-        label: "Beloning"
+      coupon_required:
+        label: "Uitnodiging verplicht"
   menus:
     surveys:
       fields: "Vragen"

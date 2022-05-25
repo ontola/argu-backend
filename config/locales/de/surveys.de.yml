@@ -18,9 +18,8 @@ de:
         label: Typeform url
       form_type:
         label: Typ
-      reward:
-        helper_text: Wie viel erhalten die Teilnehmer an dieser Umfrage?
-        label: Belohnung
+      coupon_required:
+        label: Einladung erforderlich
   menus:
     surveys:
       fields: Fragen

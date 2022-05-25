@@ -222,14 +222,14 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   batch = FactorySeeder.create(:coupon_batch, parent: open_survey)
   batch.update(coupons: %w[COUPON1 COUPON1])
 
-  reward_survey = FactorySeeder.create_with_name(
+  coupon_survey = FactorySeeder.create_with_name(
     :survey,
     :reward_survey,
     parent: freetown,
     external_iri: survey_iri,
-    reward: 100
+    coupon_required: true
   )
-  batch = FactorySeeder.create(:coupon_batch, parent: reward_survey)
+  batch = FactorySeeder.create(:coupon_batch, parent: coupon_survey)
   batch.update(coupons: %w[COUPON1 COUPON1])
 end
 

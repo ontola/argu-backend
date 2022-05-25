@@ -16,9 +16,8 @@ en:
         label: "Typeform url"
       form_type:
         label: "Type"
-      reward:
-        helper_text: "How much will participants of this survey receive?"
-        label: "Reward"
+      coupon_required:
+        label: "Invite required"
   menus:
     surveys:
       fields: "Questions"

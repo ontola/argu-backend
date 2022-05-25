@@ -34,11 +34,7 @@ class Submission < Edge
   end
 
   def require_coupon?
-    parent.has_reward? && super
-  end
-
-  def reward_iri
-    RDF::URI('https://acegif.com/wp-content/gifs/raining-money-8.gif')
+    parent.coupon_required? && super
   end
 
   private
