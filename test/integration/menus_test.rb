@@ -49,7 +49,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     navigations_iri = resource_iri(argu.menu(:navigations, user_context), root: argu)
     expect_resource_type(NS.ontola[:MenuItem], iri: navigations_iri)
     sequence = expect_sequence(navigations_iri, NS.ontola[:menuItems])
-    home_menu_iri = RDF::URI("#{navigations_iri}#home")
+    home_menu_iri = resource_iri(CustomMenuItem.find_by(edge: argu))
     freetown_menu_iri = resource_iri(CustomMenuItem.find_by(edge: freetown))
     feed_menu_iri = resource_iri(CustomMenuItem.navigations.where(resource: argu).order(:position).last)
     expect_triple(freetown_menu_iri, NS.ontola[:href], freetown.iri)

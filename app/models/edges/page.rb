@@ -43,7 +43,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   after_create :tenant_create
   after_create :create_default_groups
   after_create :create_staff_grant
-  after_create :create_activity_menu_item
+  after_create :create_default_menu_items
   after_create :create_system_vocabs
   after_create -> { reindex_tree(async: false) }
   after_update :tenant_update
@@ -169,11 +169,11 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   private
 
-  def create_activity_menu_item
-    CustomMenuItem.navigations.create(
+  def create_default_menu_items
+    navigations_menu_items.create!(edge: self)
+    navigations_menu_items.create!(
       href: feeds_iri(self),
-      label: 'menus.default.activity',
-      resource: self
+      label: 'menus.default.activity'
     )
   end
 

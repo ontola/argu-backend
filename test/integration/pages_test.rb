@@ -233,18 +233,21 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   test 'administrator should put update page change homepage' do
     sign_in argu_administrator
-    assert_equal CustomMenuItem.pluck(:edge_id).compact.sort, [amsterdam.uuid, utrecht.uuid].sort
+    assert_equal(
+      CustomMenuItem.where(root: argu).pluck(:edge_id).compact.sort,
+      [argu.uuid, amsterdam.uuid, utrecht.uuid].sort
+    )
     assert_nil argu.primary_container_node
 
     put argu, params: {id: argu.url, page: {primary_container_node_id: amsterdam.url}}
     argu.reload
     assert_equal argu.primary_container_node, amsterdam
-    assert_equal CustomMenuItem.pluck(:edge_id).compact.sort, [utrecht.uuid].sort
+    assert_equal CustomMenuItem.where(root: argu).pluck(:edge_id).compact.sort, [argu.uuid, utrecht.uuid].sort
 
     put argu, params: {id: argu.url, page: {primary_container_node_id: utrecht.url}}
     argu.reload
     assert_equal argu.primary_container_node, utrecht
-    assert_equal CustomMenuItem.pluck(:edge_id).compact.sort, [amsterdam.uuid].sort
+    assert_equal CustomMenuItem.where(root: argu).pluck(:edge_id).compact.sort, [argu.uuid, amsterdam.uuid].sort
   end
 
   test 'administrator should put update iri_prefix' do

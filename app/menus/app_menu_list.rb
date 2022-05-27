@@ -53,15 +53,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
   end
 
   def navigations_menu_items
-    [
-      menu_item(
-        :home,
-        image: ActsAsTenant.current_tenant.home_menu_image,
-        label: ActsAsTenant.current_tenant.home_menu_label,
-        href: ActsAsTenant.current_tenant.iri
-      ),
-      *custom_menu_items(:navigations, ActsAsTenant.current_tenant)
-    ]
+    custom_menu_items(:navigations, ActsAsTenant.current_tenant)
   end
 
   def navigation_item(record)
