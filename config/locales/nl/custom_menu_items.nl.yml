@@ -11,6 +11,8 @@ nl:
         label: "Type"
       edge:
         label: "Item"
+      custom_image:
+        label: "Plaatje"
       icon:
         label: "Icoon"
       position:

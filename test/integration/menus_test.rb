@@ -11,7 +11,7 @@ class MenusTest < ActionDispatch::IntegrationTest
       resource_id: argu.uuid,
       label: 'Custom label',
       href: 'https://argu.localdev/i/about',
-      image: 'fa-info'
+      icon: 'fa-info'
     )
   end
   let!(:child_menu_item) do

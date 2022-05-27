@@ -18,7 +18,7 @@ class CustomMenuItemPolicy < EdgeTreePolicy
     end
   end
 
-  permit_attributes %i[raw_label raw_href icon order edge edge_id target_type]
+  permit_attributes %i[raw_label raw_href icon order edge edge_id custom_image custom_image_content_type target_type]
 
   def show?
     true

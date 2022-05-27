@@ -11,6 +11,8 @@ de:
         label: Typ
       edge:
         label: Item
+      custom_image:
+        label: Bild
       icon:
         label: Symbol
       position:

@@ -18,6 +18,8 @@ class CustomMenuItemSerializer < Menus::ItemSerializer
   attribute :raw_href, predicate: NS.argu[:rawHref], datatype: NS.xsd.string do |object|
     object.attribute_in_database(:href)
   end
+  attribute :custom_image, predicate: NS.argu[:customImage], &:custom_image_iri
+  attribute :custom_image_content_type, predicate: NS.schema.encodingFormat
   has_one :parent,
           predicate: NS.ontola[:parentMenu],
           if: ->(o, p) { parent_menu?(o, p) },

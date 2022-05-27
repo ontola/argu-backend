@@ -21,4 +21,9 @@ class CustomMenuItemForm < ApplicationForm
   field :raw_label, if: [edge_target], helper_text: -> { 'Laat leeg om de naam van het item te gebruiken' }
   field :raw_label, if: [url_target], min_count: 1
   field :icon, input_field: IconInput
+  field :custom_image, input_field: LinkedRails::Form::Field::FileInput
+
+  hidden do
+    field :custom_image_content_type, sh_in: -> { MediaObjectUploader::IMAGE_TYPES }
+  end
 end
