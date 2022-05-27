@@ -7,8 +7,17 @@ en:
         label: "Label"
       raw_href:
         label: "URL"
+      target_type:
+        label: "Type"
+      edge:
+        label: "Item"
       icon:
         label: "Icon"
       position:
         label: "Position"
       coupled_to: "This menu item is coupled to %{name}."
+  enums:
+    custom_menu_items:
+      target_type:
+        edge: "Item"
+        url: "URL"

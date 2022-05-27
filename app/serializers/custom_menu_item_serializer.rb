@@ -7,6 +7,7 @@ class CustomMenuItemSerializer < Menus::ItemSerializer
   has_one :action, predicate: NS.ontola[:action] do
     nil
   end
+  has_one :edge, predicate: NS.argu[:edge]
   attribute :position, predicate: NS.argu[:order]
   attribute :raw_label, predicate: NS.argu[:menuLabel], datatype: NS.xsd.string do |object|
     object.attribute_in_database(:label)
@@ -25,6 +26,7 @@ class CustomMenuItemSerializer < Menus::ItemSerializer
           predicate: NS.ontola[:menuItems],
           if: ->(o, p) { menus_present?(o, p) },
           polymorphic: true
+  enum :target_type, predicate: NS.argu[:targetType]
 
   def self.menus_present?(object, _params)
     object.menus_present?

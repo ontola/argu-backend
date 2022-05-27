@@ -7,8 +7,17 @@ de:
         label: Bezeichnung
       raw_href:
         label: URL
+      target_type:
+        label: Typ
+      edge:
+        label: Item
       icon:
         label: Symbol
       position:
         label: Standort
       coupled_to: Dieser Menüpunkt ist an %{name} gekoppelt.
+  enums:
+    custom_menu_items:
+      target_type:
+        edge: Item
+        url: URL

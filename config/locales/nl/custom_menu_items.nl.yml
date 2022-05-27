@@ -7,8 +7,17 @@ nl:
         label: "Label"
       raw_href:
         label: "URL"
+      target_type:
+        label: "Type"
+      edge:
+        label: "Item"
       icon:
         label: "Icoon"
       position:
         label: "Positie"
       coupled_to: "Dit menu item is gekoppeld aan %{name}."
+  enums:
+    custom_menu_items:
+      target_type:
+        edge: "Item"
+        url: "URL"

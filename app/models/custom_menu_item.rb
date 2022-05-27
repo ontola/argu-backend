@@ -25,6 +25,8 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :custom_menu_items, -> { order(:position) }, foreign_key: :parent_menu_id, inverse_of: :parent_menu
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
+  enum target_type: {edge: 0, url: 1}
+
   before_create :set_root
 
   attr_writer :parent
@@ -42,7 +44,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def href
-    super.present? ? RDF::URI(super) : edge&.iri
+    edge&.iri || RDF::URI(super)
   end
 
   def image
@@ -103,6 +105,10 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def raw_href=(value)
     self.href = value
+  end
+
+  def target_type
+    edge.present? ? :edge : :url
   end
 
   private
