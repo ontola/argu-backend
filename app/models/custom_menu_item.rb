@@ -45,6 +45,10 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
     super.present? ? RDF::URI(super) : edge&.iri
   end
 
+  def image
+    icon
+  end
+
   def label
     return edge.display_name if attribute_in_database(:label).blank? && edge.present?
 
@@ -99,10 +103,6 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def raw_href=(value)
     self.href = value
-  end
-
-  def raw_image=(value)
-    self.image = value.presence
   end
 
   private

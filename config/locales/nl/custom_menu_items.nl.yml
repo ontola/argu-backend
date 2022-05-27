@@ -7,7 +7,7 @@ nl:
         label: "Label"
       raw_href:
         label: "URL"
-      raw_image:
+      icon:
         label: "Icoon"
       position:
         label: "Positie"

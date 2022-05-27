@@ -11,7 +11,7 @@ class CustomMenuItemSerializer < Menus::ItemSerializer
   attribute :raw_label, predicate: NS.argu[:menuLabel], datatype: NS.xsd.string do |object|
     object.attribute_in_database(:label)
   end
-  attribute :raw_image, predicate: NS.argu[:rawImage], datatype: NS.xsd.string do |object|
+  attribute :icon, predicate: NS.argu[:icon], datatype: NS.xsd.string do |object|
     object.attribute_in_database(:image)
   end
   attribute :raw_href, predicate: NS.argu[:rawHref], datatype: NS.xsd.string do |object|

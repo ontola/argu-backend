@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_17_140203) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_27_072525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -75,7 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_140203) do
     t.integer "position", null: false
     t.string "label"
     t.boolean "label_translation", default: false, null: false
-    t.string "image"
+    t.string "icon"
     t.string "href"
     t.string "policy"
     t.uuid "resource_id", null: false

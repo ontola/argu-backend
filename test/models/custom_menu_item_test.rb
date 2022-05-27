@@ -11,7 +11,7 @@ class CustomMenuItemTest < ActiveSupport::TestCase
       resource_id: argu.uuid,
       label: 'Custom label',
       href: 'https://argu.localdev/i/about',
-      image: 'fa-info'
+      icon: 'fa-info'
     )
   end
   let(:team_menu_item) do
@@ -21,7 +21,7 @@ class CustomMenuItemTest < ActiveSupport::TestCase
       resource_id: argu.uuid,
       label: 'set_language',
       href: 'https://argu.localdev/i/about',
-      image: 'fa-info'
+      icon: 'fa-info'
     )
   end
 

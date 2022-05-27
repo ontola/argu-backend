@@ -2,6 +2,6 @@
 
 class CustomMenuItemForm < ApplicationForm
   field :raw_label
-  field :raw_image
+  field :icon, input_field: IconInput
   field :raw_href
 end
