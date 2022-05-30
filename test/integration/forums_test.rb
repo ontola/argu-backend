@@ -115,6 +115,19 @@ class ForumsTest < ActionDispatch::IntegrationTest
         headers: argu_headers
 
     assert_response :success
+    expect_triple(
+      resource_iri(holland),
+      NS.ontola[:coverPhoto],
+      resource_iri(holland.default_cover_photo),
+      NS.ontola[:replace]
+    )
+    expect_triple(
+      resource_iri(holland.default_cover_photo),
+      NS.sp.Variable,
+      NS.sp.Variable,
+      NS.ontola[:invalidate]
+    )
+
     assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
     assert_equal 'new name', holland.name
     assert_equal 'new bio', holland.bio

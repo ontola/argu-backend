@@ -85,7 +85,7 @@ class Activity < PublicActivity::Activity
   end
 
   def touch_edges
-    return if %w[destroy trash untrash].include?(action)
+    return unless action == 'publish'
 
     touch_edge(trackable) if trackable&.persisted?
     touch_edge(recipient) if recipient&.persisted? && !%w[Vote].include?(trackable_type)
