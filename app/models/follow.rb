@@ -14,7 +14,7 @@ class Follow < ApplicationRecord
   belongs_to :followable, class_name: 'Edge', primary_key: :uuid
   belongs_to :follower, class_name: 'User'
 
-  enum follow_type: {never: 0, decisions: 10, news: 20, reactions: 30}
+  enum follow_type: {never: 0, news: 20, reactions: 30}
   counter_culture :followable,
                   column_name: proc { |model|
                     !model.never? ? 'follows_count' : nil

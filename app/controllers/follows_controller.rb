@@ -5,6 +5,9 @@ class FollowsController < AuthorizedController
 
   skip_before_action :check_if_registered, only: :destroy
 
+  has_collection_create_action(
+    description: -> { I18n.t('actions.follows.create.description', item: resource.parent.display_name) }
+  )
   has_resource_destroy_action(
     favorite: true
   )
@@ -67,6 +70,7 @@ class FollowsController < AuthorizedController
 
   def permit_params
     return {} unless action_name == 'create'
+    return super if params.key?(:follow)
 
     {
       follow_type: params.require(:follow_type)

@@ -9,10 +9,6 @@ de:
     all: Alle Benachrichtigungen
     settings: Einstellungen
     receive:
-      never: Niemals
-      reactions: Alle Artikel
-      news: Wichtige Artikel
-      decisions: Nur offizielle Entscheidungen
       title: 'Erhalten Sie Benachrichtigungen für:'
     permanent:
       confirm_account:

@@ -116,8 +116,23 @@ de:
           guest: Melden Sie sich an, um eine Nachricht zu senden.
           not_allowed: Der Poster erlaubt keine Kontaktaufnahme per E-Mail.
     follows:
+      create:
+        description: Wann möchten Sie Updates zu %{item} erhalten?
+        label: Abonnieren Sie Updates
       destroy:
         submit: Nicht mehr folgen
+      news:
+        description: Möchten Sie Benachrichtigungen für wichtige Antworten auf %{item} erhalten?
+        label: Benachrichtigungen bestätigen
+        submit: Bestätigen
+      reactions:
+        description: Möchten Sie Benachrichtigungen für alle Antworten auf %{item} erhalten?
+        label: Benachrichtigungen bestätigen
+        submit: Bestätigen
+      never:
+        description: Möchten Sie nie Benachrichtigungen für %{item} erhalten?
+        label: Abmelden bestätigen
+        submit: Bestätigen
     forums:
       create:
         description: Ein Ort für Diskussionen der anderen Art.

@@ -9,7 +9,9 @@ module Followable
         has_resource_action(
           :"follow_#{follow_type}",
           http_method: :post,
-          label: -> { I18n.t("menus.default.#{follow_type}") },
+          description: -> { I18n.t("actions.follows.#{follow_type}.description", item: resource.display_name) },
+          label: -> { I18n.t("actions.follows.#{follow_type}.label") },
+          submit_label: -> { I18n.t("actions.follows.#{follow_type}.submit") },
           target_url: -> { resource.follow_iri(follow_type) },
           type: [NS.schema.Action]
         )

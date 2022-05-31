@@ -105,8 +105,23 @@ nl:
           guest: "Log in om een bericht te kunnen versturen."
           not_allowed: "De indiener staat contact via e-mail niet toe."
     follows:
+      create:
+        description: "Wanneer wil je updates ontvangen over %{item}?"
+        label: "Updates ontvangen"
       destroy:
         submit: "Niet meer volgen"
+      news:
+        description: "Wil je meldingen ontvangen voor belangrijke reacties op %{item}?"
+        label: "Meldingen bevestigen"
+        submit: "Bevestig"
+      reactions:
+        description: "Wil je meldingen ontvangen voor alle reacties op %{item}?"
+        label: "Meldingen bevestigen"
+        submit: "Bevestig"
+      never:
+        description: "Wil je geen meldingen ontvangen voor %{item}?"
+        label: "Uitschrijven bevestigen"
+        submit: "Bevestig"
     forums:
       create:
         description: "Een verzamelplaats voor verschillende soorten discussies."

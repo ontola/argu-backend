@@ -9,10 +9,6 @@ nl:
     all: "Alle meldingen"
     settings: "Instellingen"
     receive:
-      never: 'Nooit meldingen ontvangen'
-      reactions: 'Alle items'
-      news: 'Belangrijke items'
-      decisions: 'Alleen officiele besluiten'
       title: 'Ontvang meldingen bij:'
     permanent:
       confirm_account:

@@ -105,8 +105,23 @@ en:
           guest: "Sign in to send a message."
           not_allowed: "The poster does not allow contact by email."
     follows:
+      create:
+        description: "When do you want to receive updates about %{item}?"
+        label: "Subscribe to updates"
       destroy:
         submit: "Stop following"
+      news:
+        description: "Do you want to receive notifications for important replies to %{item}?"
+        label: "Confirm subscription"
+        submit: "Confirm"
+      reactions:
+        description: "Do you want to receive notifications for all replies to %{item}?"
+        label: "Confirm subscription"
+        submit: "Confirm"
+      never:
+        description: "Do you never want to receive notifications for %{item}?"
+        label: "Confirm unsubscribe"
+        submit: "Confirm"
     forums:
       create:
         description: "A place for different kind of discussions."
