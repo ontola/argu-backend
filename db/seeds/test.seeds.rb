@@ -37,6 +37,7 @@ FactorySeeder.create(
 
 page = FactorySeeder.create(
   :page,
+  active_branch: true,
   profile: Profile.new,
   id: 0,
   name: 'Argu page',
@@ -72,6 +73,7 @@ end
 
 other_page = FactorySeeder.create(
   :page,
+  active_branch: true,
   publisher: staff,
   creator: staff.profile,
   is_published: true,

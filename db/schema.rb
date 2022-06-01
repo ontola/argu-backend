@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_27_072525) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_01_123516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -116,6 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_27_072525) do
     t.integer "attachments_count", default: 0, null: false
     t.string "session_id"
     t.json "cached_properties", default: {}, null: false
+    t.boolean "active_branch", default: false, null: false
     t.index ["is_published"], name: "index_edges_on_is_published"
     t.index ["owner_type"], name: "index_edges_on_owner_type"
     t.index ["parent_id", "creator_id"], name: "index_edges_on_parent_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"

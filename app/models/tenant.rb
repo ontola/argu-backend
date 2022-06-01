@@ -67,6 +67,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def create_first_page(name, iri_prefix) # rubocop:disable Metrics/MethodLength
       page = Page.create!(
+        active_branch: true,
         publisher_id: User::SERVICE_ID,
         creator_id: Profile::SERVICE_ID,
         profile: Profile.new,

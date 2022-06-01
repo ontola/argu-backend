@@ -13,10 +13,10 @@ class Feed < VirtualResource
       case parent
       when User
         user_activities
-      else
-        raise "#{parent.class} is not a valid parent type for generating a feed" unless parent.is_a?(Edge)
-
+      when Edge
         edge_activities
+      else
+        raise "#{parent.class} is not a valid parent type for generating a feed"
       end
   end
 

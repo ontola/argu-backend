@@ -87,6 +87,7 @@ class Vote < Edge # rubocop:disable Metrics/ClassLength
   class << self
     def abstain_vote(parent, user_context)
       new(
+        active_branch: parent.active_branch,
         is_published: true,
         parent: parent,
         publisher: user_context&.user,

@@ -17,6 +17,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     m
   end
   let(:unpublished_motion_argument) { create(:pro_argument, parent: unpublished_motion) }
+  let(:trashed_motion_argument) { create(:pro_argument, parent: trashed_motion) }
 
   ####################################
   # As Guest
@@ -36,6 +37,20 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'user should get forum/feed nq' do
     sign_in user
     visit_freetown_feed(accept: :nq)
+  end
+
+  test 'user should get forum/feed nq after publish' do
+    sign_in user
+    Sidekiq::Testing.inline! do
+      unpublished_motion.argu_publication.update!(published_at: Time.current)
+    end
+    visit_freetown_feed(accept: :nq, count: 9)
+  end
+
+  test 'user should get forum/feed nq after untrash' do
+    sign_in user
+    trashed_motion.untrash
+    visit_freetown_feed(accept: :nq, count: 9)
   end
 
   test 'user should get motion/feed nq' do
@@ -62,7 +77,7 @@ class FeedTest < ActionDispatch::IntegrationTest
 
   private
 
-  # Render activity of Motion#create, Motion#publish, 6 comments, 6 public votes and 3 private votes
+  # Render activity of Motion#publish, 6 comments
   def assert_activity_count(accept: :nq, count: nil, parent: subject)
     case accept
     when :nq
@@ -84,7 +99,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   def visit_freetown_feed(accept: :nq, count: 7)
-    init_content([subject, unpublished_motion, unpublished_motion_argument, trashed_motion])
+    init_content([subject, unpublished_motion, unpublished_motion_argument, trashed_motion, trashed_motion_argument])
 
     get feeds_iri(freetown, type: :paginated),
         headers: argu_headers(accept: accept)

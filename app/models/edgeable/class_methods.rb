@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 module Edgeable
+  RESET_ACTIVE_BRANCH =
+    'UPDATE edges SET active_branch = inactive.id IS NULL AND edges.is_published = true AND edges.trashed_at IS NULL '\
+    'FROM edges AS joined LEFT JOIN edges AS inactive ON inactive.path @> joined.path AND inactive.id != joined.id '\
+    'AND inactive.root_id = joined.root_id AND (inactive.is_published = false OR inactive.trashed_at IS NOT NULL) '\
+    'WHERE joined.uuid = edges.uuid'
+
   module ClassMethods
     extend ActiveSupport::Concern
 
@@ -68,6 +74,14 @@ module Edgeable
         else
           Edge.find_by(fragment: params[:id])
         end
+      end
+
+      def reset_active_branches(path = nil)
+        return connection.update(RESET_ACTIVE_BRANCH) if path.nil?
+
+        connection.update(
+          "#{RESET_ACTIVE_BRANCH} AND edges.path <@ '#{ApplicationRecord.connection.quote_string(path)}'"
+        )
       end
 
       def sort_options(collection)

@@ -18,6 +18,7 @@ class Project < Discussion
     description_placeholder = I18n.t('projects.phase_template.description_placeholder')
 
     identify = phases.create!(
+      active_branch: active_branch,
       creator: creator,
       description: description_placeholder,
       is_published: true,
@@ -27,6 +28,7 @@ class Project < Discussion
       resource_type: :survey
     )
     phases.create!(
+      active_branch: active_branch,
       creator: creator,
       description: description_placeholder,
       is_published: true,
@@ -36,6 +38,7 @@ class Project < Discussion
       resource_type: :question
     )
     phases.create!(
+      active_branch: active_branch,
       creator: creator,
       description: description_placeholder,
       is_published: true,

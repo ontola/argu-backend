@@ -88,6 +88,7 @@ class VocabSyncer # rubocop:disable Metrics/ClassLength
       return existing if existing
 
       Term.create!(
+        active_branch: true,
         creator: ActsAsTenant.current_tenant.profile,
         display_name: exact_match,
         exact_match: exact_match,
@@ -103,6 +104,7 @@ class VocabSyncer # rubocop:disable Metrics/ClassLength
       return existing if existing
 
       Vocabulary.create!(
+        active_branch: true,
         creator: ActsAsTenant.current_tenant.profile,
         display_name: url,
         initial_public_grant: 'spectator',

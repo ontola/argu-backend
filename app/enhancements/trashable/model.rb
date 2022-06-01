@@ -31,6 +31,7 @@ module Trashable
       self.class.transaction do
         self.trashed_at = Time.current
         save(validate: false)
+        Edge.reset_active_branches(path)
         run_callbacks :trash
       end
       true
@@ -42,6 +43,7 @@ module Trashable
       self.class.transaction do
         self.trashed_at = nil
         save(validate: false)
+        Edge.reset_active_branches(path)
         run_callbacks :untrash
       end
       true

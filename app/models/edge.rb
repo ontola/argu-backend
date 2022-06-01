@@ -336,6 +336,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     self.class.transaction do
       update!(is_published: true)
+      Edge.reset_active_branches(path)
       increment_counter_caches unless is_trashed?
     end
     true

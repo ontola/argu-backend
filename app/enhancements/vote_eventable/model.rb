@@ -22,6 +22,7 @@ module VoteEventable
       # rubocop:disable Naming/MemoizedInstanceVariableName
       @default_vote_event ||=
         VoteEvent.create!(
+          active_branch: active_branch,
           parent: self,
           creator: creator,
           publisher: publisher,
