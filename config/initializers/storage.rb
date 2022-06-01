@@ -56,6 +56,7 @@ end
 Rails.application.config.to_prepare do
   ActiveStorage::Variant.prepend(VariantApartmentFix)
   ActiveStorage::Blob.prepend(BlobApartmentFix)
+  ActiveStorage::Blob.validates :byte_size, numericality: {less_than: Rails.application.config.max_file_size}
 
   ActiveRecord::Base.class_eval do
     def self.find_signed!(signed_id, purpose: nil)
@@ -66,6 +67,13 @@ Rails.application.config.to_prepare do
   end
 
   ActiveStorage::BaseController.class_eval do
-    include LinkedRails::Controller::ErrorHandling
+    include LinkedRails::Helpers::OntolaActionsHelper
+
+    def handle_and_report_error(error)
+      raise(error) unless error.is_a?(ActiveRecord::RecordInvalid)
+
+      add_exec_action_header(response.headers, ontola_snackbar_action(error.message))
+      response.status = 422
+    end
   end
 end

@@ -54,7 +54,7 @@ module Argu
     config.cache_stream = ENV['CACHE_STREAM'].presence || 'transactions'
     config.stream_redis_database = (ENV['STREAM_REDIS_DATABASE'])&.to_i || 7
 
-    config.app_generators.template_engine :slim
+    config.max_file_size = 25_000_000
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = 'utf-8'
