@@ -5,8 +5,8 @@ require 'prometheus_exporter/client'
 
 module SPI
   class BulkController < LinkedRails::BulkController # rubocop:disable Metrics/ClassLength
-    include LinkedRails::EmpJSON::Records
-    include LinkedRails::EmpJSON::Primitives
+    include Empathy::EmpJson::Helpers::Slices
+    include Empathy::EmpJson::Helpers::Primitives
 
     alias_attribute :pundit_user, :user_context
 
@@ -79,7 +79,7 @@ module SPI
       hash = resource_hash(resource)
 
       if iri.to_s != "#{ActsAsTenant.current_tenant.iri}/" && resource.iri.to_s && !hash.keys.include?(iri.to_s)
-        create_record(hash, iri)
+        add_record_to_slice(hash, iri)
         hash[iri.to_s][NS.owl.sameAs.to_s] = object_to_value(resource.iri)
       end
 

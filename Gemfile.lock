@@ -45,11 +45,11 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 3f9768479239dd088c207305513a388d653c0434
-  branch: attachments
+  revision: b1c23c3707d67022e63bffce5c13ee9eb884c41d
   specs:
     linked_rails (0.0.4)
       active_response (~> 0.0.2)
+      emp_json
       kaminari-activerecord
       pundit
       rdf
@@ -296,6 +296,7 @@ GEM
     elasticsearch-transport (7.13.3)
       faraday (~> 1)
       multi_json
+    emp_json (1.1.0)
     erubi (1.10.0)
     et-orbi (1.2.6)
       tzinfo
@@ -734,6 +735,7 @@ DEPENDENCIES
   doorkeeper
   doorkeeper-jwt
   dotenv-rails
+  emp_json
   factory_bot
   factory_bot_rails
   fakeredis!

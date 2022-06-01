@@ -3,7 +3,7 @@
 require 'unit_test_helper'
 
 class PrimitivesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
-  include LinkedRails::EmpJSON::Primitives
+  include Empathy::EmpJson::Helpers::Primitives
 
   test 'object_to_value serializes sequences' do
     value = LinkedRails::Sequence.new([], scope: false)

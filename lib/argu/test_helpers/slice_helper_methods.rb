@@ -4,7 +4,7 @@
 module Argu
   module TestHelpers
     module SliceHelperMethods
-      include LinkedRails::EmpJSON::Primitives
+      include Empathy::EmpJson::Helpers::Primitives
 
       def expect_slice_subjects(slice, *subjects, partial_match: false)
         iris = subjects.map { |subject| (subject.try(:iri) || subject).to_s }
