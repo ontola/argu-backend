@@ -184,9 +184,6 @@ Rails.application.routes.draw do
   singular_linked_resource(Vote, nested: true)
   linked_resource(VoteEvent)
   linked_resource(Widget)
-  linked_resource(InterventionType)
-  linked_resource(Intervention)
-  linked_resource(Measure)
 
   ContainerNode.descendants.each do |klass|
     linked_resource(klass, resource: false)

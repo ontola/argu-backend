@@ -214,8 +214,6 @@ de:
       label: Zugriff
     group:
       label: Gruppe
-    interventionsCount:
-      label: Eingriffe
     isDraft:
       label: Entwurf
     lastActivityAt:
@@ -320,39 +318,6 @@ de:
       label: Mitglieder
     member:
       label: Mitglied
-  rivm:
-    Category:
-      label: Kategorie
-      plural_label: Kategorien
-    Incident:
-      label: Vorfälle
-      plural_label: Vorfälle
-    Intervention:
-      label: Intervention
-      plural_label: Interventionen
-    InterventionType:
-      label: Art der Intervention
-      plural_label: Arten der Intervention
-    Measure:
-      label: Maßnahme
-      plural_label: Maßnahmen
-    MeasureType:
-      label: Art der Maßnahme
-      plural_label: Arten von Maßnahmen
-    Risk:
-      label: Risiko
-      plural_label: Risiken
-    Scenario:
-      label: Szenario
-      plural_label: Szenarien
-    categories:
-      label: Kategorien
-    oneOffCostsScore:
-      label: Kosten
-    recurringCostsScore:
-      label: Wiederkehrende Kosten
-    securityImprovedScore:
-      label: Verbesserung
   schema:
     CreativeWork:
       label: Dokument

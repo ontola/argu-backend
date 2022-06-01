@@ -9,8 +9,7 @@ namespace :counter_culture do
       puts_result MediaObject.counter_culture_fix_counts
       Page.find_each do |page|
         ActsAsTenant.with_tenant(page) do
-          [Motion, Question, ProArgument, ConArgument, BlogPost, Vote, VoteEvent, Comment, Intervention, Measure,
-           Scenario]
+          [Motion, Question, ProArgument, ConArgument, BlogPost, Vote, VoteEvent, Comment]
             .each { |c| puts_result(c.fix_counts) }
         end
       end

@@ -155,25 +155,3 @@ PermittedAction.create_for_grant_sets('OpenDataPortal', 'destroy', staff)
 PermittedAction.create_for_grant_sets('ProArgument', 'destroy', staff)
 PermittedAction.create_for_grant_sets('Question', 'destroy', staff)
 PermittedAction.create_for_grant_sets('Topic', 'destroy', staff)
-
-if Apartment::Tenant.current == 'rivm'
-  PermittedAction.create_for_grant_sets('Intervention', 'show', all_grant_sets)
-  PermittedAction.create_for_grant_sets('InterventionType', 'show', all_grant_sets)
-  PermittedAction.create_for_grant_sets('Measure', 'show', all_grant_sets)
-
-  PermittedAction.create_for_grant_sets('Intervention', 'create', participator_plus)
-  PermittedAction.create_for_grant_sets('Measure', 'create', participator_plus)
-
-  PermittedAction.create_for_grant_sets('InterventionType', 'create', initiator_plus)
-
-  PermittedAction.create_for_grant_sets('Intervention', 'update', moderator_plus)
-  PermittedAction.create_for_grant_sets('InterventionType', 'update', moderator_plus)
-  PermittedAction.create_for_grant_sets('Measure', 'update', moderator_plus)
-  PermittedAction.create_for_grant_sets('Intervention', 'trash', moderator_plus)
-  PermittedAction.create_for_grant_sets('InterventionType', 'trash', moderator_plus)
-  PermittedAction.create_for_grant_sets('Measure', 'trash', moderator_plus)
-
-  PermittedAction.create_for_grant_sets('Intervention', 'destroy', administrator_plus)
-  PermittedAction.create_for_grant_sets('InterventionType', 'destroy', administrator_plus)
-  PermittedAction.create_for_grant_sets('Measure', 'destroy', administrator_plus)
-end

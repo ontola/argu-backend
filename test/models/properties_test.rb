@@ -11,10 +11,6 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
   let(:parent_comment) { create(:comment, parent: motion) }
   let(:reply1) { create(:comment, parent: motion, parent_comment_id: parent_comment.uuid) }
   let(:reply2) { create(:comment, parent: motion, parent_comment_id: parent_comment.uuid) }
-  let(:intervention_type) { create(:intervention_type, parent: argu) }
-  let(:intervention) { create(:intervention, parent: intervention_type) }
-  let(:measure) { create(:measure, parent: argu) }
-  let(:tagged_measure) { create(:measure, parent: argu, phases: [term1, term2]) }
   let(:vocabulary) { create(:vocabulary, parent: argu) }
   let(:term1) { create(:term, parent: vocabulary) }
   let(:term2) { create(:term, parent: vocabulary) }
@@ -69,40 +65,39 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
   end
 
   test 'property array assignment' do
-    assert_empty intervention.communication
+    assert_empty argu.allowed_external_sources
     assert_difference('Property.count' => 2) do
-      intervention.update!(communication: %i[open_communication communication_processed])
+      argu.update!(allowed_external_sources: %i[first second])
     end
-    prop_id = intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
+    prop_id = argu.property_manager(NS.ontola[:allowedExternalSources]).send(:properties).first.id
     assert_difference('Property.count' => 0) do
-      intervention.update!(communication: %i[open_communication communication_processed])
+      argu.update!(allowed_external_sources: %i[first second])
     end
-    assert_equal %w[communication_processed open_communication], reloaded_intervention.communication.sort
-    assert_equal prop_id, intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
+    assert_equal %w[first second], reloaded_argu.allowed_external_sources.sort
+    assert_equal prop_id, argu.property_manager(NS.ontola[:allowedExternalSources]).send(:properties).first.id
 
     assert_difference('Property.count' => -1) do
-      intervention.update!(communication: %i[open_communication])
+      argu.update!(allowed_external_sources: %i[first])
     end
-    assert_not_equal prop_id, intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
-    prop_id = intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
+    assert_not_equal prop_id, argu.property_manager(NS.ontola[:allowedExternalSources]).send(:properties).first.id
+    prop_id = argu.property_manager(NS.ontola[:allowedExternalSources]).send(:properties).first.id
     assert_difference('Property.count' => 0) do
-      intervention.update!(communication: %i[open_communication])
+      argu.update!(allowed_external_sources: %i[first])
     end
-    assert_equal prop_id, intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
-    assert_equal %w[open_communication], reloaded_intervention.communication
+    assert_equal prop_id, argu.property_manager(NS.ontola[:allowedExternalSources]).send(:properties).first.id
+    assert_equal %w[first], reloaded_argu.allowed_external_sources
   end
 
   test 'property array assignment with non array' do
-    intervention
     assert_difference('Property.count' => 1) do
-      intervention.update!(communication: :open_communication)
+      argu.update!(allowed_external_sources: :first)
     end
-    prop_id = intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
+    prop_id = argu.property_manager(NS.ontola[:allowedExternalSources]).send(:properties).first.id
     assert_difference('Property.count' => 0) do
-      intervention.update!(communication: %i[open_communication])
+      argu.update!(allowed_external_sources: %i[first])
     end
-    assert_equal prop_id, intervention.property_manager(NS.rivm[:communication]).send(:properties).first.id
-    assert_equal %w[open_communication], reloaded_intervention.communication
+    assert_equal prop_id, argu.property_manager(NS.ontola[:allowedExternalSources]).send(:properties).first.id
+    assert_equal %w[first], reloaded_argu.allowed_external_sources
   end
 
   test 'property has_one association' do
@@ -138,57 +133,6 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
     end
     assert_equal parent_comment, comment.reload.parent_comment
     assert_equal parent_comment, Comment.find_by(uuid: comment.uuid).parent_comment
-  end
-
-  test 'property has_many association' do
-    assert_equal [term1, term2], tagged_measure.phases.order(:id)
-    assert_equal [term1.uuid, term2.uuid].sort, tagged_measure.phase_ids.sort
-  end
-
-  test 'property has_many assignment by records' do
-    assert_empty measure.phases
-    term1
-    term2
-    assert_difference('Property.count' => 2) do
-      measure.phases = [term1, term2]
-    end
-    assert_difference('Property.count' => 0) do
-      measure.save
-    end
-    assert_equal [term1, term2], measure.phases.order(:id)
-    assert_equal [term1.uuid, term2.uuid].sort, measure.phase_ids.sort
-    assert_difference('Property.count' => 0) do
-      measure.phases = [term2, term1]
-    end
-    assert_difference('Property.count' => 0) do
-      measure.save
-    end
-    assert_equal [term1, term2], measure.phases.order(:id)
-
-    assert_equal [term1, term2], measure.reload.phases.order(:id)
-  end
-
-  test 'property has_many assignment by ids' do
-    assert_empty measure.phases
-    term1
-    term2
-    assert_difference('Property.count' => 0) do
-      measure.phase_ids = [term1.uuid, term2.uuid]
-    end
-    assert_difference('Property.count' => 2) do
-      measure.save
-    end
-    assert_equal [term1, term2], measure.phases.order(:id)
-    assert_equal [term1.uuid, term2.uuid].sort, measure.phase_ids.sort
-    assert_difference('Property.count' => 0) do
-      measure.phase_ids = [term2.uuid, term1.uuid]
-    end
-    assert_difference('Property.count' => 0) do
-      measure.save
-    end
-    assert_equal [term2, term1], measure.phases.order(:id)
-
-    assert_equal [term2, term1], measure.reload.phases.order(:id)
   end
 
   test 'property has_many query' do
@@ -242,8 +186,8 @@ class PropertiesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
 
   private
 
-  def reloaded_intervention
-    Edge.find_by(uuid: intervention.uuid)
+  def reloaded_argu
+    Edge.find_by(uuid: argu.uuid)
   end
 
   def reloaded_motion

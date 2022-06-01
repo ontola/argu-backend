@@ -42,7 +42,6 @@ module Argu
       config.autoload_paths << "app/#{type}/container_nodes"
       config.autoload_paths << "app/#{type}/edges"
       config.autoload_paths << "app/#{type}/virtual"
-      config.autoload_paths << "app/#{type}/rivm"
     end
     config.autoload_paths << 'app/policies/edge_tree_policies'
     config.autoload_paths += Dir["#{config.root}/app/services/cruudt_services/**/"]

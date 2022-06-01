@@ -124,9 +124,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :custom_forms
   has_many_children :forums, dependent: :restrict_with_exception
   has_many_children :open_data_portals, dependent: :restrict_with_exception
-  has_many_children :interventions
-  has_many_children :intervention_types
-  has_many_children :measures
   has_many_children :motions
   has_many_children :offers
   has_many_children :order_details

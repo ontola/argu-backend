@@ -204,8 +204,6 @@ en:
       label: "Access"
     group:
       label: "Group"
-    interventionsCount:
-      label: "Interventions"
     isDraft:
       label: "Draft"
     lastActivityAt:
@@ -308,39 +306,6 @@ en:
       label: "Members"
     member:
       label: "Member"
-  rivm:
-    Category:
-      label: "Category"
-      plural_label: "Categories"
-    Incident:
-      label: "Incident"
-      plural_label: "Incidents"
-    Intervention:
-      label: "Intervention"
-      plural_label: "Interventions"
-    InterventionType:
-      label: "Intervention type"
-      plural_label: "Intervention types"
-    Measure:
-      label: "Measure"
-      plural_label: "Measures"
-    MeasureType:
-      label: "Measure type"
-      plural_label: "Measure types"
-    Risk:
-      label: "Risk"
-      plural_label: "Risks"
-    Scenario:
-      label: "Scenario"
-      plural_label: "Scenarios"
-    categories:
-      label: "Categories"
-    oneOffCostsScore:
-      label: "Costs"
-    recurringCostsScore:
-      label: "Recurring costs"
-    securityImprovedScore:
-      label: "Improvement"
   schema:
     CreativeWork:
       label: "Document"

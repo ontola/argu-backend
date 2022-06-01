@@ -204,8 +204,6 @@ nl:
       label: "Toegang"
     group:
       label: "Groep"
-    interventionsCount:
-      label: "Interventies"
     isDraft:
       label: "Concept"
     lastActivityAt:
@@ -310,39 +308,6 @@ nl:
       label: "Leden"
     member:
       label: "Lid"
-  rivm:
-    Category:
-      label: "Categorie"
-      plural_label: "Categorieën"
-    Incident:
-      label: "Gebeurtenis"
-      plural_label: "Gebeurtenissen"
-    Intervention:
-      label: "Interventie"
-      plural_label: "Interventies"
-    InterventionType:
-      label: "Interventietype"
-      plural_label: "Interventietypes"
-    Measure:
-      label: "Voorbeeld"
-      plural_label: "Voorbeelden"
-    MeasureType:
-      label: "Maatregel"
-      plural_label: "Maatregelen"
-    Risk:
-      label: "Gevaar"
-      plural_label: "Gevaren"
-    Scenario:
-      label: "Scenario"
-      plural_label: "Scenarios"
-    categories:
-      label: "Categorieën"
-    oneOffCostsScore:
-      label: "Eenmalige kosten"
-    recurringCostsScore:
-      label: "Doorlopende kosten"
-    securityImprovedScore:
-      label: "Ervaren effectiviteit"
   schema:
     CreativeWork:
       label: "Document"

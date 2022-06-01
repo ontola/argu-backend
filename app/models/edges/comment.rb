@@ -23,8 +23,7 @@ class Comment < Edge
   counter_cache comments: {}, threads: {parent_comment_id: nil}
   with_collection :comments, counter_cache_column: nil
   paginates_per 10
-  parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :topics,
-             :intervention, :intervention_type, :measure, :linked_records
+  parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :topics, :linked_records
   filterable NS.argu[:pdfPage] => {values: []}
 
   validates :description, presence: true, allow_nil: false, length: {in: 4..5000}
