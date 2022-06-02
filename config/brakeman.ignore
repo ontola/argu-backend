@@ -3,33 +3,13 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "a1aa271eec29b721f7319b33f23cbcc920e37762e9eb3c8aa164eb1117ea1846",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/policies/widget_policy.rb",
-      "line": 11,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "scope.joins(:owner).with(granted_paths(:show_only => false)).where(\"(#{path_filter}) @> edges.path\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "WidgetPolicy::Scope",
-        "method": "resolve"
-      },
-      "user_input": "path_filter",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "b3068cfad54f52da3e188a03aaf68b5f3813d915f560d3d9fb7c921810acda5b",
+      "fingerprint": "ca78b2d7670c7512796b387bd14ff3f3c0ce2e79b2ddbf60be16e87e2b9d232d",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/virtual/feed.rb",
-      "line": 38,
+      "line": 36,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Activity.includes(:owner).where(\"key ~ '#{self.class.class_key}.update|publish'\")",
+      "code": "Activity.where(\"key ~ '#{self.class.class_key}.update|publish'\")",
       "render_path": null,
       "location": {
         "type": "method",
@@ -41,6 +21,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-05-16 11:35:10 +0200",
+  "updated": "2022-06-07 13:55:04 +0200",
   "brakeman_version": "5.2.1"
 }

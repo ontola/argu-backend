@@ -33,9 +33,7 @@ class Feed < VirtualResource
   private
 
   def activity_base
-    Activity
-      .includes(:owner)
-      .where("key ~ '#{self.class.class_key}.update|publish'")
+    Activity.where("key ~ '#{self.class.class_key}.update|publish'")
   end
 
   def edge_activities

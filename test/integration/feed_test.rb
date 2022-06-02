@@ -4,20 +4,22 @@ require 'test_helper'
 
 class FeedTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:subject) { create(:motion, :with_votes, parent: freetown, creator: publisher.profile) }
-  let(:unpublished_motion) do
+  define_cairo
+  let!(:subject) { create(:motion, :with_votes, parent: freetown, creator: publisher.profile) }
+  let!(:cairo_motion) { create(:motion, parent: cairo, creator: publisher.profile) }
+  let!(:unpublished_motion) do
     create(:motion, parent: freetown, argu_publication_attributes: {draft: true})
   end
-  let(:publisher) { create(:user) }
-  let(:trashed_motion) do
+  let!(:publisher) { create(:user) }
+  let!(:trashed_motion) do
     m = create(:motion, parent: freetown)
     ActsAsTenant.with_tenant(argu) do
       TrashService.new(m, options: {user_context: UserContext.new(user: publisher, profile: publisher.profile)}).commit
     end
     m
   end
-  let(:unpublished_motion_argument) { create(:pro_argument, parent: unpublished_motion) }
-  let(:trashed_motion_argument) { create(:pro_argument, parent: trashed_motion) }
+  let!(:unpublished_motion_argument) { create(:pro_argument, parent: unpublished_motion) }
+  let!(:trashed_motion_argument) { create(:pro_argument, parent: trashed_motion) }
 
   ####################################
   # As Guest
@@ -34,23 +36,23 @@ class FeedTest < ActionDispatch::IntegrationTest
   ####################################
   let(:user) { create(:user) }
 
-  test 'user should get forum/feed nq' do
+  test 'user should get page/feed nq' do
     sign_in user
-    visit_freetown_feed(accept: :nq)
+    visit_argu_feed(accept: :nq)
   end
 
-  test 'user should get forum/feed nq after publish' do
+  test 'user should get page/feed nq after publish' do
     sign_in user
     Sidekiq::Testing.inline! do
       unpublished_motion.argu_publication.update!(published_at: Time.current)
     end
-    visit_freetown_feed(accept: :nq, count: 9)
+    visit_argu_feed(accept: :nq, count: 9)
   end
 
-  test 'user should get forum/feed nq after untrash' do
+  test 'user should get page/feed nq after untrash' do
     sign_in user
     trashed_motion.untrash
-    visit_freetown_feed(accept: :nq, count: 9)
+    visit_argu_feed(accept: :nq, count: 9)
   end
 
   test 'user should get motion/feed nq' do
@@ -64,9 +66,9 @@ class FeedTest < ActionDispatch::IntegrationTest
   ####################################
   let(:staff) { create(:user, :staff) }
 
-  test 'staff should get forum/feed nq' do
+  test 'staff should get page/feed nq including cairo motion' do
     sign_in staff
-    visit_freetown_feed(accept: :nq)
+    visit_argu_feed(accept: :nq, count: 8)
   end
 
   test 'staff should get motion/feed nq' do
@@ -90,7 +92,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     end
   end
 
-  def init_content(_resources = subject)
+  def init_content
     Activity.update_all(created_at: 1.second.ago) # rubocop:disable Rails/SkipsModelValidations
   end
 
@@ -98,15 +100,15 @@ class FeedTest < ActionDispatch::IntegrationTest
     Feed.new(parent: parent)
   end
 
-  def visit_freetown_feed(accept: :nq, count: 7)
-    init_content([subject, unpublished_motion, unpublished_motion_argument, trashed_motion, trashed_motion_argument])
+  def visit_argu_feed(accept: :nq, count: 7)
+    init_content
 
-    get feeds_iri(freetown, type: :paginated),
+    get feeds_iri(argu, type: :paginated),
         headers: argu_headers(accept: accept)
 
     assert_response 200
 
-    assert_activity_count(accept: accept, count: count, parent: freetown)
+    assert_activity_count(accept: accept, count: count, parent: argu)
   end
 
   def visit_motion_feed(accept: :nq)

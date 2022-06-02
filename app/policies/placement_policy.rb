@@ -10,7 +10,7 @@ class PlacementPolicy < RestrictivePolicy
         .where('edges.id IS NULL OR (edges.is_published = true AND edges.trashed_at IS NULL)')
         .where(edges: {root_id: grant_tree.tree_root_id})
         .with(granted_paths)
-        .where(granted_path_type_filter)
+        .joins(granted_path_type_join)
     end
   end
 

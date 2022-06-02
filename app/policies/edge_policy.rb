@@ -13,8 +13,8 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
         .where(active_or_creator)
         .joins(:parent)
         .with(granted_paths)
+        .joins(granted_path_type_join)
         .where(root_id: grant_tree.tree_root_id)
-        .where(granted_path_type_filter)
     end
   end
 

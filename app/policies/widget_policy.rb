@@ -8,15 +8,7 @@ class WidgetPolicy < EdgeTreePolicy
       scope
         .joins(:owner)
         .with(granted_paths(show_only: false))
-        .where("(#{path_filter}) @> edges.path")
-    end
-
-    private
-
-    def path_filter
-      granted_paths_table
-        .where(granted_paths_table[:id].eq(widgets_table[:permitted_action_id]))
-        .project('array_agg(path)').to_sql
+        .joins(granted_path_action_join(Widget.arel_table))
     end
   end
 
@@ -30,7 +22,5 @@ class WidgetPolicy < EdgeTreePolicy
     staff? || service?
   end
 
-  def show?
-    edgeable_policy.show?
-  end
+  delegate :show?, to: :edgeable_policy
 end

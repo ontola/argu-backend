@@ -44,15 +44,25 @@ class EdgeTreePolicy < RestrictivePolicy
         .where(edges_table[:root_id].eq(grant_tree.tree_root_id))
     end
 
-    def granted_path_type_filter(parent_alias = :parents_edges, parent_type: nil) # rubocop:disable Metrics/AbcSize
-      filter =
-        granted_paths_table
-          .where(granted_paths_table[:resource_type].eq(edges_table[:owner_type]))
-          .where(
-            granted_paths_table[:parent_type].eq(parent_type || Arel::Table.new(parent_alias)[:owner_type])
-              .or(granted_paths_table[:parent_type].eq('*'))
-          ).project('array_agg(path)').to_sql
-      "(#{filter}) @> edges.path"
+    def granted_path_action_join(table)
+      table
+        .join(granted_paths_table)
+        .on(
+          granted_paths_table[:id].eq(table[:permitted_action_id])
+            .and(granted_paths_table[:paths].contains(Edge.arel_table[:path]))
+        ).join_sources.first.to_sql
+    end
+
+    def granted_path_type_join(table = Arel::Table.new(:parents_edges)) # rubocop:disable Metrics/AbcSize
+      table
+        .join(granted_paths_table)
+        .on(
+          granted_paths_table[:resource_type].eq(edges_table[:owner_type])
+            .and(
+              granted_paths_table[:parent_type].eq(table[:owner_type])
+                .or(granted_paths_table[:parent_type].eq('*'))
+            ).and(granted_paths_table[:paths]).contains(edges_table[:path])
+        ).join_sources.first.to_sql
     end
 
     def granted_paths(show_only: true)
@@ -61,8 +71,8 @@ class EdgeTreePolicy < RestrictivePolicy
           granted_paths_table,
           granted_paths_base(show_only: show_only)
             .project(
-              'path, permitted_actions.resource_type AS resource_type, permitted_actions.parent_type AS parent_type, '\
-              'permitted_actions.id AS id'
+              'array_agg(path) AS paths, permitted_actions.resource_type AS resource_type, '\
+              'permitted_actions.parent_type AS parent_type, permitted_actions.id AS id'
             )
         )
     end
@@ -73,7 +83,7 @@ class EdgeTreePolicy < RestrictivePolicy
       filtered_edge_table.where(permitted_actions_table[:action_name].eq(PermittedAction.action_names[:show]))
     end
 
-    def joined_edge_table # rubocop:disable Metrics/AbcSize
+    def joined_edge_table # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       edges_table
         .join(grants_table).on(edges_table[:uuid].eq(grants_table[:edge_id]))
         .join(grant_sets_table).on(grant_sets_table[:id].eq(grants_table[:grant_set_id]))
@@ -84,6 +94,11 @@ class EdgeTreePolicy < RestrictivePolicy
         .on(active_group_memberships_filter)
         .join(permitted_actions_table)
         .on(permitted_actions_table[:id].eq(grant_sets_permitted_actions_table[:permitted_action_id]))
+        .group(
+          permitted_actions_table[:resource_type],
+          permitted_actions_table[:parent_type],
+          permitted_actions_table[:id]
+        )
     end
 
     def managed_forum_paths

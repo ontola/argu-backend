@@ -15,7 +15,7 @@ class ActivityPolicy < EdgeTreePolicy
       scope
         .joins(:trackable)
         .with(granted_paths)
-        .where(granted_path_type_filter(:activities))
+        .joins(granted_path_type_join(Activity.arel_table))
     end
   end
 
