@@ -204,6 +204,7 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   FactorySeeder.create(:pro_argument, parent: expired_motion)
   FactorySeeder.create(:topic, parent: freetown)
 
+  FactorySeeder.create(:export, parent: page, user: FactorySeeder.create(:user))
   FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))
   FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))
 

@@ -21,6 +21,12 @@ RSpec.describe 'Exports', type: :request do
   let(:expect_get_new_guest_serializer) { expect_success }
   let(:expect_get_new_unauthorized_serializer) { expect_success }
 
+  context 'with page parent' do
+    subject { page_export }
+
+    it_behaves_like 'requests', skip: %i[edit update trash untrash show invalid]
+  end
+
   context 'with forum parent' do
     subject { forum_export }
 

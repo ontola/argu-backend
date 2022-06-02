@@ -30,6 +30,10 @@ class ExportsController < ServiceController
     true
   end
 
+  def create_service_parent
+    super || ActsAsTenant.current_tenant
+  end
+
   def redirect_location
     export_iri(authenticated_resource.edge)
   end

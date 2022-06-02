@@ -379,6 +379,7 @@ module Argu
           let(:trashed_question) { freetown.questions.trashed.first }
           let(:unpublished_question) { freetown.questions.unpublished.first }
           let(:argument_unpublished_child) { unpublished_question.motions.first.arguments.first }
+          let(:page_export) { argu.exports.first }
           let(:forum_export) { freetown.exports.first }
           let(:motion_export) { motion.exports.first }
         end

@@ -52,7 +52,7 @@ class Export < ApplicationRecord
   class << self
     def attributes_for_new(opts)
       {
-        edge: opts[:parent],
+        edge: opts[:parent] || ActsAsTenant.current_tenant,
         user: opts[:user_context]&.user
       }
     end
