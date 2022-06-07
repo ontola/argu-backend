@@ -10,6 +10,7 @@ Rails.application.config.active_storage.service =
   end
 
 Rails.application.config.active_storage.variant_processor = :vips
+ActiveStorage::Engine.config.active_storage.content_types_to_serve_as_binary.delete('image/svg+xml')
 
 module VariantApartmentFix
   extend ActiveSupport::Concern

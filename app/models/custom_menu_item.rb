@@ -24,7 +24,10 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :parent_menu, class_name: 'CustomMenuItem', inverse_of: :custom_menu_items
   has_many :custom_menu_items, -> { order(:position) }, foreign_key: :parent_menu_id, inverse_of: :parent_menu
   acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
-  has_one_attached :custom_image
+  has_one_attached :custom_image do |attachable|
+    attachable.variant(:png, format: :png, resize_to_limit: [218, 64])
+    attachable.variant(:svg, format: :svg, sanitize_svg: true)
+  end
   delegate :content_type, to: :custom_image, prefix: true
 
   enum target_type: {edge: 0, url: 1}
@@ -46,7 +49,11 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def custom_image_iri
-    RDF::URI(custom_image.url) if custom_image&.url
+    return unless custom_image&.attached?
+
+    return RDF::URI(custom_image.variant(:svg).processed.url) if custom_image.content_type.include?('svg')
+
+    RDF::URI(custom_image.variant(:png).processed.url)
   end
 
   def custom_image=(val)

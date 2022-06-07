@@ -749,6 +749,7 @@ DEPENDENCIES
   license_finder
   linked_rails!
   linked_rails-auth!
+  loofah
   ltree_hierarchy
   minitest
   minitest-bang
