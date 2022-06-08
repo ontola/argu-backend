@@ -45,7 +45,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 3899ebc85cdd55a77d7aed14f663c23e00bfc099
+  revision: 48b2567a8e9a645fb059bd48e7599b5b30191b9c
   specs:
     linked_rails (0.0.4)
       active_response (~> 0.0.2)
@@ -452,7 +452,7 @@ GEM
     oga (3.3)
       ast
       ruby-ll (~> 2.1)
-    oj (3.13.13)
+    oj (3.13.14)
     orm_adapter (0.5.0)
     parallel (1.21.0)
     parser (3.1.0.0)

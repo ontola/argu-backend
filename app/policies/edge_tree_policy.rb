@@ -28,8 +28,11 @@ class EdgeTreePolicy < RestrictivePolicy
     def active_group_memberships_filter # rubocop:disable Metrics/AbcSize
       groups_table[:id]
         .eq(group_memberships_table[:group_id])
-        .and(group_memberships_table[:start_date].lteq(Time.current))
-        .and(group_memberships_table[:end_date].eq(nil).or(group_memberships_table[:end_date].gteq(Time.current)))
+        .and(group_memberships_table[:start_date].lteq(Arel::Nodes::NamedFunction.new('STATEMENT_TIMESTAMP', [])))
+        .and(
+          group_memberships_table[:end_date].eq(nil)
+            .or(group_memberships_table[:end_date].gteq(Arel::Nodes::NamedFunction.new('STATEMENT_TIMESTAMP', [])))
+        )
     end
 
     def active_or_creator
