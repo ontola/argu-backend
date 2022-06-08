@@ -33,7 +33,7 @@ class Feed < VirtualResource
   private
 
   def activity_base
-    Activity.where("key ~ '#{self.class.class_key}.update|publish'")
+    Activity.where(important: true)
   end
 
   def edge_activities
@@ -45,11 +45,6 @@ class Feed < VirtualResource
   end
 
   class << self
-    def class_key
-      @class_key ||=
-        Edge.descendants.select { |k| k.include?(Edgeable::Content) }.map { |k| k.name.underscore }.join('|')
-    end
-
     def requested_index_resource(params, user_context)
       parent = LinkedRails.iri_mapper.parent_from_params(params, user_context)
       return unless parent&.enhanced_with?(Feedable)

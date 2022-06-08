@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_01_123516) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_08_073938) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_123516) do
     t.uuid "trackable_edge_id"
     t.uuid "recipient_edge_id"
     t.uuid "root_id", null: false
+    t.boolean "important", default: false, null: false
     t.index ["created_at"], name: "index_activities_on_created_at"
     t.index ["key"], name: "index_activities_on_key", using: :gist
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"

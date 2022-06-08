@@ -47,6 +47,7 @@ class Activity < PublicActivity::Activity
   alias edgeable_record trackable
 
   before_create :touch_edges
+  before_create :mark_as_important
 
   attr_accessor :notify
 
@@ -84,6 +85,18 @@ class Activity < PublicActivity::Activity
     ACTION_TYPE[action.to_sym] || NS.as[:Activity]
   end
 
+  def trackable_class
+    @trackable_class ||= trackable&.class || trackable_type.classify.constantize
+  end
+
+  private
+
+  def mark_as_important
+    return unless %w[publish update].include?(action) && trackable.class.include?(Edgeable::Content)
+
+    self.important = true
+  end
+
   def touch_edges
     return unless action == 'publish'
 
@@ -96,10 +109,6 @@ class Activity < PublicActivity::Activity
     edge.last_activity_at = Time.current
     edge.save(touch: false)
     edge.instance_variable_set(:@mutations_before_last_save, mutations)
-  end
-
-  def trackable_class
-    @trackable_class ||= trackable&.class || trackable_type.classify.constantize
   end
 
   class << self

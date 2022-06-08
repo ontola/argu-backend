@@ -1,26 +1,7 @@
 {
   "ignored_warnings": [
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "ca78b2d7670c7512796b387bd14ff3f3c0ce2e79b2ddbf60be16e87e2b9d232d",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/virtual/feed.rb",
-      "line": 36,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Activity.where(\"key ~ '#{self.class.class_key}.update|publish'\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Feed",
-        "method": "activity_base"
-      },
-      "user_input": "self.class.class_key",
-      "confidence": "Weak",
-      "note": ""
-    }
+
   ],
-  "updated": "2022-06-07 13:55:04 +0200",
+  "updated": "2022-06-10 16:18:50 +0200",
   "brakeman_version": "5.2.1"
 }
