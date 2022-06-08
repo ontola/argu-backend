@@ -357,7 +357,7 @@ GEM
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
     iso8601 (0.9.1)
-    jmespath (1.5.0)
+    jmespath (1.6.1)
     json-canonicalization (0.3.0)
     json-ld (3.2.0)
       htmlentities (~> 4.3)
