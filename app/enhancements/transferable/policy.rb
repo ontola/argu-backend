@@ -5,7 +5,7 @@ module Transferable
     extend ActiveSupport::Concern
 
     included do
-      permit_attributes %i[transfer_to], grant_sets: %i[staff]
+      permit_attributes %i[transfer_type transfer_to]
     end
 
     def transfer?

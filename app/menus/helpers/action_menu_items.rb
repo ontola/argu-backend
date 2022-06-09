@@ -20,6 +20,16 @@ module Helpers
       )
     end
 
+    def transfer_link
+      menu_item(
+        :transfer,
+        dialog: true,
+        image: 'fa-exchange',
+        href: LinkedRails.iri(path: "#{resource.root_relative_iri}/transfer"),
+        policy: :transfer?
+      )
+    end
+
     def activity_link
       menu_item(
         :activity,

@@ -56,6 +56,7 @@ class SurveyMenuList < ApplicationMenuList
       move_link,
       new_update_link,
       copy_share_link(resource.iri),
+      transfer_link,
       *trash_and_destroy_links
     ]
   end

@@ -1,0 +1,17 @@
+nl:
+  actions:
+    default:
+      transfer:
+        label: "Overdragen"
+  enums:
+    edges:
+      transfer_type:
+        transfer_to_page: "De organisatie"
+        transfer_to_user: "Selecteer een gebruiker"
+  forms:
+    transfers:
+      transfer_type:
+        label: "Overdragen aan"
+  menus:
+    default:
+      transfer: "Overdragen"

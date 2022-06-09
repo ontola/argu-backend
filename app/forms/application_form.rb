@@ -5,8 +5,8 @@ class ApplicationForm < LinkedRails::Form
   include Cacheable
 
   class << self
-    def form_options_iri(attr)
-      -> { LinkedRails.iri(path: "/enums/#{model_class.to_s.tableize}/#{attr}") }
+    def form_options_iri(attr, klass = nil)
+      -> { LinkedRails.iri(path: "/enums/#{(klass || model_class).to_s.tableize}/#{attr}") }
     end
 
     private

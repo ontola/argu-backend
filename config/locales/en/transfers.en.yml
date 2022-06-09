@@ -1,0 +1,17 @@
+en:
+  actions:
+    default:
+      transfer:
+        label: "Transfer"
+  enums:
+    edges:
+      transfer_type:
+        transfer_to_page: "The organisation"
+        transfer_to_user: "Select a user"
+  forms:
+    transfers:
+      transfer_type:
+        label: "Transfer to"
+  menus:
+    default:
+      transfer: "Transfer"

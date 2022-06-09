@@ -203,16 +203,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parent.is_a?(Phase) ? parent.parent : parent
   end
 
-  def change_creator(new_owner)
-    update!(creator: new_owner)
-    try(:argu_publication)&.update!(creator: new_owner)
-    activities
-      .where(key: %W[#{self.class.name.underscore}.create #{self.class.name.underscore}.publish])
-      .find_each { |a| a.update!(owner: new_owner) }
-
-    true
-  end
-
   def children(*args)
     association(:children).reader(*args)
   end

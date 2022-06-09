@@ -6,6 +6,7 @@ module Transferable
 
     included do
       attribute :transfer_to, datatype: NS.xsd.string, predicate: NS.argu[:transferTo]
+      enum :transfer_type, predicate: NS.argu[:transferType]
     end
   end
 end

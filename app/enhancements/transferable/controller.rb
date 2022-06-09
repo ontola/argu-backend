@@ -14,8 +14,10 @@ module Transferable
       )
     end
 
+    private
+
     def transfer_execute
-      current_resource.transfer!(permit_params.require(:transfer_to))
+      current_resource.transfer!(transfer_to)
     end
 
     def transfer_success
@@ -26,6 +28,15 @@ module Transferable
 
     def transfer_success_options
       update_success_options.merge(meta: update_meta)
+    end
+
+    def transfer_to
+      case permit_params.require(:transfer_type).to_sym
+      when :transfer_to_page
+        ActsAsTenant.current_tenant.iri
+      else
+        permit_params.require(:transfer_to)
+      end
     end
   end
 end
