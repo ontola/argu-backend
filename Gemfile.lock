@@ -45,7 +45,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 48b2567a8e9a645fb059bd48e7599b5b30191b9c
+  revision: df16952407f600b6464d69ad96538a6cdbba22b5
   specs:
     linked_rails (0.0.4)
       active_response (~> 0.0.2)
@@ -498,7 +498,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.2)
+    rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
     rails-i18n (7.0.1)
       i18n (>= 0.7, < 2)

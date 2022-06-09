@@ -93,13 +93,32 @@ class MotionsTest < ActionDispatch::IntegrationTest
     assert_equal 1, Motion.last.placements.first.zoom_level
   end
 
+  test 'initiator should get new motion object with latlon from filter' do
+    sign_in initiator
+
+    filter = {
+      NS.schema.latitude => 1,
+      NS.schema.longitude => 2,
+      NS.ontola[:zoomLevel] => 3
+    }
+    object = freetown.collection_iri(:motions, type: :paginated, filter: filter).to_s.sub('/m', '/m/new/action_object')
+    get object,
+        headers: argu_headers(accept: :nq)
+    assert_response(:success)
+    same_as = expect_triple(RDF::URI(object), NS.owl.sameAs, nil).first.object
+    location = expect_triple(same_as, NS.schema.location, nil).first.object
+    expect_triple(location, NS.schema.latitude, BigDecimal(1))
+    expect_triple(location, NS.schema.longitude, BigDecimal(2))
+    expect_triple(location, NS.ontola[:zoomLevel], 3)
+  end
+
   test 'initiator should post create motion with latlon from filter' do
     sign_in initiator
 
     filter = {
       NS.schema.latitude => 1,
-      NS.schema.longitude => 1,
-      NS.ontola[:zoomLevel] => 1
+      NS.schema.longitude => 2,
+      NS.ontola[:zoomLevel] => 3
     }
     Thread.current[:mock_searchkick] = false
     assert_difference('Motion.count' => 1, 'Placement.count' => 1, 'Place.count' => 1, 'Activity.count' => 1) do
@@ -112,8 +131,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
     Thread.current[:mock_searchkick] = true
 
     assert_equal 1, Motion.last.placements.first.lat
-    assert_equal 1, Motion.last.placements.first.lon
-    assert_equal 1, Motion.last.placements.first.zoom_level
+    assert_equal 2, Motion.last.placements.first.lon
+    assert_equal 3, Motion.last.placements.first.zoom_level
   end
 
   test 'initiator should not post create motion without latlon in question requiring location' do

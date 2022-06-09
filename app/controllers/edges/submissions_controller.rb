@@ -16,7 +16,7 @@ class SubmissionsController < EdgeableController
   end
 
   def create_success
-    add_exec_action_header(response.headers, ontola_dialog_action(current_resource.iri, opener: parent_resource.iri))
+    add_exec_action_header(response.headers, ontola_dialog_action(current_resource.iri))
 
     super
   end
