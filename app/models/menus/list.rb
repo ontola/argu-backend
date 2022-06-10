@@ -8,6 +8,8 @@ module Menus
         menu_tag = params[:id]&.to_sym
         resource = menu_list.send(:resource)
 
+        return unless resource.is_a?(Edge)
+
         LinkedRails.menus_item_class.new(
           menus: menu_list.custom_menu_items(menu_tag, resource),
           parent: menu_list,
