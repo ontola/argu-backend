@@ -20,7 +20,7 @@ module Actions
       },
       title: lambda {
         I18n.t(
-          "collections.#{LinkedRails::Translate.translation_key(parent.association_class)}.action_dialog",
+          "collections.#{LinkedRails::Translate.translation_key(parent.try(:association_class))}.action_dialog",
           default: :'actions.plural'
         )
       }

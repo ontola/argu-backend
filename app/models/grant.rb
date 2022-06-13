@@ -96,7 +96,7 @@ class Grant < ApplicationRecord
       when Group
         attrs[:group] = parent
       else
-        attrs[:edge] = parent
+        attrs[:edge] = parent unless parent.is_a?(User)
       end
       attrs
     end

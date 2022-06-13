@@ -10,9 +10,9 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def staff?
       grant_tree
-        .grant_sets(grant_tree.tree_root, group_ids: user.profile.group_ids)
-        .map(&:title)
-        .include?('staff')
+        &.grant_sets(grant_tree.tree_root, group_ids: user.profile.group_ids)
+        &.map(&:title)
+        &.include?('staff')
     end
 
     private

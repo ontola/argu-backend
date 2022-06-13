@@ -41,6 +41,8 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def granted_group_ids(action_name, check_class = class_name)
+    return [] if grant_tree.nil?
+
     grant_tree
       .granted_group_ids(
         persisted_edge,
@@ -51,15 +53,15 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def has_expired_ancestors?
-    grant_tree.expired?(persisted_edge)
+    grant_tree&.expired?(persisted_edge)
   end
 
   def has_trashed_ancestors?
-    grant_tree.trashed?(persisted_edge)
+    grant_tree&.trashed?(persisted_edge)
   end
 
   def has_unpublished_ancestors?
-    grant_tree.unpublished?(persisted_edge)
+    grant_tree&.unpublished?(persisted_edge)
   end
 
   def has_grant?(action_name, check_class = class_name)

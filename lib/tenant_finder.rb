@@ -7,6 +7,8 @@ class TenantFinder
     def from_url(url)
       uri = URI(url)
       new(uri.host, uri.port, uri.path).tenant
+    rescue URI::InvalidURIError
+      nil
     end
 
     def from_request(request)
