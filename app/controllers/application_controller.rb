@@ -102,7 +102,7 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
 
   # @private
   def set_locale
-    I18n.locale = user_context.language
+    I18n.locale = user_context.language || ActsAsTenant.current_tenant&.language || I18n.default_locale
   end
 
   def set_vary
