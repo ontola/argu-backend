@@ -366,7 +366,8 @@ module SPI
         {include: true, iri: "#{freetown.iri}/search"},
         {include: true, iri: "#{freetown.iri}/search?q=1"},
         {include: true, iri: "#{argu.iri}/ns/core"},
-        {include: true, iri: resource_iri(MotionForm.new, root: argu)}
+        {include: true, iri: resource_iri(MotionForm.new, root: argu)},
+        {include: false, iri: "#{argu.iri}%7B?before%5B%5D*,display}"}
       ]
     end
 
@@ -377,6 +378,7 @@ module SPI
         "#{freetown.iri}/search" => {cache: 'public', status: 200, include: true},
         "#{freetown.iri}/search?q=1" => {cache: 'private', status: 200, include: true},
         "#{argu.iri}/ns/core" => {cache: 'public', status: 200, include: true},
+        "#{argu.iri}%7B?before%5B%5D*,display}" => {cache: 'private', status: 404, include: false},
         resource_iri(MotionForm.new, root: argu) => {cache: 'public', status: 200, include: true}
       }.merge(opts)
     end
