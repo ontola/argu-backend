@@ -36,6 +36,7 @@ module SPI
         display_name: 'Argu',
         header_background: 'background_primary',
         header_text: 'text_auto',
+        language: 'en',
         iri_prefix: 'argu.localtest/argu',
         primary_color: '#475668',
         secondary_color: '#d96833',

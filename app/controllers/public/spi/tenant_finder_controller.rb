@@ -5,7 +5,7 @@ module Public
     class TenantFinderController < SPI::SPIController
       TENANT_META_ATTRS = %w[
         uuid all_shortnames iri_prefix header_background header_text secondary_color primary_color
-        database_schema display_name
+        database_schema display_name language
       ].freeze
 
       skip_before_action :authorize_action
