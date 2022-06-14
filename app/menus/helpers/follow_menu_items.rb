@@ -8,6 +8,17 @@ module Helpers
       @follow ||= user.follow_for(resource)
     end
 
+    def follow_icon(follow_type)
+      case follow_type.to_sym
+      when :news
+        'fa-bell-o'
+      when :reactions
+        'fa-bell'
+      else
+        'fa-bell-slash-o'
+      end
+    end
+
     def follow_type
       @follow_type ||= follow&.follow_type || 'never'
     end

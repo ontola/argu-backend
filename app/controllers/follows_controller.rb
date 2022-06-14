@@ -19,7 +19,7 @@ class FollowsController < AuthorizedController
       .menu_sequence
       .members
       .map(&method(:menu_item_image_triple))
-      .compact
+      .compact + [menu_item_image_triple(followable_menu)]
   end
 
   def destroy_failure

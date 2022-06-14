@@ -97,7 +97,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
       follow_types = opts.delete(:follow_types)
       has_menu :follow, **{
         description: I18n.t('notifications.receive.title'),
-        image: 'fa-bell-o',
+        image: -> { follow_icon(follow_type) },
         menus: -> { follow_menu_items(follow_types) }
       }.merge(opts)
     end
