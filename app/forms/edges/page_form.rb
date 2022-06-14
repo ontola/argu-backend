@@ -9,6 +9,10 @@ class PageForm < ApplicationForm
         sh_in: -> { ContainerNode.collection_iri }
   field :locale
   has_one :default_profile_photo, min_count: 0
+  resource :delete,
+           label: -> { I18n.t('delete') },
+           description: -> { I18n.t('pages.settings.advanced.delete.only_without_components') },
+           url: -> { delete_iri(ActsAsTenant.current_tenant) }
 
   group :theme,
         label: -> { I18n.t('forms.theme.label') },

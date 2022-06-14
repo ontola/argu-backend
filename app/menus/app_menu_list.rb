@@ -111,8 +111,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
         :vocabularies,
         label: Vocabulary.plural_label,
         href: Vocabulary.collection_iri(display: :table)
-      ),
-      setting_item(:delete, href: delete_iri(resource))
+      )
     ]
   end
 
@@ -150,6 +149,11 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
         :profile,
         href: user_context.user.iri,
         image: "fa-#{tab_icons[:profile]}"
+      ),
+      menu_item(
+        :help,
+        href: RDF::URI('https://argu.co/argu/help'),
+        image: 'fa-question'
       )
     ]
   end

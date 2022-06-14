@@ -39,6 +39,7 @@ module SettingsHelper
   end
 
   def setting_item_opts(tag, opts)
+    opts[:description] ||= I18n.t("menus.descriptions.#{tag}", default: nil)
     opts[:image] ||= "fa-#{tab_icons[tag]}"
     opts[:policy] ||= :tab?
     opts[:policy_arguments] ||= [tag]

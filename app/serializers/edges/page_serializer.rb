@@ -6,6 +6,9 @@ class PageSerializer < EdgeSerializer
     profile&.name
   end
   attribute :url, predicate: NS.argu[:shortname], datatype: NS.xsd.string
+  attribute :full_iri, predicate: NS.schema.url do |object|
+    URI("https://#{object.iri_prefix}")
+  end
   attribute :follows_count, predicate: NS.argu[:followsCount]
   attribute :database_schema, predicate: NS.argu[:dbSchema], if: method(:service_scope?)
 

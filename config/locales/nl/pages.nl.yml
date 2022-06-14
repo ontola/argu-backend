@@ -25,7 +25,8 @@ nl:
         get_one: "Een forum toevoegen aan jouw organisatie? <a href='mailto:info@argu.co'>Neem contact met ons op</a> voor de mogelijkheden."
       advanced:
         delete:
-          forum_owner: "Deze bevat een of meer forums. Verwijder deze eerst, of neem contact op met Argu."
+          only_without_components: "Een website kan pas worden verwijderd als alle componenten zijn verwijderd."
+          forum_owner: "Deze bevat een of meer componenten. Verwijder deze eerst, of neem contact op met Argu."
     management:
       title: "Organisatiebeheer"
       managed_current_out_of_max: "%{current} van maximaal %{max} organisatie(s) beheerd."

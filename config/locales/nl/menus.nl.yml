@@ -62,3 +62,12 @@ nl:
       general: "Algemeen"
       grants: "Rechten"
       delete: "Verwijderen"
+      banners: "Banners"
+    descriptions:
+      general: "Hier vind je de algemene instellingen voor deze website."
+      container_nodes: "Componenten vormen de basisstructuur van de website."
+      groups: "Met groepen kan je bepaalde rechten aan een selecte groep deelnemers geven."
+      shortnames: "Met redirects kan je mooiere urls maken om te delen met anderen."
+      custom_menu_items: "Menu items vormen de bovenbalk van de website."
+      banners: "Banners zijn balken die onder de navigatiebalk komen te staan. Je kunt deze gebruiken om bezoekers iets belangrijks te laten lezen."
+      vocabularies: "Via vocabularies kan je lijsten met eigen content maken."

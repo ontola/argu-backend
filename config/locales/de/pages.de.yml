@@ -35,8 +35,9 @@ de:
           Möglichkeiten.
       advanced:
         delete:
+          only_without_components: "Eine Website kann nur gelöscht werden, wenn alle Bestandteile gelöscht sind."
           forum_owner: >-
-            Diese Seite besitzt ein oder mehrere Foren. Löschen Sie diese oder
+            Diese Seite besitzt ein oder mehrere Bestandteile. Löschen Sie diese oder
             kontaktieren Sie Argu, bevor Sie fortfahren.
     management:
       title: Verwaltung von Organisationen

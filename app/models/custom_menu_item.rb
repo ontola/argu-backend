@@ -66,6 +66,8 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def custom_image_content_type=(val); end
 
+  def description; end
+
   def href
     edge&.iri || RDF::URI(super)
   end
