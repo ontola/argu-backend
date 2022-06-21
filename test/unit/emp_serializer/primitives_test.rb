@@ -54,8 +54,7 @@ class PrimitivesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
   test 'primitive_to_value serializes symbols' do
     value = :symbolName
     exp = {
-      type: 'p',
-      dt: 'http://www.w3.org/2001/XMLSchema#token',
+      type: 's',
       v: value.to_s
     }
     assert_equal exp, primitive_to_value(value)
