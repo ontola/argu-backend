@@ -7,13 +7,10 @@ module Actions
 
     collection_options(
       association_base: lambda {
-        action_list = parent ? parent.action_list(user_context) : association_class.app_action_list(user_context)
-
-        if filter[NS.schema.actionStatus]
-          action_list.actions.filter { |action| filter[NS.schema.actionStatus].include?(action.action_status) }
-        else
-          action_list.actions
-        end
+        Actions::Item.sorted_collection_actions(
+          self,
+          parent ? parent.action_list(user_context) : association_class.app_action_list(user_context)
+        )
       },
       default_filters: {
         NS.schema.actionStatus => [NS.schema.PotentialActionStatus]
@@ -46,6 +43,20 @@ module Actions
 
     class << self
       def app_action_list(_user_context); end
+
+      def collection_actions(resource, action_list)
+        if resource.filter[NS.schema.actionStatus]
+          action_list.actions.filter { |action| resource.filter[NS.schema.actionStatus].include?(action.action_status) }
+        else
+          action_list.actions
+        end
+      end
+
+      def sorted_collection_actions(resource, action_list)
+        collection_actions(resource, action_list).sort_by do |action|
+          resource.parent.try(:action_precedence).try(:index, action.tag.to_sym) || 0
+        end
+      end
     end
   end
 end

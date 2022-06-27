@@ -42,6 +42,10 @@ class Discussion < Edge
       RDF::URI("#{collection.parent.collection_iri(:discussions)}/actions") if self == Discussion
     end
 
+    def action_precedence
+      %i[new_thread new_question new_motion new_poll new_project new_budget_shop new_survey]
+    end
+
     def inherited(klass)
       klass.send(:counter_cache, true)
       super
