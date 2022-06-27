@@ -19,7 +19,7 @@ class Survey < Discussion
 
   parentable :container_node, :page, :phase
   with_collection :submissions
-  enum form_type: {local: 0, remote: 1}
+  enum form_type: {remote: 1, local: 0}
   attr_writer :form_type
 
   validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
@@ -33,7 +33,7 @@ class Survey < Discussion
   end
 
   def form_type
-    external_iri.present? ? :remote : :local
+    external_iri.present? || new_record? ? :remote : :local
   end
 
   def manage_iri
