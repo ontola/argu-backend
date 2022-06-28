@@ -7,15 +7,13 @@ module ActiveResponseHelper
     I18n.t("type_#{action_name}_failure", type: current_resource.class.label.downcase)
   end
 
-  def active_response_success_message # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
+  def active_response_success_message # rubocop:disable Metrics/AbcSize
     return send("#{action_name}_success_message") if respond_to?("#{action_name}_success_message", true)
 
-    if current_resource.try(:is_publishable?) && (action_name == 'create' || resource_was_published?)
-      if current_resource.try(:argu_publication)&.publish_time_lapsed?
-        I18n.t('type_publish_success', type: current_resource.class.label.capitalize)
-      else
-        I18n.t('type_draft_success', type: current_resource.class.label.capitalize)
-      end
+    if resource_was_published?
+      I18n.t('type_publish_success', type: current_resource.class.label.capitalize)
+    elsif action_name == 'create' && current_resource.try(:is_publishable?)
+      I18n.t('type_draft_success', type: current_resource.class.label.capitalize)
     else
       I18n.t("type_#{action_name}_success", type: current_resource.class.label.capitalize)
     end
@@ -58,7 +56,12 @@ module ActiveResponseHelper
   end
 
   def resource_was_published?
-    current_resource.try(:argu_publication)&.previous_changes&.key?(:published_at)
+    return false unless current_resource.try(:is_publishable?)
+
+    publication_changed = action_name == 'create' ||
+      current_resource.argu_publication&.previous_changes&.key?(:published_at)
+
+    publication_changed && current_resource.argu_publication&.publish_time_lapsed?
   end
 
   def respond_with(*resources, &_block)
