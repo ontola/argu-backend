@@ -49,6 +49,8 @@ nl:
     pages:
       accepted_terms:
         label: "Ik ga akkoord met de gebruiksvoorwaarden"
+      display_name:
+        label: "Naam"
       google_tag_manager:
         label: "Google tag manager"
       google_uac:

@@ -50,6 +50,8 @@ en:
     pages:
       accepted_terms:
         label: "I accept the terms of use"
+      display_name:
+        label: "Name"
       google_tag_manager:
         label: "Google tag manager"
       google_uac:

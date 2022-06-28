@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 class PageForm < ApplicationForm
-  field :display_name
-  field :url
+  field :display_name,
+        min_count: 1,
+        placeholder: ''
+  field :url,
+        start_adornment: "#{Rails.application.config.origin}/"
   field :primary_container_node_id,
         datatype: NS.xsd.string,
         max_count: 1,
         sh_in: -> { ContainerNode.collection_iri }
-  field :locale
+  field :locale,
+        min_count: 1
   has_one :default_profile_photo, min_count: 0
   resource :delete,
            label: -> { I18n.t('delete') },

@@ -65,6 +65,8 @@ de:
     pages:
       accepted_terms:
         label: Ich akzeptiere die Nutzungsbedingungen
+      display_name:
+        label: Name
       google_tag_manager:
         label: Google Tag Manager
       google_uac:

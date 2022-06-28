@@ -42,7 +42,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     get new_iri(Page.collection_iri(root: argu).path)
 
-    assert_disabled_form
+    assert_enabled_form
   end
 
   test 'guest should not post create' do

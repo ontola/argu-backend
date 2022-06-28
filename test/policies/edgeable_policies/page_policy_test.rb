@@ -33,7 +33,7 @@ class PagePolicyTest < Argu::TestHelpers::PolicyTest
   end
 
   def create_results
-    everybody_results.merge(guest: false, creator: false)
+    everybody_results.merge(creator: false)
   end
 
   def trash_results
