@@ -73,7 +73,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def image
-    custom_image_iri || icon
+    custom_image_iri || icon.presence
   end
 
   def label
