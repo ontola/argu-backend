@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApplicationMenuList < LinkedRails::Menus::List
+class ApplicationMenuList < LinkedRails::Menus::List # rubocop:disable Metrics/ClassLength
   include ActionDispatch::Routing
   include Rails.application.routes.url_helpers
   include URITemplateHelper
@@ -52,10 +52,15 @@ class ApplicationMenuList < LinkedRails::Menus::List
     )
   end
 
+  def tabs_menu_items_with_edit
+    return tabs_menu_items unless resource.try(:parent).is_a?(Phase)
+
+    tabs_menu_items + [edit_link]
+  end
+
   def tabs_menu_items
     [
       comments_link,
-      edit_link,
       activity_link
     ]
   end
@@ -111,7 +116,7 @@ class ApplicationMenuList < LinkedRails::Menus::List
 
     def has_tabs_menu(**opts)
       has_menu :tabs, **{
-        menus: -> { tabs_menu_items.map(&method(:item_without_image)) }
+        menus: -> { tabs_menu_items_with_edit.map(&method(:item_without_image)) }
       }.merge(opts)
     end
   end

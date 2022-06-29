@@ -12,6 +12,7 @@ class BudgetShopMenuList < ApplicationMenuList
 
   def action_menu_items
     [
+      edit_link,
       search_link,
       new_update_link,
       statistics_link,
@@ -58,7 +59,6 @@ class BudgetShopMenuList < ApplicationMenuList
       comments_link,
       orders_links,
       coupon_batch_links,
-      edit_link,
       activity_link
     ]
   end

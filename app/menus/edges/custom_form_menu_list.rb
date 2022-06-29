@@ -8,8 +8,8 @@ class CustomFormMenuList < ApplicationMenuList
 
   def action_menu_items
     [
-      activity_link,
       edit_link,
+      activity_link,
       copy_share_link(resource.iri),
       *trash_and_destroy_links(include_destroy: false)
     ]

@@ -11,8 +11,8 @@ class ArgumentMenuList < ApplicationMenuList
 
   def action_menu_items
     [
-      activity_link,
       edit_link,
+      activity_link,
       copy_share_link(resource.iri),
       transfer_link,
       *trash_and_destroy_links, contact_link

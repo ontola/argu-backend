@@ -11,10 +11,10 @@ class TopicMenuList < ApplicationMenuList
 
   def action_menu_items # rubocop:disable Metrics/MethodLength
     [
+      edit_link,
       activity_link,
       search_link,
       new_update_link,
-      edit_link,
       convert_link,
       move_link,
       statistics_link,

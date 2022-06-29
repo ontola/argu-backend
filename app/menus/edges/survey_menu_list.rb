@@ -46,13 +46,13 @@ class SurveyMenuList < ApplicationMenuList
         href: resource.collection_iri(:submissions, display: :table)
       ),
       form_item,
-      edit_link,
       external_link
     ]
   end
 
   def action_menu_items
     [
+      edit_link,
       move_link,
       new_update_link,
       copy_share_link(resource.iri),

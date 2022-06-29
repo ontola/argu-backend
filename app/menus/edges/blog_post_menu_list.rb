@@ -21,8 +21,7 @@ class BlogPostMenuList < ApplicationMenuList
 
   def tabs_menu_items
     [
-      comments_link,
-      edit_link
+      comments_link
     ]
   end
 end

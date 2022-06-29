@@ -8,6 +8,7 @@ class VocabularyMenuList < ApplicationMenuList
 
   def action_menu_items
     [
+      edit_link,
       copy_share_link(resource.iri),
       *trash_and_destroy_links(include_destroy: false)
     ]
@@ -15,8 +16,7 @@ class VocabularyMenuList < ApplicationMenuList
 
   def tabs_menu_items
     [
-      terms_link,
-      edit_link
+      terms_link
     ]
   end
 
