@@ -115,15 +115,15 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :blog_posts
   has_many_children :budget_shops
   has_many_children :comments
-  has_many_children :container_nodes, dependent: :restrict_with_exception
+  has_many_children :container_nodes
   has_many_children :coupon_batches
   has_many_children :creative_works
   has_many_children :decisions
-  has_many_children :blogs, dependent: :restrict_with_exception
+  has_many_children :blogs
   has_many_children :custom_form_fields
   has_many_children :custom_forms
-  has_many_children :forums, dependent: :restrict_with_exception
-  has_many_children :open_data_portals, dependent: :restrict_with_exception
+  has_many_children :forums
+  has_many_children :open_data_portals
   has_many_children :motions
   has_many_children :offers
   has_many_children :order_details
@@ -381,8 +381,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def destroy_children
-    return if owner_type == 'Page'
-
     children.destroy_all
   end
 

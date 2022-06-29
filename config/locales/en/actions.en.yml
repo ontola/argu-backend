@@ -215,7 +215,7 @@ en:
       create:
         label: "New website"
       destroy:
-        label: "Destroy"
+        label: "Delete organisation"
         description: "Are you sure you want to permanently delete this entire organisation?. This cannot be undone."
         submit: "Delete"
     passwords:

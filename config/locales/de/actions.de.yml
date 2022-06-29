@@ -232,7 +232,7 @@ de:
       create:
         label: Neue Website
       destroy:
-        label: zerstören
+        label: Organisation löschen
         description: >-
           Sind Sie sicher, dass Sie die gesamte Organisation dauerhaft löschen
           wollen?. Dies kann nicht rückgängig gemacht werden.

@@ -296,24 +296,10 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
-  test 'administrator should delete destroy when page not owns a forum' do
+  test 'administrator should delete destroy when page owns a forum' do
     sign_in administrator
 
     assert_difference('Page.count' => -1, 'Tenant.count' => -1) do
-      delete page,
-             params: {
-               page: {
-                 confirmation_string: 'remove'
-               }
-             }
-    end
-  end
-
-  test 'administrator should not delete destroy when page owns a forum' do
-    sign_in administrator
-    freetown
-
-    assert_no_difference('Page.count') do
       delete page,
              params: {
                page: {

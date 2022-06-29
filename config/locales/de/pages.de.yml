@@ -33,12 +33,6 @@ de:
           Möchten Sie ein Forum für Ihre Organisation einrichten? Bitte <a
           href="mailto:info@argu.co">kontaktieren Sie uns</a> für die
           Möglichkeiten.
-      advanced:
-        delete:
-          only_without_components: "Eine Website kann nur gelöscht werden, wenn alle Bestandteile gelöscht sind."
-          forum_owner: >-
-            Diese Seite besitzt ein oder mehrere Bestandteile. Löschen Sie diese oder
-            kontaktieren Sie Argu, bevor Sie fortfahren.
     management:
       title: Verwaltung von Organisationen
       managed_current_out_of_max: '%{current} von max %{max} Organisation(en) verwaltet.'

@@ -15,7 +15,6 @@ class PageForm < ApplicationForm
   has_one :default_profile_photo, min_count: 0
   resource :delete,
            label: -> { I18n.t('delete') },
-           description: -> { I18n.t('pages.settings.advanced.delete.only_without_components') },
            url: -> { delete_iri(ActsAsTenant.current_tenant) }
 
   group :theme,

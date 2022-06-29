@@ -23,10 +23,6 @@ en:
         about_managers: "Some groups have management permissions. Members can manage groups and post content in name of the organization. They can also vote on their own name and delete previously placed items."
       forums:
         get_one: "Do you want to add a forum for your organisation? Please <a href='mailto:info@argu.co'>contact us</a> for the possibilities."
-      advanced:
-        delete:
-          only_without_components: "A website can only be deleted when all components are deleted."
-          forum_owner: "This page owns one or multiple components. Delete these or contact Argu before proceeding."
     management:
       title: "Organization management"
       managed_current_out_of_max: "%{current} of max %{max} organization(s) managed."

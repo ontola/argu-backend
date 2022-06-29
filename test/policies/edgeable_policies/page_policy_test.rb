@@ -25,7 +25,7 @@ class PagePolicyTest < Argu::TestHelpers::PolicyTest
   end
 
   def destroy_results
-    nobody_results
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def update_results

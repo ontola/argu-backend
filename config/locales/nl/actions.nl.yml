@@ -215,7 +215,7 @@ nl:
       create:
         label: "Nieuwe website"
       destroy:
-        label: "Vernietigen"
+        label: "Organisatie verwijderen"
         description: "Weet je zeker dat je de volledige organisatie permanent wil verwijderen? Deze actie is niet ongedaan te maken."
         submit: "Verwijder"
     passwords:
