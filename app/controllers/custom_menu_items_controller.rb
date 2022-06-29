@@ -8,6 +8,6 @@ class CustomMenuItemsController < ParentableController
   end
 
   def update_meta
-    create_meta
+    super + resource_added_delta(current_resource)
   end
 end

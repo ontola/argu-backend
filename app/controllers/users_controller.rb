@@ -63,12 +63,6 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     end
   end
 
-  def changes_triples(resource)
-    super + [
-      change_triple(resource, NS.schema.name, resource.name_with_fallback)
-    ]
-  end
-
   def check_if_registered?
     return super unless action_name == 'language'
 

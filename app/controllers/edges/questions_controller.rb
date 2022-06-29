@@ -7,7 +7,7 @@ class QuestionsController < DiscussionsController
 
   private
 
-  def changes_triples(resource)
+  def update_meta
     return super unless motion_collection_changed?
 
     super + [[resource.collection_iri(:motions), NS.sp.Variable, NS.sp.Variable, delta_iri(:invalidate)]]
