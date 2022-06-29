@@ -6,7 +6,9 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
   let(:demogemeente) { create(:page, url: 'demogemeente', iri_prefix: 'demogemeente.nl') }
-  let(:demogemeente_forum) { create_forum(parent: demogemeente, url: 'forum', initial_public_grant: 'initiator') }
+  let(:demogemeente_forum) do
+    create_forum(parent: demogemeente, url: 'public_forum', initial_public_grant: 'initiator')
+  end
   let(:freetown_motion) { create(:motion, parent: freetown) }
   let(:pro_argument) { create(:pro_argument, parent: freetown_motion) }
   let(:cairo_motion) { create(:motion, parent: cairo) }
@@ -83,20 +85,29 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     assert_redirected_to demogemeente.iri
   end
 
-  test 'guest should head demogemeente forum' do
+  test 'guest should head demogemeente public_forum' do
     sign_in guest_user
 
-    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/forum'
+    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/public_forum'
     head demogemeente_forum.iri, headers: argu_headers(accept: :nq)
 
     expect_response(200, page: demogemeente)
   end
 
+  test 'guest should head demogemeente forum' do
+    sign_in guest_user
+
+    assert_equal demogemeente.primary_container_node.iri, 'http://demogemeente.nl/forum'
+    head demogemeente.primary_container_node.iri, headers: argu_headers(accept: :nq)
+
+    expect_response(403, page: demogemeente)
+  end
+
   test 'guest should head demogemeente forum argu.co' do
     sign_in guest_user
 
-    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/forum'
-    head "#{Rails.application.config.origin}/demogemeente/forum", headers: argu_headers(accept: :nq)
+    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/public_forum'
+    head "#{Rails.application.config.origin}/demogemeente/public_forum", headers: argu_headers(accept: :nq)
 
     assert_redirected_to demogemeente_forum.iri
   end
@@ -105,7 +116,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
     Shortname.create!(shortname: 'demo_alias', owner: demogemeente_forum, primary: false)
     sign_in guest_user
 
-    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/forum'
+    assert_equal demogemeente_forum.iri, 'http://demogemeente.nl/public_forum'
     head "#{Rails.application.config.origin}/demo_alias", headers: argu_headers(accept: :nq)
 
     assert_redirected_to demogemeente_forum.iri.to_s

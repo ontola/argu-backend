@@ -52,6 +52,8 @@ class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
   alias_attribute :name, :display_name
   alias_attribute :description, :bio
 
+  attr_writer :create_menu_item
+
   auto_strip_attributes :name, :cover_photo_attribution, squish: true
   auto_strip_attributes :bio, nullify: false
   validates :url, presence: true, length: {minimum: 4, maximum: 75}
@@ -85,6 +87,8 @@ class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
   private
 
   def create_menu_item?
+    return @create_menu_item unless @create_menu_item.nil?
+
     true
   end
 

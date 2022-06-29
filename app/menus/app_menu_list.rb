@@ -91,7 +91,6 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       ),
       setting_item(
         :custom_menu_items,
-        label: CustomMenuItem.plural_label,
         href: CustomMenuItem.collection_iri
       ),
       setting_item(

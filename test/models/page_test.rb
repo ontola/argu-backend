@@ -11,7 +11,7 @@ class PageTest < ActiveSupport::TestCase
   end
 
   test 'should reset primary container node' do
-    assert_nil argu.primary_container_node
+    assert_not_nil argu.primary_container_node
     argu.update(primary_container_node: freetown)
     assert_equal argu.reload.primary_container_node, freetown
     assert_equal argu.reload.primary_container_node_id, freetown.uuid

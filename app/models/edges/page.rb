@@ -40,6 +40,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   validates :profile, :iri_prefix, presence: true
   validates :name, presence: true, length: {minimum: 3, maximum: 75}
 
+  before_create :build_default_forum
   after_create :tenant_create
   after_create :create_default_groups
   after_create :create_staff_grant
@@ -168,6 +169,20 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   private
+
+  def build_default_forum # rubocop:disable Metrics/MethodLength
+    self.primary_container_node = Forum.new(
+      is_published: true,
+      publisher: publisher,
+      creator: creator,
+      create_menu_item: false,
+      locale: I18n.locale,
+      name: display_name,
+      owner_type: 'Forum',
+      parent: self,
+      url: 'forum'
+    )
+  end
 
   def create_default_menu_items
     navigations_menu_items.create!(edge: self)

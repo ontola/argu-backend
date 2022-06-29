@@ -5,7 +5,7 @@ require 'test_helper'
 class IriHelperTest < ActiveSupport::TestCase
   define_freetown
   let(:example_page) { create(:page, iri_prefix: 'example.com') }
-  let(:example) { create_forum(parent: example_page, url: :example) }
+  let(:example) { example_page.primary_container_node }
   let(:question) { create(:question, parent: freetown) }
   let(:user) { create(:user) }
 
@@ -52,9 +52,9 @@ class IriHelperTest < ActiveSupport::TestCase
   end
 
   test 'should find forum of example.com' do
-    resource_from_path(example, '/example', example_page)
+    resource_from_path(example, '/forum', example_page)
     ActsAsTenant.with_tenant(example_page) do
-      assert_equal example, LinkedRails.iri_mapper.resource_from_iri!('https://example.com/example', nil)
+      assert_equal example, LinkedRails.iri_mapper.resource_from_iri!('https://example.com/forum', nil)
     end
   end
 

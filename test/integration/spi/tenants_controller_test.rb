@@ -34,11 +34,11 @@ module SPI
         all_shortnames: %w[argu],
         database_schema: 'argu',
         display_name: 'Argu',
-        header_background: 'background_primary',
+        header_background: 'background_white',
         header_text: 'text_auto',
         language: 'en',
         iri_prefix: 'argu.localtest/argu',
-        primary_color: '#475668',
+        primary_color: '#2d707f',
         secondary_color: '#d96833',
         uuid: argu.uuid
       }.as_json

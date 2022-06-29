@@ -87,6 +87,8 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_difference(
       'Tenant.count' => 1,
       'Page.count' => 1,
+      'Forum.count' => 1,
+      'CustomMenuItem.count' => 2,
       "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
     ) do
       post Page.collection_iri(root: argu),
@@ -96,8 +98,9 @@ class PagesTest < ActionDispatch::IntegrationTest
                url: 'UtrechtNumberTwo'
              }
            }
+      assert_response :success
     end
-    assert_response :success
+    assert_equal(Page.last.primary_container_node, Forum.last)
   end
 
   test 'user should post create with unnested params' do
@@ -237,17 +240,22 @@ class PagesTest < ActionDispatch::IntegrationTest
       CustomMenuItem.where(root: argu).pluck(:edge_id).compact.sort,
       [argu.uuid, amsterdam.uuid, utrecht.uuid].sort
     )
-    assert_nil argu.primary_container_node
 
     put argu, params: {id: argu.url, page: {primary_container_node_id: amsterdam.url}}
     argu.reload
     assert_equal argu.primary_container_node, amsterdam
-    assert_equal CustomMenuItem.where(root: argu).pluck(:edge_id).compact.sort, [argu.uuid, utrecht.uuid].sort
+    assert_equal(
+      CustomMenuItem.where(root: argu).pluck(:edge_id).compact.sort,
+      [argu.uuid, argu.forums.first.uuid, utrecht.uuid].sort
+    )
 
     put argu, params: {id: argu.url, page: {primary_container_node_id: utrecht.url}}
     argu.reload
     assert_equal argu.primary_container_node, utrecht
-    assert_equal CustomMenuItem.where(root: argu).pluck(:edge_id).compact.sort, [argu.uuid, amsterdam.uuid].sort
+    assert_equal(
+      CustomMenuItem.where(root: argu).pluck(:edge_id).compact.sort,
+      [argu.uuid, argu.forums.first.uuid, amsterdam.uuid].sort
+    )
   end
 
   test 'administrator should put update iri_prefix' do
