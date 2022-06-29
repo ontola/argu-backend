@@ -127,7 +127,8 @@ module SPI
         [
           linked_iri.to_s,
           dg_motion1.iri.to_s,
-          dg_motion1.argument_columns_iri.to_s
+          dg_motion1.argument_columns_iri.to_s,
+          dg_motion1.location_query_iri.to_s
         ]
       end
       assert_equal(included_records, expected_includes)

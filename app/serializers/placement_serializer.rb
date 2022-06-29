@@ -6,7 +6,8 @@ class PlacementSerializer < RecordSerializer
     image =
       case object.placement_type
       when 'custom'
-        icon = LinkedRails.translate(:class, :icon, object.placeable.class.iri) if object.placeable
+        klass_iri = object.placeable&.class&.iri
+        icon = LinkedRails.translate(:class, :icon, klass_iri) if klass_iri.is_a?(RDF::URI)
         :"fa-#{icon}" if icon
       when 'home'
         :'fa-home'

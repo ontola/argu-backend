@@ -20,6 +20,21 @@ module Placeable
       ]
     end
 
+    def location_query
+      return if location_query_iri.blank?
+
+      @location_query ||= LinkedRails::PropertyQuery.new(
+        iri: location_query_iri,
+        force_render: true,
+        target_node: iri,
+        path: NS.schema.location
+      )
+    end
+
+    def location_query_iri
+      LinkedRails.iri(path: root_relative_iri, fragment: 'location') unless anonymous_iri?
+    end
+
     def requires_location?
       false
     end

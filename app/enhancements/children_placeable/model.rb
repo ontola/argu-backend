@@ -14,7 +14,7 @@ module ChildrenPlaceable
         Placement
           .custom
           .joins('INNER JOIN edges ON placements.placeable_type = \'Edge\' AND placements.placeable_id = edges.uuid')
-          .where('? IN (edges.id, edges.parent_id)', id)
+          .where(edges: {parent_id: id})
           .includes(:place)
     end
 

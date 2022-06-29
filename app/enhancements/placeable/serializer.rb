@@ -11,6 +11,9 @@ module Placeable
       has_one :home_placement,
               predicate: NS.schema.homeLocation,
               if: method(:has_home_placement?)
+      has_one :location_query,
+              predicate: NS.argu[:locationQuery],
+              unless: method(:export_scope?)
     end
 
     class_methods do
