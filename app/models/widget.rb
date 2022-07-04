@@ -76,10 +76,10 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def topology
-    return NS.argu[:grid] if preview_view?
-    return NS.argu[:container] if compact_view?
+    return NS.libro['topologies/grid'] if preview_view?
+    return NS.libro['topologies/container'] if compact_view?
 
-    NS.argu[:fullResource]
+    NS.libro['topologies/fullResource']
   end
 
   private
