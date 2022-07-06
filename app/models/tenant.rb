@@ -53,12 +53,6 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
         create_system_group_membership(Group.public, User.guest, Profile.guest)
 
         create_system_token(Doorkeeper::Application.argu, User.service, 'service', ENV['SERVICE_TOKEN'])
-        create_system_token(
-          Doorkeeper::Application.argu_front_end,
-          User.community,
-          'service',
-          ENV['RAILS_OAUTH_TOKEN']
-        )
         first_page
       end
     end
