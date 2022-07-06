@@ -35,7 +35,7 @@ module Oauth
     end
 
     def process_previous_token(res)
-      return unless doorkeeper_token && !res.token.scopes.scopes?(%i[guest])
+      return unless doorkeeper_token && res.token.resource_owner_id.present?
 
       schedule_redis_resource_worker(
         User.guest(session_id),

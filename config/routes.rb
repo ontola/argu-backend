@@ -37,8 +37,8 @@ Rails.application.routes.draw do
   end
 
   constraints(Argu::NoTenantConstraint) do
-    constraints(LinkedRails::Constraints::Whitelist) do
-      namespace :_public do
+    namespace :_public do
+      constraints(LinkedRails::Constraints::Whitelist) do
         namespace :spi do
           get 'find_tenant', to: 'tenant_finder#show'
           get 'tenants', to: 'tenants#index'

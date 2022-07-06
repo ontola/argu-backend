@@ -50,20 +50,6 @@ module OauthTestHelpers
          }
   end
 
-  def post_token_client_credentials(scope: nil, redirect: nil, results: {}, client_id: nil, client_secret: nil)
-    post oauth_token_path,
-         headers: argu_headers(accept: :json),
-         params: {
-           grant_type: 'client_credentials',
-           client_id: client_id,
-           client_secret: client_secret,
-           scope: scope,
-           r: redirect
-         }
-
-    token_response(**results)
-  end
-
   def refresh_access_token(refresh_token)
     post oauth_token_path,
          headers: argu_headers(accept: :json),

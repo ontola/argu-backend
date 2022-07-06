@@ -14,8 +14,6 @@ module AccessTokenIncl
 
   included do
     attr_reader :resource_owner
-
-    validate :validate_scope_for_resource_owner
   end
 end
 Doorkeeper::AccessToken.include(AccessTokenIncl)
@@ -34,12 +32,6 @@ module AccessTokenExt
   end
 
   private
-
-  def validate_scope_for_resource_owner
-    return if resource_owner_id || scopes.to_s == 'guest'
-
-    raise Doorkeeper::Errors::DoorkeeperError.new(:invalid_grant)
-  end
 
   class_methods do
     def by_resource_owner(resource_owner)
