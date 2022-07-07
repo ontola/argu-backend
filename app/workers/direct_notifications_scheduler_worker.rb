@@ -27,7 +27,7 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
       notification.update!(send_mail_after: nil)
       ActsAsTenant.with_tenant(notification.root) do
         Argu::API
-          .service_api
+          .new
           .create_email(
             notification.notification_type,
             notification.user,

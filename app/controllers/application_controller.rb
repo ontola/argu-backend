@@ -163,6 +163,10 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
     raise "IP #{request.remote_ip} is not allowed to make requests with a service token"
   end
 
+  def with_tenant_fallback(&block)
+    Tenant.with_tenant_fallback(&block)
+  end
+
   class << self
     def create_action_label # rubocop:disable: Metrics/MethodLength
       lambda do

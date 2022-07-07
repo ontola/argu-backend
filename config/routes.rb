@@ -46,6 +46,15 @@ Rails.application.routes.draw do
       end
     end
 
+    use_doorkeeper_openid_connect do
+      controllers discovery: 'oauth/discovery'
+    end
+    use_linked_rails_oauth(
+      access_tokens: 'oauth/tokens',
+      applications: 'oauth/applications',
+      authorizations: 'oauth/authorizations'
+    )
+
     match '*path', to: 'static_pages#not_found', via: :all
   end
 
@@ -59,9 +68,7 @@ Rails.application.routes.draw do
     menus: :menus,
     ontologies: :ontologies
   )
-  use_linked_rails_auth(
-    access_tokens: 'oauth/tokens',
-    applications: 'oauth/applications',
+  use_linked_rails_user(
     confirmations: 'users/confirmations',
     otp_attempts: 'users/otp_attempts',
     otp_secrets: 'users/otp_secrets',
@@ -69,6 +76,10 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   )
+  namespace :oauth do
+    resource :token, only: :create
+    post :revoke, controller: :tokens
+  end
 
   get '/values', to: 'documents#show', name: 'values'
   get '/policy', to: 'documents#show', name: 'policy'

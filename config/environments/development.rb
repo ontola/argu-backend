@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require_relative '../../app/helpers/service_helper'
+require_relative '../../lib/argu/service'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   Rails.application.routes.default_url_options[:host] = config.host_name
   Rails.application.routes.default_url_options[:protocol] = :https
   config.hosts << config.host_name
-  config.hosts << "argu.#{ServiceHelper::CLUSTER_URL_BASE}"
+  config.hosts << "argu.#{Argu::Service::CLUSTER_URL_BASE}"
   config.hosts << '.localdev'
 
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']

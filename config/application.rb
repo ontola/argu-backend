@@ -30,6 +30,7 @@ module Argu
   class Application < Rails::Application
     config.api_only = true
 
+    config.service_name = 'argu'
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"
     config.aws_url = "https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com"

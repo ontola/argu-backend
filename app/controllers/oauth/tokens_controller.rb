@@ -7,6 +7,8 @@ module Oauth
     include URITemplateHelper
     skip_before_action :current_actor, :set_locale
     skip_around_action :time_zone
+    around_action :with_tenant_fallback
+
     controller_class LinkedRails.access_token_class
 
     private
@@ -19,7 +21,7 @@ module Oauth
 
     def handle_new_token
       super
-      process_previous_token(authorize_response)
+      process_previous_token(authorize_response) if process_previous_token?(authorize_response)
     end
 
     def handle_token_exception(exception)
@@ -34,9 +36,11 @@ module Oauth
       User.find_by(id: authorize_response.token.resource_owner_id)&.requires_2fa?
     end
 
-    def process_previous_token(res)
-      return unless doorkeeper_token && res.token.resource_owner_id.present?
+    def process_previous_token?(res)
+      doorkeeper_token && res.token.scopes.exists?(:user) && res.token.resource_owner_id.present?
+    end
 
+    def process_previous_token(res)
       schedule_redis_resource_worker(
         User.guest(session_id),
         User.find(res.token.resource_owner_id),

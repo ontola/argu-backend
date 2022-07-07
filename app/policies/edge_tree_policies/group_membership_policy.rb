@@ -40,7 +40,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   def valid_token?
     return if record.token.blank?
 
-    return true if Argu::API.service_api.verify_token(record.token, record.group_id)
+    return true if Argu::API.new.verify_token(record.token, record.group_id)
 
     forbid_with_message(I18n.t('actions.group_memberships.create.errors.invalid_token'))
   end

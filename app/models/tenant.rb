@@ -57,6 +57,14 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
     end
 
+    def with_tenant_fallback(&block)
+      return yield if ActsAsTenant.current_tenant.present?
+
+      with_schema_fallback do
+        ActsAsTenant.with_tenant(Page.argu, &block)
+      end
+    end
+
     private
 
     def create_first_page(name, iri_prefix) # rubocop:disable Metrics/MethodLength
@@ -125,6 +133,12 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
       profile.save!(validate: false)
       profile.profileable.update_column(:encrypted_password, '') # rubocop:disable Rails/SkipsModelValidations
       profile
+    end
+
+    def with_schema_fallback(&block)
+      yield unless Apartment::Tenant.current == 'public'
+
+      Apartment::Tenant.switch('argu', &block)
     end
   end
 end

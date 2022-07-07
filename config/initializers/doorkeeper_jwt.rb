@@ -1,33 +1,70 @@
 # frozen_string_literal: true
 
+class JWTBuilder
+  attr_accessor :application, :created_at, :expires_in, :user_context, :scopes
+
+  def initialize(opts)
+    self.application = opts[:application]
+    self.created_at = opts[:created_at]
+    self.expires_in = opts[:expires_in]
+    self.user_context = opts[:resource_owner]
+    self.scopes = opts[:scopes]
+  end
+
+  def build
+    payload = base
+    payload[:user] = user_payload if user_type
+    payload[:exp] = (created_at + expires_in.seconds).to_i if expires_in.present?
+    payload
+  end
+
+  private
+
+  def base
+    {
+      iat: Time.current.to_i,
+      iss: ActsAsTenant.current_tenant&.iri,
+      scopes: scopes.entries,
+      application_id: application&.uid,
+      session_id: user_context&.session_id
+    }
+  end
+
+  def service?
+    scopes.exists?(:service)
+  end
+
+  def user
+    return User.service if service?
+
+    user_context&.user
+  end
+
+  def user_payload
+    {
+      '@id': user.iri,
+      id: user.id.to_s,
+      email: user.email,
+      language: user_context&.language || I18n.locale,
+      type: user_type
+    }
+  end
+
+  def user_type
+    return 'service' if service?
+    return unless user
+
+    user.guest? ? 'guest' : 'user'
+  end
+end
+
 Doorkeeper::JWT.configure do
   # Set the payload for the JWT token. This should contain unique information
   # about the user.
   # Defaults to a randomly generated token in a hash
   # { token: "RANDOM-TOKEN" }
   token_payload do |opts|
-    user_context = opts[:resource_owner]
-
-    payload = {
-      iat: Time.current.to_i,
-      iss: ActsAsTenant.current_tenant&.iri,
-      scopes: opts[:scopes].entries,
-      application_id: opts[:application]&.uid,
-      session_id: user_context&.session_id
-    }
-    user = user_context&.user
-    if user
-      payload[:user] = {
-        '@id': user.iri,
-        id: user.id.to_s,
-        email: user.email,
-        language: user_context.language,
-        type: user.guest? ? 'guest' : 'user'
-      }
-    end
-
-    payload[:exp] = (opts[:created_at] + opts[:expires_in].seconds).to_i if opts[:expires_in].present?
-    payload
+    JWTBuilder.new(opts).build
   end
 
   # Use the application secret specified in the Access Grant token

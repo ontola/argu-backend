@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_08_073938) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_06_145652) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -311,6 +311,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_08_073938) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "oauth_openid_requests", force: :cascade do |t|
+    t.bigint "access_grant_id", null: false
+    t.string "nonce", null: false
+    t.index ["access_grant_id"], name: "index_oauth_openid_requests_on_access_grant_id"
+  end
+
   create_table "otp_secrets", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -549,6 +555,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_08_073938) do
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "edges", column: "root_id", primary_key: "uuid"
   add_foreign_key "notifications", "users", on_delete: :cascade
+  add_foreign_key "oauth_openid_requests", "oauth_access_grants", column: "access_grant_id", on_delete: :cascade
   add_foreign_key "placements", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "placements", "places"
   add_foreign_key "placements", "profiles", column: "creator_id"

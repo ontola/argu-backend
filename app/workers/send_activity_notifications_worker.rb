@@ -100,7 +100,7 @@ class SendActivityNotificationsWorker
     notifications = prepared_notifications
     ActsAsTenant.with_tenant(Page.find_by(uuid: @notifications.uniq.pluck(:root_id).first)) do
       Argu::API
-        .service_api
+        .new
         .create_email(:activity_notifications, @user, follows: notifications)
     end
     @user.update_column(:notifications_viewed_at, Time.current) # rubocop:disable Rails/SkipsModelValidations

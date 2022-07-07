@@ -8,7 +8,7 @@ module Argu
         tenant = options.delete(:tenant) || :argu
         recipient =
           email_only ? {email: email, language: /.+/} : {display_name: /.+/, id: /.+/, language: /.+/, email: email}
-        stub_request(:post, expand_service_url(:email, "/#{tenant}/email/spi/emails"))
+        stub_request(:post, Argu::Service.new(:email).expand_url("/#{tenant}/email/spi/emails"))
           .with(
             body: {
               email: {

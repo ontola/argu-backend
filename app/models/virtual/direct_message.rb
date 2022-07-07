@@ -34,7 +34,7 @@ class DirectMessage < VirtualResource
   end
 
   def send_email! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    Argu::API.service_api.create_email(
+    Argu::API.new.create_email(
       :direct_message,
       resource.publisher,
       actor: {
