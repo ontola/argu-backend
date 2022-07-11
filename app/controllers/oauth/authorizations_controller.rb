@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Oauth
+module OAuth
   class AuthorizationsController < Doorkeeper::AuthorizationsController
     around_action :with_tenant_fallback
     before_action :redirect_guests

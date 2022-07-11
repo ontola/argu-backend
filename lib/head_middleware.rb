@@ -5,7 +5,7 @@ require_relative '../app/helpers/oauth_helper'
 class HeadMiddleware
   INVALID_STATUS_CODE = -1
   include LinkedRails::Auth::AuthHelper
-  include OauthHelper
+  include OAuthHelper
   attr_reader :headers, :request
 
   def initialize(app)

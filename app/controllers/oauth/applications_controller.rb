@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Oauth
+module OAuth
   class ApplicationsController < Doorkeeper::ApplicationsController
     include LinkedRails::Controller::ErrorHandling
     include Argu::Controller::ErrorHandling

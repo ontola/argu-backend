@@ -52,7 +52,6 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
         create_system_group_membership(Group.public, User.community, Profile.community)
         create_system_group_membership(Group.public, User.guest, Profile.guest)
 
-        create_system_token(Doorkeeper::Application.argu, User.service, 'service', ENV['SERVICE_TOKEN'])
         first_page
       end
     end
@@ -102,18 +101,6 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
         ).resource
       group_membership.save!(validate: false)
       group_membership
-    end
-
-    def create_system_token(app, user, scopes, secret)
-      token = Doorkeeper::AccessToken.find_or_create_for(
-        application: app,
-        resource_owner: UserContext.new(user: user),
-        scopes: scopes,
-        expires_in: 10.years.to_i,
-        use_refresh_token: true
-      )
-      token.update(token: secret)
-      token
     end
 
     def create_system_user(user_id, profile_id, name, email) # rubocop:disable Metrics/MethodLength

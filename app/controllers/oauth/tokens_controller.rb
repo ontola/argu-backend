@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Oauth
+module OAuth
   class TokensController < LinkedRails::Auth::AccessTokensController
     include JWTHelper
     include RedisResourcesHelper

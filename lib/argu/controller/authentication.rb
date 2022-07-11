@@ -7,7 +7,7 @@ module Argu
 
       included do
         include LinkedRails::Auth::Controller
-        include OauthHelper
+        include OAuthHelper
       end
 
       def skip_verify_policy_authorized(sure: false)

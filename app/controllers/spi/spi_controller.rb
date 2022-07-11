@@ -9,7 +9,7 @@ module SPI
     include JsonAPIHelper
     include Argu::Controller::Authentication
     include Argu::Controller::Authorization
-    include OauthHelper
+    include OAuthHelper
 
     private
 

@@ -67,21 +67,9 @@ Doorkeeper::AccessToken.prepend(AccessTokenExt)
 module ApplicationExt
   extend ActiveSupport::Concern
 
-  ARGU_ID = 0
-  AFE_ID = 1
-  SERVICE_ID = 2
-
   class_methods do
     def argu
-      Doorkeeper::Application.find(Doorkeeper::Application::ARGU_ID)
-    end
-
-    def argu_front_end
-      Doorkeeper::Application.find(Doorkeeper::Application::AFE_ID)
-    end
-
-    def argu_service
-      Doorkeeper::Application.find(Doorkeeper::Application::SERVICE_ID)
+      Doorkeeper::Application.find(0)
     end
   end
 end
