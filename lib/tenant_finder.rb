@@ -80,7 +80,7 @@ class TenantFinder
   end
 
   def tenant_by_website_iri
-    Tenant.find_by(iri_prefix: @website_iri) if @website_iri
+    Tenant.find_by(iri_prefix: @website_iri.split('://').last) if @website_iri
   end
 
   def uri_with_suffix

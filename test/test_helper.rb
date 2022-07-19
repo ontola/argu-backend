@@ -55,12 +55,9 @@ module ActiveSupport
       reset_tenant
     end
 
-    # FactoryBot.lint
-    # Add more helper methods to be used by all tests here...
-
-    def initialize(*args)
-      super
+    before do
       mapbox_mock
+      Argu::Redis.set(Argu::OAuth::REDIS_CLIENT_KEY, {token: sign_payload({scopes: %w[service]})}.to_json)
     end
   end
 end
@@ -80,6 +77,10 @@ module ActionDispatch
 
     teardown do
       reset_tenant
+    end
+
+    before do
+      Argu::Redis.set(Argu::OAuth::REDIS_CLIENT_KEY, {token: sign_payload({scopes: %w[service]})}.to_json)
     end
 
     def follow_redirect!

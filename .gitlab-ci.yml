@@ -5,17 +5,21 @@ cache:
     - vendor/
 
 variables:
+  DEVISE_SECRET: secret
   DISABLE_PROMETHEUS: "true"
   DOCKER_DRIVER: overlay2
-  POSTGRES_DB: testdb
-  POSTGRES_PASSWORD: testdb
-  POSTGRES_USER: testdb
+  ELASTICSEARCH_URL: "http://localhost:9200"
+  JWT_ENCRYPTION_TOKEN: secret
+  POSTGRES_PASSWORD: password
+  POSTGRES_USER: postgres
+  POSTGRESQL_ADDRESS: postgres
+  POSTGRESQL_PASSWORD: password
+  POSTGRESQL_USERNAME: postgres
+  SECRET_KEY_BASE: secret
 
 default:
   before_script:
     - apt-get update -qq && apt-get install -y -qq libvips libvips-dev
-    - cp ./config/database.docker.yml ./config/database.yml
-    - cp ./config/secrets.docker.yml ./config/secrets.yml
     - bundle install --deployment --path vendor/bundle
     - bundle exec rake db:create
     - bundle exec rake db:schema:load
@@ -28,12 +32,11 @@ build:
     - docker:18.09.8-dind
     - postgres:12
   before_script:
-    - cp config/database.docker.yml config/database.yml
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY" --password-stdin
   script:
     - docker pull $CI_REGISTRY_IMAGE:latest || true
     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
-    - docker run --network host --env APARTMENT_DISABLE_INIT=true --env DISABLE_PROMETHEUS=true --env POSTGRESQL_ADDRESS=localhost --env POSTGRESQL_DATABASE=test --env RAILS_ENV=production  --env REDIS_URL=$REDIS_URL --env SECRET_KEY_BASE=secret --env DEVISE_SECRET=secret $CI_REGISTRY_IMAGE:latest ./bin/rails runner "puts 'succeeded'"
+    - docker run --network host --env APARTMENT_DISABLE_INIT=true --env DISABLE_PROMETHEUS=true --env POSTGRESQL_ADDRESS --env POSTGRESQL_DATABASE=test --env RAILS_ENV=production  --env REDIS_URL=$REDIS_URL --env SECRET_KEY_BASE=secret --env DEVISE_SECRET=secret $CI_REGISTRY_IMAGE:latest ./bin/rails runner "puts 'succeeded'"
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker push $CI_REGISTRY_IMAGE:latest
 

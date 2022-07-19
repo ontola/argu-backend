@@ -28,9 +28,9 @@ if current_tenant == 'argu'
     staff =
       User
         .create!(
-          email: 'staff@argu.co',
-          password: 'arguargu',
-          password_confirmation: 'arguargu',
+          email: 'staff@example.com',
+          password: 'password',
+          password_confirmation: 'password',
           display_name: 'Douglas Engelbart',
           profile: Profile.new,
           last_accepted: Time.current
@@ -46,16 +46,15 @@ if current_tenant == 'argu'
 
     ActsAsTenant.current_tenant = Page.argu
 
+    ActsAsTenant.current_tenant.forums.first.grants.create!(group_id: Group::PUBLIC_ID, grant_set: GrantSet.initiator)
     forum = Forum.new(
-      name: 'Nederland',
-      initial_public_grant: 'participator',
+      name: 'Private',
       root_id: ActsAsTenant.current_tenant.root_id,
-      url: 'nederland',
+      url: 'private',
       creator: staff.profile,
       publisher: staff,
       parent: ActsAsTenant.current_tenant
     )
-    forum.grants.new(group_id: Group::PUBLIC_ID, grant_set: GrantSet.participator)
     forum.save!
     forum.publish!
 

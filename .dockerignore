@@ -11,10 +11,6 @@ spec/argu.txt
 .yardoc
 vendor/bundle
 
-# Ignore secrets
-secrets.yml
-/config/database.yml
-
 # Ignore image uploads
 /public/exports
 /public/forums

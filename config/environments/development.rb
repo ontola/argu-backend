@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/argu/service'
+require 'argu/service'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
