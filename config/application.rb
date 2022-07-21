@@ -67,6 +67,8 @@ module Argu
       g.integration_tool :rspec, fixture: true, views: true
     end
 
+    config.active_record.yaml_column_permitted_classes = [Symbol]
+
     ActiveJob::Base.queue_adapter = :sidekiq
 
     VideoInfo.provider_api_keys = {youtube: ENV['YOUTUBE_KEY'], vimeo: ENV['VIMEO_KEY']}

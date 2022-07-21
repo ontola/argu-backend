@@ -45,7 +45,7 @@ class ActivityListener
         resource,
         resource.activity_recipient,
         :create,
-        parameters: {option: resource.option}
+        parameters: {option: resource.option_id}
       )
     end
   end
