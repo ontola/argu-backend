@@ -6,7 +6,7 @@ class SubmissionsController < EdgeableController
     form: -> { resource.parent.action_body&.iri },
     http_method: :put,
     policy: :update?,
-    target_url: -> { resource.iri('submission%5Bstatus%5D': :submission_completed) }
+    target_url: -> { resource.complete_iri }
   )
 
   private
@@ -28,7 +28,7 @@ class SubmissionsController < EdgeableController
   def create_success_message; end
 
   def permit_params
-    super.merge(body_graph: params[:body_graph])
+    super.merge(body_slice: request.env['emp_json'])
   end
 
   def update_meta

@@ -73,22 +73,11 @@ class Property < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
-    def column_for_term(term)
-      return :iri if term.is_a?(RDF::URI)
-
-      raw = term.datatype.relativize(RDF::XSD).to_s.downcase.to_sym
-
-      return :text if raw == :string && term.to_s.length >= MAX_STR_LEN
-      return raw if TYPE_COLUMNS.include?(raw.to_s)
-
-      :string
-    end
-
-    def from_statement(edge, statement)
+    def build(edge, key, value)
       new(
         edge: edge,
-        predicate: statement.predicate,
-        column_for_term(statement.object) => statement.object.to_s
+        predicate: key,
+        column_for_value(value) => value.to_s
       )
     end
 
@@ -124,6 +113,23 @@ class Property < ApplicationRecord # rubocop:disable Metrics/ClassLength
         Arel::Nodes::NamedFunction.new('CAST', [arel_table[column].as('timestamptz')])
       else
         arel_table[column]
+      end
+    end
+
+    def column_for_value(value) # rubocop:disable Metrics/MethodLength
+      case value
+      when RDF::URI
+        :iri
+      when Numeric
+        :integer
+      when TrueClass, FalseClass
+        :boolean
+      when Date
+        :datetime
+      when String
+        value.length >= MAX_STR_LEN ? :text : :string
+      else
+        :string
       end
     end
 

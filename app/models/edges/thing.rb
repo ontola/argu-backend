@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Thing < Edge
+  include Empathy::EmpJson::Helpers::Parsing
+
   enhance CoverPhotoable
 
   has_many :linked_edges, through: :properties
@@ -9,9 +11,14 @@ class Thing < Edge
     []
   end
 
-  def assign_graph(graph)
-    graph.query([NS.ll.targetResource]) do |statement|
-      properties << Property.from_statement(self, statement) unless statement.object.is_a?(RDF::Node)
+  def assign_slice(slice)
+    slice['.'].each do |key, values|
+      next if key == '_id'
+
+      (values.is_a?(Array) ? values : [values]).each do |value|
+        parsed_value = emp_to_primitive(value)
+        properties << Property.build(self, key, parsed_value) unless parsed_value.is_a?(RDF::Node)
+      end
     end
   end
 

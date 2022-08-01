@@ -19,7 +19,7 @@ class Submission < Edge
     submission_completed: 1
   }
   property :submission_data_id, :linked_edge_id, NS.argu[:submissionData], association_class: 'Thing'
-  attr_accessor :body_graph
+  attr_accessor :body_slice
 
   after_save :store_submission_data
   parentable :survey
@@ -33,6 +33,10 @@ class Submission < Edge
     ]
   end
 
+  def complete_iri
+    iri('submission%5Bstatus%5D': :submission_completed)
+  end
+
   def require_coupon?
     parent.coupon_required? && super
   end
@@ -40,10 +44,10 @@ class Submission < Edge
   private
 
   def store_submission_data
-    return if body_graph.blank?
+    return if body_slice.blank?
 
     self.submission_data ||= Thing.new(parent: self, creator: creator, publisher: publisher)
-    submission_data.assign_graph(body_graph)
+    submission_data.assign_slice(body_slice)
     submission_data.rdf_type = NS.argu[:SubmissionData]
     submission_data.save!
   end
