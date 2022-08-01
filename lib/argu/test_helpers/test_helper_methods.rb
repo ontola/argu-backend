@@ -18,9 +18,10 @@ module Argu
           page pro_argument question survey term topic vocabulary vote vote_event
         ].freeze
 
-        def argu_headers(accept: :nq, bearer: nil, host: nil, referrer: nil)
+        def argu_headers(accept: :nq, bearer: nil, host: nil, referrer: nil, content_type: nil)
           headers = {}
           headers['Accept'] = accept.is_a?(Symbol) ? Mime::Type.lookup_by_extension(accept).to_s : accept
+          headers['Content-Type'] = Mime::Type.lookup_by_extension(content_type).to_s if content_type
           headers['Authorization'] = "Bearer #{bearer}" if bearer
           headers['HTTP_HOST'] = host if host
           headers['Request-Referrer'] = referrer.to_s if referrer

@@ -1,3 +1,0 @@
-<http://purl.org/link-lib/targetResource> <http://schema.org/name> "Wat een motie" .
-<http://purl.org/link-lib/targetResource> <http://schema.org/text> "Zowaar een heus idee" .
-<http://purl.org/link-lib/targetResource> <https://argu.co/ns/core#expiresAt> "2050-01-01T23:01:00.000Z" .

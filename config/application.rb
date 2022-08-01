@@ -9,8 +9,6 @@ require_relative '../lib/tenant_finder'
 require_relative '../lib/argu/redis'
 require_relative '../lib/argu/i18n_error_handler'
 require 'rails/all'
-require 'linked_rails/middleware/linked_data_params'
-require 'linked_rails/middleware/error_handling'
 require 'linked_rails/constraints/whitelist'
 
 # Require the gems listed in Gemfile, including any gems

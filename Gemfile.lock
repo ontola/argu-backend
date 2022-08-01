@@ -45,11 +45,12 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails
-  revision: 49a17012bb9f7584fab6d01d2931a55e4d89f1a4
+  revision: 83aa52ab3865d764a421e00d9772a5262f013708
+  branch: parsing
   specs:
     linked_rails (0.0.4)
       active_response (~> 0.0.2)
-      emp_json
+      emp_json (>= 1.3.0)
       kaminari-activerecord
       pundit
       rdf
@@ -302,7 +303,7 @@ GEM
     elasticsearch-transport (7.13.3)
       faraday (~> 1)
       multi_json
-    emp_json (1.2.1)
+    emp_json (1.3.0)
     erubi (1.10.0)
     et-orbi (1.2.6)
       tzinfo
@@ -451,7 +452,7 @@ GEM
     net_http_timeout_errors (0.3.5)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.13.7)
+    nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth2 (1.4.7)
@@ -463,7 +464,7 @@ GEM
     oga (3.3)
       ast
       ruby-ll (~> 2.1)
-    oj (3.13.14)
+    oj (3.13.19)
     openid_connect (1.3.0)
       activemodel
       attr_required (>= 1.0.0)
@@ -778,7 +779,7 @@ DEPENDENCIES
   doorkeeper-jwt
   doorkeeper-openid_connect
   dotenv-rails
-  emp_json
+  emp_json (= 1.3.0)
   factory_bot
   factory_bot_rails
   fakeredis!
