@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
+class Manifest < LinkedRails::Manifest # rubocop:disable Metrics/ClassLength
   ICON_FORMATS = {
     'apple-touch-icon' => %w[114x114 120x120 144x144 152x152 180x180 57x57 60x60 72x72 76x76],
     favicon: %w[160x160 16x16 192x192 32x32 512x512 96x96],
@@ -17,83 +17,101 @@ class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
     false
   end
 
+  def id; end
+
+  def iri
+    "#{page.iri}/manifest.json"
+  end
+
+  def save
+    ActsAsTenant.with_tenant(page) do
+      super
+    end
+  end
+
+  def web_manifest
+    ActsAsTenant.with_tenant(page) do
+      super
+    end
+  end
+
+  private
+
+  def allowed_external_sources
+    page.allowed_external_sources
+  end
+
   def background_color
     '#eef0f2'
   end
 
-  def csp_entries
-    {
-      connectSrc: [ActiveStorage::Blob.service.try(:bucket)&.url].compact,
-      scriptSrc: [ActiveStorage::Blob.service.try(:bucket)&.url].compact
+  def icon(name, size)
+    props = {
+      src: icon_src(name, size),
+      sizes: size,
+      type: 'image/png'
     }
+    props[:purpose] = 'any maskable' if size == '192x192' && name == 'favicon'
+    props
   end
 
-  def dir
-    :rtl
-  end
-
-  def display
-    :standalone
+  def icon_src(name, size)
+    URI(
+      ActionController::Base.helpers.asset_path(
+        "assets/favicons/#{page.template}/#{name}-#{size}.png",
+        skip_pipeline: true
+      )
+    ).path
   end
 
   def icons
     ICON_FORMATS.map { |name, sizes| sizes.map { |size| icon(name, size) } }.flatten
   end
 
-  def id; end
-
   def lang
     page.locale
   end
 
-  def name
+  def app_name
     page.display_name
   end
-  alias short_name name
 
-  def ontola # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    {
-      allowed_external_sources: page.allowed_external_sources,
-      blob_preview_iri: LinkedRails.iri(path: 'rails/active_storage/blobs/redirect/{signed_id}/preview'),
-      blob_upload_iri: LinkedRails.iri(path: 'rails/active_storage/direct_uploads'),
-      css_class: page.template,
-      csp: csp_entries,
-      header_background: page.header_background.sub('background_', ''),
-      header_text: page.header_text.sub('text_', ''),
-      preconnect: [
-        Rails.application.config.aws_url
-      ].compact,
-      preload: preload_iris,
-      primary_color: page.primary_color,
-      secondary_color: page.secondary_color,
-      styled_headers: page.styled_headers,
-      theme: page.template,
-      theme_options: template_options,
-      tracking: tracking,
-      website_iri: page.iri,
-      websocket_path: 'cable'
-    }
+  def header_background
+    page.header_background.sub('background_', '')
   end
 
-  def preload_iris # rubocop:disable Metrics/MethodLength
+  def header_text
+    page.header_text.sub('text_', '')
+  end
+
+  def preconnect
     [
-      LinkedRails.iri,
-      LinkedRails.iri(path: 'ns/core').to_s,
-      LinkedRails.iri(path: 'c_a').to_s,
-      LinkedRails.iri(path: 'banners').to_s,
-      LinkedRails.iri(path: 'search').to_s,
-      LinkedRails.iri(path: 'forms/linked_rails/auth/sessions').to_s,
-      LinkedRails.iri(path: 'forms/linked_rails/auth/access_tokens').to_s,
-      LinkedRails.iri(path: 'forms/users/registrations').to_s,
-      LinkedRails.iri(path: 'menus').to_s
-    ]
+      Rails.application.config.aws_url
+    ].compact
   end
 
-  def serviceworker
-    {
-      src: '/sw.js',
-      scope: manifest_scope
-    }
+  def styled_headers
+    page.styled_headers
+  end
+
+  def scope
+    page.iri.path || '/'
+  end
+
+  def site_theme_color
+    page.primary_color
+  end
+
+  def site_secondary_color
+    page.secondary_color
+  end
+
+  def theme
+    page.template
+  end
+
+  def theme_options
+    JSON.parse(page.template_options)
   end
 
   def tracking # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -127,43 +145,5 @@ class Manifest < VirtualResource # rubocop:disable Metrics/ClassLength
     end
 
     trackers
-  end
-
-  def manifest_scope
-    @manifest_scope ||= page.iri.path || '/'
-  end
-  alias scope manifest_scope
-
-  def start_url
-    @start_url ||= manifest_scope == '/' ? manifest_scope : "#{manifest_scope}/"
-  end
-
-  def theme_color
-    page.primary_color
-  end
-
-  private
-
-  def icon(name, size)
-    props = {
-      src: icon_src(name, size),
-      sizes: size,
-      type: 'image/png'
-    }
-    props[:purpose] = 'any maskable' if size == '192x192' && name == 'favicon'
-    props
-  end
-
-  def icon_src(name, size)
-    URI(
-      ActionController::Base.helpers.asset_path(
-        "assets/favicons/#{page.template}/#{name}-#{size}.png",
-        skip_pipeline: true
-      )
-    ).path
-  end
-
-  def template_options
-    JSON.parse(page.template_options).to_query
   end
 end

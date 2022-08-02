@@ -9,6 +9,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one :page, foreign_key: :uuid, primary_key: :root_id, inverse_of: :tenant, dependent: false
   validates :iri_prefix, exclusion: {in: IRI_PREFIX_BLACKLIST}
   after_update :reset_iri_prefix, if: :iri_prefix_previously_changed?
+  after_destroy :clean_manifest
 
   def host
     iri_prefix.split('/').first
@@ -19,6 +20,10 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   private
+
+  def clean_manifest
+    LinkedRails::Manifest.destroy(page.iri)
+  end
 
   def reset_iri_prefix
     Page.update_iris(iri_prefix_previous_change.first, iri_prefix_previous_change.second, root_id: root_id)

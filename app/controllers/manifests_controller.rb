@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
-class ManifestsController < ApplicationController
-  def show
-    render json: Oj.dump(
-      ManifestSerializer.new(tree_root.manifest).serializable_hash[:data][:attributes],
-      mode: :compat
-    )
-  end
+class ManifestsController < LinkedRails::ManifestsController
+  skip_before_action :authorize_action
+  skip_after_action :verify_authorized
 
   private
 
-  def current_resource; end
+  def current_resource
+    tree_root.manifest
+  end
 
   def doorkeeper_render_error; end
 

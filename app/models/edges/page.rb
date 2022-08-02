@@ -49,6 +49,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   after_create -> { reindex_tree(async: false) }
   after_update :tenant_update
   after_update :update_primary_node_menu_item, if: :primary_container_node_id_previously_changed?
+  after_save :save_manifest
 
   attr_writer :iri_prefix
 
@@ -229,6 +230,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     end
   end
 
+  def save_manifest
+    manifest.save
+  end
+
   def tenant_update
     tenant.update!(iri_prefix: iri_prefix)
   end
@@ -279,9 +284,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       :o
     end
 
-    def update_iris(from, to, scope = nil) # rubocop:disable Metrics/MethodLength
+    def update_iris(from, to, scope = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      LinkedRails::Manifest.move("#{LinkedRails.scheme}://#{from}", "#{LinkedRails.scheme}://#{to}")
+
       escaped_from = ApplicationRecord.connection.quote_string(from)
       escaped_to = ApplicationRecord.connection.quote_string(to)
+
       # rubocop:disable Rails/SkipsModelValidations
       Widget
         .where(scope)
