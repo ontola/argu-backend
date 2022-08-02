@@ -6,7 +6,7 @@ module OAuth
 
     def provider_response
       super.merge(
-        registration_endpoint: oauth_register_service_client_url(protocol: protocol, host: LinkedRails.host),
+        registration_endpoint: oauth_register_service_client_url(protocol: protocol, host: LinkedRails.host, port: nil),
         token_endpoint_auth_methods_supported: %w[client_secret_post]
       )
     end
@@ -19,6 +19,7 @@ module OAuth
        oauth_userinfo_url oauth_discovery_keys_url].each do |url_method|
       define_method(url_method) do |args = {}|
         args[:host] = Rails.application.config.host_name
+        args[:port] = nil
 
         super(args)
       end
