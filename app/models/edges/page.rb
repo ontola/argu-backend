@@ -186,11 +186,13 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def create_default_menu_items
-    navigations_menu_items.create!(edge: self)
-    navigations_menu_items.create!(
-      href: feeds_iri(self),
-      label: 'menus.default.activity'
-    )
+    ActsAsTenant.with_tenant(self) do
+      navigations_menu_items.create!(edge: self)
+      navigations_menu_items.create!(
+        href: feeds_iri(self),
+        label: 'menus.default.activity'
+      )
+    end
   end
 
   def create_default_groups # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
