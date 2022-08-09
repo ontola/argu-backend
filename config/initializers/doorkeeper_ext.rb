@@ -64,6 +64,19 @@ module AccessTokenExt
 end
 Doorkeeper::AccessToken.prepend(AccessTokenExt)
 
+module AccessGrantExt
+  def resource_owner=(user_context)
+    unless user_context.blank? || user_context.is_a?(UserContext)
+      raise("Expected resource_owner to by a UserContext, but is a #{user_context.class}")
+    end
+
+    self.resource_owner_id = user_context&.user&.id
+    @resource_owner = user_context
+  end
+end
+Doorkeeper::AccessGrant.prepend(AccessGrantExt)
+Doorkeeper::AccessGrant.include(AccessTokenIncl)
+
 module ApplicationExt
   extend ActiveSupport::Concern
 

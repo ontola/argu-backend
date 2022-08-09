@@ -9,7 +9,7 @@ class UserContext # rubocop:disable Metrics/ClassLength
   attr_reader :allow_expired, :child_cache
 
   delegate :user, :profile, to: :current_actor
-  delegate :guest?, :id, :language, :otp_active?, to: :user
+  delegate :guest?, :id, :language, :marked_for_destruction?, :otp_active?, to: :user
   delegate :build_child, to: :child_cache
 
   def initialize(allow_expired: false, doorkeeper_token: nil, language: nil, profile: nil, user: nil, session_id: nil) # rubocop:disable Metrics/ParameterLists

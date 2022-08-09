@@ -17,6 +17,12 @@ module OAuth
       {}
     end
 
+    def params
+      super['scope'] = super['scope'].gsub('+', ' ') if super['scope'].present?
+
+      super
+    end
+
     def redirect_guests
       return true if (current_user && !current_user&.guest?) || response_body
 

@@ -131,9 +131,8 @@ Doorkeeper.configure do
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
   # For example if dealing with a trusted application.
-  skip_authorization do |_, _client|
-    # @todo not okay
-    true
+  skip_authorization do |_user_context, client|
+    client.scopes.include?('service')
   end
 
   # WWW-Authenticate Realm (default "Doorkeeper").

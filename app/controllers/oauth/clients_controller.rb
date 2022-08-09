@@ -4,6 +4,12 @@ module OAuth
   class ClientsController < LinkedRails::Auth::ClientsController
     private
 
+    def available_scopes
+      return super unless LinkedRails::Constraints::Whitelist.matches?(request)
+
+      super + %w[staff]
+    end
+
     def permitted_scopes
       return super unless LinkedRails::Constraints::Whitelist.matches?(request)
 

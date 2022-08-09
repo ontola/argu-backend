@@ -7,7 +7,7 @@ Rails.application.configure do
   Rails.application.routes.default_url_options[:host] = config.host_name
   Rails.application.routes.default_url_options[:protocol] = :https
   config.hosts << config.host_name
-  config.hosts << "argu.#{Argu::Service::CLUSTER_URL_BASE}"
+  config.hosts << "data.#{Argu::Service::CLUSTER_URL_BASE}"
   config.hosts << '.localdev'
 
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
