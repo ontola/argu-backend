@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Placement < ApplicationRecord
+  include Cacheable
   include DelegatedAttributes
   include Parentable
 

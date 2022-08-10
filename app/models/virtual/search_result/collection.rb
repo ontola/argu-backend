@@ -2,6 +2,8 @@
 
 class SearchResult
   class Collection < ::Collection
+    include Cacheable
+
     attr_accessor :match, :q
 
     delegate :aggs, :total_count, :took, to: :association_base

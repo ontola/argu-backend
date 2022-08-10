@@ -5,6 +5,7 @@ class Notification < ApplicationRecord
 
   include ActivityHelper
   include ActionView::Helpers
+  include Cacheable
 
   belongs_to :user
   belongs_to :activity

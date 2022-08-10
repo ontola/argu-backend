@@ -4,6 +4,7 @@ class Grant < ApplicationRecord
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
 
+  include Cacheable
   include Parentable
 
   # The Edge this Grant is providing rules for

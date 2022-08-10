@@ -10,6 +10,7 @@ class Group < ApplicationRecord
   enhance Settingable
   enhance Searchable
 
+  include Cacheable
   include Parentable
 
   has_many :group_memberships, -> { active }, inverse_of: :group

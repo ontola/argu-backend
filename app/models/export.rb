@@ -3,6 +3,7 @@
 class Export < ApplicationRecord
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
+  include Cacheable
   include Parentable
 
   belongs_to :user

@@ -4,6 +4,7 @@ class Shortname < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
 
+  include Cacheable
   include Parentable
 
   belongs_to :owner,

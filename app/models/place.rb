@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Place < ApplicationRecord
+  include Cacheable
+
   has_many :placements, dependent: :destroy
   has_many :placeables, through: :placements
   DEFAULT_ZOOM_LEVEL = 13

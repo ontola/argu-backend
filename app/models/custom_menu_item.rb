@@ -5,6 +5,7 @@ class CustomMenuItem < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Updatable
   enhance LinkedRails::Enhancements::Destroyable
   enhance Orderable
+  include Cacheable
   include TranslatableProperties
 
   with_columns default: [
