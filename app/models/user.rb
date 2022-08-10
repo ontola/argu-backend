@@ -70,6 +70,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
          :multi_email_confirmable, :lockable, :timeoutable
   acts_as_follower
 
+  scope :search_import, -> { joins(:edges).where(root: ActsAsTenant.current_tenant) }
+
   with_collection :email_addresses
   with_collection :favorite_pages,
                   association_class: Page,
