@@ -5,7 +5,7 @@ class EmailAddress < ApplicationRecord
   enhance LinkedRails::Enhancements::Destroyable
   enhance LinkedRails::Enhancements::Updatable, except: %i[Action]
 
-  include Broadcastable
+  include Cacheable
   include RedisResourcesHelper
   include DeltaHelper
   TEMP_EMAIL_REGEX = /\Achange@me/.freeze

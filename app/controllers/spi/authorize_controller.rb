@@ -2,7 +2,7 @@
 
 module SPI
   class AuthorizeController < SPI::SPIController
-    include NestedResourceHelper
+    include LinkedRails::Helpers::ResourceHelper
 
     def show
       head 200
@@ -55,7 +55,7 @@ module SPI
 
     def resource_from_iri(iri)
       ActsAsTenant.with_tenant(TenantFinder.from_url(iri)) do
-        LinkedRails.iri_mapper.resource_from_iri(path_to_url(iri), user_context)
+        LinkedRails.iri_mapper.resource_from_iri(request_path_to_url(iri), user_context)
       end
     end
 

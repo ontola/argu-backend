@@ -4,7 +4,7 @@ require 'benchmark'
 require 'prometheus_exporter/client'
 
 module SPI
-  class BulkController < LinkedRails::BulkController # rubocop:disable Metrics/ClassLength
+  class BulkController < LinkedRails::BulkController
     include Empathy::EmpJson::Helpers::Slices
     include Empathy::EmpJson::Helpers::Primitives
 
@@ -26,19 +26,6 @@ module SPI
           .require(:resources)
           .map { |param| resource_params(param) }
       )
-    end
-
-    def authorized_resource(opts)
-      return super if wrong_host?(opts[:iri])
-
-      include = opts[:include].to_s == 'true'
-      resource = LinkedRails.iri_mapper.resource_from_iri(path_to_url(opts[:iri]), user_context)
-
-      return super if resource.blank?
-
-      response_from_resource(include, opts[:iri], resource)
-    rescue StandardError => e
-      handle_resource_error(opts, e)
     end
 
     def available_connections
@@ -96,17 +83,8 @@ module SPI
       req
     end
 
-    def response_from_resource(include, iri, resource)
-      resource_policy = policy(resource)
-      status = resource_status(resource, resource_policy)
-
-      resource_response(
-        iri,
-        body: include && status == 200 ? resource_body_with_same_as(resource, iri) : nil,
-        cache: resource_cache_control(resource.try(:cacheable?), status, resource_policy),
-        language: I18n.locale,
-        status: status
-      )
+    def response_from_resource_body(include, iri, resource, status)
+      include && status == 200 ? resource_body_with_same_as(resource, iri) : nil
     end
 
     def response_for_wrong_host(opts)
@@ -123,19 +101,11 @@ module SPI
     end
 
     def resource_cache_control(cacheable, status, resource_policy)
-      return :private unless status == 200 && cacheable
-      return 'no-cache' if resource_policy.try(:has_unpublished_ancestors?)
-      return 'no-cache' unless resource_policy.try(:public_resource?)
+      cache_control = super
 
-      :public
-    end
+      return 'no-cache' if cache_control == :public && resource_policy.try(:has_unpublished_ancestors?)
 
-    def resource_status(resource, resource_policy)
-      return 404 if resource.nil?
-
-      raise(Argu::Errors::Forbidden.new(query: :show?)) unless resource_policy.show?
-
-      200
+      cache_control
     end
 
     def resource_thread(&block)

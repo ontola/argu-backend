@@ -108,7 +108,7 @@ class RestrictivePolicy
   end
 
   def assert!(assertion, query = nil)
-    raise Argu::Errors::Forbidden.new(record: record, query: query) unless assertion
+    raise LinkedRails::Errors::Forbidden.new(record: record, query: query) unless assertion
   end
 
   def cache_action(action, val)

@@ -8,6 +8,7 @@ class Survey < Discussion
   enhance Settingable
 
   include Edgeable::Content
+  include DeltaHelper
 
   property :external_iri, :iri, NS.argu[:externalIRI]
   property :coupon_required, :boolean, NS.argu[:couponRequired], default: false

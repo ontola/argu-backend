@@ -287,7 +287,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     end
 
     def update_iris(from, to, scope = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-      LinkedRails::Manifest.move("#{LinkedRails.scheme}://#{from}", "#{LinkedRails.scheme}://#{to}")
+      Manifest.move("#{LinkedRails.scheme}://#{from}", "#{LinkedRails.scheme}://#{to}")
 
       escaped_from = ApplicationRecord.connection.quote_string(from)
       escaped_to = ApplicationRecord.connection.quote_string(to)

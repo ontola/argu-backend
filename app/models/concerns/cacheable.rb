@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
 module Cacheable
-  include DeltaHelper
+  extend ActiveSupport::Concern
 
-  def cacheable?
-    true
+  included do
+    include LinkedRails::Model::Cacheable
+  end
+
+  private
+
+  def should_publish_changes
+    super && !RequestStore.store[:disable_broadcast]
   end
 end

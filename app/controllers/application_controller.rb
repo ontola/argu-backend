@@ -12,7 +12,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   include UsersHelper
   include PublicActivity::StoreController
   include DeltaHelper
-  include NestedResourceHelper
 
   SAFE_METHODS = %w[GET HEAD OPTIONS CONNECT TRACE].freeze
   UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze

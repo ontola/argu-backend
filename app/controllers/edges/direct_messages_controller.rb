@@ -16,7 +16,7 @@ class DirectMessagesController < ParentableController
     return false unless authenticated_resource.valid?
 
     unless authenticated_resource.email_address.confirmed? && authenticated_resource.email_address.user == current_user
-      raise Argu::Errors::Forbidden.new(record: authenticated_resource, query: 'email?')
+      raise LinkedRails::Errors::Forbidden.new(record: authenticated_resource, query: 'email?')
     end
 
     authenticated_resource.send_email!

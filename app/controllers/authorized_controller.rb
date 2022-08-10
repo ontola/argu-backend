@@ -34,7 +34,6 @@ class AuthorizedController < ApplicationController
 
   # Searches for the resource of the current controllers' type by `id`
   # If the action is one where a resource can't exist yet, a new one is created with the tenant set.
-  # @see {NestedResourceHelper} For finding parent resources
   # @author Fletcher91 <thom@argu.co>
   # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
   def authenticated_resource!

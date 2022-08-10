@@ -15,7 +15,6 @@ class Activity < PublicActivity::Activity
 
   include LinkedRails::Model
   include Cacheable
-  include Broadcastable
   has_many :notifications, dependent: :destroy
   # The creator of the activity
   # @example Create action

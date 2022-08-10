@@ -6,6 +6,8 @@ class Decision < Edge
   enhance Loggable
   enhance MarkAsImportant
 
+  include DeltaHelper
+
   attribute :display_name
   property :description, :text, NS.schema.text
   property :state, :integer, NS.argu[:state], default: 0, enum: {pending: 0, approved: 1, rejected: 2}

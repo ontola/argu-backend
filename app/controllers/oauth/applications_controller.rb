@@ -9,7 +9,7 @@ module OAuth
     private
 
     def authenticate_admin!
-      raise Argu::Errors::Forbidden.new(query: "#{params[:action]}?") unless current_user&.is_staff?
+      raise LinkedRails::Errors::Forbidden.new(query: "#{params[:action]}?") unless current_user&.is_staff?
     end
   end
 end

@@ -22,7 +22,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
   private
 
   def clean_manifest
-    LinkedRails::Manifest.destroy(page.iri)
+    Manifest.destroy(page.iri)
   end
 
   def reset_iri_prefix

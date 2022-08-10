@@ -257,7 +257,7 @@ module SPI
         assert_equal expectation[:cache], resource[:cache], "#{iri} should be #{expectation[:cache]}"
 
         assertion_method = expectation[:include] ? :assert_not_nil : :assert_nil
-        positive = expectation[:include] ? '' : ' not'
+        positive = expectation[:include] ? ' not' : ''
 
         send(assertion_method, resource[:body], "Resource was#{positive} present in body")
 

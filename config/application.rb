@@ -49,9 +49,6 @@ module Argu
     ENV['REDIS_URL'] = ENV['REDIS_URL'].presence ||
       "redis://#{ENV['REDIS_ADDRESS'] || 'localhost'}:#{ENV['REDIS_PORT'] || 6379}/12"
 
-    config.cache_stream = ENV['CACHE_STREAM'].presence || 'transactions'
-    config.stream_redis_database = (ENV['STREAM_REDIS_DATABASE'])&.to_i || 7
-
     config.max_file_size = 25_000_000
 
     # Configure the default encoding used in templates for Ruby 1.9.

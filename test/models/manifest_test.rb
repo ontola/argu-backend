@@ -9,6 +9,7 @@ class ManifestTest < ActiveSupport::TestCase
     assert_equal('#2d707f', get_manifest('http://example.com')[:theme_color])
     page.update(primary_color: '#FFFFFF')
     assert_equal('#FFFFFF', get_manifest('http://example.com')[:theme_color])
+    assert_nil(get_redirect('http://example.com'))
   end
 
   test 'should update iri_prefix of manifest' do
@@ -16,19 +17,25 @@ class ManifestTest < ActiveSupport::TestCase
     page.update(iri_prefix: 'example.com/path')
     assert_equal('#2d707f', get_manifest('http://example.com/path')[:theme_color])
     assert_nil(get_manifest('http://example.com'))
+    assert_equal(get_redirect('http://example.com'), 'http://example.com/path')
   end
 
   test 'should clean up manifest' do
     assert(get_manifest('http://example.com'))
     page.destroy
     assert_nil(get_manifest('http://example.com'))
+    assert_nil(get_redirect('http://example.com'))
   end
 
   private
 
   def get_manifest(iri)
-    raw = LinkedRails::Manifest.redis_client.hget(LinkedRails::Manifest::MANIFEST_KEY, iri)
+    raw = LinkedRails::Storage.hget(:persistent, :manifest, iri)
 
     JSON.parse(raw).with_indifferent_access if raw
+  end
+
+  def get_redirect(iri)
+    LinkedRails::Storage.hget(:persistent, :redirect_prefix, iri)
   end
 end

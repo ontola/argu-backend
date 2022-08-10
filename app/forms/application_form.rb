@@ -2,7 +2,6 @@
 
 class ApplicationForm < LinkedRails::Form
   extend URITemplateHelper
-  include Cacheable
 
   class << self
     def form_options_iri(attr, klass = nil)

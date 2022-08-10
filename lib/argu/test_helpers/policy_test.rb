@@ -130,7 +130,7 @@ module Argu
           result =
             begin
               policy(subject, send(user)).send("#{action}?")
-            rescue Argu::Errors::Forbidden
+            rescue LinkedRails::Errors::Forbidden
               false
             end
           if expected

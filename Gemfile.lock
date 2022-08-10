@@ -379,7 +379,7 @@ GEM
       with_env (= 1.1.0)
       xml-simple (~> 1.1.5)
     link_header (0.0.8)
-    linked_rails (0.0.4.pre.g14b377f91)
+    linked_rails (0.0.4.pre.g72bb595fe)
       active_response (~> 0.0.2)
       emp_json (>= 1.3.0)
       kaminari-activerecord
@@ -786,7 +786,7 @@ DEPENDENCIES
   jwt
   kaminari-activerecord
   license_finder
-  linked_rails (= 0.0.4.pre.g14b377f91)
+  linked_rails (= 0.0.4.pre.g72bb595fe)
   linked_rails-auth!
   loofah
   ltree_hierarchy

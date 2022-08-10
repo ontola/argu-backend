@@ -4,7 +4,6 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend URITemplateHelper
   include Parentable
   include Cacheable
-  include Broadcastable
   collection_options(
     display: :table
   )

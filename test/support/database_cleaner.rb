@@ -24,6 +24,11 @@ end
 
 module ActiveSupport
   class TestCase
+    def before_setup
+      Redis::Connection::Memory.reset_all_databases
+      super
+    end
+
     before(:each) do
       DatabaseCleaner.start
     end

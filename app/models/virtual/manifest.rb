@@ -7,8 +7,6 @@ class Manifest < LinkedRails::Manifest # rubocop:disable Metrics/ClassLength
     mstile: %w[144x144 150x150 310x310 70x70]
   }.freeze
 
-  include Cacheable
-
   attr_accessor :page
 
   alias_attribute :root, :page
