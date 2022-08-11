@@ -2,8 +2,6 @@
 
 require 'factory_seeder'
 
-load(Dir[Rails.root.join('db/seeds/doorkeeper_apps.seeds.rb')][0])
-
 Apartment::Tenant.switch('public') do
   Tenant.delete_all
   Tenant.create_system_users unless User.any?

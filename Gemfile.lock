@@ -45,7 +45,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/linked_rails-auth
-  revision: a07f94d0b126325355ab1bc3386c651e91bb688f
+  revision: c6e1abfa0b5acb9f0bc8c61cbd9e317754694253
   specs:
     linked_rails-auth (0.0.4)
       active_model_otp
@@ -581,7 +581,7 @@ GEM
     rexml (3.2.5)
     rfc-822 (0.4.1)
     rotp (6.2.0)
-    rqrcode (2.1.1)
+    rqrcode (2.1.2)
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
     rqrcode_core (1.2.0)
@@ -677,7 +677,7 @@ GEM
       ruby-ole
     ssrf_filter (1.0.7)
     stackprof (0.2.17)
-    strscan (3.0.3)
+    strscan (3.0.4)
     swd (1.3.0)
       activesupport (>= 3)
       attr_required (>= 0.0.5)

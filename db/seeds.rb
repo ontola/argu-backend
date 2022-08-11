@@ -5,8 +5,6 @@
 
 # raise 'NOMINATIM_KEY is empty, please edit your .env' if ENV['NOMINATIM_KEY'].nil?
 
-load(Dir[Rails.root.join('db/seeds/doorkeeper_apps.seeds.rb')][0])
-
 current_tenant = Apartment::Tenant.current
 puts "Seeding #{current_tenant}" # rubocop:disable Rails/Output
 
