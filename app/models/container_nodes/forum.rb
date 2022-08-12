@@ -6,6 +6,7 @@ class Forum < ContainerNode
   enhance Inviteable
   enhance Motionable
   enhance Questionable
+  enhance SwipeToolable
   enhance Topicable
 
   has_one :primary_container_node_of,

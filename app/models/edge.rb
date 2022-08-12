@@ -132,6 +132,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :questions
   has_many_children :surveys
   has_many_children :submissions
+  has_many_children :swipe_tools
   has_many_children :terms
   has_many_children :topics
   has_many_children :vocabularies

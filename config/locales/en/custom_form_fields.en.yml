@@ -1,0 +1,5 @@
+en:
+  forms:
+    custom_form_fields:
+      default_cover_photo:
+        label: "Image"

@@ -54,8 +54,20 @@ class CustomFormField < Edge
     form_field_type&.exact_match
   end
 
+  def required
+    min_count&.positive?
+  end
+
+  def required=(value)
+    self.min_count = value ? 1 : 0
+  end
+
   def sh_path
     predicate || iri
+  end
+
+  def swipe_tool?
+    parent.parent.is_a?(SwipeTool)
   end
 
   class << self
@@ -63,8 +75,13 @@ class CustomFormField < Edge
       super.merge(max_count: 1)
     end
 
+    def swipe_type
+      Vocabulary.find_via_shortname(:formFields).terms.find_by(exact_match: NS.form[:SwipeInput])
+    end
+
     def build_new(parent: nil, user_context: nil)
       resource = super
+      resource.form_field_type = swipe_type if resource.swipe_tool?
       resource.build_options_vocab(
         creator: user_context&.profile,
         display_name: I18n.t('sh.in.label'),

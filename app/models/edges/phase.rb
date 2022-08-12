@@ -15,6 +15,7 @@ class Phase < Edge
   enhance Placeable
   enhance Statable
   enhance Surveyable
+  enhance SwipeToolable
   enhance Questionable
   enhance Motionable
   enhance Orderable

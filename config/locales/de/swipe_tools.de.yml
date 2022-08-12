@@ -1,0 +1,10 @@
+de:
+  swipe_tools:
+    type_new: Neue swipetool
+  forms:
+    swipe_tools:
+      action_body:
+        label: Formular
+  menus:
+    swipe_tools:
+      fields: Fragen

@@ -1,0 +1,7 @@
+nl:
+  forms:
+    custom_form_fields:
+      default_cover_photo:
+        label: "Plaatje"
+      required:
+        label: "Verplicht"

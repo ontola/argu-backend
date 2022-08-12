@@ -215,6 +215,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_144155) do
     t.index ["start_date", "end_date", "group_id", "member_id"], name: "index_group_memberships_full"
     t.index ["start_date", "end_date"], name: "index_group_memberships_on_start_date_and_end_date"
     t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps, where: '(member_id <> 0)'
+    t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps, where: '(member_id <> 0)'
   end
 
   create_table "groups", id: :serial, force: :cascade do |t|

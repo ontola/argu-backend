@@ -186,6 +186,7 @@ Rails.application.routes.draw do
   linked_resource(Shortname)
   linked_resource(Submission)
   linked_resource(Survey)
+  linked_resource(SwipeTool)
   linked_resource(Term)
   linked_resource(Topic)
   singular_linked_resource(User)

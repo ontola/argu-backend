@@ -14,7 +14,6 @@ class CustomFormFieldForm < ApplicationForm
              :formFields,
              min_count: 1,
              sh_in_opts: {page_size: 99}
-  has_one :default_cover_photo, if: has_type(:SwipeInput)
   field :display_name
   field :description
   %i[TextInput TextAreaInput MarkdownInput NumberInput CheckboxInput CheckboxGroup RadioGroup SelectInput
@@ -39,12 +38,13 @@ class CustomFormFieldForm < ApplicationForm
   field :max_inclusive_label, if: has_type(:SliderInput)
   field :min_inclusive, if: has_type(:NumberInput)
   field :max_inclusive, if: has_type(:NumberInput)
-  field :min_count
-  field :max_count
-
-  group :advanced, label: -> { I18n.t('forms.advanced') } do
-    field :predicate
+  field :required, input_field: LinkedRails::Form::Field::CheckboxInput
+  %i[TextInput CheckboxGroup SelectInput ColorInput DateInput DateTimeInput MultipleEmailInput
+     FileInput PostalRangeInput].each do |type|
+    field :max_count,
+          if: has_type(type)
   end
+  has_one :default_cover_photo, if: has_type(:SwipeInput)
 
   hidden do
     has_one :options_vocab,
