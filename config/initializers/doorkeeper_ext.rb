@@ -77,17 +77,6 @@ end
 Doorkeeper::AccessGrant.prepend(AccessGrantExt)
 Doorkeeper::AccessGrant.include(AccessTokenIncl)
 
-module ApplicationExt
-  extend ActiveSupport::Concern
-
-  class_methods do
-    def argu
-      Doorkeeper::Application.find(0)
-    end
-  end
-end
-Doorkeeper::Application.prepend(ApplicationExt)
-
 module PasswordAccessTokenRequestExt
   private
 

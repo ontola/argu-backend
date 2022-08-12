@@ -8,7 +8,6 @@ class TokensClientCredentialsTest < ActionDispatch::IntegrationTest
 
   define_page
   let(:application) { create(:application) }
-  let(:service_application) { create(:application, scopes: ['service']) }
 
   test 'Should not create client credentials without credentials' do
     assert_difference('Doorkeeper::AccessToken.count' => 0) do

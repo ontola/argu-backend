@@ -29,7 +29,6 @@ class TokensPasswordTest < ActionDispatch::IntegrationTest
   let!(:user) { create(:user) }
   let!(:user_without_password) { create(:user, :no_password) }
   let(:application) { create(:application) }
-  let(:service_application) { create(:application, scopes: ['service']) }
   let(:staff) { create(:user, :staff) }
 
   ####################################
@@ -70,7 +69,7 @@ class TokensPasswordTest < ActionDispatch::IntegrationTest
     post oauth_token_path,
          headers: argu_headers(accept: :json),
          params: {
-           client_id: Doorkeeper::Application.argu.uid,
+           client_id: frontend_application.uid,
            username: user.email,
            password: user.password,
            grant_type: 'password',
@@ -87,7 +86,7 @@ class TokensPasswordTest < ActionDispatch::IntegrationTest
     post oauth_token_path,
          headers: argu_headers(accept: :json),
          params: {
-           client_id: Doorkeeper::Application.argu.uid,
+           client_id: frontend_application.uid,
            username: user.email,
            password: user.password,
            grant_type: 'password',

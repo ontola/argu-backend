@@ -40,8 +40,8 @@ module OauthTestHelpers
     post oauth_token_path,
          headers: argu_headers(accept: :json),
          params: {
-           client_id: Doorkeeper::Application.argu.uid,
-           client_secret: Doorkeeper::Application.argu.secret,
+           client_id: frontend_application.uid,
+           client_secret: frontend_application.secret,
            username: name,
            password: password,
            grant_type: 'password',
@@ -54,8 +54,8 @@ module OauthTestHelpers
     post oauth_token_path,
          headers: argu_headers(accept: :json),
          params: {
-           client_id: Doorkeeper::Application.argu.uid,
-           client_secret: Doorkeeper::Application.argu.secret,
+           client_id: frontend_application.uid,
+           client_secret: frontend_application.secret,
            grant_type: :refresh_token,
            refresh_token: refresh_token
          }

@@ -80,8 +80,8 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_difference('Doorkeeper::AccessToken.count' => 0, 'Doorkeeper::AccessToken.active_for(user).count' => -1) do
       post oauth_revoke_path,
            params: {
-             client_id: Doorkeeper::Application.argu.uid,
-             client_secret: Doorkeeper::Application.argu.secret,
+             client_id: frontend_application.uid,
+             client_secret: frontend_application.secret,
              token: token.token
            }
     end

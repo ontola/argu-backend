@@ -38,6 +38,8 @@ module Argu
           let!(:argu) do
             Page.find_via_shortname('argu')
           end
+          let(:service_application) { create(:application, scopes: %i[guest user service]) }
+          let(:frontend_application) { create(:application, scopes: %i[guest user staff]) }
         end
 
         def define_freetown(name = 'freetown', attributes: {}) # rubocop:disable Metrics/MethodLength

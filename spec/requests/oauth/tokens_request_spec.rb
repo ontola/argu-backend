@@ -36,8 +36,8 @@ RSpec.describe 'Tokens', type: :request do
         post_token(
           scope: :user,
           params: {
-            client_id: Doorkeeper::Application.argu.uid,
-            client_secret: Doorkeeper::Application.argu.secret,
+            client_id: frontend_application.uid,
+            client_secret: frontend_application.secret,
             grant_type: 'password',
             password: user.password,
             username: user.email
@@ -58,8 +58,8 @@ RSpec.describe 'Tokens', type: :request do
         post_token(
           scope: :user,
           params: {
-            client_id: Doorkeeper::Application.argu.uid,
-            client_secret: Doorkeeper::Application.argu.secret,
+            client_id: frontend_application.uid,
+            client_secret: frontend_application.secret,
             grant_type: 'password',
             password: 'wrong',
             username: user.email

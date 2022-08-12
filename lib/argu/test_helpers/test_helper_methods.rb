@@ -50,7 +50,7 @@ module Argu
             end
           resource_owner = UserContext.new(user: owner, profile: owner.profile, session_id: owner.session_id)
           Doorkeeper::AccessToken.create!(
-            application: Doorkeeper::Application.argu,
+            application: frontend_application,
             resource_owner: resource_owner,
             scopes: role,
             expires_in: expires_in,
@@ -351,6 +351,7 @@ module Argu
 
         def define_spec_objects
           let(:argu) { Page.argu }
+          let(:frontend_application) { create(:application, scopes: %i[guest user staff]) }
           let(:other_page) { Page.find_via_shortname('other_page') }
           let(:other_page_forum) { Forum.find_via_shortname('other_page_forum') }
           let(:other_forum) { Forum.find_via_shortname('holland') }
