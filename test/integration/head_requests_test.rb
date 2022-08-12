@@ -70,7 +70,7 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   test 'guest should head demogemeente' do
     sign_in guest_user
 
-    assert_equal demogemeente.iri, 'http://demogemeente.nl'
+    assert_equal demogemeente.iri, 'http://demogemeente.nl/'
     head demogemeente.iri, headers: argu_headers(accept: :nq)
 
     expect_response(200, page: demogemeente)
@@ -79,10 +79,10 @@ class HeadRequestsTest < ActionDispatch::IntegrationTest
   test 'guest should head demogemeente argu.co' do
     sign_in guest_user
 
-    assert_equal demogemeente.iri, 'http://demogemeente.nl'
+    assert_equal demogemeente.iri, 'http://demogemeente.nl/'
     head "#{Rails.application.config.origin}/demogemeente", headers: argu_headers(accept: :nq)
 
-    assert_redirected_to demogemeente.iri
+    assert_redirected_to demogemeente.iri.to_s.chomp('/')
   end
 
   test 'guest should head demogemeente public_forum' do

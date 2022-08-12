@@ -121,7 +121,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   def iri(**_opts)
     return anonymous_iri if iri_prefix.blank? || (ActsAsTenant.current_tenant && ActsAsTenant.current_tenant != self)
 
-    @iri ||= RDF::URI("#{Rails.env.test? ? :http : :https}://#{iri_prefix}")
+    @iri ||= RDF::URI(LinkedRails::URL.as_href("#{Rails.env.test? ? :http : :https}://#{iri_prefix}"))
   end
 
   def iri_prefix

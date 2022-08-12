@@ -20,7 +20,7 @@ module Argu
 
       def sanitized_path(iri)
         iri.path = "#{iri.path}/" unless iri.path&.ends_with?('/')
-        tenant_path = ActsAsTenant.current_tenant&.iri&.path
+        tenant_path = ActsAsTenant.current_tenant&.iri&.path&.chomp('/')
         URI(tenant_path.present? ? iri.to_s.split("#{tenant_path}/").last : iri).path
       end
     end

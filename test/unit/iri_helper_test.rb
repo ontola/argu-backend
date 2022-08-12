@@ -119,7 +119,7 @@ class IriHelperTest < ActiveSupport::TestCase
   def resource_from_path(resource, path, root = argu)
     ActsAsTenant.with_tenant(root) do
       assert_equal(
-        LinkedRails.iri_mapper.resource_from_iri("#{root.iri}#{path}", nil).iri,
+        LinkedRails.iri_mapper.resource_from_iri("#{root.iri.to_s.chomp('/')}#{path}", nil).iri,
         resource.iri
       )
     end

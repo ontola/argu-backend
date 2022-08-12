@@ -4,7 +4,7 @@ require 'test_helper'
 
 class TenantFinderTest < ActiveSupport::TestCase
   define_freetown
-  let!(:demogemeente) { create(:page, iri_prefix: 'demogemeente.nl/test', url: 'demogemeente') }
+  let!(:demogemeente) { create(:page, iri_prefix: 'demogemeente.nl', url: 'demogemeente') }
   let!(:secondary_shortname) { create(:shortname, primary: false, shortname: 'secondary', owner: argu) }
   let!(:upcase_page) { create(:page, iri_prefix: 'example.com/Upcase') }
 
@@ -18,6 +18,10 @@ class TenantFinderTest < ActiveSupport::TestCase
 
   test 'should find tenant by forum iri' do
     assert_equal TenantFinder.from_url(freetown_iri), argu
+  end
+
+  test 'should find tenant by forum iri with upcase prefix' do
+    assert_equal TenantFinder.from_url(freetown_iri.to_s.gsub('argu/', 'Argu/')), argu
   end
 
   test 'should find tenant by forum iri with upcase shortname' do
@@ -40,16 +44,16 @@ class TenantFinderTest < ActiveSupport::TestCase
     assert_equal TenantFinder.from_url("https://#{Rails.application.config.host_name}/demogemeente"), demogemeente
   end
 
-  test 'should find demogemeente' do
-    assert_equal TenantFinder.from_url('https://demogemeente.nl/test'), demogemeente
+  test 'should find demogemeente root' do
+    assert_equal TenantFinder.from_url('https://demogemeente.nl'), demogemeente
+  end
+
+  test 'should find demogemeente root with slash' do
+    assert_equal TenantFinder.from_url('https://demogemeente.nl/'), demogemeente
   end
 
   test 'should find demogemeente sub url' do
-    assert_equal TenantFinder.from_url('https://demogemeente.nl/test/forum'), demogemeente
-  end
-
-  test 'should find demogemeente sub url with upcase page shortname' do
-    assert_equal TenantFinder.from_url('https://demogemeente.nl/Test/forum'), demogemeente
+    assert_equal TenantFinder.from_url('https://demogemeente.nl/forum'), demogemeente
   end
 
   test 'should find upcase' do
