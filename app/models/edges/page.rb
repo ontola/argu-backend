@@ -34,8 +34,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
            foreign_key: :root_id,
            primary_key: :uuid
 
-  delegate :database_schema, to: :tenant, allow_nil: true
-
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :iri_prefix, presence: true
   validates :name, presence: true, length: {minimum: 3, maximum: 75}
@@ -241,7 +239,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def tenant_create
-    create_tenant!(root_id: uuid, iri_prefix: iri_prefix, database_schema: Apartment::Tenant.current)
+    create_tenant!(root_id: uuid, iri_prefix: iri_prefix)
   end
 
   def update_primary_node_menu_item

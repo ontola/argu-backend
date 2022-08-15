@@ -2,18 +2,11 @@
 
 Thread.current[:mock_searchkick] = true
 
-Apartment::Tenant.create('argu') unless ApplicationRecord.connection.schema_exists?('argu')
-Apartment::Tenant.switch('public') do
-  Tenant.delete_all
-  Tenant.create_system_users unless User.any?
-end
-Apartment::Tenant.switch!('argu')
-
 DatabaseCleaner.clean_with(:deletion, except: %w[ar_internal_metadata])
 DatabaseCleaner.strategy = :transaction
 
 Sidekiq::Testing.inline! do
-  Tenant.seed_schema('argu', "#{Rails.application.config.host_name}/public_page", 'public_page')
+  Tenant.seed_schema('public_page', "#{Rails.application.config.host_name}/public_page")
 
   ActsAsTenant.current_tenant = nil
 

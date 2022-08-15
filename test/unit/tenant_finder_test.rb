@@ -8,14 +8,6 @@ class TenantFinderTest < ActiveSupport::TestCase
   let!(:secondary_shortname) { create(:shortname, primary: false, shortname: 'secondary', owner: argu) }
   let!(:upcase_page) { create(:page, iri_prefix: 'example.com/Upcase') }
 
-  before do
-    Apartment::Tenant.switch! nil
-  end
-
-  after do
-    Apartment::Tenant.switch! 'argu'
-  end
-
   test 'should find tenant by forum iri' do
     assert_equal TenantFinder.from_url(freetown_iri), argu
   end

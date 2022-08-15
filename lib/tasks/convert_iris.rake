@@ -22,9 +22,7 @@ namespace :iris do
   def convert_iris(from, to)
     # rubocop:disable Rails/SkipsModelValidations
     Tenant.update_all("iri_prefix = replace(iri_prefix, '#{from}', '#{to}')")
-    Apartment::Tenant.each do
-      Page.update_iris(from, to)
-    end
+    Page.update_iris(from, to)
     # rubocop:enable Rails/SkipsModelValidations
   end
 

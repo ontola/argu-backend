@@ -4,9 +4,6 @@ RSpec.configure do |config|
   config.before(:suite) do
     Thread.current[:mock_searchkick] = true
 
-    Apartment::Tenant.create('argu') unless ApplicationRecord.connection.schema_exists?('argu')
-    Apartment::Tenant.switch!('argu')
-
     DatabaseCleaner.clean_with(:deletion, except: %w[ar_internal_metadata])
     DatabaseCleaner.strategy = :transaction
 

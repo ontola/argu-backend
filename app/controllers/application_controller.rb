@@ -44,7 +44,6 @@ class ApplicationController < ActionController::API # rubocop:disable Metrics/Cl
   def add_tenant_tab(notification)
     notification.add_tab(
       :tenant,
-      schema: Apartment::Tenant.current,
       server: ENV['SERVER_NAME'],
       tenant: ActsAsTenant.current_tenant&.iri_prefix,
       tenant_id: ActsAsTenant.current_tenant&.uuid

@@ -5,16 +5,14 @@ module Public
     class TenantFinderController < SPI::SPIController
       TENANT_META_ATTRS = %w[
         uuid all_shortnames iri_prefix header_background header_text secondary_color primary_color
-        database_schema display_name language
+        display_name language
       ].freeze
 
       skip_before_action :authorize_action
       skip_after_action :verify_authorized
 
       def show
-        Apartment::Tenant.switch(tenant!.database_schema) do
-          render json: tenant_meta
-        end
+        render json: tenant_meta
       end
 
       private

@@ -6,11 +6,9 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
 
   def perform
     ActsAsTenant.without_tenant do
-      Apartment::Tenant.each do
-        send_activity_notifications(User.reactions_emails[:direct_reactions_email])
+      send_activity_notifications(User.reactions_emails[:direct_reactions_email])
 
-        send_individual_notifications
-      end
+      send_individual_notifications
     end
   end
 

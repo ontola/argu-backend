@@ -5,9 +5,7 @@ class WeeklyNotificationsSchedulerWorker < NotificationsSchedulerWorker
 
   def perform
     ActsAsTenant.without_tenant do
-      Apartment::Tenant.each do
-        send_activity_notifications(User.reactions_emails[:weekly_reactions_email])
-      end
+      send_activity_notifications(User.reactions_emails[:weekly_reactions_email])
     end
   end
 end

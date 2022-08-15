@@ -2,7 +2,7 @@
 
 class OtpSecret < LinkedRails::Auth::OtpSecret
   def issuer_name
-    Apartment::Tenant.current.humanize
+    ActsAsTenant.current_tenant.name
   end
 
   class << self

@@ -15,8 +15,7 @@ module ActsAsTenant
     class Server
       def call(_worker_class, msg, _queue, &block)
         if msg.key?('acts_as_tenant')
-          tenant = Apartment::Tenant.switch('public') { Tenant.find_by!(root_id: msg['acts_as_tenant']) }
-          page = Apartment::Tenant.switch(tenant.database_schema) { tenant.page }
+          page = Page.find_by!(uuid: msg['acts_as_tenant'])
 
           ActsAsTenant.with_tenant(page, &block)
         else

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_02_144155) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_15_101616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -453,7 +453,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_144155) do
 
   create_table "tenants", force: :cascade do |t|
     t.string "iri_prefix", null: false
-    t.string "database_schema", default: "argu", null: false
     t.uuid "root_id", null: false
     t.index ["iri_prefix"], name: "index_tenants_on_iri_prefix", unique: true
   end

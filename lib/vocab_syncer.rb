@@ -29,7 +29,7 @@ class VocabSyncer # rubocop:disable Metrics/ClassLength
 
     def sync_all
       if new_version
-        Rails.logger.info("Syncing vocabularies for #{Apartment::Tenant.current}")
+        Rails.logger.info('Syncing vocabularies')
 
         sync_all!
 
@@ -117,7 +117,7 @@ class VocabSyncer # rubocop:disable Metrics/ClassLength
     end
 
     def hash_key
-      "#{HASH_KEY}.#{Apartment::Tenant.current}"
+      "#{HASH_KEY}.argu"
     end
 
     def stored_hash

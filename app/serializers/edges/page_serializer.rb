@@ -10,7 +10,6 @@ class PageSerializer < EdgeSerializer
     URI("https://#{object.iri_prefix}")
   end
   attribute :follows_count, predicate: NS.argu[:followsCount]
-  attribute :database_schema, predicate: NS.argu[:dbSchema], if: method(:service_scope?)
 
   has_one :primary_container_node, predicate: NS.foaf[:homepage], unless: method(:service_scope?)
   has_one :profile, predicate: NS.argu[:profile]

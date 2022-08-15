@@ -2,19 +2,10 @@
 
 require 'factory_seeder'
 
-Apartment::Tenant.switch('public') do
-  Tenant.delete_all
-  Tenant.create_system_users unless User.any?
-end
-
-Apartment::Tenant.drop('argu') if ApplicationRecord.connection.schema_exists?('argu')
-
 Sidekiq::Testing.inline! do
-  Tenant.setup_schema('argu', "#{Rails.application.config.host_name}/first_page", 'first_page')
+  Tenant.seed_schema('first_page', "#{Rails.application.config.host_name}/first_page")
 end
 
-Apartment::Tenant.switch!('argu')
-ActsAsTenant.current_tenant.update(url: 'first_page')
 ActsAsTenant.current_tenant = nil
 
 staff = FactorySeeder.create(

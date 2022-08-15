@@ -7,21 +7,16 @@ module SPI
     define_page
     let(:user) { create(:user) }
 
-    after do
-      Apartment::Tenant.switch! 'argu'
-    end
-
     test 'service should get index' do
       sign_in :service
 
       get _public_spi_tenants_path
 
       assert_response 200
-      assert_equal parsed_body['schemas'], %w[argu]
       sites = parsed_body['sites']
       assert_equal sites.length, 2
-      assert_includes sites, 'name' => 'argu', 'location' => 'https://argu.localtest/argu'
-      assert_includes sites, 'name' => 'argu', 'location' => 'https://argu.localtest/public_page'
+      assert_includes sites, 'name' => 'Argu', 'location' => 'https://argu.localtest/argu'
+      assert_includes sites, 'name' => 'Public page', 'location' => 'https://argu.localtest/public_page'
     end
 
     test 'service should get tenant of iri' do
@@ -32,7 +27,6 @@ module SPI
       assert_response 200
       assert_equal parsed_body, {
         all_shortnames: %w[argu],
-        database_schema: 'argu',
         display_name: 'Argu',
         header_background: 'background_white',
         header_text: 'text_auto',

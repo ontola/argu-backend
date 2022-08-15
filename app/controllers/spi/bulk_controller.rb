@@ -109,16 +109,14 @@ module SPI
     end
 
     def resource_thread(&block)
-      Thread.new(Apartment::Tenant.current, ActsAsTenant.current_tenant, I18n.locale, request.env, &block)
+      Thread.new(ActsAsTenant.current_tenant, I18n.locale, request.env, &block)
     end
 
-    def threaded_authorized_resource(resource, &block) # rubocop:disable Metrics/MethodLength
-      resource_thread do |apartment, tenant, locale, env|
+    def threaded_authorized_resource(resource, &block)
+      resource_thread do |tenant, locale, env|
         Bugsnag.configuration.set_request_data(:rack_env, env)
-        Apartment::Tenant.switch(apartment) do
-          ActsAsTenant.with_tenant(tenant) do
-            I18n.with_locale(locale, &block)
-          end
+        ActsAsTenant.with_tenant(tenant) do
+          I18n.with_locale(locale, &block)
         end
       rescue StandardError, ScriptError => e
         handle_resource_error(resource, e)

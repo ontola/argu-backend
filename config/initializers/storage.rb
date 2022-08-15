@@ -12,7 +12,7 @@ Rails.application.config.active_storage.service =
 Rails.application.config.active_storage.variant_processor = :vips
 ActiveStorage::Engine.config.active_storage.content_types_to_serve_as_binary.delete('image/svg+xml')
 
-module VariantApartmentFix
+module VariantTenantFix
   extend ActiveSupport::Concern
 
   def url(expires_in: ActiveStorage.service_urls_expire_in, disposition: :inline)
@@ -24,11 +24,11 @@ module VariantApartmentFix
   end
 end
 
-module BlobApartmentFix
+module BlobTenantFix
   extend ActiveSupport::Concern
 
   def key
-    self[:key] ||= "#{Apartment::Tenant.current}/#{self.class.generate_unique_secure_token(length: 28)}"
+    self[:key] ||= "argu/#{self.class.generate_unique_secure_token(length: 28)}"
   end
 
   def service_url_for_direct_upload(expires_in: ActiveStorage.service_urls_expire_in)
@@ -44,28 +44,12 @@ module BlobApartmentFix
 
     DynamicURIHelper.rewrite(super)
   end
-
-  class_methods do
-    def create_before_direct_upload!(**args)
-      Apartment::Tenant.switch(Apartment::Tenant.current) do
-        super
-      end
-    end
-  end
 end
 
 Rails.application.config.to_prepare do
-  ActiveStorage::Variant.prepend(VariantApartmentFix)
-  ActiveStorage::Blob.prepend(BlobApartmentFix)
+  ActiveStorage::Variant.prepend(VariantTenantFix)
+  ActiveStorage::Blob.prepend(BlobTenantFix)
   ActiveStorage::Blob.validates :byte_size, numericality: {less_than: Rails.application.config.max_file_size}
-
-  ActiveRecord::Base.class_eval do
-    def self.find_signed!(signed_id, purpose: nil)
-      Apartment::Tenant.switch(Apartment::Tenant.current) do
-        super
-      end
-    end
-  end
 
   ActiveStorage::BaseController.class_eval do
     include LinkedRails::Helpers::OntolaActionsHelper

@@ -68,9 +68,6 @@ gem 'rdf-vocab'
 gem 'redis'
 gem 'rest-client'
 gem 'rfc-822'
-gem 'ros-apartment',
-    git: 'https://github.com/rails-on-services/apartment',
-    require: 'apartment'
 gem 'rqrcode'
 gem 'ruby-vips'
 gem 'rubyzip'

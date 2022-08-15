@@ -6,13 +6,13 @@ class TenantFinder
   class << self
     def from_url(url)
       uri = URI(url)
-      new(uri.host, uri.port, uri.path).tenant
+      new(uri.host, uri.port, uri.path).page
     rescue URI::InvalidURIError
       nil
     end
 
     def from_request(request)
-      new(request.host, request.port, request.path, request.get_header('HTTP_WEBSITE_IRI')).tenant
+      new(request.host, request.port, request.path, request.get_header('HTTP_WEBSITE_IRI')).page
     end
   end
 
@@ -25,20 +25,18 @@ class TenantFinder
     @website_iri = website_iri
   end
 
-  def tenant
-    tenant = same_tenant? ? ActsAsTenant.current_tenant.tenant : find_tenant
-    return if tenant.blank?
+  def page
+    page = same_page? ? ActsAsTenant.current_tenant : find_page
+    return if page.blank?
 
-    ActsAsTenant.without_tenant do
-      Apartment::Tenant.switch(tenant.database_schema) { tenant.page }
-    end
+    page
   end
 
   private
 
-  def find_tenant
+  def find_page
     ActsAsTenant.without_tenant do
-      tenant_by_website_iri || tenant_by_prefix || tenant_by_uuid || tenant_by_shortname
+      (tenant_by_website_iri || tenant_by_prefix || tenant_by_uuid || tenant_by_shortname)&.page
     end
   end
 
@@ -54,7 +52,7 @@ class TenantFinder
     [host_with_port, uri_with_suffix]
   end
 
-  def same_tenant?
+  def same_page?
     ActsAsTenant.current_tenant && matching_iris.any? do |iri|
       iri.start_with?(ActsAsTenant.current_tenant&.iri_prefix)
     end
@@ -67,12 +65,9 @@ class TenantFinder
   def tenant_by_shortname
     return unless Rails.application.config.host_name == @host
 
-    Apartment::Tenant.each do
-      match = Shortname.find_resource(iri_suffix)
-      return match.root.tenant if match.is_a?(Edge)
-    end
+    match = Shortname.find_resource(iri_suffix)
 
-    nil
+    match.root.tenant if match.is_a?(Edge)
   end
 
   def tenant_by_uuid
