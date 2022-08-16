@@ -55,10 +55,10 @@ class Grant < ApplicationRecord
   end
 
   def display_name
-    case edge&.owner_type
-    when 'Forum'
+    case edge
+    when ContainerNode
       edge.display_name
-    when 'Page'
+    when Page
       I18n.t('grants.all_forums')
     else
       I18n.t('grants.other')

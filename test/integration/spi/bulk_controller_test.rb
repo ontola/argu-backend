@@ -187,6 +187,7 @@ module SPI
         {include: true, iri: hidden_vote1.iri},
         {include: false, iri: hidden_vote2.iri},
         {include: false, iri: 'https://example.com'},
+        {include: false, iri: "#{motion1.iri}{%7B?before%5B%5D*}"},
         {include: true, iri: "#{argu.iri}/wrong_iri"},
         {include: true, iri: "#{argu.iri}/cable"},
         {include: true, iri: resource_iri(motion1.activities.last, root: argu)},
@@ -250,7 +251,7 @@ module SPI
 
       responses.each do |iri, expectation|
         resource = response.detect { |r| r[:iri] == iri }
-        raise("No expected response available for #{iri}. Found #{response.pluck(:iri)}") if resource.blank?
+        raise("The bulk did not return a response for #{iri}. Found #{response.pluck(:iri)}") if resource.blank?
 
         assert_equal iri.to_s, resource[:iri]
         assert_equal expectation[:status], resource[:status], "#{iri} should be #{expectation[:status]}"
@@ -289,7 +290,8 @@ module SPI
       [
         {include: true, iri: LinkedRails.iri(path: 'argu', query: '</script><script>')},
         {include: true, iri: LinkedRails.iri(path: 'argu/.bla', query: '</script><script>')},
-        {include: true, iri: LinkedRails.iri(query: '</script><script>')}
+        {include: true, iri: LinkedRails.iri(query: '</script><script>')},
+        {include: true, iri: 'https://argu.localtest{%7B?before%5B%5D*}<script></script>'}
       ]
     end
 

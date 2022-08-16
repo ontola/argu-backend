@@ -53,6 +53,8 @@ module Actions
       end
 
       def sorted_collection_actions(resource, action_list)
+        return [] if action_list.blank?
+
         collection_actions(resource, action_list).sort_by do |action|
           resource.parent.try(:action_precedence).try(:index, action.tag.to_sym) || 0
         end

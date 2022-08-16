@@ -15,7 +15,7 @@ class Conversion < VirtualResource
   attr_accessor :edge, :klass_iri
 
   def convertible_classes
-    edge.convertible_classes.keys.map { |c| c.to_s.classify.constantize.iri }
+    edge.try(:convertible_classes)&.keys&.map { |c| c.to_s.classify.constantize.iri }
   end
 
   def edgeable_record
