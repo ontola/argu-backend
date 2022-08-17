@@ -288,7 +288,7 @@ GEM
     elasticsearch-transport (7.13.3)
       faraday (~> 1)
       multi_json
-    emp_json (1.3.0)
+    emp_json (1.5.0)
     erubi (1.11.0)
     et-orbi (1.2.6)
       tzinfo
@@ -774,7 +774,7 @@ DEPENDENCIES
   doorkeeper-jwt
   doorkeeper-openid_connect
   dotenv-rails
-  emp_json (= 1.3.0)
+  emp_json
   factory_bot
   factory_bot_rails
   fakeredis!

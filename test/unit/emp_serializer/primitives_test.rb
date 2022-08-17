@@ -142,8 +142,7 @@ class PrimitivesTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLe
 
     float = 3.2
     exp = {
-      type: 'p',
-      dt: 'http://www.w3.org/2001/XMLSchema#double',
+      type: 'd',
       v: '3.2'
     }
     assert_equal exp, primitive_to_value(float)
