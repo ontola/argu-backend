@@ -82,7 +82,7 @@ module Argu
       end
 
       def destroy_results
-        nobody_results.merge(creator: true, staff: true)
+        nobody_results.merge(creator: true, administrator: true, staff: true)
       end
 
       def destroy_with_children_results

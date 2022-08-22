@@ -25,6 +25,7 @@ RSpec.describe GrantTree, type: :model do
   let(:root) { argu }
   let(:method_args) { [] }
   let(:method_opts) { {} }
+  let(:admin_group) { root.groups.custom.order(:created_at).first }
 
   describe '#initialize' do
     context 'with root id' do
@@ -55,7 +56,7 @@ RSpec.describe GrantTree, type: :model do
       context 'without filters' do
         it do
           expect(subject).to(
-            match_array([root.groups.custom.order(:created_at).first.id, Group::STAFF_ID, Group::PUBLIC_ID])
+            match_array([admin_group.id, Group::STAFF_ID, Group::PUBLIC_ID])
           )
         end
       end
@@ -64,7 +65,7 @@ RSpec.describe GrantTree, type: :model do
         let(:method_args) { [motion] }
         let(:method_opts) { {action_name: :destroy, resource_type: motion.owner_type} }
 
-        it { is_expected.to match_array [Group::STAFF_ID] }
+        it { is_expected.to match_array [Group::STAFF_ID, admin_group.id] }
       end
     end
 
@@ -72,7 +73,7 @@ RSpec.describe GrantTree, type: :model do
       let(:method_args) { hidden_motion }
 
       context 'without filters' do
-        it { is_expected.to match_array [Group::STAFF_ID, root.groups.custom.order(:created_at).first.id, 111, 222] }
+        it { is_expected.to match_array [Group::STAFF_ID, admin_group.id, 111, 222] }
       end
     end
   end
