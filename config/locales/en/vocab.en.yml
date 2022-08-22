@@ -96,9 +96,6 @@ en:
     Notification:
       label: "Notification"
       plural_label: "Notifications"
-    OpenDataPortal:
-      label: "Dataportal"
-      plural_label: "Dataportals"
     Order:
       type: "Order"
       plural_label: "Orders"

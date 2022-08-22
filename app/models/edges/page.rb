@@ -60,7 +60,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   with_collection :custom_menu_items, association: :navigations_menu_items, association_class: CustomMenuItem
   with_collection :blogs
   with_collection :forums
-  with_collection :open_data_portals
   with_collection :groups
   with_collection :shortnames, association: :descendant_shortnames
   with_collection :vocabularies

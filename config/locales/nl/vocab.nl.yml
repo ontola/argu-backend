@@ -96,9 +96,6 @@ nl:
     Notification:
       label: "Melding"
       plural_label: "Meldingen"
-    OpenDataPortal:
-      label: "Dataportaal"
-      plural_label: "Dataportalen"
     Order:
       label: "Bestelling"
       plural_label: "Bestellingen"

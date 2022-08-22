@@ -104,9 +104,6 @@ de:
     Notification:
       label: Benachrichtigung
       plural_label: Benachrichtigungen
-    OpenDataPortal:
-      label: Datenportal
-      plural_label: Datenportale
     Order:
       type: Bestellung
       plural_label: Bestellungen

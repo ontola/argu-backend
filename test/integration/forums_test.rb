@@ -188,8 +188,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'staff should post create forum json_api' do
     sign_in :service
 
-    assert_difference('OpenDataPortal.count' => 1) do
-      post argu.collection_iri(:open_data_portals), params: {
+    assert_difference('Forum.count' => 1) do
+      post argu.collection_iri(:forums), params: {
         forum: {
           name: 'New forum',
           url: 'new_forum'
@@ -237,19 +237,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
     iri = "#{Forum.last.iri}/discussions?display=grid&type=infinite"
     assert_equal Forum.last.widgets.last.resource_iri, [[iri, nil]]
-  end
-
-  test 'service should post create ori forum' do
-    sign_in :service
-
-    assert_difference('OpenDataPortal.count' => 1, 'Widget.discussions.count' => 0) do
-      post argu.collection_iri(:open_data_portals), params: {
-        forum: {
-          name: 'New forum',
-          url: 'new_forum'
-        }
-      }, headers: argu_headers(accept: :json)
-    end
   end
 
   private
