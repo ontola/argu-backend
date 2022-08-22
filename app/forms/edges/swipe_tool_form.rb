@@ -4,7 +4,7 @@ class SwipeToolForm < ApplicationForm
   field :display_name
   field :description, datatype: NS.fhir[:markdown]
   has_one :default_cover_photo
-  has_one :custom_placement
+  has_one :placement
 
   group :advanced, label: -> { I18n.t('forms.advanced') } do
     field :pinned

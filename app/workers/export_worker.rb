@@ -184,7 +184,7 @@ class ExportWorker # rubocop:disable Metrics/ClassLength
       edge,
       edge.try(:default_profile_photo),
       edge.try(:media_objects).try(:to_a),
-      edge.try(:placements).try(:to_a)
+      edge.try(:placement)
     ].flatten.compact
   end
 

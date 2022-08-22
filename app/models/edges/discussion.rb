@@ -35,7 +35,6 @@ class Discussion < Edge
     NS.argu[:followsCount]
   ]
   paginates_per 12
-  placeable :custom
 
   class << self
     def action_dialog(collection)

@@ -9,13 +9,10 @@ class UsersTest < ActionDispatch::IntegrationTest
   define_cairo
 
   let(:user) { create(:user) }
-  let(:place) { create(:place) }
   let(:second_email) { create(:email_address, user: user, email: 'second@argu.co', confirmed_at: Time.current) }
   let(:unconfirmed_email) { create(:email_address, user: user, email: 'unconfirmed@argu.co') }
   let(:administrator) { create_administrator(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
-  let(:home_placement) { create(:home_placement, placeable: user) }
-  let(:hidden_home_placement) { create(:home_placement, placeable: user_non_public) }
   let(:user_non_public) { create(:user, is_public: false) }
   let(:user_hidden_votes) { create(:user, show_feed: false) }
   let(:user_form) { RDF::URI('https:example.com/user') }
@@ -390,7 +387,6 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should update and remove profile_photo and cover_photo' do
-    nominatim_postal_code_valid
     sign_in user
 
     put resource_iri(user, root: argu),
@@ -426,147 +422,5 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 'name', user.reload.display_name
     assert_nil(user.default_profile_photo.content.filename)
-  end
-
-  test 'user should create place and placement on update with postal_code and country code' do
-    nominatim_postal_code_valid
-    sign_in user
-
-    assert_difference 'Place.count' => 1,
-                      'Placement.count' => 1 do
-      put resource_iri(user, root: argu),
-          params: {
-            user: {
-              display_name: 'name',
-              home_placement_attributes: {
-                postal_code: '3583GP',
-                country_code: 'NL'
-              }
-            }
-          }
-    end
-    assert_response :success
-    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
-  end
-
-  test 'user should create place and placement on update with only country code' do
-    nominatim_country_code_only
-    sign_in user
-
-    assert_difference 'Place.count' => 1,
-                      'Placement.count' => 1 do
-      put resource_iri(user, root: argu),
-          params: {
-            user: {
-              display_name: 'name',
-              home_placement_attributes: {
-                postal_code: '',
-                country_code: 'NL'
-              }
-            }
-          }
-    end
-    assert_response :success
-    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
-  end
-
-  test 'user should not create place and placement on update with only postal code' do
-    sign_in user
-
-    assert_difference 'Place.count' => 0,
-                      'Placement.count' => 0 do
-      put resource_iri(user, root: argu),
-          params: {
-            user: {
-              display_name: 'name',
-              home_placement_attributes: {
-                postal_code: '3583GP',
-                country_code: ''
-              }
-            }
-          }
-    end
-    assert_response :unprocessable_entity
-  end
-
-  test 'user should not create place and placement on update with wrong postal code' do
-    nominatim_postal_code_wrong
-    sign_in user
-
-    assert_difference 'Place.count' => 0,
-                      'Placement.count' => 0 do
-      put resource_iri(user, root: argu),
-          params: {
-            user: {
-              display_name: 'name',
-              home_placement_attributes: {
-                postal_code: 'wrong_postal_code',
-                country_code: 'NL'
-              }
-            }
-          }
-    end
-    assert_response :unprocessable_entity
-  end
-
-  test 'user should not create place but should create placement on update with cached postal code and country code' do
-    sign_in user
-    place
-
-    assert_difference 'Place.count' => 0,
-                      'Placement.count' => 1 do
-      put resource_iri(user, root: argu),
-          params: {
-            user: {
-              display_name: 'name',
-              home_placement_attributes: {
-                postal_code: '3583GP',
-                country_code: 'NL'
-              }
-            }
-          }
-    end
-    assert_response :success
-    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
-  end
-
-  test 'user should destroy placement on update with blank postal code and country code' do
-    sign_in user
-    place
-    placement = user.build_home_placement(creator: user.profile, publisher: user, place: place)
-    placement.save
-
-    assert_difference 'Place.count' => 0,
-                      'Placement.count' => -1 do
-      put resource_iri(user, root: argu),
-          params: {
-            user: {
-              display_name: 'name',
-              home_placement_attributes: {
-                id: placement.id,
-                postal_code: '',
-                country_code: ''
-              }
-            }
-          }
-    end
-    assert_response :success
-    assert_equal(response.headers['Location'], resource_iri(user, root: argu))
-  end
-
-  test 'user should show own homePlacement' do
-    home_placement
-    sign_in user
-    get resource_iri(user, root: argu)
-    assert_response :success
-    expect_triple(resource_iri(user, root: argu), NS.schema.homeLocation, nil)
-  end
-
-  test 'other user should not show homePlacement' do
-    home_placement
-    sign_in user_public
-    get resource_iri(user, root: argu)
-    assert_response :success
-    refute_triple(resource_iri(user, root: argu), NS.schema.homeLocation, nil)
   end
 end

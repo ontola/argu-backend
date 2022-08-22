@@ -42,7 +42,7 @@ en:
         label: "Post as"
       current_password:
         label: "Current password"
-      custom_placement:
+      placement:
         label: "Location"
       default_cover_photo:
         label: "Cover photo"
@@ -89,8 +89,6 @@ en:
         label: "Background of top bar"
       header_text:
         label: "Text color of top bar"
-      home_placement:
-        label: "Address"
       is_draft:
         label: "Draft"
       is_public:

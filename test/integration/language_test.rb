@@ -4,7 +4,7 @@ require 'test_helper'
 
 class LanguageTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:dutch_forum) { create_forum(initial_public_grant: 'participator', locale: 'nl-NL') }
+  let(:dutch_forum) { create_forum(initial_public_grant: 'participator') }
   let(:user) { create(:user) }
 
   test 'guest without token should get edit language' do

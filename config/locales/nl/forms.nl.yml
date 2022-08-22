@@ -42,7 +42,7 @@ nl:
         label: "Plaatsen als"
       current_password:
         label: "Huidig wachtwoord"
-      custom_placement:
+      placement:
         label: "Locatie"
       default_cover_photo:
         label: "Coverfoto"
@@ -89,8 +89,6 @@ nl:
         label: "Achtergrond van bovenste balk"
       header_text:
         label: "Tekstkleur van bovenste balk"
-      home_placement:
-        label: "Adres"
       is_public:
         label: "Profiel zichtbaar voor niet-leden"
       is_draft:

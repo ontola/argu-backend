@@ -10,10 +10,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
     attributes: {
       url: 'forum_with_placement',
       shortname_attributes: {shortname: 'forum_with_placement'},
-      custom_placement_attributes: {
+      placement_attributes: {
         lat: 1.0,
-        lon: 1.0,
-        placement_type: 'custom'
+        lon: 1.0
       }
     }
   )
@@ -166,24 +165,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'administrator should update locale affecting placement' do
-    nominatim_netherlands
-    sign_in holland_administrator
-    assert_equal holland.reload.places.first.country_code, 'GB'
-    assert_difference('Placement.count' => 0) do
-      put holland,
-          params: {
-            forum: {
-              locale: 'nl-NL'
-            }
-          },
-          headers: argu_headers
-    end
-    assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
-    assert_equal holland.reload.locale, 'nl-NL'
-    assert_equal holland.reload.places.first.country_code, 'NL'
-  end
-
   test 'administrator should show statistics' do
     sign_in holland_administrator
 
@@ -194,52 +175,14 @@ class ForumsTest < ActionDispatch::IntegrationTest
   ####################################
   # As Staff
   ####################################
-  define_freetown('inhabited')
   let(:staff) { create :user, :staff }
   let(:transfer_to) { create :page }
-  let(:binnenhof) { create(:place, address: {'city' => 'Den Haag', 'country_code' => 'nl', 'postcode' => '2513AA'}) }
-  let(:paleis) { create(:place, address: {'city' => 'Den Haag', 'country_code' => 'nl', 'postcode' => '2517KJ'}) }
-  let(:office) { create(:place, address: {'city' => 'Utrecht', 'country_code' => 'nl', 'postcode' => '3583GP'}) }
-  let(:nederland) { create(:place, address: {'country_code' => 'nl'}) }
-  let(:inhabitants) do
-    create(:home_placement, place: office, placeable: create_follower(freetown, create(:user)))
-
-    create(:home_placement, place: office, placeable: create_follower(inhabited, create(:user)))
-    create(:home_placement, place: binnenhof, placeable: create_follower(inhabited, create(:user)))
-    create(:home_placement, place: paleis, placeable: create_follower(inhabited, create(:user)))
-    create(:home_placement, place: nederland, placeable: create_follower(inhabited, create(:user)))
-  end
 
   test 'staff should show statistics' do
     sign_in staff
 
-    inhabitants # Trigger
-    get statistics_iri(inhabited), headers: argu_headers
+    get statistics_iri(freetown), headers: argu_headers
     assert_response :success
-  end
-
-  test 'staff should post create forum with latlon' do
-    sign_in staff
-
-    assert_difference('Forum.count' => 1, 'Placement.count' => 2, 'Place.count' => 1, 'CustomAction.count' => 3) do
-      post argu.collection_iri(:forums),
-           params: {
-             forum: {
-               name: 'New forum',
-               locale: 'en-GB',
-               url: 'new_forum',
-               custom_placement_attributes: {
-                 lat: 1.0,
-                 lon: 1.0,
-                 placement_type: 'custom'
-               }
-             }
-           },
-           headers: argu_headers
-    end
-
-    assert_equal 1, Forum.last.placements.first.lat
-    assert_equal 1, Forum.last.placements.first.lon
   end
 
   test 'staff should post create forum json_api' do
@@ -249,59 +192,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
       post argu.collection_iri(:open_data_portals), params: {
         forum: {
           name: 'New forum',
-          locale: 'en-GB',
           url: 'new_forum'
         }
       }, headers: argu_headers(accept: :json_api)
     end
     assert_response 201
-  end
-
-  test 'creator should put update forum change latlon' do
-    sign_in staff
-    forum_with_placement
-
-    assert_difference('Placement.count' => 0, 'Place.count' => 1) do
-      put forum_with_placement,
-          params: {
-            forum: {
-              custom_placement_attributes: {
-                id: forum_with_placement.custom_placement.id,
-                lat: 2.0,
-                lon: 2.0
-              }
-            }
-          },
-          headers: argu_headers
-    end
-
-    forum_with_placement.reload
-    assert_equal 2, forum_with_placement.custom_placement.lat
-    assert_equal 2, forum_with_placement.custom_placement.lon
-  end
-
-  test 'staff should put update motion remove latlon' do
-    sign_in staff
-    forum_with_placement
-
-    assert_difference('Motion.count' => 0, 'Placement.count' => -1, 'Place.count' => 0) do
-      put forum_with_placement,
-          params: {
-            forum: {
-              custom_placement_attributes: {
-                id: forum_with_placement.custom_placement.id,
-                _destroy: 'true'
-              }
-            }
-          },
-          headers: argu_headers
-    end
-    expect_triple(
-      forum_with_placement.iri,
-      NS.schema.location,
-      NS.sp.Variable,
-      NS.ontola[:remove]
-    )
   end
 
   test 'staff should delete destory forum with confirmation string' do
@@ -336,7 +231,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
       post argu.collection_iri(:forums), params: {
         forum: {
           name: 'New forum',
-          locale: 'en-GB',
           url: 'new_forum'
         }
       }, headers: argu_headers(accept: :json)
@@ -352,7 +246,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
       post argu.collection_iri(:open_data_portals), params: {
         forum: {
           name: 'New forum',
-          locale: 'en-GB',
           url: 'new_forum'
         }
       }, headers: argu_headers(accept: :json)

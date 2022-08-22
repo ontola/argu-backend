@@ -4,7 +4,6 @@ require 'bcrypt'
 
 class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance ConfirmedDestroyable
-  enhance Placeable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
   enhance Feedable
@@ -23,8 +22,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_save :sanitize_redirect_url
   before_create :build_public_group_membership
   before_destroy :handle_dependencies
-  placeable :home
-  has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
   has_many :drafts,
            -> { where(is_published: false) },
@@ -50,12 +47,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :uploaded_media_objects,
            class_name: 'MediaObject',
-           inverse_of: :publisher,
-           foreign_key: 'publisher_id',
-           dependent: :restrict_with_exception
-  has_many :content_placements,
-           -> { where(placement_type: %i[country custom]) },
-           class_name: 'Placement',
            inverse_of: :publisher,
            foreign_key: 'publisher_id',
            dependent: :restrict_with_exception
@@ -385,7 +376,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def dependent_associations
       @dependent_associations ||= Edge.descendants.map(&:to_s).map(&:tableize) +
-        %w[uploaded_media_objects content_placements]
+        %w[uploaded_media_objects]
     end
 
     def community

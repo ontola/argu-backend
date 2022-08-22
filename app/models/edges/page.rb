@@ -66,7 +66,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   with_collection :vocabularies
 
   parentable :user
-  placeable :custom
   property :display_name, :string, NS.schema.name
   property :locale, :string, NS.argu[:locale], default: 'nl-NL'
   property :template, :string, NS.ontola[:template], default: :default
@@ -169,13 +168,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   private
 
-  def build_default_forum # rubocop:disable Metrics/MethodLength
+  def build_default_forum
     self.primary_container_node = Forum.new(
       is_published: true,
       publisher: publisher,
       creator: creator,
       create_menu_item: false,
-      locale: I18n.locale,
       name: display_name,
       owner_type: 'Forum',
       parent: self,

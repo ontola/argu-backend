@@ -34,7 +34,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :topics, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
-  has_many :placements, inverse_of: :creator, foreign_key: :creator_id, dependent: :restrict_with_exception
   has_many :uploaded_media_objects,
            class_name: 'MediaObject',
            inverse_of: :creator,
@@ -134,7 +133,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def dependent_associations
       @dependent_associations ||= Edge.descendants.map(&:to_s).map(&:tableize) +
-        %w[activities uploaded_media_objects unscoped_group_memberships placements]
+        %w[activities uploaded_media_objects unscoped_group_memberships]
     end
 
     def guest

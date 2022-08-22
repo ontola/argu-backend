@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_15_101616) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_22_122246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -340,38 +340,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_101616) do
   end
 
   create_table "placements", id: :serial, force: :cascade do |t|
-    t.integer "place_id", null: false
-    t.string "placeable_type", null: false
-    t.string "title"
-    t.text "about"
-    t.integer "creator_id", null: false
-    t.integer "publisher_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer "placement_type", null: false
-    t.uuid "placeable_id", null: false
-    t.uuid "forum_id"
-    t.index ["forum_id"], name: "index_placements_on_forum_id"
-    t.index ["placeable_id"], name: "index_placements_on_placeable_id", unique: true, where: "((placement_type = 0) AND ((placeable_type)::text = 'User'::text))"
-  end
-
-  create_table "places", force: :cascade do |t|
-    t.string "licence"
-    t.string "osm_type"
-    t.bigint "osm_id"
-    t.text "boundingbox", default: [], array: true
-    t.decimal "lat", precision: 64, scale: 12
-    t.decimal "lon", precision: 64, scale: 12
-    t.string "display_name"
-    t.string "osm_class"
-    t.string "osm_importance"
-    t.string "icon"
-    t.string "osm_category"
-    t.json "address"
-    t.json "extratags"
-    t.json "namedetails"
-    t.integer "nominatim_id"
+    t.uuid "edge_id", null: false
+    t.decimal "lat", precision: 64, scale: 12, null: false
+    t.decimal "lon", precision: 64, scale: 12, null: false
     t.integer "zoom_level", default: 13, null: false
+    t.uuid "root_id", null: false
   end
 
   create_table "profiles", id: :serial, force: :cascade do |t|
@@ -556,10 +531,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_101616) do
   add_foreign_key "notifications", "edges", column: "root_id", primary_key: "uuid"
   add_foreign_key "notifications", "users", on_delete: :cascade
   add_foreign_key "oauth_openid_requests", "oauth_access_grants", column: "access_grant_id", on_delete: :cascade
-  add_foreign_key "placements", "edges", column: "forum_id", primary_key: "uuid"
-  add_foreign_key "placements", "places"
-  add_foreign_key "placements", "profiles", column: "creator_id"
-  add_foreign_key "placements", "users", column: "publisher_id"
   add_foreign_key "properties", "edges", column: "linked_edge_id", primary_key: "uuid"
   add_foreign_key "properties", "edges", primary_key: "uuid"
   add_foreign_key "publications", "edges", column: "publishable_id", primary_key: "uuid"

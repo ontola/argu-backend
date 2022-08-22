@@ -5,7 +5,6 @@ class Topic < Discussion
 
   paginates_per 15
   parentable :container_node
-  placeable :custom
 
   convertible(
     motions: %i[activities media_objects],

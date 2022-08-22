@@ -177,7 +177,6 @@ class PagesTest < ActionDispatch::IntegrationTest
   let(:argu_administrator) { argu.publisher }
 
   test 'administrator should get settings and all tabs' do
-    create(:place, address: {country_code: 'nl'})
     sign_in administrator
 
     get settings_iri(page)
@@ -211,18 +210,16 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should put update page add latlon' do
-    create(:place, address: {country_code: 'nl'})
     sign_in administrator
 
-    assert_difference('Placement.count' => 1, 'Place.count' => 1) do
+    assert_difference('Placement.count' => 1) do
       put page,
           params: {
             id: page.url,
             page: {
-              custom_placement_attributes: {
+              placement_attributes: {
                 lat: 2.0,
-                lon: 2.0,
-                placement_type: 'custom'
+                lon: 2.0
               }
             }
           }
@@ -230,8 +227,8 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     page.reload
-    assert_equal 2, page.custom_placement.lat
-    assert_equal 2, page.custom_placement.lon
+    assert_equal 2, page.placement.lat
+    assert_equal 2, page.placement.lon
   end
 
   test 'administrator should put update page change homepage' do

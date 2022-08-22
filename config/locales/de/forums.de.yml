@@ -70,7 +70,6 @@ de:
         scope: Umfang
         visibility: Sichtbarkeit
         page: Übertragung
-        locale: Land und Sprache
   votes:
     alerts:
       not_modified: ''

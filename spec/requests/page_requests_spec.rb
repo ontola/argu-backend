@@ -7,7 +7,6 @@ RSpec.describe 'Pages', type: :request do
 
   let(:authorized_user) { create_administrator(subject, create(:user)) }
   let(:edit_path) do
-    nominatim_netherlands
     settings_iri(subject).path
   end
   let(:index_path) { Page.collection_iri(root: argu).path }
@@ -32,7 +31,6 @@ RSpec.describe 'Pages', type: :request do
   let(:invalid_create_params) { {page: {name: 'new_name'}} }
   let(:update_params) { {page: {name: 'new_name'}} }
   let(:invalid_update_params) do
-    nominatim_netherlands
     {page: {name: 'a'}}
   end
   let(:destroy_params) { {page: {confirmation_string: 'remove'}} }

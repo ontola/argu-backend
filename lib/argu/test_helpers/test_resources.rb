@@ -4,7 +4,7 @@ module Argu
   module TestHelpers
     module TestResources
       module InstanceMethods
-        def create_forum(*args) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+        def create_forum(*args) # rubocop:disable Metrics/MethodLength
           attributes = (args.pop if args.last.is_a?(Hash)) || {}
           page = attributes[:parent] || ActsAsTenant.current_tenant || create_page
 
@@ -15,10 +15,6 @@ module Argu
               publisher: page.user
             }
           }.merge(attributes)
-          country_code = attributes[:locale]&.split('-')&.second&.downcase || 'gb'
-          unless Place.where("address->>'country_code' = ?", country_code).any?
-            Place.create!(address: {country_code: country_code})
-          end
           ActsAsTenant.with_tenant(page) do
             create(
               :forum,

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
+class ContainerNode < Edge
   include DeltaHelper
 
   enhance ConfirmedDestroyable
@@ -27,7 +27,6 @@ class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
   property :bio_long, :text, NS.schema.text
   property :cover_photo_attribution, :string, NS.argu[:photoAttribution]
   property :discoverable, :boolean, NS.argu[:discoverable], default: true
-  property :locale, :string, NS.argu[:locale], default: 'nl-NL'
   property :show_header, :boolean, NS.argu[:showHeader], default: true
 
   collection_options(
@@ -44,9 +43,6 @@ class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
   ]
 
   parentable :page, :phase
-  placeable :country, :custom
-
-  after_save :reset_country
 
   alias_attribute :description, :bio
   alias_attribute :name, :display_name
@@ -92,31 +88,9 @@ class ContainerNode < Edge # rubocop:disable Metrics/ClassLength
     true
   end
 
-  def reset_country # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    country_code = locale.split('-').second
-    return if country_placement&.country_code == country_code
-
-    place = Place.find_or_fetch_country(country_code)
-    placement =
-      placements
-        .country
-        .first_or_create do |p|
-        p.creator = creator
-        p.publisher = publisher
-        p.place = place
-      end
-    placement.update!(place: place) unless placement.place == place
-  end
-
   class << self
     def action_dialog(collection)
       RDF::URI("#{collection.parent.collection_iri(:container_nodes)}/actions") if self == ContainerNode
-    end
-
-    def attributes_for_new(opts)
-      attrs = super
-      attrs[:locale] = ActsAsTenant.current_tenant.locale
-      attrs
     end
 
     def iri

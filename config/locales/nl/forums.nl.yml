@@ -58,7 +58,6 @@ nl:
         scope: "Vorm"
         visibility: "Zichtbaarheid"
         page: "Verplaatsen"
-        locale: "Land en taal"
     votes:
       alerts:
         not_modified: ""

@@ -39,15 +39,14 @@ class MotionsTest < ActionDispatch::IntegrationTest
   end
   let(:motion_with_placement) do
     create(:motion,
-           custom_placement_attributes: {
+           placement_attributes: {
              lat: 1.0,
-             lon: 1.0,
-             placement_type: 'custom'
+             lon: 1.0
            },
            publisher: creator,
            parent: question)
   end
-  let(:motion_placement) { motion_with_placement.placements.first }
+  let(:motion_placement) { motion_with_placement.placement }
   let(:guest_user) { create_guest_user }
   let(:other_guest_user) { create_guest_user(session_id: 'other_id') }
   let(:guest_vote) do
@@ -76,21 +75,20 @@ class MotionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: :created},
       parent: :freetown,
       attributes: {
-        custom_placement_attributes: {
+        placement_attributes: {
           lat: 1.0,
           lon: 1.0,
-          zoom_level: 1,
-          placement_type: 'custom'
+          zoom_level: 1
         }
       },
-      differences: [['Motion', 1], ['Placement', 1], ['Place', 1], ['Activity', 2]]
+      differences: [['Motion', 1], ['Placement', 1], ['Activity', 2]]
     )
 
     Thread.current[:mock_searchkick] = true
 
-    assert_equal 1, Motion.last.placements.first.lat
-    assert_equal 1, Motion.last.placements.first.lon
-    assert_equal 1, Motion.last.placements.first.zoom_level
+    assert_equal 1, Motion.last.placement.lat
+    assert_equal 1, Motion.last.placement.lon
+    assert_equal 1, Motion.last.placement.zoom_level
   end
 
   test 'initiator should get new motion object with latlon from filter' do
@@ -121,7 +119,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       NS.ontola[:zoomLevel] => 3
     }
     Thread.current[:mock_searchkick] = false
-    assert_difference('Motion.count' => 1, 'Placement.count' => 1, 'Place.count' => 1, 'Activity.count' => 1) do
+    assert_difference('Motion.count' => 1, 'Placement.count' => 1, 'Activity.count' => 1) do
       post freetown.collection_iri(:motions, type: :paginated, filter: filter),
            headers: argu_headers(accept: :nq),
            params: {motion: default_create_attributes}
@@ -130,9 +128,9 @@ class MotionsTest < ActionDispatch::IntegrationTest
     end
     Thread.current[:mock_searchkick] = true
 
-    assert_equal 1, Motion.last.placements.first.lat
-    assert_equal 2, Motion.last.placements.first.lon
-    assert_equal 3, Motion.last.placements.first.zoom_level
+    assert_equal 1, Motion.last.placement.lat
+    assert_equal 2, Motion.last.placement.lon
+    assert_equal 3, Motion.last.placement.zoom_level
   end
 
   test 'initiator should not post create motion without latlon in question requiring location' do
@@ -150,9 +148,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       attributes: {
-        custom_placement_attributes: {
+        placement_attributes: {
           id: '',
-          placement_type: 'custom',
           lat: '',
           lon: '',
           zoom_level: '1'
@@ -169,9 +166,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       attributes: {
-        custom_placement_attributes: {
+        placement_attributes: {
           id: '',
-          placement_type: 'custom',
           lat: 2.0,
           lon: 2.0,
           zoom_level: '1'
@@ -185,29 +181,25 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
   test 'creator should put update motion change latlon' do
     sign_in creator
-    place_id = motion_placement.place.id
 
     general_update(
       results: {should: true, response: :success},
       record: :motion_with_placement,
       attributes: {
-        custom_placement_attributes: {
+        placement_attributes: {
           id: motion_placement.id,
           lat: 2.0,
           lon: 2.0
         }
       },
-      differences: [['Motion', 0], ['Placement', 0], ['Place', 1], ['Activity', 1]]
+      differences: [['Motion', 0], ['Placement', 0], ['Activity', 1]]
     )
 
     motion_placement.reload
-    assert_not_equal(motion_placement.place.id, place_id)
     assert_equal 2, motion_placement.lat
     assert_equal 2, motion_placement.lon
 
     expect_triple(resource_iri(motion_placement), NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate])
-    place_iri = resource_iri(motion_placement.place, root: argu)
-    expect_triple(place_iri, NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate])
     vote_event_iri = resource_iri(motion_with_placement.default_vote_event)
     expect_triple(vote_event_iri, NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate])
     refute_triple(resource_iri(motion_with_placement), NS.sp.Variable, NS.sp.Variable, NS.ontola[:invalidate])
@@ -220,12 +212,12 @@ class MotionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: :success},
       record: :motion_with_placement,
       attributes: {
-        custom_placement_attributes: {
+        placement_attributes: {
           id: motion_placement.id,
           _destroy: 'true'
         }
       },
-      differences: [['Motion', 0], ['Placement', -1], ['Place', 0], ['Activity', 1]]
+      differences: [['Motion', 0], ['Placement', -1], ['Activity', 1]]
     )
   end
 

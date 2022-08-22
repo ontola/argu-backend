@@ -11,7 +11,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   let(:other_user) { create(:user) }
   let(:guest_user) { create_guest_user }
   let(:other_guest_user) { create_guest_user(session_id: 'other_id') }
-  let(:place) { create(:place) }
   let(:motion) { create(:motion, parent: freetown) }
   let(:argument) { create(:pro_argument, parent: motion) }
   let(:motion2) { create(:motion, parent: freetown) }
@@ -310,8 +309,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should delete destroy with placement, uploaded_photo and expired group_membership' do
-    placement = user.build_home_placement(creator: user.profile, publisher: user, place: place)
-    placement.save
     photo = motion.build_default_cover_photo(
       creator: user.profile,
       publisher: user,
@@ -328,8 +325,9 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     sign_in user
 
-    assert_difference('User.count' => -1, 'Placement.count' => -1, 'Place.count' => 0,
-                      'MediaObject.count' => -1, 'MediaObject.where(publisher_id: 0, creator_id: 0).count' => 1) do
+    assert_difference('User.count' => -1,
+                      'MediaObject.count' => -1,
+                      'MediaObject.where(publisher_id: 0, creator_id: 0).count' => 1) do
       delete resource_iri(user, root: argu),
              params: {
                user: {
@@ -478,13 +476,18 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   private
 
-  def create_content_for(user) # rubocop:disable Metrics/AbcSize
-    motion = create(:motion, publisher: user, creator: user.profile, parent: freetown)
+  def create_content_for(user) # rubocop:disable Metrics/MethodLength
+    motion = create(
+      :motion,
+      publisher: user,
+      creator: user.profile,
+      parent: freetown,
+      placement_attributes: {lat: 1.0, lon: 1.0}
+    )
     create(:vote, publisher: user, creator: user.profile, parent: motion.default_vote_event)
     create(:question, publisher: user, creator: user.profile, parent: freetown)
     create(:pro_argument, parent: Motion.last, publisher: user, creator: user.profile)
     create(:motion, publisher: user, creator: user.profile, parent: cairo)
-    motion.build_custom_placement(publisher: user, creator: user.profile, place: place).save
   end
 
   def create_user(redirect_url: nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

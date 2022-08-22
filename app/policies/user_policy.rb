@@ -8,7 +8,7 @@ class UserPolicy < RestrictivePolicy
       scope
     end
   end
-  permit_nested_attributes %i[home_placement email_addresses]
+  permit_nested_attributes %i[email_addresses]
   permit_attributes %i[password password_confirmation current_password time_zone language]
   permit_attributes %i[display_name about show_feed is_public finished_intro]
   permit_attributes %i[reactions_email news_email decisions_email memberships_email created_email has_analytics]
@@ -77,10 +77,6 @@ class UserPolicy < RestrictivePolicy
   end
 
   private
-
-  def home_placement_attributes
-    HomePlacementPolicy.new(context, record.home_placement || HomePlacement.new(placeable: record)).permitted_attributes
-  end
 
   def system_user?
     !record.id.positive?

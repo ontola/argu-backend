@@ -8,7 +8,7 @@ class BudgetShopForm < ApplicationForm
   field :budget_max, input_field: MoneyInput
   has_one :default_cover_photo
   has_many :attachments
-  has_one :custom_placement
+  has_one :placement
 
   group :advanced, label: -> { I18n.t('forms.advanced') } do
     field :mark_as_important, description: -> { mark_as_important_label }

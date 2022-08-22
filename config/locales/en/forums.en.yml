@@ -59,7 +59,6 @@ en:
         scope: "Scope"
         visibility: "Visibility"
         page: "Transfer"
-        locale: "Country and language"
   votes:
     alerts:
       not_modified: ""

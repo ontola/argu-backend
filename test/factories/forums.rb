@@ -3,7 +3,5 @@
 FactoryBot.define do
   factory :forum do
     sequence(:name) { |n| "fg_forum#{n}end" }
-
-    locale { 'en-GB' }
   end
 end

@@ -10,7 +10,7 @@ Sidekiq::Testing.inline! do
 
   ActsAsTenant.current_tenant = nil
 
-  FactorySeeder.create(:page, locale: 'en-GB', url: 'argu', name: 'Argu')
+  FactorySeeder.create(:page, url: 'argu', name: 'Argu')
 end
 
 module ActiveSupport

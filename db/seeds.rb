@@ -3,8 +3,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-# raise 'NOMINATIM_KEY is empty, please edit your .env' if ENV['NOMINATIM_KEY'].nil?
-
 ActiveRecord::Base.transaction do
   Tenant.seed_schema('argu', "#{Rails.application.config.host_name}/argu")
 

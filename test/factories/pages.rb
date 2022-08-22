@@ -8,6 +8,7 @@ FactoryBot.define do
   factory :page do
     association :profile
     is_published { true }
+    locale { :en }
     sequence :url do |n|
       "page_#{n}"
     end

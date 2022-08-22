@@ -21,7 +21,7 @@ class SurveyForm < ContainerNodeForm
   field :external_iri, if: [is_remote], min_count: 1
   field :coupon_required
   has_one :default_cover_photo
-  has_one :custom_placement
+  has_one :placement
 
   group :advanced, label: -> { I18n.t('forms.advanced') } do
     field :pinned

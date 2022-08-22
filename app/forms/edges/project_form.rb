@@ -10,7 +10,7 @@ class ProjectForm < ContainerNodeForm
         sh_in_prop: NS.argu[:phases]
   has_one :default_cover_photo
   has_many :attachments
-  has_one :custom_placement
+  has_one :placement
 
   group :advanced, label: -> { I18n.t('forms.advanced') } do
     field :pinned

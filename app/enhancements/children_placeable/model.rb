@@ -6,16 +6,15 @@ module ChildrenPlaceable
 
     included do
       with_collection :children_placements,
-                      association_class: Placement
+                      association_class: Placement,
+                      route_key: :placements
     end
 
     def children_placements
       @children_placements ||=
         Placement
-          .custom
-          .joins('INNER JOIN edges ON placements.placeable_type = \'Edge\' AND placements.placeable_id = edges.uuid')
+          .joins('INNER JOIN edges ON placements.edge_id = edges.uuid')
           .where(edges: {parent_id: id})
-          .includes(:place)
     end
 
     def children_placements_iri

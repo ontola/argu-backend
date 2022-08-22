@@ -5,14 +5,14 @@ module Placeable
     extend ActiveSupport::Concern
 
     included do
-      permit_nested_attributes(Placement.placement_types.keys.map { |key| :"#{key}_placement" })
+      permit_nested_attributes %i[placement]
     end
 
     def permitted_attributes_from_filters(filters)
-      custom_placement_attributes = params_parser(filters).attributes_from_filters(Placement).permit!
-      return super if custom_placement_attributes.blank?
+      placement_attributes = params_parser(filters).attributes_from_filters(Placement).permit!
+      return super if placement_attributes.blank?
 
-      super.merge(custom_placement_attributes: custom_placement_attributes.merge(placement_type: 'custom'))
+      super.merge(placement_attributes: placement_attributes)
     end
   end
 end

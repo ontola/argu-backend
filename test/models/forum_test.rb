@@ -14,7 +14,7 @@ class ForumTest < ActiveSupport::TestCase
   let(:group) { create(:group, parent: page) }
   let(:user) { create(:user) }
   let(:forum) do
-    create(:forum, parent: page, url: 'new_forum', locale: 'nl')
+    create(:forum, parent: page, url: 'new_forum')
   end
 
   test 'valid' do

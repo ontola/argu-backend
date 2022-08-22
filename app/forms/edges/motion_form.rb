@@ -18,8 +18,8 @@ class MotionForm < ApplicationForm
   field :description, datatype: NS.fhir[:markdown]
   has_one :default_cover_photo
   has_many :attachments
-  has_one :custom_placement, min_count: 1, if: location_required
-  has_one :custom_placement, unless: location_required
+  has_one :placement, min_count: 1, if: location_required
+  has_one :placement, unless: location_required
 
   group :advanced, label: -> { I18n.t('forms.advanced') } do
     field :mark_as_important, description: -> { mark_as_important_label }

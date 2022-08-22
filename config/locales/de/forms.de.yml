@@ -44,7 +44,7 @@ de:
         label: Posten als
       current_password:
         label: Aktuelles Passwort
-      custom_placement:
+      placement:
         label: Standort
       default_cover_photo:
         label: Titelbild
@@ -89,8 +89,6 @@ de:
         label: Hintergrund der oberen Leiste
       header_text:
         label: Textfarbe der oberen Leiste
-      home_placement:
-        label: Adresse
       is_draft:
         label: Entwurf
       is_public:

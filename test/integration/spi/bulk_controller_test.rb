@@ -8,8 +8,8 @@ module SPI
     include ThreadHelper
 
     define_page
-    let(:freetown) { create(:forum, parent: argu, initial_public_grant: 'initiator', url: 'freetown', locale: :nl) }
-    let(:holland) { create(:forum, parent: argu, url: 'holland', locale: :nl) }
+    let(:freetown) { create(:forum, parent: argu, initial_public_grant: 'initiator', url: 'freetown') }
+    let(:holland) { create(:forum, parent: argu, url: 'holland') }
     let(:guest_user) { create_guest_user }
     let(:motion1) { create(:motion, parent: freetown) }
     let(:motion2) { create(:motion, parent: freetown) }
@@ -28,8 +28,7 @@ module SPI
       create(:forum,
              parent: demogemeente,
              initial_public_grant: 'initiator',
-             url: 'demogemeente',
-             locale: :nl)
+             url: 'demogemeente')
     end
     let(:dg_motion1) { create(:motion, parent: demogemeente_forum) }
 
