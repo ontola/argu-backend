@@ -9,7 +9,7 @@ class UserContext # rubocop:disable Metrics/ClassLength
   attr_reader :allow_expired, :child_cache
 
   delegate :user, :profile, to: :current_actor
-  delegate :guest?, :id, :language, :marked_for_destruction?, :otp_active?, to: :user
+  delegate :guest?, :id, :marked_for_destruction?, :otp_active?, to: :user
   delegate :build_child, to: :child_cache
 
   def initialize(allow_expired: false, doorkeeper_token: nil, language: nil, profile: nil, user: nil, session_id: nil) # rubocop:disable Metrics/ParameterLists
@@ -75,6 +75,10 @@ class UserContext # rubocop:disable Metrics/ClassLength
 
   def inspect
     "<UserContext user_id: #{user.id}, profile_id: #{profile.id}>"
+  end
+
+  def language
+    user&.language unless user.service?
   end
 
   def managed_profile_ids
