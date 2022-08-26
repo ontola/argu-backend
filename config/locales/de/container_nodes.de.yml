@@ -1,19 +1,17 @@
+---
 de:
+  blogs:
+    type_new: Neuer Blog
+  container_nodes:
+    type_new: Neue Seite
+  dashboards:
+    type_new: Neues Dashboard
   forms:
+    blogs:
+      bio:
+        description: Fassen Sie in einem Satz zusammen, welche Funktion der Blog hat. Dieser Text wird unter dem Namen des Forums erscheinen. Es gibt ein Maximum von 80 Zeichen.
     container_nodes:
       url:
         description: Der Teil der Url nach %{iri_prefix}
-    blogs:
-      bio:
-        description: >-
-          Fassen Sie in einem Satz zusammen, welche Funktion der Blog hat.
-          Dieser Text wird unter dem Namen des Forums erscheinen. Es gibt ein
-          Maximum von 80 Zeichen.
-  container_nodes:
-    type_new: Neue Seite
-  blogs:
-    type_new: Neuer Blog
   forums:
     type_new: Neues Forum
-  dashboards:
-    type_new: Neues Dashboard

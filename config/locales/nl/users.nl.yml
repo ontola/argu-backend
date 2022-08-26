@@ -1,78 +1,77 @@
-#Dutch motions translations
-
+---
 nl:
-  users:
-    type: "Gebruiker"
-    plural: "Gebruikers"
-    guest: 'Gast gebruiker'
-    anonymous: 'Anoniem'
-    settings:
-      title: "Gebruikersinstellingen"
-      menu:
-        general: "Algemeen"
-        profile: "Profiel"
-        authentication: "Authenticatie"
-        notifications: "Meldingen"
-        privacy: "Privacy"
-        advanced: "Geavanceerd"
-        emails: "E-mailadressen"
-        destroy: "Verwijder"
-    registrations:
-      confirm_mail_change_notice: "We hebben je een mail gestuurd naar het nieuwe adres. Bevestig deze om de wijziging op te slaan."
-    drafts:
-      title: "Mijn concepten"
   enums:
     users:
-      reactions_email:
-        never_reactions_email: 'Nooit'
-        direct_reactions_email: 'Onmiddelijk'
-        daily_reactions_email: 'Dagelijks'
-        weekly_reactions_email: 'Wekelijks'
-      news_email:
-        never_news_email: 'Nooit'
-        direct_news_email: 'Onmiddelijk'
-        daily_news_email: 'Dagelijks'
-        weekly_news_email: 'Wekelijks'
-      decisions_email:
-        never_decisions_email: 'Nooit'
-        direct_decisions_email: 'Onmiddelijk'
-        daily_decisions_email: 'Dagelijks'
-        weekly_decisions_email: 'Wekelijks'
-      memberships_email:
-        never_memberships_email: 'Nooit'
-        direct_memberships_email: 'Onmiddelijk'
-        daily_memberships_email: 'Dagelijks'
-        weekly_memberships_email: 'Wekelijks'
       created_email:
-        never_created_email: 'Nooit'
-        direct_created_email: 'Onmiddelijk'
-        daily_created_email: 'Dagelijks'
-        weekly_created_email: 'Wekelijks'
+        daily_created_email: Dagelijks
+        direct_created_email: Onmiddelijk
+        never_created_email: Nooit
+        weekly_created_email: Wekelijks
+      decisions_email:
+        daily_decisions_email: Dagelijks
+        direct_decisions_email: Onmiddelijk
+        never_decisions_email: Nooit
+        weekly_decisions_email: Wekelijks
       destroy_strategy:
-        expropriate_on_destroy: "Anonimiseer content"
-        remove_on_destroy: "Verwijder content"
+        expropriate_on_destroy: Anonimiseer content
+        remove_on_destroy: Verwijder content
+      memberships_email:
+        daily_memberships_email: Dagelijks
+        direct_memberships_email: Onmiddelijk
+        never_memberships_email: Nooit
+        weekly_memberships_email: Wekelijks
+      news_email:
+        daily_news_email: Dagelijks
+        direct_news_email: Onmiddelijk
+        never_news_email: Nooit
+        weekly_news_email: Wekelijks
+      reactions_email:
+        daily_reactions_email: Dagelijks
+        direct_reactions_email: Onmiddelijk
+        never_reactions_email: Nooit
+        weekly_reactions_email: Wekelijks
   forms:
     users:
       decisions_email:
-        label: "Bij officiele besluiten"
+        label: Bij officiele besluiten
       display_name:
-        placeholder: ""
-        helper_text: "Stel in hoe je zichtbaar bent voor anderen. De meesten mensen gebruiken hun echte naam."
-        label: "Naam"
+        helper_text: Stel in hoe je zichtbaar bent voor anderen. De meesten mensen gebruiken hun echte naam.
+        label: Naam
+        placeholder: ''
       email:
-        placeholder: "email@example.com"
+        placeholder: email@example.com
       has_analytics:
-        description: "We gebruiken Bugsnag om fouten in je browser te detecteren en op te lossen. We gebruiken Matomo om geanonimiseerd op te slaan hoe de website wordt gebruikt, zodat we hem sneller kunnen verbeteren."
-        label: "Activeer browser diensten"
+        description: We gebruiken Bugsnag om fouten in je browser te detecteren en op te lossen. We gebruiken Matomo om geanonimiseerd op te slaan hoe de website wordt gebruikt, zodat we hem sneller kunnen verbeteren.
+        label: Activeer browser diensten
       is_public:
-        description: "Als je dit uitzet, verandert je naam voor niet-leden in \"Anoniem\". Door dit uit te zetten voorkom je dat je in zoekmachines terecht komt. Geregistreerde leden kunnen altijd je profiel en naam bekijken."
+        description: Als je dit uitzet, verandert je naam voor niet-leden in "Anoniem". Door dit uit te zetten voorkom je dat je in zoekmachines terecht komt. Geregistreerde leden kunnen altijd je profiel en naam bekijken.
       news_email:
-        label: "Bij belangrijke items"
+        label: Bij belangrijke items
       reactions_email:
-        label: "Bij nieuwe items"
+        label: Bij nieuwe items
       shortname:
-        description: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
-        label: "Gebruikersnaam"
+        description: Geen spaties. Alleen letters, cijfers en _. Begin met een letter.
+        label: Gebruikersnaam
       url:
-        helper_text: "Je kunt jouw gebruikersnaam later niet meer wijzigen."
-        label: "Gebruikersnaam"
+        helper_text: Je kunt jouw gebruikersnaam later niet meer wijzigen.
+        label: Gebruikersnaam
+  users:
+    anonymous: Anoniem
+    drafts:
+      title: Mijn concepten
+    guest: Gast gebruiker
+    plural: Gebruikers
+    registrations:
+      confirm_mail_change_notice: We hebben je een mail gestuurd naar het nieuwe adres. Bevestig deze om de wijziging op te slaan.
+    settings:
+      menu:
+        advanced: Geavanceerd
+        authentication: Authenticatie
+        destroy: Verwijder
+        emails: E-mailadressen
+        general: Algemeen
+        notifications: Meldingen
+        privacy: Privacy
+        profile: Profiel
+      title: Gebruikersinstellingen
+    type: Gebruiker

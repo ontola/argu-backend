@@ -1,28 +1,16 @@
+---
 de:
-  pages:
-    type_new: Fangen sie an
-    settings:
-      menu:
-        return: Ansicht %{resource}
-        general: Allgemein
-        profile: Profil der Community
-        advanced: Fortgeschrittene
-        groups: Gruppen
-        grants: Erlaubnisse
-        forums: Foren
-        container_nodes: Bestandteile
-        shortnames: Weiterleitungen
-    limit_reached_amount:
-      one: Sie können nicht mehr als %{count} Community anlegen.
-      other: Sie können nicht mehr als %{count} Communities anlegen.
   actions:
     pages:
       destroy:
+        description: Sind Sie sicher, dass Sie die gesamte Community dauerhaft löschen wollen?. Dies kann nicht rückgängig gemacht werden.
         label: Community löschen
-        description: >-
-          Sind Sie sicher, dass Sie die gesamte Community dauerhaft löschen
-          wollen?. Dies kann nicht rückgängig gemacht werden.
         submit: löschen
+  activerecord:
+    attributes:
+      page:
+        name: Name
+        shortname: URL argumentieren
   enums:
     pages:
       header_background:
@@ -30,9 +18,9 @@ de:
         background_secondary: Sekundäre Farbe
         background_white: Weiß
       header_text:
+        text_auto: Automatisch
         text_primary: Primäre Farbe
         text_secondary: Sekundäre Farbe
-        text_auto: Automatisch
   forms:
     pages:
       accepted_terms:
@@ -45,25 +33,37 @@ de:
         label: Google UA-Code
       last_accepted:
         label: Ich akzeptiere die Nutzungsbedingungen
-      matomo_host:
-        label: Matomo-Host
-        description: Leer lassen, um den Standard-Host zu verwenden
       matomo_cdn:
-        label: Matomo-CDN
         description: Leer lassen, um den Standard-CDN zu verwenden
+        label: Matomo-CDN
+      matomo_host:
+        description: Leer lassen, um den Standard-Host zu verwenden
+        label: Matomo-Host
       matomo_site_id:
         label: Matomo-Site-ID
       piwik_pro_host:
-        label: Piwik Pro-Host
         description: z.B. 'meinprojekt.piwik.pro'
+        label: Piwik Pro-Host
       piwik_pro_site_id:
         label: Piwik-Pro-Site-ID
       requires_intro:
         helper_text: Fordern Sie Benutzer auf, einen Benutzernamen einzugeben, bevor sie Inhalte veröffentlichen.
       shortname:
         label: URL argumentieren
-  activerecord:
-    attributes:
-      page:
-        name: Name
-        shortname: URL argumentieren
+  pages:
+    limit_reached_amount:
+      one: Sie können nicht mehr als %{count} Community anlegen.
+      other: Sie können nicht mehr als %{count} Communities anlegen.
+    settings:
+      menu:
+        advanced: Fortgeschrittene
+        container_nodes: Bestandteile
+        forums: Foren
+        general: Allgemein
+        grants: Erlaubnisse
+        groups: Gruppen
+        profile: Profil der Community
+        return: Ansicht %{resource}
+        shortnames: Weiterleitungen
+        theme: Theme
+    type_new: Fangen sie an

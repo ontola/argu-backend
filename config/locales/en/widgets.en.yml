@@ -1,19 +1,20 @@
+---
 en:
-  widgets:
-    type_new: "New widget"
-  forms:
-    widgets:
-      size:
-        label: "Width"
-      position:
-        label: "Position"
-      view:
-        label: "View"
-      raw_resource_iri:
-        label: "Object"
   enums:
     widgets:
       view:
-        full_view: "Volledig"
-        compact_view: "Compact"
-        preview_view: "Preview"
+        compact_view: Compact
+        full_view: Volledig
+        preview_view: Preview
+  forms:
+    widgets:
+      position:
+        label: Position
+      raw_resource_iri:
+        label: Object
+      size:
+        label: Width
+      view:
+        label: View
+  widgets:
+    type_new: New widget

@@ -1,11 +1,7 @@
+---
 en:
   legal:
-    agree_and_create: "Agree and create account"
+    continue_html: By continuing you agree to our %{policy} and our %{privacy}.
     documents:
-      policy: "Terms of use"
-      privacy: "Privacy policy"
-      values:
-    form_html: "By creating an Argu account you agree to our %{link}."
-    notice: "By creating an Argu account you agree to our "
-    continue_html: "By continuing you agree to our %{policy} and our %{privacy}."
-    accept: "Accept"
+      policy: Terms of use
+      privacy: Privacy policy

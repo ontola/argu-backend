@@ -1,6 +1,7 @@
+---
 en:
   topics:
-    type_new: "New thread"
     call_to_action:
-      title: "Discuss a topic?"
-      body: "Do you want to start a conversation about a specific topic?"
+      body: Do you want to start a conversation about a specific topic?
+      title: Discuss a topic?
+    type_new: New thread

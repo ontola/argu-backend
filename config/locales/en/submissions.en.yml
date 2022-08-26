@@ -1,8 +1,9 @@
+---
 en:
   enums:
     submissions:
       status:
-        submission_active: "Active"
-      submission_completed: "Completed"
+        submission_active: Active
+        submission_completed: Completed
   submissions:
-    type_new: "Fill in survey"
+    type_new: Fill in survey

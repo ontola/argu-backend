@@ -1,73 +1,74 @@
+---
 nl:
   menus:
     copy_successful: "'%{url}' is gekopieerd naar het klembord"
     default:
-      2fa: "Tweestapsverificatie"
-      authentication: "Authenticatie"
-      drafts: "Concepten"
-      facebook: "Facebook"
-      twitter: "Twitter"
-      linked_in: "LinkedIn"
-      google_plus: "Google+"
-      email: "E-Mail"
-      whatsapp: "Whatsapp"
-      permissions: "Rechten"
-      share: "Delen"
-      copy: "Kopieer link"
-      location: "Kaart"
-      no_social_media: "Delen op social media kan alleen in openbare forums"
-      not_published: "Je kan alleen gepubliceerde items delen"
-      follow: "Meldingen"
-      follow_header: "Meldingen ontvangen bij:"
-      never: 'Nooit meldingen ontvangen'
-      reactions: 'Alle items'
-      news: 'Belangrijke items'
-      invite: "Uitnodigen"
-      email_invite: "Uitnodigen via email"
-      bearer_invite: "Uitnodigen via link"
-      meetings: "Vergaderingen"
-      questions: "Vraagstukken"
-      manage: "Beheer"
-      motions: "Ideeën"
-      notifications: "Meldingen"
-      settings: "Instellingen"
-      typeform: "Beheer"
-      participate: "Invullen"
-      submission: "Reactie"
-      new_component: "Pagina toevoegen"
-      new_forum: "Nieuw forum"
-      new_blog: "Nieuw blog"
-      actions: "Menu"
+      2fa: Tweestapsverificatie
+      actions: Menu
+      activity: Activiteit
+      authentication: Authenticatie
+      banners: Banners
+      bearer_invite: Uitnodigen via link
       comments:
-        zero: "Reacties"
-        one: "Reacties (%{count})"
-        other: "Reacties (%{count})"
-      activity: "Activiteit"
-      new_update: "Nieuwe update"
-      edit: "Bewerken"
-      statistics: "Statistieken"
-      trash: "Verwijderen"
-      untrash: "Terugplaatsen"
-      destroy: "Permanent verwijderen"
-      take_decision: "Besluit nemen"
-      contact: "Contacteer plaatser"
-      overview: "Overzicht"
-      profile: "Profiel"
-      new_discussion: "Nieuwe discussie"
-      new_motion: "Nieuw idee"
-      new_question: "Nieuwe uitdaging"
-      move: "Verplaats"
-      search: "Zoeken"
-      general: "Algemeen"
-      grants: "Rechten"
-      delete: "Verwijderen"
-      banners: "Banners"
-      custom_menu_items: "Menu"
+        one: Reacties (%{count})
+        other: Reacties (%{count})
+        zero: Reacties
+      contact: Contacteer plaatser
+      copy: Kopieer link
+      custom_menu_items: Menu
+      delete: Verwijderen
+      destroy: Permanent verwijderen
+      drafts: Concepten
+      edit: Bewerken
+      email: E-Mail
+      email_invite: Uitnodigen via email
+      facebook: Facebook
+      follow: Meldingen
+      follow_header: 'Meldingen ontvangen bij:'
+      general: Algemeen
+      google_plus: Google+
+      grants: Rechten
+      invite: Uitnodigen
+      linked_in: LinkedIn
+      location: Kaart
+      manage: Beheer
+      meetings: Vergaderingen
+      motions: Ideeën
+      move: Verplaats
+      never: Nooit meldingen ontvangen
+      new_blog: Nieuw blog
+      new_component: Pagina toevoegen
+      new_discussion: Nieuwe discussie
+      new_forum: Nieuw forum
+      new_motion: Nieuw idee
+      new_question: Nieuwe uitdaging
+      new_update: Nieuwe update
+      news: Belangrijke items
+      no_social_media: Delen op social media kan alleen in openbare forums
+      not_published: Je kan alleen gepubliceerde items delen
+      notifications: Meldingen
+      overview: Overzicht
+      participate: Invullen
+      permissions: Rechten
+      profile: Profiel
+      questions: Vraagstukken
+      reactions: Alle items
+      search: Zoeken
+      settings: Instellingen
+      share: Delen
+      statistics: Statistieken
+      submission: Reactie
+      take_decision: Besluit nemen
+      trash: Verwijderen
+      twitter: Twitter
+      typeform: Beheer
+      untrash: Terugplaatsen
+      whatsapp: Whatsapp
     descriptions:
-      general: "Hier vind je de algemene instellingen voor deze community."
-      container_nodes: "Componenten vormen de basisstructuur van de community."
-      groups: "Met groepen kan je bepaalde rechten aan een selecte groep deelnemers geven."
-      shortnames: "Met redirects kan je mooiere urls maken om te delen met anderen."
-      custom_menu_items: "Het menu in de bovenbalk van de community."
-      banners: "Banners zijn balken die onder de navigatiebalk komen te staan. Je kunt deze gebruiken om bezoekers iets belangrijks te laten lezen."
-      vocabularies: "Via vocabularies kan je lijsten met eigen content maken."
+      banners: Banners zijn balken die onder de navigatiebalk komen te staan. Je kunt deze gebruiken om bezoekers iets belangrijks te laten lezen.
+      container_nodes: Componenten vormen de basisstructuur van de community.
+      custom_menu_items: Het menu in de bovenbalk van de community.
+      general: Hier vind je de algemene instellingen voor deze community.
+      groups: Met groepen kan je bepaalde rechten aan een selecte groep deelnemers geven.
+      shortnames: Met redirects kan je mooiere urls maken om te delen met anderen.
+      vocabularies: Via vocabularies kan je lijsten met eigen content maken.

@@ -1,12 +1,11 @@
+---
 de:
   forms:
     group_memberships:
-      user:
-        label: Benutzer
       group:
         label: Gruppe
+      user:
+        label: Benutzer
   group_memberships:
+    destroy_confirmation: Sind Sie sicher, dass Sie %{user} aus der Gruppe %{group} entfernen wollen?
     type_new: Benutzer hinzufügen
-    destroy_confirmation: >-
-      Sind Sie sicher, dass Sie %{user} aus der Gruppe %{group} entfernen
-      wollen?

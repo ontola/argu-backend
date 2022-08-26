@@ -1,18 +1,19 @@
+---
 en:
   enums:
     vocabularies:
       default_term_display:
-        default_display: "Default"
-        grid_display: "Grid"
-        table_display: "Table"
-        card_display: "Card"
+        card_display: Card
+        default_display: Default
+        grid_display: Grid
+        table_display: Table
   forms:
     vocabularies:
       default_term_display:
-        label: "Default display"
+        label: Default display
       tagged_label:
-        label: "Label for tagged items"
+        label: Label for tagged items
   vocabularies:
-    type_new: "New vocabulary"
     errors:
-      system: "This vocabulary cannot be updated"
+      system: This vocabulary cannot be updated
+    type_new: New vocabulary

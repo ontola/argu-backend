@@ -1,23 +1,24 @@
+---
 nl:
-  surveys:
-    type_new: "Nieuwe enquête"
   enums:
     surveys:
       form_type:
-        local: "Eigen formulier"
-        remote: "Typeform"
+        local: Eigen formulier
+        remote: Typeform
   forms:
     surveys:
       action_body:
-        label: "Formulier"
-      external_iri:
-        placeholder: "https://[accountNaam].typeform.com/to/[surveyId]"
-        helper_text: "Ga voor meer informatie over surveys naar [onze helpdesk](https://argu.co/argu/t/10509)"
-        label: "Typeform url"
-      form_type:
-        label: "Type"
+        label: Formulier
       coupon_required:
-        label: "Uitnodiging verplicht"
+        label: Uitnodiging verplicht
+      external_iri:
+        helper_text: Ga voor meer informatie over surveys naar [onze helpdesk](https://argu.co/argu/t/10509)
+        label: Typeform url
+        placeholder: https://[accountNaam].typeform.com/to/[surveyId]
+      form_type:
+        label: Type
   menus:
     surveys:
-      fields: "Vragen"
+      fields: Vragen
+  surveys:
+    type_new: Nieuwe enquête

@@ -1,36 +1,26 @@
-# Dutch argument translations
-
+---
 nl:
   forms:
     forums:
       bio:
-        label: "Doel van het forum"
-        description: "Beschrijf waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum."
+        description: Beschrijf waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum.
       naam:
-        label: "Naam van forum"
+        label: Naam van forum
       shortname:
-        label: "URL"
+        label: URL
   forums:
     settings:
-      title: "Forum instellingen"
-      general: "Algemene instellingen"
-      profile: "Profiel instellingen"
+      general: Algemene instellingen
+      manager: Beheerder
       menu:
-        return: "Bekijk %{resource}"
-        general: "Algemeen"
-        advanced: 'Geavanceerd'
-        groups: 'Groepen'
-        privacy: 'Privacy'
-        grants: 'Rechten'
-        shortnames: 'Argu URLs'
-      privacy: "Privacy"
-      manager: "Beheerder"
-      shortnames: 'Argu URLs'
-    statistics:
-      title: "Statistiek"
-      questions: "Uitdagingen"
-      motions: "Ideeën"
-      cities:
-        title: "Woonplaatsen van gebruikers"
-        info: "Gebaseerd op optioneel aangeleverde gebruikersgegevens"
-        unknown: "Onbekend"
+        advanced: Geavanceerd
+        general: Algemeen
+        grants: Rechten
+        groups: Groepen
+        privacy: Privacy
+        return: Bekijk %{resource}
+        shortnames: Argu URLs
+      privacy: Privacy
+      profile: Profiel instellingen
+      shortnames: Argu URLs
+      title: Forum instellingen

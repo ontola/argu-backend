@@ -1,18 +1,16 @@
+---
 de:
   direct_messages:
     notice:
       success: Die E-Mail wird gesendet
   forms:
     direct_messages:
+      body:
+        label: Nachricht
       email:
         description: ''
       email_address_id:
-        description: >-
-          Sie können eine E-Mail von einer Ihrer bestätigten E-Mail-Adressen
-          senden. Ist Ihre Emailadresse nicht sichtbar? Gehen Sie zu den
-          Benutzereinstellungen, um Ihre Adresse zu bestätigen.
+        description: Sie können eine E-Mail von einer Ihrer bestätigten E-Mail-Adressen senden. Ist Ihre Emailadresse nicht sichtbar? Gehen Sie zu den Benutzereinstellungen, um Ihre Adresse zu bestätigen.
         label: Absender
       subject:
         label: Betreff
-      body:
-        label: Nachricht

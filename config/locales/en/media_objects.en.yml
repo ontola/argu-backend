@@ -1,19 +1,20 @@
+---
 en:
-  forms:
-    media_objects:
-      content:
-        label: "Select a file"
-      remote_content_url:
-        label: "Enter a link to a file or movie:"
-      content_source:
-        label: "Location of the file"
-    image_objects:
-      content:
-        label: "Select a file"
-      remote_content_url:
-        label: "Enter a link to a file or movie:"
   enums:
     media_objects:
       content_source:
-        local: "On my computer"
-        remote: "On the internet"
+        local: On my computer
+        remote: On the internet
+  forms:
+    image_objects:
+      content:
+        label: Select a file
+      remote_content_url:
+        label: 'Enter a link to a file or movie:'
+    media_objects:
+      content:
+        label: Select a file
+      content_source:
+        label: Location of the file
+      remote_content_url:
+        label: 'Enter a link to a file or movie:'

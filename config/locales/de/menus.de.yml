@@ -1,73 +1,74 @@
+---
 de:
   menus:
     copy_successful: '%{url}" in die Zwischenablage kopiert'
     default:
       2fa: Zwei-Faktor-Authentifizierung
-      authentication: Authentifizierung
-      drafts: Entwürfe
-      facebook: Facebook
-      twitter: Twitter
-      linked_in: LinkedIn
-      google_plus: Google+
-      email: E-Mail
-      whatsapp: Whatsapp
-      permissions: Erlaubnisse
-      share: Teilen
-      copy: Link kopieren
-      location: Karte
-      manage: Management
-      no_social_media: Das Teilen auf sozialen Medien ist nur in öffentlichen Foren möglich
-      not_published: Sie können nur veröffentlichte Artikel teilen
-      follow: Benachrichtigungen
-      follow_header: 'Erhalten Sie Benachrichtigungen für:'
-      never: Niemals Benachrichtigungen erhalten
-      reactions: Alle Artikel
-      news: Wichtige Artikel
-      invite: Einladen
-      email_invite: Per E-Mail einladen
-      bearer_invite: Per Link einladen
-      meetings: Begegnungen
-      questions: Fragen
-      motions: Anträge
-      notifications: Benachrichtigungen
-      settings: Einstellungen
-      typeform: Verwalten
-      participate: Senden
-      submission: Antwort
-      new_component: Seite hinzufügen
-      new_forum: Neues Forum
-      new_blog: Neuer Blog
       actions: Menü
+      activity: Feed
+      authentication: Authentifizierung
+      banners: Banners
+      bearer_invite: Per Link einladen
       comments:
-        zero: Kommentare
         one: Kommentare%{count})
         other: Kommentare%{count})
-      activity: Feed
-      new_update: Neues Update
-      edit: Bearbeiten
-      statistics: Statistik
-      trash: Löschen
-      untrash: Untrash
-      destroy: Dauerhaft löschen
-      take_decision: Entscheidung treffen
+        zero: Kommentare
       contact: Kontakt-Poster
-      overview: Übersicht
-      profile: Profil
+      copy: Link kopieren
+      custom_menu_items: Menü
+      delete: Löschen
+      destroy: Dauerhaft löschen
+      drafts: Entwürfe
+      edit: Bearbeiten
+      email: E-Mail
+      email_invite: Per E-Mail einladen
+      facebook: Facebook
+      follow: Benachrichtigungen
+      follow_header: 'Erhalten Sie Benachrichtigungen für:'
+      general: Allgemein
+      google_plus: Google+
+      grants: Erlaubnisse
+      invite: Einladen
+      linked_in: LinkedIn
+      location: Karte
+      manage: Management
+      meetings: Begegnungen
+      motions: Anträge
+      move: Antrag
+      never: Niemals Benachrichtigungen erhalten
+      new_blog: Neuer Blog
+      new_component: Seite hinzufügen
       new_discussion: Neue Diskussion
+      new_forum: Neues Forum
       new_motion: Neuer Antrag
       new_question: Neue Frage
-      move: Antrag
+      new_update: Neues Update
+      news: Wichtige Artikel
+      no_social_media: Das Teilen auf sozialen Medien ist nur in öffentlichen Foren möglich
+      not_published: Sie können nur veröffentlichte Artikel teilen
+      notifications: Benachrichtigungen
+      overview: Übersicht
+      participate: Senden
+      permissions: Erlaubnisse
+      profile: Profil
+      questions: Fragen
+      reactions: Alle Artikel
       search: Suche
-      general: Allgemein
-      grants: Erlaubnisse
-      delete: Löschen
-      banners: Banners
-      custom_menu_items: Menü
+      settings: Einstellungen
+      share: Teilen
+      statistics: Statistik
+      submission: Antwort
+      take_decision: Entscheidung treffen
+      trash: Löschen
+      twitter: Twitter
+      typeform: Verwalten
+      untrash: Untrash
+      whatsapp: Whatsapp
     descriptions:
-      general: "Hier finden Sie die allgemeinen Einstellungen für diese Community."
-      container_nodes: "Komponenten bilden die Grundstruktur der Community."
-      groups: "Mit Gruppen können Sie einem ausgewählten Teilnehmerkreis bestimmte Rechte geben."
-      shortnames: "Mit Umleitungen können Sie schönere URLs erstellen, die Sie mit anderen teilen können."
-      custom_menu_items: "Das Menü in der Navigationsleiste der Community."
-      banners: "Banner sind Balken, die unterhalb der Navigationsleiste erscheinen. Damit können Sie Besucher über etwas Wichtiges informieren."
-      vocabularies: "Über Vokabeln können Sie Listen mit eigenen Inhalten erstellen."
+      banners: Banner sind Balken, die unterhalb der Navigationsleiste erscheinen. Damit können Sie Besucher über etwas Wichtiges informieren.
+      container_nodes: Komponenten bilden die Grundstruktur der Community.
+      custom_menu_items: Das Menü in der Navigationsleiste der Community.
+      general: Hier finden Sie die allgemeinen Einstellungen für diese Community.
+      groups: Mit Gruppen können Sie einem ausgewählten Teilnehmerkreis bestimmte Rechte geben.
+      shortnames: Mit Umleitungen können Sie schönere URLs erstellen, die Sie mit anderen teilen können.
+      vocabularies: Über Vokabeln können Sie Listen mit eigenen Inhalten erstellen.

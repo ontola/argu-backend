@@ -1,10 +1,9 @@
-# English publications translation
-
+---
 en:
   publications:
-    instance_type:
-      direct: 'Publish'
-      draft: 'Save draft'
-      schedule: 'Schedule'
     follow_type:
-      helper: 'Notify all followers'
+      helper: Notify all followers
+    instance_type:
+      direct: Publish
+      draft: Save draft
+      schedule: Schedule

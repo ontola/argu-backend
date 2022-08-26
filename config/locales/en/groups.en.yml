@@ -1,34 +1,33 @@
-#English argument translations
-
+---
 en:
-  groups:
-    type_new: "Add group"
-    new: "Add group"
-    public:
-      name: "Public"
-      name_singular: "User"
-    members: 'Members'
-    description: "You can grant certain rights to groups. Members of these groups will for example be allowed to edit content on your forums."
-    errors:
-      confirmation_required: "As member of the group %{group_name}, confirming your email address is required."
-    settings:
-      title: "Group settings"
-      menu:
-        general: "General"
-        members: 'Members'
-        invite: 'Invite'
-        grants: 'Grants'
-        advanced: 'Advanced'
-    delete:
-      info: "Are you sure you wish to delete the group '%{group}'?"
-      not_allowed: "It's not possible to delete this group."
   forms:
     groups:
       name:
-        placeholder: "e.g. 'Civilians'"
-        label: "Name"
+        label: Name
+        placeholder: e.g. 'Civilians'
       name_singular:
-        placeholder: "e.g. 'Civilian'"
-        label: "Name singular"
+        label: Name singular
+        placeholder: e.g. 'Civilian'
       require_2fa:
-        label: "Force two factor authentication"
+        label: Force two factor authentication
+  groups:
+    delete:
+      info: Are you sure you wish to delete the group '%{group}'?
+      not_allowed: It's not possible to delete this group.
+    description: You can grant certain rights to groups. Members of these groups will for example be allowed to edit content on your forums.
+    errors:
+      confirmation_required: As member of the group %{group_name}, confirming your email address is required.
+    members: Members
+    new: Add group
+    public:
+      name: Public
+      name_singular: User
+    settings:
+      menu:
+        advanced: Advanced
+        general: General
+        grants: Grants
+        invite: Invite
+        members: Members
+      title: Group settings
+    type_new: Add group

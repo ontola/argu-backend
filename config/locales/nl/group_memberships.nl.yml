@@ -1,10 +1,11 @@
+---
 nl:
-  group_memberships:
-    type_new: "Gebruiker toevoegen"
-    destroy_confirmation: "Weet je zeker dat je %{user} uit de groep %{group} wil zetten?"
   forms:
     group_memberships:
-      user:
-        label: "Gebruiker"
       group:
-        label: "Groep"
+        label: Groep
+      user:
+        label: Gebruiker
+  group_memberships:
+    destroy_confirmation: Weet je zeker dat je %{user} uit de groep %{group} wil zetten?
+    type_new: Gebruiker toevoegen

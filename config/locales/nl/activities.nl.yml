@@ -1,46 +1,46 @@
-
+---
 nl:
   activities:
-    votes:
-      create: "%{owner} %{side} %{parent}"
-      :yes: "is vóór"
-      :no: "is tegen"
-      other: "heeft nog geen mening over"
+    arguments:
+      create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
+      'no': tegen
+      'yes': vóór
+    blog_posts:
+      create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
+    comments:
+      create: "%{owner} heeft concept %{type} geplaatst op %{parent}"
+      destroy: "%{owner} heeft een %{type} op %{parent} permanent verwijderd"
+      publish: "%{owner} heeft gereageerd op %{parent}"
+      trash: "%{owner} heeft een %{subject} op %{parent} verwijderd"
+      untrash: "%{owner} heeft een %{subject} op %{parent} teruggeplaatst"
+      update: "%{owner} heeft een %{subject} op %{parent} gewijzigd"
+    con_arguments:
+      create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
+      'no': tegen
+      'yes': vóór
     decisions:
       approved: "%{owner} heeft %{parent} aangenomen"
-      rejected: "%{owner} heeft %{parent} verworpen"
       create: "%{owner} heeft een concept besluit geplaatst in %{parent}"
+      rejected: "%{owner} heeft %{parent} verworpen"
       update: "%{owner} heeft een besluit over %{parent} gewijzigd"
     default:
       convert: "%{owner} heeft %{subject} omgezet in een %{type}"
       create: "%{owner} heeft een %{type} geplaatst in %{parent}"
-      publish: "%{owner} heeft een %{type} geplaatst in %{parent}"
       destroy: "%{owner} heeft %{subject} permanent verwijderd"
+      publish: "%{owner} heeft een %{type} geplaatst in %{parent}"
       trash: "%{owner} heeft %{subject} verwijderd"
       untrash: "%{owner} heeft %{subject} teruggeplaatst"
       update: "%{owner} heeft %{subject} gewijzigd"
-    arguments:
-      create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
-      :yes: "vóór"
-      :no: "tegen"
-    pro_arguments:
-      create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
-      :yes: "vóór"
-      :no: "tegen"
-    con_arguments:
-      create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
-      :yes: "vóór"
-      :no: "tegen"
-    blog_posts:
-      create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
     motions:
       create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
+    pro_arguments:
+      create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
+      'no': tegen
+      'yes': vóór
     questions:
       create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
-    comments:
-      create: "%{owner} heeft concept %{type} geplaatst op %{parent}"
-      publish: "%{owner} heeft gereageerd op %{parent}"
-      destroy: "%{owner} heeft een %{type} op %{parent} permanent verwijderd"
-      trash: "%{owner} heeft een %{subject} op %{parent} verwijderd"
-      untrash: "%{owner} heeft een %{subject} op %{parent} teruggeplaatst"
-      update: "%{owner} heeft een %{subject} op %{parent} gewijzigd"
+    votes:
+      create: "%{owner} %{side} %{parent}"
+      'no': is tegen
+      other: heeft nog geen mening over
+      'yes': is vóór

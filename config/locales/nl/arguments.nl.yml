@@ -1,64 +1,63 @@
-#Dutch argument translations
-
+---
 nl:
-  forms:
-    arguments:
-      content:
-        placeholder: "Plaats hier de details en achtergrondinformatie van jouw argument."
-        label: "Licht je argument toe (optioneel)"
-      description:
-        placeholder: "Plaats hier de details en achtergrondinformatie van jouw argument."
-      display_name:
-        placeholder: "Plaats hier de kern van jouw argument"
-      title:
-        placeholder: "Plaats hier de kern van jouw argument"
-        label: "Kern van jouw argument"
-      type: "type"
-      submit: "argument plaatsen"
-      side:
-        pro: "argument voor"
-        con: "argument tegen"
-    pro_arguments:
-      content:
-        placeholder: "Details en achtergrondinformatie van jouw argument."
-      description:
-        placeholder: "Details en achtergrondinformatie van jouw argument."
-      display_name:
-        placeholder: "De kern van het voordeel"
-      title:
-        placeholder: "De kern van het voordeel"
-    con_arguments:
-      content:
-        placeholder: "Details en achtergrondinformatie van jouw argument."
-      description:
-        placeholder: "Details en achtergrondinformatie van jouw argument."
-      display_name:
-        placeholder: "De kern van het nadeel"
-      title:
-        placeholder: "De kern van het nadeel"
-  pro_arguments:
-    type_new: "Nieuw voordeel"
-  con_arguments:
-    type_new: "Nieuw nadeel"
-  arguments:
-    type_new: "Nieuw argument"
-    vote: "Stem"
-    collection:
-      'yes': "Voordelen"
-      'no': "Problemen"
-      new:
-        'yes': "Voordeel toevoegen"
-        'no': "Probleem toevoegen"
   activerecord:
+    attributes:
+      argument:
+        body: Inhoud
+        title: Titel
     errors:
       models:
         arguments:
           attributes:
-            title:
-              blank: "Je moet een titel voor jouw argument opgeven."
             forum:
-              different: "The argument and it's motion must belong to the same forum"
-    attributes:
-      argument:
-        title: "Titel"
-        body: "Inhoud"
+              different: The argument and it's motion must belong to the same forum
+            title:
+              blank: Je moet een titel voor jouw argument opgeven.
+  arguments:
+    collection:
+      new:
+        'no': Probleem toevoegen
+        'yes': Voordeel toevoegen
+      'no': Problemen
+      'yes': Voordelen
+    type_new: Nieuw argument
+    vote: Stem
+  con_arguments:
+    type_new: Nieuw nadeel
+  forms:
+    arguments:
+      content:
+        label: Licht je argument toe (optioneel)
+        placeholder: Plaats hier de details en achtergrondinformatie van jouw argument.
+      description:
+        placeholder: Plaats hier de details en achtergrondinformatie van jouw argument.
+      display_name:
+        placeholder: Plaats hier de kern van jouw argument
+      side:
+        con: argument tegen
+        pro: argument voor
+      submit: argument plaatsen
+      title:
+        label: Kern van jouw argument
+        placeholder: Plaats hier de kern van jouw argument
+      type: type
+    con_arguments:
+      content:
+        placeholder: Details en achtergrondinformatie van jouw argument.
+      description:
+        placeholder: Details en achtergrondinformatie van jouw argument.
+      display_name:
+        placeholder: De kern van het nadeel
+      title:
+        placeholder: De kern van het nadeel
+    pro_arguments:
+      content:
+        placeholder: Details en achtergrondinformatie van jouw argument.
+      description:
+        placeholder: Details en achtergrondinformatie van jouw argument.
+      display_name:
+        placeholder: De kern van het voordeel
+      title:
+        placeholder: De kern van het voordeel
+  pro_arguments:
+    type_new: Nieuw voordeel

@@ -1,10 +1,11 @@
+---
 en:
   forms:
     group_memberships:
-      user:
-        label: "User"
       group:
-        label: "Group"
+        label: Group
+      user:
+        label: User
   group_memberships:
-    type_new: "Add user"
-    destroy_confirmation: "Are you sure you want to remove %{user} from the group %{group}?"
+    destroy_confirmation: Are you sure you want to remove %{user} from the group %{group}?
+    type_new: Add user

@@ -1,25 +1,26 @@
+---
 de:
   custom_menu_items:
     type_new: Neuer Menüpunkt
-  forms:
-    custom_menu_items:
-      raw_label:
-        label: Bezeichnung
-      raw_href:
-        label: URL
-      target_type:
-        label: Typ
-      edge:
-        label: Item
-      custom_image:
-        label: Bild
-      icon:
-        label: Symbol
-      position:
-        label: Standort
-      coupled_to: Dieser Menüpunkt ist an %{name} gekoppelt.
   enums:
     custom_menu_items:
       target_type:
         edge: Item
         url: URL
+  forms:
+    custom_menu_items:
+      coupled_to: Dieser Menüpunkt ist an %{name} gekoppelt.
+      custom_image:
+        label: Bild
+      edge:
+        label: Item
+      icon:
+        label: Symbol
+      position:
+        label: Standort
+      raw_href:
+        label: URL
+      raw_label:
+        label: Bezeichnung
+      target_type:
+        label: Typ

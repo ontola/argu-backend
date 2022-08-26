@@ -1,3 +1,4 @@
+---
 de:
   blog_posts:
     type_new: Neues Update
@@ -5,13 +6,9 @@ de:
   forms:
     blog_posts:
       content:
-        placeholder: >-
-          Geben Sie hier Details und Hintergrundinformationen zu Ihrer
-          Aktualisierung ein.
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Aktualisierung ein.
       description:
-        placeholder: >-
-          Geben Sie hier Details und Hintergrundinformationen zu Ihrer
-          Aktualisierung ein.
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Aktualisierung ein.
       display_name:
         placeholder: Geben Sie hier den Kern Ihres Updates ein
       title:

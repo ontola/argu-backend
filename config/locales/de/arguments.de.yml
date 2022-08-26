@@ -1,34 +1,46 @@
+---
 de:
+  activerecord:
+    attributes:
+      argument:
+        body: Inhalt
+        title: Titel
+    errors:
+      models:
+        arguments:
+          attributes:
+            forum:
+              different: The argument and it's motion must belong to the same forum
+            title:
+              blank: You need to add a title for your argument.
+  arguments:
+    collection:
+      new:
+        'no': Problem hinzufügen
+        'yes': Vorteil hinzufügen
+      'no': Probleme
+      'yes': Vorteile
+    type_new: Neues Argument
+    vote: Abstimmung
+  con_arguments:
+    type_new: Neues Argument
   forms:
     arguments:
       content:
-        placeholder: >-
-          Geben Sie hier Details und Hintergrundinformationen zu Ihrem Argument
-          ein.
         label: Details zum Argument (optional)
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrem Argument ein.
       description:
-        placeholder: >-
-          Geben Sie hier Details und Hintergrundinformationen zu Ihrem Argument
-          an.
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrem Argument an.
       display_name:
         placeholder: Geben Sie hier den Kern Ihres Arguments an
-      title:
-        placeholder: Geben Sie hier den Kern Ihres Arguments ein
-        label: Kern Ihres Arguments
-      type: eingeben
-      submit: Argument einreichen
       side:
-        pro: Pro-Argument
         con: Gegenargument
-    pro_arguments:
-      content:
-        placeholder: Details und Hintergrundinformationen.
-      description:
-        placeholder: Einzelheiten und Hintergrundinformationen.
-      display_name:
-        placeholder: Zusammenfassung Ihrer Pro
+        pro: Pro-Argument
+      submit: Argument einreichen
       title:
-        placeholder: Zusammenfassung der Pro-Argumente
+        label: Kern Ihres Arguments
+        placeholder: Geben Sie hier den Kern Ihres Arguments ein
+      type: eingeben
     con_arguments:
       content:
         placeholder: Details und Hintergrundinformationen.
@@ -38,29 +50,14 @@ de:
         placeholder: Zusammenfassung Ihrer Argumente
       title:
         placeholder: Zusammenfassung Ihrer Argumente
+    pro_arguments:
+      content:
+        placeholder: Details und Hintergrundinformationen.
+      description:
+        placeholder: Einzelheiten und Hintergrundinformationen.
+      display_name:
+        placeholder: Zusammenfassung Ihrer Pro
+      title:
+        placeholder: Zusammenfassung der Pro-Argumente
   pro_arguments:
     type_new: Neues Pro
-  con_arguments:
-    type_new: Neues Argument
-  arguments:
-    type_new: Neues Argument
-    vote: Abstimmung
-    collection:
-      'yes': Vorteile
-      'no': Probleme
-      new:
-        'yes': Vorteil hinzufügen
-        'no': Problem hinzufügen
-  activerecord:
-    errors:
-      models:
-        arguments:
-          attributes:
-            title:
-              blank: You need to add a title for your argument.
-            forum:
-              different: The argument and it's motion must belong to the same forum
-    attributes:
-      argument:
-        title: Titel
-        body: Inhalt

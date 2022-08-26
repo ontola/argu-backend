@@ -1,8 +1,9 @@
+---
 nl:
   enums:
     submissions:
       status:
-        submission_active: "Actief"
-        submission_completed: "Afgerond"
+        submission_active: Actief
+        submission_completed: Afgerond
   submissions:
-    type_new: "Enquête invullen"
+    type_new: Enquête invullen

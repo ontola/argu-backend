@@ -1,45 +1,44 @@
-#Dutch questions translations
-
+---
 nl:
-  questions:
-    type_new: "Nieuwe uitdaging"
-    call_to_action:
-      title: "Oplossing nodig?"
-      body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
-      action: "Deel jouw uitdaging."
-  enums:
-    questions:
-      default_motion_sorting:
-        popular: "Stemmen voor (meeste eerst)"
-        created_at: "Aanmaakdatum (nieuwste eerst)"
-        updated_at: "Activiteit (recenste eerst)"
-        popular_asc: "Stemmen voor (minste eerst)"
-        created_at_asc: "Aanmaakdatum (oudste eerst)"
-        updated_at_asc: "Activiteit (oudste eerst)"
-      default_motion_display:
-        default_display: "Standaard"
-        grid_display: "Grid"
-        table_display: "Tabel"
-  forms:
-    questions:
-      content:
-        placeholder: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
-        label: "Licht je uitdaging toe"
-      default_motion_sorting:
-        label: "Standaard sortering van ideeën"
-      default_motion_display:
-        label: "Standaard weergave"
-      description:
-        placeholder: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
-      display_name:
-        placeholder: "Plaats hier de kern van jouw uitdaging"
-      title:
-        placeholder: "Plaats hier de kern van jouw uitdaging"
-        label: "Geef jouw uitdaging een titel"
   activerecord:
     attributes:
       question:
         default_sortings:
-          popular: "Meeste stemmen voor"
-          created_at: "Nieuwste"
-          updated_at: "Laatst actief"
+          created_at: Nieuwste
+          popular: Meeste stemmen voor
+          updated_at: Laatst actief
+  enums:
+    questions:
+      default_motion_display:
+        default_display: Standaard
+        grid_display: Grid
+        table_display: Tabel
+      default_motion_sorting:
+        created_at: Aanmaakdatum (nieuwste eerst)
+        created_at_asc: Aanmaakdatum (oudste eerst)
+        popular: Stemmen voor (meeste eerst)
+        popular_asc: Stemmen voor (minste eerst)
+        updated_at: Activiteit (recenste eerst)
+        updated_at_asc: Activiteit (oudste eerst)
+  forms:
+    questions:
+      content:
+        label: Licht je uitdaging toe
+        placeholder: Plaats hier de details en achtergrondinformatie van jouw uitdaging.
+      default_motion_display:
+        label: Standaard weergave
+      default_motion_sorting:
+        label: Standaard sortering van ideeën
+      description:
+        placeholder: Plaats hier de details en achtergrondinformatie van jouw uitdaging.
+      display_name:
+        placeholder: Plaats hier de kern van jouw uitdaging
+      title:
+        label: Geef jouw uitdaging een titel
+        placeholder: Plaats hier de kern van jouw uitdaging
+  questions:
+    call_to_action:
+      action: Deel jouw uitdaging.
+      body: Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?
+      title: Oplossing nodig?
+    type_new: Nieuwe uitdaging

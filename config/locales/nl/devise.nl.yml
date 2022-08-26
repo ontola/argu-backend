@@ -1,89 +1,88 @@
-# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
-
+---
 nl:
-  errors:
-    messages:
-      expired: "is verlopen, vraag een nieuwe aan."
-      not_found: "niet gevonden"
-      already_confirmed: "was al bevestigd, probeer in te loggen."
-      not_locked: "was niet vergrendeld"
-      should_match: "moet overeenkomen"
-      extension_whitelist_error: "Dit type bestand kan je hier niet uploaden."
-      not_saved:
-        one: "1 fout zorgde ervoor dat %{resource} niet kon worden opgeslagen:"
-        other: "%{count} fouten zorgde ervoor dat %{resource} niet kon worden opgeslagen:"
   devise:
-    failure:
-      already_authenticated: 'Je bent al ingelogd.'
-      unauthenticated: 'Je moet inloggen voordat je door kan gaan.'
-      unconfirmed: 'Je moet je account bevestigen voordat je door kan gaan.'
-      locked: 'Jouw account is vergrendeld.'
-      invalid_token: 'Ongeldige authentication token.'
-      timeout: 'Jouw sessie is verlopen, log opnieuw in om door te gaan.'
-      inactive: 'Jouw account is nog niet geactiveerd.'
-      invalid: 'We konden geen gebruiker vinden met dat e-mailadres en wachtwoord. Heeft u al geregistreerd met dit e-mail adres?'
-      invalid_email: 'We konden geen gebruiker vinden met dit e-mailadres.'
-      invalid_password: 'Het wachtwoord is niet correct.'
-      invalid_username: 'We konden geen gebruiker vinden met deze naam.'
-      no_password: 'Je hebt nog geen wachtwoord ingesteld voor dit account. We hebben zojuist een nieuwe email gestuurd waarmee een wachtwoord kan worden ingesteld.'
-      user:
-        not_found_in_database: 'We konden geen gebruiker vinden met dat e-mailadres en wachtwoord.'
-    sessions:
-      signed_in: 'Welkom terug!'
-      signed_out: 'Je bent succesvol uitgelogd, tot ziens.'
-    passwords:
-      send_instructions: 'Je zal zometeen een email ontvangen met instructies om jouw wachtwoord te resetten.'
-      updated: 'Jouw wachtwoord is succesvol gewijzigd. Je bent nu ingelogd.'
-      updated_not_active: 'Jouw wachtwoord is gewijzigd.'
-      send_paranoid_instructions: "Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw wachtwoord te resetten."
-      no_token: "Je kan geen toegang krijgen tot deze pagina zonder doorverwezen te worden van een wachtwoord reset mail. Controleer het ingevoerde webadres."
-      edit:
-        header: 'Wachtwoord wijzigen'
-        submit: 'Opslaan'
-      set:
-        header: 'Kies een wachtwoord'
-      new:
-        header: 'Wachtwoord vergeten?'
-        helper: 'Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je een nieuw wachtwoord kan instellen.'
-        submit: 'Verzend reset instructies'
-    confirmations:
-      send: 'Verstuur bevestigingsmail'
-      send_instructions: 'Je zal binnen enkele minuten een mail ontvangen met  instructies om jouw account te bevestigen.'
-      send_paranoid_instructions: 'Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw account te bevestigen.'
-      confirmed: 'Jouw account is bevestigd.'
-      invalid_email: '%{email} bestaat niet of is van een andere gebruiker.'
-      set_password:
-        header: "Kies een wachtwoord"
-        button: "Wachtwoord instellen"
-      edit:
-        header: 'Bevestigingslink opnieuw versturen'
-        submit: 'Verzend bevestigingslink opnieuw'
-    registrations:
-      signed_up: 'Welkom op argu! Je bent zojuist geregistreerd.'
-      signed_up_but_unconfirmed: 'Een email met een bevestigings link is zojuist gestuurd naar het door jou opgegeven email adres. Open die link om jouw account te bevestigen.'
-      signed_up_but_inactive: 'Je bent geregistreerd, maar je kan nog niet inloggen, omdat jouw account is gedeactiveerd.'
-      signed_up_but_locked: 'Je bent succesvol geregistreerd, maar je kan nog niet inloggen, omdat jouw account is vergrendeld.'
-      updated: 'Jouw account is gewijzigd.'
-      update_needs_confirmation: "Wil je jouw email adres nog bevestigen? We hebben een bevestigings mail gestuurd."
-      destroyed: 'Jouw account is verwijderd. Hopelijk tot snel!'
-      password_confirmation:
-        header: 'Je wachtwoord is gewijzigd.'
-    unlocks:
-      send_instructions: 'Je zal binnen enkele minuten een email ontvangen met instructies om jouw account te ontgrendelen.'
-      unlocked: 'Jouw account is ontgrendeld. Log in om door te gaan.'
-      send_paranoid_instructions: 'Als jouw account bestaat, zal je binnen enkele minuten een mail met instructies om jouw account te ontgredelen ontvangen.'
-      new:
-        header: 'Je account is vergrendeld'
-        helper: 'Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je je account kunt ontgrendelen.'
-        submit: 'Verstuur ontgrendel instructies'
-    omniauth_callbacks:
-      success: 'Succesvol gekoppeld aan %{kind} account.'
-      failure: 'Sorry, het lukte niet om jouw %{kind} account te koppelen vanwege %{reason}.'
     activerecord:
       attributes:
         user:
-          login: "email of gebruikersnaam"
+          login: email of gebruikersnaam
+    confirmations:
+      confirmed: Jouw account is bevestigd.
+      edit:
+        header: Bevestigingslink opnieuw versturen
+        submit: Verzend bevestigingslink opnieuw
+      invalid_email: "%{email} bestaat niet of is van een andere gebruiker."
+      send: Verstuur bevestigingsmail
+      send_instructions: Je zal binnen enkele minuten een mail ontvangen met  instructies om jouw account te bevestigen.
+      send_paranoid_instructions: Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw account te bevestigen.
+      set_password:
+        button: Wachtwoord instellen
+        header: Kies een wachtwoord
+    failure:
+      already_authenticated: Je bent al ingelogd.
+      inactive: Jouw account is nog niet geactiveerd.
+      invalid: We konden geen gebruiker vinden met dat e-mailadres en wachtwoord. Heeft u al geregistreerd met dit e-mail adres?
+      invalid_email: We konden geen gebruiker vinden met dit e-mailadres.
+      invalid_password: Het wachtwoord is niet correct.
+      invalid_token: Ongeldige authentication token.
+      invalid_username: We konden geen gebruiker vinden met deze naam.
+      locked: Jouw account is vergrendeld.
+      no_password: Je hebt nog geen wachtwoord ingesteld voor dit account. We hebben zojuist een nieuwe email gestuurd waarmee een wachtwoord kan worden ingesteld.
+      timeout: Jouw sessie is verlopen, log opnieuw in om door te gaan.
+      unauthenticated: Je moet inloggen voordat je door kan gaan.
+      unconfirmed: Je moet je account bevestigen voordat je door kan gaan.
+      user:
+        not_found_in_database: We konden geen gebruiker vinden met dat e-mailadres en wachtwoord.
+    omniauth_callbacks:
+      failure: Sorry, het lukte niet om jouw %{kind} account te koppelen vanwege %{reason}.
+      success: Succesvol gekoppeld aan %{kind} account.
+    passwords:
+      edit:
+        header: Wachtwoord wijzigen
+        submit: Opslaan
+      new:
+        header: Wachtwoord vergeten?
+        helper: Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je een nieuw wachtwoord kan instellen.
+        submit: Verzend reset instructies
+      no_token: Je kan geen toegang krijgen tot deze pagina zonder doorverwezen te worden van een wachtwoord reset mail. Controleer het ingevoerde webadres.
+      send_instructions: Je zal zometeen een email ontvangen met instructies om jouw wachtwoord te resetten.
+      send_paranoid_instructions: Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw wachtwoord te resetten.
+      set:
+        header: Kies een wachtwoord
+      updated: Jouw wachtwoord is succesvol gewijzigd. Je bent nu ingelogd.
+      updated_not_active: Jouw wachtwoord is gewijzigd.
+    registrations:
+      destroyed: Jouw account is verwijderd. Hopelijk tot snel!
+      password_confirmation:
+        header: Je wachtwoord is gewijzigd.
+      signed_up: Welkom op argu! Je bent zojuist geregistreerd.
+      signed_up_but_inactive: Je bent geregistreerd, maar je kan nog niet inloggen, omdat jouw account is gedeactiveerd.
+      signed_up_but_locked: Je bent succesvol geregistreerd, maar je kan nog niet inloggen, omdat jouw account is vergrendeld.
+      signed_up_but_unconfirmed: Een email met een bevestigings link is zojuist gestuurd naar het door jou opgegeven email adres. Open die link om jouw account te bevestigen.
+      update_needs_confirmation: Wil je jouw email adres nog bevestigen? We hebben een bevestigings mail gestuurd.
+      updated: Jouw account is gewijzigd.
+    sessions:
+      signed_in: Welkom terug!
+      signed_out: Je bent succesvol uitgelogd, tot ziens.
+    unlocks:
+      new:
+        header: Je account is vergrendeld
+        helper: Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je je account kunt ontgrendelen.
+        submit: Verstuur ontgrendel instructies
+      send_instructions: Je zal binnen enkele minuten een email ontvangen met instructies om jouw account te ontgrendelen.
+      send_paranoid_instructions: Als jouw account bestaat, zal je binnen enkele minuten een mail met instructies om jouw account te ontgredelen ontvangen.
+      unlocked: Jouw account is ontgrendeld. Log in om door te gaan.
+  errors:
+    messages:
+      already_confirmed: was al bevestigd, probeer in te loggen.
+      expired: is verlopen, vraag een nieuwe aan.
+      extension_whitelist_error: Dit type bestand kan je hier niet uploaden.
+      not_found: niet gevonden
+      not_locked: was niet vergrendeld
+      not_saved:
+        one: '1 fout zorgde ervoor dat %{resource} niet kon worden opgeslagen:'
+        other: "%{count} fouten zorgde ervoor dat %{resource} niet kon worden opgeslagen:"
+      should_match: moet overeenkomen
   intro:
     initial:
       headers:
-        shortname: "Welkom!"
+        shortname: Welkom!

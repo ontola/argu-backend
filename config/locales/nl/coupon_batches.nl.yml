@@ -1,6 +1,7 @@
+---
 nl:
   coupon_batches:
-    type_new: "Nieuwe coupons"
     errors:
       coupon:
-        invalid: "Coupon is niet geldig"
+        invalid: Coupon is niet geldig
+    type_new: Nieuwe coupons

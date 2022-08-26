@@ -1,18 +1,17 @@
+---
 de:
   comments:
-    type_new: Antwort
-    menu:
-      zero: Kommentare
-      one: Kommentare%{count})
-      other: Kommentare%{count})
-    placeholder: >-
-      Platzieren Sie Ihre Kommentare hier. Bitte halten Sie Ihre Kommentare
-      sachlich und freundlich :)
+    edit: Kommentar bearbeiten
+    edited_at: bearbeitet um %{time}
     empty:
       name: Platzieren Sie Ihren Kommentar
-    edited_at: bearbeitet um %{time}
+    menu:
+      one: Kommentare%{count})
+      other: Kommentare%{count})
+      zero: Kommentare
     more: Mehr anzeigen
-    edit: Kommentar bearbeiten
+    placeholder: Platzieren Sie Ihre Kommentare hier. Bitte halten Sie Ihre Kommentare sachlich und freundlich :)
+    type_new: Antwort
   forms:
     comments:
       description:

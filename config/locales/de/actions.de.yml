@@ -1,62 +1,6 @@
-
+---
 de:
-  collections:
-    container_nodes:
-      action_dialog: Welches Instrument möchten Sie verwenden?
-    discussions:
-      action_dialog: Welches Instrument möchten Sie verwenden?
-  forms:
-    custom_actions:
-      raw_label:
-        label: Etikett
-      raw_description:
-        label: Beschreibung
-      raw_submit_label:
-        label: Text der Schaltfläche
-      href:
-        label: URL
   actions:
-    plural: Aktionen
-    status:
-      CompletedActionStatus: Diese Aktion ist bereits abgeschlossen
-      ExpiredActionStatus: Diese Aktion ist nicht mehr verfügbar
-      DisabledActionStatus: Diese Aktion ist derzeit nicht verfügbar
-    default:
-      create:
-        label: Neuer %{type}
-        success: Erfolgreich erstellt
-        submit: Speichern
-      destroy:
-        label: Löschen %{type}
-        description: >-
-          Dieses Objekt und alle zugehörigen Daten werden dauerhaft entfernt.
-          Dies kann nicht rückgängig gemacht werden.
-        success: Erfolgreich vernichtet
-        submit: Löschen
-      update:
-        label: Bearbeiten
-        success: Erfolgreich aktualisiert
-        submit: Speichern
-      create_comment:
-        label: Kommentieren
-      move:
-        label: Verschieben
-        description: Alle Kinder werden verschoben.
-        submit: Verschieben
-      publish:
-        label: Veröffentlichen
-        submit: Veröffentlichen
-        description: Entwurfsversion, noch nicht veröffentlicht.
-      trash:
-        label: Papierkorb
-        description: >-
-          Dieser Punkt wird in der öffentlichen Diskussion nicht mehr sichtbar
-          sein. Dies kann rückgängig gemacht werden.
-        submit: Papierkorb
-      untrash:
-        label: wiederherstellen
-        description: Dieser Punkt wird in der öffentlichen Diskussion wieder sichtbar.
-        submit: Wiederherstellen
     access_tokens:
       create:
         label: Einloggen
@@ -88,14 +32,11 @@ de:
         submit: Bestätigen Sie
     conversions:
       create:
-        label: Konvertieren
-        description: >-
-          Hier können Sie einen Objekttyp in einen anderen umwandeln.
-          Assoziationen können geändert werden. Es ist möglich, dass eine
-          Umwandlung nicht möglich ist, weil einige Assoziationen leer sind.
-        submit: Konvertieren
+        description: Hier können Sie einen Objekttyp in einen anderen umwandeln. Assoziationen können geändert werden. Es ist möglich, dass eine Umwandlung nicht möglich ist, weil einige Assoziationen leer sind.
         errors:
           invalid_class: Keine Umwandlung in diesen Typ erlaubt
+        label: Konvertieren
+        submit: Konvertieren
     current_actors:
       create:
         errors:
@@ -103,24 +44,56 @@ de:
     dashboards:
       create:
         description: Ein Dashboard kann Widgets enthalten.
+    default:
+      create:
+        label: Neuer %{type}
+        submit: Speichern
+        success: Erfolgreich erstellt
+      create_comment:
+        label: Kommentieren
+      destroy:
+        description: Dieses Objekt und alle zugehörigen Daten werden dauerhaft entfernt. Dies kann nicht rückgängig gemacht werden.
+        label: Löschen %{type}
+        submit: Löschen
+        success: Erfolgreich vernichtet
+      move:
+        description: Alle Kinder werden verschoben.
+        label: Verschieben
+        submit: Verschieben
+      publish:
+        description: Entwurfsversion, noch nicht veröffentlicht.
+        label: Veröffentlichen
+        submit: Veröffentlichen
+      trash:
+        description: Dieser Punkt wird in der öffentlichen Diskussion nicht mehr sichtbar sein. Dies kann rückgängig gemacht werden.
+        label: Papierkorb
+        submit: Papierkorb
+      untrash:
+        description: Dieser Punkt wird in der öffentlichen Diskussion wieder sichtbar.
+        label: wiederherstellen
+        submit: Wiederherstellen
+      update:
+        label: Bearbeiten
+        submit: Speichern
+        success: Erfolgreich aktualisiert
     direct_messages:
       create:
-        label: Nachricht senden
-        description: >-
-          Senden Sie eine E-Mail an %{creator}, den Poster dieses Artikels. Wenn
-          er auf die E-Mail antwortet, wird die Antwort direkt an Ihre Mailbox
-          gesendet, so dass Sie die Konversation außerhalb dieser Plattform
-          fortsetzen können.
-        submit: Senden
+        description: Senden Sie eine E-Mail an %{creator}, den Poster dieses Artikels. Wenn er auf die E-Mail antwortet, wird die Antwort direkt an Ihre Mailbox gesendet, so dass Sie die Konversation außerhalb dieser Plattform fortsetzen können.
         disabled:
           guest: Melden Sie sich an, um eine Nachricht zu senden.
           not_allowed: Der Poster erlaubt keine Kontaktaufnahme per E-Mail.
+        label: Nachricht senden
+        submit: Senden
     follows:
       create:
         description: Wann möchten Sie Updates zu %{item} erhalten?
         label: Abonnieren Sie Updates
       destroy:
         submit: Nicht mehr folgen
+      never:
+        description: Möchten Sie nie Benachrichtigungen für %{item} erhalten?
+        label: Abmelden bestätigen
+        submit: Bestätigen
       news:
         description: Möchten Sie Benachrichtigungen für wichtige Antworten auf %{item} erhalten?
         label: Benachrichtigungen bestätigen
@@ -128,10 +101,6 @@ de:
       reactions:
         description: Möchten Sie Benachrichtigungen für alle Antworten auf %{item} erhalten?
         label: Benachrichtigungen bestätigen
-        submit: Bestätigen
-      never:
-        description: Möchten Sie nie Benachrichtigungen für %{item} erhalten?
-        label: Abmelden bestätigen
         submit: Bestätigen
     forums:
       create:
@@ -146,10 +115,21 @@ de:
     motions:
       create:
         description: Finden Sie heraus, wie Menschen über eine bestimmte Idee denken.
+    passwords:
+      create:
+        label: Haben Sie Ihr Passwort vergessen?
+        submit: Senden Sie
+      update:
+        label: Ihr Passwort festlegen
     phases:
       destroy:
         errors:
           current_phase: Das ist die aktuelle Phase. Sie können dies nicht entfernen.
+    placements:
+      create:
+        errors:
+          wrong_type: Bei diesem Elternteil nicht möglich
+    plural: Aktionen
     policy_agreements:
       create:
         submit: Akzeptieren
@@ -172,16 +152,24 @@ de:
       create:
         label: Anmelden oder registrieren
         submit: Bestätigen Sie
+    setups:
+      update:
+        label: Herzlich willkommen!
+        submit: Weiter
     shortnames:
       create:
         errors:
           invalid_type: Kann keinen Kurznamen für diesen Typ hinzufügen.
-      update:
-        errors:
-          primary: Primärkurznamen können nicht aktualisiert werden.
       destroy:
         errors:
           primary: Primäre Kurznamen können nicht entfernt werden.
+      update:
+        errors:
+          primary: Primärkurznamen können nicht aktualisiert werden.
+    status:
+      CompletedActionStatus: Diese Aktion ist bereits abgeschlossen
+      DisabledActionStatus: Diese Aktion ist derzeit nicht verfügbar
+      ExpiredActionStatus: Diese Aktion ist nicht mehr verfügbar
     submissions:
       create:
         label: Umfrage ausfüllen
@@ -192,56 +180,44 @@ de:
     topics:
       create:
         description: Beginnen Sie ein Gespräch über ein bestimmtes Thema.
+    unlocks:
+      create:
+        description: Geben Sie Ihre E-Mail-Adresse ein und Sie erhalten einen Link, um Ihr Konto zu entsperren.
+        label: Ihr Konto ist gesperrt
+        submit: Senden Sie
     users:
-      update:
-        label: Einstellungen
-      profile:
-        submit: Speichern
-      notifications:
-        label: Benachrichtigungen
-        description: >-
-          Wann möchten Sie eine E-Mail für Beiträge erhalten, denen Sie
-          folgen?<br/>Moderatoren einer Community können Beiträge als
-          "wichtig" markieren. Zum Beispiel eine Entscheidung über eine
-          Diskussion, die Sie verfolgen.
-        submit: Speichern
-      setup:
-        label: Willkommen!
-        submit: Weiter
       authentication:
         label: Authentifizierung
+        submit: Speichern
+      destroy:
+        description: Sind Sie sicher, dass Sie **%{name}** entfernen möchten? Der von diesem Konto gepostete Inhalt wird anonymisiert.
+        label: Konto entfernen
+      notifications:
+        description: Wann möchten Sie eine E-Mail für Beiträge erhalten, denen Sie folgen?<br/>Moderatoren einer Community können Beiträge als "wichtig" markieren. Zum Beispiel eine Entscheidung über eine Diskussion, die Sie verfolgen.
+        label: Benachrichtigungen
         submit: Speichern
       privacy:
         label: Datenschutz
         submit: speichern
-      destroy:
-        label: Konto entfernen
-        description: >-
-          Sind Sie sicher, dass Sie **%{name}** entfernen möchten? Der von diesem
-          Konto gepostete Inhalt wird anonymisiert.
-    votes:
-      create:
-        errors:
-          not_started: Abstimmen ist noch nicht möglich
-          finished: Abstimmen ist nicht mehr möglich
-    setups:
-      update:
-        label: Herzlich willkommen!
+      profile:
+        submit: Speichern
+      setup:
+        label: Willkommen!
         submit: Weiter
-    passwords:
-      create:
-        label: Haben Sie Ihr Passwort vergessen?
-        submit: Senden Sie
       update:
-        label: Ihr Passwort festlegen
-    placements:
-      create:
-        errors:
-          wrong_type: Bei diesem Elternteil nicht möglich
-    unlocks:
-      create:
-        label: Ihr Konto ist gesperrt
-        description: >-
-          Geben Sie Ihre E-Mail-Adresse ein und Sie erhalten einen Link, um Ihr
-          Konto zu entsperren.
-        submit: Senden Sie
+        label: Einstellungen
+  collections:
+    container_nodes:
+      action_dialog: Welches Instrument möchten Sie verwenden?
+    discussions:
+      action_dialog: Welches Instrument möchten Sie verwenden?
+  forms:
+    custom_actions:
+      href:
+        label: URL
+      raw_description:
+        label: Beschreibung
+      raw_label:
+        label: Etikett
+      raw_submit_label:
+        label: Text der Schaltfläche

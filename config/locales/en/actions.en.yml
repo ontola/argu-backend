@@ -1,228 +1,223 @@
-
+---
 en:
-  collections:
-    container_nodes:
-      action_dialog: "Which instrument do you want to use?"
-    discussions:
-      action_dialog: "Which instrument do you want to use?"
-  forms:
-    custom_actions:
-      raw_label:
-        label: "Label"
-      raw_description:
-        label: "Description"
-      raw_submit_label:
-        label: "Button text"
-      href:
-        label: "URL"
   actions:
-    plural: "Actions"
-    status:
-      CompletedActionStatus: "This action is already completed"
-      ExpiredActionStatus: "This action is no longer available"
-      DisabledActionStatus: "This action is currently not available"
-    default:
-      create:
-        label: "New %{type}"
-        success: 'Created successfully'
-        submit: "Save"
-      destroy:
-        label: "Delete %{type}"
-        description: "This object and all related data will be permanently removed. This cannot be undone."
-        success: 'Destroyed successfully'
-        submit: "Delete"
-      update:
-        label: "Edit"
-        success: 'Updated successfully'
-        submit: "Save"
-      create_comment:
-        label: "Comment"
-      move:
-        label: "Move"
-        description: "All children will be moved along."
-        submit: "Move"
-      publish:
-        label: "Publish"
-        submit: "Publish"
-        description: "Draft version, not yet published."
-      trash:
-        label: "Trash"
-        description: "This item will no longer be visible in public discussion. This can be undone."
-        submit: "Trash"
-      untrash:
-        label: "Restore"
-        description: "This item will be visible again in public discussion."
-        submit: "Restore"
     access_tokens:
       create:
-        label: "Log in"
-        submit: "Continue"
+        label: Log in
+        submit: Continue
     blogs:
       create:
-        description: "Keep people informed through blog posts."
+        description: Keep people informed through blog posts.
     budget_shops:
       create:
-        description: "Let people divide a budget."
+        description: Let people divide a budget.
     cart_details:
       create:
         errors:
-          already_added: "This item is already added to your cart"
+          already_added: This item is already added to your cart
       show:
         errors:
-          no_parent: "Parent is missing"
+          no_parent: Parent is missing
     con_arguments:
       create_vote:
-        submit: "Upvote"
+        submit: Upvote
       destroy_vote:
-        submit: "Upvote"
+        submit: Upvote
     confirmations:
       create:
-        label: "Send confirmation link again"
-        submit: "Send"
+        label: Send confirmation link again
+        submit: Send
       update:
-        label: "Confirm email address"
-        submit: "Confirm"
+        label: Confirm email address
+        submit: Confirm
     conversions:
       create:
-        label: "Convert"
-        description: "This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty."
-        submit: "Convert"
+        description: This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty.
         errors:
-          invalid_class: "No allowed to convert to this type"
+          invalid_class: No allowed to convert to this type
+        label: Convert
+        submit: Convert
     current_actors:
       create:
         errors:
-          unconfirmed: "This account is not confirmed"
+          unconfirmed: This account is not confirmed
     dashboards:
       create:
-        description: "A dashboard can contain widgets."
+        description: A dashboard can contain widgets.
+    default:
+      create:
+        label: New %{type}
+        submit: Save
+        success: Created successfully
+      create_comment:
+        label: Comment
+      destroy:
+        description: This object and all related data will be permanently removed. This cannot be undone.
+        label: Delete %{type}
+        submit: Delete
+        success: Destroyed successfully
+      move:
+        description: All children will be moved along.
+        label: Move
+        submit: Move
+      publish:
+        description: Draft version, not yet published.
+        label: Publish
+        submit: Publish
+      trash:
+        description: This item will no longer be visible in public discussion. This can be undone.
+        label: Trash
+        submit: Trash
+      untrash:
+        description: This item will be visible again in public discussion.
+        label: Restore
+        submit: Restore
+      update:
+        label: Edit
+        submit: Save
+        success: Updated successfully
     direct_messages:
       create:
-        label: "Send message"
-        description: "Send an e-mail to %{creator}, the poster of this item. If he replies to the e-mail, the reply will be send to your mailbox directly so you can continue the conversation outside of this platform."
-        submit: "Send"
+        description: Send an e-mail to %{creator}, the poster of this item. If he replies to the e-mail, the reply will be send to your mailbox directly so you can continue the conversation outside of this platform.
         disabled:
-          guest: "Sign in to send a message."
-          not_allowed: "The poster does not allow contact by email."
+          guest: Sign in to send a message.
+          not_allowed: The poster does not allow contact by email.
+        label: Send message
+        submit: Send
     follows:
       create:
-        description: "When do you want to receive updates about %{item}?"
-        label: "Subscribe to updates"
+        description: When do you want to receive updates about %{item}?
+        label: Subscribe to updates
       destroy:
-        submit: "Stop following"
-      news:
-        description: "Do you want to receive notifications for important replies to %{item}?"
-        label: "Confirm subscription"
-        submit: "Confirm"
-      reactions:
-        description: "Do you want to receive notifications for all replies to %{item}?"
-        label: "Confirm subscription"
-        submit: "Confirm"
+        submit: Stop following
       never:
-        description: "Do you never want to receive notifications for %{item}?"
-        label: "Confirm unsubscribe"
-        submit: "Confirm"
+        description: Do you never want to receive notifications for %{item}?
+        label: Confirm unsubscribe
+        submit: Confirm
+      news:
+        description: Do you want to receive notifications for important replies to %{item}?
+        label: Confirm subscription
+        submit: Confirm
+      reactions:
+        description: Do you want to receive notifications for all replies to %{item}?
+        label: Confirm subscription
+        submit: Confirm
     forums:
       create:
-        description: "A place for different kind of discussions."
+        description: A place for different kind of discussions.
     group_memberships:
       create:
         errors:
-          invalid_token: "Invalid token. Please try again."
+          invalid_token: Invalid token. Please try again.
       destroy:
         errors:
-          last_admin: "Cannot remove the last member from the admin group"
+          last_admin: Cannot remove the last member from the admin group
     motions:
       create:
-        description: "Find out how people think about a certain idea."
+        description: Find out how people think about a certain idea.
+    passwords:
+      create:
+        label: Forgotten password?
+        submit: Send
+      update:
+        label: Set your password
     phases:
       destroy:
         errors:
-          current_phase: "This is the current phase. You can not delete this phase."
-    policy_agreements:
-      create:
-        submit: "Accept"
-    pro_arguments:
-      create_vote:
-        submit: "Upvote"
-      destroy_vote:
-        submit: "Upvote"
-    projects:
-      create:
-        description: "Involve people over a longer period of time."
-    questions:
-      create:
-        description: "Share an issue, collect ideas and make a decision."
-    registrations:
-      create:
-        label: "Sign up"
-        submit: "Confirm"
-    sessions:
-      create:
-        label: "Sign in or register"
-        submit: "Confirm"
-    shortnames:
-      create:
-        errors:
-          invalid_type: "Cannot add shortname for this type."
-      update:
-        errors:
-          primary: "Cannot update primary shortnames."
-      destroy:
-        errors:
-          primary: "Cannot remove primary shortnames."
-    submissions:
-      create:
-        label: "Fill in survey"
-        submit: "Start"
-    surveys:
-      create:
-        description: "Compile a list of closed and open questions."
-    topics:
-      create:
-        description: "Start a conversation about a particular topic."
-    users:
-      update:
-        label: "Settings"
-      profile:
-        submit: "Save"
-      notifications:
-        label: "Notifications"
-        description: "When would you like to receive an email for items you follow?</br>Moderators of a community can mark items as 'important'. For example a decison on a discussion you are following."
-        submit: "Save"
-      setup:
-        label: "Welcome!"
-        submit: "Continue"
-      authentication:
-        label: "Authentication"
-        submit: "Save"
-      privacy:
-        label: "Privacy"
-        submit: "Save"
-      destroy:
-        label: "Remove account"
-        description: "Are you sure you want to remove **%{name}**? The content posted by this account will be anonymized."
-    votes:
-      create:
-        errors:
-          not_started: "Voting is not yet possible"
-          finished: "Voting is no longer possible"
-    setups:
-      update:
-        label: "Welcome!"
-        submit: "Continue"
-    passwords:
-      create:
-        label: "Forgotten password?"
-        submit: "Send"
-      update:
-        label: "Set your password"
+          current_phase: This is the current phase. You can not delete this phase.
     placements:
       create:
         errors:
-          wrong_type: "Not possible for this parent"
+          wrong_type: Not possible for this parent
+    plural: Actions
+    policy_agreements:
+      create:
+        submit: Accept
+    pro_arguments:
+      create_vote:
+        submit: Upvote
+      destroy_vote:
+        submit: Upvote
+    projects:
+      create:
+        description: Involve people over a longer period of time.
+    questions:
+      create:
+        description: Share an issue, collect ideas and make a decision.
+    registrations:
+      create:
+        label: Sign up
+        submit: Confirm
+    sessions:
+      create:
+        label: Sign in or register
+        submit: Confirm
+    setups:
+      update:
+        label: Welcome!
+        submit: Continue
+    shortnames:
+      create:
+        errors:
+          invalid_type: Cannot add shortname for this type.
+      destroy:
+        errors:
+          primary: Cannot remove primary shortnames.
+      update:
+        errors:
+          primary: Cannot update primary shortnames.
+    status:
+      CompletedActionStatus: This action is already completed
+      DisabledActionStatus: This action is currently not available
+      ExpiredActionStatus: This action is no longer available
+    submissions:
+      create:
+        label: Fill in survey
+        submit: Start
+    surveys:
+      create:
+        description: Compile a list of closed and open questions.
+    topics:
+      create:
+        description: Start a conversation about a particular topic.
     unlocks:
       create:
-        label: 'Your account is locked'
-        description: "Enter your email address and you'll receive a link to unlock your account."
-        submit: "Send"
+        description: Enter your email address and you'll receive a link to unlock your account.
+        label: Your account is locked
+        submit: Send
+    users:
+      authentication:
+        label: Authentication
+        submit: Save
+      destroy:
+        description: Are you sure you want to remove **%{name}**? The content posted by this account will be anonymized.
+        label: Remove account
+      notifications:
+        description: When would you like to receive an email for items you follow?</br>Moderators of a community can mark items as 'important'. For example a decison on a discussion you are following.
+        label: Notifications
+        submit: Save
+      privacy:
+        label: Privacy
+        submit: Save
+      profile:
+        submit: Save
+      setup:
+        label: Welcome!
+        submit: Continue
+      update:
+        label: Settings
+  collections:
+    container_nodes:
+      action_dialog: Which instrument do you want to use?
+    discussions:
+      action_dialog: Which instrument do you want to use?
+  forms:
+    custom_actions:
+      href:
+        label: URL
+      raw_description:
+        label: Description
+      raw_label:
+        label: Label
+      raw_submit_label:
+        label: Button text

@@ -1,15 +1,16 @@
+---
 en:
+  banner_dismissals:
+    type: Dismissal
+  banner_managements:
+    plural: Banners
+    type: Banner
   banners:
-    type_new: 'New banner'
+    type_new: New banner
   enums:
     banners:
       audience:
-        guests: 'Guests'
-        users: 'Users'
-        members: 'Members'
-        everyone: 'Everyone'
-  banner_managements:
-    type: 'Banner'
-    plural: 'Banners'
-  banner_dismissals:
-    type: 'Dismissal'
+        everyone: Everyone
+        guests: Guests
+        members: Members
+        users: Users

@@ -1,13 +1,14 @@
+---
 de:
   forms:
     invites:
-      message:
-        label: Nachricht
-        placeholder: Geben Sie eine Nachricht für in der E-Mail
       addresses:
         label: E-Mail-Adressen
         placeholder: Geben Sie eine oder mehrere E-Mail-Adressen ein
       group_id:
         label: Zu welcher Gruppe möchten Sie diese Personen hinzufügen?
+      message:
+        label: Nachricht
+        placeholder: Geben Sie eine Nachricht für in der E-Mail
       redirect_url:
         label: Landingspage für den Eingeladenen

@@ -1,379 +1,383 @@
+---
 en:
   argu:
     Argument:
-      description: "An argument is a single reason in favor or against an idea."
-      icon: "argument"
-      label: "Argument"
-      plural_label: "Arguments"
+      description: An argument is a single reason in favor or against an idea.
+      icon: argument
+      label: Argument
+      plural_label: Arguments
     Blog:
-      label: "Blog"
-      plural_label: "Blogs"
+      label: Blog
+      plural_label: Blogs
     BlogPost:
-      description: "An Blogpost is a message or article in which something is shared."
-      icon: "bullhorn"
-      label: "Update"
-      plural_label: "Updates"
+      description: An Blogpost is a message or article in which something is shared.
+      icon: bullhorn
+      label: Update
+      plural_label: Updates
     BudgetShop:
-      icon: "shopping-cart"
-      label: "Budget"
-      plural_label: "Budgets"
+      icon: shopping-cart
+      label: Budget
+      plural_label: Budgets
     CartDetail:
-      label: "Selected option"
-      plural_label: "Selected options"
+      label: Selected option
+      plural_label: Selected options
     Comment:
-      description: "A comment is a written response or note about a thing."
-      icon: "comment"
-      label: "Comment"
-      plural_label: "Comments"
+      description: A comment is a written response or note about a thing.
+      icon: comment
+      label: Comment
+      plural_label: Comments
     ConArgument:
-      description: "A con argument is a reason to be against something."
-      icon: "minus"
-      label: "Con"
-      plural_label: "Cons"
+      description: A con argument is a reason to be against something.
+      icon: minus
+      label: Con
+      plural_label: Cons
     ContainerNode:
-      label: "Component"
-      plural_label: "Components"
+      label: Component
+      plural_label: Components
     Conversion:
-      label: "Conversion"
-      plural_label: "Conversions"
+      label: Conversion
+      plural_label: Conversions
     CouponBatch:
-      label: "Coupons"
-      plural_label: "Coupons"
+      label: Coupons
+      plural_label: Coupons
     CustomAction:
-      label: "Action"
-      plural_label: "Actions"
+      label: Action
+      plural_label: Actions
     CustomForm:
-      label: "Form"
-      plural_label: "Forms"
+      label: Form
+      plural_label: Forms
     CustomFormField:
-      label: "Field"
-      plural_label: "Fields"
+      label: Field
+      plural_label: Fields
     Dashboard:
-      label: "Dashboard"
-      plural_label: "Dashboards"
+      label: Dashboard
+      plural_label: Dashboards
     Decision:
-      icon: "gavel"
-      label: "Decision"
-      plural_label: "Decisions"
+      icon: gavel
+      label: Decision
+      plural_label: Decisions
     DirectMessage:
-      label: "Message"
-      plural_label: "Messages"
+      label: Message
+      plural_label: Messages
     Discussion:
-      label: 'Topic'
-      plural_label: 'Topics'
+      label: Topic
+      plural_label: Topics
     EmailAddress:
-      label: "Email address"
-      plural_label: "Email addresses"
+      label: Email address
+      plural_label: Email addresses
     Export:
-      label: "Export"
-      plural_label: "Exports"
+      label: Export
+      plural_label: Exports
     Follow:
-      label: "Subscription"
-      plural_label: "Subscriptions"
+      label: Subscription
+      plural_label: Subscriptions
     Form:
-      label: "Forum"
-      plural_label: "Forums"
+      label: Forum
+      plural_label: Forums
     Grant:
-      label: "Grant"
-      plural_label: "Grants"
-    GroupMembership:
-      label: "Member"
-      plural_label: "Members"
+      label: Grant
+      plural_label: Grants
     Group:
-      label: "Group"
-      plural_label: "Groups"
+      label: Group
+      plural_label: Groups
+    GroupMembership:
+      label: Member
+      plural_label: Members
     Invite:
-      label: "Invite"
-      plural_label: "Invites"
+      label: Invite
+      plural_label: Invites
     Motion:
-      description: "An idea is a proposal on which people can vote and add pro- or con arguments."
-      icon: "lightbulb-o"
-      label: "Idea"
-      plural_label: "Ideas"
+      description: An idea is a proposal on which people can vote and add pro- or con arguments.
+      icon: lightbulb-o
+      label: Idea
+      plural_label: Ideas
     Move:
-      label: "Movement"
-      plural_label: "Movements"
+      label: Movement
+      plural_label: Movements
     Notification:
-      label: "Notification"
-      plural_label: "Notifications"
+      label: Notification
+      plural_label: Notifications
     Order:
-      type: "Order"
-      plural_label: "Orders"
+      label: Order
+      plural_label: Orders
     Page:
-      label: "Community"
-      plural_label: "Communities"
+      label: Community
+      plural_label: Communities
     Phase:
-      icon: "calendar-o"
-      label: "Phase"
-      plural_label: "Phases"
+      icon: calendar-o
+      label: Phase
+      plural_label: Phases
     Placement:
-      icon: "map-marker"
-      label: "Location"
-      plural_label: "Locations"
+      icon: map-marker
+      label: Location
+      plural_label: Locations
     ProArgument:
-      description: "A pro argument is a reason to be in favor of something."
-      icon: "plus"
-      label: "Pro"
-      plural_label: "Pros"
+      description: A pro argument is a reason to be in favor of something.
+      icon: plus
+      label: Pro
+      plural_label: Pros
     Project:
-      icon: "rocket"
-      label: "Project"
-      plural_label: "Projects"
+      icon: rocket
+      label: Project
+      plural_label: Projects
     Publication:
-      label: "Publication"
-      plural_label: "Publications"
+      label: Publication
+      plural_label: Publications
     Question:
-      description: "A challenge is een problem or question to which people can submit their ideas."
-      icon: "question"
-      label: "Challenge"
-      plural_label: "Challenges"
+      description: A challenge is een problem or question to which people can submit their ideas.
+      icon: question
+      label: Challenge
+      plural_label: Challenges
     Shortname:
-      label: 'Redirect'
-      plural_label: 'Redirects'
+      label: Redirect
+      plural_label: Redirects
     Submission:
-      icon: "pencil"
-      label: "Response"
-      plural_label: "Responses"
+      icon: pencil
+      label: Response
+      plural_label: Responses
     SubmissionData:
-      label: "Data"
+      label: Data
     Survey:
-      icon: "list-ul"
-      label: "Survey"
-      plural_label: "Surveys"
+      icon: list-ul
+      label: Survey
+      plural_label: Surveys
     Term:
-      label: "Term"
-      plural_label: "Terms"
+      label: Term
+      plural_label: Terms
     Topic:
-      description: "A topic is a general discussion about a specific subject."
-      icon: "comments"
-      label: "Thread"
-      plural_label: "Threads"
+      description: A topic is a general discussion about a specific subject.
+      icon: comments
+      label: Thread
+      plural_label: Threads
     Vocabulary:
-      label: "Vocabulary"
-      plural_label: "Vocabularies"
+      label: Vocabulary
+      plural_label: Vocabularies
     Vote:
-      label: "Vote"
-      plural_label: "Votes"
+      label: Vote
+      plural_label: Votes
     VoteEvent:
-      label: "Vote event"
-      plural_label: "Vote events"
+      label: Vote event
+      plural_label: Vote events
     alias:
-      label: "Alias"
+      label: Alias
     confirmed:
-      label: "Confirmed"
+      label: Confirmed
     copyUrl:
-      label: "Copy"
+      label: Copy
     couponCount:
-      label: "Count"
+      label: Count
     createBlogPostPermission:
-      label: "Updates"
+      label: Updates
     createCommentPermission:
-      label: "Comments"
+      label: Comments
     createConArgumentPermission:
-      label: "Cons"
+      label: Cons
     createForumPermission:
-      label: "Forums"
+      label: Forums
     createMotionPermission:
-      label: "Motions"
+      label: Motions
     createPermission:
-      label: "Create"
+      label: Create
     createProArgumentPermission:
-      label: "Pros"
+      label: Pros
     createQuestionPermission:
-      label: "Questions"
+      label: Questions
     createVotePermission:
-      label: "Votes"
+      label: Votes
     destroyPermission:
-      label: "Destroy"
-    exportStatus:
-      label: "Status"
+      label: Destroy
     expiresAt:
-      label: "Expiry date"
+      label: Expiry date
+    exportStatus:
+      label: Status
     fileUsage:
-      label: "Usage"
+      label: Usage
     followsCount:
-      label: "Followers"
+      label: Followers
     formFieldType:
-      label: "Field type"
+      label: Field type
     grantSet:
-      label: "Grant set"
+      label: Grant set
     grantedGroups:
-      label: "Access"
+      label: Access
     group:
-      label: "Group"
+      label: Group
     isDraft:
-      label: "Draft"
+      label: Draft
     lastActivityAt:
-      label: "Last active"
+      label: Last active
     optionsVocab:
-      label: "Options"
-    position:
-      label: "Position"
+      label: Options
     orderDetails:
-      label: "Details"
+      label: Details
     pdfPage:
-      label: "Page"
+      label: Page
     pinned:
-      label: "Pinned"
+      label: Pinned
+    position:
+      label: Position
     price:
-      label: "Price"
-    showPermission:
-      label: "Show"
-    trashPermission:
-      label: "Trash"
-    updatePermission:
-      label: "Update"
-    view:
-      label: "View"
+      label: Price
     rawResource:
-      label: "Resource"
+      label: Resource
     shortnameable:
-      label: "Item"
+      label: Item
+    showPermission:
+      label: Show
     submissionData:
-      label: "Data"
+      label: Data
     submissionStatus:
-      label: "Status"
+      label: Status
+    target:
+      label: Target
+    trashPermission:
+      label: Trash
     trashed:
-      label: "Trashed"
+      label: Trashed
+    updatePermission:
+      label: Update
+    view:
+      label: View
     voteableVoteEvent:
-      label: "Vote"
+      label: Vote
     votesProCount:
-      label: "Votes in favour"
+      label: Votes in favour
   dbo:
     filename:
-      label: "Filename"
+      label: Filename
   foaf:
     name:
-      label: "Naam"
+      label: Naam
   ontola:
     Banner:
-      label: 'Banner'
-      plural_label: 'Banners'
+      label: Banner
+      plural_label: Banners
     MenuItem:
-      label: "Menu item"
-      plural_label: "Menu items"
+      label: Menu item
+      plural_label: Menu items
     OtpSecret:
-      label: 'Two factor authentication'
+      label: Two factor authentication
     SearchResult:
-      label: "Search result"
+      label: Search result
     audience:
-      label: "Audience"
+      label: Audience
     destroyAction:
-      label: "Destroy"
+      label: Destroy
     helperText:
-      label: "Helper text"
+      label: Helper text
     href:
-      label: "Url"
+      label: Url
     makePrimaryAction:
-      label: "Make primary"
+      label: Make primary
     maxCount:
-      label: "Maximum count defined by"
+      label: Maximum count defined by
     maxInclusive:
-      label: "Maximum value defined by"
+      label: Maximum value defined by
     maxInclusiveLabel:
-      label: "Maximum value label"
+      label: Maximum value label
     maxLength:
-      label: "Maximum length defined by"
+      label: Maximum length defined by
     minCount:
-      label: "Minimum count defined by"
+      label: Minimum count defined by
     minInclusive:
-      label: "Minimum value defined by"
+      label: Minimum value defined by
     minInclusiveLabel:
-      label: "Minimum value label"
+      label: Minimum value label
     minLength:
-      label: "Minimum length defined by"
+      label: Minimum length defined by
     publishAction:
-      label: "Publish"
+      label: Publish
     relevance:
-      label: "Relevance"
+      label: Relevance
     requiresIntro:
-      label: "Name required"
+      description: Require users to enter a username before posting content.
+      label: Name required
     sendConfirmationAction:
-      label: "Confirm"
+      label: Confirm
     settingsMenu:
-      label: "Settings"
+      label: Settings
     shIn:
-      label: "Options defined by"
+      label: Options defined by
     text:
-      label: "Text"
+      label: Text
     updateAction:
-      label: "Update"
+      label: Update
     widgetSize:
-      label: "Size"
+      label: Size
   org:
     hasMember:
-      label: "Members"
+      label: Members
     member:
-      label: "Member"
+      label: Member
   schema:
     CreativeWork:
-      label: "Document"
-      plural_label: "Documents"
+      label: Document
+      plural_label: Documents
     GeoCoordinates:
-      label: "Location"
-      plural_label: "Locations"
+      label: Location
+      plural_label: Locations
     ImageObject:
-      icon: "file-image-o"
-      label: "Image"
-      plural_label: "Images"
+      icon: file-image-o
+      label: Image
+      plural_label: Images
     MediaObject:
-      description: 'An attachment is a file which has been appended to a document to provide more information.'
-      icon: "paperclip"
-      label: "Attachment"
-      plural_label: "Attachments"
+      description: An attachment is a file which has been appended to a document to provide more information.
+      icon: paperclip
+      label: Attachment
+      plural_label: Attachments
     Offer:
-      label: "Option"
-      plural_label: "Options"
+      label: Option
+      plural_label: Options
     Person:
-      label: "Person"
-      plural_label: "People"
+      label: Person
+      plural_label: People
     Thing:
-      label: "Thing"
-      plural_label: "Things"
+      label: Thing
+      plural_label: Things
     Widget:
-      label: "Widget"
-      plural_label: "Widgets"
+      label: Widget
+      plural_label: Widgets
     creator:
-      label: "Creator"
+      label: Creator
     dateCreated:
-      label: "Date created"
+      label: Date created
     datePublished:
-      label: "Date published"
+      label: Date published
     downloadUrl:
-      label: "Download"
+      label: Download
     email:
-      label: "Email"
+      label: Email
     name:
-      label: "Name"
+      label: Name
     option:
-      label: "Option"
+      label: Option
     orderedItem:
-      label: "Ordered item"
+      label: Ordered item
     uploadDate:
-      label: "Upload date"
+      label: Upload date
     url:
-      label: "Url"
+      label: Url
   sh:
     datatype:
-      label: "Datatype"
-    maxCount:
-      label: "Maximum count"
-    maxInclusive:
-      label: "Maximum value"
-    maxLength:
-      label: "Maximum length"
-    minCount:
-      label: "Minimum count"
-    minInclusive:
-      label: "Minimum value"
-    minLength:
-      label: "Minimum length"
-    pattern:
-      label: "Regex pattern"
+      label: Datatype
     in:
-      label: "Options"
+      label: Options
+    maxCount:
+      label: Maximum count
+    maxInclusive:
+      label: Maximum value
+    maxLength:
+      label: Maximum length
+    minCount:
+      label: Minimum count
+    minInclusive:
+      label: Minimum value
+    minLength:
+      label: Minimum length
     path:
-      label: "Predicate"
+      label: Predicate
+    pattern:
+      label: Regex pattern
   skos:
     exactMatch:
-      label: "External iri"
+      label: External iri

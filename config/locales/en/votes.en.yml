@@ -1,34 +1,28 @@
-#English votes translations
-
+---
 en:
   actions:
     votes:
       create:
         errors:
-          expired: "Voting no longer possible"
+          expired: Voting no longer possible
+          finished: Voting is no longer possible
+          not_started: Voting is not yet possible
       trash:
-        description: "Click to remove your vote"
+        description: Click to remove your vote
   votes:
-    score: "score"
-    collection:
-      votes: "%{count} votes"
-      :yes: "%{count} agrees"
-      :no: "%{count} disagrees"
-      other: "%{count} other"
     alerts:
-      success: "Thanks for your vote!"
-      login_to_succeed: "Please login to confirm your vote!"
-      confirm_to_succeed: "Don't forget to confirm your vote!"
-      failed: "Something went wrong, please try again."
-      trashed: "Vote deleted successfully"
-    instance_type:
-      pro: "Agree"
-      :yes: "Agree"
-      neutral: "Other"
-      other: "Other"
-      con: "Disagree"
-      :no: "Disagree"
-    type_new: "New vote"
+      confirm_to_succeed: Don't forget to confirm your vote!
+      failed: Something went wrong, please try again.
+      login_to_succeed: Please login to confirm your vote!
+      success: Thanks for your vote!
+      trashed: Vote deleted successfully
+    collection:
+      'no': "%{count} disagrees"
+      other: "%{count} other"
+      votes: "%{count} votes"
+      'yes': "%{count} agrees"
     disabled:
-      expired: 'Voting is no longer possible'
-      unauthorized: 'You are not allowed to vote on this item'
+      expired: Voting is no longer possible
+      unauthorized: You are not allowed to vote on this item
+    score: score
+    type_new: New vote

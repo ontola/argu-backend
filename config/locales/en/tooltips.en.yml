@@ -1,6 +1,7 @@
+---
 en:
   tooltips:
     motion:
-      vote_pro_count: "Amount of votes in favor"
-      vote_con_count: "Amount of votes against"
-      vote_neutral_count: "Amount of neutral votes"
+      vote_con_count: Amount of votes against
+      vote_neutral_count: Amount of neutral votes
+      vote_pro_count: Amount of votes in favor

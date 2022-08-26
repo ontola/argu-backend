@@ -1,3 +1,4 @@
+---
 de:
   activerecord:
     attributes:
@@ -9,27 +10,118 @@ de:
         doorkeeper/application:
           attributes:
             redirect_uri:
+              forbidden_uri: is forbidden by the server.
               fragment_present: cannot contain a fragment.
               invalid_uri: must be a valid URI.
               relative_uri: must be an absolute URI.
               secured_uri: must be an HTTPS/SSL URI.
-              forbidden_uri: is forbidden by the server.
             scopes:
               not_match_configured: doesn't match configured on the server.
-  mongoid:
-    attributes:
-      doorkeeper/application:
+  doorkeeper:
+    applications:
+      buttons:
+        authorize: autorisieren
+        cancel: Abbrechen
+        destroy: Zerstören
+        edit: Bearbeiten
+        submit: Senden
+      confirmations:
+        destroy: Sind Sie sicher?
+      edit:
+        title: Anwendung bearbeiten
+      form:
+        error: Huch! Überprüfen Sie Ihr Formular auf mögliche Fehler
+      help:
+        confidential: Die Anwendung wird verwendet, wenn das Kundengeheimnis vertraulich behandelt werden kann. Native mobile Anwendungen und Single Page Apps werden als nicht vertraulich betrachtet.
+        native_redirect_uri: Verwenden Sie %{native_redirect_uri}, wenn Sie zu Entwicklungszwecken Localhost-URIs hinzufügen möchten.
+        redirect_uri: Verwenden Sie eine Zeile pro URI
+        scopes: Trennen Sie die Bereiche mit Leerzeichen. Lassen Sie die Zeile leer, um die Standardbereiche zu verwenden.
+      index:
+        actions: Aktionen
+        callback_url: Rückruf-URL
+        confidential: Vertraulich?
+        confidentiality:
+          'no': Nein
+          'yes': Ja
         name: Name
-        redirect_uri: URI umleiten
+        new: Neue Anwendung
+        title: Ihre Anwendungen
+      new:
+        title: Neue Anwendung
+      show:
+        actions: Aktionen
+        application_id: Anmeldung UID
+        callback_urls: Rückruf-Urls
+        confidential: Vertraulich
+        scopes: Geltungsbereiche
+        secret: Geheimnis
+        title: 'Bewerbung: %{name}'
+    authorizations:
+      buttons:
+        authorize: Autorisieren
+        deny: Verweigern
+      error:
+        title: Es ist ein Fehler aufgetreten
+      new:
+        able_to: Diese Anwendung wird in der Lage sein
+        prompt: Erlauben Sie %{client_name}, Ihr Konto zu benutzen?
+        title: Autorisierung erforderlich
+      show:
+        title: Berechtigungscode
+    authorized_applications:
+      buttons:
+        revoke: Widerrufen
+      confirmations:
+        revoke: Sind Sie sicher?
+      index:
+        application: Anwendung
+        created_at: Erstellt am
+        date_format: "%Y-%m-%d %H:%M:%S"
+        title: Ihre autorisierten Anwendungen
     errors:
-      models:
-        doorkeeper/application:
-          attributes:
-            redirect_uri:
-              fragment_present: cannot contain a fragment.
-              invalid_uri: must be a valid URI.
-              relative_uri: must be an absolute URI.
-              secured_uri: must be an HTTPS/SSL URI.
+      messages:
+        access_denied: Der Eigentümer der Ressource oder der Autorisierungsserver hat die Anfrage abgelehnt.
+        admin_authenticator_not_configured: Der Zugriff auf die Administrationsoberfläche ist verboten, da Doorkeeper.configure.admin_authenticator nicht konfiguriert ist.
+        credential_flow_not_configured: Resource Owner Password Credentials flow failed due to Doorkeeper.configure.resource_owner_from_credentials being unconfigured.
+        invalid_client: Die Client-Authentifizierung ist fehlgeschlagen, weil der Client unbekannt ist, keine Client-Authentifizierung enthalten ist oder die Authentifizierungsmethode nicht unterstützt wird.
+        invalid_code_challenge_method: Die Code-Challenge-Methode muss einfach oder S256 sein.
+        invalid_grant: Die angegebene Autorisierungserlaubnis ist ungültig, abgelaufen, widerrufen, stimmt nicht mit dem in der Autorisierungsanforderung verwendeten Umleitungs-URI überein oder wurde für einen anderen Client ausgestellt.
+        invalid_redirect_uri: Die angeforderte Redirect-URI ist fehlerhaft oder stimmt nicht mit der Redirect-URI des Clients überein.
+        invalid_request:
+          missing_param: In der Anfrage fehlt ein erforderlicher Parameter, sie enthält einen nicht unterstützten Parameterwert oder ist anderweitig fehlerhaft formatiert.
+        invalid_scope: Der angeforderte Bereich ist ungültig, unbekannt oder fehlerhaft.
+        invalid_token:
+          expired: Das Zugriffstoken ist abgelaufen
+          revoked: Das Zugriffstoken wurde widerrufen
+          unknown: Das Zugriffstoken ist ungültig
+        resource_owner_authenticator_not_configured: Die Suche nach dem Ressourcenbesitzer ist fehlgeschlagen, da Doorkeeper.configure.resource_owner_authenticator nicht konfiguriert ist.
+        server_error: Der Autorisierungsserver ist auf eine unerwartete Bedingung gestoßen, die ihn daran hindert, die Anforderung zu erfüllen.
+        temporarily_unavailable: Der Autorisierungsserver ist aufgrund einer vorübergehenden Überlastung oder Wartung des Servers derzeit nicht in der Lage, die Anfrage zu bearbeiten.
+        unauthorized_client: Der Client ist nicht berechtigt, diese Anforderung mit dieser Methode durchzuführen.
+        unsupported_grant_type: Der Typ der Berechtigungserlaubnis wird vom Autorisierungsserver nicht unterstützt.
+        unsupported_response_type: Der Autorisierungsserver unterstützt diesen Antworttyp nicht.
+    flash:
+      applications:
+        create:
+          notice: Anwendung wurde erstellt.
+        destroy:
+          notice: Anwendung gelöscht.
+        update:
+          notice: Anwendung aktualisiert.
+      authorized_applications:
+        destroy:
+          notice: Anwendung widerrufen.
+    layouts:
+      admin:
+        nav:
+          applications: Anwendungen
+          home: Startseite
+          oauth2_provider: OAuth2-Anbieter
+        title: Doorkeeper
+      application:
+        title: OAuth-Autorisierung erforderlich
+    pre_authorization:
+      status: Vor-Autorisierung
   mongo_mapper:
     attributes:
       doorkeeper/application:
@@ -44,146 +136,17 @@ de:
               invalid_uri: must be a valid URI.
               relative_uri: must be an absolute URI.
               secured_uri: must be an HTTPS/SSL URI.
-  doorkeeper:
-    applications:
-      confirmations:
-        destroy: Sind Sie sicher?
-      buttons:
-        edit: Bearbeiten
-        destroy: Zerstören
-        submit: Senden
-        cancel: Abbrechen
-        authorize: autorisieren
-      form:
-        error: Huch! Überprüfen Sie Ihr Formular auf mögliche Fehler
-      help:
-        confidential: >-
-          Die Anwendung wird verwendet, wenn das Kundengeheimnis vertraulich
-          behandelt werden kann. Native mobile Anwendungen und Single Page Apps
-          werden als nicht vertraulich betrachtet.
-        redirect_uri: Verwenden Sie eine Zeile pro URI
-        native_redirect_uri: >-
-          Verwenden Sie %{native_redirect_uri}, wenn Sie zu Entwicklungszwecken
-          Localhost-URIs hinzufügen möchten.
-        scopes: >-
-          Trennen Sie die Bereiche mit Leerzeichen. Lassen Sie die Zeile leer,
-          um die Standardbereiche zu verwenden.
-      edit:
-        title: Anwendung bearbeiten
-      index:
-        title: Ihre Anwendungen
-        new: Neue Anwendung
+  mongoid:
+    attributes:
+      doorkeeper/application:
         name: Name
-        callback_url: Rückruf-URL
-        confidential: Vertraulich?
-        actions: Aktionen
-        confidentiality:
-          'yes': Ja
-          'no': Nein
-      new:
-        title: Neue Anwendung
-      show:
-        title: 'Bewerbung: %{name}'
-        application_id: Anmeldung UID
-        secret: Geheimnis
-        scopes: Geltungsbereiche
-        confidential: Vertraulich
-        callback_urls: Rückruf-Urls
-        actions: Aktionen
-    authorizations:
-      buttons:
-        authorize: Autorisieren
-        deny: Verweigern
-      error:
-        title: Es ist ein Fehler aufgetreten
-      new:
-        title: Autorisierung erforderlich
-        prompt: Erlauben Sie %{client_name}, Ihr Konto zu benutzen?
-        able_to: Diese Anwendung wird in der Lage sein
-      show:
-        title: Berechtigungscode
-    authorized_applications:
-      confirmations:
-        revoke: Sind Sie sicher?
-      buttons:
-        revoke: Widerrufen
-      index:
-        title: Ihre autorisierten Anwendungen
-        application: Anwendung
-        created_at: Erstellt am
-        date_format: '%Y-%m-%d %H:%M:%S'
-    pre_authorization:
-      status: Vor-Autorisierung
+        redirect_uri: URI umleiten
     errors:
-      messages:
-        invalid_request:
-          missing_param: >-
-            In der Anfrage fehlt ein erforderlicher Parameter, sie enthält einen
-            nicht unterstützten Parameterwert oder ist anderweitig fehlerhaft
-            formatiert.
-        invalid_redirect_uri: >-
-          Die angeforderte Redirect-URI ist fehlerhaft oder stimmt nicht mit der
-          Redirect-URI des Clients überein.
-        unauthorized_client: >-
-          Der Client ist nicht berechtigt, diese Anforderung mit dieser Methode
-          durchzuführen.
-        access_denied: >-
-          Der Eigentümer der Ressource oder der Autorisierungsserver hat die
-          Anfrage abgelehnt.
-        invalid_scope: Der angeforderte Bereich ist ungültig, unbekannt oder fehlerhaft.
-        invalid_code_challenge_method: Die Code-Challenge-Methode muss einfach oder S256 sein.
-        server_error: >-
-          Der Autorisierungsserver ist auf eine unerwartete Bedingung gestoßen,
-          die ihn daran hindert, die Anforderung zu erfüllen.
-        temporarily_unavailable: >-
-          Der Autorisierungsserver ist aufgrund einer vorübergehenden
-          Überlastung oder Wartung des Servers derzeit nicht in der Lage, die
-          Anfrage zu bearbeiten.
-        credential_flow_not_configured: >-
-          Resource Owner Password Credentials flow failed due to
-          Doorkeeper.configure.resource_owner_from_credentials being
-          unconfigured.
-        resource_owner_authenticator_not_configured: >-
-          Die Suche nach dem Ressourcenbesitzer ist fehlgeschlagen, da
-          Doorkeeper.configure.resource_owner_authenticator nicht konfiguriert
-          ist.
-        admin_authenticator_not_configured: >-
-          Der Zugriff auf die Administrationsoberfläche ist verboten, da
-          Doorkeeper.configure.admin_authenticator nicht konfiguriert ist.
-        unsupported_response_type: Der Autorisierungsserver unterstützt diesen Antworttyp nicht.
-        invalid_client: >-
-          Die Client-Authentifizierung ist fehlgeschlagen, weil der Client
-          unbekannt ist, keine Client-Authentifizierung enthalten ist oder die
-          Authentifizierungsmethode nicht unterstützt wird.
-        invalid_grant: >-
-          Die angegebene Autorisierungserlaubnis ist ungültig, abgelaufen,
-          widerrufen, stimmt nicht mit dem in der Autorisierungsanforderung
-          verwendeten Umleitungs-URI überein oder wurde für einen anderen Client
-          ausgestellt.
-        unsupported_grant_type: >-
-          Der Typ der Berechtigungserlaubnis wird vom Autorisierungsserver nicht
-          unterstützt.
-        invalid_token:
-          revoked: Das Zugriffstoken wurde widerrufen
-          expired: Das Zugriffstoken ist abgelaufen
-          unknown: Das Zugriffstoken ist ungültig
-    flash:
-      applications:
-        create:
-          notice: Anwendung wurde erstellt.
-        destroy:
-          notice: Anwendung gelöscht.
-        update:
-          notice: Anwendung aktualisiert.
-      authorized_applications:
-        destroy:
-          notice: Anwendung widerrufen.
-    layouts:
-      admin:
-        title: Doorkeeper
-        nav:
-          oauth2_provider: OAuth2-Anbieter
-          applications: Anwendungen
-          home: Startseite
-      application:
-        title: OAuth-Autorisierung erforderlich
+      models:
+        doorkeeper/application:
+          attributes:
+            redirect_uri:
+              fragment_present: cannot contain a fragment.
+              invalid_uri: must be a valid URI.
+              relative_uri: must be an absolute URI.
+              secured_uri: must be an HTTPS/SSL URI.

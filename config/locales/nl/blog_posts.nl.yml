@@ -1,16 +1,15 @@
-#Dutch blog post translations
-
+---
 nl:
   blog_posts:
-    type_new: "Nieuwe update"
-    unpublished: "Concept"
+    type_new: Nieuwe update
+    unpublished: Concept
   forms:
     blog_posts:
       content:
-        placeholder: "Licht je update hier toe."
+        placeholder: Licht je update hier toe.
       description:
-        placeholder: "Licht je update hier toe."
+        placeholder: Licht je update hier toe.
       display_name:
-        placeholder: "Plaats de kern van de update"
+        placeholder: Plaats de kern van de update
       title:
-        placeholder: "Plaats de kern van de update"
+        placeholder: Plaats de kern van de update

@@ -1,29 +1,27 @@
-
-#English general translations
-
+---
 en:
   status:
     s_400:
-      header: "Error in request"
-      body: "The request made cannot be fulfilled because it contains bad syntax, check your URL parameters or refresh the page that linked to this resource."
-      reference_link_url: "https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error"
-      reference_link_body: "Click here to learn more about HTTP & status 400 :)"
+      body: The request made cannot be fulfilled because it contains bad syntax, check your URL parameters or refresh the page that linked to this resource.
+      header: Error in request
+      reference_link_body: Click here to learn more about HTTP & status 400 :)
+      reference_link_url: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error
     s_403:
-      header: "This item is hidden"
-      sign_in: "Maybe it's visible after logging in:"
+      header: This item is hidden
+      sign_in: 'Maybe it''s visible after logging in:'
     s_404:
-      header: "This item is not found"
-      body: "Maybe the item you are looking for is deleted or never existed."
+      body: Maybe the item you are looking for is deleted or never existed.
+      header: This item is not found
     s_413:
-      header: "Request entity too large (413 Payload Too Large)"
-      body: "The item that you are uploading is too large. Go back and try a smaller file."
-      reference_link_url: "https://en.wikipedia.org/wiki/HTTP_413"
-      reference_link_body: "Click here to learn more about HTTP & status 413 :)"
+      body: The item that you are uploading is too large. Go back and try a smaller file.
+      header: Request entity too large (413 Payload Too Large)
+      reference_link_body: Click here to learn more about HTTP & status 413 :)
+      reference_link_url: https://en.wikipedia.org/wiki/HTTP_413
     s_422:
-      header: "Unprocessable Entity"
-      body: "The item that you are trying to create cannot be processed."
-      reference_link_url: "https://en.wikipedia.org/wiki/HTTP_422"
-      reference_link_body: "Click here to learn more about HTTP & status 422 :)"
+      body: The item that you are trying to create cannot be processed.
+      header: Unprocessable Entity
+      reference_link_body: Click here to learn more about HTTP & status 422 :)
+      reference_link_url: https://en.wikipedia.org/wiki/HTTP_422
     s_500:
-      header: "Something went wrong on our side, please try again later"
-      body: "Something went wrong on our side. Error information has been collected and sent automatically. We'll try to fix the issue as soon as possible. Please try again later."
+      body: Something went wrong on our side. Error information has been collected and sent automatically. We'll try to fix the issue as soon as possible. Please try again later.
+      header: Something went wrong on our side, please try again later

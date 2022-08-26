@@ -1,9 +1,10 @@
+---
 de:
-  offers:
-    type_new: Neue Option
   forms:
     offers:
-      product_id:
-        label: Wählen Sie eine Idee
       price:
         label: Wert
+      product_id:
+        label: Wählen Sie eine Idee
+  offers:
+    type_new: Neue Option

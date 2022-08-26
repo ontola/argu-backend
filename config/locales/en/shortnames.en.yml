@@ -1,23 +1,24 @@
+---
 en:
-  shortnames:
-    type_new: 'New redirect'
-    info: 'When changing a url, a redirect for the old url is automatically created. You can also ass redirects manually. On this page you can find all active redirects.'
-    labels:
-      from: "From"
-      to: "To"
-      delete: "Delete"
-  forms:
-    shortnames:
-      destination:
-        description: "Enter the part of the url following %{iri_prefix}/"
-        label: "Destination"
-      shortname:
-        description: "No spaces. Only letters, numbers and _. Start with a letter."
-        label: "URL"
   activerecord:
     errors:
       models:
         shortname:
           attributes:
             owner:
-              blank: "This object doesn't exists or belongs to another forum"
+              blank: This object doesn't exists or belongs to another forum
+  forms:
+    shortnames:
+      destination:
+        description: Enter the part of the url following %{iri_prefix}/
+        label: Destination
+      shortname:
+        description: No spaces. Only letters, numbers and _. Start with a letter.
+        label: URL
+  shortnames:
+    info: When changing a url, a redirect for the old url is automatically created. You can also ass redirects manually. On this page you can find all active redirects.
+    labels:
+      delete: Delete
+      from: From
+      to: To
+    type_new: New redirect

@@ -1,46 +1,46 @@
-
+---
 en:
   activities:
-    votes:
-      create: "%{owner} %{side} %{parent}"
-      :yes: "is in favour of"
-      :no: "is against"
-      other: "is neutral about"
+    arguments:
+      create: "%{owner} posted a draft %{type} %{side} %{parent}"
+      'no': against
+      'yes': in favour of
+    blog_posts:
+      create: "%{owner} posted a draft %{type} in %{parent}"
+    comments:
+      create: "%{owner} posted a draft %{type} to %{parent}"
+      destroy: "%{owner} deleted a %{type} for %{parent}"
+      publish: "%{owner} replied to %{parent}"
+      trash: "%{owner} trashed a %{subject} for %{parent}"
+      untrash: "%{owner} untrashed a %{subject} for %{parent}"
+      update: "%{owner} updated a %{subject} for %{parent}"
+    con_arguments:
+      create: "%{owner} posted a draft %{type} %{side} %{parent}"
+      'no': against
+      'yes': in favour of
     decisions:
       approved: "%{owner} passed %{parent}"
-      rejected: "%{owner} rejected %{parent}"
       create: "%{owner} posted a draft decision in %{parent}"
+      rejected: "%{owner} rejected %{parent}"
       update: "%{owner} updated a decision on %{parent}"
     default:
       convert: "%{owner} converted %{subject} into a %{type}"
       create: "%{owner} posted a %{type} in %{parent}"
-      publish: "%{owner} posted a %{type} in %{parent}"
       destroy: "%{owner} deleted %{subject}"
+      publish: "%{owner} posted a %{type} in %{parent}"
       trash: "%{owner} trashed %{subject}"
       untrash: "%{owner} untrashed %{subject}"
       update: "%{owner} updated %{subject}"
-    arguments:
-      create: "%{owner} posted a draft %{type} %{side} %{parent}"
-      :yes: "in favour of"
-      :no: "against"
-    pro_arguments:
-      create: "%{owner} posted a draft %{type} %{side} %{parent}"
-      :yes: "in favour of"
-      :no: "against"
-    con_arguments:
-      create: "%{owner} posted a draft %{type} %{side} %{parent}"
-      :yes: "in favour of"
-      :no: "against"
-    blog_posts:
-      create: "%{owner} posted a draft %{type} in %{parent}"
     motions:
       create: "%{owner} posted a draft %{type} in %{parent}"
+    pro_arguments:
+      create: "%{owner} posted a draft %{type} %{side} %{parent}"
+      'no': against
+      'yes': in favour of
     questions:
       create: "%{owner} posted a draft %{type} in %{parent}"
-    comments:
-      create: "%{owner} posted a draft %{type} to %{parent}"
-      publish: "%{owner} replied to %{parent}"
-      destroy: "%{owner} deleted a %{type} for %{parent}"
-      trash: "%{owner} trashed a %{subject} for %{parent}"
-      untrash: "%{owner} untrashed a %{subject} for %{parent}"
-      update: "%{owner} updated a %{subject} for %{parent}"
+    votes:
+      create: "%{owner} %{side} %{parent}"
+      'no': is against
+      other: is neutral about
+      'yes': is in favour of

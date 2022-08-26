@@ -1,51 +1,5 @@
+---
 de:
-  forms:
-    motions:
-      content:
-        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Idee ein.
-        label: Beschreiben Sie Ihre Idee im Detail
-      description:
-        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Idee an.
-      display_name:
-        placeholder: Geben Sie hier den Kern Ihrer Idee an
-      title:
-        placeholder: Geben Sie hier den Kern Ihrer Idee ein
-        label: Fassen Sie Ihre Idee in einem Satz zusammen
-  motions:
-    type_new: Neue Idee
-    title: Idee
-    pros: pro
-    cons: con
-    edit: Idee bearbeiten
-    no_pros: noch keine Pros
-    no_cons: noch keine Nachteile
-    content: Inhalt
-    one_up: Haben Sie eine bessere Idee?
-    percentage_in_favor:
-      zero: Bisher hat noch niemand darüber abgestimmt.
-      one: 1 Benutzer ist dafür.
-      other: '%{percentage} von %{count} Stimmen ist dafür.'
-    votes:
-      pro: Zustimmen
-      neutral: Neutral
-      con: Ablehnen
-      show: Abstimmungsergebnisse anzeigen
-    preview:
-      pro:
-        zero: keine Pro-Argumente
-        one: 1 Pro-Argument
-        other: '%{count} Pro-Argumente'
-      con:
-        zero: keine Gegenargumente
-        one: 1 Gegenargument
-        other: '%{count} Gegenargumente'
-    call_to_action:
-      title: Haben Sie eine gute Idee?
-      body: Haben Sie eine gute Idee und wollen Sie andere überzeugen?
-      action: Teilen Sie Ihre Idee
-  pundit:
-    motion_policy:
-      create_without_question?: Sie können hier eine Idee ohne Herausforderung posten.
   activerecord:
     errors:
       models:
@@ -53,3 +7,50 @@ de:
           attributes:
             forum:
               different: The motion and it's question(s) must belong to the same forum
+  forms:
+    motions:
+      content:
+        label: Beschreiben Sie Ihre Idee im Detail
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Idee ein.
+      description:
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Idee an.
+      display_name:
+        placeholder: Geben Sie hier den Kern Ihrer Idee an
+      title:
+        label: Fassen Sie Ihre Idee in einem Satz zusammen
+        placeholder: Geben Sie hier den Kern Ihrer Idee ein
+  motions:
+    call_to_action:
+      action: Teilen Sie Ihre Idee
+      body: Haben Sie eine gute Idee und wollen Sie andere überzeugen?
+      title: Haben Sie eine gute Idee?
+    cons: con
+    content: Inhalt
+    edit: Idee bearbeiten
+    no_cons: noch keine Nachteile
+    no_pros: noch keine Pros
+    one_up: Haben Sie eine bessere Idee?
+    percentage_in_favor:
+      one: 1 Benutzer ist dafür.
+      other: "%{percentage} von %{count} Stimmen ist dafür."
+      zero: Bisher hat noch niemand darüber abgestimmt.
+    preview:
+      con:
+        one: 1 Gegenargument
+        other: "%{count} Gegenargumente"
+        zero: keine Gegenargumente
+      pro:
+        one: 1 Pro-Argument
+        other: "%{count} Pro-Argumente"
+        zero: keine Pro-Argumente
+    pros: pro
+    title: Idee
+    type_new: Neue Idee
+    votes:
+      con: Ablehnen
+      neutral: Neutral
+      pro: Zustimmen
+      show: Abstimmungsergebnisse anzeigen
+  pundit:
+    motion_policy:
+      create_without_question?: Sie können hier eine Idee ohne Herausforderung posten.

@@ -1,62 +1,61 @@
-#English grants translations
-
+---
 en:
   forms:
     grants:
-      description: "You can grant certain rights to groups in this forum. Grants also apply to the underlying content. The following grants are defined at a higher level:"
+      description: 'You can grant certain rights to groups in this forum. Grants also apply to the underlying content. The following grants are defined at a higher level:'
       group:
-        label: "Groep"
+        label: Groep
   grants:
-    type_new: "New grant"
-    empty: "No grants"
-    new: "Assign new grants"
-    inherited: "This role is inherited from the %{type}"
-    all_forums: "All forums"
-    other: "Other"
-    labels:
-      role: "Which role you want to grant?"
-      group: "To which group you want tot provide this role?"
-      edge: "For which forum should this role be granted?"
+    all_forums: All forums
+    empty: No grants
     errors:
-      taken: "This group already has a grant on this forum. Please remove this grant before creating a new one."
-  permissions:
-    description: "Here you can see the active permissions for this resource and its (nested) children. Grants always trickle down to children, but you can retract certain permissions granted on a higher level."
-    label: "Permissions"
+      taken: This group already has a grant on this forum. Please remove this grant before creating a new one.
+    inherited: This role is inherited from the %{type}
+    labels:
+      edge: For which forum should this role be granted?
+      group: To which group you want tot provide this role?
+      role: Which role you want to grant?
+    new: Assign new grants
+    other: Other
+    type_new: New grant
   menus:
     grants:
       children:
-        collection: 'Permitted replies'
-        item: 'Replies'
+        collection: Permitted replies
+        item: Replies
       grant_resets:
-        collection: 'Retracted permissions'
-        item: 'Retract permissions'
+        collection: Retracted permissions
+        item: Retract permissions
       grants:
-        item: 'Grant permissions'
+        item: Grant permissions
       resource:
-        collection: 'Permissions for this resource'
-        item: 'Resource'
+        collection: Permissions for this resource
+        item: Resource
+  permissions:
+    description: Here you can see the active permissions for this resource and its (nested) children. Grants always trickle down to children, but you can retract certain permissions granted on a higher level.
+    label: Permissions
   roles:
-    type: "Grant"
-    plural: "Grants"
-    description: "Grants also apply to the underlying content."
-    label: "Members of this group may:"
-    in_current_forum: "In forum %{forum}"
-    in_all_forums: "In all forums"
-    empty: "none"
-    may: "may"
-    types:
-      empty: "no additional role"
-      none: "see nothing"
-      spectator: "only read"
-      participator: "participate"
-      initiator: "initiate"
-      moderator: "moderate"
-      administrator: "manage"
-      staff: "staff"
+    description: Grants also apply to the underlying content.
     descriptions:
-      spectator: "This allows you to read content. It's not possible to post your reactions."
-      participator: "This allows you to react to content posted by moderators. Users cannot start new topics themselves."
-      initiator: "This allows users to both react to topics of others as to start new topics themselves."
-      moderator: "Besides reacting and starting new topics, this also enables the ability to edit and delete content of others."
-      administrator: "The most advanced set of grants. This allows you to read and edit everything."
-      staff: "Employees of Ontola"
+      administrator: The most advanced set of grants. This allows you to read and edit everything.
+      initiator: This allows users to both react to topics of others as to start new topics themselves.
+      moderator: Besides reacting and starting new topics, this also enables the ability to edit and delete content of others.
+      participator: This allows you to react to content posted by moderators. Users cannot start new topics themselves.
+      spectator: This allows you to read content. It's not possible to post your reactions.
+      staff: Employees of Ontola
+    empty: none
+    in_all_forums: In all forums
+    in_current_forum: In forum %{forum}
+    label: 'Members of this group may:'
+    may: may
+    plural: Grants
+    type: Grant
+    types:
+      administrator: manage
+      empty: no additional role
+      initiator: initiate
+      moderator: moderate
+      none: see nothing
+      participator: participate
+      spectator: only read
+      staff: staff

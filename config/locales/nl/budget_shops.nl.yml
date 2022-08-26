@@ -1,9 +1,10 @@
+---
 nl:
   budget_shops:
-    type_new: "Nieuw budget"
+    type_new: Nieuw budget
   forms:
     budget_shops:
       budget_max:
-        label: "Budget"
+        label: Budget
       currency:
-        label: "Eenheid"
+        label: Eenheid

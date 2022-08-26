@@ -1,17 +1,18 @@
+---
 en:
   actions:
     default:
       transfer:
-        label: "Transfer"
+        label: Transfer
   enums:
     edges:
       transfer_type:
-        transfer_to_page: "Profile of the community"
-        transfer_to_user: "Select a user"
+        transfer_to_page: Profile of the community
+        transfer_to_user: Select a user
   forms:
     transfers:
       transfer_type:
-        label: "Transfer to"
+        label: Transfer to
   menus:
     default:
-      transfer: "Transfer"
+      transfer: Transfer

@@ -1,67 +1,69 @@
+---
 en:
-  pages:
-    type_new: "Get started"
-    settings:
-      menu:
-        return: "View %{resource}"
-        general: 'General'
-        profile: 'Community profile'
-        advanced: 'Advanced'
-        groups: 'Groups'
-        grants: 'Grants'
-        forums: 'Forums'
-        container_nodes: 'Components'
-        shortnames: 'Redirects'
-    limit_reached_amount:
-      one: "You can create no more than %{count} community."
-      other: "You can create no more than %{count} communities."
   actions:
     pages:
       destroy:
-        label: "Delete community"
-        description: "Are you sure you want to permanently delete this entire community?. This cannot be undone."
-        submit: "Delete"
-  enums:
-    pages:
-      header_background:
-        background_primary: "Primary color"
-        background_secondary: "Secondary color"
-        background_white: "White"
-      header_text:
-        text_primary: "Primary color"
-        text_secondary: "Secondary color"
-        text_auto: "Automatic"
-  forms:
-    pages:
-      accepted_terms:
-        label: "I accept the terms of use"
-      display_name:
-        label: "Name of your community"
-      google_tag_manager:
-        label: "Google tag manager"
-      google_uac:
-        label: "Google UA code"
-      last_accepted:
-        label: "I accept the terms of use"
-      matomo_host:
-        label: "Matomo host"
-        description: "Leave blank to use the default host"
-      matomo_cdn:
-        label: "Matomo cdn"
-        description: "Leave blank to use the default cdn"
-      matomo_site_id:
-        label: "Matomo site id"
-      piwik_pro_host:
-        label: "Piwik Pro host"
-        description: "E.g. 'myproject.piwik.pro'"
-      piwik_pro_site_id:
-        label: "Piwik Pro site id"
-      requires_intro:
-        helper_text: "Require users to enter a username before posting content."
-      shortname:
-        label: "Argu URL"
+        description: Are you sure you want to permanently delete this entire community?. This cannot be undone.
+        label: Delete community
+        submit: Delete
   activerecord:
     attributes:
       page:
-        name: 'Name'
-        shortname: 'Argu URL'
+        name: Name
+        shortname: Argu URL
+  enums:
+    pages:
+      header_background:
+        background_primary: Primary color
+        background_secondary: Secondary color
+        background_white: White
+      header_text:
+        text_auto: Automatic
+        text_primary: Primary color
+        text_secondary: Secondary color
+  forms:
+    pages:
+      accepted_terms:
+        label: I accept the terms of use
+      display_name:
+        label: Name of your community
+      google_tag_manager:
+        label: Google tag manager
+      google_uac:
+        label: Google UA code
+      last_accepted:
+        label: I accept the terms of use
+      matomo_host:
+        description: Leave blank to use the default host
+        label: Matomo host
+      matomo_cdn:
+        description: Leave blank to use the default cdn
+        label: Matomo cdn
+      matomo_site_id:
+        label: Matomo site id
+      piwik_pro_host:
+        description: E.g. 'myproject.piwik.pro'
+        label: Piwik Pro host
+      piwik_pro_site_id:
+        label: Piwik Pro site id
+      requires_intro:
+        helper_text: Require users to enter a username before posting content.
+      shortname:
+        label: Argu URL
+  pages:
+    limit_reached_amount:
+      one: You can create no more than %{count} community.
+      other: You can create no more than %{count} communities.
+    settings:
+      menu:
+        advanced: Advanced
+        container_nodes: Components
+        forums: Forums
+        general: General
+        grants: Grants
+        groups: Groups
+        profile: Community profile
+        return: View %{resource}
+        shortnames: Redirects
+        theme: Theme
+    type_new: Get started

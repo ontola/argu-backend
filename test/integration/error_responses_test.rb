@@ -197,7 +197,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     subject = RDF::URI("#{Rails.application.config.origin}#{path}")
 
     expect_resource_type(NS.ontola["errors/#{opts[:error]}Error"], iri: subject)
-    expect_triple(subject, NS.schema.name, I18n.t('status')[status])
+    expect_triple(subject, NS.schema.name, I18n.t('linked_rails.status')[status])
     expect_triple(subject, NS.schema.text, opts[:message])
   end
 

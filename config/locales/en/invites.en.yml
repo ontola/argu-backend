@@ -1,13 +1,14 @@
+---
 en:
   forms:
     invites:
-      message:
-        label: "Message"
-        placeholder: "Enter a message for in the email"
       addresses:
-        label: "Email addresses"
-        placeholder: "Enter one or multiple email addresses"
+        label: Email addresses
+        placeholder: Enter one or multiple email addresses
       group_id:
-        label: "To which group do you want to add these people?"
+        label: To which group do you want to add these people?
+      message:
+        label: Message
+        placeholder: Enter a message for in the email
       redirect_url:
-        label: "Landingspage for the invitee"
+        label: Landingspage for the invitee

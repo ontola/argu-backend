@@ -1,12 +1,13 @@
+---
 de:
+  enums:
+    follows:
+      follow_type:
+        never: Niemals
+        news: Wichtige Artikel
+        reactions: Alle Artikel
   follows:
     status:
       never: Sie erhalten keine Benachrichtigungen für%{item}".
       news: Sie erhalten Benachrichtigungen über wichtige Neuigkeiten zu%{item}'.
       reactions: Sie erhalten Benachrichtigungen für alle Antworten zu%{item}'.
-  enums:
-    follows:
-      follow_type:
-        never: Niemals
-        reactions: Alle Artikel
-        news: Wichtige Artikel

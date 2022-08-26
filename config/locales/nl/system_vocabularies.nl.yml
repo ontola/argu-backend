@@ -1,97 +1,98 @@
+---
 nl:
   vocabularies:
     system:
       form_fields:
-        label: "Veld types"
+        label: Veld types
         terms:
-          - label: "Korte tekst"
-            exact_match: "https://ns.ontola.io/form#TextInput"
-            icon: "font"
-          - label: "Lange tekst"
-            exact_match: "https://ns.ontola.io/form#TextAreaInput"
-            icon: "file-text-o"
-          - label: "Tekst met opmaak"
-            exact_match: "https://ns.ontola.io/form#MarkdownInput"
-            icon: "italic"
-          - label: "Nummer"
-            exact_match: "https://ns.ontola.io/form#NumberInput"
-            icon: "calculator"
-          - label: "Losse checkbox"
-            exact_match: "https://ns.ontola.io/form#CheckboxInput"
-            icon: "check-square-o"
-          - label: "Checkbox groep"
-            exact_match: "https://ns.ontola.io/form#CheckboxGroup"
-            icon: "list"
-          - label: "Radio groep"
-            exact_match: "https://ns.ontola.io/form#RadioGroup"
-            icon: "check-circle-o"
-          - label: "Dropdown"
-            exact_match: "https://ns.ontola.io/form#SelectInput"
-            icon: "bars"
-          - label: "Toggle knoppen"
-            exact_match: "https://ns.ontola.io/form#ToggleButtonGroup"
-            icon: "square-o"
-          - label: "Kleur"
-            exact_match: "https://ns.ontola.io/form#ColorInput"
-            icon: "pencil"
-          - label: "Datum"
-            exact_match: "https://ns.ontola.io/form#DateInput"
-            icon: "calendar"
-          - label: "Datum en tijd"
-            exact_match: "https://ns.ontola.io/form#DateTimeInput"
-            icon: "clock-o"
-          - label: "Geldbedrag"
-            exact_match: "https://ns.ontola.io/form#MoneyInput"
-            icon: "money"
-          - label: "Icoontje"
-            exact_match: "https://ns.ontola.io/form#IconInput"
-            icon: "picture-o"
-          - label: "Locatie"
-            exact_match: "https://ns.ontola.io/form#LocationInput"
-            icon: "map-marker"
-          - label: "Slider"
-            exact_match: "https://ns.ontola.io/form#SliderInput"
-            icon: "sliders"
-          - label: "Email"
-            exact_match: "https://ns.ontola.io/form#EmailInput"
-            icon: "envelope-o"
-          - label: "Wachtwoord"
-            exact_match: "https://ns.ontola.io/form#PasswordInput"
-            icon: "unlock-alt"
-          - label: "Meerdere emails"
-            exact_match: "https://ns.ontola.io/form#MultipleEmailInput"
-            icon: "users"
-          - label: "Bestand"
-            exact_match: "https://ns.ontola.io/form#FileInput"
-            icon: "file-o"
-          - label: "Postcode range"
-            exact_match: "https://ns.ontola.io/form#PostalRangeInput"
-            icon: "home"
-          - label: "Swipe item"
-            exact_match: "https://ns.ontola.io/form#SwipeInput"
-            icon: "hand-o-up"
-      vote_options:
-        label: "Stemopties"
-        terms:
-          - color: "#547f4b"
-            icon: "thumbs-up"
-            label: "Voor"
-            description: "Klik om voor te stemmen"
-            exact_match: "https://argu.co/ns/core#yes"
-          - color: "#707070"
-            icon: "pause"
-            label: "Anders"
-            description: "Klik om neutraal te stemmen"
-            exact_match: "https://argu.co/ns/core#other"
-          - color: "#863d3d"
-            icon: "thumbs-down"
-            label: "Tegen"
-            description: "Klik om tegen te stemmen"
-            exact_match: "https://argu.co/ns/core#no"
+        - label: Korte tekst
+          exact_match: https://ns.ontola.io/form#TextInput
+          icon: font
+        - label: Lange tekst
+          exact_match: https://ns.ontola.io/form#TextAreaInput
+          icon: file-text-o
+        - label: Tekst met opmaak
+          exact_match: https://ns.ontola.io/form#MarkdownInput
+          icon: italic
+        - label: Nummer
+          exact_match: https://ns.ontola.io/form#NumberInput
+          icon: calculator
+        - label: Losse checkbox
+          exact_match: https://ns.ontola.io/form#CheckboxInput
+          icon: check-square-o
+        - label: Checkbox groep
+          exact_match: https://ns.ontola.io/form#CheckboxGroup
+          icon: list
+        - label: Radio groep
+          exact_match: https://ns.ontola.io/form#RadioGroup
+          icon: check-circle-o
+        - label: Dropdown
+          exact_match: https://ns.ontola.io/form#SelectInput
+          icon: bars
+        - label: Toggle knoppen
+          exact_match: https://ns.ontola.io/form#ToggleButtonGroup
+          icon: square-o
+        - label: Kleur
+          exact_match: https://ns.ontola.io/form#ColorInput
+          icon: pencil
+        - label: Datum
+          exact_match: https://ns.ontola.io/form#DateInput
+          icon: calendar
+        - label: Datum en tijd
+          exact_match: https://ns.ontola.io/form#DateTimeInput
+          icon: clock-o
+        - label: Geldbedrag
+          exact_match: https://ns.ontola.io/form#MoneyInput
+          icon: money
+        - label: Icoontje
+          exact_match: https://ns.ontola.io/form#IconInput
+          icon: picture-o
+        - label: Locatie
+          exact_match: https://ns.ontola.io/form#LocationInput
+          icon: map-marker
+        - label: Slider
+          exact_match: https://ns.ontola.io/form#SliderInput
+          icon: sliders
+        - label: Email
+          exact_match: https://ns.ontola.io/form#EmailInput
+          icon: envelope-o
+        - label: Wachtwoord
+          exact_match: https://ns.ontola.io/form#PasswordInput
+          icon: unlock-alt
+        - label: Meerdere emails
+          exact_match: https://ns.ontola.io/form#MultipleEmailInput
+          icon: users
+        - label: Bestand
+          exact_match: https://ns.ontola.io/form#FileInput
+          icon: file-o
+        - label: Postcode range
+          exact_match: https://ns.ontola.io/form#PostalRangeInput
+          icon: home
+        - label: Swipe item
+          exact_match: https://ns.ontola.io/form#SwipeInput
+          icon: hand-o-up
       upvote_options:
-        label: "Upvote opties"
+        label: Upvote opties
         terms:
-          - color: "#547f4b"
-            icon: "arrow-up"
-            label: "Upvote"
-            exact_match: "https://argu.co/ns/core#yes"
+        - color: "#547f4b"
+          icon: arrow-up
+          label: Upvote
+          exact_match: https://argu.co/ns/core#yes
+      vote_options:
+        label: Stemopties
+        terms:
+        - color: "#547f4b"
+          icon: thumbs-up
+          label: Voor
+          description: Klik om voor te stemmen
+          exact_match: https://argu.co/ns/core#yes
+        - color: "#707070"
+          icon: pause
+          label: Anders
+          description: Klik om neutraal te stemmen
+          exact_match: https://argu.co/ns/core#other
+        - color: "#863d3d"
+          icon: thumbs-down
+          label: Tegen
+          description: Klik om tegen te stemmen
+          exact_match: https://argu.co/ns/core#no

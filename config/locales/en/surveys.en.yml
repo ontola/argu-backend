@@ -1,23 +1,24 @@
+---
 en:
-  surveys:
-    type_new: "New survey"
   enums:
     surveys:
       form_type:
-        local: "Own form"
-        remote: "Typeform"
+        local: Own form
+        remote: Typeform
   forms:
     surveys:
       action_body:
-        label: "Form"
-      external_iri:
-        placeholder: "https://[userName].typeform.com/to/[surveyId]"
-        helper_text: "See [our helpdesk](https://argu.co/argu/t/10509) for more information about creating surveys"
-        label: "Typeform url"
-      form_type:
-        label: "Type"
+        label: Form
       coupon_required:
-        label: "Invite required"
+        label: Invite required
+      external_iri:
+        helper_text: See [our helpdesk](https://argu.co/argu/t/10509) for more information about creating surveys
+        label: Typeform url
+        placeholder: https://[userName].typeform.com/to/[surveyId]
+      form_type:
+        label: Type
   menus:
     surveys:
-      fields: "Questions"
+      fields: Questions
+  surveys:
+    type_new: New survey

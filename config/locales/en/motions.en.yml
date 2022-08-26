@@ -1,57 +1,56 @@
-#English motions translations
-
+---
 en:
-  forms:
-    motions:
-      content:
-        placeholder: "Enter details and background information on your idea here."
-        label: "Describe your idea in detail"
-      description:
-        placeholder: "Enter details and background information on your idea here."
-      display_name:
-        placeholder: "Enter the core of your idea here"
-      title:
-        placeholder: "Enter the core of your idea here"
-        label: "Summarize your idea in one sentence"
-  motions:
-    type_new: "New idea"
-    title: "Idea"
-    pros: "pro"
-    cons: "con"
-    edit: "Edit idea"
-    no_pros: "no pros yet"
-    no_cons: "no cons yet"
-    content: "content"
-    one_up: "Do you have a better idea?"
-    percentage_in_favor:
-      zero: "Nobody has voted on this yet."
-      one: "1 user is in favor."
-      other: "%{percentage}% of %{count} votes is in favor."
-    votes:
-      pro: "Agree"
-      neutral: "Neutral"
-      con: "Disagree"
-      show: "Show vote results"
-    preview:
-      pro:
-        zero: "no pro arguments"
-        one: "1 pro argument"
-        other: "%{count} pro arguments"
-      con:
-        zero: "no con arguments"
-        one: "1  con argument"
-        other: "%{count} con arguments"
-    call_to_action:
-      title: "Do you have a good idea?"
-      body: "Do you have a good idea and do you want to convince others?"
-      action: "Share your idea"
-  pundit:
-    motion_policy:
-      create_without_question?: "You can post an idea here without a challenge."
   activerecord:
     errors:
       models:
         motions:
           attributes:
             forum:
-              different: "The motion and it's question(s) must belong to the same forum"
+              different: The motion and it's question(s) must belong to the same forum
+  forms:
+    motions:
+      content:
+        label: Describe your idea in detail
+        placeholder: Enter details and background information on your idea here.
+      description:
+        placeholder: Enter details and background information on your idea here.
+      display_name:
+        placeholder: Enter the core of your idea here
+      title:
+        label: Summarize your idea in one sentence
+        placeholder: Enter the core of your idea here
+  motions:
+    call_to_action:
+      action: Share your idea
+      body: Do you have a good idea and do you want to convince others?
+      title: Do you have a good idea?
+    cons: con
+    content: content
+    edit: Edit idea
+    no_cons: no cons yet
+    no_pros: no pros yet
+    one_up: Do you have a better idea?
+    percentage_in_favor:
+      one: 1 user is in favor.
+      other: "%{percentage}% of %{count} votes is in favor."
+      zero: Nobody has voted on this yet.
+    preview:
+      con:
+        one: 1  con argument
+        other: "%{count} con arguments"
+        zero: no con arguments
+      pro:
+        one: 1 pro argument
+        other: "%{count} pro arguments"
+        zero: no pro arguments
+    pros: pro
+    title: Idea
+    type_new: New idea
+    votes:
+      con: Disagree
+      neutral: Neutral
+      pro: Agree
+      show: Show vote results
+  pundit:
+    motion_policy:
+      create_without_question?: You can post an idea here without a challenge.

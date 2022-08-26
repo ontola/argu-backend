@@ -1,62 +1,61 @@
-#Dutch grants translations
-
+---
 nl:
   forms:
     grants:
-      description: "Je kunt rechten toekennen aan groepen binnen dit forum. Rechten gelden ook voor onderliggende items. De volgende rechten zijn op een hoger niveau toegekend:"
+      description: 'Je kunt rechten toekennen aan groepen binnen dit forum. Rechten gelden ook voor onderliggende items. De volgende rechten zijn op een hoger niveau toegekend:'
       group:
-        label: "Group"
+        label: Group
   grants:
-    type_new: "Nieuw recht"
-    empty: "Geen rechten"
-    new: "Verleen nieuwe rechten"
-    inherited: "Deze rol is geërfd van bovenliggend %{type}"
-    all_forums: "Alle forums"
-    other: "Anders"
-    labels:
-      role: "Welke rol wil je verlenen?"
-      group: "Aan welke groep wil je deze rol verlenen?"
-      edge: "Voor welk forum geldt deze rol?"
+    all_forums: Alle forums
+    empty: Geen rechten
     errors:
-      taken: "Deze groep heeft al rechten in dit forum. Verwijder dit recht eerst voordat je een nieuwe aanmaakt."
-  permissions:
-    description: "Hier kan je alle actieve rechten zien voor dit object en de onderliggende objecten. Rechten seipelen altijd door naar beneden, maar je kan bepaalde rechten die hoger zijn toegekend intrekken."
-    label: "Rechten"
+      taken: Deze groep heeft al rechten in dit forum. Verwijder dit recht eerst voordat je een nieuwe aanmaakt.
+    inherited: Deze rol is geërfd van bovenliggend %{type}
+    labels:
+      edge: Voor welk forum geldt deze rol?
+      group: Aan welke groep wil je deze rol verlenen?
+      role: Welke rol wil je verlenen?
+    new: Verleen nieuwe rechten
+    other: Anders
+    type_new: Nieuw recht
   menus:
     grants:
       children:
-        collection: 'Toegestane reacties'
-        item: 'Reacties'
+        collection: Toegestane reacties
+        item: Reacties
       grant_resets:
-        collection: 'Ingetrokken rechten'
-        item: 'Rechten intrekken'
+        collection: Ingetrokken rechten
+        item: Rechten intrekken
       grants:
-        item: 'Rechten toekennen'
+        item: Rechten toekennen
       resource:
-        collection: 'Rechten voor dit object'
-        item: 'Object'
+        collection: Rechten voor dit object
+        item: Object
+  permissions:
+    description: Hier kan je alle actieve rechten zien voor dit object en de onderliggende objecten. Rechten seipelen altijd door naar beneden, maar je kan bepaalde rechten die hoger zijn toegekend intrekken.
+    label: Rechten
   roles:
-    type: "Recht"
-    plural: "Rechten"
-    description: "Rechten gelden ook voor onderliggende items."
-    label: "Leden van deze groep mogen:"
-    in_current_forum: "In forum %{forum}"
-    in_all_forums: "In alle forums"
-    empty: "geen"
-    may: "mogen"
-    types:
-      empty: "geen aanvullende rol"
-      none: "niets zien"
-      spectator: "alleen lezen"
-      participator: "meedoen"
-      initiator: "initiëren"
-      moderator: "modereren"
-      administrator: "beheren"
-      staff: "staff"
+    description: Rechten gelden ook voor onderliggende items.
     descriptions:
-      spectator: "Hiermee kan alleen content bekeken worden. Er kan niet worden gereageerd."
-      participator: "Hiermee kan worden gereageerd op onderwerpen die door moderators geplaatst zijn. Gebruikers kunnen niet zelf onderwerpen starten."
-      initiator: "Hiermee kunnen gebruikers zowel reageren op onderwerpen van anderen, als zelf nieuwe onderwerpen starten."
-      moderator: "Naast reageren en onderwerpen starten kan je hiermee ook sommige reacties van anderen aanpassen of verwijderen."
-      administrator: "De hoogst mogelijke rechtenset. Hiermee kan alles worden bewerkt en bekeken."
-      staff: "Medewerkers van Ontola"
+      administrator: De hoogst mogelijke rechtenset. Hiermee kan alles worden bewerkt en bekeken.
+      initiator: Hiermee kunnen gebruikers zowel reageren op onderwerpen van anderen, als zelf nieuwe onderwerpen starten.
+      moderator: Naast reageren en onderwerpen starten kan je hiermee ook sommige reacties van anderen aanpassen of verwijderen.
+      participator: Hiermee kan worden gereageerd op onderwerpen die door moderators geplaatst zijn. Gebruikers kunnen niet zelf onderwerpen starten.
+      spectator: Hiermee kan alleen content bekeken worden. Er kan niet worden gereageerd.
+      staff: Medewerkers van Ontola
+    empty: geen
+    in_all_forums: In alle forums
+    in_current_forum: In forum %{forum}
+    label: 'Leden van deze groep mogen:'
+    may: mogen
+    plural: Rechten
+    type: Recht
+    types:
+      administrator: beheren
+      empty: geen aanvullende rol
+      initiator: initiëren
+      moderator: modereren
+      none: niets zien
+      participator: meedoen
+      spectator: alleen lezen
+      staff: staff

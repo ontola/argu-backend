@@ -1,9 +1,8 @@
+---
 de:
   argu:
     Argument:
-      description: >-
-        Ein Argument ist ein einzelner Grund, der für oder gegen eine Idee
-        spricht.
+      description: Ein Argument ist ein einzelner Grund, der für oder gegen eine Idee spricht.
       icon: argument
       label: Argument
       plural_label: Argumente
@@ -11,9 +10,7 @@ de:
       label: Blog
       plural_label: Blogs
     BlogPost:
-      description: >-
-        Ein Blogpost ist eine Nachricht oder ein Artikel, in dem etwas geteilt
-        wird.
+      description: Ein Blogpost ist eine Nachricht oder ein Artikel, in dem etwas geteilt wird.
       icon: bullhorn
       label: Aktualisieren
       plural_label: Aktualisierungen
@@ -25,9 +22,7 @@ de:
       label: Ausgewählte Option
       plural_label: Ausgewählte Optionen
     Comment:
-      description: >-
-        Ein Kommentar ist eine schriftliche Antwort oder Anmerkung zu einer
-        Sache.
+      description: Ein Kommentar ist eine schriftliche Antwort oder Anmerkung zu einer Sache.
       icon: comment
       label: Kommentar
       plural_label: Kommentare
@@ -82,19 +77,17 @@ de:
     Grant:
       label: Grant
       plural_label: Erlaubnisse
-    GroupMembership:
-      label: Mitglied
-      plural_label: Mitglieder
     Group:
       label: Gruppe
       plural_label: Gruppen
+    GroupMembership:
+      label: Mitglied
+      plural_label: Mitglieder
     Invite:
       label: Einladen
       plural_label: Einladungen
     Motion:
-      description: >-
-        Eine Idee ist ein Vorschlag, über den man abstimmen und Pro- oder
-        Kontra-Argumente hinzufügen kann.
+      description: Eine Idee ist ein Vorschlag, über den man abstimmen und Pro- oder Kontra-Argumente hinzufügen kann.
       icon: lightbulb-o
       label: Idee
       plural_label: Ideen
@@ -105,7 +98,7 @@ de:
       label: Benachrichtigung
       plural_label: Benachrichtigungen
     Order:
-      type: Bestellung
+      label: Bestellung
       plural_label: Bestellungen
     Page:
       label: Community
@@ -131,9 +124,7 @@ de:
       label: Veröffentlichung
       plural_label: Veröffentlichungen
     Question:
-      description: >-
-        Eine Herausforderung ist ein Problem oder eine Frage, zu der Menschen
-        ihre Ideen einreichen können.
+      description: Eine Herausforderung ist ein Problem oder eine Frage, zu der Menschen ihre Ideen einreichen können.
       icon: question
       label: Herausforderung
       plural_label: Herausforderungen
@@ -195,10 +186,10 @@ de:
       label: Abstimmungen
     destroyPermission:
       label: Zerstören
-    exportStatus:
-      label: Status
     expiresAt:
       label: Verfallsdatum
+    exportStatus:
+      label: Status
     fileUsage:
       label: Verwendung
     followsCount:
@@ -217,36 +208,36 @@ de:
       label: Zuletzt aktiv
     optionsVocab:
       label: Optionen
-    position:
-      label: Standort
     orderDetails:
       label: Einzelheiten
     pdfPage:
       label: Seite
     pinned:
       label: Angepinnt
+    position:
+      label: Standort
     price:
       label: Preis
-    showPermission:
-      label: Anzeigen
-    updatePermission:
-      label: Bearbeiten
-    target:
-      label: Ziel
-    trashPermission:
-      label: Löschen
-    view:
-      label: Ansicht
     rawResource:
       label: Hilfsmittel
     shortnameable:
       label: Artikel
+    showPermission:
+      label: Anzeigen
     submissionData:
       label: Daten
     submissionStatus:
       label: Status
+    target:
+      label: Ziel
+    trashPermission:
+      label: Löschen
     trashed:
       label: Verworfen
+    updatePermission:
+      label: Bearbeiten
+    view:
+      label: Ansicht
     voteableVoteEvent:
       label: Abstimmen
     votesProCount:
@@ -299,8 +290,8 @@ de:
     relevance:
       label: Relevanz
     requiresIntro:
-      label: Name erforderlich
       description: Fordern Sie Benutzer auf, einen Benutzernamen einzugeben, bevor sie Inhalte veröffentlichen.
+      label: Name erforderlich
     sendConfirmationAction:
       label: Bestätigen Sie
     settingsMenu:
@@ -330,9 +321,7 @@ de:
       label: Bild
       plural_label: Bilder
     MediaObject:
-      description: >-
-        Ein Anhang ist eine Datei, die an ein Dokument angehängt wurde, um
-        weitere Informationen zu liefern.
+      description: Ein Anhang ist eine Datei, die an ein Dokument angehängt wurde, um weitere Informationen zu liefern.
       icon: paperclip
       label: Anhang
       plural_label: Anhänge
@@ -371,6 +360,8 @@ de:
   sh:
     datatype:
       label: Datentyp
+    in:
+      label: Optionen
     maxCount:
       label: Maximale Anzahl
     maxInclusive:
@@ -383,12 +374,10 @@ de:
       label: Minimaler Wert
     minLength:
       label: Minimale Länge
-    pattern:
-      label: Regex-Muster
-    in:
-      label: Optionen
     path:
       label: Prädikat
+    pattern:
+      label: Regex-Muster
   skos:
     exactMatch:
       label: Externes iri

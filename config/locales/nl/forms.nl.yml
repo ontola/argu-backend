@@ -1,159 +1,158 @@
+---
 nl:
   forms:
-    staff_only: "Staff only"
-    advanced: "Geavanceerd"
-    theme:
-      label: "Thema"
-      description: "Herlaad de pagina na het wijzigen van het thema"
+    advanced: Geavanceerd
     default:
       about:
-        label: "Over"
-      attachments:
-        label: "Bijlagen"
+        label: Over
       attachment_collection:
-        label: "Bijlagen"
+        label: Bijlagen
+      attachments:
+        label: Bijlagen
       audience:
-        label: "Publiek"
-      bio:
-        label: "Doel"
+        label: Publiek
       confirmation_string:
-        placeholder: "Type 'verwijder' om te bevestigen"
-        label: "Bevestiging"
+        label: Bevestiging
+        placeholder: Type 'verwijder' om te bevestigen
       content:
-        label: "Inhoud"
+        label: Inhoud
       country_code:
-        label: "Land"
+        label: Land
       coupon:
-        label: "Coupon"
-      coupons:
-        label: "Coupons"
+        label: Coupon
       coupon_count:
-        label: "Aantal coupons"
-      cover_photo_attribution:
-        description: "Als jij niet de auteursrechten van de afbeelding bezit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
-        label: "Auteursrechten"
+        label: Aantal coupons
+      coupons:
+        label: Coupons
       cover_photo:
-        label: "Omslagfoto"
+        label: Omslagfoto
       cover_photo_add:
-        label: "Afbeelding toevoegen"
+        label: Afbeelding toevoegen
+      cover_photo_attribution:
+        description: 'Als jij niet de auteursrechten van de afbeelding bezit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep'
+        label: Auteursrechten
       created_at:
-        label: "Gemaakt op"
+        label: Gemaakt op
       creator:
-        label: "Plaatsen als"
+        label: Plaatsen als
       current_password:
-        label: "Huidig wachtwoord"
-      placement:
-        label: "Locatie"
+        label: Huidig wachtwoord
       default_cover_photo:
-        label: "Coverfoto"
+        label: Coverfoto
       default_options_vocab_id:
-        label: "Standaard stemopties"
+        label: Standaard stemopties
       default_profile_photo:
-        label: "Profielfoto"
+        label: Profielfoto
       description:
-        placeholder: "Voer een beschrijving in"
-        label: "Inhoud"
+        label: Inhoud
+        placeholder: Voer een beschrijving in
       dismiss_button:
-        label: "Knoptekst"
+        label: Knoptekst
       dismissable:
-        label: "Sluitbaar"
+        label: Sluitbaar
       display_name:
-        placeholder: "Voer een titel in"
-        label: "Titel"
+        label: Titel
+        placeholder: Voer een titel in
       edge_id:
-        label: "Object"
+        label: Object
       email:
-        placeholder: "email@voorbeeld.nl"
-        label: "Email"
+        label: Email
+        placeholder: email@voorbeeld.nl
       ends_at:
-        label: "Eindigen op"
+        label: Eindigen op
       expires_at:
-        label: "Verloopt op"
+        label: Verloopt op
       filename:
-        label: "Bestandsnaam"
+        label: Bestandsnaam
       follows_count:
-        label: 'Volgers'
-      grant_set:
-        label: 'Rechtenset'
-      grant_set_id:
-        label: 'Rechtenset'
-      grants:
-        label: "Rechten"
+        label: Volgers
       grant_collection:
-        label: "Rechten"
-      group_membership_collection:
-        label: 'Leden'
+        label: Rechten
+      grant_set:
+        label: Rechtenset
+      grant_set_id:
+        label: Rechtenset
+      grants:
+        label: Rechten
       group_id:
-        label: 'Groep'
+        label: Groep
+      group_membership_collection:
+        label: Leden
       header_background:
-        label: "Achtergrond van bovenste balk"
+        label: Achtergrond van bovenste balk
       header_text:
-        label: "Tekstkleur van bovenste balk"
-      is_public:
-        label: "Profiel zichtbaar voor niet-leden"
+        label: Tekstkleur van bovenste balk
       is_draft:
-        label: "Concept"
-      last_accepted:
-        label: "Ik ga akkoord"
-      last_activity_at:
-        label: "Activiteit"
+        label: Concept
+      is_public:
+        label: Profiel zichtbaar voor niet-leden
       language:
-        label: "Taal"
+        label: Taal
+      last_accepted:
+        label: Ik ga akkoord
+      last_activity_at:
+        label: Activiteit
       locale:
-        label: "Taal"
+        label: Taal
       map_question:
-        label: "Grote kaart"
+        label: Grote kaart
       mark_as_important:
-        label: "Markeer als belangrijk"
+        label: Markeer als belangrijk
       name:
-        label: "Naam"
+        label: Naam
       notify:
-        label: 'Verstuur notificatie naar de plaatser'
+        label: Verstuur notificatie naar de plaatser
       options_vocab_id:
-        label: "Stemopties"
-        description: "Wanneer er nieuwe stemopties worden geselecteerd, zijn al geplaatste stemmen niet langer zichtbaar."
-      password_confirmation:
-        helper_text: "Zelfde als hierboven"
-        label: "Wachtwoord bevestigen"
+        description: Wanneer er nieuwe stemopties worden geselecteerd, zijn al geplaatste stemmen niet langer zichtbaar.
+        label: Stemopties
       password:
-        label: "Wachtwoord"
+        label: Wachtwoord
+      password_confirmation:
+        helper_text: Zelfde als hierboven
+        label: Wachtwoord bevestigen
       path:
-        label: "alias"
+        label: alias
       pinned:
-        label: "Vastzetten"
+        label: Vastzetten
+      placement:
+        label: Locatie
       postal_code:
-        label: "Postcode"
+        label: Postcode
       primary_color:
-        label: "Primaire kleur"
+        label: Primaire kleur
       primary_container_node_id:
-        label: "Homepage"
+        label: Homepage
       profile_photo:
-        label: "Profielfoto"
+        label: Profielfoto
       published_at:
-        label: "Publicatie"
+        label: Publicatie
       remember_me:
-        label: "Gegevens onthouden"
+        label: Gegevens onthouden
       require_location:
-        label: "Locatie is verplicht"
+        label: Locatie is verplicht
       secondary_color:
-        label: "Secondaire kleur"
+        label: Secondaire kleur
       show_feed:
-        label: "Toon mijn activiteit en mijn stemmen in mijn profiel"
+        label: Toon mijn activiteit en mijn stemmen in mijn profiel
       status:
-        label: 'Status'
+        label: Status
       styled_headers:
-        label: 'Gebruik primaire kleur voor titels'
-      title:
-        label: "Titel"
+        label: Gebruik primaire kleur voor titels
       time_zone:
-        label: "Tijdzone"
+        label: Tijdzone
+      title:
+        label: Titel
       trash_activity:
-        label: "Toelichting"
+        label: Toelichting
       type:
-        label: "Type"
+        label: Type
       untrash_activity:
-        label: "Toelichting"
+        label: Toelichting
       url:
-        label: "Url"
+        label: Url
       used_coupons:
-        label: "Gebruikte coupons"
+        label: Gebruikte coupons
+    staff_only: Staff only
+    theme:
+      description: Herlaad de pagina na het wijzigen van het thema
+      label: Thema

@@ -1,16 +1,17 @@
+---
 nl:
+  blogs:
+    type_new: Nieuw blog
+  container_nodes:
+    type_new: Nieuwe pagina
+  dashboards:
+    type_new: Nieuw dashboard
   forms:
-    container_nodes:
-      url:
-        description: "Het gedeelte van de url dat komt na %{iri_prefix}/"
     blogs:
       bio:
-        description: "Zet in één zin neer waar het blog voor dient. Deze tekst verschijnt onder de naam van het blog. Maximaal 80 karakters."
-  container_nodes:
-    type_new: "Nieuwe pagina"
-  blogs:
-    type_new: "Nieuw blog"
+        description: Zet in één zin neer waar het blog voor dient. Deze tekst verschijnt onder de naam van het blog. Maximaal 80 karakters.
+    container_nodes:
+      url:
+        description: Het gedeelte van de url dat komt na %{iri_prefix}/
   forums:
-    type_new: "Nieuw forum"
-  dashboards:
-    type_new: "Nieuw dashboard"
+    type_new: Nieuw forum

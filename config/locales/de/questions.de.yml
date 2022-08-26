@@ -1,47 +1,44 @@
+---
 de:
-  questions:
-    type_new: Neue Herausforderung
-    call_to_action:
-      title: Suchen Sie nach guten Ideen?
-      body: Sind Sie auf der Suche nach guten Ideen zu einer brennenden Frage?
-      action: Teilen Sie Ihre Herausforderung
-  enums:
-    questions:
-      default_motion_sorting:
-        popular: Ja-Stimmen (die meisten zuerst)
-        created_at: Erstellungsdatum (neueste zuerst)
-        updated_at: Aktivität (jüngste zuerst)
-        popular_asc: Ja-Stimmen (am wenigsten zuerst)
-        created_at_asc: Erstellungsdatum (älteste zuerst)
-        updated_at_asc: Aktivität (älteste zuerst)
-      default_motion_display:
-        default_display: Standard
-        grid_display: Raster
-        table_display: Tabelle
-  forms:
-    questions:
-      content:
-        placeholder: >-
-          Geben Sie hier Details und Hintergrundinformationen zu Ihrer
-          Herausforderung ein.
-        label: Erläutern Sie Ihre Herausforderung
-      description:
-        placeholder: >-
-          Geben Sie hier Details und Hintergrundinformationen zu Ihrer
-          Herausforderung an.
-      display_name:
-        placeholder: Geben Sie hier den Kern Ihrer Herausforderung ein
-      default_motion_sorting:
-        label: Standard-Sortierung der Ideen
-      default_motion_display:
-        label: Standard-Anzeige
-      title:
-        placeholder: Geben Sie hier den Kern Ihrer Herausforderung ein
-        label: Geben Sie Ihrer Herausforderung einen passenden Titel
   activerecord:
     attributes:
       question:
         default_sortings:
-          popular: Meiste Ja-Stimmen
           created_at: Neuestes
+          popular: Meiste Ja-Stimmen
           updated_at: Zuletzt aktiv
+  enums:
+    questions:
+      default_motion_display:
+        default_display: Standard
+        grid_display: Raster
+        table_display: Tabelle
+      default_motion_sorting:
+        created_at: Erstellungsdatum (neueste zuerst)
+        created_at_asc: Erstellungsdatum (älteste zuerst)
+        popular: Ja-Stimmen (die meisten zuerst)
+        popular_asc: Ja-Stimmen (am wenigsten zuerst)
+        updated_at: Aktivität (jüngste zuerst)
+        updated_at_asc: Aktivität (älteste zuerst)
+  forms:
+    questions:
+      content:
+        label: Erläutern Sie Ihre Herausforderung
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Herausforderung ein.
+      default_motion_display:
+        label: Standard-Anzeige
+      default_motion_sorting:
+        label: Standard-Sortierung der Ideen
+      description:
+        placeholder: Geben Sie hier Details und Hintergrundinformationen zu Ihrer Herausforderung an.
+      display_name:
+        placeholder: Geben Sie hier den Kern Ihrer Herausforderung ein
+      title:
+        label: Geben Sie Ihrer Herausforderung einen passenden Titel
+        placeholder: Geben Sie hier den Kern Ihrer Herausforderung ein
+  questions:
+    call_to_action:
+      action: Teilen Sie Ihre Herausforderung
+      body: Sind Sie auf der Suche nach guten Ideen zu einer brennenden Frage?
+      title: Suchen Sie nach guten Ideen?
+    type_new: Neue Herausforderung

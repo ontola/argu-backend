@@ -1,16 +1,17 @@
+---
 nl:
-  orders:
-    plural: "Bestellingen"
-    type: "Bestelling"
-    type_new: "Afronden"
-    errors:
-      coupon:
-        invalid: "Coupon is niet geldig"
   actions:
     orders:
       create:
-        success: "Je budget is ingediend!"
         errors:
-          budget_exceeded: "Het budget is overschreden"
-          cart_empty: "Nog geen items geselecteerd"
-          submitted: "Je hebt al een budget ingediend"
+          budget_exceeded: Het budget is overschreden
+          cart_empty: Nog geen items geselecteerd
+          submitted: Je hebt al een budget ingediend
+        success: Je budget is ingediend!
+  orders:
+    errors:
+      coupon:
+        invalid: Coupon is niet geldig
+    plural: Bestellingen
+    type: Bestelling
+    type_new: Afronden

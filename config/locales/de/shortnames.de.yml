@@ -1,24 +1,5 @@
+---
 de:
-  shortnames:
-    type_new: Neue Weiterleitung
-    info: >-
-      Wenn Sie eine URL ändern, wird automatisch eine Weiterleitung für die alte
-      URL erstellt. Sie können Weiterleitungen auch manuell einrichten. Auf
-      dieser Seite können Sie alle aktiven Weiterleitungen finden.
-    labels:
-      from: Von
-      to: Nach
-      delete: Löschen
-  forms:
-    shortnames:
-      destination:
-        description: "Geben Sie den Teil der Url ein, der auf %{iri_prefix}/ folgt."
-        label: Ziel
-      shortname:
-        description: >-
-          Keine Leerzeichen. Nur Buchstaben, Zahlen und _. Beginnen Sie mit
-          einem Buchstaben.
-        label: URL
   activerecord:
     errors:
       models:
@@ -26,3 +7,18 @@ de:
           attributes:
             owner:
               blank: This object doesn't exists or belongs to another forum
+  forms:
+    shortnames:
+      destination:
+        description: Geben Sie den Teil der Url ein, der auf %{iri_prefix}/ folgt.
+        label: Ziel
+      shortname:
+        description: Keine Leerzeichen. Nur Buchstaben, Zahlen und _. Beginnen Sie mit einem Buchstaben.
+        label: URL
+  shortnames:
+    info: Wenn Sie eine URL ändern, wird automatisch eine Weiterleitung für die alte URL erstellt. Sie können Weiterleitungen auch manuell einrichten. Auf dieser Seite können Sie alle aktiven Weiterleitungen finden.
+    labels:
+      delete: Löschen
+      from: Von
+      to: Nach
+    type_new: Neue Weiterleitung

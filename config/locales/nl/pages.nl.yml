@@ -1,67 +1,69 @@
+---
 nl:
-  pages:
-    type_new: "Aan de slag"
-    settings:
-      menu:
-        return: "Bekijk %{resource}"
-        general: 'Algemeen'
-        profile: 'Community profiel'
-        advanced: 'Geavanceerd'
-        groups: 'Groepen'
-        grants: 'Rechten'
-        forums: 'Forums'
-        container_nodes: 'Componenten'
-        shortnames: 'Redirects'
-    limit_reached_amount:
-      one: "Je kunt maximaal %{count} community aanmaken."
-      other: "Je kunt maximaal %{count} communities aanmaken."
   actions:
     pages:
       destroy:
-        label: "Community verwijderen"
-        description: "Weet je zeker dat je de volledige community permanent wil verwijderen? Deze actie is niet ongedaan te maken."
-        submit: "Verwijder"
-  enums:
-    pages:
-      header_background:
-        background_primary: "Primaire kleur"
-        background_secondary: "Secondaire kleur"
-        background_white: "Wit"
-      header_text:
-        text_primary: "Primaire kleur"
-        text_secondary: "Secondaire kleur"
-        text_auto: "Automatisch"
-  forms:
-    pages:
-      accepted_terms:
-        label: "Ik ga akkoord met de gebruiksvoorwaarden"
-      display_name:
-        label: "Naam van jouw community"
-      google_tag_manager:
-        label: "Google tag manager"
-      google_uac:
-        label: "Google UA code"
-      last_accepted:
-        label: "Ik ga akkoord met de gebruiksvoorwaarden"
-      matomo_host:
-        label: "Matomo host"
-        description: "Laat leeg om de standaard host te gebruiken"
-      matomo_cdn:
-        label: "Matomo cdn"
-        description: "Laat leeg om de standaard cdn te gebruiken"
-      matomo_site_id:
-        label: "Matomo site id"
-      piwik_pro_host:
-        label: "Piwik Pro host"
-        description: "Bijvoorbeeld 'mijntraject.piwik.pro'"
-      piwik_pro_site_id:
-        label: "Piwik Pro site id"
-      requires_intro:
-        helper_text: "Verplicht gebruikers om een gebruikersnaam in te voeren voordat ze content kunnen plaatsen."
-      shortname:
-        label: "Argu URL"
+        description: Weet je zeker dat je de volledige community permanent wil verwijderen? Deze actie is niet ongedaan te maken.
+        label: Community verwijderen
+        submit: Verwijder
   activerecord:
     attributes:
       page:
-        name: 'Naam'
-        shortname: 'Argu URL'
+        name: Naam
+        shortname: Argu URL
+  enums:
+    pages:
+      header_background:
+        background_primary: Primaire kleur
+        background_secondary: Secondaire kleur
+        background_white: Wit
+      header_text:
+        text_auto: Automatisch
+        text_primary: Primaire kleur
+        text_secondary: Secondaire kleur
+  forms:
+    pages:
+      accepted_terms:
+        label: Ik ga akkoord met de gebruiksvoorwaarden
+      display_name:
+        label: Naam van jouw community
+      google_tag_manager:
+        label: Google tag manager
+      google_uac:
+        label: Google UA code
+      last_accepted:
+        label: Ik ga akkoord met de gebruiksvoorwaarden
+      matomo_cdn:
+        label: Matomo cdn
+        description: Laat leeg om de standaard cdn te gebruiken
+      matomo_host:
+        description: Laat leeg om de standaard host te gebruiken
+        label: Matomo host
+      matomo_site_id:
+        label: Matomo site id
+      piwik_pro_host:
+        description: Bijvoorbeeld 'mijntraject.piwik.pro'
+        label: Piwik Pro host
+      piwik_pro_site_id:
+        label: Piwik Pro site id
+      requires_intro:
+        helper_text: Verplicht gebruikers om een gebruikersnaam in te voeren voordat ze content kunnen plaatsen.
+      shortname:
+        label: Argu URL
+  pages:
+    limit_reached_amount:
+      one: Je kunt maximaal %{count} community aanmaken.
+      other: Je kunt maximaal %{count} communities aanmaken.
+    settings:
+      menu:
+        advanced: Geavanceerd
+        container_nodes: Componenten
+        forums: Forums
+        general: Algemeen
+        grants: Rechten
+        groups: Groepen
+        profile: Community profiel
+        return: Bekijk %{resource}
+        shortnames: Redirects
+        theme: Thema
+    type_new: Aan de slag

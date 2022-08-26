@@ -1,30 +1,23 @@
+---
 de:
   forms:
     grants:
-      description: >-
-        Sie können Gruppen in diesem Forum bestimmte Rechte gewähren. Die Rechte
-        gelten auch für den zugrunde liegenden Inhalt. Die folgenden Rechte sind
-        auf einer höheren Ebene definiert:
+      description: 'Sie können Gruppen in diesem Forum bestimmte Rechte gewähren. Die Rechte gelten auch für den zugrunde liegenden Inhalt. Die folgenden Rechte sind auf einer höheren Ebene definiert:'
       group:
         label: Groep
   grants:
-    type_new: Neue Berechtigung
-    empty: Keine Rechte
-    new: Neue Förderungen zuweisen
-    inherited: Diese Rolle wird von der %{type}geerbt
     all_forums: Alle Foren
-    other: Andere
-    labels:
-      role: Welche Rolle möchten Sie zuweisen?
-      group: Welcher Gruppe möchten Sie diese Rolle zuweisen?
-      edge: Für welches Forum soll diese Rolle gewährt werden?
+    empty: Keine Rechte
     errors:
-      taken: >-
-        Diese Gruppe hat bereits eine Berechtigung für dieses Forum. Bitte
-        entfernen Sie diese Berechtigung, bevor Sie eine neue erstellen.
-  permissions:
-    description: Hier sehen Sie die aktiven Berechtigungen für diese Ressource und ihre (verschachtelten) Kinder. Zuschüsse werden immer an Kinder weitergegeben, aber Sie können bestimmte Berechtigungen zurückziehen, die auf einer höheren Ebene erteilt wurden.
-    label: Berechtigungen
+      taken: Diese Gruppe hat bereits eine Berechtigung für dieses Forum. Bitte entfernen Sie diese Berechtigung, bevor Sie eine neue erstellen.
+    inherited: Diese Rolle wird von der %{type}geerbt
+    labels:
+      edge: Für welches Forum soll diese Rolle gewährt werden?
+      group: Welcher Gruppe möchten Sie diese Rolle zuweisen?
+      role: Welche Rolle möchten Sie zuweisen?
+    new: Neue Förderungen zuweisen
+    other: Andere
+    type_new: Neue Berechtigung
   menus:
     grants:
       children:
@@ -38,38 +31,31 @@ de:
       resource:
         collection: Berechtigungen für diese Ressource
         item: Ressource
+  permissions:
+    description: Hier sehen Sie die aktiven Berechtigungen für diese Ressource und ihre (verschachtelten) Kinder. Zuschüsse werden immer an Kinder weitergegeben, aber Sie können bestimmte Berechtigungen zurückziehen, die auf einer höheren Ebene erteilt wurden.
+    label: Berechtigungen
   roles:
-    type: Grant
-    plural: Erlaubnisse
     description: Die Berechtigungen gelten auch für den zugrunde liegenden Inhalt.
-    label: 'Mitglieder dieser Gruppe können:'
-    in_current_forum: Im Forum %{forum}
-    in_all_forums: In allen Foren
+    descriptions:
+      administrator: Der fortgeschrittenste Satz von Berechtigungen. Damit können Sie alles lesen und bearbeiten.
+      initiator: Hier können Sie sowohl auf Themen anderer reagieren als auch selbst neue Themen erstellen.
+      moderator: Neben dem Reagieren und dem Starten neuer Themen ermöglicht dies auch die Möglichkeit, Inhalte anderer zu bearbeiten und zu löschen.
+      participator: Hier können Sie auf Inhalte reagieren, die von Moderatoren gepostet wurden. Benutzer können selbst keine neuen Themen erstellen.
+      spectator: Damit können Sie Inhalte lesen. Es ist nicht möglich, eigene Reaktionen zu posten.
+      staff: Mitarbeiter von Ontola
     empty: keine
+    in_all_forums: In allen Foren
+    in_current_forum: Im Forum %{forum}
+    label: 'Mitglieder dieser Gruppe können:'
     may: können
+    plural: Erlaubnisse
+    type: Grant
     types:
+      administrator: verwalten
       empty: keine zusätzliche Rolle
-      none: nichts sehen
-      spectator: nur lesen
-      participator: teilnehmen
       initiator: initiieren
       moderator: moderieren
-      administrator: verwalten
+      none: nichts sehen
+      participator: teilnehmen
+      spectator: nur lesen
       staff: Mitarbeiter
-    descriptions:
-      spectator: >-
-        Damit können Sie Inhalte lesen. Es ist nicht möglich, eigene Reaktionen
-        zu posten.
-      participator: >-
-        Hier können Sie auf Inhalte reagieren, die von Moderatoren gepostet
-        wurden. Benutzer können selbst keine neuen Themen erstellen.
-      initiator: >-
-        Hier können Sie sowohl auf Themen anderer reagieren als auch selbst neue
-        Themen erstellen.
-      moderator: >-
-        Neben dem Reagieren und dem Starten neuer Themen ermöglicht dies auch
-        die Möglichkeit, Inhalte anderer zu bearbeiten und zu löschen.
-      administrator: >-
-        Der fortgeschrittenste Satz von Berechtigungen. Damit können Sie alles
-        lesen und bearbeiten.
-      staff: Mitarbeiter von Ontola

@@ -1,45 +1,44 @@
-#English questions translations
-
+---
 en:
-  questions:
-    type_new: "New challenge"
-    call_to_action:
-      title: "Looking for good ideas?"
-      body: "Are you looking for good ideas to a burning question?"
-      action: "Share your challenge"
-  enums:
-    questions:
-      default_motion_sorting:
-        popular: "Votes in favour (most first)"
-        created_at: "Creation date (newest first)"
-        updated_at: "Activity (most recent first)"
-        popular_asc: "Votes in favour (least first)"
-        created_at_asc: "Creation date (oldest first)"
-        updated_at_asc: "Activity (oldest first)"
-      default_motion_display:
-        default_display: "Default"
-        grid_display: "Grid"
-        table_display: "Table"
-  forms:
-    questions:
-      content:
-        placeholder: "Enter details and background information on your challenge here."
-        label: "Explain your challenge"
-      description:
-        placeholder: "Enter details and background information on your challenge here."
-      display_name:
-        placeholder: "Enter the core of your challenge here"
-      default_motion_sorting:
-        label: "Default sorting of ideas"
-      default_motion_display:
-        label: "Default display"
-      title:
-        placeholder: "Enter the core of your challenge here"
-        label: "Give your challenge a fitting title"
   activerecord:
     attributes:
       question:
         default_sortings:
-          popular: "Most votes in favour"
-          created_at: "Newest"
-          updated_at: "Most recently active"
+          created_at: Newest
+          popular: Most votes in favour
+          updated_at: Most recently active
+  enums:
+    questions:
+      default_motion_display:
+        default_display: Default
+        grid_display: Grid
+        table_display: Table
+      default_motion_sorting:
+        created_at: Creation date (newest first)
+        created_at_asc: Creation date (oldest first)
+        popular: Votes in favour (most first)
+        popular_asc: Votes in favour (least first)
+        updated_at: Activity (most recent first)
+        updated_at_asc: Activity (oldest first)
+  forms:
+    questions:
+      content:
+        label: Explain your challenge
+        placeholder: Enter details and background information on your challenge here.
+      default_motion_display:
+        label: Default display
+      default_motion_sorting:
+        label: Default sorting of ideas
+      description:
+        placeholder: Enter details and background information on your challenge here.
+      display_name:
+        placeholder: Enter the core of your challenge here
+      title:
+        label: Give your challenge a fitting title
+        placeholder: Enter the core of your challenge here
+  questions:
+    call_to_action:
+      action: Share your challenge
+      body: Are you looking for good ideas to a burning question?
+      title: Looking for good ideas?
+    type_new: New challenge

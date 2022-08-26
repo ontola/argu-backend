@@ -1,9 +1,10 @@
+---
 de:
-  cart_details:
-    type_new: Option auswählen
   actions:
     cart_details:
       create:
         submit: hinzufügen
       destroy:
         submit: Entfernen
+  cart_details:
+    type_new: Option auswählen

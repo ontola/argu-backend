@@ -1,36 +1,26 @@
-# English argument translations
-
+---
 en:
   forms:
     forums:
       bio:
-        label: "Forum goal"
-        description: "Describe what the forum is for. This text appears below the name of the forum."
+        description: Describe what the forum is for. This text appears below the name of the forum.
       naam:
-        label: "Forum name"
+        label: Forum name
       shortname:
-        label: "URL"
+        label: URL
   forums:
     settings:
-      title: "Forum settings"
-      general: "General settings"
-      profile: "Forum profile"
+      general: General settings
+      manager: Manager
       menu:
-        return: "View %{resource}"
-        general: "General"
-        advanced: 'Advanced'
-        groups: 'Groups'
-        privacy: 'Privacy'
-        grants: 'Grants'
-        shortnames: 'Argu URLs'
-      privacy: "Privacy"
-      manager: "Manager"
-      shortnames: 'Argu URLs'
-    statistics:
-      title: "Statistics"
-      questions: "Challenges"
-      motions: "Ideas"
-      cities:
-        title: "Cities of users"
-        info: "Based on data provided optionally by users"
-        unknown: "Unknown"
+        advanced: Advanced
+        general: General
+        grants: Grants
+        groups: Groups
+        privacy: Privacy
+        return: View %{resource}
+        shortnames: Argu URLs
+      privacy: Privacy
+      profile: Forum profile
+      shortnames: Argu URLs
+      title: Forum settings

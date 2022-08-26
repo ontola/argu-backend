@@ -1,228 +1,223 @@
-
+---
 nl:
-  collections:
-    container_nodes:
-      action_dialog: "Welk instrument wil je inzetten?"
-    discussions:
-      action_dialog: "Welk instrument wil je inzetten?"
-  forms:
-    custom_actions:
-      raw_label:
-        label: "Label"
-      raw_description:
-        label: "Beschrijving"
-      raw_submit_label:
-        label: "Knoptekst"
-      href:
-        label: "URL"
   actions:
-    plural: "Acties"
-    status:
-      CompletedActionStatus: "Deze actie is al uitgevoerd"
-      ExpiredActionStatus: "Deze actie is niet langer beschikbaar"
-      DisabledActionStatus: "Deze actie is momenteel niet beschikbaar"
-    default:
-      create:
-        label: "Voeg %{type} toe"
-        success: 'Succesvol aangemaakt'
-        submit: "Opslaan"
-      destroy:
-        label: "Verwijder %{type}"
-        description: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
-        success: 'Succesvol verwijderd'
-        submit: "Verwijder"
-      update:
-        label: "Bewerken"
-        success: 'Succesvol opgeslagen'
-        submit: "Opslaan"
-      create_comment:
-        label: "Reageer"
-      move:
-        label: "Verplaatsen"
-        description: "Alle onderliggende items zullen mee verplaatst worden."
-        submit: "Verplaats"
-      publish:
-        label: "Publiceer"
-        submit: "Publiceer"
-        description: "Concept versie, nog niet gepubliceerd."
-      trash:
-        label: "Verwijderen"
-        description: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."
-        submit: "Verwijder"
-      untrash:
-        label: "Terugplaatsen"
-        description: "Dit object zal weer zichtbaar zijn in de publieke discussie."
-        submit: "Plaats terug"
     access_tokens:
       create:
-        label: "Inloggen"
-        submit: "Ga verder"
+        label: Inloggen
+        submit: Ga verder
     blogs:
       create:
-        description: "Houd mensen op de hoogte via blog posts."
+        description: Houd mensen op de hoogte via blog posts.
     budget_shops:
       create:
-        description: "Laat mensen een budget verdelen."
+        description: Laat mensen een budget verdelen.
     cart_details:
       create:
         errors:
-          already_added: "Dit item is al geselecteerd"
+          already_added: Dit item is al geselecteerd
       show:
         errors:
-          no_parent: "Parent ontbreekt"
+          no_parent: Parent ontbreekt
     con_arguments:
       create_vote:
-        submit: "Upvote"
+        submit: Upvote
       destroy_vote:
-        submit: "Upvote"
+        submit: Upvote
     confirmations:
       create:
-        label: "Bevestigingslink opnieuw versturen"
-        submit: "Verstuur"
+        label: Bevestigingslink opnieuw versturen
+        submit: Verstuur
       update:
-        label: "Email bevestigen"
-        submit: "Bevestig"
+        label: Email bevestigen
+        submit: Bevestig
     conversions:
       create:
-        label: "Omzetten"
-        description: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
-        submit: "Zet om"
+        description: Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn.
         errors:
-          invalid_class: "No allowed to convert to this type"
+          invalid_class: No allowed to convert to this type
+        label: Omzetten
+        submit: Zet om
     current_actors:
       create:
         errors:
-          unconfirmed: "Dit account is nog niet bevestigd"
+          unconfirmed: Dit account is nog niet bevestigd
     dashboards:
       create:
-        description: "Een dashboard kan widgets bevatten."
+        description: Een dashboard kan widgets bevatten.
+    default:
+      create:
+        label: Voeg %{type} toe
+        submit: Opslaan
+        success: Succesvol aangemaakt
+      create_comment:
+        label: Reageer
+      destroy:
+        description: Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken.
+        label: Verwijder %{type}
+        submit: Verwijder
+        success: Succesvol verwijderd
+      move:
+        description: Alle onderliggende items zullen mee verplaatst worden.
+        label: Verplaatsen
+        submit: Verplaats
+      publish:
+        description: Concept versie, nog niet gepubliceerd.
+        label: Publiceer
+        submit: Publiceer
+      trash:
+        description: Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken.
+        label: Verwijderen
+        submit: Verwijder
+      untrash:
+        description: Dit object zal weer zichtbaar zijn in de publieke discussie.
+        label: Terugplaatsen
+        submit: Plaats terug
+      update:
+        label: Bewerken
+        submit: Opslaan
+        success: Succesvol opgeslagen
     direct_messages:
       create:
-        label: "Verstuur bericht"
-        description: "Verstuur een e-mail naar %{creator}, de plaatser van dit item. Als hij of zij reageert op de e-mail, dan komt het antwoord direct in jouw mailbox en kan je het gesprek buiten dit platform verder voeren."
-        submit: "Verstuur"
+        description: Verstuur een e-mail naar %{creator}, de plaatser van dit item. Als hij of zij reageert op de e-mail, dan komt het antwoord direct in jouw mailbox en kan je het gesprek buiten dit platform verder voeren.
         disabled:
-          guest: "Log in om een bericht te kunnen versturen."
-          not_allowed: "De indiener staat contact via e-mail niet toe."
+          guest: Log in om een bericht te kunnen versturen.
+          not_allowed: De indiener staat contact via e-mail niet toe.
+        label: Verstuur bericht
+        submit: Verstuur
     follows:
       create:
-        description: "Wanneer wil je updates ontvangen over %{item}?"
-        label: "Updates ontvangen"
+        description: Wanneer wil je updates ontvangen over %{item}?
+        label: Updates ontvangen
       destroy:
-        submit: "Niet meer volgen"
-      news:
-        description: "Wil je meldingen ontvangen voor belangrijke reacties op %{item}?"
-        label: "Meldingen bevestigen"
-        submit: "Bevestig"
-      reactions:
-        description: "Wil je meldingen ontvangen voor alle reacties op %{item}?"
-        label: "Meldingen bevestigen"
-        submit: "Bevestig"
+        submit: Niet meer volgen
       never:
-        description: "Wil je geen meldingen ontvangen voor %{item}?"
-        label: "Uitschrijven bevestigen"
-        submit: "Bevestig"
+        description: Wil je geen meldingen ontvangen voor %{item}?
+        label: Uitschrijven bevestigen
+        submit: Bevestig
+      news:
+        description: Wil je meldingen ontvangen voor belangrijke reacties op %{item}?
+        label: Meldingen bevestigen
+        submit: Bevestig
+      reactions:
+        description: Wil je meldingen ontvangen voor alle reacties op %{item}?
+        label: Meldingen bevestigen
+        submit: Bevestig
     forums:
       create:
-        description: "Een verzamelplaats voor verschillende soorten discussies."
+        description: Een verzamelplaats voor verschillende soorten discussies.
     group_memberships:
       create:
         errors:
-          invalid_token: "Token is niet correct. Probeer het opnieuw."
+          invalid_token: Token is niet correct. Probeer het opnieuw.
       destroy:
         errors:
-          last_admin: "Je kan het laatste lid van een admin groep niet verwijderen."
+          last_admin: Je kan het laatste lid van een admin groep niet verwijderen.
     motions:
       create:
-        description: "Ontdek hoe mensen denken over een bepaald idee."
+        description: Ontdek hoe mensen denken over een bepaald idee.
+    passwords:
+      create:
+        label: Wachtwoord vergeten?
+        submit: Verstuur
+      update:
+        label: Stel je wachtwoord in
     phases:
       destroy:
         errors:
-          current_phase: "Dit is de huidige fase. Deze kan je niet verwijderen."
-    policy_agreements:
-      create:
-        submit: "Accepteer"
-    pro_arguments:
-      create_vote:
-        submit: "Upvote"
-      destroy_vote:
-        submit: "Upvote"
-    projects:
-      create:
-        description: "Betrek mensen over een langere periode."
-    questions:
-      create:
-        description: "Deel een vraagstuk, verzamel ideeën en neem een besluit."
-    registrations:
-      create:
-        label: "Registreren"
-        submit: "Bevestig"
-    sessions:
-      create:
-        label: "Inloggen of registeren"
-        submit: "Bevestig"
-    shortnames:
-      create:
-        errors:
-          invalid_type: "Je kan geen alias aanmaken voor dit type."
-      update:
-        errors:
-          primary: "Je kan primaire aliases niet aanpassen."
-      destroy:
-        errors:
-          primary: "Je kan primaire aliases niet verwijderen."
-    submissions:
-      create:
-        label: "Enquête invullen"
-        submit: "Start"
-    surveys:
-      create:
-        description: "Stel een lijst samen van gesloten en open vragen."
-    topics:
-      create:
-        description: "Start een gesprek over een bepaald onderwerp."
-    users:
-      update:
-        label: "Instellingen"
-      profile:
-        submit: "Opslaan"
-      notifications:
-        label: "Meldingen"
-        description: "Wanneer wil je een email ontvangen over items die je volgt? Beheerders van een community kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt."
-        submit: "Opslaan"
-      setup:
-        label: "Welkom!"
-        submit: "Doorgaan"
-      authentication:
-        label: "Authenticatie"
-        submit: "Opslaan"
-      privacy:
-        label: "Privacy"
-        submit: "Opslaan"
-      destroy:
-        label: "Account verwijderen"
-        description: "Weet je zeker dat je **%{name}** wil verwijderen? De content geplaatst door dit account wordt geanonimiseerd."
-    votes:
-      create:
-        errors:
-          not_started: "Stemmen is nog niet mogelijk"
-          finished: "Stemmen is niet langer mogelijk"
-    setups:
-      update:
-        label: "Welkom!"
-        submit: "Doorgaan"
-    passwords:
-      create:
-        label: "Wachtwoord vergeten?"
-        submit: "Verstuur"
-      update:
-        label: "Stel je wachtwoord in"
+          current_phase: Dit is de huidige fase. Deze kan je niet verwijderen.
     placements:
       create:
         errors:
-          wrong_type: "Niet mogelijk voor deze parent"
+          wrong_type: Niet mogelijk voor deze parent
+    plural: Acties
+    policy_agreements:
+      create:
+        submit: Accepteer
+    pro_arguments:
+      create_vote:
+        submit: Upvote
+      destroy_vote:
+        submit: Upvote
+    projects:
+      create:
+        description: Betrek mensen over een langere periode.
+    questions:
+      create:
+        description: Deel een vraagstuk, verzamel ideeën en neem een besluit.
+    registrations:
+      create:
+        label: Registreren
+        submit: Bevestig
+    sessions:
+      create:
+        label: Inloggen of registeren
+        submit: Bevestig
+    setups:
+      update:
+        label: Welkom!
+        submit: Doorgaan
+    shortnames:
+      create:
+        errors:
+          invalid_type: Je kan geen alias aanmaken voor dit type.
+      destroy:
+        errors:
+          primary: Je kan primaire aliases niet verwijderen.
+      update:
+        errors:
+          primary: Je kan primaire aliases niet aanpassen.
+    status:
+      CompletedActionStatus: Deze actie is al uitgevoerd
+      DisabledActionStatus: Deze actie is momenteel niet beschikbaar
+      ExpiredActionStatus: Deze actie is niet langer beschikbaar
+    submissions:
+      create:
+        label: Enquête invullen
+        submit: Start
+    surveys:
+      create:
+        description: Stel een lijst samen van gesloten en open vragen.
+    topics:
+      create:
+        description: Start een gesprek over een bepaald onderwerp.
     unlocks:
       create:
-        label: 'Je account is vergrendeld'
-        description: 'Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je je account kunt ontgrendelen.'
-        submit: "Verstuur"
+        description: Vul je e-mailadres in en wij zullen jou een mail sturen met een link waarmee je je account kunt ontgrendelen.
+        label: Je account is vergrendeld
+        submit: Verstuur
+    users:
+      authentication:
+        label: Authenticatie
+        submit: Opslaan
+      destroy:
+        description: Weet je zeker dat je **%{name}** wil verwijderen? De content geplaatst door dit account wordt geanonimiseerd.
+        label: Account verwijderen
+      notifications:
+        description: Wanneer wil je een email ontvangen over items die je volgt? Beheerders van een community kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt.
+        label: Meldingen
+        submit: Opslaan
+      privacy:
+        label: Privacy
+        submit: Opslaan
+      profile:
+        submit: Opslaan
+      setup:
+        label: Welkom!
+        submit: Doorgaan
+      update:
+        label: Instellingen
+  collections:
+    container_nodes:
+      action_dialog: Welk instrument wil je inzetten?
+    discussions:
+      action_dialog: Welk instrument wil je inzetten?
+  forms:
+    custom_actions:
+      href:
+        label: URL
+      raw_description:
+        label: Beschrijving
+      raw_label:
+        label: Label
+      raw_submit_label:
+        label: Knoptekst

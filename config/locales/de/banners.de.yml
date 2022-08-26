@@ -1,15 +1,16 @@
+---
 de:
+  banner_dismissals:
+    type: Entlassung
+  banner_managements:
+    plural: Banner
+    type: Banner
   banners:
     type_new: Neue Fahne
   enums:
     banners:
       audience:
-        guests: Gäste
-        users: Benutzer
-        members: Mitglieder
         everyone: Alle
-  banner_managements:
-    type: Banner
-    plural: Banner
-  banner_dismissals:
-    type: Entlassung
+        guests: Gäste
+        members: Mitglieder
+        users: Benutzer

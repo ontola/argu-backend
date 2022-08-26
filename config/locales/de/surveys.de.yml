@@ -1,6 +1,5 @@
+---
 de:
-  surveys:
-    type_new: Neue Umfrage
   enums:
     surveys:
       form_type:
@@ -10,16 +9,16 @@ de:
     surveys:
       action_body:
         label: Formular
-      external_iri:
-        placeholder: https://[benutzername].typeform.com/to/[umfrageId]
-        helper_text: >-
-          Weitere Informationen zur Erstellung von Umfragen finden Sie unter
-          [unser Helpdesk] (https://argu.co/argu/t/10509)
-        label: Typeform url
-      form_type:
-        label: Typ
       coupon_required:
         label: Einladung erforderlich
+      external_iri:
+        helper_text: Weitere Informationen zur Erstellung von Umfragen finden Sie unter [unser Helpdesk] (https://argu.co/argu/t/10509)
+        label: Typeform url
+        placeholder: https://[benutzername].typeform.com/to/[umfrageId]
+      form_type:
+        label: Typ
   menus:
     surveys:
       fields: Fragen
+  surveys:
+    type_new: Neue Umfrage

@@ -1,381 +1,383 @@
+---
 nl:
   argu:
     Argument:
-      description: "Een argument is een enkele reden voor of tegen een idee."
-      icon: "argument"
-      label: "Argument"
-      plural_label: "Argumenten"
+      description: Een argument is een enkele reden voor of tegen een idee.
+      icon: argument
+      label: Argument
+      plural_label: Argumenten
     Blog:
-      label: "Blog"
-      plural_label: "Blogs"
+      label: Blog
+      plural_label: Blogs
     BlogPost:
-      description: "Een Blogpost is een bericht of artikel waarin iets wordt gedeeld."
-      icon: "bullhorn"
-      label: "Update"
-      plural_label: "Updates"
+      description: Een Blogpost is een bericht of artikel waarin iets wordt gedeeld.
+      icon: bullhorn
+      label: Update
+      plural_label: Updates
     BudgetShop:
-      icon: "shopping-cart"
-      label: "Budget"
-      plural_label: "Budgetten"
+      icon: shopping-cart
+      label: Budget
+      plural_label: Budgetten
     CartDetail:
-      label: "Geselecteerde optie"
-      plural_label: "Geselecteerde opties"
+      label: Geselecteerde optie
+      plural_label: Geselecteerde opties
     Comment:
-      description: "Een reactie is een geschreven antwoord of notitie over een ding."
-      icon: "comment"
-      label: "Reactie"
-      plural_label: "Reacties"
+      description: Een reactie is een geschreven antwoord of notitie over een ding.
+      icon: comment
+      label: Reactie
+      plural_label: Reacties
     ConArgument:
-      description: "Een tegenargument is een reden om ergens tegen te zijn."
-      icon: "minus"
-      label: "Nadeel"
-      plural_label: "Nadelen"
+      description: Een tegenargument is een reden om ergens tegen te zijn.
+      icon: minus
+      label: Nadeel
+      plural_label: Nadelen
     ContainerNode:
-      label: "Component"
-      plural_label: "Componenten"
+      label: Component
+      plural_label: Componenten
     Conversion:
-      label: "Conversie"
-      plural_label: "Conversies"
+      label: Conversie
+      plural_label: Conversies
     CouponBatch:
-      label: "Coupons"
-      plural_label: "Coupons"
+      label: Coupons
+      plural_label: Coupons
     CustomAction:
-      label: "Action"
-      plural_label: "Actions"
+      label: Action
+      plural_label: Actions
     CustomForm:
-      label: "Formulier"
-      plural_label: "Formulieren"
+      label: Formulier
+      plural_label: Formulieren
     CustomFormField:
-      label: "Veld"
-      plural_label: "Velden"
+      label: Veld
+      plural_label: Velden
     Dashboard:
-      label: "Dashboard"
-      plural_label: "Dashboards"
+      label: Dashboard
+      plural_label: Dashboards
     Decision:
-      icon: "Besluit"
-      label: "Decision"
-      plural_label: "Besluiten"
+      icon: Besluit
+      label: Decision
+      plural_label: Besluiten
     DirectMessage:
-      label: "Bericht"
-      plural_label: "Berichten"
+      label: Bericht
+      plural_label: Berichten
     Discussion:
-      label: 'Onderwerp'
-      plural_label: 'Onderwerpen'
+      label: Onderwerp
+      plural_label: Onderwerpen
     EmailAddress:
-      label: "E-mail adres"
-      plural_label: "E-mail adressen"
+      label: E-mail adres
+      plural_label: E-mail adressen
     Export:
-      label: "Export"
-      plural_label: "Exports"
+      label: Export
+      plural_label: Exports
     Follow:
-      label: "Meldingen"
-      plural_label: "Meldingen"
+      label: Meldingen
+      plural_label: Meldingen
     Form:
-      label: "Forum"
-      plural_label: "Forums"
+      label: Forum
+      plural_label: Forums
     Grant:
-      label: "Recht"
-      plural_label: "Rechten"
-    GroupMembership:
-      label: "Lid"
-      plural_label: "Leden"
+      label: Recht
+      plural_label: Rechten
     Group:
-      label: "Groep"
-      plural_label: "Groepen"
+      label: Groep
+      plural_label: Groepen
+    GroupMembership:
+      label: Lid
+      plural_label: Leden
     Invite:
-      label: "Uitnodiging"
-      plural_label: "Uitnodigingen"
+      label: Uitnodiging
+      plural_label: Uitnodigingen
     Motion:
-      description: "Een idee is een voorstel waar je voor of tegen kan zijn."
-      icon: "lightbulb-o"
-      label: "Idee"
-      plural_label: "Ideeën"
+      description: Een idee is een voorstel waar je voor of tegen kan zijn.
+      icon: lightbulb-o
+      label: Idee
+      plural_label: Ideeën
     Move:
-      label: "Verplaatsing"
-      plural_label: "Verplaatsingen"
+      label: Verplaatsing
+      plural_label: Verplaatsingen
     Notification:
-      label: "Melding"
-      plural_label: "Meldingen"
+      label: Melding
+      plural_label: Meldingen
     Order:
-      label: "Bestelling"
-      plural_label: "Bestellingen"
+      label: Bestelling
+      plural_label: Bestellingen
     Page:
-      label: "Community"
-      plural_label: "Communities"
+      label: Community
+      plural_label: Communities
     Phase:
-      icon: "calendar-o"
-      label: "Fase"
-      plural_label: "Fases"
+      icon: calendar-o
+      label: Fase
+      plural_label: Fases
     Placement:
-      icon: "map-marker"
-      label: "Locatie"
-      plural_label: "Locaties"
+      icon: map-marker
+      label: Locatie
+      plural_label: Locaties
     ProArgument:
-      description: "Een voorargument is een reden om ergens voor te zijn."
-      icon: "plus"
-      label: "Voordeel"
-      plural_label: "Voordelen"
+      description: Een voorargument is een reden om ergens voor te zijn.
+      icon: plus
+      label: Voordeel
+      plural_label: Voordelen
     Project:
-      icon: "rocket"
-      label: "Traject"
-      plural_label: "Trajecten"
+      icon: rocket
+      label: Traject
+      plural_label: Trajecten
     Publication:
-      label: "Publicatie"
-      plural_label: "Publicaties"
+      label: Publicatie
+      plural_label: Publicaties
     Question:
-      description: "Een uitdaging is een vraagstuk of probleem waaronder ideeën kunnen worden geplaatst."
-      icon: "question"
-      label: "Uitdaging"
-      plural_label: "Uitdagingen"
+      description: Een uitdaging is een vraagstuk of probleem waaronder ideeën kunnen worden geplaatst.
+      icon: question
+      label: Uitdaging
+      plural_label: Uitdagingen
     Shortname:
-      label: 'Redirect'
-      plural_label: 'Redirects'
+      label: Redirect
+      plural_label: Redirects
     Submission:
-      icon: "pencil"
-      label: "Reactie"
-      plural_label: "Reacties"
+      icon: pencil
+      label: Reactie
+      plural_label: Reacties
     SubmissionData:
-      label: "Data"
+      label: Data
     Survey:
-      icon: "list-ul"
-      label: "Enquête"
-      plural_label: "Enquêtes"
+      icon: list-ul
+      label: Enquête
+      plural_label: Enquêtes
     Term:
-      label: "Term"
-      plural_label: "Termen"
+      label: Term
+      plural_label: Termen
     Topic:
-      description: "Een topic is een gesprek over een specifiek onderwerp."
-      icon: "comments"
-      label: "Thread"
-      plural_label: "Threads"
+      description: Een topic is een gesprek over een specifiek onderwerp.
+      icon: comments
+      label: Thread
+      plural_label: Threads
     Vocabulary:
-      label: "Vocabulaire"
-      plural_label: "Vocabulaires"
+      label: Vocabulaire
+      plural_label: Vocabulaires
     Vote:
-      label: "Stem"
-      plural_label: "Stemmen"
+      label: Stem
+      plural_label: Stemmen
     VoteEvent:
-      label: "Stemronde"
-      plural_label: "Stemrondes"
+      label: Stemronde
+      plural_label: Stemrondes
     alias:
-      label: "Alias"
+      label: Alias
     confirmed:
-      label: "Bevestigd"
+      label: Bevestigd
     copyUrl:
-      label: "Kopieer"
+      label: Kopieer
     couponCount:
-      label: "Aantal"
+      label: Aantal
     createBlogPostPermission:
-      label: "Updates"
+      label: Updates
     createCommentPermission:
-      label: "Reacties"
+      label: Reacties
     createConArgumentPermission:
-      label: "Nadelen"
+      label: Nadelen
     createForumPermission:
-      label: "Forums"
+      label: Forums
     createMotionPermission:
-      label: "Moties"
+      label: Moties
     createPermission:
-      label: "Aanmaken"
+      label: Aanmaken
     createProArgumentPermission:
-      label: "Voordelen"
+      label: Voordelen
     createQuestionPermission:
-      label: "Uitdagingen"
+      label: Uitdagingen
     createVotePermission:
-      label: "Stemmen"
+      label: Stemmen
     destroyPermission:
-      label: "Verwijderen"
-    exportStatus:
-      label: "Status"
+      label: Verwijderen
     expiresAt:
-      label: "Verloopdatum"
+      label: Verloopdatum
+    exportStatus:
+      label: Status
     fileUsage:
-      label: "Gebruik"
+      label: Gebruik
     followsCount:
-      label: "Volgers"
+      label: Volgers
     formFieldType:
-      label: "Veldtype"
+      label: Veldtype
     grantSet:
-      label: "Rechtenset"
+      label: Rechtenset
     grantedGroups:
-      label: "Toegang"
+      label: Toegang
     group:
-      label: "Groep"
+      label: Groep
     isDraft:
-      label: "Concept"
+      label: Concept
     lastActivityAt:
-      label: "Laatst actief"
-    position:
-      label: "Positie"
+      label: Laatst actief
     optionsVocab:
-      label: "Opties"
+      label: Opties
     orderDetails:
-      label: "Details"
+      label: Details
     pdfPage:
-      label: "Pagina"
+      label: Pagina
     pinned:
-      label: "Vastgezet"
+      label: Vastgezet
+    position:
+      label: Positie
     price:
-      label: "Prijs"
-    showPermission:
-      label: "Bekijken"
-    updatePermission:
-      label: "Bewerken"
-    trashPermission:
-      label: "Verbergen"
-    view:
-      label: "Weergave"
+      label: Prijs
     rawResource:
-      label: "Resource"
+      label: Resource
     shortnameable:
-      label: "Item"
+      label: Item
+    showPermission:
+      label: Bekijken
     submissionData:
-      label: "Data"
+      label: Data
     submissionStatus:
-      label: "Status"
+      label: Status
     target:
-      label: "Doelwit"
+      label: Doelwit
+    trashPermission:
+      label: Verbergen
     trashed:
-      label: "Verborgen"
+      label: Verborgen
+    updatePermission:
+      label: Bewerken
+    view:
+      label: Weergave
     voteableVoteEvent:
-      label: "Stemming"
+      label: Stemming
     votesProCount:
-      label: "Stemmen voor"
+      label: Stemmen voor
   dbo:
     filename:
-      label: "Bestandsnaam"
+      label: Bestandsnaam
   foaf:
     name:
-      label: "Naam"
+      label: Naam
   ontola:
     Banner:
-      label: 'Banner'
-      plural_label: 'Banners'
+      label: Banner
+      plural_label: Banners
     MenuItem:
-      label: "Menu item"
-      plural_label: "Menu items"
+      label: Menu item
+      plural_label: Menu items
     OtpSecret:
-      label: 'Tweestapsverificatie'
+      label: Tweestapsverificatie
     SearchResult:
-      label: "Zoekresultaat"
+      label: Zoekresultaat
     audience:
-      label: "Publiek"
+      label: Publiek
     destroyAction:
-      label: "Verwijderen"
+      label: Verwijderen
     helperText:
-      label: "Hulptekst"
+      label: Hulptekst
     href:
-      label: "Url"
+      label: Url
     makePrimaryAction:
-      label: "Maak primair"
+      label: Maak primair
     maxCount:
-      label: "Maximaal aantal bepaalt door"
+      label: Maximaal aantal bepaalt door
     maxInclusive:
-      label: "Maximale waarde bepaalt door"
+      label: Maximale waarde bepaalt door
     maxInclusiveLabel:
-      label: "Label maximale waarde"
+      label: Label maximale waarde
     maxLength:
-      label: "Maximale lengte bepaalt door"
+      label: Maximale lengte bepaalt door
     minCount:
-      label: "Minimaal aantal bepaalt door"
+      label: Minimaal aantal bepaalt door
     minInclusive:
-      label: "Minimale waarde bepaalt door"
+      label: Minimale waarde bepaalt door
     minInclusiveLabel:
-      label: "Label minimale waarde"
+      label: Label minimale waarde
     minLength:
-      label: "Minimale lengte bepaalt door"
+      label: Minimale lengte bepaalt door
     publishAction:
-      label: "Publiceer"
+      label: Publiceer
     relevance:
-      label: "Relevantie"
+      label: Relevantie
     requiresIntro:
-      label: "Naam verplicht"
+      description: Gebruikers moeten een gebruikersnaam invoeren voordat ze content kunnen plaatsen.
+      label: Naam verplicht
     sendConfirmationAction:
-      label: "Bevestigen"
+      label: Bevestigen
     settingsMenu:
-      label: "Instellingen"
+      label: Instellingen
     shIn:
-      label: "Opties bepaalt door"
+      label: Opties bepaalt door
     text:
-      label: "Tekst"
+      label: Tekst
     updateAction:
-      label: "Bewerken"
+      label: Bewerken
     widgetSize:
-      label: "Breedte"
+      label: Breedte
   org:
     hasMember:
-      label: "Leden"
+      label: Leden
     member:
-      label: "Lid"
+      label: Lid
   schema:
     CreativeWork:
-      label: "Document"
-      plural_label: "Documenten"
+      label: Document
+      plural_label: Documenten
     GeoCoordinates:
-      label: "Locatie"
-      plural_label: "Locaties"
+      label: Locatie
+      plural_label: Locaties
     ImageObject:
-      icon: "file-image-o"
-      label: "Plaatje"
-      plural_label: "Plaatjes"
+      icon: file-image-o
+      label: Plaatje
+      plural_label: Plaatjes
     MediaObject:
-      description: 'Een bijlage is een bestand dat bij een document gevoegd is om meer informatie te verschaffen.'
-      icon: "paperclip"
-      label: "Bijlage"
-      plural_label: "Bijlages"
+      description: Een bijlage is een bestand dat bij een document gevoegd is om meer informatie te verschaffen.
+      icon: paperclip
+      label: Bijlage
+      plural_label: Bijlages
     Offer:
-      label: "Optie"
-      plural_label: "Opties"
+      label: Optie
+      plural_label: Opties
     Person:
-      label: "Persoon"
-      plural_label: "Mensen"
+      label: Persoon
+      plural_label: Mensen
     Thing:
-      label: "Object"
-      plural_label: "Objecten"
+      label: Object
+      plural_label: Objecten
     Widget:
-      label: "Widget"
-      plural_label: "Widgets"
+      label: Widget
+      plural_label: Widgets
     creator:
-      label: "Plaatser"
+      label: Plaatser
     dateCreated:
-      label: "Aanmaakdatum"
+      label: Aanmaakdatum
     datePublished:
-      label: "Publicatiedatum"
+      label: Publicatiedatum
     downloadUrl:
-      label: "Download"
+      label: Download
     email:
-      label: "Email"
+      label: Email
     name:
-      label: "Naam"
+      label: Naam
     option:
-      label: "Optie"
+      label: Optie
     orderedItem:
-      label: "Item"
+      label: Item
     uploadDate:
-      label: "Upload datum"
+      label: Upload datum
     url:
-      label: "Url"
+      label: Url
   sh:
     datatype:
-      label: "Data type"
-    maxCount:
-      label: "Maximaal aantal"
-    maxInclusive:
-      label: "Maximale waarde"
-    maxLength:
-      label: "Maximale lengte"
-    minCount:
-      label: "Minimaal aantal"
-    minInclusive:
-      label: "Minimale waarde"
-    minLength:
-      label: "Minimale lengte"
-    pattern:
-      label: "Regex patroon"
+      label: Data type
     in:
-      label: "Opties"
+      label: Opties
+    maxCount:
+      label: Maximaal aantal
+    maxInclusive:
+      label: Maximale waarde
+    maxLength:
+      label: Maximale lengte
+    minCount:
+      label: Minimaal aantal
+    minInclusive:
+      label: Minimale waarde
+    minLength:
+      label: Minimale lengte
     path:
-      label: "Predicate"
+      label: Predicate
+    pattern:
+      label: Regex patroon
   skos:
     exactMatch:
-      label: "Externe iri"
+      label: Externe iri

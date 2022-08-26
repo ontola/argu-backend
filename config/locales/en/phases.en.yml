@@ -1,11 +1,12 @@
+---
 en:
-  phases:
-    type_new: "New phase"
   forms:
     phases:
       position:
-        label: "Position"
+        label: Position
       resource_type:
-        label: "Type"
+        label: Type
       time:
-        label: "Time"
+        label: Time
+  phases:
+    type_new: New phase

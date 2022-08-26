@@ -1,23 +1,24 @@
+---
 nl:
   actions:
     email_addresses:
       confirm:
-        completed: "Dit adres is al bevestigd"
+        completed: Dit adres is al bevestigd
       create:
-        submit: "Voeg toe"
+        submit: Voeg toe
       destroy:
-        primary: "Je kan het primaire adres niet verwijderen"
+        primary: Je kan het primaire adres niet verwijderen
       make_primary:
-        completed: "Dit is al het primaire adres"
-        unconfirmed: "Dit adres is nog niet bevestigd"
-        submit: "Maak primair e-mail adres"
+        completed: Dit is al het primaire adres
+        submit: Maak primair e-mail adres
+        unconfirmed: Dit adres is nog niet bevestigd
       send_confirmation:
-        submit: "Verzend opnieuw"
+        submit: Verzend opnieuw
+  email_addresses:
+    create:
+      success: Email succesvol toegevoegd. Bevestig het adres door op de link te klikken die we hebben gestuurd.
+    type_new: Nieuw e-mail adres
   forms:
     email_addresses:
       user:
-        label: "Gebruiker"
-  email_addresses:
-    type_new: "Nieuw e-mail adres"
-    create:
-      success: "Email succesvol toegevoegd. Bevestig het adres door op de link te klikken die we hebben gestuurd."
+        label: Gebruiker

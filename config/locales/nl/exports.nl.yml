@@ -1,20 +1,21 @@
+---
 nl:
+  exports:
+    create_helper: Het duurt even om een export te maken. Je krijgt een mail als hij klaar is.
+    destroy_confirmation: Weet je zeker dat je deze export wilt verwijderen?
+    formats:
+      xls:
+        description: "%{type} description"
+        overview_title: Overzicht
+        path: Hiërarchie
+        title: "%{type} title"
+    status:
+      done: Beschikbaar
+      failed: Fout tijdens verwerking
+      pending: Wachten op verwerking
+      processing: Bezig met verwerken
+    type_new: Nieuwe export
   forms:
     exports:
       user:
-        label: "Gebruiker"
-  exports:
-    type_new: "Nieuwe export"
-    destroy_confirmation: "Weet je zeker dat je deze export wilt verwijderen?"
-    status:
-      pending: "Wachten op verwerking"
-      processing: "Bezig met verwerken"
-      done: "Beschikbaar"
-      failed: "Fout tijdens verwerking"
-    create_helper: "Het duurt even om een export te maken. Je krijgt een mail als hij klaar is."
-    formats:
-      xls:
-        overview_title: "Overzicht"
-        path: "Hiërarchie"
-        title: "%{type} title"
-        description: "%{type} description"
+        label: Gebruiker

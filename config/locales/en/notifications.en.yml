@@ -1,23 +1,24 @@
+---
 en:
   actions:
     notifications:
-      update:
-        label: "Mark as read"
       read_all:
-        label: "Mark all as read"
+        label: Mark all as read
+      update:
+        label: Mark as read
   notifications:
-    all: "All notifications"
-    settings: "Settings"
-    receive:
-      title: 'Receive notifications for:'
+    all: All notifications
+    changed_successfully: Your notification settings are updated
     permanent:
       confirm_account:
-        one: "Please confirm your vote by clicking the link we've sent to %{email}"
-        other: "Please confirm your %{count} votes by clicking the link we've sent to %{email}"
+        one: Please confirm your vote by clicking the link we've sent to %{email}
+        other: Please confirm your %{count} votes by clicking the link we've sent to %{email}
       drafts_reminder:
-        one: "You have an unpublished draft"
-        other: "You have %{count} unpublished drafts"
+        one: You have an unpublished draft
+        other: You have %{count} unpublished drafts
+    receive:
+      title: 'Receive notifications for:'
+    settings: Settings
     unsubscribe:
-      success: "You no longer receive notifications for '%{item}'."
-      failed: "You don't receive notifications already for '%{item}'."
-    changed_successfully: "Your notification settings are updated"
+      failed: You don't receive notifications already for '%{item}'.
+      success: You no longer receive notifications for '%{item}'.

@@ -1,11 +1,12 @@
+---
 nl:
-  phases:
-    type_new: "Nieuwe fase"
   forms:
     phases:
       position:
-        label: "Positie"
+        label: Positie
       resource_type:
-        label: "Type"
+        label: Type
       time:
-        label: "Tijdsaanduiding"
+        label: Tijdsaanduiding
+  phases:
+    type_new: Nieuwe fase

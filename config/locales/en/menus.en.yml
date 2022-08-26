@@ -1,73 +1,74 @@
+---
 en:
   menus:
-    copy_successful: "Copied '%{url}' to clipboard"
+    copy_successful: Copied '%{url}' to clipboard
     default:
-      2fa: "Two factor authentication"
-      authentication: "Authentication"
-      drafts: "Drafts"
-      facebook: "Facebook"
-      twitter: "Twitter"
-      linked_in: "LinkedIn"
-      google_plus: "Google+"
-      email: "E-Mail"
-      whatsapp: "Whatsapp"
-      permissions: "Permissions"
-      share: "Share"
-      copy: "Copy link"
-      location: "Map"
-      manage: "Manage"
-      no_social_media: "Sharing on social media is only possible in public forums"
-      not_published: "You can only share published items"
-      follow: "Notifications"
-      follow_header: "Receive notifications for:"
-      never: 'Never receive notifications'
-      reactions: 'All items'
-      news: 'Important items'
-      invite: "Invite"
-      email_invite: "Invite by email"
-      bearer_invite: "Invite by link"
-      meetings: "Meetings"
-      questions: "Questions"
-      motions: "Motions"
-      notifications: "Notifications"
-      settings: "Settings"
-      typeform: "Manage"
-      participate: "Submit"
-      submission: "Response"
-      new_component: "Add page"
-      new_forum: "New forum"
-      new_blog: "New blog"
-      actions: "Menu"
+      2fa: Two factor authentication
+      actions: Menu
+      activity: Feed
+      authentication: Authentication
+      banners: Banners
+      bearer_invite: Invite by link
       comments:
-        zero: "Comments"
-        one: "Comments (%{count})"
-        other: "Comments (%{count})"
-      activity: "Feed"
-      new_update: "New update"
-      edit: "Edit"
-      statistics: "Statistics"
-      trash: "Delete"
-      untrash: "Untrash"
-      destroy: "Delete permanently"
-      take_decision: "Take decision"
-      contact: "Contact poster"
-      overview: "Overview"
-      profile: "Profile"
-      new_discussion: "New discussion"
-      new_motion: "New motion"
-      new_question: "New question"
-      move: "Move"
-      search: "Search"
-      general: "General"
-      grants: "Grants"
-      delete: "Delete"
-      banners: "Banners"
-      custom_menu_items: "Menu"
+        one: Comments (%{count})
+        other: Comments (%{count})
+        zero: Comments
+      contact: Contact poster
+      copy: Copy link
+      custom_menu_items: Menu
+      delete: Delete
+      destroy: Delete permanently
+      drafts: Drafts
+      edit: Edit
+      email: E-Mail
+      email_invite: Invite by email
+      facebook: Facebook
+      follow: Notifications
+      follow_header: 'Receive notifications for:'
+      general: General
+      google_plus: Google+
+      grants: Grants
+      invite: Invite
+      linked_in: LinkedIn
+      location: Map
+      manage: Manage
+      meetings: Meetings
+      motions: Motions
+      move: Move
+      never: Never receive notifications
+      new_blog: New blog
+      new_component: Add page
+      new_discussion: New discussion
+      new_forum: New forum
+      new_motion: New motion
+      new_question: New question
+      new_update: New update
+      news: Important items
+      no_social_media: Sharing on social media is only possible in public forums
+      not_published: You can only share published items
+      notifications: Notifications
+      overview: Overview
+      participate: Submit
+      permissions: Permissions
+      profile: Profile
+      questions: Questions
+      reactions: All items
+      search: Search
+      settings: Settings
+      share: Share
+      statistics: Statistics
+      submission: Response
+      take_decision: Take decision
+      trash: Delete
+      twitter: Twitter
+      typeform: Manage
+      untrash: Untrash
+      whatsapp: Whatsapp
     descriptions:
-      general: "Here you will find the general settings for this community."
-      container_nodes: "Components form the basic structure of the community."
-      groups: "With groups you can give certain rights to a select group of participants."
-      shortnames: "With redirects you can create nicer urls to share with others."
-      custom_menu_items: "The menu in the navigation bar of the community."
-      banners: "Banners are bars that appear below the navigation bar. You can use these to inform visitors of something important."
-      vocabularies: "Via vocabularies you can create lists with your own content."
+      banners: Banners are bars that appear below the navigation bar. You can use these to inform visitors of something important.
+      container_nodes: Components form the basic structure of the community.
+      custom_menu_items: The menu in the navigation bar of the community.
+      general: Here you will find the general settings for this community.
+      groups: With groups you can give certain rights to a select group of participants.
+      shortnames: With redirects you can create nicer urls to share with others.
+      vocabularies: Via vocabularies you can create lists with your own content.

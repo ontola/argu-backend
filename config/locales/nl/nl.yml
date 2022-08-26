@@ -1,113 +1,79 @@
-#Dutch general translations
-
+---
 nl:
-  language: "Nederlands"
-  set_language: "Taal instellen"
-  settings: "Instellingen"
-  sign_up: "Account aanmaken"
-  sign_up_description: "Maak gratis een account aan:"
-  argu_sign_up: "Argu account aanmaken"
-  sign_up_argu: "Maak Argu account"
-  sign_up_email: "Registreer met e-mail"
-  sign_out: "Uitloggen"
-  no_confirmation_instructions: "Geen bevestigingsmail ontvangen?"
-  no_unlock_instructions: "Geen ontgrendelingsmail ontvangen?"
-  learn_more: "Meer info"
-  not_found_type: "%{type} niet gevonden"
-  draft: "Concept"
-  drafts: "Concepten"
-  ended: 'Geëindigd'
-  publish: "Publiceer"
-  published: "Gepubliceerd"
-  publish_confirmation: "Weet je zeker dat je dit object wilt publiceren?"
-  retract: "Terugtrekken"
-  retracted: "Teruggetrokken"
-  retract_confirmation: "Weet je zeker dat je dit item wilt terugtrekken?"
-  edit: "Bewerken"
-  edit_type: "%{type} bewerken"
-  show_type: "%{type} weergeven"
-  settings_type: "%{type}instellingen"
-  read_more: "Lees meer"
-  read_less: "Minder"
-  collapse: "Inklappen"
-  update: "Bijwerken"
-  update_type: "%{type} bijwerken"
-  save: "Opslaan"
-  send: "Verstuur"
-  new: "Nieuw"
-  new_type: "Nieuw %{type}"
-  newe_type: "Nieuwe %{type}"
+  add: Toevoegen
   add_type: "%{type} toevoegen"
-  back: "Terug"
-  cancel: "Annuleren"
-  show: "Tonen"
-  add: "Toevoegen"
-  next: "Volgende"
-  previous: "Vorige"
-  older: "Ouder"
-  newer: "Nieuwer"
-  delete: "Verwijderen"
-  destroy: "Permanent verwijderen"
+  back: Terug
+  cancel: Annuleren
+  con: tegen
+  delete: Verwijderen
+  deleted: Verwijderd
+  destroy: Permanent verwijderen
+  destroy_confirm_string: verwijder
   destroy_type: "%{type} permanent verwijderen"
-  trash: "Verwijderen"
-  untrash: "Terugplaatsen"
-  type_destroyed: "%{type} vernietigd"
-  type_destroyed_failed: "Fout tijdens het vernietigen van %{type}"
-  empty_type: "Er zijn geen %{type}"
-  history: "Geschiendenis"
-  image: "Afbeelding"
-  pro: "voor"
-  con: "tegen"
-  log: "Log"
-  feed: "Activiteit"
-  overview: "Overzicht"
-  edited: "Bewerkt"
-  deleted: "Verwijderd"
-  trashed: "Verborgen"
-  is_draft: "Concept"
-  report: "Rapporteer"
-  clearance: "Bevoegdheid"
-  forum: "Forum"
-  share: "Delen"
-  menu: "Menu"
-  legal:
-    header: "Voorwaarden"
-    policy: "Gebruiksvoorwaarden"
-    privacy: "Privacy"
-    cookies: "Cookies"
-  destroy_confirm_string: 'verwijder'
-  about:
-    info: "Info"
-    team: "Ons team"
-  users_cancel_string: "verwijder"
-  users_cancel_super_admin: "Je bent administrator op een of meerdere plekken. Om je account te verwijderen zal je eerst die rechten moeten overdragen of verwijderen."
-  datetime_ago: "geleden"
-  datetime:
-    distance_in_words:
-      x_days:
-        one: '1 dag'
-        other: '%{count} dagen'
-      about_x_hours:
-        one: '%{count} uur'
-        other: '%{count} uur'
-  type_save_success: "%{type} succesvol opgeslagen"
-  type_update_failure: "Niet gelukt om %{type} op te slaan"
-  type_update_success: "%{type} succesvol opgeslagen"
-  type_create_failure: "Niet gelukt om %{type} aan te maken"
+  draft: Concept
+  drafts: Concepten
+  edit: Bewerken
+  edit_type: "%{type} bewerken"
+  edited: Bewerkt
+  ended: Geëindigd
+  feed: Activiteit
+  forum: Forum
+  image: Afbeelding
+  is_draft: Concept
+  language: Nederlands
+  log: Log
+  menu: Menu
+  new: Nieuw
+  new_type: Nieuw %{type}
+  newer: Nieuwer
+  next: Volgende
+  older: Ouder
+  overview: Overzicht
+  previous: Vorige
+  pro: voor
+  publish: Publiceer
+  publish_confirmation: Weet je zeker dat je dit object wilt publiceren?
+  published: Gepubliceerd
+  read_less: Minder
+  read_more: Lees meer
+  report: Rapporteer
+  retract: Terugtrekken
+  retract_confirmation: Weet je zeker dat je dit item wilt terugtrekken?
+  retracted: Teruggetrokken
+  save: Opslaan
+  send: Verstuur
+  set_language: Taal instellen
+  settings: Instellingen
+  settings_type: "%{type}instellingen"
+  share: Delen
+  show: Tonen
+  show_type: "%{type} weergeven"
+  sign_out: Uitloggen
+  sign_up: Account aanmaken
+  sign_up_argu: Maak Argu account
+  sign_up_description: 'Maak gratis een account aan:'
+  sign_up_email: Registreer met e-mail
+  trash: Verwijderen
+  trashed: Verborgen
+  type_changes: Wijzigingen
+  type_convert_success: Succesvol geconverteerd naar {type}
+  type_create_failure: Niet gelukt om %{type} aan te maken
   type_create_success: "%{type} succesvol aangemaakt"
-  type_publish_success: "%{type} gepubliceerd."
-  type_draft_success: "Concept aangemaakt."
-  type_convert_success: "Succesvol geconverteerd naar {type}"
-  type_destroy_failure: "Niet gelukt om %{type} te verwijderen"
+  type_destroy_failure: Niet gelukt om %{type} te verwijderen
   type_destroy_success: "%{type} succesvol verwijderd"
+  type_destroyed: "%{type} vernietigd"
+  type_destroyed_failed: Fout tijdens het vernietigen van %{type}
+  type_draft_success: Concept aangemaakt.
+  type_move_success: "%{type} succesvol verplaatst"
+  type_publish_success: "%{type} gepubliceerd."
+  type_save_success: "%{type} succesvol opgeslagen"
   type_trash_success: "%{type} succesvol verborgen"
   type_untrash_success: "%{type} succesvol teruggeplaatst"
-  type_move_success: "%{type} succesvol verplaatst"
-  type_changes: 'Wijzigingen'
-  time:
-    formats:
-      dateline: '%A, %d %B %Y'
-      date: "%A, %d %B '%y"
-  activerecord:
-    errors:
-      record_not_unique: 'Deze waarde(n) is al bezet.'
+  type_update_failure: Niet gelukt om %{type} op te slaan
+  type_update_success: "%{type} succesvol opgeslagen"
+  untrash: Terugplaatsen
+  update: Bijwerken
+  update_type: "%{type} bijwerken"
+  users_cancel_string: verwijder
+  users_cancel_system_user: Deze gebruiker kan niet worden verwijderd.
+  users_cancel_super_admin: Je bent administrator op een of meerdere plekken. Om je account te verwijderen zal je eerst die rechten moeten overdragen of verwijderen.

@@ -1,113 +1,79 @@
-#English general translations
-
+---
 en:
-  language: "English"
-  set_language: "Set language"
-  settings: "Settings"
-  sign_up: "Sign up"
-  sign_up_description: "Sign up with a free account:"
-  argu_sign_up: "Create Argu account"
-  sign_up_argu: "Create Argu account"
-  sign_up_email: "Sign up with email"
-  sign_out: "Sign out"
-  no_confirmation_instructions: "Didn't receive confirmation instructions?"
-  no_unlock_instructions: "Didn't receive unlock instructions?"
-  learn_more: "Learn more"
-  not_found_type: "%{type} not found"
-  draft: "Draft"
-  drafts: "Drafts"
-  ended: "Ended"
-  publish: "Publish"
-  published: "Published"
-  publish_confirmation: "Are you sure you want to publish this item?"
-  retract: "Retract"
-  retracted: "Retracted"
-  retract_confirmation: "Are you sure you want to retract this item?"
-  edit: "Edit"
-  edit_type: "Edit %{type}"
-  show_type: "Show %{type}"
+  add: Add
+  add_type: Add %{type}
+  back: Back
+  cancel: Cancel
+  con: con
+  delete: Delete
+  deleted: Deleted
+  destroy: Delete permanently
+  destroy_confirm_string: remove
+  destroy_type: Delete %{type} permanently
+  draft: Draft
+  drafts: Drafts
+  edit: Edit
+  edit_type: Edit %{type}
+  edited: Edited
+  ended: Ended
+  feed: Feed
+  forum: Forum
+  image: Image
+  is_draft: Draft
+  language: English
+  log: Log
+  menu: Menu
+  new: New
+  new_type: New %{type}
+  newer: Newer
+  next: Next
+  older: Older
+  overview: Overview
+  previous: Previous
+  pro: pro
+  publish: Publish
+  publish_confirmation: Are you sure you want to publish this item?
+  published: Published
+  read_less: Less
+  read_more: Read more
+  report: Report
+  retract: Retract
+  retract_confirmation: Are you sure you want to retract this item?
+  retracted: Retracted
+  save: Save
+  send: Send
+  set_language: Set language
+  settings: Settings
   settings_type: "%{type}settings"
-  read_more: "Read more"
-  read_less: "Less"
-  collapse: "Collapse"
-  update: "Update"
-  update_type: "Update %{type} "
-  save: "Save"
-  send: "Send"
-  new: "New"
-  new_type: "New %{type}"
-  newe_type: "New %{type}"
-  add_type: "Add %{type}"
-  back: "Back"
-  cancel: "Cancel"
-  show: "Show"
-  add: "Add"
-  next: "Next"
-  previous: "Previous"
-  older: "Older"
-  newer: "Newer"
-  delete: "Delete"
-  destroy: "Delete permanently"
-  destroy_type: "Delete %{type} permanently"
-  trash: "Trash"
-  untrash: "Untrash"
-  type_destroyed: "%{type} deleted"
-  type_destroyed_failed: "Error while deleting %{type}"
-  empty_type: "There are no %{type}"
-  history: "History"
-  image: "Image"
-  pro: "pro"
-  con: "con"
-  log: "Log"
-  feed: "Feed"
-  overview: "Overview"
-  edited: "Edited"
-  deleted: "Deleted"
-  trashed: "Hidden"
-  is_draft: "Draft"
-  report: "Report"
-  clearance: "Clearance"
-  forum: "Forum"
-  share: "Share"
-  menu: "Menu"
-  legal:
-    header: "Legal"
-    policy: "Terms of use"
-    privacy: "Privacy"
-    cookies: "Cookies"
-  destroy_confirm_string: 'remove'
-  about:
-    about: "About Argu"
-    info: "Info"
-  users_cancel_string: "remove"
-  users_cancel_super_admin: "You are the administrator in one or more places. If you want to delete your account, please first transfer or remove these rights first."
-  datetime_ago: "ago"
-  datetime:
-    distance_in_words:
-      x_days:
-        one: '1 day'
-        other: '%{count} days'
-      about_x_hours:
-        one: '%{count} hour'
-        other: '%{count} hours'
-  type_save_success: "%{type} saved successfully"
-  type_update_failure: "Failed to save %{type}"
-  type_update_success: "%{type} saved successfully"
-  type_create_failure: "Failed to create %{type}"
+  share: Share
+  show: Show
+  show_type: Show %{type}
+  sign_out: Sign out
+  sign_up: Sign up
+  sign_up_argu: Create Argu account
+  sign_up_description: 'Sign up with a free account:'
+  sign_up_email: Sign up with email
+  trash: Trash
+  trashed: Hidden
+  type_changes: Changes
+  type_convert_success: Successfully converted to %{type}
+  type_create_failure: Failed to create %{type}
   type_create_success: "%{type} created successfully"
-  type_publish_success: "%{type} published."
-  type_draft_success: "Draft created."
-  type_convert_success: "Successfully converted to %{type}"
-  type_destroy_failure: "Failed to delete %{type}"
+  type_destroy_failure: Failed to delete %{type}
   type_destroy_success: "%{type} deleted successfully"
+  type_destroyed: "%{type} deleted"
+  type_destroyed_failed: Error while deleting %{type}
+  type_draft_success: Draft created.
+  type_move_success: "%{type} moved successfully"
+  type_publish_success: "%{type} published."
+  type_save_success: "%{type} saved successfully"
   type_trash_success: "%{type} trashed successfully"
   type_untrash_success: "%{type} successfully removed from trash"
-  type_move_success: "%{type} moved successfully"
-  type_changes: 'Changes'
-  time:
-    formats:
-      date: "%A, %d %B '%y"
-      dateline: '%A, %d %B %Y'
-  activerecord:
-    errors:
-      record_not_unique: 'This value has already been taken.'
+  type_update_failure: Failed to save %{type}
+  type_update_success: "%{type} saved successfully"
+  untrash: Untrash
+  update: Update
+  update_type: 'Update %{type} '
+  users_cancel_string: remove
+  users_cancel_system_user: This user cannot be deleted.
+  users_cancel_super_admin: You are the administrator in one or more places. If you want to delete your account, please first transfer or remove these rights first.

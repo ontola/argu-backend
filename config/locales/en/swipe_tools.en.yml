@@ -1,10 +1,11 @@
+---
 en:
-  swipe_tools:
-    type_new: "New swipetool"
   forms:
     swipe_tools:
       action_body:
-        label: "Form"
+        label: Form
   menus:
     swipe_tools:
-      fields: "Questions"
+      fields: Questions
+  swipe_tools:
+    type_new: New swipetool

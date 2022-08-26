@@ -1,18 +1,19 @@
+---
 nl:
   enums:
-    questions:
+    vocabularies:
       default_term_display:
-        default_display: "Standaard"
-        grid_display: "Grid"
-        table_display: "Tabel"
-        csrd_display: "Kaart"
+        card_display: Kaart
+        default_display: Standaard
+        grid_display: Grid
+        table_display: Tabel
   forms:
     vocabularies:
       default_term_display:
-        label: "Standaard weergave"
+        label: Standaard weergave
       tagged_label:
-        label: "Label voor getagde items"
+        label: Label voor getagde items
   vocabularies:
-    type_new: "Nieuwe vocabulaire"
     errors:
-      system: "Deze vocabulaire kan niet worden aangepast"
+      system: Deze vocabulaire kan niet worden aangepast
+    type_new: Nieuwe vocabulaire

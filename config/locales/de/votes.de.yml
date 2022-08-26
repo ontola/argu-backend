@@ -1,25 +1,28 @@
+---
 de:
+  actions:
+    votes:
+      create:
+        errors:
+          expired: Abstimmen ist nicht mehr möglich
+          finished: Abstimmen ist nicht mehr möglich
+          not_started: Abstimmen ist noch nicht möglich
+      trash:
+        description: Klicken Sie hier, um Ihre Stimme zu entfernen
   votes:
-    score: Bewertung
-    collection:
-      votes: '%{count} Stimmen'
-      ':yes': '%{count} stimmt zu'
-      ':no': '%{count} stimmt nicht zu'
-      other: '%{count} andere'
     alerts:
-      success: Vielen Dank für Ihre Stimme!
-      login_to_succeed: Melden Sie sich an, um Ihre Stimme zu bestätigen!
       confirm_to_succeed: Vergessen Sie nicht, Ihre Stimme zu bestätigen!
       failed: Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.
+      login_to_succeed: Melden Sie sich an, um Ihre Stimme zu bestätigen!
+      success: Vielen Dank für Ihre Stimme!
       trashed: Stimme erfolgreich gelöscht
-    instance_type:
-      pro: Zustimmen
-      ':yes': Zustimmen
-      neutral: Andere
-      other: Andere
-      con: Ablehnen
-      ':no': Ablehnen
-    type_new: Neue Abstimmung
+    collection:
+      'no': "%{count} stimmt nicht zu"
+      other: "%{count} andere"
+      votes: "%{count} Stimmen"
+      'yes': "%{count} stimmt zu"
     disabled:
       expired: Abstimmen ist nicht mehr möglich
       unauthorized: Sie dürfen nicht über diesen Punkt abstimmen
+    score: Bewertung
+    type_new: Neue Abstimmung

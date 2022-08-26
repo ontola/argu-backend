@@ -1,38 +1,28 @@
-#Dutch votes translations
-
+---
 nl:
   actions:
     votes:
       create:
         errors:
-          expired: "Stemmen is niet langer mogelijk"
+          expired: Stemmen is niet langer mogelijk
+          finished: Stemmen is niet langer mogelijk
+          not_started: Stemmen is nog niet mogelijk
       trash:
-        description: "Klik om je stem te verwijderen"
+        description: Klik om je stem te verwijderen
   votes:
-    score: "score"
-    header:
-      pro: "Is voor"
-      neutral: "Geen van beide"
-      con: "Is tegen"
-    collection:
-      votes: "%{count} stemmen"
-      :yes: "%{count} stemmen voor"
-      :no: "%{count} stemmen tegen"
-      other: "%{count} stemmen geen van beide"
     alerts:
-      success: "Bedankt voor je stem!"
-      login_to_succeed: "Log in om je stem te bevestigen!"
-      confirm_to_succeed: "Vergeet je stem niet te bevestigen!"
-      failed: "Er is iets fout gegaan, probeer het opnieuw."
-      trashed: "Stem succesvol verwijderd"
-    instance_type:
-      pro: "Voor"
-      :yes: "Voor"
-      neutral: "Anders"
-      other: "Anders"
-      con: "Tegen"
-      :no: "Tegen"
-    type_new: "Nieuwe stem"
+      confirm_to_succeed: Vergeet je stem niet te bevestigen!
+      failed: Er is iets fout gegaan, probeer het opnieuw.
+      login_to_succeed: Log in om je stem te bevestigen!
+      success: Bedankt voor je stem!
+      trashed: Stem succesvol verwijderd
+    collection:
+      'no': "%{count} stemmen tegen"
+      other: "%{count} stemmen geen van beide"
+      votes: "%{count} stemmen"
+      'yes': "%{count} stemmen voor"
     disabled:
-      expired: 'Stemmen is niet langer mogelijk'
-      unauthorized: 'Je hebt niet voldoende rechten om te stemmen'
+      expired: Stemmen is niet langer mogelijk
+      unauthorized: Je hebt niet voldoende rechten om te stemmen
+    score: score
+    type_new: Nieuwe stem

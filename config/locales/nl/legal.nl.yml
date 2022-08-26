@@ -1,11 +1,7 @@
+---
 nl:
   legal:
-    agree_and_create: "Ik ga akkoord"
+    continue_html: Door verder te gaan ga je akkoord met de %{policy} en de %{privacy}.
     documents:
-      policy: "Gebruiksvoorwaarden"
-      privacy: "Privacy policy"
-      values: "Kernwaarden"
-    form_html: "Door je aan te melden voor Argu ga je akkoord met de %{link}."
-    notice: "Door je aan te melden voor Argu ga je akkoord met de "
-    continue_html: "Door verder te gaan ga je akkoord met de %{policy} en de %{privacy}."
-    accept: "Accepteer"
+      policy: Gebruiksvoorwaarden
+      privacy: Privacy policy

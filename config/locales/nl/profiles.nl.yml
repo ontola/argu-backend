@@ -1,39 +1,38 @@
-#Dutch argument translations
-
+---
 nl:
   profiles:
-    type: "Profiel"
-    about_me: "Over mij"
-    heads_up: "Jouw profiel is zichtbaar voor andere bezoekers van Argu."
-    feed_is_private: "Je activiteit is alleen voor jou zichtbaar. "
-    feed_is_public: "Je activiteit is voor iedereen zichtbaar. "
+    about_me: Over mij
     actor:
-      create: "Plaatsen als"
-      update: "Wijzigen als"
-      send: "Versturen als"
-    show:
-      title: "Profiel"
-      btn:
-        edit: 'Bewerken'
-        freeze: 'Bevriezen'
-        unfreeze: 'Ontdooien'
-        admin: 'Maak admin'
-        unadmin: 'Degradeer admin'
-    edit:
-      title: "Profiel bewerken"
-      shortname_not_allowed: "Je kunt jouw gebruikersnaam niet wijzigen. Je kan wel de naam wijzigen die andere gebruikers zien bij "
-      general: "Algemeen"
-      profile_photo: "Profielfoto"
-      cover_photo: "Omslagfoto"
-      privacy: "Privacy"
-      privacy_notice: "Op Argu kan je stemmen op ideeën. Als je wilt laten zien waar je voor staat, kan je er voor kiezen om wat je stemt te delen op Argu. Dit kan je later nog wijzigen."
-      shortname: "Gebruikersnaam"
+      create: Plaatsen als
+      send: Versturen als
+      update: Wijzigen als
     didnt_vote_name: "%{name} heeft nog niet gestemd."
-    should_start_with_capital: "mag alleen letters cijfers en '_' bevatten, met een letter beginnen."
+    edit:
+      cover_photo: Omslagfoto
+      general: Algemeen
+      privacy: Privacy
+      privacy_notice: Op Argu kan je stemmen op ideeën. Als je wilt laten zien waar je voor staat, kan je er voor kiezen om wat je stemt te delen op Argu. Dit kan je later nog wijzigen.
+      profile_photo: Profielfoto
+      shortname: Gebruikersnaam
+      shortname_not_allowed: 'Je kunt jouw gebruikersnaam niet wijzigen. Je kan wel de naam wijzigen die andere gebruikers zien bij '
+      title: Profiel bewerken
+    feed_is_private: 'Je activiteit is alleen voor jou zichtbaar. '
+    feed_is_public: 'Je activiteit is voor iedereen zichtbaar. '
+    heads_up: Jouw profiel is zichtbaar voor andere bezoekers van Argu.
+    should_start_with_capital: mag alleen letters cijfers en '_' bevatten, met een letter beginnen.
+    show:
+      btn:
+        admin: Maak admin
+        edit: Bewerken
+        freeze: Bevriezen
+        unadmin: Degradeer admin
+        unfreeze: Ontdooien
+      title: Profiel
+    type: Profiel
   pundit:
     profile_policy:
-      update?: "Je mag dit profiel niet bewerken."
+      update?: Je mag dit profiel niet bewerken.
   users:
     shortname:
-      not_changeable: "Kies een gebruikersnaam zorgvuldig, deze kan niet meer gewijzigd worden."
-      already_present: "Je hebt al een gebruikersnaam, neem contact op met Argu voor een wijzigingsverzoek."
+      already_present: Je hebt al een gebruikersnaam, neem contact op met Argu voor een wijzigingsverzoek.
+      not_changeable: Kies een gebruikersnaam zorgvuldig, deze kan niet meer gewijzigd worden.

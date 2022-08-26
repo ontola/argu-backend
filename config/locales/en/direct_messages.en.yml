@@ -1,15 +1,16 @@
+---
 en:
   direct_messages:
     notice:
-      success: "The mail will be sent"
+      success: The mail will be sent
   forms:
     direct_messages:
-      email:
-        description: ""
-      email_address_id:
-        description: "You can send an email from one of your confirmed emailadresses. Is your emailadress not visible? Go to User settings to confirm your address."
-        label: "Sender"
-      subject:
-        label: "Subject"
       body:
-        label: "Message"
+        label: Message
+      email:
+        description: ''
+      email_address_id:
+        description: You can send an email from one of your confirmed emailadresses. Is your emailadress not visible? Go to User settings to confirm your address.
+        label: Sender
+      subject:
+        label: Subject

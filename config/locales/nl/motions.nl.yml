@@ -1,57 +1,56 @@
-#Dutch motions translations
-
+---
 nl:
-  forms:
-    motions:
-      content:
-        placeholder: "Plaats hier de details en achtergrondinformatie van jouw idee."
-        label: "Licht je idee toe"
-      description:
-        placeholder: "Plaats hier de details en achtergrondinformatie van jouw idee."
-      display_name:
-        placeholder: "Plaats hier de kern van jouw idee"
-      title:
-        placeholder: "Plaats hier de kern van jouw idee"
-        label: "Vat je idee samen in één zin."
-  motions:
-    type_new: "Nieuw idee"
-    title: "Idee"
-    pros: "voor"
-    cons: "tegen"
-    edit: "stelling bewerken"
-    no_pros: "nog niets voor"
-    no_cons: "nog niets tegen"
-    content: "inhoud"
-    one_up: "Heb jij een beter idee?"
-    percentage_in_favor:
-      zero: "Nog niemand heeft hier op gestemd."
-      one: "Één persoon heeft hier op gestemd."
-      other: "%{percentage}% of %{count} votes is in favor."
-    votes:
-      pro: "Voor"
-      neutral: "Anders"
-      con: "Tegen"
-      show: "Laat stemresultaten zien"
-    preview:
-      pro:
-        zero: "geen voorargumenten"
-        one: "1 voorargument"
-        other: "%{count} voorargumenten"
-      con:
-        zero: "geen tegenargumenten"
-        one: "1  tegenargument"
-        other: "%{count} tegenargumenten"
-    call_to_action:
-      title: "Heb jij een goed idee?"
-      body: "Heb jij een goed idee en wil je anderen daarvan overtuigen?"
-      action: "Deel jouw idee."
-  pundit:
-    motion_policy:
-      create_without_question?: "Je mag hier geen idee aanmaken zonder het eerst te koppelen aan een uitdaging."
   activerecord:
     errors:
       models:
         motions:
           attributes:
             forum:
-              different: "Het idee en haar uitdaging(en) moeten tot hetzelfde forum behoren"
+              different: Het idee en haar uitdaging(en) moeten tot hetzelfde forum behoren
+  forms:
+    motions:
+      content:
+        label: Licht je idee toe
+        placeholder: Plaats hier de details en achtergrondinformatie van jouw idee.
+      description:
+        placeholder: Plaats hier de details en achtergrondinformatie van jouw idee.
+      display_name:
+        placeholder: Plaats hier de kern van jouw idee
+      title:
+        label: Vat je idee samen in één zin.
+        placeholder: Plaats hier de kern van jouw idee
+  motions:
+    call_to_action:
+      action: Deel jouw idee.
+      body: Heb jij een goed idee en wil je anderen daarvan overtuigen?
+      title: Heb jij een goed idee?
+    cons: tegen
+    content: inhoud
+    edit: stelling bewerken
+    no_cons: nog niets tegen
+    no_pros: nog niets voor
+    one_up: Heb jij een beter idee?
+    percentage_in_favor:
+      one: Één persoon heeft hier op gestemd.
+      other: "%{percentage}% of %{count} votes is in favor."
+      zero: Nog niemand heeft hier op gestemd.
+    preview:
+      con:
+        one: 1  tegenargument
+        other: "%{count} tegenargumenten"
+        zero: geen tegenargumenten
+      pro:
+        one: 1 voorargument
+        other: "%{count} voorargumenten"
+        zero: geen voorargumenten
+    pros: voor
+    title: Idee
+    type_new: Nieuw idee
+    votes:
+      con: Tegen
+      neutral: Anders
+      pro: Voor
+      show: Laat stemresultaten zien
+  pundit:
+    motion_policy:
+      create_without_question?: Je mag hier geen idee aanmaken zonder het eerst te koppelen aan een uitdaging.

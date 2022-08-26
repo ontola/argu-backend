@@ -1,6 +1,7 @@
+---
 en:
   tokens:
     discussion:
-      title: "Invite people"
-      description: "Invite people to join the discussion."
-      default_message: "Join the discussion about '%{resource}'."
+      default_message: Join the discussion about '%{resource}'.
+      description: Invite people to join the discussion.
+      title: Invite people

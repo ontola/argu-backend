@@ -1,15 +1,16 @@
+---
 en:
-  projects:
-    type_new: "New project"
-    phase_template:
-      description_placeholder: "Click on the menu on the right and then on 'Edit' to change the title and this text."
-      blog_post:
-        name: "Feedback"
-      question:
-        name: "Collect ideas"
-      survey:
-        name: "Survey"
   forms:
     projects:
       current_phase_id:
-        label: "Current phase"
+        label: Current phase
+  projects:
+    phase_template:
+      blog_post:
+        name: Feedback
+      description_placeholder: Click on the menu on the right and then on 'Edit' to change the title and this text.
+      question:
+        name: Collect ideas
+      survey:
+        name: Survey
+    type_new: New project

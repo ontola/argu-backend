@@ -1,11 +1,12 @@
+---
 de:
   enums:
     vocabularies:
       default_term_display:
+        card_display: Karte
         default_display: Standard
         grid_display: Raster
         table_display: Tabelle
-        card_display: Karte
   forms:
     vocabularies:
       default_term_display:
@@ -13,6 +14,6 @@ de:
       tagged_label:
         label: Etikett für markierte Artikel
   vocabularies:
-    type_new: Neues Vokabular
     errors:
       system: Dieses Vokabular kann nicht aktualisiert werden
+    type_new: Neues Vokabular

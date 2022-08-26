@@ -1,16 +1,17 @@
+---
 en:
-  orders:
-    plural: "Orders"
-    type: "Order"
-    type_new: "Finish"
-    errors:
-      coupon:
-        invalid: "Coupon is not valid"
   actions:
     orders:
       create:
-        success: "Your budget is submitted!"
         errors:
-          budget_exceeded: "The budget is exceeded"
-          cart_empty: "No items selected yet"
-          submitted: "You already submitted a budget"
+          budget_exceeded: The budget is exceeded
+          cart_empty: No items selected yet
+          submitted: You already submitted a budget
+        success: Your budget is submitted!
+  orders:
+    errors:
+      coupon:
+        invalid: Coupon is not valid
+    plural: Orders
+    type: Order
+    type_new: Finish

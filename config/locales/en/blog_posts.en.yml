@@ -1,16 +1,15 @@
-#English argument translations
-
+---
 en:
   blog_posts:
-    type_new: "New update"
-    unpublished: "Draft"
+    type_new: New update
+    unpublished: Draft
   forms:
     blog_posts:
       content:
-        placeholder: "Enter details and background information on your update here."
+        placeholder: Enter details and background information on your update here.
       description:
-        placeholder: "Enter details and background information on your update here."
+        placeholder: Enter details and background information on your update here.
       display_name:
-        placeholder: "Enter the core of your update here"
+        placeholder: Enter the core of your update here
       title:
-        placeholder: "Enter the core of your update here"
+        placeholder: Enter the core of your update here

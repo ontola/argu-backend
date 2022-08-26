@@ -1,16 +1,17 @@
+---
 en:
+  blogs:
+    type_new: New blog
+  container_nodes:
+    type_new: New page
+  dashboards:
+    type_new: New dashboard
   forms:
-    container_nodes:
-      url:
-        description: "The part of the url following %{iri_prefix}/"
     blogs:
       bio:
-        description: "Summarize in one sentence what function the blog has. This text will appear under the name of the forum. There's a maximum of 80 characters."
-  container_nodes:
-    type_new: "New page"
-  blogs:
-    type_new: "New blog"
+        description: Summarize in one sentence what function the blog has. This text will appear under the name of the forum. There's a maximum of 80 characters.
+    container_nodes:
+      url:
+        description: The part of the url following %{iri_prefix}/
   forums:
-    type_new: "New forum"
-  dashboards:
-    type_new: "New dashboard"
+    type_new: New forum

@@ -1,6 +1,7 @@
+---
 nl:
   tooltips:
     motion:
-      vote_pro_count: "Aantal stemmen voor"
-      vote_con_count: "Aantal stemmen tegen"
-      vote_neutral_count: "Aantal 'geen van beiden' stemmen"
+      vote_con_count: Aantal stemmen tegen
+      vote_neutral_count: Aantal 'geen van beiden' stemmen
+      vote_pro_count: Aantal stemmen voor

@@ -1,8 +1,9 @@
+---
 de:
   publications:
+    follow_type:
+      helper: Alle Follower benachrichtigen
     instance_type:
       direct: veröffentlichen
       draft: Entwurf speichern
       schedule: Planen Sie
-    follow_type:
-      helper: Alle Follower benachrichtigen

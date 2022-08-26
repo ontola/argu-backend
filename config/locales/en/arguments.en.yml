@@ -1,64 +1,63 @@
-#English argument translations
-
+---
 en:
-  forms:
-    arguments:
-      content:
-        placeholder: "Enter details and background information on your argument here."
-        label: "Argument details (optional)"
-      description:
-        placeholder: "Enter details and background information on your argument here."
-      display_name:
-        placeholder: "Enter the core of your argument here"
-      title:
-        placeholder: "Enter the core of your argument here"
-        label: "Core of your argument"
-      type: "type"
-      submit: "Submit argument"
-      side:
-        pro: "pro argument"
-        con: "con argument"
-    pro_arguments:
-      content:
-        placeholder: "Details and background information."
-      description:
-        placeholder: "Details and background information."
-      display_name:
-        placeholder: "Summary of your pro"
-      title:
-        placeholder: "Summary of your pro"
-    con_arguments:
-      content:
-        placeholder: "Details and background information."
-      description:
-        placeholder: "Details and background information."
-      display_name:
-        placeholder: "Summary of your con"
-      title:
-        placeholder: "Summary of your con"
-  pro_arguments:
-    type_new: "New pro"
-  con_arguments:
-    type_new: "New con"
-  arguments:
-    type_new: "New argument"
-    vote: "vote"
-    collection:
-      'yes': "Advantages"
-      'no': "Problems"
-      new:
-        'yes': "Add advantage"
-        'no': "Add problem"
   activerecord:
+    attributes:
+      argument:
+        body: Content
+        title: Title
     errors:
       models:
         arguments:
           attributes:
-            title:
-              blank: "You need to add a title for your argument."
             forum:
-              different: "The argument and it's motion must belong to the same forum"
-    attributes:
-      argument:
-        title: "Title"
-        body: "Content"
+              different: The argument and it's motion must belong to the same forum
+            title:
+              blank: You need to add a title for your argument.
+  arguments:
+    collection:
+      new:
+        'no': Add problem
+        'yes': Add advantage
+      'no': Problems
+      'yes': Advantages
+    type_new: New argument
+    vote: vote
+  con_arguments:
+    type_new: New con
+  forms:
+    arguments:
+      content:
+        label: Argument details (optional)
+        placeholder: Enter details and background information on your argument here.
+      description:
+        placeholder: Enter details and background information on your argument here.
+      display_name:
+        placeholder: Enter the core of your argument here
+      side:
+        con: con argument
+        pro: pro argument
+      submit: Submit argument
+      title:
+        label: Core of your argument
+        placeholder: Enter the core of your argument here
+      type: type
+    con_arguments:
+      content:
+        placeholder: Details and background information.
+      description:
+        placeholder: Details and background information.
+      display_name:
+        placeholder: Summary of your con
+      title:
+        placeholder: Summary of your con
+    pro_arguments:
+      content:
+        placeholder: Details and background information.
+      description:
+        placeholder: Details and background information.
+      display_name:
+        placeholder: Summary of your pro
+      title:
+        placeholder: Summary of your pro
+  pro_arguments:
+    type_new: New pro

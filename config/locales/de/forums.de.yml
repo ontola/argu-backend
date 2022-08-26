@@ -1,37 +1,26 @@
+---
 de:
   forms:
     forums:
       bio:
-        label: Ziel des Forums
-        description: >-
-          Beschreiben Sie, wofür das Forum gedacht ist. Dieser Text erscheint unter dem Namen des Forums.
+        description: Beschreiben Sie, wofür das Forum gedacht ist. Dieser Text erscheint unter dem Namen des Forums.
       naam:
         label: Name des Forums
       shortname:
         label: URL
   forums:
     settings:
-      title: Einstellungen des Forums
       general: Allgemeine Einstellungen
-      profile: Forum-Profil
+      manager: Leiter
       menu:
-        return: Ansicht %{resource}
-        general: Allgemein
         advanced: Fortgeschrittene
+        general: Allgemein
+        grants: Erlaubnisse
         groups: Gruppen
         privacy: Datenschutz
-        grants: Erlaubnisse
+        return: Ansicht %{resource}
         shortnames: URLs argumentieren
       privacy: Datenschutz
-      manager: Leiter
+      profile: Forum-Profil
       shortnames: Argu-URLs
-    statistics:
-      title: Statistik
-      questions: Herausforderungen
-      motions: Ideen
-      cities:
-        title: Städte der Benutzer
-        info: >-
-          Basierend auf Daten, die optional von den Nutzern zur Verfügung
-          gestellt werden
-        unknown: Unbekannt
+      title: Einstellungen des Forums

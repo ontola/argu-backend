@@ -1,168 +1,152 @@
+---
 nl:
   activerecord:
     attributes:
       doorkeeper/application:
-        name: 'Naam'
-        redirect_uri: 'Omleidings-URI'
+        name: Naam
+        redirect_uri: Omleidings-URI
     errors:
       models:
         doorkeeper/application:
           attributes:
             redirect_uri:
-              fragment_present: 'mag geen fragment bevatten.'
-              invalid_uri: 'moet een correcte URI zijn.'
-              relative_uri: 'moet een absolute URI zijn.'
-              secured_uri: 'moet een HTTPS/SSL URI zijn.'
-              forbidden_uri: 'is verboden door deserver.'
+              forbidden_uri: is verboden door deserver.
+              fragment_present: mag geen fragment bevatten.
+              invalid_uri: moet een correcte URI zijn.
+              relative_uri: moet een absolute URI zijn.
+              secured_uri: moet een HTTPS/SSL URI zijn.
             scopes:
-              not_match_configured: "geen match met instelling op de server."
-
-  mongoid:
-    attributes:
-      doorkeeper/application:
-        name: 'Naam'
-        redirect_uri: 'Omleidings-URI'
-    errors:
-      models:
-        doorkeeper/application:
-          attributes:
-            redirect_uri:
-              fragment_present: 'mag geen fragment bevatten.'
-              invalid_uri: 'moet een correcte URI zijn.'
-              relative_uri: 'moet een absolute URI zijn.'
-              secured_uri: 'moet een HTTPS/SSL URI zijn.'
-
-  mongo_mapper:
-    attributes:
-      doorkeeper/application:
-        name: 'Naam'
-        redirect_uri: 'Omleidings-URI'
-    errors:
-      models:
-        doorkeeper/application:
-          attributes:
-            redirect_uri:
-              fragment_present: 'mag geen fragment bevatten.'
-              invalid_uri: 'moet een correcte URI zijn.'
-              relative_uri: 'moet een absolute URI zijn.'
-              secured_uri: 'moet een HTTPS/SSL URI zijn.'
-
+              not_match_configured: geen match met instelling op de server.
   doorkeeper:
     applications:
-      confirmations:
-        destroy: 'Weet je het zeker?'
       buttons:
-        edit: 'Bewerken'
-        destroy: 'Vernietigen'
-        submit: 'Verzenden'
-        cancel: 'Annuleren'
-        authorize: 'Authorizeren'
-      form:
-        error: 'Oeps! Controleer het verzoek op mogelijke fouten'
-      help:
-        confidential: 'Application will be used where the client secret can be kept confidential. Native mobile apps and Single Page Apps are considered non-confidential.'
-        redirect_uri: 'Gebruik een regel per URI'
-        native_redirect_uri: 'Gebruik %{native_redirect_uri} voor lokale tests'
-        scopes: 'Split scopes met spaties. Laat leeg voor de standaard scopes.'
+        authorize: Authorizeren
+        cancel: Annuleren
+        destroy: Vernietigen
+        edit: Bewerken
+        submit: Verzenden
+      confirmations:
+        destroy: Weet je het zeker?
       edit:
-        title: 'Bewerk applicaties'
+        title: Bewerk applicaties
+      form:
+        error: Oeps! Controleer het verzoek op mogelijke fouten
+      help:
+        confidential: Application will be used where the client secret can be kept confidential. Native mobile apps and Single Page Apps are considered non-confidential.
+        native_redirect_uri: Gebruik %{native_redirect_uri} voor lokale tests
+        redirect_uri: Gebruik een regel per URI
+        scopes: Split scopes met spaties. Laat leeg voor de standaard scopes.
       index:
-        title: 'Jouw applicaties'
-        new: 'Nieuwe applicatie'
-        name: 'Naam'
-        callback_url: 'Callback URL'
-        confidential: 'Vertrouwelijk?'
-        actions: 'Acties'
+        actions: Acties
+        callback_url: Callback URL
+        confidential: Vertrouwelijk?
         confidentiality:
-          'yes': 'Ja'
-          'no': 'Nee'
+          'no': Nee
+          'yes': Ja
+        name: Naam
+        new: Nieuwe applicatie
+        title: Jouw applicaties
       new:
-        title: 'Nieuwe applicatie'
+        title: Nieuwe applicatie
       show:
+        actions: Acties
+        application_id: Applicatie Id
+        callback_urls: Callback urls
+        confidential: Vertrouwelijk
+        scopes: Scopes
+        secret: Geheim
         title: 'Applicatie: %{name}'
-        application_id: 'Applicatie Id'
-        secret: 'Geheim'
-        scopes: 'Scopes'
-        confidential: 'Vertrouwelijk'
-        callback_urls: 'Callback urls'
-        actions: 'Acties'
-
     authorizations:
       buttons:
-        authorize: 'Authorizeer'
-        deny: 'Weigeren'
+        authorize: Authorizeer
+        deny: Weigeren
       error:
-        title: 'Er is een fout opgetreden'
+        title: Er is een fout opgetreden
       new:
-        title: 'Authorizatie vereist'
-        prompt: 'Authorizeer %{client_name} om je account te gebruiken?'
-        able_to: 'Deze applicatie zal het volgende kunnen doen'
+        able_to: Deze applicatie zal het volgende kunnen doen
+        prompt: Authorizeer %{client_name} om je account te gebruiken?
+        title: Authorizatie vereist
       show:
-        title: 'Authorizatie code'
-
+        title: Authorizatie code
     authorized_applications:
-      confirmations:
-        revoke: 'Weet je het zeker?'
       buttons:
-        revoke: 'Intrekken'
+        revoke: Intrekken
+      confirmations:
+        revoke: Weet je het zeker?
       index:
-        title: 'Jouw geauthoriseerde applicaties'
-        application: 'Applicaties'
-        created_at: 'Gemaakt op'
-        date_format: '%Y-%m-%d %H:%M:%S'
-
-    pre_authorization:
-      status: 'Pre-authorization'
-
+        application: Applicaties
+        created_at: Gemaakt op
+        date_format: "%Y-%m-%d %H:%M:%S"
+        title: Jouw geauthoriseerde applicaties
     errors:
       messages:
-        # Common error messages
+        access_denied: The resource owner or authorization server denied the request.
+        admin_authenticator_not_configured: Access to admin panel is forbidden due to Doorkeeper.configure.admin_authenticator being unconfigured.
+        credential_flow_not_configured: Resource Owner Password Credentials flow failed due to Doorkeeper.configure.resource_owner_from_credentials being unconfigured.
+        invalid_client: Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.
+        invalid_code_challenge_method: The code challenge method must be plain or S256.
+        invalid_grant: The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.
+        invalid_redirect_uri: The requested redirect uri is malformed or doesn't match client redirect URI.
         invalid_request:
-          missing_param: 'The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.'
-        invalid_redirect_uri: "The requested redirect uri is malformed or doesn't match client redirect URI."
-        unauthorized_client: 'The client is not authorized to perform this request using this method.'
-        access_denied: 'The resource owner or authorization server denied the request.'
-        invalid_scope: 'The requested scope is invalid, unknown, or malformed.'
-        invalid_code_challenge_method: 'The code challenge method must be plain or S256.'
-        server_error: 'The authorization server encountered an unexpected condition which prevented it from fulfilling the request.'
-        temporarily_unavailable: 'The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.'
-
-        # Configuration error messages
-        credential_flow_not_configured: 'Resource Owner Password Credentials flow failed due to Doorkeeper.configure.resource_owner_from_credentials being unconfigured.'
-        resource_owner_authenticator_not_configured: 'Resource Owner find failed due to Doorkeeper.configure.resource_owner_authenticator being unconfigured.'
-        admin_authenticator_not_configured: 'Access to admin panel is forbidden due to Doorkeeper.configure.admin_authenticator being unconfigured.'
-
-        # Access grant errors
-        unsupported_response_type: 'The authorization server does not support this response type.'
-
-        # Access token errors
-        invalid_client: 'Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.'
-        invalid_grant: 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.'
-        unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
-
+          missing_param: The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.
+        invalid_scope: The requested scope is invalid, unknown, or malformed.
         invalid_token:
-          revoked: "The access token was revoked"
-          expired: "The access token expired"
-          unknown: "The access token is invalid"
-
+          expired: The access token expired
+          revoked: The access token was revoked
+          unknown: The access token is invalid
+        resource_owner_authenticator_not_configured: Resource Owner find failed due to Doorkeeper.configure.resource_owner_authenticator being unconfigured.
+        server_error: The authorization server encountered an unexpected condition which prevented it from fulfilling the request.
+        temporarily_unavailable: The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.
+        unauthorized_client: The client is not authorized to perform this request using this method.
+        unsupported_grant_type: The authorization grant type is not supported by the authorization server.
+        unsupported_response_type: The authorization server does not support this response type.
     flash:
       applications:
         create:
-          notice: 'Applicatie aangemaakt.'
+          notice: Applicatie aangemaakt.
         destroy:
-          notice: 'Applicatie verwijderd.'
+          notice: Applicatie verwijderd.
         update:
-          notice: 'Applicatie gewijzigd.'
+          notice: Applicatie gewijzigd.
       authorized_applications:
         destroy:
-          notice: 'Applicatie ingetrokken.'
-
+          notice: Applicatie ingetrokken.
     layouts:
       admin:
-        title: 'Doorkeeper'
         nav:
-          oauth2_provider: 'OAuth2 Aanbieder'
-          applications: 'Applicaties'
-          home: 'Home'
+          applications: Applicaties
+          home: Home
+          oauth2_provider: OAuth2 Aanbieder
+        title: Doorkeeper
       application:
-        title: 'OAuth authorize required'
+        title: OAuth authorize required
+    pre_authorization:
+      status: Pre-authorization
+  mongo_mapper:
+    attributes:
+      doorkeeper/application:
+        name: Naam
+        redirect_uri: Omleidings-URI
+    errors:
+      models:
+        doorkeeper/application:
+          attributes:
+            redirect_uri:
+              fragment_present: mag geen fragment bevatten.
+              invalid_uri: moet een correcte URI zijn.
+              relative_uri: moet een absolute URI zijn.
+              secured_uri: moet een HTTPS/SSL URI zijn.
+  mongoid:
+    attributes:
+      doorkeeper/application:
+        name: Naam
+        redirect_uri: Omleidings-URI
+    errors:
+      models:
+        doorkeeper/application:
+          attributes:
+            redirect_uri:
+              fragment_present: mag geen fragment bevatten.
+              invalid_uri: moet een correcte URI zijn.
+              relative_uri: moet een absolute URI zijn.
+              secured_uri: moet een HTTPS/SSL URI zijn.

@@ -1,23 +1,24 @@
+---
 nl:
   actions:
     notifications:
-      update:
-        label: "Markeer als gelezen"
       read_all:
-        label: "Markeer alles als gelezen"
+        label: Markeer alles als gelezen
+      update:
+        label: Markeer als gelezen
   notifications:
-    all: "Alle meldingen"
-    settings: "Instellingen"
-    receive:
-      title: 'Ontvang meldingen bij:'
+    all: Alle meldingen
+    changed_successfully: Je melding instellingen zijn aangepast
     permanent:
       confirm_account:
-        one: "Vergeet niet je stem te bevestigen door op de link te klikken die we je hebben gemaild naar %{email}"
-        other: "Vergeet niet je %{count} stemmen te bevestigen door op de link te klikken die we je hebben gemaild naar %{email}"
+        one: Vergeet niet je stem te bevestigen door op de link te klikken die we je hebben gemaild naar %{email}
+        other: Vergeet niet je %{count} stemmen te bevestigen door op de link te klikken die we je hebben gemaild naar %{email}
       drafts_reminder:
-        one: "Je hebt een ongepubliceerd concept"
-        other: "Je hebt ongepubliceerde concepten"
+        one: Je hebt een ongepubliceerd concept
+        other: Je hebt %{count} ongepubliceerde concepten
+    receive:
+      title: 'Ontvang meldingen bij:'
+    settings: Instellingen
     unsubscribe:
-      success: "Je ontvangt geen meldingen meer voor '%{item}'."
-      failed: "Je ontvangt al geen meldingen meer voor '%{item}'."
-    changed_successfully: "Je melding instellingen zijn aangepast"
+      failed: Je ontvangt al geen meldingen meer voor '%{item}'.
+      success: Je ontvangt geen meldingen meer voor '%{item}'.

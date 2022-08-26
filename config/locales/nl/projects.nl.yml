@@ -1,15 +1,16 @@
+---
 nl:
-  projects:
-    type_new: "Nieuw traject"
-    phase_template:
-      description_placeholder: "Klik op het menu rechtsboven en dan op 'Bewerken' om de titel en deze tekst aan te passen."
-      blog_post:
-        name: "Terugkoppeling"
-      question:
-        name: "Ideeën verzamelen"
-      survey:
-        name: "Enquête"
   forms:
     projects:
       current_phase_id:
-        label: "Huidige fase"
+        label: Huidige fase
+  projects:
+    phase_template:
+      blog_post:
+        name: Terugkoppeling
+      description_placeholder: Klik op het menu rechtsboven en dan op 'Bewerken' om de titel en deze tekst aan te passen.
+      question:
+        name: Ideeën verzamelen
+      survey:
+        name: Enquête
+    type_new: Nieuw traject

@@ -1,37 +1,27 @@
+---
 de:
   status:
     s_400:
+      body: Die Anfrage kann nicht erfüllt werden, da sie eine fehlerhafte Syntax enthält. Überprüfen Sie Ihre URL-Parameter oder aktualisieren Sie die Seite, die auf diese Ressource verlinkt.
       header: Fehlerhafte Anfrage (400 Bad Request)
-      body: >-
-        Die Anfrage kann nicht erfüllt werden, da sie eine fehlerhafte Syntax
-        enthält. Überprüfen Sie Ihre URL-Parameter oder aktualisieren Sie die
-        Seite, die auf diese Ressource verlinkt.
-      reference_link_url: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error
       reference_link_body: Klicken Sie hier, um mehr über HTTP und den Status 400 zu erfahren :)
+      reference_link_url: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error
     s_403:
       header: Dieses Element ist versteckt
       sign_in: 'Vielleicht ist er nach dem Einloggen sichtbar:'
     s_404:
-      header: Dieser Artikel wurde nicht gefunden
       body: Vielleicht ist der gesuchte Eintrag gelöscht oder hat nie existiert.
+      header: Dieser Artikel wurde nicht gefunden
     s_413:
+      body: Das Objekt, das Sie hochladen, ist zu groß. Gehen Sie zurück und versuchen Sie es mit einer kleineren Datei.
       header: Die angeforderte Einheit ist zu groß (413 Payload Too Large)
-      body: >-
-        Das Objekt, das Sie hochladen, ist zu groß. Gehen Sie zurück und
-        versuchen Sie es mit einer kleineren Datei.
-      reference_link_url: https://en.wikipedia.org/wiki/HTTP_413
       reference_link_body: Klicken Sie hier, um mehr über HTTP und den Status 413 zu erfahren :)
+      reference_link_url: https://en.wikipedia.org/wiki/HTTP_413
     s_422:
+      body: Das Element, das Sie zu erstellen versuchen, kann nicht verarbeitet werden.
       header: Unverarbeitbare Entität
-      body: >-
-        Das Element, das Sie zu erstellen versuchen, kann nicht verarbeitet
-        werden.
-      reference_link_url: https://en.wikipedia.org/wiki/HTTP_422
       reference_link_body: Klicken Sie hier, um mehr über HTTP und den Status 422 zu erfahren :)
+      reference_link_url: https://en.wikipedia.org/wiki/HTTP_422
     s_500:
+      body: Auf unserer Seite ist ein Fehler aufgetreten. Die Fehlerinformationen wurden gesammelt und automatisch gesendet. Wir werden versuchen, das Problem so schnell wie möglich zu beheben. Bitte versuchen Sie es später noch einmal.
       header: Server-Fehler
-      body: >-
-        Auf unserer Seite ist ein Fehler aufgetreten. Die Fehlerinformationen
-        wurden gesammelt und automatisch gesendet. Wir werden versuchen, das
-        Problem so schnell wie möglich zu beheben. Bitte versuchen Sie es später
-        noch einmal.

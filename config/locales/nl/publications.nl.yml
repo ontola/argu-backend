@@ -1,10 +1,9 @@
-# Dutch publications translation
-
+---
 nl:
   publications:
-    instance_type:
-      direct: 'Publiceer'
-      draft: 'Concept opslaan'
-      schedule: 'Inplannen'
     follow_type:
-      helper: 'Stuur een melding naar alle volgers'
+      helper: Stuur een melding naar alle volgers
+    instance_type:
+      direct: Publiceer
+      draft: Concept opslaan
+      schedule: Inplannen

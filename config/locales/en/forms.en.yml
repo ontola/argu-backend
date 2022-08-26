@@ -1,159 +1,158 @@
+---
 en:
   forms:
-    staff_only: "Staff only"
-    advanced: "Advanced"
-    theme:
-      label: "Theme"
-      description: "Please reload the page after changing the theme."
+    advanced: Advanced
     default:
       about:
-        label: "About"
-      attachments:
-        label: "Attachments"
+        label: About
       attachment_collection:
-        label: "Attachments"
+        label: Attachments
+      attachments:
+        label: Attachments
       audience:
-        label: "Audience"
-      bio:
-        label: "Goal"
+        label: Audience
       confirmation_string:
-        placeholder: "Type 'remove' to confirm"
-        label: "Confirmation"
+        label: Confirmation
+        placeholder: Type 'remove' to confirm
       content:
-        label: "Content"
+        label: Content
       country_code:
-        label: "Country"
+        label: Country
       coupon:
-        label: "Coupon"
-      coupons:
-        label: "Coupons"
+        label: Coupon
       coupon_count:
-        label: "Coupon count"
-      cover_photo_attribution:
-        description: "If you do not posess the copyright to a photo, you can name the author and the license here. For example: CC-BY @argu_joep"
-        label: "Copyright"
+        label: Coupon count
+      coupons:
+        label: Coupons
       cover_photo:
-        label: "Cover photo"
+        label: Cover photo
       cover_photo_add:
-        label: "Add image"
+        label: Add image
+      cover_photo_attribution:
+        description: 'If you do not posess the copyright to a photo, you can name the author and the license here. For example: CC-BY @argu_joep'
+        label: Copyright
       created_at:
-        label: "Created at"
+        label: Created at
       creator:
-        label: "Post as"
+        label: Post as
       current_password:
-        label: "Current password"
-      placement:
-        label: "Location"
+        label: Current password
       default_cover_photo:
-        label: "Cover photo"
+        label: Cover photo
       default_options_vocab_id:
-        label: "Default vote options"
+        label: Default vote options
       default_profile_photo:
-        label: "Profile photo"
+        label: Profile photo
       description:
-        placeholder: "Enter a description"
-        label: "Content"
+        label: Content
+        placeholder: Enter a description
       dismiss_button:
-        label: "Button text"
+        label: Button text
       dismissable:
-        label: "Dismissable"
+        label: Dismissable
       display_name:
-        placeholder: "Enter your title"
-        label: "Title"
+        label: Title
+        placeholder: Enter your title
       edge_id:
-        label: "Object"
+        label: Object
       email:
-        placeholder: "email@example.com"
-        label: "Email"
+        label: Email
+        placeholder: email@example.com
       ends_at:
-        label: "Ends at"
+        label: Ends at
       expires_at:
-        label: "Expires at"
+        label: Expires at
       filename:
-        label: "Filename"
+        label: Filename
       follows_count:
-        label: 'Followers'
-      grant_set:
-        label: 'Permission set'
-      grant_set_id:
-        label: 'Permission set'
-      grants:
-        label: "Grants"
+        label: Followers
       grant_collection:
-        label: "Grants"
-      group_membership_collection:
-        label: 'Members'
+        label: Grants
+      grant_set:
+        label: Permission set
+      grant_set_id:
+        label: Permission set
+      grants:
+        label: Grants
       group_id:
-        label: 'Group'
+        label: Group
+      group_membership_collection:
+        label: Members
       header_background:
-        label: "Background of top bar"
+        label: Background of top bar
       header_text:
-        label: "Text color of top bar"
+        label: Text color of top bar
       is_draft:
-        label: "Draft"
+        label: Draft
       is_public:
-        label: "Show profile to non-members"
-      last_accepted:
-        label: "I agree"
-      last_activity_at:
-        label: "Activity"
+        label: Show profile to non-members
       language:
-        label: "Language"
+        label: Language
+      last_accepted:
+        label: I agree
+      last_activity_at:
+        label: Activity
       locale:
-        label: "Language"
+        label: Language
       map_question:
-        label: "Large map"
+        label: Large map
       mark_as_important:
-        label: "Mark as important"
+        label: Mark as important
       name:
-        label: "Name"
+        label: Name
       notify:
-        label: 'Verstuur notificatie naar de plaatser'
+        label: Verstuur notificatie naar de plaatser
       options_vocab_id:
-        label: "Vote options"
-        description: "When changing the vote options, previously casted votes will no longer be visible."
-      password_confirmation:
-        helper_text: "Same as above"
-        label: "Confirm password"
+        description: When changing the vote options, previously casted votes will no longer be visible.
+        label: Vote options
       password:
-        label: "Password"
+        label: Password
+      password_confirmation:
+        helper_text: Same as above
+        label: Confirm password
       path:
-        label: "alias"
+        label: alias
       pinned:
-        label: "Pin"
+        label: Pin
+      placement:
+        label: Location
       postal_code:
-        label: "Postal code"
+        label: Postal code
       primary_color:
-        label: "Primary color"
+        label: Primary color
       primary_container_node_id:
-        label: "Homepage"
+        label: Homepage
       profile_photo:
-        label: "Profile photo"
+        label: Profile photo
       published_at:
-        label: "Published"
+        label: Published
       remember_me:
-        label: "Remember data"
+        label: Remember data
       require_location:
-        label: "Location is required"
+        label: Location is required
       secondary_color:
-        label: "Secondary color"
+        label: Secondary color
       show_feed:
-        label: "Show my activity and my votes on my profile"
+        label: Show my activity and my votes on my profile
       status:
-        label: 'Status'
+        label: Status
       styled_headers:
-        label: "Use primary color for headings"
-      title:
-        label: "Title"
+        label: Use primary color for headings
       time_zone:
-        label: "Time zone"
+        label: Time zone
+      title:
+        label: Title
       trash_activity:
-        label: "Explanation"
+        label: Explanation
       type:
-        label: "Type"
+        label: Type
       untrash_activity:
-        label: "Explanation"
+        label: Explanation
       url:
-        label: "Url"
+        label: Url
       used_coupons:
-        label: "Used coupons"
+        label: Used coupons
+    staff_only: Staff only
+    theme:
+      description: Please reload the page after changing the theme.
+      label: Theme

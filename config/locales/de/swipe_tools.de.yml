@@ -1,6 +1,5 @@
+---
 de:
-  swipe_tools:
-    type_new: Neue swipetool
   forms:
     swipe_tools:
       action_body:
@@ -8,3 +7,5 @@ de:
   menus:
     swipe_tools:
       fields: Fragen
+  swipe_tools:
+    type_new: Neue swipetool

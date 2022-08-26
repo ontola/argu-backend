@@ -1,78 +1,77 @@
-#English motions translations
-
+---
 en:
-  users:
-    type: "User"
-    plural: "Users"
-    guest: 'Guest user'
-    anonymous: 'Anonymous'
-    settings:
-      title: "User settings"
-      menu:
-        general: "General"
-        profile: "Profile"
-        authentication: "Authentication"
-        notifications: "Notifications"
-        privacy: "Privacy"
-        advanced: "Advanced"
-        emails: "Email addresses"
-        destroy: "Destroy"
-    registrations:
-      confirm_mail_change_notice: "We have send you a mail to the new address. Please confirm the change by clicking the link in this mail."
-    drafts:
-      title: "My drafts"
   enums:
     users:
-      reactions_email:
-        never_reactions_email: 'Never'
-        direct_reactions_email: 'Immediately'
-        daily_reactions_email: 'Daily'
-        weekly_reactions_email: 'Weekly'
-      news_email:
-        never_news_email: 'Never'
-        direct_news_email: 'Immediately'
-        daily_news_email: 'Daily'
-        weekly_news_email: 'Weekly'
-      decisions_email:
-        never_decisions_email: 'Never'
-        direct_decisions_email: 'Immediately'
-        daily_decisions_email: 'Daily'
-        weekly_decisions_email: 'Weekly'
-      memberships_email:
-        never_memberships_email: 'Never'
-        direct_memberships_email: 'Immediately'
-        daily_memberships_email: 'Daily'
-        weekly_memberships_email: 'Weekly'
       created_email:
-        never_created_email: 'Never'
-        direct_created_email: 'Immediately'
-        daily_created_email: 'Daily'
-        weekly_created_email: 'Weekly'
+        daily_created_email: Daily
+        direct_created_email: Immediately
+        never_created_email: Never
+        weekly_created_email: Weekly
+      decisions_email:
+        daily_decisions_email: Daily
+        direct_decisions_email: Immediately
+        never_decisions_email: Never
+        weekly_decisions_email: Weekly
       destroy_strategy:
-        expropriate_on_destroy: "Anonymize content"
-        remove_on_destroy: "Remove content"
+        expropriate_on_destroy: Anonymize content
+        remove_on_destroy: Remove content
+      memberships_email:
+        daily_memberships_email: Daily
+        direct_memberships_email: Immediately
+        never_memberships_email: Never
+        weekly_memberships_email: Weekly
+      news_email:
+        daily_news_email: Daily
+        direct_news_email: Immediately
+        never_news_email: Never
+        weekly_news_email: Weekly
+      reactions_email:
+        daily_reactions_email: Daily
+        direct_reactions_email: Immediately
+        never_reactions_email: Never
+        weekly_reactions_email: Weekly
   forms:
     users:
       decisions_email:
-        label: "For official decisions"
+        label: For official decisions
       display_name:
-        placeholder: ""
-        helper_text: "Set how you will be visible to others. Most people use their real name."
-        label: "Name"
+        helper_text: Set how you will be visible to others. Most people use their real name.
+        label: Name
+        placeholder: ''
       email:
-        placeholder: "email@example.com"
+        placeholder: email@example.com
       has_analytics:
-        description: "We use Bugsnag to get notified of and help fix errors in your browser. We use Matomo to analyze how the website is used, so we can improve the user experience."
-        label: "Enable browser services"
+        description: We use Bugsnag to get notified of and help fix errors in your browser. We use Matomo to analyze how the website is used, so we can improve the user experience.
+        label: Enable browser services
       is_public:
-        description: "By enabling this option, your name will be replace with \"Anonymous\" for guest users. This way your name will not be indexed by search engines. Registered users are always allowed to view your profile and name."
+        description: By enabling this option, your name will be replace with "Anonymous" for guest users. This way your name will not be indexed by search engines. Registered users are always allowed to view your profile and name.
       news_email:
-        label: "For important items"
+        label: For important items
       reactions_email:
-        label: "For new items"
+        label: For new items
       shortname:
-        description: "No spaces. Only letters, numbers and _. Start with a letter."
-        label: "Username"
+        description: No spaces. Only letters, numbers and _. Start with a letter.
+        label: Username
       url:
-        helper_text: "You can't change your username after setting it."
-        label: "Username"
+        helper_text: You can't change your username after setting it.
+        label: Username
+  users:
+    anonymous: Anonymous
+    drafts:
+      title: My drafts
+    guest: Guest user
+    plural: Users
+    registrations:
+      confirm_mail_change_notice: We have send you a mail to the new address. Please confirm the change by clicking the link in this mail.
+    settings:
+      menu:
+        advanced: Advanced
+        authentication: Authentication
+        destroy: Destroy
+        emails: Email addresses
+        general: General
+        notifications: Notifications
+        privacy: Privacy
+        profile: Profile
+      title: User settings
+    type: User

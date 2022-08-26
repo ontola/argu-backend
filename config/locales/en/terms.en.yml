@@ -1,4 +1,5 @@
+---
 en:
   terms:
-    type_new: "New term"
-    tagged_items: "Tagged"
+    tagged_items: Tagged
+    type_new: New term

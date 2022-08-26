@@ -1,18 +1,5 @@
+---
 de:
-  forms:
-    otp_attempts:
-      otp_attempt:
-        helper_text: >-
-          Diesen finden Sie in der Authentifizierungsanwendung, die Sie zuvor
-          verwendet haben.
-        label: Authentifizierungs-Code
-    otp_secrets:
-      otp_attempt:
-        label: Authentifizierungs-Code
-      provision_image:
-        description: >-
-          Installieren Sie eine Authentifizierungsanwendung und scannen Sie
-          diesen QR-Code.
   actions:
     otp_attempts:
       create:
@@ -23,18 +10,24 @@ de:
         label: Zwei-Faktor-Authentifizierung
         submit: Weiter
       destroy:
+        description: Sind Sie sicher, dass Sie die Zwei-Faktor-Authentifizierung von **%{name}** deaktivieren möchten?
         label: Zwei-Faktor-Authentifizierung deaktivieren
-        description: >-
-          Sind Sie sicher, dass Sie die Zwei-Faktor-Authentifizierung von
-          **%{name}** deaktivieren möchten?
         submit: Bestätigen Sie
         success: Die Zwei-Faktor-Authentifizierung ist deaktiviert
       errors:
-        invalid: Der Authentifizierungscode ist falsch.
-        not_activated: Die Zwei-Faktor-Authentifizierung ist noch nicht aktiviert.
         already_exists: Die Zwei-Faktor-Authentifizierung ist bereits aktiviert.
         create:
           success: Willkommen zurück!
-        expired: >-
-          Die Anfrage ist abgelaufen. Bitte versuchen Sie, sich erneut
-          anzumelden.
+        expired: Die Anfrage ist abgelaufen. Bitte versuchen Sie, sich erneut anzumelden.
+        invalid: Der Authentifizierungscode ist falsch.
+        not_activated: Die Zwei-Faktor-Authentifizierung ist noch nicht aktiviert.
+  forms:
+    otp_attempts:
+      otp_attempt:
+        helper_text: Diesen finden Sie in der Authentifizierungsanwendung, die Sie zuvor verwendet haben.
+        label: Authentifizierungs-Code
+    otp_secrets:
+      otp_attempt:
+        label: Authentifizierungs-Code
+      provision_image:
+        description: Installieren Sie eine Authentifizierungsanwendung und scannen Sie diesen QR-Code.

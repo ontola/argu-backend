@@ -1,48 +1,38 @@
+---
 de:
   profiles:
-    type: Profil
     about_me: Über mich
-    heads_up: Ihr Profil ist für andere Argu-Nutzer sichtbar.
-    feed_is_private: 'Ihre Aktivitäten sind nur für Sie sichtbar. '
-    feed_is_public: 'Ihre Aktivitäten sind für alle sichtbar. '
     actor:
       create: Posten als
-      update: Aktualisieren als
       send: Senden als
+      update: Aktualisieren als
+    didnt_vote_name: "%{name} hat noch nicht abgestimmt."
+    edit:
+      cover_photo: Titelbild
+      general: Allgemein
+      privacy: Datenschutz
+      privacy_notice: Auf Argu können Sie für Ideen abstimmen. Wenn Sie zeigen möchten, wofür Sie gestimmt haben, können Sie diese Information auf Argu teilen. Diese Einstellung kann jederzeit geändert werden.
+      profile_photo: Profilbild
+      shortname: Benutzername
+      shortname_not_allowed: Sie können Ihren Benutzernamen nicht ändern. Sie können jedoch den Namen, den andere Benutzer sehen, ändern unter
+      title: Profil bearbeiten
+    feed_is_private: 'Ihre Aktivitäten sind nur für Sie sichtbar. '
+    feed_is_public: 'Ihre Aktivitäten sind für alle sichtbar. '
+    heads_up: Ihr Profil ist für andere Argu-Nutzer sichtbar.
+    should_start_with_capital: darf nur Buchstaben, Zahlen und '_' enthalten. Außerdem muss er mit einem Buchstaben beginnen.
     show:
-      title: Profil
       btn:
+        admin: Zum Administrator befördern
         edit: Bearbeiten
         freeze: Einfrieren
-        unfreeze: Einfrieren aufheben
-        admin: Zum Administrator befördern
         unadmin: Admin zurückstufen
-    edit:
-      title: Profil bearbeiten
-      shortname_not_allowed: >-
-        Sie können Ihren Benutzernamen nicht ändern. Sie können jedoch den
-        Namen, den andere Benutzer sehen, ändern unter
-      general: Allgemein
-      profile_photo: Profilbild
-      cover_photo: Titelbild
-      privacy: Datenschutz
-      privacy_notice: >-
-        Auf Argu können Sie für Ideen abstimmen. Wenn Sie zeigen möchten, wofür
-        Sie gestimmt haben, können Sie diese Information auf Argu teilen. Diese
-        Einstellung kann jederzeit geändert werden.
-      shortname: Benutzername
-    didnt_vote_name: '%{name} hat noch nicht abgestimmt.'
-    should_start_with_capital: >-
-      darf nur Buchstaben, Zahlen und '_' enthalten. Außerdem muss er mit einem
-      Buchstaben beginnen.
+        unfreeze: Einfrieren aufheben
+      title: Profil
+    type: Profil
   pundit:
     profile_policy:
       update?: Du kannst dieses Profil nicht aktualisieren.
   users:
     shortname:
-      not_changeable: >-
-        Überlege dir einen Benutzernamen gut. Du kannst ihn später nicht mehr
-        ändern.
-      already_present: >-
-        Wenn Sie bereits einen Benutzernamen haben, wenden Sie sich an Argu, um
-        eine Änderung zu beantragen.
+      already_present: Wenn Sie bereits einen Benutzernamen haben, wenden Sie sich an Argu, um eine Änderung zu beantragen.
+      not_changeable: Überlege dir einen Benutzernamen gut. Du kannst ihn später nicht mehr ändern.

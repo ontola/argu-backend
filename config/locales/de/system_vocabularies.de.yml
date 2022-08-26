@@ -1,97 +1,98 @@
+---
 de:
   vocabularies:
     system:
       form_fields:
         label: Feldtypen
         terms:
-          - label: Kleiner Text
-            exact_match: https://ns.ontola.io/form#TextInput
-            icon: "font"
-          - label: Großer Text
-            exact_match: https://ns.ontola.io/form#TextAreaInput
-            icon: "file-text-o"
-          - label: Formatierter Text
-            exact_match: https://ns.ontola.io/form#MarkdownInput
-            icon: "italic"
-          - label: Nummer
-            exact_match: https://ns.ontola.io/form#NumberInput
-            icon: "calculator"
-          - label: Einzelne Checkbox
-            exact_match: https://ns.ontola.io/form#CheckboxInput
-            icon: "check-square-o"
-          - label: Gruppe von Kontrollkästchen
-            exact_match: https://ns.ontola.io/form#CheckboxGroup
-            icon: "list"
-          - label: Radio-Gruppe
-            exact_match: https://ns.ontola.io/form#RadioGroup
-            icon: "check-circle-o"
-          - label: Dropdown-Selektor
-            exact_match: https://ns.ontola.io/form#SelectInput
-            icon: "bars"
-          - label: Toggle-Schaltflächen
-            exact_match: https://ns.ontola.io/form#ToggleButtonGroup
-            icon: "square-o"
-          - label: Farbe
-            exact_match: https://ns.ontola.io/form#ColorInput
-            icon: "pencil"
-          - label: Datum
-            exact_match: https://ns.ontola.io/form#DateInput
-            icon: "calendar"
-          - label: Datum und Uhrzeit
-            exact_match: https://ns.ontola.io/form#DateTimeInput
-            icon: "clock-o"
-          - label: Geldbetrag
-            exact_match: https://ns.ontola.io/form#MoneyInput
-            icon: "money"
-          - label: Symbol
-            exact_match: https://ns.ontola.io/form#IconInput
-            icon: "picture-o"
-          - label: Standort
-            exact_match: https://ns.ontola.io/form#LocationInput
-            icon: "map-marker"
-          - label: Schieberegler
-            exact_match: https://ns.ontola.io/form#SliderInput
-            icon: "sliders"
-          - label: E-Mail
-            exact_match: https://ns.ontola.io/form#EmailInput
-            icon: "envelope-o"
-          - label: Kennwort
-            exact_match: https://ns.ontola.io/form#PasswordInput
-            icon: "unlock-alt"
-          - label: Mehrere Emails
-            exact_match: https://ns.ontola.io/form#MultipleEmailInput
-            icon: "users"
-          - label: Datei
-            exact_match: https://ns.ontola.io/form#FileInput
-            icon: "file-o"
-          - label: Postleitzahlenbereich
-            exact_match: https://ns.ontola.io/form#PostalRangeInput
-            icon: "home"
-          - label: Swipe item
-            exact_match: https://ns.ontola.io/form#SwipeInput
-            icon: "hand-o-up"
-      vote_options:
-        label: Optionen für die Stimmabgabe
-        terms:
-          - color: '#547f4b'
-            icon: Daumen hoch
-            label: Zustimmen
-            description: Anklicken, um dafür zu stimmen
-            exact_match: https://argu.co/ns/core#yes
-          - color: '#707070'
-            icon: Pause
-            label: Andere
-            description: Klicken Sie, um neutral zu stimmen
-            exact_match: https://argu.co/ns/core#other
-          - color: '#863d3d'
-            icon: Daumen runter
-            label: Ablehnen
-            description: Klicken Sie, um dagegen zu stimmen
-            exact_match: https://argu.co/ns/core#no
+        - label: Kleiner Text
+          exact_match: https://ns.ontola.io/form#TextInput
+          icon: font
+        - label: Großer Text
+          exact_match: https://ns.ontola.io/form#TextAreaInput
+          icon: file-text-o
+        - label: Formatierter Text
+          exact_match: https://ns.ontola.io/form#MarkdownInput
+          icon: italic
+        - label: Nummer
+          exact_match: https://ns.ontola.io/form#NumberInput
+          icon: calculator
+        - label: Einzelne Checkbox
+          exact_match: https://ns.ontola.io/form#CheckboxInput
+          icon: check-square-o
+        - label: Gruppe von Kontrollkästchen
+          exact_match: https://ns.ontola.io/form#CheckboxGroup
+          icon: list
+        - label: Radio-Gruppe
+          exact_match: https://ns.ontola.io/form#RadioGroup
+          icon: check-circle-o
+        - label: Dropdown-Selektor
+          exact_match: https://ns.ontola.io/form#SelectInput
+          icon: bars
+        - label: Toggle-Schaltflächen
+          exact_match: https://ns.ontola.io/form#ToggleButtonGroup
+          icon: square-o
+        - label: Farbe
+          exact_match: https://ns.ontola.io/form#ColorInput
+          icon: pencil
+        - label: Datum
+          exact_match: https://ns.ontola.io/form#DateInput
+          icon: calendar
+        - label: Datum und Uhrzeit
+          exact_match: https://ns.ontola.io/form#DateTimeInput
+          icon: clock-o
+        - label: Geldbetrag
+          exact_match: https://ns.ontola.io/form#MoneyInput
+          icon: money
+        - label: Symbol
+          exact_match: https://ns.ontola.io/form#IconInput
+          icon: picture-o
+        - label: Standort
+          exact_match: https://ns.ontola.io/form#LocationInput
+          icon: map-marker
+        - label: Schieberegler
+          exact_match: https://ns.ontola.io/form#SliderInput
+          icon: sliders
+        - label: E-Mail
+          exact_match: https://ns.ontola.io/form#EmailInput
+          icon: envelope-o
+        - label: Kennwort
+          exact_match: https://ns.ontola.io/form#PasswordInput
+          icon: unlock-alt
+        - label: Mehrere Emails
+          exact_match: https://ns.ontola.io/form#MultipleEmailInput
+          icon: users
+        - label: Datei
+          exact_match: https://ns.ontola.io/form#FileInput
+          icon: file-o
+        - label: Postleitzahlenbereich
+          exact_match: https://ns.ontola.io/form#PostalRangeInput
+          icon: home
+        - label: Swipe item
+          exact_match: https://ns.ontola.io/form#SwipeInput
+          icon: hand-o-up
       upvote_options:
         label: Upvote-Optionen
         terms:
-          - color: '#547f4b'
-            icon: Pfeil nach oben
-            label: Upvote
-            exact_match: https://argu.co/ns/core#yes
+        - color: "#547f4b"
+          icon: Pfeil nach oben
+          label: Upvote
+          exact_match: https://argu.co/ns/core#yes
+      vote_options:
+        label: Optionen für die Stimmabgabe
+        terms:
+        - color: "#547f4b"
+          icon: Daumen hoch
+          label: Zustimmen
+          description: Anklicken, um dafür zu stimmen
+          exact_match: https://argu.co/ns/core#yes
+        - color: "#707070"
+          icon: Pause
+          label: Andere
+          description: Klicken Sie, um neutral zu stimmen
+          exact_match: https://argu.co/ns/core#other
+        - color: "#863d3d"
+          icon: Daumen runter
+          label: Ablehnen
+          description: Klicken Sie, um dagegen zu stimmen
+          exact_match: https://argu.co/ns/core#no

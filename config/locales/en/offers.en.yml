@@ -1,9 +1,10 @@
+---
 en:
-  offers:
-    type_new: "New option"
   forms:
     offers:
-      product_id:
-        label: "Select an Idea"
       price:
-        label: "Value"
+        label: Value
+      product_id:
+        label: Select an Idea
+  offers:
+    type_new: New option

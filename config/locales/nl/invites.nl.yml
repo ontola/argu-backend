@@ -1,13 +1,14 @@
+---
 nl:
   forms:
     invites:
-      message:
-        label: "Toelichting"
-        placeholder: "Schrijf een bericht voor in de email"
       addresses:
-        label: "Email adressen"
-        placeholder: "Voer een of meerdere email adressen in"
+        label: Email adressen
+        placeholder: Voer een of meerdere email adressen in
       group_id:
-        label: "Aan welke groep wil je deze mensen toevoegen?"
+        label: Aan welke groep wil je deze mensen toevoegen?
+      message:
+        label: Toelichting
+        placeholder: Schrijf een bericht voor in de email
       redirect_url:
-        label: "Landingspagina voor de uitgenodigde"
+        label: Landingspagina voor de uitgenodigde

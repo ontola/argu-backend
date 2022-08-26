@@ -1,12 +1,13 @@
+---
 en:
-  follows:
-    status:
-      never: "You are not receiving notifications for '%{item}'."
-      news: "You are receiving notifications for important news about '%{item}'."
-      reactions: "You are receiving notifications for all replies to '%{item}'."
   enums:
     follows:
       follow_type:
-        never: 'Never'
-        reactions: 'All items'
-        news: 'Important items'
+        never: Never
+        news: Important items
+        reactions: All items
+  follows:
+    status:
+      never: You are not receiving notifications for '%{item}'.
+      news: You are receiving notifications for important news about '%{item}'.
+      reactions: You are receiving notifications for all replies to '%{item}'.

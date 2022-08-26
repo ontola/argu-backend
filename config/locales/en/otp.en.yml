@@ -1,32 +1,33 @@
+---
 en:
-  forms:
-    otp_attempts:
-      otp_attempt:
-        helper_text: 'You can find this in the authentication-application you used earlier.'
-        label: "Authentication code"
-    otp_secrets:
-      otp_attempt:
-        label: "Authentication code"
-      provision_image:
-        description: 'Install a authentication-application and scan this QR code.'
   actions:
     otp_attempts:
       create:
-        label: 'Two factor authentication'
-        submit: "Continue"
+        label: Two factor authentication
+        submit: Continue
     otp_secrets:
       create:
-        label: 'Two factor authentication'
-        submit: "Continue"
+        label: Two factor authentication
+        submit: Continue
       destroy:
-        label: 'Disable two factor authentication'
-        description: "Are you sure you want to disable the two factor authentication of **%{name}**?"
-        submit: "Confirm"
-        success: "Two factor authentication is disabled"
+        description: Are you sure you want to disable the two factor authentication of **%{name}**?
+        label: Disable two factor authentication
+        submit: Confirm
+        success: Two factor authentication is disabled
       errors:
-        invalid: "The authentication code is incorrect."
-        not_activated: "Two factor authentication is not yet activated."
-        already_exists: "Two factor authentication is already activated."
+        already_exists: Two factor authentication is already activated.
         create:
-          success: "Welcome back!"
-        expired: "The request expired. Please try logging in again."
+          success: Welcome back!
+        expired: The request expired. Please try logging in again.
+        invalid: The authentication code is incorrect.
+        not_activated: Two factor authentication is not yet activated.
+  forms:
+    otp_attempts:
+      otp_attempt:
+        helper_text: You can find this in the authentication-application you used earlier.
+        label: Authentication code
+    otp_secrets:
+      otp_attempt:
+        label: Authentication code
+      provision_image:
+        description: Install a authentication-application and scan this QR code.

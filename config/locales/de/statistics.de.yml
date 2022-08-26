@@ -1,34 +1,31 @@
+---
 de:
   statistics:
-    header: Statistik
-    users_count:
-      label: Beteiligte Benutzer
-      tooltip: >-
-        Die Anzahl der Nutzer, die abgestimmt oder einen Beitrag geleistet
-        haben.
-    votes_count:
-      label: Bestätigte Stimmen
-      tooltip: Die Anzahl der Stimmen für oder gegen eine Idee.
-    unconfirmed_votes_count:
-      label: Unbestätigte Stimmen
-      tooltip: Die Anzahl der Stimmen für oder gegen eine Idee, die unbestätigt sind.
-    questions_count:
-      label: Herausforderungen
-      tooltip: Die Anzahl der eingereichten Herausforderungen.
-    motions_count:
-      label: Ideen
-      tooltip: Die Anzahl der eingereichten Ideen.
     arguments_count:
       label: Argumente
       tooltip: Die Anzahl der Argumente für oder gegen eine Idee.
-    opinions_count:
-      label: Meinungen
-      tooltip: Die Anzahl der Meinungen, die mit den Abstimmungen verbunden sind.
     comments_count:
       label: Kommentare
       tooltip: Die Anzahl der Kommentare zu Argumenten, Ideen und Herausforderungen.
     contributions_count:
       label: Beiträge
-      tooltip: >-
-        Alle Beiträge mit Text. Dies sind Kommentare, Ideen und Argumente
-        zusammen.
+      tooltip: Alle Beiträge mit Text. Dies sind Kommentare, Ideen und Argumente zusammen.
+    header: Statistik
+    motions_count:
+      label: Ideen
+      tooltip: Die Anzahl der eingereichten Ideen.
+    opinions_count:
+      label: Meinungen
+      tooltip: Die Anzahl der Meinungen, die mit den Abstimmungen verbunden sind.
+    questions_count:
+      label: Herausforderungen
+      tooltip: Die Anzahl der eingereichten Herausforderungen.
+    unconfirmed_votes_count:
+      label: Unbestätigte Stimmen
+      tooltip: Die Anzahl der Stimmen für oder gegen eine Idee, die unbestätigt sind.
+    users_count:
+      label: Beteiligte Benutzer
+      tooltip: Die Anzahl der Nutzer, die abgestimmt oder einen Beitrag geleistet haben.
+    votes_count:
+      label: Bestätigte Stimmen
+      tooltip: Die Anzahl der Stimmen für oder gegen eine Idee.

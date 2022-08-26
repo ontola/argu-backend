@@ -22,12 +22,11 @@ module Shortnameable
     validates :url,
               allow_blank: true,
               format: {
-                allow_blank: true,
                 with: Shortname
                         .validators
                         .detect { |validator| validator.is_a?(ActiveModel::Validations::FormatValidator) }
                         .options[:with],
-                message: I18n.t('profiles.should_start_with_capital')
+                message: ->(_date_or_time, **_options) { I18n.t('profiles.should_start_with_capital') }
               }
 
     validate :validate_no_duplicate_shortname

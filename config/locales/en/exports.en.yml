@@ -1,20 +1,21 @@
+---
 en:
+  exports:
+    create_helper: It takes a while to create an export. You will receive an email when it is ready.
+    destroy_confirmation: Are you sure you want to delete this export?
+    formats:
+      xls:
+        description: "%{type} inhoud"
+        overview_title: Overview
+        path: Hierarchy
+        title: "%{type} titel"
+    status:
+      done: Available
+      failed: Error during processing
+      pending: Waiting for processing
+      processing: Processing
+    type_new: New export
   forms:
     exports:
       user:
-        label: "Gebruiker"
-  exports:
-    type_new: "New export"
-    destroy_confirmation: "Are you sure you want to delete this export?"
-    status:
-      pending: "Waiting for processing"
-      processing: "Processing"
-      ready: "Available"
-      failed: "Error during processing"
-    create_helper: "It takes a while to create an export. You will receive an email when it is ready."
-    formats:
-      xls:
-        overview_title: "Overview"
-        path: "Hierarchy"
-        title: "%{type} titel"
-        description: "%{type} inhoud"
+        label: Gebruiker

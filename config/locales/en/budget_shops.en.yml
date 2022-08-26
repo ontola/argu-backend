@@ -1,9 +1,10 @@
+---
 en:
   budget_shops:
-    type_new: "New budget"
+    type_new: New budget
   forms:
     budget_shops:
       budget_max:
-        label: "Budget"
+        label: Budget
       currency:
-        label: "Unit"
+        label: Unit

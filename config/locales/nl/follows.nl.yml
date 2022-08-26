@@ -1,12 +1,13 @@
+---
 nl:
-  follows:
-    status:
-      never: "Je ontvangt geen meldingen meer voor '%{item}'."
-      news: "Je ontvangt meldingen voor belangrijk nieuws over '%{item}'."
-      reactions: "Je ontvangt meldingen voor alle reacties op '%{item}'."
   enums:
     follows:
       follow_type:
-        never: 'Nooit meldingen ontvangen'
-        reactions: 'Alle items'
-        news: 'Belangrijke items'
+        never: Nooit meldingen ontvangen
+        news: Belangrijke items
+        reactions: Alle items
+  follows:
+    status:
+      never: Je ontvangt geen meldingen meer voor '%{item}'.
+      news: Je ontvangt meldingen voor belangrijk nieuws over '%{item}'.
+      reactions: Je ontvangt meldingen voor alle reacties op '%{item}'.

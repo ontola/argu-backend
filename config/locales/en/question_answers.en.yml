@@ -1,6 +1,5 @@
-#English questions translations
-
+---
 en:
   question_answers:
     destroy:
-          confirmation: 'This decouples this idea from its question, these can be coupled again at a later time.'
+      confirmation: This decouples this idea from its question, these can be coupled again at a later time.

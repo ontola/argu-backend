@@ -1,15 +1,16 @@
+---
 nl:
+  banner_dismissals:
+    type: Dismissal
+  banner_managements:
+    plural: Banners
+    type: Banner
   banners:
-    type_new: 'Nieuwe banner'
+    type_new: Nieuwe banner
   enums:
     banners:
       audience:
-        guests: 'Gasten'
-        users: 'Gebruikers'
-        members: 'Leden'
-        everyone: 'Iedereen'
-  banner_managements:
-    type: 'Banner'
-    plural: 'Banners'
-  banner_dismissals:
-    type: 'Dismissal'
+        everyone: Iedereen
+        guests: Gasten
+        members: Leden
+        users: Gebruikers

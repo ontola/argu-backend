@@ -1,5 +1,8 @@
+---
 en:
   forms:
     custom_form_fields:
       default_cover_photo:
-        label: "Image"
+        label: Image
+      required:
+        label: Required

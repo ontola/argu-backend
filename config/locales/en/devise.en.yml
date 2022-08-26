@@ -1,89 +1,88 @@
-# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
-
+---
 en:
-  errors:
-    messages:
-      expired: "expired, please request a new one."
-      not_found: "not found"
-      already_confirmed: "was already confirmed, try to log in."
-      not_locked: "was not locked"
-      should_match: "should match"
-      extension_whitelist_error: "This file type can't be uploaded."
-      not_saved:
-        one: "1 error caused %{resource} to be unable to save:"
-        other: "%{count} errors caused %{resource} to be unable to save:"
   devise:
-    failure:
-      already_authenticated: 'You are already authenticated.'
-      unauthenticated: 'You must authenticate before you can continue.'
-      unconfirmed: 'You must confirm your account before you can continue.'
-      locked: 'Your account is locked.'
-      invalid_token: 'Invalid authentication token.'
-      timeout: 'Your session has expired, log in to continue.'
-      inactive: 'Your account has not been activated.'
-      invalid: 'We couldn''t find a user with that email and password combination.'
-      invalid_email: 'We couldn''t find a user with this email.'
-      invalid_password: 'Invalid password.'
-      invalid_username: 'We couldn''t find a user with this name.'
-      no_password: "You account does not have a password yet. We've just send you a new email to set a password."
-      user:
-        not_found_in_database: 'We couldn''t find a user with that email and password combination.'
-    sessions:
-      signed_in: 'Welcome back!'
-      signed_out: 'You have signed out successfully.'
-    passwords:
-      send_instructions: 'You will receive an email shortly with instructions to reset your password.'
-      updated: 'Your password has been updated successfully. You are now logged in.'
-      updated_not_active: 'Your password has been updated successfully.'
-      send_paranoid_instructions: "If your email address is already present in our database, you'll receive a link to reset your password in a few minutes."
-      no_token: "You cannot access this page without being redirected by a password reset mail. Please check the entered address."
-      edit:
-        header: 'Change password'
-        submit: 'Save'
-      set:
-        header: 'Choose a password'
-      new:
-        header: 'Forgotten password?'
-        helper: "Enter your email address and we'll send you a mail with a link where you can enter a new password."
-        submit: 'Send reset instructions'
-    confirmations:
-      send: 'Send confirmation mail'
-      send_instructions: "You'll receive a mail containing instructions to confirm your account within a few minutes."
-      send_paranoid_instructions: "If your email address is already present in our database, you'll receive a link to confirm your account."
-      confirmed: 'Your account has been confirmed.'
-      invalid_email: '%{email} does not exist or belongs to a different user.'
-      set_password:
-        header: "Choose a password"
-        button: "Set password"
-      edit:
-        header: 'Send confirmation link again'
-        submit: 'Send confirmation link'
-    registrations:
-      signed_up: 'Welcome to argu! You have just signed up.'
-      signed_up_but_unconfirmed: 'A confirmation email has been sent to your entered email address. Open the link to confirm your account.'
-      signed_up_but_inactive: "You have reigstered, but you can't log in as your account has been deactivated."
-      signed_up_but_locked: "You have successfully reigstered, but you can't log in as your account has been locked."
-      updated: 'Your account has been updated.'
-      update_needs_confirmation: "Would you like to confirm your email address? We have sent a confirmation email."
-      destroyed: 'Your account has been removed. We hope to see you again soon!'
-      password_confirmation:
-        header: 'Your password has been updated.'
-    unlocks:
-      send_instructions: 'You will receive an email with instructions to unlock your account within a few minutes.'
-      unlocked: 'Your account has been unlocked. Log in to continue.'
-      send_paranoid_instructions: "If your account exists, you'll receive a mail with instructions to unlock your account within a few minutes."
-      new:
-          header: 'Your account is locked'
-          helper: "Enter your email address and you'll receive a link to unlock your account."
-          submit: 'Send unlock instructions'
-    omniauth_callbacks:
-      success: 'Succesfully connected to a %{kind} account.'
-      failure: 'Sorry, it was unsuccessful to couple your %{kind} account because of %{reason}.'
     activerecord:
       attributes:
         user:
-          login: "email or username"
+          login: email or username
+    confirmations:
+      confirmed: Your account has been confirmed.
+      edit:
+        header: Send confirmation link again
+        submit: Send confirmation link
+      invalid_email: "%{email} does not exist or belongs to a different user."
+      send: Send confirmation mail
+      send_instructions: You'll receive a mail containing instructions to confirm your account within a few minutes.
+      send_paranoid_instructions: If your email address is already present in our database, you'll receive a link to confirm your account.
+      set_password:
+        button: Set password
+        header: Choose a password
+    failure:
+      already_authenticated: You are already authenticated.
+      inactive: Your account has not been activated.
+      invalid: We couldn't find a user with that email and password combination.
+      invalid_email: We couldn't find a user with this email.
+      invalid_password: Invalid password.
+      invalid_token: Invalid authentication token.
+      invalid_username: We couldn't find a user with this name.
+      locked: Your account is locked.
+      no_password: You account does not have a password yet. We've just send you a new email to set a password.
+      timeout: Your session has expired, log in to continue.
+      unauthenticated: You must authenticate before you can continue.
+      unconfirmed: You must confirm your account before you can continue.
+      user:
+        not_found_in_database: We couldn't find a user with that email and password combination.
+    omniauth_callbacks:
+      failure: Sorry, it was unsuccessful to couple your %{kind} account because of %{reason}.
+      success: Succesfully connected to a %{kind} account.
+    passwords:
+      edit:
+        header: Change password
+        submit: Save
+      new:
+        header: Forgotten password?
+        helper: Enter your email address and we'll send you a mail with a link where you can enter a new password.
+        submit: Send reset instructions
+      no_token: You cannot access this page without being redirected by a password reset mail. Please check the entered address.
+      send_instructions: You will receive an email shortly with instructions to reset your password.
+      send_paranoid_instructions: If your email address is already present in our database, you'll receive a link to reset your password in a few minutes.
+      set:
+        header: Choose a password
+      updated: Your password has been updated successfully. You are now logged in.
+      updated_not_active: Your password has been updated successfully.
+    registrations:
+      destroyed: Your account has been removed. We hope to see you again soon!
+      password_confirmation:
+        header: Your password has been updated.
+      signed_up: Welcome to argu! You have just signed up.
+      signed_up_but_inactive: You have reigstered, but you can't log in as your account has been deactivated.
+      signed_up_but_locked: You have successfully reigstered, but you can't log in as your account has been locked.
+      signed_up_but_unconfirmed: A confirmation email has been sent to your entered email address. Open the link to confirm your account.
+      update_needs_confirmation: Would you like to confirm your email address? We have sent a confirmation email.
+      updated: Your account has been updated.
+    sessions:
+      signed_in: Welcome back!
+      signed_out: You have signed out successfully.
+    unlocks:
+      new:
+        header: Your account is locked
+        helper: Enter your email address and you'll receive a link to unlock your account.
+        submit: Send unlock instructions
+      send_instructions: You will receive an email with instructions to unlock your account within a few minutes.
+      send_paranoid_instructions: If your account exists, you'll receive a mail with instructions to unlock your account within a few minutes.
+      unlocked: Your account has been unlocked. Log in to continue.
+  errors:
+    messages:
+      already_confirmed: was already confirmed, try to log in.
+      expired: expired, please request a new one.
+      extension_whitelist_error: This file type can't be uploaded.
+      not_found: not found
+      not_locked: was not locked
+      not_saved:
+        one: '1 error caused %{resource} to be unable to save:'
+        other: "%{count} errors caused %{resource} to be unable to save:"
+      should_match: should match
   intro:
     initial:
       headers:
-        shortname: "Welcome!"
+        shortname: Welcome!

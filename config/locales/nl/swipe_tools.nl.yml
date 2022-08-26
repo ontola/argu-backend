@@ -1,10 +1,11 @@
+---
 nl:
-  swipe_tools:
-    type_new: "Nieuwe swipetool"
   forms:
     swipe_tools:
       action_body:
-        label: "Formulier"
+        label: Formulier
   menus:
     swipe_tools:
-      fields: "Vragen"
+      fields: Vragen
+  swipe_tools:
+    type_new: Nieuwe swipetool

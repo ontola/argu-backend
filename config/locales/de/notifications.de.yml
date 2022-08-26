@@ -1,27 +1,24 @@
+---
 de:
   actions:
     notifications:
-      update:
-        label: Als gelesen markieren
       read_all:
         label: Alle als gelesen markieren
+      update:
+        label: Als gelesen markieren
   notifications:
     all: Alle Benachrichtigungen
-    settings: Einstellungen
-    receive:
-      title: 'Erhalten Sie Benachrichtigungen für:'
+    changed_successfully: Ihre Benachrichtigungseinstellungen wurden aktualisiert
     permanent:
       confirm_account:
-        one: >-
-          Bitte bestätigen Sie Ihre Stimme, indem Sie auf den Link klicken, den
-          wir an %{email}gesendet haben.
-        other: >-
-          Bitte bestätigen Sie Ihre %{count} Stimmen, indem Sie auf den Link
-          klicken, den wir an %{email}geschickt haben.
+        one: Bitte bestätigen Sie Ihre Stimme, indem Sie auf den Link klicken, den wir an %{email}gesendet haben.
+        other: Bitte bestätigen Sie Ihre %{count} Stimmen, indem Sie auf den Link klicken, den wir an %{email}geschickt haben.
       drafts_reminder:
         one: Sie haben einen unveröffentlichten Entwurf
-        other: Sie haben unveröffentlichte Entwürfe
+        other: Sie haben %{count} unveröffentlichte Entwürfe
+    receive:
+      title: 'Erhalten Sie Benachrichtigungen für:'
+    settings: Einstellungen
     unsubscribe:
-      success: Sie erhalten keine Benachrichtigungen mehr für%{item}'.
       failed: Du erhältst noch keine Benachrichtigungen für%{item}'.
-    changed_successfully: Ihre Benachrichtigungseinstellungen wurden aktualisiert
+      success: Sie erhalten keine Benachrichtigungen mehr für%{item}'.

@@ -1,15 +1,7 @@
+---
 de:
   legal:
-    agree_and_create: Zustimmen und Konto erstellen
+    continue_html: Indem Sie fortfahren, erklären Sie sich mit unserer %{policy} und unserem %{privacy} einverstanden.
     documents:
       policy: Nutzungsbestimmungen
       privacy: Datenschutz
-      values: null
-    form_html: >-
-      Mit der Einrichtung eines Argu-Kontos erklären Sie sich mit unseren
-      Datenschutzbestimmungen einverstanden.
-    notice: 'Durch die Erstellung eines Argu-Kontos erklären Sie sich mit unseren '
-    continue_html: >-
-      Indem Sie fortfahren, erklären Sie sich mit unserer %{policy} und unserem
-      %{privacy} einverstanden.
-    accept: Akzeptieren Sie

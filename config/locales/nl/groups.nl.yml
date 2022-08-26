@@ -1,34 +1,33 @@
-#Dutch argument translations
-
+---
 nl:
-  groups:
-    type_new: "Groep toevoegen"
-    new: "Groep toevoegen"
-    public:
-      name: "Publiek"
-      name_singular: "Gebruiker"
-    members: 'Leden'
-    description: "Je kan rechten verlenen aan groepen. Leden van deze groepen kunnen dan bijvoorbeeld content aanpassen."
-    errors:
-      confirmation_required: "Als lid van de groep %{group_name} moet je je email bevestigen voordat je deze actie kan uitvoeren."
-    settings:
-      title: "Groepsinstellingen"
-      menu:
-        general: "Algemeen"
-        members: 'Leden'
-        invite: 'Uitnodigen'
-        grants: 'Rechten'
-        advanced: 'Geavanceerd'
-    delete:
-      info: "Weet je zeker dat je de groep '%{group}' wil verwijderen?"
-      not_allowed: "Het is niet mogelijk om deze groep te verwijderen."
   forms:
     groups:
       name:
-        placeholder: "bv Burgers"
-        label: "Naam"
+        label: Naam
+        placeholder: bv Burgers
       name_singular:
-        placeholder: "bv Burger"
-        label: "Naam enkelvoud"
+        label: Naam enkelvoud
+        placeholder: bv Burger
       require_2fa:
-        label: "Verplicht tweestapsverificatie"
+        label: Verplicht tweestapsverificatie
+  groups:
+    delete:
+      info: Weet je zeker dat je de groep '%{group}' wil verwijderen?
+      not_allowed: Het is niet mogelijk om deze groep te verwijderen.
+    description: Je kan rechten verlenen aan groepen. Leden van deze groepen kunnen dan bijvoorbeeld content aanpassen.
+    errors:
+      confirmation_required: Als lid van de groep %{group_name} moet je je email bevestigen voordat je deze actie kan uitvoeren.
+    members: Leden
+    new: Groep toevoegen
+    public:
+      name: Publiek
+      name_singular: Gebruiker
+    settings:
+      menu:
+        advanced: Geavanceerd
+        general: Algemeen
+        grants: Rechten
+        invite: Uitnodigen
+        members: Leden
+      title: Groepsinstellingen
+    type_new: Groep toevoegen

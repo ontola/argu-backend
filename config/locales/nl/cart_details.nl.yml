@@ -1,9 +1,10 @@
+---
 nl:
-  cart_details:
-    type_new: "Selecteer optie"
   actions:
     cart_details:
       create:
-        submit: "Toevoegen"
+        submit: Toevoegen
       destroy:
-        submit: "Verwijderen"
+        submit: Verwijderen
+  cart_details:
+    type_new: Selecteer optie

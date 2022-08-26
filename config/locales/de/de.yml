@@ -1,114 +1,79 @@
+---
 de:
-  language: Deutsch
-  set_language: Sprache einstellen
-  settings: Einstellungen
-  sign_up: Anmelden
-  sign_up_description: 'Melden Sie sich mit einem kostenlosen Konto an:'
-  argu_sign_up: Argu-Konto erstellen
-  sign_up_argu: Argu-Konto erstellen
-  sign_up_email: Mit E-Mail anmelden
-  sign_out: Abmelden
-  no_confirmation_instructions: Haben Sie keine Bestätigungsanweisungen erhalten?
-  no_unlock_instructions: Sie haben keine Anweisungen zur Freischaltung erhalten?
-  learn_more: Mehr erfahren
-  not_found_type: '%{type} nicht gefunden'
-  draft: Entwurf
-  drafts: Entwürfe
-  ended: Beendet
-  publish: veröffentlichen
-  published: Veröffentlicht
-  publish_confirmation: Sind Sie sicher, dass Sie diesen Artikel veröffentlichen möchten?
-  retract: Zurückziehen
-  retracted: Zurückgezogen
-  retract_confirmation: Sind Sie sicher, dass Sie diesen Artikel zurückziehen wollen?
-  edit: Bearbeiten
-  edit_type: ' %{type}bearbeiten'
-  show_type: ' %{type}anzeigen'
-  settings_type: '%{type}'
-  read_more: Mehr lesen
-  read_less: Weniger
-  collapse: Zusammenklappen
-  update: Aktualisieren
-  update_type: ' %{type} aktualisieren '
-  save: Speichern
-  send: Senden
-  new: Neu
-  new_type: Neu %{type}
-  newe_type: Neues %{type}
-  add_type: ' %{type}hinzufügen'
+  add: hinzufügen
+  add_type: " %{type}hinzufügen"
   back: Zurück
   cancel: Abbrechen
-  show: Anzeigen
-  add: hinzufügen
-  next: Nächste
-  previous: Vorherige
-  older: Ältere
-  newer: Neuere
-  delete: Löschen
-  destroy: Dauerhaft löschen
-  destroy_type: 'Dauerhaft löschen %{type} '
-  trash: Papierkorb
-  untrash: Untrash
-  type_destroyed: '%{type} gelöscht'
-  type_destroyed_failed: Fehler beim Löschen von %{type}
-  empty_type: Es gibt keine %{type}
-  history: Verlauf
-  image: Bild
-  pro: pro
   con: con
-  log: Protokoll
-  feed: Feed
-  overview: Übersicht
-  edited: Bearbeitet
+  delete: Löschen
   deleted: Gelöscht
-  trashed: Versteckt
-  is_draft: Entwurf
-  report: Bericht
-  clearance: Freigabe
-  forum: Forum
-  share: Teilen
-  menu: Menü
-  legal:
-    header: Rechtliches
-    policy: Nutzungsbestimmungen
-    privacy: Datenschutz
-    cookies: Cookies
+  destroy: Dauerhaft löschen
   destroy_confirm_string: entfernen
-  about:
-    about: Über Argu
-    info: Infos
-  users_cancel_string: entfernen
-  users_cancel_super_admin: >-
-    Sie sind der Administrator an einer oder mehreren Stellen. Wenn Sie Ihr
-    Konto löschen wollen, übertragen oder entfernen Sie bitte zuerst diese
-    Rechte.
-  datetime_ago: vor
-  datetime:
-    distance_in_words:
-      x_days:
-        one: 1 Tag
-        other: '%{count} Tage'
-      about_x_hours:
-        one: '%{count} Stunden'
-        other: '%{count} Stunden'
-  type_save_success: '%{type} erfolgreich gespeichert'
-  type_update_failure: ' %{type}Speicherung fehlgeschlagen'
-  type_update_success: '%{type} erfolgreich gespeichert'
-  type_create_failure: ' %{type}fehlgeschlagen'
-  type_create_success: '%{type} erfolgreich erstellt'
-  type_publish_success: '%{type} veröffentlicht.'
-  type_draft_success: Entwurf erstellt.
-  type_convert_success: Erfolgreich in %{type}umgewandelt
-  type_destroy_failure: ' %{type}konnte nicht gelöscht werden'
-  type_destroy_success: '%{type} erfolgreich gelöscht'
-  type_trash_success: '%{type} erfolgreich geleert'
-  type_untrash_success: '%{type} erfolgreich aus dem Papierkorb entfernt'
-  type_move_success: '%{type} erfolgreich verschoben'
+  destroy_type: 'Dauerhaft löschen %{type} '
+  draft: Entwurf
+  drafts: Entwürfe
+  edit: Bearbeiten
+  edit_type: " %{type}bearbeiten"
+  edited: Bearbeitet
+  ended: Beendet
+  feed: Feed
+  forum: Forum
+  image: Bild
+  is_draft: Entwurf
+  language: Deutsch
+  log: Protokoll
+  menu: Menü
+  new: Neu
+  new_type: Neu %{type}
+  newer: Neuere
+  next: Nächste
+  older: Ältere
+  overview: Übersicht
+  previous: Vorherige
+  pro: pro
+  publish: veröffentlichen
+  publish_confirmation: Sind Sie sicher, dass Sie diesen Artikel veröffentlichen möchten?
+  published: Veröffentlicht
+  read_less: Weniger
+  read_more: Mehr lesen
+  report: Bericht
+  retract: Zurückziehen
+  retract_confirmation: Sind Sie sicher, dass Sie diesen Artikel zurückziehen wollen?
+  retracted: Zurückgezogen
+  save: Speichern
+  send: Senden
+  set_language: Sprache einstellen
+  settings: Einstellungen
+  settings_type: "%{type}"
+  share: Teilen
+  show: Anzeigen
+  show_type: " %{type}anzeigen"
+  sign_out: Abmelden
+  sign_up: Anmelden
+  sign_up_argu: Argu-Konto erstellen
+  sign_up_description: 'Melden Sie sich mit einem kostenlosen Konto an:'
+  sign_up_email: Mit E-Mail anmelden
+  trash: Papierkorb
+  trashed: Versteckt
   type_changes: Änderungen
-  time:
-    formats:
-      date: '%A, %d %B ''%y'
-      dateline: '%A, %d %B %Y'
-  activerecord:
-    errors:
-      record_not_unique: Dieser Wert wurde bereits übernommen.
+  type_convert_success: Erfolgreich in %{type}umgewandelt
+  type_create_failure: " %{type}fehlgeschlagen"
+  type_create_success: "%{type} erfolgreich erstellt"
+  type_destroy_failure: " %{type}konnte nicht gelöscht werden"
+  type_destroy_success: "%{type} erfolgreich gelöscht"
+  type_destroyed: "%{type} gelöscht"
+  type_destroyed_failed: Fehler beim Löschen von %{type}
+  type_draft_success: Entwurf erstellt.
+  type_move_success: "%{type} erfolgreich verschoben"
+  type_publish_success: "%{type} veröffentlicht."
+  type_save_success: "%{type} erfolgreich gespeichert"
+  type_trash_success: "%{type} erfolgreich geleert"
+  type_untrash_success: "%{type} erfolgreich aus dem Papierkorb entfernt"
+  type_update_failure: " %{type}Speicherung fehlgeschlagen"
+  type_update_success: "%{type} erfolgreich gespeichert"
+  untrash: Untrash
+  update: Aktualisieren
+  update_type: " %{type} aktualisieren "
+  users_cancel_string: entfernen
+  users_cancel_system_user: Dieser Benutzer kann nicht gelöscht werden.
+  users_cancel_super_admin: Sie sind der Administrator an einer oder mehreren Stellen. Wenn Sie Ihr Konto löschen wollen, übertragen oder entfernen Sie bitte zuerst diese Rechte.

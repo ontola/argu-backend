@@ -1,5 +1,5 @@
-
+---
 nl:
   question_answers:
     destroy:
-      confirmation: 'Hiermee koppel je dit idee los van de uitdaging, deze kan later weer gekoppeld worden.'
+      confirmation: Hiermee koppel je dit idee los van de uitdaging, deze kan later weer gekoppeld worden.

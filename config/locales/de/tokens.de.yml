@@ -1,6 +1,7 @@
+---
 de:
   tokens:
     discussion:
-      title: Leute einladen
-      description: Laden Sie Leute ein, an der Diskussion teilzunehmen.
       default_message: Beteiligen Sie sich an der Diskussion über%{resource}".
+      description: Laden Sie Leute ein, an der Diskussion teilzunehmen.
+      title: Leute einladen

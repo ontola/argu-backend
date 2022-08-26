@@ -1,6 +1,5 @@
+---
 de:
-  phases:
-    type_new: Neue Phase
   forms:
     phases:
       position:
@@ -9,3 +8,5 @@ de:
         label: Typ
       time:
         label: Zeit
+  phases:
+    type_new: Neue Phase

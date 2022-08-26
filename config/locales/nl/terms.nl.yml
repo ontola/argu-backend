@@ -1,4 +1,5 @@
+---
 nl:
   terms:
-    type_new: "Nieuwe term"
-    tagged_items: "Getagd"
+    tagged_items: Getagd
+    type_new: Nieuwe term

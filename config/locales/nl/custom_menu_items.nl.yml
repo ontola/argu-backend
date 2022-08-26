@@ -1,25 +1,26 @@
+---
 nl:
   custom_menu_items:
-    type_new: "Nieuw menu item"
-  forms:
-    custom_menu_items:
-      raw_label:
-        label: "Label"
-      raw_href:
-        label: "URL"
-      target_type:
-        label: "Type"
-      edge:
-        label: "Item"
-      custom_image:
-        label: "Plaatje"
-      icon:
-        label: "Icoon"
-      position:
-        label: "Positie"
-      coupled_to: "Dit menu item is gekoppeld aan %{name}."
+    type_new: Nieuw menu item
   enums:
     custom_menu_items:
       target_type:
-        edge: "Item"
-        url: "URL"
+        edge: Item
+        url: URL
+  forms:
+    custom_menu_items:
+      coupled_to: Dit menu item is gekoppeld aan %{name}.
+      custom_image:
+        label: Plaatje
+      edge:
+        label: Item
+      icon:
+        label: Icoon
+      position:
+        label: Positie
+      raw_href:
+        label: URL
+      raw_label:
+        label: Label
+      target_type:
+        label: Type

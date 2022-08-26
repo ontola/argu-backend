@@ -1,30 +1,31 @@
+---
 en:
   statistics:
-    header: "Statistics"
-    users_count:
-      label: "Involved users"
-      tooltip: "The amount of users that voted or made a contribution."
-    votes_count:
-      label: "Confirmed votes"
-      tooltip: "The amount of votes for or against an idea."
-    unconfirmed_votes_count:
-      label: "Unconfirmed votes"
-      tooltip: "The amount of votes for or against an idea that are unconfirmed."
-    questions_count:
-      label: "Challenges"
-      tooltip: "The amount of submitted challenges."
-    motions_count:
-      label: "Ideas"
-      tooltip: "The amount of submitted ideas."
     arguments_count:
-      label: "Arguments"
-      tooltip: "The amount arguments for or against an idea."
-    opinions_count:
-      label: "Opinions"
-      tooltip: "The amount of opinions attached to votes."
+      label: Arguments
+      tooltip: The amount arguments for or against an idea.
     comments_count:
-      label: "Comments"
-      tooltip: "The amount comments on arguments, ideas and challenges."
+      label: Comments
+      tooltip: The amount comments on arguments, ideas and challenges.
     contributions_count:
-      label: "Contributions"
-      tooltip: "All items with text. These are comments, ideas and arguments combined."
+      label: Contributions
+      tooltip: All items with text. These are comments, ideas and arguments combined.
+    header: Statistics
+    motions_count:
+      label: Ideas
+      tooltip: The amount of submitted ideas.
+    opinions_count:
+      label: Opinions
+      tooltip: The amount of opinions attached to votes.
+    questions_count:
+      label: Challenges
+      tooltip: The amount of submitted challenges.
+    unconfirmed_votes_count:
+      label: Unconfirmed votes
+      tooltip: The amount of votes for or against an idea that are unconfirmed.
+    users_count:
+      label: Involved users
+      tooltip: The amount of users that voted or made a contribution.
+    votes_count:
+      label: Confirmed votes
+      tooltip: The amount of votes for or against an idea.

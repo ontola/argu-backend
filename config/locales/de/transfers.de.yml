@@ -1,17 +1,18 @@
+---
 de:
   actions:
     default:
       transfer:
-        label: "Übertragen"
+        label: Übertragen
   enums:
     edges:
       transfer_type:
-        transfer_to_page: "Profil der Community"
-        transfer_to_user: "Wählen Sie einen Benutzer aus"
+        transfer_to_page: Profil der Community
+        transfer_to_user: Wählen Sie einen Benutzer aus
   forms:
     transfers:
       transfer_type:
-        label: "Überweisen an"
+        label: Überweisen an
   menus:
     default:
-      transfer: "Überweisen"
+      transfer: Überweisen
