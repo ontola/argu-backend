@@ -188,7 +188,7 @@ en:
         submit: "Save"
       notifications:
         label: "Notifications"
-        description: "When would you like to receive an email for items you follow?</br>Moderators of an organisation can mark items as 'important'. For example a decison on a discussion you are following."
+        description: "When would you like to receive an email for items you follow?</br>Moderators of a community can mark items as 'important'. For example a decison on a discussion you are following."
         submit: "Save"
       setup:
         label: "Welcome!"
@@ -211,13 +211,6 @@ en:
       update:
         label: "Welcome!"
         submit: "Continue"
-    pages:
-      create:
-        label: "New website"
-      destroy:
-        label: "Delete organisation"
-        description: "Are you sure you want to permanently delete this entire organisation?. This cannot be undone."
-        submit: "Delete"
     passwords:
       create:
         label: "Forgotten password?"

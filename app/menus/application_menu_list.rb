@@ -101,7 +101,7 @@ class ApplicationMenuList < LinkedRails::Menus::List # rubocop:disable Metrics/C
     def has_follow_menu(**opts)
       follow_types = opts.delete(:follow_types)
       has_menu :follow, **{
-        description: I18n.t('notifications.receive.title'),
+        description: -> { I18n.t('notifications.receive.title') },
         image: -> { follow_icon(follow_type) },
         menus: -> { follow_menu_items(follow_types) }
       }.merge(opts)

@@ -64,10 +64,10 @@ en:
       banners: "Banners"
       custom_menu_items: "Menu"
     descriptions:
-      general: "Here you will find the general settings for this website."
-      container_nodes: "Components form the basic structure of the website."
+      general: "Here you will find the general settings for this community."
+      container_nodes: "Components form the basic structure of the community."
       groups: "With groups you can give certain rights to a select group of participants."
       shortnames: "With redirects you can create nicer urls to share with others."
-      custom_menu_items: "The menu in the navigation bar of the website."
+      custom_menu_items: "The menu in the navigation bar of the community."
       banners: "Banners are bars that appear below the navigation bar. You can use these to inform visitors of something important."
       vocabularies: "Via vocabularies you can create lists with your own content."

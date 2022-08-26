@@ -1,36 +1,26 @@
 nl:
   pages:
-    type_new: "Nieuwe website"
-    show: "Organisatie weergeven"
-    discover_header: "Ontdek"
-    my_pages: "Mijn Argu websites"
+    type_new: "Aan de slag"
     settings:
-      title: "Organisatie instellingen"
       menu:
         return: "Bekijk %{resource}"
         general: 'Algemeen'
-        profile: 'Organisatieprofiel'
+        profile: 'Community profiel'
         advanced: 'Geavanceerd'
         groups: 'Groepen'
         grants: 'Rechten'
         forums: 'Forums'
         container_nodes: 'Componenten'
         shortnames: 'Redirects'
-      managers:
-        owner: "Eigenaar"
-        about_owner: "Gebruikers zijn eigenaar van een organisatie. Gebruikers kunnen meerdere organisaties bezitten, maar een organisatie kan maar één eigenaar hebben."
-        title: "Groepen"
-        about_managers: "Groepen kunnen beheerrechten hebben. De leden uit deze groepen kunnen groepen beheren en content plaatsen namens de organisatie. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
-      forums:
-        get_one: "Een forum toevoegen aan jouw organisatie? <a href='mailto:info@argu.co'>Neem contact met ons op</a> voor de mogelijkheden."
-    management:
-      title: "Organisatiebeheer"
-      managed_current_out_of_max: "%{current} van maximaal %{max} organisatie(s) beheerd."
-      owner: "Eigenaar"
-    display: "Organisatie bekijken"
-    create: "Maak een organisatie"
-    legal: "Door deze organisatie aan te maken verklaar je toestemming te hebben om de organisatie officieel op Argu te vertegenwoordigen, en dat je akkoord gaat met de Algemene Voorwaarden."
-    limit_reached_amount: "Je kunt maximaal %{amount} organisatie(s) aanmaken."
+    limit_reached_amount:
+      one: "Je kunt maximaal %{count} community aanmaken."
+      other: "Je kunt maximaal %{count} communities aanmaken."
+  actions:
+    pages:
+      destroy:
+        label: "Community verwijderen"
+        description: "Weet je zeker dat je de volledige community permanent wil verwijderen? Deze actie is niet ongedaan te maken."
+        submit: "Verwijder"
   enums:
     pages:
       header_background:
@@ -46,7 +36,7 @@ nl:
       accepted_terms:
         label: "Ik ga akkoord met de gebruiksvoorwaarden"
       display_name:
-        label: "Naam"
+        label: "Naam van jouw community"
       google_tag_manager:
         label: "Google tag manager"
       google_uac:
@@ -66,6 +56,8 @@ nl:
         description: "Bijvoorbeeld 'mijntraject.piwik.pro'"
       piwik_pro_site_id:
         label: "Piwik Pro site id"
+      requires_intro:
+        helper_text: "Verplicht gebruikers om een gebruikersnaam in te voeren voordat ze content kunnen plaatsen."
       shortname:
         label: "Argu URL"
   activerecord:
@@ -73,4 +65,3 @@ nl:
       page:
         name: 'Naam'
         shortname: 'Argu URL'
-        f_delete: 'Verwijderen'

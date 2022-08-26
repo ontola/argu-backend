@@ -26,20 +26,6 @@ en:
       privacy: "Privacy"
       manager: "Manager"
       shortnames: 'Argu URLs'
-      grants:
-        title: "Groups"
-        administrator: "Administrator"
-        about_managers: "Some groups have management permissions. Members can change and remove objects in the forum.
-          They can also change non-advanced settings in the forum and access forum statistics."
-        owner: "Owner"
-        about_owner: "Only pages can be owners of a forum. Contact Argu with requests to change ownership."
-        about_owner_name: "This Page is owner of the forum '%{name}':"
-        about_page_owner: "The administrator of a forum can appoint managers and change all settings."
-        about_page_owner_name: "This user is owner of the page '%{name}':"
-      hints:
-        bio: "Summarize the goal of the forum in one sentence. This text will appear under the forum. At most 140 characters."
-        remove_admin: "This only removes administrator rights."
-      new_helper: "You're about to create a new forum for the organization '%{page}'.  "
     statistics:
       title: "Statistics"
       questions: "Challenges"
@@ -48,20 +34,3 @@ en:
         title: "Cities of users"
         info: "Based on data provided optionally by users"
         unknown: "Unknown"
-  activerecord: #These currently aren't used for forms.
-    attributes:
-      forum:
-        name: "Name"
-        shortname: "Argu URL"
-        description: "Description"
-        website: "Website"
-        profile_photo: "Profile photo"
-        scope: "Scope"
-        visibility: "Visibility"
-        page: "Transfer"
-  votes:
-    alerts:
-      not_modified: ""
-  pundit:
-    membership_policy:
-      destroy?: "Membership can not be canceled."

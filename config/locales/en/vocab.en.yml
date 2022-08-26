@@ -100,8 +100,8 @@ en:
       type: "Order"
       plural_label: "Orders"
     Page:
-      label: "Organization"
-      plural_label: "Organizations"
+      label: "Community"
+      plural_label: "Communities"
     Phase:
       icon: "calendar-o"
       label: "Phase"

@@ -275,7 +275,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     get new_iri(Page.collection_iri(root: argu).path)
 
-    assert_disabled_form(error: I18n.t('pages.limit_reached_amount', amount: 1))
+    assert_disabled_form(error: I18n.t('pages.limit_reached_amount', count: 1))
   end
 
   test 'administrator should not post create' do

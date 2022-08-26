@@ -6,7 +6,7 @@ en:
   enums:
     edges:
       transfer_type:
-        transfer_to_page: "The organisation"
+        transfer_to_page: "Profile of the community"
         transfer_to_user: "Select a user"
   forms:
     transfers:

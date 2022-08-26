@@ -20,9 +20,9 @@ module Shortnameable
              primary_key: :uuid
     accepts_nested_attributes_for :shortname, :shortnames
     validates :url,
-              allow_nil: true,
+              allow_blank: true,
               format: {
-                allow_nil: true,
+                allow_blank: true,
                 with: Shortname
                         .validators
                         .detect { |validator| validator.is_a?(ActiveModel::Validations::FormatValidator) }

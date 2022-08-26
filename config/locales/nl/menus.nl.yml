@@ -64,10 +64,10 @@ nl:
       banners: "Banners"
       custom_menu_items: "Menu"
     descriptions:
-      general: "Hier vind je de algemene instellingen voor deze website."
-      container_nodes: "Componenten vormen de basisstructuur van de website."
+      general: "Hier vind je de algemene instellingen voor deze community."
+      container_nodes: "Componenten vormen de basisstructuur van de community."
       groups: "Met groepen kan je bepaalde rechten aan een selecte groep deelnemers geven."
       shortnames: "Met redirects kan je mooiere urls maken om te delen met anderen."
-      custom_menu_items: "Het menu in de bovenbalk van de website."
+      custom_menu_items: "Het menu in de bovenbalk van de community."
       banners: "Banners zijn balken die onder de navigatiebalk komen te staan. Je kunt deze gebruiken om bezoekers iets belangrijks te laten lezen."
       vocabularies: "Via vocabularies kan je lijsten met eigen content maken."

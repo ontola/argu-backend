@@ -1,50 +1,28 @@
 de:
   pages:
-    type_new: Neue Website
-    show: Organisation anzeigen
-    discover_header: Entdecken Sie
-    my_pages: Meine Argu-Webseiten
+    type_new: Fangen sie an
     settings:
-      title: Einstellungen der Organisation
       menu:
         return: Ansicht %{resource}
         general: Allgemein
-        profile: Profil der Organisation
+        profile: Profil der Community
         advanced: Fortgeschrittene
         groups: Gruppen
         grants: Erlaubnisse
         forums: Foren
         container_nodes: Bestandteile
         shortnames: Weiterleitungen
-      managers:
-        owner: Besitzer
-        about_owner: >-
-          Benutzer besitzen eine Organisation. Benutzer können mehrere
-          Organisationen besitzen, aber eine Organisation kann nur einen
-          einzigen Besitzer haben.
-        title: Gruppen
-        about_managers: >-
-          Einige Gruppen haben Verwaltungsrechte. Mitglieder können Gruppen
-          verwalten und Inhalte im Namen der Organisation veröffentlichen. Sie
-          können auch über ihren eigenen Namen abstimmen und zuvor eingestellte
-          Beiträge löschen.
-      forums:
-        get_one: >-
-          Möchten Sie ein Forum für Ihre Organisation einrichten? Bitte <a
-          href="mailto:info@argu.co">kontaktieren Sie uns</a> für die
-          Möglichkeiten.
-    management:
-      title: Verwaltung von Organisationen
-      managed_current_out_of_max: '%{current} von max %{max} Organisation(en) verwaltet.'
-      owner: Besitzer
-    display: Organisation anzeigen
-    create: Eine Organisation erstellen
-    legal: >-
-      Indem Sie diese Organisation anlegen, erklären Sie, dass Sie die Erlaubnis
-      haben, die betreffende Organisation auf Argu zu vertreten, und dass Sie
-      mit den allgemeinen Geschäftsbedingungen einverstanden sind.
-    limit_reached_amount: Sie können nicht mehr als %{amount} Organisation(en) anlegen.
-    page_management: Verwaltung der Organisation
+    limit_reached_amount:
+      one: Sie können nicht mehr als %{count} Community anlegen.
+      other: Sie können nicht mehr als %{count} Communities anlegen.
+  actions:
+    pages:
+      destroy:
+        label: Community löschen
+        description: >-
+          Sind Sie sicher, dass Sie die gesamte Community dauerhaft löschen
+          wollen?. Dies kann nicht rückgängig gemacht werden.
+        submit: löschen
   enums:
     pages:
       header_background:
@@ -60,7 +38,7 @@ de:
       accepted_terms:
         label: Ich akzeptiere die Nutzungsbedingungen
       display_name:
-        label: Name
+        label: Name Ihrer Community
       google_tag_manager:
         label: Google Tag Manager
       google_uac:
@@ -80,6 +58,8 @@ de:
         description: z.B. 'meinprojekt.piwik.pro'
       piwik_pro_site_id:
         label: Piwik-Pro-Site-ID
+      requires_intro:
+        helper_text: Fordern Sie Benutzer auf, einen Benutzernamen einzugeben, bevor sie Inhalte veröffentlichen.
       shortname:
         label: URL argumentieren
   activerecord:
@@ -87,4 +67,3 @@ de:
       page:
         name: Name
         shortname: URL argumentieren
-        f_delete: Löschen

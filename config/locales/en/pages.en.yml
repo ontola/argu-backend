@@ -1,37 +1,26 @@
 en:
   pages:
-    type_new: "New website"
-    show: "Show organization"
-    discover_header: "Discover"
-    my_pages: "My Argu websites"
+    type_new: "Get started"
     settings:
-      title: "Organization settings"
       menu:
         return: "View %{resource}"
         general: 'General'
-        profile: 'Organisation profile'
+        profile: 'Community profile'
         advanced: 'Advanced'
         groups: 'Groups'
         grants: 'Grants'
         forums: 'Forums'
         container_nodes: 'Components'
         shortnames: 'Redirects'
-      managers:
-        owner: "Owner"
-        about_owner: "Users own an organization. Users can own multiple organizations, but organization can only have a single owner."
-        title: "Groups"
-        about_managers: "Some groups have management permissions. Members can manage groups and post content in name of the organization. They can also vote on their own name and delete previously placed items."
-      forums:
-        get_one: "Do you want to add a forum for your organisation? Please <a href='mailto:info@argu.co'>contact us</a> for the possibilities."
-    management:
-      title: "Organization management"
-      managed_current_out_of_max: "%{current} of max %{max} organization(s) managed."
-      owner: "Owner"
-    display: "Display organization"
-    create: "Create an organization"
-    legal: "By creating this organization you declare having permission to represent the related organisation on Argu, and that you agree to the general terms and conditions."
-    limit_reached_amount: "You can create no more than %{amount} organization(s)."
-    page_management: "organization management"
+    limit_reached_amount:
+      one: "You can create no more than %{count} community."
+      other: "You can create no more than %{count} communities."
+  actions:
+    pages:
+      destroy:
+        label: "Delete community"
+        description: "Are you sure you want to permanently delete this entire community?. This cannot be undone."
+        submit: "Delete"
   enums:
     pages:
       header_background:
@@ -47,7 +36,7 @@ en:
       accepted_terms:
         label: "I accept the terms of use"
       display_name:
-        label: "Name"
+        label: "Name of your community"
       google_tag_manager:
         label: "Google tag manager"
       google_uac:
@@ -67,6 +56,8 @@ en:
         description: "E.g. 'myproject.piwik.pro'"
       piwik_pro_site_id:
         label: "Piwik Pro site id"
+      requires_intro:
+        helper_text: "Require users to enter a username before posting content."
       shortname:
         label: "Argu URL"
   activerecord:
@@ -74,4 +65,3 @@ en:
       page:
         name: 'Name'
         shortname: 'Argu URL'
-        f_delete: 'Delete'

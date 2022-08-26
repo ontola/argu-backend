@@ -201,7 +201,7 @@ de:
         label: Benachrichtigungen
         description: >-
           Wann möchten Sie eine E-Mail für Beiträge erhalten, denen Sie
-          folgen?<br/>Moderatoren einer Organisation können Beiträge als
+          folgen?<br/>Moderatoren einer Community können Beiträge als
           "wichtig" markieren. Zum Beispiel eine Entscheidung über eine
           Diskussion, die Sie verfolgen.
         submit: Speichern
@@ -228,15 +228,6 @@ de:
       update:
         label: Herzlich willkommen!
         submit: Weiter
-    pages:
-      create:
-        label: Neue Website
-      destroy:
-        label: Organisation löschen
-        description: >-
-          Sind Sie sicher, dass Sie die gesamte Organisation dauerhaft löschen
-          wollen?. Dies kann nicht rückgängig gemacht werden.
-        submit: löschen
     passwords:
       create:
         label: Haben Sie Ihr Passwort vergessen?

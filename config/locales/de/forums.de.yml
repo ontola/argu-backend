@@ -25,30 +25,6 @@ de:
       privacy: Datenschutz
       manager: Leiter
       shortnames: Argu-URLs
-      grants:
-        title: Gruppen
-        administrator: Verwalter
-        about_managers: >-
-          Einige Gruppen haben Verwaltungsrechte. Mitglieder können Objekte im
-          Forum ändern und entfernen. Sie können auch nicht-erweiterte
-          Einstellungen im Forum ändern und auf Forumsstatistiken zugreifen.
-        owner: Besitzer
-        about_owner: >-
-          Nur Seiten können Eigentümer eines Forums sein. Wenden Sie sich an
-          Argu, wenn Sie den Besitzer wechseln möchten.
-        about_owner_name: 'Diese Seite ist Eigentümer des Forums%{name}'':'
-        about_page_owner: >-
-          Der Administrator eines Forums kann Manager ernennen und alle
-          Einstellungen ändern.
-        about_page_owner_name: 'Dieser Benutzer ist Eigentümer der Seite%{name}'':'
-      hints:
-        bio: >-
-          Fassen Sie das Ziel des Forums in einem Satz zusammen. Dieser Text
-          wird unter dem Forum erscheinen. Maximal 140 Zeichen.
-        remove_admin: Dadurch werden nur die Administratorrechte entfernt.
-      new_helper: >-
-        Sie sind dabei, ein neues Forum für die Organisation%{page}' zu
-        erstellen.
     statistics:
       title: Statistik
       questions: Herausforderungen
@@ -59,20 +35,3 @@ de:
           Basierend auf Daten, die optional von den Nutzern zur Verfügung
           gestellt werden
         unknown: Unbekannt
-  activerecord:
-    attributes:
-      forum:
-        name: Name
-        shortname: URL argumentieren
-        description: Beschreibung
-        website: Website
-        profile_photo: Profilbild
-        scope: Umfang
-        visibility: Sichtbarkeit
-        page: Übertragung
-  votes:
-    alerts:
-      not_modified: ''
-  pundit:
-    membership_policy:
-      destroy?: Die Mitgliedschaft kann nicht gekündigt werden.

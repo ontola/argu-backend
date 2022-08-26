@@ -39,7 +39,7 @@ class Shortname < ApplicationRecord # rubocop:disable Metrics/ClassLength
             if: :new_record?,
             unless: :root_id
   validates :shortname,
-            allow_nil: true,
+            allow_blank: true,
             format: {
               with: /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i,
               message: I18n.t('profiles.should_start_with_capital')

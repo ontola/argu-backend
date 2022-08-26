@@ -64,10 +64,10 @@ de:
       banners: Banners
       custom_menu_items: Menü
     descriptions:
-      general: "Hier finden Sie die allgemeinen Einstellungen für diese Website."
-      container_nodes: "Komponenten bilden die Grundstruktur der Website."
+      general: "Hier finden Sie die allgemeinen Einstellungen für diese Community."
+      container_nodes: "Komponenten bilden die Grundstruktur der Community."
       groups: "Mit Gruppen können Sie einem ausgewählten Teilnehmerkreis bestimmte Rechte geben."
       shortnames: "Mit Umleitungen können Sie schönere URLs erstellen, die Sie mit anderen teilen können."
-      custom_menu_items: "Das Menü in der Navigationsleiste der Website."
+      custom_menu_items: "Das Menü in der Navigationsleiste der Community."
       banners: "Banner sind Balken, die unterhalb der Navigationsleiste erscheinen. Damit können Sie Besucher über etwas Wichtiges informieren."
       vocabularies: "Über Vokabeln können Sie Listen mit eigenen Inhalten erstellen."

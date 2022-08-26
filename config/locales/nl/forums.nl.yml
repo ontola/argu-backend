@@ -26,19 +26,6 @@ nl:
       privacy: "Privacy"
       manager: "Beheerder"
       shortnames: 'Argu URLs'
-      grants:
-        title: "Groepen"
-        administrator: "Administrator"
-        about_managers: "Groepen kunnen beheerrechten hebben. De leden uit deze groepen kunnen objecten in het forum aanpassen en verwijderen.
-          Ook kunnen ze de niet-geavanceerde instellingen van het forum wijzigen en de forumstatistieken inzien."
-        owner: "Eigenaar"
-        about_owner: "Alleen een pagina kan eigenaar zijn van een forum. Neem contact op met Argu met verzoeken om het eigenaarschap te wijzigen."
-        about_owner_name: "Deze Pagina is de eigenaar van het forum '%{name}':"
-        about_page_owner: "De administrator van een forum kan beheerders aanwijzen en alle instellingen veranderen. "
-        about_page_owner_name: "Deze gebruiker is de eigenaar van de pagina '%{name}':"
-      hints:
-        bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de titel van het forum. Maximaal 140 karakters."
-        remove_admin: "Dit trekt slechts administratieve rechten in"
     statistics:
       title: "Statistiek"
       questions: "Uitdagingen"
@@ -47,20 +34,3 @@ nl:
         title: "Woonplaatsen van gebruikers"
         info: "Gebaseerd op optioneel aangeleverde gebruikersgegevens"
         unknown: "Onbekend"
-  activerecord: #These currently aren't used for forms.
-    attributes:
-      forum:
-        name: "Naam"
-        shortname: "Argu URL"
-        description: "Omschrijving"
-        website: "Web adres"
-        profile_photo: "Profielfoto"
-        scope: "Vorm"
-        visibility: "Zichtbaarheid"
-        page: "Verplaatsen"
-    votes:
-      alerts:
-        not_modified: ""
-  pundit:
-    membership_policy:
-      destroy?: "Lidmaatschap mag niet opgezegd worden."

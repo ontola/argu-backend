@@ -63,6 +63,6 @@ class PagePolicy < EdgePolicy
     max = UserPolicy.new(context, user).max_allowed_pages
     return true if user.page_count < max
 
-    forbid_with_message(I18n.t('pages.limit_reached_amount', amount: max))
+    forbid_with_message(I18n.t('pages.limit_reached_amount', count: max))
   end
 end

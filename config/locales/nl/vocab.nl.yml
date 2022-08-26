@@ -100,8 +100,8 @@ nl:
       label: "Bestelling"
       plural_label: "Bestellingen"
     Page:
-      label: "Organisatie"
-      plural_label: "Organisaties"
+      label: "Community"
+      plural_label: "Communities"
     Phase:
       icon: "calendar-o"
       label: "Fase"

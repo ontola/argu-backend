@@ -188,7 +188,7 @@ nl:
         submit: "Opslaan"
       notifications:
         label: "Meldingen"
-        description: "Wanneer wil je een email ontvangen over items die je volgt? Beheerders van een organisatie kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt."
+        description: "Wanneer wil je een email ontvangen over items die je volgt? Beheerders van een community kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt."
         submit: "Opslaan"
       setup:
         label: "Welkom!"
@@ -211,13 +211,6 @@ nl:
       update:
         label: "Welkom!"
         submit: "Doorgaan"
-    pages:
-      create:
-        label: "Nieuwe website"
-      destroy:
-        label: "Organisatie verwijderen"
-        description: "Weet je zeker dat je de volledige organisatie permanent wil verwijderen? Deze actie is niet ongedaan te maken."
-        submit: "Verwijder"
     passwords:
       create:
         label: "Wachtwoord vergeten?"

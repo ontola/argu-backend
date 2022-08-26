@@ -108,8 +108,8 @@ de:
       type: Bestellung
       plural_label: Bestellungen
     Page:
-      label: Organisation
-      plural_label: Organisationen
+      label: Community
+      plural_label: Communities
     Phase:
       icon: calendar-o
       label: Phase
@@ -300,6 +300,7 @@ de:
       label: Relevanz
     requiresIntro:
       label: Name erforderlich
+      description: Fordern Sie Benutzer auf, einen Benutzernamen einzugeben, bevor sie Inhalte veröffentlichen.
     sendConfirmationAction:
       label: Bestätigen Sie
     settingsMenu:
