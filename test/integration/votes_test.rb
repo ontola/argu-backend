@@ -480,7 +480,8 @@ class VotesTest < ActionDispatch::IntegrationTest
       delete argument_vote.iri.path, headers: argu_headers(accept: :nq)
     end
 
-    expect_triple(vote_iri, NS.schema.option, NS.argu[:abstain], NS.ontola[:replace])
+    new_vote = expect_triple(vote_iri, NS.owl.sameAs, nil, NS.ontola[:replace])
+    expect_triple(new_vote.first.object, NS.schema.option, NS.argu[:abstain], NS.ontola[:supplant])
     assert_response 200
   end
 

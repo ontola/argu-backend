@@ -61,7 +61,12 @@ class VotesController < EdgeableController
   end
 
   def destroy_success
-    super
+    respond_with_resource(
+      destroy_success_options.merge(
+        meta: destroy_meta,
+        resource: abstain_vote
+      )
+    )
     broadcast_vote_counts
   end
 
@@ -93,12 +98,16 @@ class VotesController < EdgeableController
     end
   end
 
+  def abstain_vote
+    @abstain_vote ||= Vote.abstain_vote(current_resource!.parent, user_context)
+  end
+
   def singular_added_delta(resource)
     [same_as_statement(resource.singular_iri, resource.iri)]
   end
 
   def singular_removed_delta(resource)
-    [[current_vote_iri(resource.parent), NS.schema.option, NS.argu[:abstain], delta_iri(:replace)]]
+    [[current_vote_iri(resource.parent), NS.owl.sameAs, abstain_vote.iri, delta_iri(:replace)]]
   end
 
   def trash_meta
