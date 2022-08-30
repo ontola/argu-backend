@@ -5,5 +5,5 @@ class BlogForm < ContainerNodeForm
   field :bio, datatype: NS.fhir[:markdown]
   field :url, **url_options
   has_one :default_cover_photo
-  has_many :grants, **grant_options
+  grants_group
 end

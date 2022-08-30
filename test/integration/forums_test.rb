@@ -18,6 +18,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
   )
   define_helsinki
 
+  let(:group) { create(:group, parent: argu) }
+  let(:other_group) { create(:group, parent: argu) }
   let(:draft_motion) do
     create(:motion, parent: holland, argu_publication_attributes: {draft: true})
   end
@@ -157,6 +159,63 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_equal "#{updated_holland.parent.iri}/new_url", updated_holland.iri
     updated_holland.custom_actions.map(&:href).all? do |iri|
       iri.match?(%r{#{Regexp.escape(updated_holland.parent.iri)}/new_url})
+    end
+  end
+
+  test 'administrator should update grants' do
+    sign_in holland_administrator
+    assert_equal(holland.grants.count, 1)
+    public_grant = holland.grants.first
+
+    assert_difference('Grant.count' => 1) do
+      put holland,
+          params: {
+            forum: {
+              grants_attributes: {
+                '0': {
+                  id: public_grant.id,
+                  grant_set_id: public_grant.grant_set_id,
+                  group_id: public_grant.group_id,
+                },
+                '1': {
+                  grant_set_id: GrantSet.participator.id,
+                  group_id: group.id
+                },
+                '2': {
+                  group_id: other_group.id
+                }
+              }
+            }
+          },
+          headers: argu_headers
+      assert_response :success
+      expect_triple(NS.sp.Variable, NS.ontola[:baseCollection], holland.collection_iri(:grants), NS.ontola[:invalidate])
+      expect_triple(NS.sp.Variable, RDF.type, NS.argu['GrantTree::PermissionGroup'], NS.ontola[:invalidate])
+    end
+  end
+
+  test 'administrator should update remove grant' do
+    sign_in holland_administrator
+    assert_equal(holland.grants.count, 1)
+    public_grant = holland.grants.first
+
+    assert_difference('Grant.count' => -1) do
+      put holland,
+          params: {
+            forum: {
+              grants_attributes: {
+                '0': {
+                  id: public_grant.id,
+                  grant_set_id: '',
+                  group_id: public_grant.group_id
+                }
+              }
+            }
+          },
+          headers: argu_headers
+      assert_response :success
+      expect_triple(NS.sp.Variable, NS.ontola[:baseCollection], holland.collection_iri(:grants), NS.ontola[:invalidate])
+      expect_triple(NS.sp.Variable, RDF.type, NS.argu['GrantTree::PermissionGroup'], NS.ontola[:invalidate])
     end
   end
 

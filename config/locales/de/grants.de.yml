@@ -2,7 +2,8 @@
 de:
   forms:
     grants:
-      description: 'Sie können Gruppen in diesem Forum bestimmte Rechte gewähren. Die Rechte gelten auch für den zugrunde liegenden Inhalt. Die folgenden Rechte sind auf einer höheren Ebene definiert:'
+      label: Rechte
+      description: 'Sie können Gruppen in diesem Forum bestimmte Rechte gewähren. Die Rechte gelten auch für den zugrunde liegenden Inhalt.'
       group:
         label: Groep
   grants:

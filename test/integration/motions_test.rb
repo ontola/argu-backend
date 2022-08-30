@@ -103,8 +103,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     get object,
         headers: argu_headers(accept: :nq)
     assert_response(:success)
-    same_as = expect_triple(RDF::URI(object), NS.owl.sameAs, nil).first.object
-    location = expect_triple(same_as, NS.schema.location, nil).first.object
+    location = expect_triple(RDF::URI(object), NS.schema.location, nil).first.object
     expect_triple(location, NS.schema.latitude, BigDecimal(1))
     expect_triple(location, NS.schema.longitude, BigDecimal(2))
     expect_triple(location, NS.ontola[:zoomLevel], 3)

@@ -111,8 +111,8 @@ module SPI
       expect_slice_attribute(cart_detail_slice, cart_detail, NS.owl.sameAs, blank_node)
       actions = [
         RDF::URI("#{cart_detail}/new"),
-        RDF::URI("#{cart_detail}/shortnames/new"),
-        RDF::URI("#{cart_detail}/grants/new")
+        RDF::URI("#{argu.iri}/cart_details/shortnames/new"),
+        RDF::URI("#{argu.iri}/cart_details/grants/new")
       ]
       expect_slice_attribute(cart_detail_slice, blank_node, NS.ontola[:createAction], actions)
     end

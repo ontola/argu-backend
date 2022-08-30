@@ -37,9 +37,7 @@ class GrantReset < ApplicationRecord
   ]
 
   def added_delta
-    super + [
-      [NS.sp.Variable, RDF.type, NS.argu['GrantTree::PermissionGroup'], NS.ontola[:invalidate]]
-    ]
+    super + GrantTree::PermissionGroup.invalidate_all_delta
   end
 
   def display_name; end

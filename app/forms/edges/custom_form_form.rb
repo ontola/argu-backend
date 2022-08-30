@@ -2,5 +2,5 @@
 
 class CustomFormForm < ContainerNodeForm
   field :display_name
-  has_many :grants, **grant_options
+  grants_group
 end

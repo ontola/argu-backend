@@ -2,7 +2,8 @@
 nl:
   forms:
     grants:
-      description: 'Je kunt rechten toekennen aan groepen binnen dit forum. Rechten gelden ook voor onderliggende items. De volgende rechten zijn op een hoger niveau toegekend:'
+      label: 'Rechten'
+      description: 'Je kunt rechten toekennen aan groepen binnen dit forum. Rechten gelden ook voor onderliggende items.'
       group:
         label: Group
   grants:

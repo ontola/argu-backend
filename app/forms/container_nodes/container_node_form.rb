@@ -2,16 +2,20 @@
 
 class ContainerNodeForm < ApplicationForm
   class << self
+    def grants_group
+      group :grants,
+            description: -> { I18n.t('forms.grants.description') },
+            label: -> { I18n.t('forms.grants.label') } do
+        field :grants, **grant_options
+      end
+    end
+
     def grant_options
       {
-        description: lambda do
-          grants_list =
-            ActsAsTenant.current_tenant.grants.joins(:grant_set).where("grant_sets.title != 'staff'").map do |grant|
-              "**#{grant.group.display_name}**: #{I18n.t("roles.types.#{grant.grant_set.title}")}"
-            end.join("\n")
-          "#{I18n.t('forms.grants.description')}\n#{grants_list}"
-        end,
-        form: Grants::EdgeForm
+        input_field: GrantsInput,
+        form: Grants::EdgeForm,
+        label: '',
+        max_count: 999
       }
     end
 

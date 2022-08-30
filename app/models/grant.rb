@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Grant < ApplicationRecord
+class Grant < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
 
@@ -42,6 +42,11 @@ class Grant < ApplicationRecord
   validates :edge, presence: true, uniqueness: {scope: :group}
 
   parentable :edge
+  collection_options(
+    association_base: -> { Grant.collection_items(self) },
+    include_members: true
+  )
+
   %i[creator spectator participator initiator moderator administrator staff].each do |role|
     define_method "#{role}?" do
       grant_set.title == role
@@ -49,9 +54,7 @@ class Grant < ApplicationRecord
   end
 
   def added_delta
-    super + [
-      [NS.sp.Variable, RDF.type, NS.argu['GrantTree::PermissionGroup'], NS.ontola[:invalidate]]
-    ]
+    super + GrantTree::PermissionGroup.invalidate_all_delta
   end
 
   def display_name
@@ -76,6 +79,15 @@ class Grant < ApplicationRecord
     end.flatten + [edge.grant_tree_node(user_context).permission_group_collection]
   end
 
+  def grant_set_id=(value)
+    if value.blank?
+      mark_for_destruction
+      edge.send(:association_has_destructed, :grants)
+    else
+      super
+    end
+  end
+
   def grant_set=(value)
     value = GrantSet.find_by!(title: value) if value.is_a?(String)
     super
@@ -97,9 +109,28 @@ class Grant < ApplicationRecord
       when Group
         attrs[:group] = parent
       else
-        attrs[:edge] = parent unless parent.is_a?(User)
+        attrs[:edge] = parent if parent.is_a?(Edge)
       end
       attrs
+    end
+
+    def collection_items(collection)
+      grants = collection.parent.try(:grants)&.to_a || []
+      missing_groups = Group.pluck(:id) - grants.map(&:group_id)
+      missing_grants = missing_groups.map do |group_id|
+        Grant.new(group_id: group_id)
+      end
+
+      (grants + missing_grants).sort_by(&:group_id)
+    end
+
+    def requested_index_resource(params, user_context)
+      return super unless params[:parent_iri]&.end_with?('/action_object')
+
+      collection_or_view = root_collection(**index_collection_params(params, user_context))
+      collection = collection_or_view.is_a?(Collection) ? collection_or_view : collection_or_view.collection
+      collection.parent_iri = params[:parent_iri].split('/')
+      collection_or_view
     end
   end
 end

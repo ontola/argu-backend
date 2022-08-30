@@ -2,7 +2,6 @@
 
 class GrantSet < ApplicationRecord
   RESERVED_TITLES = %w[spectator participator initiator moderator administrator staff].freeze
-  SELECTABLE_TITLES = %w[spectator participator initiator administrator].freeze
   has_many :grant_sets_permitted_actions, dependent: :destroy
   has_many :permitted_actions, through: :grant_sets_permitted_actions
   has_many :grants, dependent: :restrict_with_exception
@@ -10,8 +9,6 @@ class GrantSet < ApplicationRecord
 
   validates :page, presence: true
   validates :title, uniqueness: {scope: :root_id}
-
-  scope :selectable, -> { where(title: SELECTABLE_TITLES) }
 
   RESERVED_TITLES.each do |title|
     define_singleton_method title do

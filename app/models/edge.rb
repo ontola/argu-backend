@@ -227,6 +227,12 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     expires_at? && expires_at < Time.current
   end
 
+  def granted_groups
+    base_iri = persisted? ? iri : persisted_edge&.iri
+
+    RDF::URI("#{base_iri}/granted") if base_iri&.uri?
+  end
+
   def has_expired_ancestors?
     persisted_edge
       .self_and_ancestors

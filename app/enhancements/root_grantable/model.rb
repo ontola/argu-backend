@@ -6,7 +6,12 @@ module RootGrantable
 
     included do
       after_create :create_default_grant
-      accepts_nested_attributes_for :grants, reject_if: :all_blank, allow_destroy: true
+      accepts_nested_attributes_for :grants,
+                                    reject_if: proc { |attributes|
+                                      attributes.all? { |key, value| key == '_destroy' || value.blank? } ||
+                                        (attributes['id'].blank? && attributes['grant_set_id'].blank?)
+                                    },
+                                    allow_destroy: true
 
       attr_writer :initial_public_grant
 

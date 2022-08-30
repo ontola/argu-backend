@@ -79,6 +79,12 @@ class GrantTree
         }
       end
 
+      def invalidate_all_delta
+        [
+          [NS.sp.Variable, RDF.type, NS.argu['GrantTree::PermissionGroup'], NS.ontola[:invalidate]]
+        ]
+      end
+
       def iri_template
         @iri_template ||= LinkedRails::URITemplate.new("{/parent_iri*}/#{route_key}{/id}{#fragment}")
       end

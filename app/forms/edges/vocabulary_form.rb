@@ -13,7 +13,7 @@ class VocabularyForm < ContainerNodeForm
 
   has_one :default_cover_photo
   has_many :attachments
-  has_many :grants, **grant_options
-
   with_collection :terms
+
+  grants_group
 end

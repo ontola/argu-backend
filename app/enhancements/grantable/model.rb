@@ -3,6 +3,7 @@
 module Grantable
   module Model
     extend ActiveSupport::Concern
+    include URITemplateHelper
 
     included do
       with_collection :grants
@@ -16,6 +17,22 @@ module Grantable
 
     def grant_tree_node(user_context)
       @grant_tree_node ||= user_context&.grant_tree&.find_or_cache_node(self)
+    end
+
+    def permissions_iri
+      LinkedRails.iri(path: permissions_root_relative_iri)
+    end
+
+    def permissions_root_relative_iri
+      GrantTree::Node.singular_iri_template.expand(parent_iri: split_iri_segments(root_relative_iri))
+    end
+
+    def permission_groups_iri
+      LinkedRails.iri(path: permission_groups_root_relative_iri)
+    end
+
+    def permission_groups_root_relative_iri
+      GrantTree::PermissionGroup.iri_template.expand(parent_iri: split_iri_segments(permissions_root_relative_iri))
     end
   end
 end

@@ -5,6 +5,7 @@ module Vocabularies
     has_many :terms,
              form: Terms::OptionsTermForm,
              label: '',
+             max_count: 12,
              min_count: 1
 
     hidden do
