@@ -37,7 +37,7 @@ de:
         description: Leer lassen, um den Standard-CDN zu verwenden
         label: Matomo-CDN
       matomo_host:
-        description: Leer lassen, um den Standard-Host zu verwenden
+        description: Kontaktieren Sie uns, wenn Sie unseren Matomo-Service nutzen möchten
         label: Matomo-Host
       matomo_site_id:
         label: Matomo-Site-ID

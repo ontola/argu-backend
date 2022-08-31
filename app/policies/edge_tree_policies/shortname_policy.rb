@@ -23,8 +23,10 @@ class ShortnamePolicy < EdgeTreePolicy
 
   def create?
     return forbid_with_message(I18n.t('actions.shortnames.create.errors.invalid_type')) unless valid_owner_type?
+    return false unless edgeable_policy.update?
+    return forbid_wrong_tier unless feature_enabled?(:shortnames)
 
-    edgeable_policy.update?
+    true
   end
 
   def destroy?

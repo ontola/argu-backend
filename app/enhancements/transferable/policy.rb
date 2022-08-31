@@ -9,7 +9,10 @@ module Transferable
     end
 
     def transfer?
-      staff?
+      return false unless administrator? || staff?
+      return forbid_wrong_tier unless feature_enabled?(:transfer_content)
+
+      true
     end
   end
 end

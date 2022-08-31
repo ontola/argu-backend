@@ -75,6 +75,11 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
     [
       setting_item(:general, label: I18n.t('pages.settings.menu.general'), href: edit_iri(ActsAsTenant.current_tenant)),
       setting_item(
+        :theme,
+        label: I18n.t('pages.settings.menu.theme'),
+        href: ActsAsTenant.current_tenant.action(:theme).iri
+      ),
+      setting_item(
         :container_nodes,
         label: I18n.t('pages.settings.menu.container_nodes'),
         href: ContainerNode.collection_iri(display: :settingsTable)

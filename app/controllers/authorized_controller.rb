@@ -11,6 +11,8 @@ class AuthorizedController < ApplicationController
 
   active_response :index, :show
 
+  delegate :feature_enabled?, to: :user_context
+
   private
 
   def add_errors_tab(notification)

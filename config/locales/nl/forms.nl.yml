@@ -152,7 +152,7 @@ nl:
         label: Url
       used_coupons:
         label: Gebruikte coupons
-    staff_only: Staff only
+    analytics: Analytics
     theme:
       description: Herlaad de pagina na het wijzigen van het thema
       label: Thema

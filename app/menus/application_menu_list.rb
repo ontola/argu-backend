@@ -81,13 +81,23 @@ class ApplicationMenuList < LinkedRails::Menus::List # rubocop:disable Metrics/C
       :permissions,
       image: 'fa-suitcase',
       href: resource.grant_tree_node(user_context).iri,
-      policy: :staff?
+      policy: :permissions_tab?
     )
   end
 
   def item_without_image(item)
     item&.image = nil
     item
+  end
+
+  def show_menu_item?(_tag, options)
+    return true if options[:policy].blank?
+
+    policy = resource_policy(options[:policy_resource])
+
+    return true if policy_verdict(policy, options)
+
+    policy.action_status == NS.ontola[:LockedActionStatus]
   end
 
   class << self

@@ -17,6 +17,12 @@ module Policies
       grant_sets.any? { |grant_set| has_grant_set?(grant_set) }
     end
 
+    def check_feature_enabled(feature)
+      return true if staff?
+
+      ActsAsTenant.current_tenant.feature_enabled?(feature)
+    end
+
     module ClassMethods
       private
 
@@ -34,6 +40,16 @@ module Policies
           LinkedRails::SHACL::PropertyShape.new(
             path: [NS.argu[:grantedSets], NS.rdfs.member, NS.argu[:grantSetKey]],
             sh_in: grant_sets
+          )
+        ]
+      end
+
+      def feature_enabled_shapes(feature)
+        [
+          LinkedRails::SHACL::PropertyShape.new(
+            path: [NS.argu[:tierLevel]],
+            min_inclusive: Rails.application.config.tiers[feature],
+            target_node: -> { current_actor_iri }
           )
         ]
       end

@@ -30,6 +30,8 @@ class SearchResult
     end
 
     def result
+      return result_mock if result_mock?
+
       @result ||= association_class.search(
         q,
         aggs: parent.searchable_aggregations,
@@ -49,6 +51,21 @@ class SearchResult
 
     def match
       :word_middle if collection.match.to_s == 'partial'
+    end
+
+    def result_mock?
+      !ActsAsTenant.current_tenant.feature_enabled?(:search) || Rails.application.config.disable_searchkick
+    end
+
+    def result_mock
+      @result_mock ||= Searchkick::Results.new(
+        association_class,
+        {
+          hits: {
+            total: 0
+          }
+        }.with_indifferent_access
+      )
     end
 
     def search_filter

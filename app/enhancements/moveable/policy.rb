@@ -9,7 +9,10 @@ module Moveable
     end
 
     def move?
-      staff? || administrator? || moderator?
+      return false unless moderator? || administrator? || staff?
+      return forbid_wrong_tier unless feature_enabled?(:move_content)
+
+      true
     end
   end
 end

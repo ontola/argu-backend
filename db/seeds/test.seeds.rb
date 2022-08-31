@@ -40,6 +40,7 @@ page = Sidekiq::Testing.inline! do
     creator: staff.profile,
     is_published: true,
     locale: 'en-GB',
+    tier: :standard,
     root_id: 'deadbeef-bfc5-4e68-993f-430037bd5bd3',
     uuid: 'deadbeef-bfc5-4e68-993f-430037bd5bd3'
   )

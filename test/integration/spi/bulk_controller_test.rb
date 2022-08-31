@@ -181,8 +181,12 @@ module SPI
     ####################################
     test 'administrator should post bulk request' do
       sign_in administrator
+      reindex_tree
 
-      bulk_request
+      bulk_request(responses: bulk_responses(
+        "#{argu.iri}/u/search" => {cache: 'no-cache', status: 200, include: true},
+        "#{argu.iri}/u/search?q=1" => {cache: 'private', status: 200, include: true}
+      ))
     end
 
     private

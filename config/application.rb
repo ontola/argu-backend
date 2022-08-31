@@ -49,6 +49,7 @@ module Argu
     ENV['REDIS_URL'] = ENV['REDIS_URL'].presence ||
       "redis://#{ENV['REDIS_ADDRESS'] || 'localhost'}:#{ENV['REDIS_PORT'] || 6379}/12"
 
+    config.limited_file_size = 1_000_000
     config.max_file_size = 25_000_000
 
     # Configure the default encoding used in templates for Ruby 1.9.

@@ -6,31 +6,21 @@ class PageForm < ApplicationForm
         placeholder: ''
   field :url,
         start_adornment: "#{Rails.application.config.origin}/"
+  field :tier
   field :primary_container_node_id,
         datatype: NS.xsd.string,
         max_count: 1,
         sh_in: -> { ContainerNode.collection_iri }
   field :locale,
         min_count: 1
-  has_one :default_profile_photo, min_count: 0
+  field :requires_intro
   resource :delete,
            label: -> { I18n.t('delete') },
            url: -> { delete_iri(ActsAsTenant.current_tenant) }
+  has_one :default_profile_photo, min_count: 0
 
-  group :theme,
-        label: -> { I18n.t('forms.theme.label') },
-        description: -> { I18n.t('forms.theme.description') } do
-    field :primary_color,
-          input_field: LinkedRails::Form::Field::ColorInput
-    field :secondary_color,
-          input_field: LinkedRails::Form::Field::ColorInput
-    field :header_background
-    field :header_text
-    field :styled_headers
-  end
-  group :staff,
-        label: -> { I18n.t('forms.staff_only') } do
-    field :requires_intro
+  group :analytics,
+        label: -> { I18n.t('forms.analytics') } do
     field :matomo_site_id
     field :matomo_host
     field :matomo_cdn

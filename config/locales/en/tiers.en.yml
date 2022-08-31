@@ -1,0 +1,4 @@
+en:
+  tiers:
+    feature_disabled: This feature is not available in the current tier. Please [upgrade](https://argu.co/info/upgrade_tier) to use this feature.
+    search_disabled: Search is not available in the current tier. Please [upgrade](https://argu.co/info/upgrade_tier) to use this feature.

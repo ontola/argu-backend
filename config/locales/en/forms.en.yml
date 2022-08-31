@@ -152,7 +152,7 @@ en:
         label: Url
       used_coupons:
         label: Used coupons
-    staff_only: Staff only
+    analytics: Analytics
     theme:
       description: Please reload the page after changing the theme.
       label: Theme

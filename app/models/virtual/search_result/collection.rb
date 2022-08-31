@@ -65,6 +65,7 @@ class SearchResult
     end
 
     def title
+      return I18n.t('tiers.search_disabled') unless ActsAsTenant.current_tenant.feature_enabled?(:search)
       return I18n.t('search.results_found', count: total_count) if q.present?
 
       I18n.available_locales.map do |locale|

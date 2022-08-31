@@ -23,7 +23,7 @@ class CustomMenuItemForm < ApplicationForm
   field :icon, input_field: IconInput
   field :custom_image,
         input_field: LinkedRails::Form::Field::FileInput,
-        max_size: Rails.application.config.max_file_size
+        max_size: -> { MediaObject.max_file_size }
 
   hidden do
     field :custom_image_content_type, sh_in: -> { MediaObjectUploader::IMAGE_TYPES }

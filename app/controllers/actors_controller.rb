@@ -9,7 +9,7 @@ class ActorsController < ParentableController
 
   def available_actors
     return [] if current_user.guest?
-    return [current_user, ActsAsTenant.current_tenant] if user_context.page_manager?
+    return [current_user, ActsAsTenant.current_tenant] if user_context.page_manager? && feature_enabled?(:post_as_org)
 
     [current_user]
   end

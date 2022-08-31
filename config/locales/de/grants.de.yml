@@ -42,7 +42,6 @@ de:
       moderator: Neben dem Reagieren und dem Starten neuer Themen ermöglicht dies auch die Möglichkeit, Inhalte anderer zu bearbeiten und zu löschen.
       participator: Hier können Sie auf Inhalte reagieren, die von Moderatoren gepostet wurden. Benutzer können selbst keine neuen Themen erstellen.
       spectator: Damit können Sie Inhalte lesen. Es ist nicht möglich, eigene Reaktionen zu posten.
-      staff: Mitarbeiter von Ontola
     empty: keine
     in_all_forums: In allen Foren
     in_current_forum: Im Forum %{forum}
@@ -58,4 +57,3 @@ de:
       none: nichts sehen
       participator: teilnehmen
       spectator: nur lesen
-      staff: Mitarbeiter

@@ -42,7 +42,6 @@ nl:
       moderator: Naast reageren en onderwerpen starten kan je hiermee ook sommige reacties van anderen aanpassen of verwijderen.
       participator: Hiermee kan worden gereageerd op onderwerpen die door moderators geplaatst zijn. Gebruikers kunnen niet zelf onderwerpen starten.
       spectator: Hiermee kan alleen content bekeken worden. Er kan niet worden gereageerd.
-      staff: Medewerkers van Ontola
     empty: geen
     in_all_forums: In alle forums
     in_current_forum: In forum %{forum}
@@ -58,4 +57,3 @@ nl:
       none: niets zien
       participator: meedoen
       spectator: alleen lezen
-      staff: staff

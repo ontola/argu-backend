@@ -35,7 +35,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
            primary_key: :uuid
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
-  validates :profile, :iri_prefix, presence: true
+  validates :profile, :iri_prefix, :tier, presence: true
   validates :name, presence: true, length: {minimum: 3, maximum: 75}
 
   before_create :build_default_forum
@@ -67,6 +67,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   parentable :user
   property :display_name, :string, NS.schema.name
   property :locale, :string, NS.argu[:locale], default: 'nl-NL'
+  property :tier, :integer, NS.argu[:tier], enum: {free: 0, basic: 1, standard: 2}, default: 0
   property :template, :string, NS.ontola[:template], default: :default
   property :template_options, :text, NS.ontola[:templateOpts], default: '{}'
   property :home_menu_label, :string, NS.ontola[:homeMenuLabel]
@@ -99,6 +100,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   def email
     'anonymous'
+  end
+
+  def feature_enabled?(feature)
+    tier = Rails.application.config.tiers.fetch(feature)
+
+    tier_before_type_cast >= tier
   end
 
   def home_menu_image
@@ -135,6 +142,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   def reindex_tree(async: {wait: true})
     return if Rails.application.config.disable_searchkick
+    return unless feature_enabled?(:search)
 
     ActsAsTenant.with_tenant(self) do
       Edge.reindex(async: async)

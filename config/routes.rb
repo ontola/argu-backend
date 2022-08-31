@@ -115,6 +115,7 @@ Rails.application.routes.draw do
   resource :pages, path: '' do
     get(:delete, action: :delete, action_key: :destroy)
     get(:edit, action: :edit, action_key: :update)
+    get(:theme, action: :edit, action_key: :theme)
   end
   resources :actors, only: :index
   resources :activities, only: :show

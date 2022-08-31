@@ -9,6 +9,7 @@ class InviteForm < ApplicationForm
         max_count: 5000,
         pattern: /(#{RegexHelper::SINGLE_EMAIL.source},?\s?)+/
   field :message,
+        input_field: LinkedRails::Form::Field::TextAreaInput,
         min_count: 1,
         max_length: 5000
   field :group_id,

@@ -9,6 +9,7 @@ Rails.application.configure do
   config.hosts << config.host_name
   config.hosts << ".#{Argu::Service::CLUSTER_URL_BASE}"
   config.hosts << '.localdev'
+  config.hosts << '.localtest'
 
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
   config.web_console.whitelisted_ips = ['192.168.0.0/16', '10.0.1.0/16', '172.17.0.0/16', ENV['TRUSTED_IP']].compact

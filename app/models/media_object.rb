@@ -208,5 +208,13 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     def iri
       NS.schema.MediaObject
     end
+
+    def max_file_size
+      if ActsAsTenant.current_tenant.feature_enabled?(:large_attachments)
+        Rails.application.config.max_file_size
+      else
+        Rails.application.config.limited_file_size
+      end
+    end
   end
 end

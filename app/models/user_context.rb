@@ -48,6 +48,12 @@ class UserContext # rubocop:disable Metrics/ClassLength
     decode_token(doorkeeper_token.token, exp_leeway: 1.year.to_i)
   end
 
+  def feature_enabled?(feature)
+    return true if user.is_staff?
+
+    ActsAsTenant.current_tenant.feature_enabled?(feature)
+  end
+
   def grant_tree
     grant_tree_for(tree_root)
   end

@@ -3,6 +3,14 @@
 class PagesController < EdgeableController
   before_action :redirect_generic_shortnames, only: :show
 
+  has_resource_action(
+    :theme,
+    **update_resource_options,
+    action_path: :theme,
+    form: Pages::StyleForm,
+    policy: :theme?
+  )
+
   private
 
   def authorize_action

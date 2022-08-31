@@ -10,15 +10,19 @@ class PagePolicy < EdgePolicy
   permit_attributes %i[display_name name url iri_prefix locale]
   permit_attributes %i[primary_container_node_id delete], new_record: false
   permit_attributes %i[confirmation_text], new_record: true
-  permit_attributes %i[requires_intro matomo_site_id matomo_host matomo_cdn
-                       piwik_pro_site_id piwik_pro_host google_tag_manager google_uac],
-                    grant_sets: %i[staff],
+  permit_attributes %i[requires_intro],
                     new_record: false
+  permit_attributes %i[matomo_site_id matomo_host matomo_cdn
+                       piwik_pro_site_id piwik_pro_host google_tag_manager google_uac],
+                    grant_sets: %i[administrator staff],
+                    feature_enabled: :user_tracking,
+                    new_record: false
+  permit_attributes %i[tier], grant_sets: %i[staff]
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i[general profile container_nodes groups shortnames banners vocabularies delete] if update?
-    tabs.concat %i[custom_menu_items] if staff?
+    tabs.concat %i[general theme container_nodes groups shortnames custom_menu_items banners] if update?
+    tabs.concat %i[vocabularies] if staff?
     tabs
   end
 
@@ -42,6 +46,15 @@ class PagePolicy < EdgePolicy
 
   def default_tab
     'general'
+  end
+
+  def theme?
+    can_update = update?
+
+    return can_update unless can_update
+    return forbid_wrong_tier unless feature_enabled?(:custom_style)
+
+    true
   end
 
   private

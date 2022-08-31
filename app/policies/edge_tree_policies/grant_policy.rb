@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class GrantPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+  class Scope < EdgeTreePolicy::Scope
+    def resolve
+      scope
+    end
+  end
 
   permit_attributes %i[grant_set_id _destroy group_id edge_id]
 

@@ -13,7 +13,7 @@ module Actions
         )
       },
       default_filters: {
-        NS.schema.actionStatus => [NS.schema.PotentialActionStatus]
+        NS.schema.actionStatus => [NS.schema.PotentialActionStatus, NS.ontola[:LockedActionStatus]]
       },
       title: lambda {
         I18n.t(

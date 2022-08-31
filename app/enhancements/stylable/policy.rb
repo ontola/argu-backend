@@ -7,7 +7,8 @@ module Stylable
     included do
       permit_attributes(
         %i[header_background header_text secondary_color primary_color styled_headers],
-        new_record: false
+        new_record: false,
+        feature_enabled: :custom_style
       )
     end
   end

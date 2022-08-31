@@ -4,7 +4,19 @@ class ContainerNodePolicy < EdgePolicy
   permit_attributes %i[display_name bio locale]
 
   def create?
-    ContainerNode.descendants.detect { |klass| has_grant?(:create, klass.name) }
+    return false unless ContainerNode.descendants.detect { |klass| has_grant?(:create, klass.name) }
+    return forbid_wrong_tier unless feature_enabled?(:container_nodes)
+
+    true
+  end
+
+  def destroy?
+    verdict = super
+    return verdict unless verdict
+
+    return forbid_wrong_tier unless feature_enabled?(:container_nodes)
+
+    true
   end
 
   def has_content_children?

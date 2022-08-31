@@ -24,11 +24,18 @@ class CustomMenuItemPolicy < EdgeTreePolicy
     true
   end
 
+  def create?
+    return false unless administrator? || staff?
+    return forbid_wrong_tier unless feature_enabled?(:custom_menu_items)
+
+    true
+  end
+
   def update?
-    staff?
+    create?
   end
 
   def destroy?
-    staff?
+    create?
   end
 end

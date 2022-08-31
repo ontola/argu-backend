@@ -7,7 +7,8 @@ module Moveable
     included do
       has_resource_action(
         :move,
-        form: MoveForm
+        form: MoveForm,
+        policy: :move?
       )
     end
 

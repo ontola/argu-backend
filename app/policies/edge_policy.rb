@@ -79,7 +79,10 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def contact?
-    administrator? || staff?
+    return false unless administrator? || staff?
+    return forbid_wrong_tier unless feature_enabled?(:direct_messages)
+
+    true
   end
 
   def expired?
@@ -98,10 +101,6 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     granted_group_ids(:show).include?(Group::PUBLIC_ID)
   end
 
-  def shift?
-    move?
-  end
-
   def show?
     return if has_unpublished_ancestors? && !show_unpublished?
     return true if record.owner_type == 'Edge' && record.new_record?
@@ -112,8 +111,10 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   def create?
     return create_expired? if has_expired_ancestors?
     return create_trashed? if has_trashed_ancestors?
+    return false unless has_grant?(:create)
+    return forbid_wrong_tier if wrong_tier?
 
-    has_grant?(:create)
+    true
   end
 
   def trash?
@@ -205,5 +206,17 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def show_unpublished?
     update? || (record.is_published? && parent_policy.show?)
+  end
+
+  def required_feature
+    feature = policy_class.name.tableize
+
+    feature if Rails.application.config.tiers.key?(feature)
+  end
+
+  def wrong_tier?
+    return false unless required_feature
+
+    !feature_enabled?(required_feature)
   end
 end

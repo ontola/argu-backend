@@ -8,10 +8,14 @@ class CurrentActorPolicy < RestrictivePolicy
   end
 
   def show?
+    forbid_wrong_tier if forbid_post_as_org?
+
     moderator?
   end
 
   def update?
+    forbid_wrong_tier if forbid_post_as_org?
+
     moderator?
   end
 
@@ -31,5 +35,9 @@ class CurrentActorPolicy < RestrictivePolicy
 
       record.profile == record.user.profile || user_context.managed_profile_ids.include?(record.profile.id)
     end
+  end
+
+  def forbid_post_as_org?
+    record.profile.profileable.is_a?(Page) && !feature_enabled?(:post_as_org)
   end
 end

@@ -1,19 +1,32 @@
 # frozen_string_literal: true
 
 class GrantResetPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+  class Scope < EdgeTreePolicy::Scope
+    def resolve
+      scope
+    end
+  end
 
   permit_attributes %i[edge_id resource_type action_name]
 
   def create?
-    staff?
+    return false unless administrator? || staff?
+    return forbid_wrong_tier unless feature_enabled?(:grant_resets)
+
+    true
   end
 
   def destroy?
-    staff?
+    return false unless administrator? || staff?
+    return forbid_wrong_tier unless feature_enabled?(:grant_resets)
+
+    true
   end
 
   def show?
-    staff?
+    return false unless administrator? || staff?
+    return forbid_wrong_tier unless feature_enabled?(:grant_resets)
+
+    true
   end
 end

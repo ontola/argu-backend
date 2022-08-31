@@ -152,7 +152,7 @@ de:
         label: Url
       used_coupons:
         label: Verwendete Coupons
-    staff_only: Nur Personal
+    analytics: Analytics
     theme:
       description: Bitte laden Sie die Seite neu, nachdem Sie das Thema geändert haben.
       label: Thema

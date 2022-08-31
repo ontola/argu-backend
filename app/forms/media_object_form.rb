@@ -21,7 +21,7 @@ class MediaObjectForm < ApplicationForm
         if: [is_local],
         min_count: 1,
         input_field: LinkedRails::Form::Field::FileInput,
-        max_size: Rails.application.config.max_file_size
+        max_size: -> { MediaObject.max_file_size }
   field :remote_content_url, if: [is_remote], min_count: 1
 
   hidden do

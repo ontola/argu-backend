@@ -42,7 +42,6 @@ en:
       moderator: Besides reacting and starting new topics, this also enables the ability to edit and delete content of others.
       participator: This allows you to react to content posted by moderators. Users cannot start new topics themselves.
       spectator: This allows you to read content. It's not possible to post your reactions.
-      staff: Employees of Ontola
     empty: none
     in_all_forums: In all forums
     in_current_forum: In forum %{forum}
@@ -58,4 +57,3 @@ en:
       none: see nothing
       participator: participate
       spectator: only read
-      staff: staff

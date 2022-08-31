@@ -30,6 +30,7 @@ module SettingsHelper
       settings: 'gear',
       submissions: 'list-ul',
       submission: 'pencil',
+      theme: 'eyedropper',
       participate: 'pencil'
     }
   end

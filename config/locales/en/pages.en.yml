@@ -34,7 +34,7 @@ en:
       last_accepted:
         label: I accept the terms of use
       matomo_host:
-        description: Leave blank to use the default host
+        description: Contact us if you want to use our matomo service
         label: Matomo host
       matomo_cdn:
         description: Leave blank to use the default cdn

@@ -1,0 +1,23 @@
+basic:
+  - blog_posts
+  - container_nodes
+  - custom_style
+  - direct_messages
+  - exports
+  - groups
+  - large_attachments
+  - move_content
+  - post_as_org
+  - search
+  - transfer_content
+  - widgets
+standard:
+  - user_tracking
+  - surveys
+  - projects
+  - budget_shops
+  - grant_resets
+  - shortnames
+  - banners
+  - custom_menu_items
+  - multiple_pages

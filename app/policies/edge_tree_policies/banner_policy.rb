@@ -25,4 +25,10 @@ class BannerPolicy < EdgePolicy
 
     true
   end
+
+  private
+
+  def required_feature
+    :banners
+  end
 end

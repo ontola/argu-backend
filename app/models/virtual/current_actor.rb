@@ -41,6 +41,12 @@ class CurrentActor < VirtualResource
     NS.ontola[actor_type]
   end
 
+  def tier_level
+    return Page.tiers[:standard] if user.is_staff?
+
+    ActsAsTenant.current_tenant.tier_before_type_cast
+  end
+
   def unread_notification_count
     Pundit.policy_scope(UserContext.new(user: user), Notification).where(read_at: nil).count
   end

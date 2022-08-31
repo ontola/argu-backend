@@ -20,20 +20,31 @@ class GroupPolicy < EdgeTreePolicy
     tabs.concat %i[email_invite bearer_invite delete] if edgeable_policy.update?
     tabs
   end
-  delegate :update?, to: :edgeable_policy
 
   def show?
     true
   end
 
   def create?
-    edgeable_policy.update?
+    return false unless edgeable_policy.update?
+    return forbid_wrong_tier unless feature_enabled?(:groups)
+
+    true
+  end
+
+  def update?
+    return false unless edgeable_policy.update?
+    return forbid_wrong_tier unless record.deletable || feature_enabled?(:groups)
+
+    true
   end
 
   def destroy?
     return forbid_with_message(I18n.t('groups.delete.not_allowed')) unless record.deletable
+    return false unless edgeable_policy.update?
+    return forbid_wrong_tier unless feature_enabled?(:groups)
 
-    edgeable_policy.update?
+    true
   end
 
   def default_tab

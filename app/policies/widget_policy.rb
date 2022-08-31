@@ -15,11 +15,17 @@ class WidgetPolicy < EdgeTreePolicy
   permit_attributes %i[resource_iri raw_resource_iri size position widget_type permitted_action_title view]
 
   def create?
-    administrator? || staff? || service?
+    return false unless administrator? || staff? || service?
+    return forbid_wrong_tier unless feature_enabled?(:widgets)
+
+    true
   end
 
   def update?
-    administrator? || staff? || service?
+    return false unless administrator? || staff? || service?
+    return forbid_wrong_tier unless feature_enabled?(:widgets)
+
+    true
   end
 
   delegate :show?, to: :edgeable_policy

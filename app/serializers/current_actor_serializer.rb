@@ -7,6 +7,7 @@ class CurrentActorSerializer < BaseSerializer
   attribute :has_analytics?, predicate: NS.argu[:hasAnalytics]
   attribute :mount_action, predicate: NS.ontola[:mountAction]
   attribute :primary_email, predicate: NS.argu[:primaryEmail]
+  attribute :tier_level, predicate: NS.argu[:tierLevel]
   attribute :user_seq, predicate: RDF[:_0] do |object|
     object&.user&.iri
   end

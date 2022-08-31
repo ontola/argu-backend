@@ -1,0 +1,4 @@
+nl:
+  tiers:
+    feature_disabled: Deze functie is niet beschikbaar in het huidige pakket. [Upgrade](https://argu.co/info/upgrade_tier) om deze functie mogelijk te maken.
+    search_disabled: De zoekfunctie is niet beschikbaar in het huidige pakket. [Upgrade](https://argu.co/info/upgrade_tier) om zoeken mogelijk te maken.

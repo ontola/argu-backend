@@ -16,6 +16,8 @@ class PageSerializer < EdgeSerializer
 
   with_collection :container_nodes, predicate: NS.argu[:forums]
 
+  enum :tier,
+       predicate: NS.argu[:tier]
   enum :locale,
        type: NS.schema.Thing,
        predicate: NS.argu[:locale],

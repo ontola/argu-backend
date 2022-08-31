@@ -35,7 +35,7 @@ class Invite < VirtualResource
         edge: opts[:parent],
         message: I18n.t('tokens.discussion.default_message', resource: opts[:parent].display_name),
         redirect_url: opts[:parent].iri.to_s,
-        root_id: ActsAsTenant.current_tenant,
+        root_id: ActsAsTenant.current_tenant&.uuid,
         send_mail: true
       }
       attrs[:creator] = opts[:user_context]&.user&.iri

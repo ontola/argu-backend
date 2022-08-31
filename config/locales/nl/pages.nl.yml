@@ -37,7 +37,7 @@ nl:
         label: Matomo cdn
         description: Laat leeg om de standaard cdn te gebruiken
       matomo_host:
-        description: Laat leeg om de standaard host te gebruiken
+        description: Neem contact met ons op als je gebruik wilt maken van onze matomo service
         label: Matomo host
       matomo_site_id:
         label: Matomo site id

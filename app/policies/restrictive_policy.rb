@@ -41,7 +41,7 @@ class RestrictivePolicy
     @service ||= context.doorkeeper_scopes&.include? 'service'
   end
 
-  delegate :user, :profile, :managed_profile_ids, :session_id, to: :context
+  delegate :feature_enabled?, :user, :profile, :managed_profile_ids, :session_id, to: :context
   attr_reader :context, :record, :message
 
   def initialize(context, record)
@@ -128,6 +128,10 @@ class RestrictivePolicy
   def forbid_with_message(message)
     @message = message
     false
+  end
+
+  def forbid_wrong_tier
+    forbid_with_status(NS.ontola[:LockedActionStatus], I18n.t('tiers.feature_disabled'))
   end
 
   def new_record?

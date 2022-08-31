@@ -8,7 +8,10 @@ class ExportPolicy < EdgeTreePolicy
   end
 
   def create?
-    administrator? || staff?
+    return false unless administrator? || staff?
+    return forbid_wrong_tier unless feature_enabled?(:exports)
+
+    true
   end
 
   def destroy?
