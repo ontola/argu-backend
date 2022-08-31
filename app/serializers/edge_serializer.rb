@@ -14,11 +14,7 @@ class EdgeSerializer < RecordSerializer
           predicate: NS.schema.creator do |object|
     object.creator&.profileable
   end
-  attribute :granted_groups, predicate: NS.argu[:grantedGroups], unless: method(:system_scope?) do |object|
-    base_iri = object.persisted? ? object.iri : object.try(:persisted_edge)&.iri
-
-    RDF::URI("#{base_iri}/granted") if base_iri&.uri?
-  end
+  attribute :granted_groups_iri, predicate: NS.argu[:grantedGroups], unless: method(:system_scope?)
   attribute :is_trashed,
             predicate: NS.argu[:trashed],
             datatype: NS.xsd.boolean

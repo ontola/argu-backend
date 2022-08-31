@@ -21,6 +21,17 @@ class Invite < VirtualResource
     @edge = id.present? ? Edge.find_by(uuid: id) : nil
   end
 
+  def granted_groups_iri
+    return if edge.persisted_edge.blank?
+
+    GrantedGroup.collection_iri(
+      page: 1,
+      filter: {NS.argu[:selectable] => [true]},
+      fragment: :members,
+      parent_iri: split_iri_segments(edge.persisted_edge.root_relative_iri)
+    )
+  end
+
   def identifier
     "invite_#{edge.id}"
   end

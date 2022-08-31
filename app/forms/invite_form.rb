@@ -14,7 +14,8 @@ class InviteForm < ApplicationForm
         max_length: 5000
   field :group_id,
         min_count: 1,
-        sh_in: -> { ::Group.collection_iri }
+        input_field: LinkedRails::Form::Field::SelectInput,
+        sh_in_prop: NS.argu[:grantedGroups]
   field :redirect_url,
         min_count: 1
 

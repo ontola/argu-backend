@@ -11,4 +11,3 @@ module RootGrantable
     end
   end
 end
-

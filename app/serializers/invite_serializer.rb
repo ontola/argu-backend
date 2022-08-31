@@ -2,6 +2,8 @@
 
 class InviteSerializer < BaseSerializer
   attribute :addresses, predicate: NS.argu[:emailAddresses], datatype: NS.xsd.string
+  has_one :edge, predicate: NS.schema.isPartOf
+  attribute :granted_groups_iri, predicate: NS.argu[:grantedGroups]
   attribute :send_mail, predicate: NS.argu[:sendMail], datatype: NS.xsd.boolean
   attribute :creator, predicate: NS.schema.creator, datatype: NS.xsd.string
   attribute :group_id, predicate: NS.argu[:groupId], datatype: NS.xsd.string

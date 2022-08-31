@@ -74,6 +74,12 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     user_context.has_grant_set?(persisted_edge, grant_set) if persisted_edge
   end
 
+  def index_children?(raw_klass, **opts)
+    return show? if raw_klass == GrantedGroup
+
+    super
+  end
+
   def convert?
     false
   end
@@ -147,6 +153,14 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def invite?
     false
+  end
+
+  def permissions_tab?
+    return false unless staff? || administrator?
+
+    return forbid_wrong_tier unless feature_enabled?(:grant_resets)
+
+    true
   end
 
   def statistics?

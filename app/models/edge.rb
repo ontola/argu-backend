@@ -15,6 +15,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Shortnameable
   include Uuidable
   include Cacheable
+  include URITemplateHelper
 
   enhance Grantable
   enhance Transferable
@@ -227,10 +228,14 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     expires_at? && expires_at < Time.current
   end
 
-  def granted_groups
-    base_iri = persisted? ? iri : persisted_edge&.iri
+  def granted_groups_iri
+    return if persisted_edge.blank?
 
-    RDF::URI("#{base_iri}/granted") if base_iri&.uri?
+    GrantedGroup.collection_iri(
+      page: 1,
+      fragment: :members,
+      parent_iri: split_iri_segments(persisted_edge.root_relative_iri)
+    )
   end
 
   def has_expired_ancestors?
