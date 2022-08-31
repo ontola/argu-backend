@@ -39,7 +39,7 @@ page = Sidekiq::Testing.inline! do
     publisher: staff,
     creator: staff.profile,
     is_published: true,
-    locale: 'en-GB',
+    language: :en,
     tier: :standard,
     root_id: 'deadbeef-bfc5-4e68-993f-430037bd5bd3',
     uuid: 'deadbeef-bfc5-4e68-993f-430037bd5bd3'
@@ -76,7 +76,7 @@ other_page = Sidekiq::Testing.inline! do
     name: 'Other page',
     primary_color: '#800000',
     url: 'other_page',
-    locale: 'en-GB',
+    language: :en,
     iri_prefix: 'argu.localtest/other_page'
   )
 end

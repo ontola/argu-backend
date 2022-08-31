@@ -7,7 +7,7 @@ class PagePolicy < EdgePolicy
     end
   end
 
-  permit_attributes %i[display_name name url iri_prefix locale]
+  permit_attributes %i[display_name name url iri_prefix language]
   permit_attributes %i[primary_container_node_id delete], new_record: false
   permit_attributes %i[confirmation_text], new_record: true
   permit_attributes %i[requires_intro],

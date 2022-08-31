@@ -100,7 +100,7 @@ class Manifest < LinkedRails::Manifest # rubocop:disable Metrics/ClassLength
   end
 
   def lang
-    page.locale
+    page.language
   end
 
   def app_name

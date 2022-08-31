@@ -11,7 +11,7 @@ class PageForm < ApplicationForm
         datatype: NS.xsd.string,
         max_count: 1,
         sh_in: -> { ContainerNode.collection_iri }
-  field :locale,
+  field :language,
         min_count: 1
   field :requires_intro
   has_one :default_profile_photo, min_count: 0

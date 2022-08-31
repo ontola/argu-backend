@@ -46,6 +46,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   after_create :create_system_vocabs
   after_create -> { reindex_tree(async: false) }
   after_update :tenant_update
+  after_update :update_language, if: :language_previously_changed?
   after_update :update_primary_node_menu_item, if: :primary_container_node_id_previously_changed?
   after_save :save_manifest
 
@@ -66,7 +67,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   parentable :user
   property :display_name, :string, NS.schema.name
-  property :locale, :string, NS.argu[:locale], default: 'nl-NL'
+  property :language, :string, NS.schema.Language, default: :nl
   property :tier, :integer, NS.argu[:tier], enum: {free: 0, basic: 1, standard: 2}, default: 0
   property :template, :string, NS.ontola[:template], default: :default
   property :template_options, :text, NS.ontola[:templateOpts], default: '{}'
@@ -130,10 +131,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   def iri_prefix
     @iri_prefix || tenant&.iri_prefix
-  end
-
-  def language
-    locale.split('-').first.to_sym
   end
 
   def manifest
@@ -248,6 +245,14 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     create_tenant!(root_id: uuid, iri_prefix: iri_prefix)
   end
 
+  def update_language
+    I18n.locale = language
+
+    ActsAsTenant.with_tenant(self) do
+      VocabSyncWorker.perform_async
+    end
+  end
+
   def update_primary_node_menu_item
     if previous_changes[:primary_container_node_id].first
       CustomMenuItem
@@ -264,6 +269,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   class << self
     def argu
       find_via_shortname(ARGU_URL)
+    end
+
+    def attributes_for_new(opts)
+      attrs = super
+      attrs[:language] ||= I18n.locale
+      attrs
     end
 
     def build_new(parent: nil, user_context: nil)
