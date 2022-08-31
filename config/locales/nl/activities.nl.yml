@@ -18,11 +18,6 @@ nl:
       create: "%{owner} heeft een concept %{type} geplaatst %{side} %{parent}"
       'no': tegen
       'yes': vóór
-    decisions:
-      approved: "%{owner} heeft %{parent} aangenomen"
-      create: "%{owner} heeft een concept besluit geplaatst in %{parent}"
-      rejected: "%{owner} heeft %{parent} verworpen"
-      update: "%{owner} heeft een besluit over %{parent} gewijzigd"
     default:
       convert: "%{owner} heeft %{subject} omgezet in een %{type}"
       create: "%{owner} heeft een %{type} geplaatst in %{parent}"

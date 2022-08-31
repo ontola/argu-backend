@@ -13,7 +13,7 @@ module Argu
         include JWTHelper
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i[
-          argument banner blog_post budget_shop comment con_argument coupon_batch decision export forum
+          argument banner blog_post budget_shop comment con_argument coupon_batch export forum
           group group_membership grant motion offer order order_detail
           page poll pro_argument question swipe_tool submission survey term topic vocabulary vote vote_event
         ].freeze
@@ -367,7 +367,6 @@ module Argu
           let(:question) { freetown.questions.first }
           let(:motion) { question.motions.first }
           let(:forum_topic) { freetown.topics.first }
-          let(:decision) { motion.decisions.first }
           let(:vote_event) { motion.default_vote_event }
           let(:vote) { vote_event.votes.first }
           let(:argument) { motion.arguments.first }

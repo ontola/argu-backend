@@ -89,7 +89,7 @@ Rails.application.routes.draw do
 
   # @todo canonical urls of edges should redirect
   resources :edges, only: %i[show index] do
-    %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
+    %i[pro_arguments con_arguments blog_posts comments discussions forums media_objects
        motions questions votes vote_events budget_shops offers orders coupon_batches].map do |edgeable|
       resources edgeable, only: :index
     end
@@ -152,7 +152,6 @@ Rails.application.routes.draw do
   linked_resource(CustomForm)
   linked_resource(CustomFormField)
   linked_resource(CustomMenuItem)
-  linked_resource(Decision)
   linked_resource(DirectMessage)
   linked_resource(Discussion)
   linked_resource(EmailAddress)

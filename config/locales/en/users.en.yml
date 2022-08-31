@@ -7,11 +7,6 @@ en:
         direct_created_email: Immediately
         never_created_email: Never
         weekly_created_email: Weekly
-      decisions_email:
-        daily_decisions_email: Daily
-        direct_decisions_email: Immediately
-        never_decisions_email: Never
-        weekly_decisions_email: Weekly
       destroy_strategy:
         expropriate_on_destroy: Anonymize content
         remove_on_destroy: Remove content
@@ -32,8 +27,6 @@ en:
         weekly_reactions_email: Weekly
   forms:
     users:
-      decisions_email:
-        label: For official decisions
       display_name:
         helper_text: Set how you will be visible to others. Most people use their real name.
         label: Name

@@ -52,10 +52,6 @@ nl:
     Dashboard:
       label: Dashboard
       plural_label: Dashboards
-    Decision:
-      icon: Besluit
-      label: Decision
-      plural_label: Besluiten
     DirectMessage:
       label: Bericht
       plural_label: Berichten

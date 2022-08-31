@@ -7,11 +7,6 @@ nl:
         direct_created_email: Onmiddelijk
         never_created_email: Nooit
         weekly_created_email: Wekelijks
-      decisions_email:
-        daily_decisions_email: Dagelijks
-        direct_decisions_email: Onmiddelijk
-        never_decisions_email: Nooit
-        weekly_decisions_email: Wekelijks
       destroy_strategy:
         expropriate_on_destroy: Anonimiseer content
         remove_on_destroy: Verwijder content
@@ -32,8 +27,6 @@ nl:
         weekly_reactions_email: Wekelijks
   forms:
     users:
-      decisions_email:
-        label: Bij officiele besluiten
       display_name:
         helper_text: Stel in hoe je zichtbaar bent voor anderen. De meesten mensen gebruiken hun echte naam.
         label: Naam

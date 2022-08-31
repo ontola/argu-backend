@@ -8,8 +8,4 @@ class MotionPolicy < DiscussionPolicy
   def convert?
     staff?
   end
-
-  def decide?
-    record.state == 'pending' && Pundit.policy(context, record.last_or_new_decision(true)).update?
-  end
 end

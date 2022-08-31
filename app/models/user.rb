@@ -38,7 +38,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :container_nodes, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
-  has_many :decisions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :pages, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
@@ -103,12 +102,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     direct_reactions_email: 3
   }
   enum news_email: {never_news_email: 0, weekly_news_email: 1, daily_news_email: 2, direct_news_email: 3}
-  enum decisions_email: {
-    never_decisions_email: 0,
-    weekly_decisions_email: 1,
-    daily_decisions_email: 2,
-    direct_decisions_email: 3
-  }
 
   validates :profile, presence: true
   validates :language,

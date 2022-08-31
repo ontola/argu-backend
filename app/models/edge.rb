@@ -118,7 +118,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :container_nodes
   has_many_children :coupon_batches
   has_many_children :creative_works
-  has_many_children :decisions
   has_many_children :blogs
   has_many_children :custom_form_fields
   has_many_children :custom_forms
@@ -147,18 +146,6 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one :top_comment,
           -> { active.order(created_at: :asc) },
           class_name: 'Comment',
-          foreign_key: :parent_id,
-          inverse_of: :parent,
-          dependent: :destroy
-  has_one :last_decision,
-          -> { order(created_at: :desc) },
-          class_name: 'Decision',
-          foreign_key: :parent_id,
-          inverse_of: :parent,
-          dependent: :destroy
-  has_one :last_published_decision,
-          -> { published.order(created_at: :desc) },
-          class_name: 'Decision',
           foreign_key: :parent_id,
           inverse_of: :parent,
           dependent: :destroy

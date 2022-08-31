@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ActivityListener
-  AUTO_GENERATED_LISTENER_CLASSES = Edge.descendants.map(&:name).map(&:underscore) - %w[decision vote vote_event page]
+  AUTO_GENERATED_LISTENER_CLASSES = Edge.descendants.map(&:name).map(&:underscore) - %w[vote vote_event page]
 
   # @param [Hash] opts
   # @option opts [User] publisher The person that made the action
@@ -22,11 +22,6 @@ class ActivityListener
       define_method "#{method}_#{model}_successful" do |resource|
         create_activity(resource, resource.activity_recipient, method)
       end
-    end
-
-    define_method "#{method}_decision_successful" do |resource|
-      action = method == 'publish' ? resource.state : method
-      create_activity(resource, resource.activity_recipient, action)
     end
   end
 

@@ -122,11 +122,6 @@ ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   question = FactorySeeder.create_with_name(:question, :freetown_question, parent: freetown)
   motion = FactorySeeder.create_with_name(:motion, :question_motion, parent: question)
   FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: page, name: 'custom'))
-  FactorySeeder.create(
-    :decision,
-    parent: motion,
-    state: 'approved'
-  )
   vote_event = motion.default_vote_event
   FactorySeeder.create(:vote, parent: vote_event)
 

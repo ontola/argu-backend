@@ -37,16 +37,10 @@ module Argu
         ActsAsTenant.current_tenant = argu
       end
 
-      ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix| # rubocop:disable Metrics/BlockLength
+      ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix|
         let("#{prefix}question") { create(:question, parent: send("#{prefix}freetown"), publisher: creator) }
         let("#{prefix}forum_motion") { create(:motion, parent: send("#{prefix}freetown"), publisher: creator) }
         let("#{prefix}motion") { create(:motion, parent: send("#{prefix}question"), publisher: creator) }
-        let("#{prefix}decision") do
-          create(:decision,
-                 parent: send("#{prefix}motion"),
-                 publisher: creator,
-                 state: 'approved')
-        end
         let("#{prefix}vote_event") { send("#{prefix}motion").default_vote_event }
         let("#{prefix}vote") { create(:vote, parent: send("#{prefix}vote_event"), publisher: creator) }
         let("#{prefix}pro_argument") { create(:pro_argument, parent: send("#{prefix}motion"), publisher: creator) }

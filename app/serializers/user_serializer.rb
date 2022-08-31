@@ -70,16 +70,6 @@ class UserSerializer < RecordSerializer
          daily_news_email: {exact_match: NS.argu[:daily]},
          direct_news_email: {exact_match: NS.argu[:direct]}
        }
-  enum :decisions_email,
-       type: NS.schema.Thing,
-       predicate: NS.argu[:decisionsEmails],
-       if: method(:self?),
-       options: {
-         never_decisions_email: {exact_match: NS.argu[:never]},
-         weekly_decisions_email: {exact_match: NS.argu[:weekly]},
-         daily_decisions_email: {exact_match: NS.argu[:daily]},
-         direct_decisions_email: {exact_match: NS.argu[:direct]}
-       }
   enum :language,
        type: NS.schema.Language,
        options: available_locales,

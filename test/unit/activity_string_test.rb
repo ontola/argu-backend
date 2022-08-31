@@ -8,16 +8,6 @@ class ActivityStringTest < ActiveSupport::TestCase
   let(:receiver) { create_initiator(freetown) }
   let!(:question) { create(:question, parent: freetown) }
   let!(:motion) { create(:motion, parent: question) }
-  let!(:approved_decision) do
-    create(:decision,
-           parent: motion,
-           state: 'approved')
-  end
-  let!(:rejected_decision) do
-    create(:decision,
-           parent: motion,
-           state: 'rejected')
-  end
   let(:group) { create(:group, parent: argu) }
 
   test 'string for activities of question' do
@@ -99,26 +89,5 @@ class ActivityStringTest < ActiveSupport::TestCase
                  Argu::ActivityString.new(update_activity.reload, receiver, render: :display_name).to_s
     assert_equal "community trashed #{question.display_name}",
                  Argu::ActivityString.new(trash_activity.reload, receiver, render: :display_name).to_s
-  end
-
-  test 'string for approved decision' do
-    approved_activity = approved_decision.activities.second
-    assert_equal "#{approved_decision.publisher.display_name} "\
-                 "passed #{motion.display_name}",
-                 Argu::ActivityString.new(approved_activity, receiver, render: :display_name).to_s
-  end
-
-  test 'string for rejected decision' do
-    rejected_activity = rejected_decision.activities.second
-    assert_equal "#{rejected_decision.publisher.display_name} "\
-                 "rejected #{motion.display_name}",
-                 Argu::ActivityString.new(rejected_activity, receiver, render: :display_name).to_s
-  end
-
-  test 'string for updated decision' do
-    update_activity = update_resource(approved_decision, {content: 'updated content'}, updater).activities.last
-    assert_equal "#{updater.display_name} "\
-                 "updated a decision on #{motion.display_name}",
-                 Argu::ActivityString.new(update_activity, receiver, render: :display_name).to_s
   end
 end

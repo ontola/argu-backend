@@ -18,11 +18,6 @@ en:
       create: "%{owner} posted a draft %{type} %{side} %{parent}"
       'no': against
       'yes': in favour of
-    decisions:
-      approved: "%{owner} passed %{parent}"
-      create: "%{owner} posted a draft decision in %{parent}"
-      rejected: "%{owner} rejected %{parent}"
-      update: "%{owner} updated a decision on %{parent}"
     default:
       convert: "%{owner} converted %{subject} into a %{type}"
       create: "%{owner} posted a %{type} in %{parent}"

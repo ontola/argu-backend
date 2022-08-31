@@ -18,11 +18,6 @@ de:
       create: "%{owner} hat einen Entwurf gepostet %{type} %{side} %{parent}"
       ':no': gegen
       ':yes': dafür
-    decisions:
-      approved: "%{owner} bestanden %{parent}"
-      create: "%{owner} hat einen Entscheidungsentwurf im Bereich %{parent}veröffentlicht"
-      rejected: "%{owner} abgelehnt %{parent}"
-      update: "%{owner} aktualisiert eine Entscheidung über %{parent}"
     default:
       convert: "%{owner} umgewandelt %{subject} in eine %{type}"
       create: "%{owner} veröffentlicht eine %{type} in %{parent}"

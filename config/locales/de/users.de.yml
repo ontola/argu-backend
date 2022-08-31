@@ -7,11 +7,6 @@ de:
         direct_created_email: Unmittelbar
         never_created_email: Niemals
         weekly_created_email: Wöchentlich
-      decisions_email:
-        daily_decisions_email: Täglich
-        direct_decisions_email: Unmittelbar
-        never_decisions_email: Niemals
-        weekly_decisions_email: Wöchentlich
       destroy_strategy:
         expropriate_on_destroy: Anonymisierung von Inhalten
         remove_on_destroy: Inhalte entfernen
@@ -32,8 +27,6 @@ de:
         weekly_reactions_email: Wöchentlich
   forms:
     users:
-      decisions_email:
-        label: Für offizielle Entscheidungen
       display_name:
         helper_text: Legen Sie fest, wie Sie für andere sichtbar sein sollen. Die meisten Leute verwenden ihren echten Namen.
         label: Name

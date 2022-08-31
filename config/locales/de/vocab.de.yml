@@ -52,10 +52,6 @@ de:
     Dashboard:
       label: Dashboard
       plural_label: Dashboards
-    Decision:
-      icon: gavel
-      label: Entscheidung
-      plural_label: Beschlüsse
     DirectMessage:
       label: Nachricht
       plural_label: Meldungen
