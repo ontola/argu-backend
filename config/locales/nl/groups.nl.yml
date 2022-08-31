@@ -19,9 +19,16 @@ nl:
       confirmation_required: Als lid van de groep %{group_name} moet je je email bevestigen voordat je deze actie kan uitvoeren.
     members: Leden
     new: Groep toevoegen
-    public:
-      name: Publiek
-      name_singular: Gebruiker
+    default:
+      admin:
+        name: Admins
+        name_singular: Admin
+      members:
+        name: Leden
+        name_singular: Lid
+      public:
+        name: Publiek
+        name_singular: Gebruiker
     settings:
       menu:
         advanced: Geavanceerd

@@ -64,7 +64,7 @@ class Group < ApplicationRecord
   end
 
   def display_name
-    id == Group::PUBLIC_ID ? I18n.t('groups.public.name') : name
+    id == Group::PUBLIC_ID ? I18n.t('groups.default.public.name') : name
   end
 
   def inherited_grants(edge)
@@ -82,7 +82,7 @@ class Group < ApplicationRecord
   end
 
   def name_singular
-    id == Group::PUBLIC_ID ? I18n.t('groups.public.name_singular') : super
+    id == Group::PUBLIC_ID ? I18n.t('groups.default.public.name_singular') : super
   end
 
   def searchable_should_index?

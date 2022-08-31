@@ -196,20 +196,28 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def create_default_groups # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    group = Group.new(
-      name: 'Admins',
-      name_singular: 'Admin',
-      page: self,
+  def create_default_groups
+    admin_group = create_admin_group
+    create_admin_membership(admin_group) unless creator.reserved?
+
+    create_members_group
+  end
+
+  def create_admin_group
+    group = groups.build(
+      name: I18n.t('groups.default.admin.name'),
+      name_singular: I18n.t('groups.default.admin.name_singular'),
       require_confirmation: true,
       deletable: false
     )
     group.grants << Grant.new(grant_set: GrantSet.administrator, edge: self)
     group.save!
-    return if creator.reserved?
+    group
+  end
 
+  def create_admin_membership(admin_group)
     service = CreateGroupMembership.new(
-      group,
+      admin_group,
       attributes: {member: creator},
       options: {user_context: UserContext.new(user: publisher, profile: creator)}
     )
@@ -217,6 +225,17 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
       raise gm.errors.full_messages.join('\n')
     end
     service.commit
+  end
+
+  def create_members_group
+    group = groups.create!(
+      name: I18n.t('groups.default.members.name'),
+      name_singular: I18n.t('groups.default.members.name_singular'),
+      page: self
+    )
+    group.grants << Grant.new(grant_set: GrantSet.participator, edge: primary_container_node)
+    group.save!
+    group
   end
 
   def create_staff_grant

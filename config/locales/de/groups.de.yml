@@ -19,9 +19,16 @@ de:
       confirmation_required: Als Mitglied der Gruppe %{group_name} ist die Bestätigung Ihrer E-Mail-Adresse erforderlich.
     members: Mitglieder
     new: Gruppe hinzufügen
-    public:
-      name: Öffentlich
-      name_singular: Benutzer
+    default:
+      admin:
+        name: Admins
+        name_singular: Admin
+      members:
+        name: Mitglieder
+        name_singular: Mitglied
+      public:
+        name: Öffentlich
+        name_singular: Benutzer
     settings:
       menu:
         advanced: Fortgeschrittene

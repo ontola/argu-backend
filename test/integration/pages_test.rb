@@ -88,7 +88,9 @@ class PagesTest < ActionDispatch::IntegrationTest
       'Tenant.count' => 1,
       'Page.count' => 1,
       'Forum.count' => 1,
+      'Group.count' => 2,
       'CustomMenuItem.count' => 2,
+      'Grant.count' => 3,
       "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
     ) do
       post Page.collection_iri(root: argu),

@@ -19,9 +19,16 @@ en:
       confirmation_required: As member of the group %{group_name}, confirming your email address is required.
     members: Members
     new: Add group
-    public:
-      name: Public
-      name_singular: User
+    default:
+      admin:
+        name: Admins
+        name_singular: Admin
+      members:
+        name: Members
+        name_singular: Member
+      public:
+        name: Public
+        name_singular: User
     settings:
       menu:
         advanced: Advanced

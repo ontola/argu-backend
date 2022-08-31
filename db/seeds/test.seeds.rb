@@ -100,7 +100,7 @@ end
 ActsAsTenant.with_tenant(page) do # rubocop:disable  Metrics/BlockLength
   members_group =
     FactorySeeder
-      .create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.root)
+      .create(:group, id: 111, name: 'Invitees', name_singular: 'Invitee', parent: holland.root)
   group_member = FactorySeeder.create(:user, email: 'member@example.com')
   FactorySeeder.create(:group_membership, parent: members_group, member: group_member.profile)
 

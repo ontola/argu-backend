@@ -80,6 +80,7 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def create_system_group(id, plural, singular, page)
       public_group = Group.new(
+        deletable: false,
         id: id,
         name: plural,
         name_singular: singular,

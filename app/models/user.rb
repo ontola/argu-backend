@@ -209,7 +209,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def generated_name
-    [I18n.t('groups.public.name_singular'), id].join(' ') unless new_record?
+    [I18n.t('groups.default.public.name_singular'), id].join(' ') unless new_record?
   end
 
   def guest?

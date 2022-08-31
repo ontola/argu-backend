@@ -175,7 +175,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
                 '0': {
                   id: public_grant.id,
                   grant_set_id: public_grant.grant_set_id,
-                  group_id: public_grant.group_id,
+                  group_id: public_grant.group_id
                 },
                 '1': {
                   grant_set_id: GrantSet.participator.id,
