@@ -14,10 +14,10 @@ class PageForm < ApplicationForm
   field :locale,
         min_count: 1
   field :requires_intro
+  has_one :default_profile_photo, min_count: 0
   resource :delete,
            label: -> { I18n.t('delete') },
            url: -> { delete_iri(ActsAsTenant.current_tenant) }
-  has_one :default_profile_photo, min_count: 0
 
   group :analytics,
         label: -> { I18n.t('forms.analytics') } do

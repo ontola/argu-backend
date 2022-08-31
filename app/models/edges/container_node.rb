@@ -10,7 +10,6 @@ class ContainerNode < Edge
   enhance Followable
   enhance Placeable
   enhance ChildrenPlaceable
-  enhance ProfilePhotoable
   enhance RootGrantable
   enhance LinkedRails::Enhancements::Updatable
   enhance Widgetable
@@ -53,7 +52,7 @@ class ContainerNode < Edge
   auto_strip_attributes :name, :cover_photo_attribution, squish: true
   auto_strip_attributes :bio, nullify: false
   validates :url, presence: true, length: {minimum: 4, maximum: 75}
-  validates :name, presence: true, length: {minimum: 4, maximum: 75}
+  validates :display_name, presence: true, length: {minimum: 4, maximum: 75}
   validates :bio, length: {maximum: 5_000}
   validates :bio_long, length: {maximum: MAXIMUM_DESCRIPTION_LENGTH}
 

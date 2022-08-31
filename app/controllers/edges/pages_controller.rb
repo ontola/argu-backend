@@ -8,7 +8,8 @@ class PagesController < EdgeableController
     **update_resource_options,
     action_path: :theme,
     form: Pages::StyleForm,
-    policy: :theme?
+    policy: :theme?,
+    submit_label: -> { I18n.t('save') }
   )
 
   private

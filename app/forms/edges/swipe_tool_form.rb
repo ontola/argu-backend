@@ -16,7 +16,6 @@ class SwipeToolForm < ApplicationForm
   end
 
   hidden do
-    has_one :action_body
     field :is_draft
   end
 end

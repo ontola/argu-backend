@@ -86,6 +86,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   FAILED_LOGIN_ATTRS = %w[current_sign_in_at last_sign_in_at sign_in_count updated_at].freeze
 
   validates :about, length: {maximum: 3000}
+  validates :news_email, :reactions_email, presence: true
 
   attr_accessor :current_password, :session_id
 

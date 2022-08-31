@@ -102,10 +102,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
           forum: {
             name: 'new name',
             bio: 'new bio',
-            default_profile_photo_attributes: {
-              id: holland.default_profile_photo.id,
-              content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
-            },
             default_cover_photo_attributes: {
               content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
             }
@@ -130,9 +126,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
     assert_equal 'new name', holland.name
     assert_equal 'new bio', holland.bio
-    assert_equal 'profile_photo.png', holland.default_profile_photo.content.filename.to_s
     assert_equal 'cover_photo.jpg', holland.default_cover_photo.content.filename.to_s
-    assert_equal 2, holland.media_objects.count
+    assert_equal 1, holland.media_objects.count
   end
 
   test 'administrator should update shortname' do

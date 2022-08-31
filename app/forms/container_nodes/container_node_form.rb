@@ -17,9 +17,7 @@ class ContainerNodeForm < ApplicationForm
 
     def url_options
       {
-        description: lambda do
-          I18n.t('forms.shortnames.destination.description', iri_prefix: ActsAsTenant.current_tenant.iri_prefix)
-        end
+        start_adornment: -> { "#{ActsAsTenant.current_tenant.iri}/" }
       }
     end
   end
