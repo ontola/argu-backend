@@ -9,9 +9,17 @@ class RecordsTest < ActiveSupport::TestCase
   Model = Struct.new(:iri)
 
   test 'record_id handles URI from bulk_controller' do
-    value = URI('https://example.com/bar')
+    id = URI('https://example.com/foo')
+    slice = {}
+    exp = {
+      _id: {
+        type: 'id',
+        v: id.to_s
+      }
+    }
+    add_record_to_slice(slice, Model.new(id))
 
-    assert_equal 'https://example.com/bar', retrieve_id(value)
+    assert_equal exp, slice[id.to_s]
   end
 
   test 'add_record_to_slice initialises globalId' do

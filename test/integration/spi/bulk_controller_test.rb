@@ -68,6 +68,17 @@ module SPI
       )
     end
 
+    test 'guest should post bulk request slash resources' do
+      sign_in guest_user
+
+      bulk_request(
+        resources: slash_resource,
+        responses: slash_response
+      )
+      slice = JSON.parse(JSON.parse(body).first['body'])
+      expect_slice_attribute(slice, RDF::URI("#{freetown.iri}/"), NS.owl.sameAs, freetown.iri)
+    end
+
     test 'guest should post bulk escape injection' do
       sign_in guest_user
 
@@ -253,7 +264,11 @@ module SPI
         raise("The bulk did not return a response for #{iri}. Found #{response.pluck(:iri)}") if resource.blank?
 
         assert_equal iri.to_s, resource[:iri]
-        assert_equal expectation[:status], resource[:status], "#{iri} should be #{expectation[:status]}"
+        assert_equal(
+          expectation[:status],
+          resource[:status],
+          "#{iri} should be #{expectation[:status]}. #{resource[:body]}"
+        )
         assert_equal expectation[:cache], resource[:cache], "#{iri} should be #{expectation[:cache]}"
 
         assertion_method = expectation[:include] ? :assert_not_nil : :assert_nil
@@ -358,6 +373,18 @@ module SPI
       {
         NS.argu[:Motion] => {cache: 'public', status: 200, include: true, type: RDF::RDFS.Class},
         NS.argu[:markAsImportant] => {cache: 'public', status: 200, include: true, type: RDF.Property}
+      }.merge(opts)
+    end
+
+    def slash_resource
+      [
+        {include: true, iri: "#{freetown.iri}/"}
+      ]
+    end
+
+    def slash_response(**opts)
+      {
+        "#{freetown.iri}/" => {cache: 'public', status: 200, include: true}
       }.merge(opts)
     end
 
