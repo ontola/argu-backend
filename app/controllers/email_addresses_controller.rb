@@ -53,6 +53,10 @@ class EmailAddressesController < ParentableController
     end
   end
 
+  def require_confirmation?
+    false
+  end
+
   def action_delta(action) # rubocop:disable Metrics/AbcSize
     image = RDF::URI(action.image.to_s.gsub(/^fa-/, 'http://fontawesome.io/icon/'))
 

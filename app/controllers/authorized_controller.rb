@@ -83,6 +83,10 @@ class AuthorizedController < ApplicationController
     !%i[new create].include? params[:action]
   end
 
+  def require_confirmation?
+    !current_user.guest? && !current_user.confirmed? && current_user.profile.groups.confirmation_required.any?
+  end
+
   def requires_setup?
     !(current_user.guest? || !tree_root.requires_intro? || setup_finished?)
   end
@@ -91,8 +95,8 @@ class AuthorizedController < ApplicationController
     current_user.finished_intro?
   end
 
-  def verify_confirmed_email # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    return if current_user.guest? || current_user.confirmed? || current_user.profile.groups.confirmation_required.empty?
+  def verify_confirmed_email # rubocop:disable Metrics/MethodLength
+    return unless require_confirmation?
 
     error = I18n.t(
       'groups.errors.confirmation_required',

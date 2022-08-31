@@ -135,6 +135,10 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     r_param || super
   end
 
+  def require_confirmation?
+    false
+  end
+
   def update_execute
     @email_changed = email_changed?
 
