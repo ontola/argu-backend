@@ -1,5 +1,16 @@
 ---
 nl:
+  actions:
+    invites:
+      create:
+        description: Nodig mensen uit om mee te denken.
+        submit: Maak uitnodiging
+        title: Mensen uitnodigen
+  enums:
+    invites:
+      token_type:
+        email_type: Via email
+        bearer_type: Via link
   forms:
     invites:
       addresses:
@@ -12,3 +23,7 @@ nl:
         placeholder: Schrijf een bericht voor in de email
       redirect_url:
         label: Landingspagina voor de uitgenodigde
+      token_type:
+        label: Hoe wil je mensen uitnodigen?
+  invites:
+    default_message: Denk mee over '%{resource}'.

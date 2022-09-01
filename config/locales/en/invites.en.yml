@@ -1,5 +1,16 @@
 ---
 en:
+  actions:
+    invites:
+      create:
+        description: Invite people to join the discussion.
+        submit: Create invite
+        title: Invite people
+  enums:
+    invites:
+      token_type:
+        email_type: Via email
+        bearer_type: Via link
   forms:
     invites:
       addresses:
@@ -12,3 +23,7 @@ en:
         placeholder: Enter a message for in the email
       redirect_url:
         label: Landingspage for the invitee
+      token_type:
+        label: How do you want to invite people?
+  invites:
+    default_message: Join the discussion about '%{resource}'.

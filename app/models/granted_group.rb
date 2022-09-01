@@ -4,12 +4,6 @@ class GrantedGroup < VirtualResource
   collection_options(
     association_base: -> { GrantedGroup.collection_items(self) }
   )
-  filterable(
-    NS.argu[:selectable] => boolean_filter(
-      ->(scope) { scope.where(deletable: true) },
-      ->(scope) { scope.where(deletable: false) }
-    )
-  )
 
   class << self
     def collection_items(collection)

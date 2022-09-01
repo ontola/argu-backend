@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Group < ApplicationRecord
+class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
   PUBLIC_ID = -1
   STAFF_ID = -2
 
@@ -63,8 +63,24 @@ class Group < ApplicationRecord
     super(options.merge(except: %i[created_at updated_at]))
   end
 
+  def bearer_token_collection
+    iri_from_template(
+      :tokens_collection_iri,
+      token_type: :bearer,
+      group_id: id
+    )
+  end
+
   def display_name
     id == Group::PUBLIC_ID ? I18n.t('groups.default.public.name') : name
+  end
+
+  def email_token_collection
+    iri_from_template(
+      :tokens_collection_iri,
+      token_type: :email,
+      group_id: id
+    )
   end
 
   def inherited_grants(edge)

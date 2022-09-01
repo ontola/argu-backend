@@ -7,6 +7,8 @@ class VirtualResource
   include LinkedRails::Model
   include ApplicationModel
 
+  class_attribute :defined_enums, default: {}.with_indifferent_access
+
   collection_options(
     association_base: -> { [] }
   )
@@ -28,6 +30,10 @@ class VirtualResource
   end
 
   class << self
+    def enum(**opts)
+      defined_enums.merge!(opts)
+    end
+
     def serializer_class
       "#{class_name.singularize}_serializer".classify.safe_constantize
     end

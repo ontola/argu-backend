@@ -1,7 +1,0 @@
----
-nl:
-  tokens:
-    discussion:
-      default_message: Denk mee over '%{resource}'.
-      description: Nodig mensen uit om mee te denken.
-      title: Mensen uitnodigen

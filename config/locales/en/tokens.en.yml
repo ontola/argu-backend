@@ -1,7 +1,0 @@
----
-en:
-  tokens:
-    discussion:
-      default_message: Join the discussion about '%{resource}'.
-      description: Invite people to join the discussion.
-      title: Invite people

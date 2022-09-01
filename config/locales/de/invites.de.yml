@@ -1,5 +1,16 @@
 ---
 de:
+  actions:
+    invites:
+      create:
+        description: Laden Sie Leute ein, an der Diskussion teilzunehmen.
+        submit: Einladung machen
+        title: Leute einladen
+  enums:
+    invites:
+      token_type:
+        email_type: Per email
+        bearer_type: Per Verlinkung
   forms:
     invites:
       addresses:
@@ -12,3 +23,7 @@ de:
         placeholder: Geben Sie eine Nachricht für in der E-Mail
       redirect_url:
         label: Landingspage für den Eingeladenen
+      token_type:
+        label: Wie möchten Sie Personen einladen?
+  invites:
+    default_message: Beteiligen Sie sich an der Diskussion über '%{resource}'.
