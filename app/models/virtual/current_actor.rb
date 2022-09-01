@@ -6,7 +6,7 @@ class CurrentActor < VirtualResource
   attr_accessor :profile, :user
 
   delegate :display_name, to: :profile, allow_nil: true
-  delegate :id, :default_profile_photo, :default_profile_photo_id, :has_analytics?, to: :user
+  delegate :id, :default_profile_photo, :default_profile_photo_id, :has_analytics?, :staff, to: :user
 
   def actor_type # rubocop:disable Metrics/MethodLength
     if profile.present?
@@ -42,7 +42,7 @@ class CurrentActor < VirtualResource
   end
 
   def tier_level
-    return Page.tiers[:standard] if user.is_staff?
+    return Page.tiers[:standard] if user.staff?
 
     ActsAsTenant.current_tenant.tier_before_type_cast
   end

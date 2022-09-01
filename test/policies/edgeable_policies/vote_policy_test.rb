@@ -26,7 +26,7 @@ class VotePolicyTest < Argu::TestHelpers::PolicyTest
   private
 
   def update_results
-    nobody_results.merge(creator: true)
+    nobody_results.merge(creator: true, staff: true)
   end
 
   def feed_results
@@ -38,6 +38,6 @@ class VotePolicyTest < Argu::TestHelpers::PolicyTest
   end
 
   def destroy_results
-    nobody_results.merge(creator: true)
+    nobody_results.merge(creator: true, staff: true)
   end
 end

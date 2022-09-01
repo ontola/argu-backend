@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_31_100831) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_01_132147) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -483,6 +483,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_31_100831) do
     t.text "about", default: ""
     t.integer "attachments_count", default: 0, null: false
     t.string "display_name"
+    t.boolean "staff", default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["show_feed"], name: "index_users_on_show_feed"

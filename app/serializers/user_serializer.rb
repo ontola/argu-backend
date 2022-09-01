@@ -24,7 +24,7 @@ class UserSerializer < RecordSerializer
     if ActsAsTenant.current_tenant && object.profile
       Group
         .joins(group_memberships: :member)
-        .where('groups.root_id = ? OR groups.id = ?', ActsAsTenant.current_tenant.uuid, Group::STAFF_ID)
+        .where(groups: {root_id: ActsAsTenant.current_tenant.uuid})
         .where(profiles: {id: object.profile.id})
         .pluck(:id)
         .map do |group_id|

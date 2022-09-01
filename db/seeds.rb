@@ -14,16 +14,9 @@ ActiveRecord::Base.transaction do
         password_confirmation: 'password',
         display_name: 'Douglas Engelbart',
         profile: Profile.new,
+        staff: true,
         last_accepted: Time.current
       )
-
-  staff_membership =
-    CreateGroupMembership.new(
-      Group.staff,
-      attributes: {member: staff.profile},
-      options: {user_context: UserContext.new(user: staff, profile: staff.profile)}
-    ).resource
-  staff_membership.save!(validate: false)
 
   ActsAsTenant.current_tenant = Page.argu
 

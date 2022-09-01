@@ -9,16 +9,24 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     def resolve
       return scope.none if user.nil?
 
-      scope
+      filter_granted_edges(scope)
         .where(active_or_creator)
+        .where(root_id: grant_tree.tree_root_id)
+    end
+
+    private
+
+    def filter_granted_edges(scope)
+      return scope if staff?
+
+      scope
         .joins(:parent)
         .with(granted_paths)
         .joins(granted_path_type_join)
-        .where(root_id: grant_tree.tree_root_id)
     end
   end
 
-  permit_attributes %i[expires_at], grant_sets: %i[moderator administrator staff]
+  permit_attributes %i[expires_at], grant_sets: %i[moderator administrator]
   permit_attributes %i[creator], creator: true, new_record: true
   permit_attributes %i[url]
 
@@ -32,7 +40,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     @grant_tree = init_grant_tree
   end
 
-  %i[spectator participator moderator administrator staff].each do |role|
+  %i[spectator participator moderator administrator].each do |role|
     define_method "#{role}?" do
       return instance_variable_get("@#{role}") if instance_variable_defined?("@#{role}")
 
@@ -65,7 +73,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def has_grant?(action_name, check_class = class_name)
-    return true if service?
+    return true if service? || staff?
 
     (granted_group_ids(action_name, check_class) & user.profile.group_ids).any?
   end

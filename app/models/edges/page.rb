@@ -41,7 +41,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   before_create :build_default_forum
   after_create :tenant_create
   after_create :create_default_groups
-  after_create :create_staff_grant
   after_create :create_default_menu_items
   after_create :create_system_vocabs
   after_create -> { reindex_tree(async: false) }
@@ -236,14 +235,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     group.grants << Grant.new(grant_set: GrantSet.participator, edge: primary_container_node)
     group.save!
     group
-  end
-
-  def create_staff_grant
-    staff_group = Group.find_by(id: Group::STAFF_ID)
-    return if staff_group.nil?
-
-    grant = Grant.new(grant_set: GrantSet.staff, edge: self, group: staff_group)
-    grant.save!(validate: false)
   end
 
   def create_system_vocabs

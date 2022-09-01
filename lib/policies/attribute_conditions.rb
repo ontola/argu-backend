@@ -23,6 +23,10 @@ module Policies
       ActsAsTenant.current_tenant.feature_enabled?(feature)
     end
 
+    def check_staff(check)
+      staff? == check
+    end
+
     module ClassMethods
       private
 
@@ -49,6 +53,16 @@ module Policies
           LinkedRails::SHACL::PropertyShape.new(
             path: [NS.argu[:tierLevel]],
             min_inclusive: Rails.application.config.tiers[feature],
+            target_node: -> { current_actor_iri }
+          )
+        ]
+      end
+
+      def staff_shapes(check)
+        [
+          LinkedRails::SHACL::PropertyShape.new(
+            path: [NS.argu[:staff]],
+            has_value: check,
             target_node: -> { current_actor_iri }
           )
         ]

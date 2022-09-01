@@ -11,16 +11,9 @@ ActsAsTenant.current_tenant = nil
 staff = FactorySeeder.create(
   :user,
   display_name: 'argu_owner',
-  email: 'staff@example.com'
+  email: 'staff@example.com',
+  staff: true
 )
-staff_group = Group.find(Group::STAFF_ID)
-staff_membership =
-  CreateGroupMembership.new(
-    staff_group,
-    attributes: {member: staff.profile},
-    options: {user_context: UserContext.new(user: staff, profile: staff.profile)}
-  ).resource
-staff_membership.save(validate: false)
 
 FactorySeeder.create(
   :unconfirmed_user,

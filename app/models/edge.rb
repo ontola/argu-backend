@@ -43,7 +43,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
       ->(scope) { scope.where(trashed_at: nil) },
       visible: lambda {
         !collection.parent.is_a?(Edge) ||
-          collection.user_context.has_grant_set?(collection.parent, %i[moderator administrator staff])
+          collection.user_context.has_grant_set?(collection.parent, %i[moderator administrator])
       }
     ),
     NS.argu[:isDraft] => boolean_filter(

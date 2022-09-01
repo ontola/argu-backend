@@ -30,14 +30,7 @@ FactoryBot.define do
     end
 
     trait :staff do
-      after(:create) do |user|
-        gm = GroupMembership.new(
-          group: Group.find(Group::STAFF_ID),
-          member: user.profile,
-          start_date: Time.current
-        )
-        gm.save!(validate: false)
-      end
+      staff { true }
     end
 
     trait :viewed_notifications_hour_ago do

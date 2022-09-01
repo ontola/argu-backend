@@ -35,19 +35,19 @@ class GrantTreeTest < ActiveSupport::TestCase
 
   test 'administrator group should update Motion' do
     assert_equal group_ids(motion, resource_type: 'Motion', action_name: 'update'),
-                 [Group::STAFF_ID, argu.groups.first.id]
+                 [argu.groups.first.id]
     forum_manager_group_membership
     assert_equal group_ids(motion, resource_type: 'Motion', action_name: 'update'),
-                 [Group::STAFF_ID, argu.groups.first.id, forum_manager_group_membership.group.id].sort
+                 [argu.groups.first.id, forum_manager_group_membership.group.id].sort
   end
 
   test 'excluded group should not post Motion' do
     assert_equal group_ids(question, resource_type: 'Motion', action_name: 'create'),
-                 [Group::STAFF_ID, Group::PUBLIC_ID, argu.groups.first.id]
+                 [Group::PUBLIC_ID, argu.groups.first.id]
     reset_motion_grants
     assert_empty group_ids(question, resource_type: 'Motion', action_name: 'create')
     assert_equal group_ids(other_question, resource_type: 'Motion', action_name: 'create'),
-                 [Group::STAFF_ID, Group::PUBLIC_ID, argu.groups.first.id].sort
+                 [Group::PUBLIC_ID, argu.groups.first.id].sort
     public_create_motion_grant
     assert_equal group_ids(question, resource_type: 'Motion', action_name: 'create'),
                  [Group::PUBLIC_ID]

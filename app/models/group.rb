@@ -2,7 +2,6 @@
 
 class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
   PUBLIC_ID = -1
-  STAFF_ID = -2
 
   enhance ConfirmedDestroyable
   enhance LinkedRails::Enhancements::Creatable
@@ -126,10 +125,6 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def route_key
       :g
-    end
-
-    def staff
-      Group.find_by(id: Group::STAFF_ID)
     end
 
     def sort_options(_collection)

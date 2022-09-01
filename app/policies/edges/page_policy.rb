@@ -14,10 +14,10 @@ class PagePolicy < EdgePolicy
                     new_record: false
   permit_attributes %i[matomo_site_id matomo_host matomo_cdn
                        piwik_pro_site_id piwik_pro_host google_tag_manager google_uac],
-                    grant_sets: %i[administrator staff],
+                    grant_sets: %i[administrator],
                     feature_enabled: :user_tracking,
                     new_record: false
-  permit_attributes %i[tier], grant_sets: %i[staff]
+  permit_attributes %i[tier], staff: true
 
   def permitted_tabs
     tabs = []

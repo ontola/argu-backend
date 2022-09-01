@@ -9,7 +9,7 @@ class UserContext # rubocop:disable Metrics/ClassLength
   attr_reader :allow_expired, :child_cache
 
   delegate :user, :profile, to: :current_actor
-  delegate :guest?, :id, :marked_for_destruction?, :otp_active?, to: :user
+  delegate :guest?, :id, :marked_for_destruction?, :otp_active?, :staff?, to: :user
   delegate :build_child, to: :child_cache
 
   def initialize(allow_expired: false, doorkeeper_token: nil, language: nil, profile: nil, user: nil, session_id: nil) # rubocop:disable Metrics/ParameterLists
@@ -49,7 +49,7 @@ class UserContext # rubocop:disable Metrics/ClassLength
   end
 
   def feature_enabled?(feature)
-    return true if user.is_staff?
+    return true if staff?
 
     ActsAsTenant.current_tenant.feature_enabled?(feature)
   end
@@ -69,6 +69,7 @@ class UserContext # rubocop:disable Metrics/ClassLength
   end
 
   def has_grant_set?(edge, grant_set)
+    return true if staff?
     return false if grant_tree.nil?
 
     return grant_set.any? { |set| has_grant_set?(edge, set) } if grant_set.is_a?(Array)
@@ -89,7 +90,7 @@ class UserContext # rubocop:disable Metrics/ClassLength
 
   def managed_profile_ids
     return [] if user.guest?
-    return [user.profile.id, ActsAsTenant.current_tenant.profile.id] if page_manager?
+    return [user.profile.id, ActsAsTenant.current_tenant.profile.id] if staff? || page_manager?
 
     [user.profile.id]
   end

@@ -19,7 +19,6 @@ class Grant < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :initiator, -> { where(grant_set_id: GrantSet.initiator.id) }
   scope :moderator, -> { where(grant_set_id: GrantSet.moderator.id) }
   scope :administrator, -> { where(grant_set_id: GrantSet.administrator.id) }
-  scope :staff, -> { where(grant_set_id: GrantSet.staff.id) }
 
   scope :custom, -> { where('group_id > 0') }
 
@@ -47,7 +46,7 @@ class Grant < ApplicationRecord # rubocop:disable Metrics/ClassLength
     include_members: true
   )
 
-  %i[creator spectator participator initiator moderator administrator staff].each do |role|
+  %i[creator spectator participator initiator moderator administrator].each do |role|
     define_method "#{role}?" do
       grant_set.title == role
     end

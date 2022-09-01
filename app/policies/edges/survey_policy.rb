@@ -2,9 +2,9 @@
 
 class SurveyPolicy < EdgePolicy
   permit_attributes %i[external_iri display_name description]
-  permit_attributes %i[pinned], grant_sets: %i[moderator administrator staff]
-  permit_attributes %i[form_type coupon_required], grant_sets: %i[staff]
-  permit_nested_attributes %i[action_body], grant_sets: %i[staff]
+  permit_attributes %i[pinned], grant_sets: %i[moderator administrator]
+  permit_attributes %i[form_type coupon_required], staff: true
+  permit_nested_attributes %i[action_body], staff: true
 
   def permitted_tabs
     tabs = %i[participate submission]

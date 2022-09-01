@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
+class Tenant < ApplicationRecord
   IRI_PREFIX_BLACKLIST = [
     Rails.application.config.host_name,
     "#{Rails.application.config.host_name}/"
@@ -37,16 +37,13 @@ class Tenant < ApplicationRecord # rubocop:disable Metrics/ClassLength
       create_system_user(User::GUEST_ID, Profile::GUEST_ID, 'guest', 'guest@argu.co')
     end
 
-    def seed_schema(name, iri_prefix) # rubocop:disable Metrics/AbcSize
+    def seed_schema(name, iri_prefix)
       load(Dir[Rails.root.join('db/seeds/grant_sets.seeds.rb')][0])
       create_system_users
 
       first_page = create_first_page(name, iri_prefix)
 
       create_system_group(Group::PUBLIC_ID, 'Public', 'Public', first_page)
-      create_system_group(Group::STAFF_ID, 'Staff', 'Staff', first_page)
-
-      first_page.send(:create_staff_grant)
 
       create_system_group_membership(Group.public, User.community, Profile.community)
       create_system_group_membership(Group.public, User.guest, Profile.guest)

@@ -90,8 +90,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       'Forum.count' => 1,
       'Group.count' => 2,
       'CustomMenuItem.count' => 2,
-      'Grant.count' => 3,
-      "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
+      'Grant.count' => 2
     ) do
       post Page.collection_iri(root: argu),
            params: {
@@ -111,7 +110,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_difference(
       'Tenant.count' => 1,
       'Page.count' => 1,
-      "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
+      'Grant.count' => 2
     ) do
       post Page.collection_iri(root: argu),
            params: {

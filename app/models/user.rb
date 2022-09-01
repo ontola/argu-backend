@@ -215,10 +215,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     "sessions_#{session_id}"
   end
 
-  def is_staff?
-    @is_staff ||= profile.is_group_member?(Group::STAFF_ID)
-  end
-
   def name_with_fallback
     display_name || generated_name
   end
@@ -272,7 +268,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     id <= 0
   end
 
-  # Include email in search data. User search is only available for staff.
+  # Include email in search data. User search is only available for admins and staff.
   def search_data
     data = super
     data[:email] = email

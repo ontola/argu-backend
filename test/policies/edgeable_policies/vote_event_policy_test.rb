@@ -12,11 +12,14 @@ class VoteEventPolicyTest < Argu::TestHelpers::PolicyTest
     test_edgeable_policies
   end
 
-  alias create_results nobody_results
+  def update_results
+    nobody_results.merge(creator: true, staff: true)
+  end
+
+  alias create_results staff_only_results
   alias create_expired_results nobody_results
   alias create_trashed_results nobody_results
-  alias update_results nobody_results
-  alias trash_results nobody_results
+  alias trash_results staff_only_results
   alias destroy_results nobody_results
   alias destroy_with_children_results nobody_results
   alias feed_results nobody_results

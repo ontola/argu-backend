@@ -14,7 +14,7 @@ class UserPolicy < RestrictivePolicy
   permit_attributes %i[reactions_email news_email memberships_email created_email has_analytics]
   permit_attributes %i[accept_terms], has_values: {accepted_terms: false}
   permit_attributes %i[email redirect_url], new_record: true
-  permit_attributes %i[destroy_strategy], grant_sets: %i[staff]
+  permit_attributes %i[destroy_strategy], grant_sets: %i[administrator]
 
   def permitted_tabs
     tabs = []

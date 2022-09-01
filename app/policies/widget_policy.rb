@@ -5,6 +5,14 @@ class WidgetPolicy < EdgeTreePolicy
     def resolve
       return scope.none if user.nil?
 
+      filter_granted_edges(scope)
+    end
+
+    private
+
+    def filter_granted_edges(scope)
+      return scope if staff?
+
       scope
         .joins(:owner)
         .with(granted_paths(show_only: false))

@@ -39,7 +39,7 @@ module AccessTokenExt
     end
 
     def find_or_create_for(**attrs)
-      return super unless attrs[:resource_owner]&.user&.is_staff? && attrs[:scopes].present?
+      return super unless attrs[:resource_owner]&.staff? && attrs[:scopes].present?
 
       attrs[:scopes] =
         if attrs[:scopes].is_a?(Array)

@@ -19,13 +19,10 @@ class RestrictivePolicy
     delegate :export_scope?, :service_scope?, :system_scope?,
              to: :scope,
              allow_nil: true
+    delegate :staff?, to: :user
 
     def resolve
       staff? ? scope : scope.none
-    end
-
-    def staff?
-      user.is_staff?
     end
   end
 
@@ -33,15 +30,12 @@ class RestrictivePolicy
     false
   end
 
-  def staff?
-    user.is_staff?
-  end
-
   def service?
     @service ||= context.doorkeeper_scopes&.include? 'service'
   end
 
   delegate :feature_enabled?, :user, :profile, :managed_profile_ids, :session_id, to: :context
+  delegate :staff?, to: :user
   attr_reader :context, :record, :message
 
   def initialize(context, record)
@@ -93,11 +87,7 @@ class RestrictivePolicy
   end
 
   def has_grant_set?(grant_set)
-    user.profile.groups
-      .joins(grants: :grant_set)
-      .where(grants: {edge: ActsAsTenant.current_tenant})
-      .pluck('grant_sets.title')
-      .include?(grant_set.to_s)
+    user_context.has_grant_set?(ActsAsTenant.current_tenant, grant_set)
   end
 
   private

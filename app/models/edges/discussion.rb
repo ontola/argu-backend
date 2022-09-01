@@ -24,7 +24,7 @@ class Discussion < Edge
       ->(scope) { scope.where(pinned_at: nil) },
       visible: lambda {
         !collection.parent.is_a?(Edge) ||
-          collection.user_context.has_grant_set?(collection.parent, %i[moderator administrator staff])
+          collection.user_context.has_grant_set?(collection.parent, %i[moderator administrator])
       }
     )
   )

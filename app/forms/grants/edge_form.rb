@@ -17,7 +17,7 @@ module Grants
             [NS.libro[:null]] +
               GrantSet
                 .where(root_id: [nil, ActsAsTenant.current_tenant&.uuid])
-                .where.not(title: %i[empty staff motion_create])
+                .where.not(title: %i[empty motion_create])
                 .map(&:iri) + [RDF.nil]
           }
   end

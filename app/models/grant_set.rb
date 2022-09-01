@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GrantSet < ApplicationRecord
-  RESERVED_TITLES = %w[spectator participator initiator moderator administrator staff].freeze
+  RESERVED_TITLES = %w[spectator participator initiator moderator administrator].freeze
   has_many :grant_sets_permitted_actions, dependent: :destroy
   has_many :permitted_actions, through: :grant_sets_permitted_actions
   has_many :grants, dependent: :restrict_with_exception
@@ -40,6 +40,12 @@ class GrantSet < ApplicationRecord
   end
 
   class << self
+    def granted_sets_for_user_context(parent, user_context)
+      return [GrantSet.administrator] if user_context.staff?
+
+      user_context.grant_tree.grant_sets(parent.persisted_edge, group_ids: user_context.user.profile.group_ids)
+    end
+
     def for_one_action(resource_type, action)
       title = "#{resource_type.underscore}_#{action}"
       find_or_initialize_by(title: title) do |grant_set|
@@ -58,7 +64,7 @@ class GrantSet < ApplicationRecord
       return unless parent&.enhanced_with?(Grantable)
 
       LinkedRails::Sequence.new(
-        user_context.grant_tree.grant_sets(parent.persisted_edge, group_ids: user_context.user.profile.group_ids),
+        granted_sets_for_user_context(parent, user_context),
         id: parent.granted_sets_iri,
         scope: false
       )

@@ -23,6 +23,6 @@ class CommentPolicyTest < Argu::TestHelpers::PolicyTest
   alias feed_results nobody_results
 
   def update_results
-    nobody_results.merge(creator: true)
+    nobody_results.merge(creator: true, staff: true)
   end
 end

@@ -8,13 +8,6 @@ class EdgeTreePolicy < RestrictivePolicy
       @grant_tree ||= context.grant_tree_for(context.tree_root)
     end
 
-    def staff?
-      grant_tree
-        &.grant_sets(grant_tree.tree_root, group_ids: user.profile.group_ids)
-        &.map(&:title)
-        &.include?('staff')
-    end
-
     private
 
     %i[edges grant_sets grant_sets_permitted_actions granted_paths grants
@@ -116,7 +109,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
   end
   delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?, :has_grant_set?,
-           :persisted_edge, :spectator?, :participator?, :moderator?, :administrator?, :staff?, to: :edgeable_policy
+           :persisted_edge, :spectator?, :participator?, :moderator?, :administrator?, to: :edgeable_policy
 
   def grant_tree
     @grant_tree ||= context.grant_tree_for(edgeable_record)

@@ -27,7 +27,7 @@ class ForumPolicyTest < Argu::TestHelpers::PolicyTest
   end
 
   def trash_results
-    nobody_results
+    staff_only_results
   end
 
   def invite_results
