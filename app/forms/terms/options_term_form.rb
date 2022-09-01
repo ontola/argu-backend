@@ -4,7 +4,8 @@ module Terms
   class OptionsTermForm < ApplicationForm
     field :display_name,
           label: '',
-          placeholder: ''
+          placeholder: '',
+          max_length: 35
 
     hidden do
       field :position
