@@ -28,9 +28,12 @@ default:
 
 build:
   stage: build
-  image: docker:18.09.8
+  image: docker:20-cli
+  variables:
+    DOCKER_TLS_CERTDIR: ''
   services:
-    - docker:18.09.8-dind
+    - name: 'docker:20-dind'
+      command: [ '--tls=false', '--host=tcp://0.0.0.0:2375' ]
     - postgres:12
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY" --password-stdin
@@ -40,6 +43,7 @@ build:
     - docker run --network host --env APARTMENT_DISABLE_INIT=true --env DISABLE_PROMETHEUS=true --env POSTGRESQL_ADDRESS --env POSTGRESQL_DATABASE=test --env RAILS_ENV=production  --env REDIS_URL=$REDIS_URL --env SECRET_KEY_BASE=secret --env DEVISE_SECRET=secret $CI_REGISTRY_IMAGE:latest ./bin/rails runner "puts 'succeeded'"
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker push $CI_REGISTRY_IMAGE:latest
+    - docker buildx build --platform linux/arm64/v8 --push --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
 
 codeQuality:
   stage: test
