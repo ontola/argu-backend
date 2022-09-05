@@ -9,6 +9,7 @@ class MenuListTest < ActiveSupport::TestCase
 
   let(:user) { create(:user) }
   let(:user_context) do
+    argu.join_user(user)
     UserContext.new(
       profile: user.profile,
       user: user

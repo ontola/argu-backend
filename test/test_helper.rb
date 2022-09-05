@@ -152,7 +152,9 @@ module ActionDispatch
     end
 
     def sign_in(resource = create(:user))
-      token = resource.is_a?(String) ? resource : doorkeeper_token_for(resource).token
+      token = ActsAsTenant.with_tenant(ActsAsTenant.current_tenant || argu) do
+        resource.is_a?(String) ? resource : doorkeeper_token_for(resource).token
+      end
       @_argu_headers = (@_argu_headers || {}).merge(argu_headers(bearer: token))
     end
 

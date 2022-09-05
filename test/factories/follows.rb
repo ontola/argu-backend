@@ -9,6 +9,12 @@ FactoryBot.define do
       f.followable_type = 'Edge'
     end
 
+    after :create do |f|
+      ActsAsTenant.with_tenant(f.followable.root) do
+        f.followable.root.join_user(f.follower)
+      end
+    end
+
     %i[question motion argument comment vote].each do |item|
       trait "t_#{item}".to_sym do
         association :followable, factory: :edge, owner: item

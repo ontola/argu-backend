@@ -35,6 +35,7 @@ module Argu
 
       before do
         ActsAsTenant.current_tenant = argu
+        argu.join_user(user)
       end
 
       ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix|

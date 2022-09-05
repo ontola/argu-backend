@@ -39,6 +39,7 @@ RSpec.describe Feed, type: :model do
 
   before do
     ActsAsTenant.current_tenant = argu
+    argu.join_user(user)
   end
 
   RSpec.shared_examples_for 'scope' do

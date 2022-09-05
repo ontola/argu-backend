@@ -12,6 +12,7 @@ RSpec.describe SearchResult, type: :model do
   before do
     Thread.current[:mock_searchkick] = false
     ActsAsTenant.current_tenant = argu
+    argu.join_user(user)
     Edge.reindex_with_tenant(async: false)
   end
 

@@ -134,55 +134,46 @@ module Argu
           User.guest(session_id)
         end
 
-        def create_moderator(record, user = nil)
-          user ||= create(:user)
+        def create_group_membership(record, user, group = nil)
           page = record.is_a?(Page) ? record : record.root
-          group = create(:group, parent: page)
+          group ||= create(:group, parent: page)
+          user ||= create(:user)
+
+          page.join_user(user)
+
           create(:group_membership,
                  parent: group,
                  member: user.profile)
-          create(:grant, edge: record, group: group, grant_set: GrantSet.moderator)
-          user
+        end
+
+        def create_moderator(record, user = nil)
+          membership = create_group_membership(record, user)
+          create(:grant, edge: record, group: membership.group, grant_set: GrantSet.moderator)
+          membership.user
         end
 
         def create_spectator(record, user = nil)
-          user ||= create(:user)
-          page = record.is_a?(Page) ? record : record.root
-          group = create(:group, parent: page)
-          create(:group_membership,
-                 parent: group,
-                 member: user.profile)
-          create(:grant, edge: record, group: group, grant_set: GrantSet.spectator)
-          user
+          membership = create_group_membership(record, user)
+          create(:grant, edge: record, group: membership.group, grant_set: GrantSet.spectator)
+          membership.user
         end
 
         def create_participator(record, user = nil)
-          user ||= create(:user)
-          page = record.is_a?(Page) ? record : record.root
-          group = create(:group, parent: page)
-          create(:group_membership,
-                 parent: group,
-                 member: user.profile)
-          create(:grant, edge: record, group: group, grant_set: GrantSet.participator)
-          user
+          membership = create_group_membership(record, user)
+          create(:grant, edge: record, group: membership.group, grant_set: GrantSet.participator)
+          membership.user
         end
 
         def create_initiator(record, user = nil)
-          user ||= create(:user)
-          page = record.is_a?(Page) ? record : record.root
-          group = create(:group, parent: page)
-          create(:group_membership,
-                 parent: group,
-                 member: user.profile)
-          create(:grant, edge: record, group: group, grant_set: GrantSet.initiator)
-          user
+          membership = create_group_membership(record, user)
+          create(:grant, edge: record, group: membership.group, grant_set: GrantSet.initiator)
+          membership.user
         end
 
         def create_administrator(record, user = nil)
-          user ||= create(:user)
           page = record.is_a?(Page) ? record : record.root
-          create(:group_membership, parent: page.groups.find_by(name: 'Admins'), member: user.profile)
-          user
+
+          create_group_membership(record, user, page.groups.find_by(name: 'Admins')).user
         end
 
         def create_follower(item, user = nil)
@@ -198,6 +189,7 @@ module Argu
             attributes[:owner_type] = klass.to_s if klass < Edge
 
             options = service_options(creator: options[:creator], publisher: options[:publisher])
+            ActsAsTenant.current_tenant&.join_user(options[:user_context].user)
             service_class = "Create#{klass}".safe_constantize || service_class_fallback(klass)
             service = service_class.new(
               parent_edge,

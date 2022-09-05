@@ -9,19 +9,15 @@ module RefreshTokenStrategyExt
 end
 Doorkeeper::Request::RefreshToken.prepend(RefreshTokenStrategyExt)
 
-module AccessTokenIncl
+module ResourceOwnerIncl
   extend ActiveSupport::Concern
 
   included do
     attr_reader :resource_owner
   end
 end
-Doorkeeper::AccessToken.include(AccessTokenIncl)
 
-module AccessTokenExt
-  extend ActiveSupport::Concern
-  extend JWTHelper
-
+module ResourceOwnerExt
   def resource_owner=(user_context)
     unless user_context.blank? || user_context.is_a?(UserContext)
       raise("Expected resource_owner to by a UserContext, but is a #{user_context.class}")
@@ -30,8 +26,30 @@ module AccessTokenExt
     self.resource_owner_id = user_context&.user&.id
     @resource_owner = user_context
   end
+end
+
+Doorkeeper::AccessToken.prepend(ResourceOwnerExt)
+Doorkeeper::AccessToken.include(ResourceOwnerIncl)
+Doorkeeper::AccessGrant.prepend(ResourceOwnerExt)
+Doorkeeper::AccessGrant.include(ResourceOwnerIncl)
+
+module AccessTokenIncl
+  extend ActiveSupport::Concern
+
+  included do
+    before_create :join_community
+  end
 
   private
+
+  def join_community
+    ActsAsTenant.current_tenant&.join_user(resource_owner&.user)
+  end
+end
+
+module AccessTokenExt
+  extend ActiveSupport::Concern
+  # extend JWTHelper
 
   class_methods do
     def by_resource_owner(resource_owner)
@@ -63,19 +81,7 @@ module AccessTokenExt
   end
 end
 Doorkeeper::AccessToken.prepend(AccessTokenExt)
-
-module AccessGrantExt
-  def resource_owner=(user_context)
-    unless user_context.blank? || user_context.is_a?(UserContext)
-      raise("Expected resource_owner to by a UserContext, but is a #{user_context.class}")
-    end
-
-    self.resource_owner_id = user_context&.user&.id
-    @resource_owner = user_context
-  end
-end
-Doorkeeper::AccessGrant.prepend(AccessGrantExt)
-Doorkeeper::AccessGrant.include(AccessTokenIncl)
+Doorkeeper::AccessToken.include(AccessTokenIncl)
 
 module PasswordAccessTokenRequestExt
   private

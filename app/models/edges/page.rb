@@ -130,6 +130,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     @iri_prefix || tenant&.iri_prefix
   end
 
+  def join_user(user)
+    return if user.nil? || user.profile.group_memberships.where(group: users_group).any?
+
+    create_membership(users_group, user, user.profile)
+  end
+
   def manifest
     @manifest ||= Manifest.new(page: self)
   end

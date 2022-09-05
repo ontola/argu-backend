@@ -50,6 +50,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     sign_in guest_user
     user
     assert_difference('User.count' => 0,
+                      'GroupMembership.count' => 0,
                       'Notification.confirmation_reminder.count' => 0) do
       post user_registration_path,
            params: {
@@ -65,6 +66,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     sign_in :service
     user
     assert_difference('User.count' => 0,
+                      'GroupMembership.count' => 0,
                       'Notification.confirmation_reminder.count' => 0) do
       post user_registration_path,
            params: {
@@ -227,6 +229,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     user_params = attributes_for(:user)
 
     assert_difference('User.count' => 0,
+                      'GroupMembership.count' => 0,
                       worker_count_string('RedisResourceWorker') => 0,
                       worker_count_string('SendEmailWorker') => 0) do
       post user_registration_path,
@@ -496,6 +499,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     create_email_mock('confirmation', 'test@example.com', token_url: /.+/)
     assert_difference(
       'User.count' => 1,
+      'GroupMembership.count' => 1,
       'Notification.confirmation_reminder.count' => 0
     ) do
       post user_registration_path,

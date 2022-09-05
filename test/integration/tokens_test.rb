@@ -26,7 +26,10 @@ class TokensTest < ActionDispatch::IntegrationTest
   ####################################
   test 'User should post create token and refresh' do
     sign_in guest_user
-    assert_difference('Doorkeeper::AccessToken.count', 1) do
+    assert_difference(
+      'Doorkeeper::AccessToken.count' => 1,
+      'GroupMembership.count' => 1
+    ) do
       post_token_password
     end
     refresh_token = parsed_body['refresh_token']
@@ -34,7 +37,10 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_equal session_id.class, String
     assert refresh_token
     sleep 1
-    assert_difference('Doorkeeper::AccessToken.count', 1) do
+    assert_difference(
+      'Doorkeeper::AccessToken.count' => 1,
+      'GroupMembership.count' => 0
+    ) do
       refresh_access_token(refresh_token)
     end
     token_response
