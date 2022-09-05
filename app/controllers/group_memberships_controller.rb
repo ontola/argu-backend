@@ -49,7 +49,7 @@ class GroupMembershipsController < ServiceController
     forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
     return forum_grants.first.edge.iri if forum_grants.count == 1
 
-    authenticated_resource!.page.iri
+    authenticated_resource!.root.iri
   end
   alias destroy_success_location redirect_location
 end

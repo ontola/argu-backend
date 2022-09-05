@@ -12,14 +12,14 @@ class GroupMembership < ApplicationRecord
   belongs_to :member,
              inverse_of: :group_memberships,
              class_name: 'Profile'
-  belongs_to :profile
-  has_one :page,
+  has_one :root,
           through: :group
   has_one :user,
           through: :member,
           source: :profileable,
           source_type: :User
   has_many :grants, through: :group
+  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
   scope :active, lambda {
     where('start_date <= statement_timestamp() AND (end_date IS NULL OR end_date > statement_timestamp())')
@@ -46,7 +46,7 @@ class GroupMembership < ApplicationRecord
 
   delegate :email, to: :user
 
-  alias edgeable_record page
+  alias edgeable_record root
 
   paginates_per 30
   parentable :group

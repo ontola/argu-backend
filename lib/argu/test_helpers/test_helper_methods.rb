@@ -139,11 +139,13 @@ module Argu
           group ||= create(:group, parent: page)
           user ||= create(:user)
 
-          page.join_user(user)
+          ActsAsTenant.with_tenant(page) do
+            page.join_user(user)
 
-          create(:group_membership,
-                 parent: group,
-                 member: user.profile)
+            create(:group_membership,
+                   parent: group,
+                   member: user.profile)
+          end
         end
 
         def create_moderator(record, user = nil)

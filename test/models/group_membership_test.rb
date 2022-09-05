@@ -49,25 +49,25 @@ class GroupMembershipTest < ActiveSupport::TestCase
     subject.update(end_date: 2.days.from_now)
 
     # can create outside member/group scope
-    assert create_group_membership(member: moderator.profile), @errors
-    assert create_group_membership(group: second_group), @errors
+    assert test_group_membership(member: moderator.profile), @errors
+    assert test_group_membership(group: second_group), @errors
 
     # cannot create before or during existing membership
-    assert_not create_group_membership
-    assert_not create_group_membership(start_date: Time.current, end_date: 4.days.from_now)
-    assert_not create_group_membership(start_date: Time.current)
+    assert_not test_group_membership
+    assert_not test_group_membership(start_date: Time.current, end_date: 4.days.from_now)
+    assert_not test_group_membership(start_date: Time.current)
     subject.update(end_date: nil)
-    assert_not create_group_membership
-    assert_not create_group_membership(start_date: 3.days.from_now)
-    assert_not create_group_membership(start_date: 3.days.from_now, end_date: 4.days.from_now)
-    assert_not create_group_membership(start_date: 2.days.ago)
+    assert_not test_group_membership
+    assert_not test_group_membership(start_date: 3.days.from_now)
+    assert_not test_group_membership(start_date: 3.days.from_now, end_date: 4.days.from_now)
+    assert_not test_group_membership(start_date: 2.days.ago)
 
     # can create before existing membership
-    assert create_group_membership(start_date: 2.days.ago, end_date: 1.day.ago), @errors
+    assert test_group_membership(start_date: 2.days.ago, end_date: 1.day.ago), @errors
 
     # can create after existing membership
     subject.update(end_date: 2.days.from_now)
-    assert create_group_membership(start_date: 3.days.from_now, end_date: 4.days.from_now), @errors
+    assert test_group_membership(start_date: 3.days.from_now, end_date: 4.days.from_now), @errors
   end
 
   test 'constraint allows no partial overlapping group_memberships' do
@@ -90,13 +90,14 @@ class GroupMembershipTest < ActiveSupport::TestCase
 
   private
 
-  def create_group_membership(member: user.profile, group: custom_group, start_date: Time.current, end_date: nil)
+  def test_group_membership(member: user.profile, group: custom_group, start_date: Time.current, end_date: nil)
     gm = GroupMembership
            .create(
              group_id: group.id,
              member_id: member.id,
              start_date: start_date,
-             end_date: end_date
+             end_date: end_date,
+             root: custom_group.root
            )
     @errors = gm.errors.full_messages
     gm.valid?

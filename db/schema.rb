@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_05_075234) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_05_093143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -212,6 +212,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_05_075234) do
     t.text "description"
     t.datetime "start_date"
     t.datetime "end_date"
+    t.uuid "root_id", null: false
+    t.index ["root_id", "group_id"], name: "index_group_memberships_on_root_id_and_group_id"
+    t.index ["root_id", "start_date", "end_date"], name: "index_group_memberships_on_root_id_and_start_date_and_end_date"
+    t.index ["root_id"], name: "index_group_memberships_on_root_id"
     t.index ["start_date", "end_date", "group_id", "member_id"], name: "index_group_memberships_full"
     t.index ["start_date", "end_date"], name: "index_group_memberships_on_start_date_and_end_date"
     t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps, where: '(member_id <> 0)'
