@@ -85,9 +85,18 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
         href: ContainerNode.collection_iri(display: :settingsTable)
       ),
       setting_item(
+        :users,
+        label: I18n.t('users.plural'),
+        href: ActsAsTenant.current_tenant.users_group.collection_iri(
+          :group_memberships,
+          display: :table,
+          table_type: :users
+        )
+      ),
+      setting_item(
         :groups,
         label: I18n.t('pages.settings.menu.groups'),
-        href: Group.collection_iri(display: :settingsTable)
+        href: Group.collection_iri(display: :settingsTable, filter: {NS.argu[:groupType] => %i[custom admin]})
       ),
       setting_item(
         :shortnames,

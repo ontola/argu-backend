@@ -25,10 +25,17 @@ class GroupMembership < ApplicationRecord
     where('start_date <= statement_timestamp() AND (end_date IS NULL OR end_date > statement_timestamp())')
   }
 
-  with_columns settings: [
-    NS.org[:member],
-    NS.ontola[:destroyAction]
-  ]
+  with_columns(
+    settings: [
+      NS.org[:member],
+      NS.ontola[:destroyAction]
+    ],
+    users: [
+      NS.org[:member],
+      NS.schema.email,
+      NS.schema.dateCreated
+    ]
+  )
 
   validates :member, presence: true
   validates :start_date, presence: true
@@ -36,6 +43,8 @@ class GroupMembership < ApplicationRecord
   validate :no_overlapping_group_memberships
   validates :group_id, presence: true
   validates :member_id, exclusion: {in: [Profile::COMMUNITY_ID, Profile::GUEST_ID]}
+
+  delegate :email, to: :user
 
   alias edgeable_record page
 

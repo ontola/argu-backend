@@ -31,6 +31,7 @@ module SettingsHelper
       submissions: 'list-ul',
       submission: 'pencil',
       theme: 'eyedropper',
+      users: 'user',
       participate: 'pencil'
     }
   end

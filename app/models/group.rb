@@ -29,7 +29,10 @@ class Group < ApplicationRecord
     parent: -> { ActsAsTenant.current_tenant }
   )
   with_collection :grants
-  with_collection :group_memberships
+  with_collection :group_memberships,
+                  title: lambda {
+                    parent.users? ? I18n.t('users.plural') : I18n.t('argu.GroupMembership.plural_label')
+                  }
   with_collection :search_results,
                   association_base: -> { SearchResult::Query.new(self) },
                   association_class: Group,
@@ -42,6 +45,7 @@ class Group < ApplicationRecord
     NS.org[:hasMember],
     NS.ontola[:settingsMenu]
   ]
+  filterable group_type: {}
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
   validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}

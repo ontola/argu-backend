@@ -21,7 +21,7 @@ class PagePolicy < EdgePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i[general theme container_nodes groups shortnames custom_menu_items banners] if update?
+    tabs.concat %i[general theme container_nodes users groups shortnames custom_menu_items banners] if update?
     tabs.concat %i[vocabularies] if staff?
     tabs
   end
