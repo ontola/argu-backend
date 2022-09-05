@@ -18,7 +18,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.11/community" >> /etc/apk/repo
     \
     echo 'Install mozjpeg' && \
     cd /tmp && \
-    git clone git://github.com/mozilla/mozjpeg.git && \
+    git clone https://github.com/mozilla/mozjpeg.git && \
     cd /tmp/mozjpeg && \
     git checkout ${MOZJPEG_VERSION} && \
     autoreconf -fiv && ./configure --prefix=/usr && make install && \
