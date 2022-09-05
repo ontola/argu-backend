@@ -41,28 +41,19 @@ class Tenant < ApplicationRecord
       load(Dir[Rails.root.join('db/seeds/grant_sets.seeds.rb')][0])
       create_system_users
 
-      first_page = create_first_page(name, iri_prefix)
-
-      create_system_group(Group::PUBLIC_ID, 'Public', 'Public', first_page)
-
-      create_system_group_membership(Group.public, User.community, Profile.community)
-      create_system_group_membership(Group.public, User.guest, Profile.guest)
-
-      first_page
+      ActsAsTenant.current_tenant = create_first_page(name, iri_prefix)
     end
 
     def with_tenant_fallback(&block)
       return yield if ActsAsTenant.current_tenant.present?
 
-      with_schema_fallback do
-        ActsAsTenant.with_tenant(Page.argu, &block)
-      end
+      ActsAsTenant.with_tenant(Page.argu, &block)
     end
 
     private
 
-    def create_first_page(name, iri_prefix) # rubocop:disable Metrics/MethodLength
-      page = Page.create!(
+    def create_first_page(name, iri_prefix)
+      Page.create!(
         active_branch: true,
         publisher_id: User::SERVICE_ID,
         creator_id: Profile::SERVICE_ID,
@@ -72,30 +63,6 @@ class Tenant < ApplicationRecord
         is_published: true,
         iri_prefix: iri_prefix
       )
-      ActsAsTenant.current_tenant = page
-    end
-
-    def create_system_group(id, plural, singular, page)
-      public_group = Group.new(
-        deletable: false,
-        id: id,
-        name: plural,
-        name_singular: singular,
-        page: page
-      )
-      public_group.save!(validate: false)
-      public_group
-    end
-
-    def create_system_group_membership(group, user, profile)
-      group_membership =
-        CreateGroupMembership.new(
-          group,
-          attributes: {member_id: profile.id},
-          options: {user_context: UserContext.new(user: user, profile: profile)}
-        ).resource
-      group_membership.save!(validate: false)
-      group_membership
     end
 
     def create_system_user(user_id, profile_id, name, email) # rubocop:disable Metrics/MethodLength
@@ -115,10 +82,6 @@ class Tenant < ApplicationRecord
       profile.save!(validate: false)
       profile.profileable.update_column(:encrypted_password, '') # rubocop:disable Rails/SkipsModelValidations
       profile
-    end
-
-    def with_schema_fallback
-      yield
     end
   end
 end

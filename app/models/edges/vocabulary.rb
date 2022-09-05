@@ -50,12 +50,12 @@ class Vocabulary < Edge
       :vocab
     end
 
-    def upvote_options
-      active.find_via_shortname('upvoteOptions')
+    def upvote_options(root_id = ActsAsTenant.current_tenant.uuid)
+      active.where(root_id: root_id).find_via_shortname('upvoteOptions')
     end
 
-    def vote_options
-      active.find_via_shortname('voteOptions')
+    def vote_options(root_id = ActsAsTenant.current_tenant.uuid)
+      active.where(root_id: root_id).find_via_shortname('voteOptions')
     end
   end
 end

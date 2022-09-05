@@ -34,7 +34,7 @@ module Users
     ####################################
     # As Administrator
     ####################################
-    let(:administrator) { create_administrator(freetown) }
+    let(:administrator) { create_administrator(other_page) }
 
     test 'administrator should get index' do
       sign_in administrator

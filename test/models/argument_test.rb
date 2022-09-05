@@ -13,7 +13,7 @@ class ArgumentTest < ActiveSupport::TestCase
 
   test 'order by vote count' do
     assert_equal(
-      motion.pro_argument_collection.association_base.order_values.map(&:to_sql), [
+      sorting_sql, [
         "#{votes_pro_sorting} DESC",
         '"edges"."id" ASC'
       ]
@@ -22,8 +22,14 @@ class ArgumentTest < ActiveSupport::TestCase
 
   private
 
+  def sorting_sql
+    ActsAsTenant.with_tenant(argu) do
+      motion.pro_argument_collection.association_base.order_values.map(&:to_sql)
+    end
+  end
+
   def votes_pro_sorting
-    @pro_vote ||= Vocabulary.upvote_options.active_terms.find_by(exact_match: NS.argu[:yes])
+    @pro_vote ||= Vocabulary.upvote_options(argu.root_id).active_terms.find_by(exact_match: NS.argu[:yes])
 
     "COALESCE(CAST(\"edges\".\"children_counts\" -> '#{@pro_vote.uuid}' AS INT), 0)"
   end

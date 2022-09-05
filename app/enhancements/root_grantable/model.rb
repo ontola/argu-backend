@@ -18,13 +18,13 @@ module RootGrantable
       private
 
       def create_default_grant
-        grants.where(group_id: Group::PUBLIC_ID).destroy_all
+        grants.where(group: root.users_group).destroy_all
 
         grant_set = @initial_public_grant || self.class.default_public_grant
         return unless grant_set
 
         grants.create!(
-          group_id: Group::PUBLIC_ID,
+          group: root.users_group,
           grant_set: GrantSet.find_by!(title: grant_set)
         )
       end

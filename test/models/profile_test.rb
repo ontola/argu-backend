@@ -16,11 +16,11 @@ class ProfileTest < ActiveSupport::TestCase
     capetown
 
     assert_equal subject.reload.granted_edges.pluck(:id).uniq.sort,
-                 ([freetown.id] + Vocabulary.pluck(:id)).uniq.sort
+                 ([freetown.id] + Vocabulary.where(root: argu).pluck(:id)).uniq.sort
     assert_equal subject.granted_edges(owner_type: nil, grant_set: :moderator).pluck(:id), []
     moderator
     assert_equal subject.reload.granted_edges.pluck(:id).uniq.sort,
-                 ([freetown.id, capetown.parent.id] + Vocabulary.pluck(:id)).uniq.sort
+                 ([freetown.id, capetown.root.id] + Vocabulary.where(root: [argu, capetown.root]).pluck(:id)).uniq.sort
     assert_equal subject.granted_edges(owner_type: nil, grant_set: :moderator).pluck(:id).uniq,
                  [capetown.parent.id]
   end

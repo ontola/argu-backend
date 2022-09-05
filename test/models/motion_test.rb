@@ -43,7 +43,7 @@ class MotionTest < ActiveSupport::TestCase
 
   test 'order by vote count' do
     assert_equal(
-      question.motion_collection.association_base.order_values.map(&:to_sql), [
+      sorting_sql, [
         '"edges"."pinned_at" ASC',
         "#{votes_pro_sorting} DESC",
         '"edges"."id" ASC'
@@ -52,7 +52,7 @@ class MotionTest < ActiveSupport::TestCase
 
     question.update(default_motion_sorting: :popular_asc)
     assert_equal(
-      question.motion_collection.association_base.order_values.map(&:to_sql), [
+      sorting_sql, [
         '"edges"."pinned_at" ASC',
         "#{votes_pro_sorting} ASC",
         '"edges"."id" ASC'
@@ -61,7 +61,7 @@ class MotionTest < ActiveSupport::TestCase
 
     question.update(default_motion_sorting: :updated_at)
     assert_equal(
-      question.motion_collection.association_base.order_values.map(&:to_sql), [
+      sorting_sql, [
         '"edges"."pinned_at" ASC',
         '"edges"."last_activity_at" DESC',
         '"edges"."id" ASC'
@@ -71,8 +71,14 @@ class MotionTest < ActiveSupport::TestCase
 
   private
 
+  def sorting_sql
+    ActsAsTenant.with_tenant(argu) do
+      question.motion_collection.association_base.order_values.map(&:to_sql)
+    end
+  end
+
   def votes_pro_sorting
-    @pro_vote ||= Vocabulary.vote_options.active_terms.find_by(exact_match: NS.argu[:yes])
+    @pro_vote ||= Vocabulary.vote_options(argu.uuid).active_terms.find_by(exact_match: NS.argu[:yes])
 
     "COALESCE(CAST(\"default_vote_events_edges\".\"children_counts\" -> '#{@pro_vote.uuid}' AS INT), 0)"
   end

@@ -6,13 +6,17 @@ RSpec.describe 'Votes', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
   before do
-    freetown.initial_public_grant = :participator
-    freetown.send(:create_default_grant)
+    ActsAsTenant.with_tenant(argu) do
+      freetown.initial_public_grant = :participator
+      freetown.send(:create_default_grant)
+    end
   end
 
   let(:before_unauthorized_create) do
-    freetown.initial_public_grant = :spectator
-    freetown.send(:create_default_grant)
+    ActsAsTenant.with_tenant(argu) do
+      freetown.initial_public_grant = :spectator
+      freetown.send(:create_default_grant)
+    end
   end
   let(:before_unauthorized_trash) do
     before_unauthorized_create

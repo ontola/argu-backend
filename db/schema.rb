@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_01_132147) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_05_075234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -226,6 +226,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_132147) do
     t.uuid "root_id", null: false
     t.boolean "require_2fa", default: false
     t.boolean "require_confirmation", default: false, null: false
+    t.integer "group_type", default: 0, null: false
+    t.index ["group_type"], name: "index_groups_on_group_type"
     t.index ["root_id", "name"], name: "index_groups_on_root_id_and_name", unique: true
     t.index ["root_id", "name_singular"], name: "index_groups_on_root_id_and_name_singular", unique: true
     t.index ["root_id"], name: "index_groups_on_root_id"

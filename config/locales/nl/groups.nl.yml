@@ -26,8 +26,8 @@ nl:
       members:
         name: Leden
         name_singular: Lid
-      public:
-        name: Publiek
+      users:
+        name: Alle gebruikers
         name_singular: Gebruiker
     settings:
       menu:

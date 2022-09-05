@@ -120,7 +120,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def public_resource?
-    granted_group_ids(:show)&.include?(Group::PUBLIC_ID)
+    granted_group_ids(:show)&.include?(ActsAsTenant.current_tenant.users_group.id)
   end
 
   private

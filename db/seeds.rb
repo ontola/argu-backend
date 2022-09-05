@@ -20,7 +20,10 @@ ActiveRecord::Base.transaction do
 
   ActsAsTenant.current_tenant = Page.argu
 
-  ActsAsTenant.current_tenant.forums.first.grants.create!(group_id: Group::PUBLIC_ID, grant_set: GrantSet.initiator)
+  ActsAsTenant.current_tenant.forums.first.grants.create!(
+    group: ActsAsTenant.current_tenant.users_group,
+    grant_set: GrantSet.initiator
+  )
   forum = Forum.new(
     name: 'Private',
     root_id: ActsAsTenant.current_tenant.root_id,

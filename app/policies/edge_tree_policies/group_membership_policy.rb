@@ -23,6 +23,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   def destroy?
     return forbid_with_message(I18n.t('actions.group_memberships.destroy.errors.last_admin')) if last_admin?
+    return false if record.group.users?
 
     group_member? || edgeable_policy.update?
   end
@@ -34,7 +35,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def last_admin?
-    record.group.grants.administrator.present? && record.group.group_memberships.count <= 1
+    record.group.admin? && record.group.group_memberships.count <= 1
   end
 
   def valid_token?

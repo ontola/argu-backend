@@ -88,7 +88,7 @@ class PagesTest < ActionDispatch::IntegrationTest
       'Tenant.count' => 1,
       'Page.count' => 1,
       'Forum.count' => 1,
-      'Group.count' => 2,
+      'Group.count' => 3,
       'CustomMenuItem.count' => 2,
       'Grant.count' => 2
     ) do

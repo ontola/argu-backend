@@ -112,7 +112,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def public_resource?
-    granted_group_ids(:show).include?(Group::PUBLIC_ID)
+    granted_group_ids(:show).include?(ActsAsTenant.current_tenant.users_group.id)
   end
 
   def show?

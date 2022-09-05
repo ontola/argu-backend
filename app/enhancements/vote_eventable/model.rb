@@ -34,7 +34,7 @@ module VoteEventable
     end
 
     def options_vocab
-      super || parent.try(:default_options_vocab) || Vocabulary.vote_options
+      super || parent.try(:default_options_vocab) || Vocabulary.vote_options(root_id)
     end
 
     def previously_changed_relations(inverted = nil)

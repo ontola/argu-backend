@@ -5,7 +5,9 @@ require 'vocab_syncer'
 class Page < Edge # rubocop:disable Metrics/ClassLength
   ARGU_URL = 'argu'
 
-  has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid, foreign_key: :root_id
+  has_many :groups, dependent: :destroy, inverse_of: :root, primary_key: :uuid, foreign_key: :root_id
+  has_one :users_group, -> { users }, class_name: 'Group', inverse_of: :root, primary_key: :uuid, foreign_key: :root_id
+  has_one :admin_group, -> { admin }, class_name: 'Group', inverse_of: :root, primary_key: :uuid, foreign_key: :root_id
 
   enhance Attachable
   enhance BlogPostable

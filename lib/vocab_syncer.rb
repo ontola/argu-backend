@@ -48,6 +48,7 @@ class VocabSyncer # rubocop:disable Metrics/ClassLength
     end
 
     def sync_page
+      # ActsAsTenant.current_tenant.reload
       I18n.locale = ActsAsTenant.current_tenant.language
 
       Searchkick.disable_callbacks

@@ -25,7 +25,7 @@ RSpec.describe GrantTree, type: :model do
   let(:root) { argu }
   let(:method_args) { [] }
   let(:method_opts) { {} }
-  let(:admin_group) { root.groups.custom.order(:created_at).first }
+  let(:admin_group) { root.groups.admin.order(:created_at).first }
 
   describe '#initialize' do
     context 'with root id' do
@@ -56,7 +56,7 @@ RSpec.describe GrantTree, type: :model do
       context 'without filters' do
         it do
           expect(subject).to(
-            match_array([admin_group.id, Group::PUBLIC_ID])
+            match_array([admin_group.id, argu.users_group.id])
           )
         end
       end

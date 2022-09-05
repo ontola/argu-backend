@@ -4,9 +4,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Uuidable
   include DependentAssociations
 
-  # Currently hardcoded to User (whilst it can also be a Profile)
-  # to make the mailer implementation more efficient
-  # has_one :profileable, class_name: 'User'
   belongs_to :profileable,
              polymorphic: true,
              inverse_of: :profile,

@@ -52,8 +52,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'follower should put update as nq' do
-    argument
     sign_in follower
+    argument
     notification = follower.notifications.where(read_at: nil).first
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => -1) do
       put resource_iri(notification), headers: argu_headers(accept: :nq)

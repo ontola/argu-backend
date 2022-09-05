@@ -26,8 +26,8 @@ en:
       members:
         name: Members
         name_singular: Member
-      public:
-        name: Public
+      users:
+        name: All users
         name_singular: User
     settings:
       menu:

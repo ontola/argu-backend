@@ -25,14 +25,10 @@ class EdgeableController < ServiceController
   end
 
   def update_meta
-    meta = super
-    if current_resource.previously_changed_relations.include?('grant_collection')
-      meta.concat(
-        GrantTree.new(current_resource.root).granted_groups(current_resource).map do |granted_group|
-          [current_resource.iri, NS.argu[:grantedGroups], granted_group.iri, delta_iri(:replace)]
-        end
-      )
-    end
-    meta
+    return super unless current_resource.previously_changed_relations.include?('grant_collection')
+
+    super + [
+      invalidate_resource_delta(current_resource.granted_groups_iri)
+    ]
   end
 end

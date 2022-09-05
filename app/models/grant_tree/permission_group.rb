@@ -7,6 +7,7 @@ class GrantTree
     include URITemplateHelper
 
     attr_accessor :node, :group_id
+    attr_writer :group
 
     delegate :edgeable_record, to: :node
     with_collection :permissions,
@@ -26,8 +27,9 @@ class GrantTree
     )
     delegate(*GrantReset.action_names.keys.map(&:to_sym), to: :node_permission, allow_nil: true)
 
-    def initialize(group_id: nil, node: nil)
-      self.group_id = group_id&.to_i
+    def initialize(group: nil, group_id: nil, node: nil)
+      self.group = group
+      self.group_id = group_id&.to_i || group&.id
       self.node = node
     end
 
@@ -74,7 +76,7 @@ class GrantTree
     class << self
       def attributes_for_new(**opts)
         {
-          group_id: Group::PUBLIC_ID,
+          group: ActsAsTenant.current_tenant.users_group,
           node: opts[:parent]
         }
       end

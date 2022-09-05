@@ -44,7 +44,7 @@ class GroupMembershipsControllerTest < ActionDispatch::IntegrationTest
   test 'user should not get show' do
     sign_in user
 
-    get member.profile.group_memberships.second, params: {root_id: argu.url}
+    get member.profile.group_memberships.first
 
     assert_not_authorized
   end
@@ -92,7 +92,7 @@ class GroupMembershipsControllerTest < ActionDispatch::IntegrationTest
   test 'member should get show' do
     sign_in member
 
-    get member.profile.group_memberships.second,
+    get member.profile.group_memberships.first,
         headers: argu_headers(accept: :nq),
         params: {root_id: argu.url}
 
@@ -103,7 +103,7 @@ class GroupMembershipsControllerTest < ActionDispatch::IntegrationTest
     sign_in member
     create(:grant, edge: freetown, group: group)
 
-    get member.profile.group_memberships.second,
+    get member.profile.group_memberships.first,
         headers: argu_headers(accept: :nq),
         params: {root_id: argu.url}
 
@@ -114,7 +114,7 @@ class GroupMembershipsControllerTest < ActionDispatch::IntegrationTest
     sign_in member
     create(:grant, edge: argu, group: group)
 
-    get member.profile.group_memberships.second,
+    get member.profile.group_memberships.first,
         headers: argu_headers(accept: :nq),
         params: {root_id: argu.url}
 
@@ -124,7 +124,7 @@ class GroupMembershipsControllerTest < ActionDispatch::IntegrationTest
   test 'member should get show with r' do
     sign_in member
 
-    get member.profile.group_memberships.second,
+    get member.profile.group_memberships.first,
         headers: argu_headers(accept: :nq),
         params: {r: freetown.iri.path, root_id: argu.url}
 
@@ -135,7 +135,7 @@ class GroupMembershipsControllerTest < ActionDispatch::IntegrationTest
     sign_in member
 
     assert_difference 'GroupMembership.count' => 0, 'GroupMembership.active.count' => -1 do
-      delete member.profile.group_memberships.second,
+      delete member.profile.group_memberships.first,
              headers: argu_headers(accept: :json),
              params: {
                root_id: argu.url,

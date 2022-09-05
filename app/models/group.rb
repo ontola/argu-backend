@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
-  PUBLIC_ID = -1
-
+class Group < ApplicationRecord
   enhance ConfirmedDestroyable
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Updatable
@@ -21,6 +19,10 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
   alias_attribute :display_name, :name
 
   scope :confirmation_required, -> { where(require_confirmation: true) }
+
+  enum group_type: {custom: 0, users: 1, admin: 2}
+
+  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
   collection_options(
     association: :groups,
@@ -43,8 +45,6 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
   validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
-
-  scope :custom, -> { where('groups.id > 0') }
 
   delegate :publisher, to: :page
   delegate :include?, to: :members
@@ -70,10 +70,6 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def display_name
-    id == Group::PUBLIC_ID ? I18n.t('groups.default.public.name') : name
-  end
-
   def email_token_collection
     iri_from_template(
       :tokens_collection_iri,
@@ -96,10 +92,6 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
     iri
   end
 
-  def name_singular
-    id == Group::PUBLIC_ID ? I18n.t('groups.default.public.name_singular') : super
-  end
-
   def searchable_should_index?
     root_id == ActsAsTenant.current_tenant.root_id || id <= 0
   end
@@ -117,10 +109,6 @@ class Group < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     def iri
       [super, NS.org['Organization']]
-    end
-
-    def public
-      Group.find_by(id: Group::PUBLIC_ID)
     end
 
     def route_key

@@ -7,6 +7,7 @@ class GroupSerializer < RecordSerializer
   attribute :require_2fa, predicate: NS.argu[:require2fa]
   attribute :bearer_token_collection, predicate: NS.argu[:bearerTokenCollection]
   attribute :email_token_collection, predicate: NS.argu[:emailTokenCollection]
+  enum :group_type, predicate: NS.argu[:groupType]
 
   with_collection :group_membership, predicate: NS.org[:hasMember]
 

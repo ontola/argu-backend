@@ -26,8 +26,8 @@ de:
       members:
         name: Mitglieder
         name_singular: Mitglied
-      public:
-        name: Öffentlich
+      users:
+        name: Alle Nutzer
         name_singular: Benutzer
     settings:
       menu:

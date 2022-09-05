@@ -69,7 +69,7 @@ module Helpers
       user_context
         .grant_tree_for(resource)
         .granted_group_ids(resource)
-        .include?(Group::PUBLIC_ID)
+        .include?(resource.root.users_group.id)
     end
 
     def share_menu_items # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

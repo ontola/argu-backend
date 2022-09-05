@@ -20,7 +20,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   before_save :adjust_birthday, if: :birthday_changed?
   before_save :sanitize_redirect_url
-  before_create :build_public_group_membership
   before_destroy :handle_dependencies
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id, inverse_of: :publisher
   has_many :drafts,
@@ -132,17 +131,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def ancestor(_type); end
 
-  def build_public_group_membership
-    return if Group.public.nil?
-    return if profile.group_memberships.any? { |m| m.group_id == Group::PUBLIC_ID }
-
-    profile.group_memberships.build(
-      member: profile,
-      group_id: Group::PUBLIC_ID,
-      start_date: Time.current
-    )
-  end
-
   def confirmed?
     @confirmed ||= email_addresses.where.not(confirmed_at: nil).any?
   end
@@ -202,7 +190,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def generated_name
-    [I18n.t('groups.default.public.name_singular'), id].join(' ') unless new_record?
+    [I18n.t('groups.default.users.name_singular'), id].join(' ') unless new_record?
   end
 
   def guest?

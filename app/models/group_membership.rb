@@ -35,7 +35,7 @@ class GroupMembership < ApplicationRecord
   validate :end_date_after_start_date
   validate :no_overlapping_group_memberships
   validates :group_id, presence: true
-  validates :member_id, exclusion: {in: [Profile::COMMUNITY_ID]}
+  validates :member_id, exclusion: {in: [Profile::COMMUNITY_ID, Profile::GUEST_ID]}
 
   alias edgeable_record page
 

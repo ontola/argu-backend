@@ -32,6 +32,6 @@ class GroupsControllerTest < ActionController::TestCase
 
     expect_relationship('collection')
 
-    expect_view_members(primary_resource, 3)
+    expect_view_members(primary_resource, 4)
   end
 end

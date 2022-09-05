@@ -24,7 +24,7 @@ class Argument < Edge
   alias pro? pro
 
   def options_vocab
-    Vocabulary.upvote_options
+    Vocabulary.upvote_options(root_id)
   end
 
   def pro=(value)
