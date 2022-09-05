@@ -38,16 +38,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   validates :profile, :iri_prefix, :tier, presence: true
   validates :name, presence: true, length: {minimum: 3, maximum: 75}
 
-  before_create :build_default_forum
-  after_create :tenant_create
-  after_create :create_default_groups
-  after_create :create_default_menu_items
-  after_create :create_system_vocabs
   after_create -> { reindex_tree(async: false) }
   after_update :tenant_update
   after_update :update_language, if: :language_previously_changed?
   after_update :update_primary_node_menu_item, if: :primary_container_node_id_previously_changed?
   after_save :save_manifest
+  include Bootstrap
 
   attr_writer :iri_prefix
 
@@ -172,87 +168,12 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   private
 
-  def build_default_forum
-    self.primary_container_node = Forum.new(
-      is_published: true,
-      publisher: publisher,
-      creator: creator,
-      create_menu_item: false,
-      name: display_name,
-      owner_type: 'Forum',
-      parent: self,
-      url: 'forum'
-    )
-  end
-
-  def create_default_menu_items
-    ActsAsTenant.with_tenant(self) do
-      navigations_menu_items.create!(edge: self)
-      navigations_menu_items.create!(
-        href: feeds_iri(self),
-        label: 'menus.default.activity'
-      )
-    end
-  end
-
-  def create_default_groups
-    admin_group = create_admin_group
-    create_admin_membership(admin_group) unless creator.reserved?
-
-    create_members_group
-  end
-
-  def create_admin_group
-    group = groups.build(
-      name: I18n.t('groups.default.admin.name'),
-      name_singular: I18n.t('groups.default.admin.name_singular'),
-      require_confirmation: true,
-      deletable: false
-    )
-    group.grants << Grant.new(grant_set: GrantSet.administrator, edge: self)
-    group.save!
-    group
-  end
-
-  def create_admin_membership(admin_group)
-    service = CreateGroupMembership.new(
-      admin_group,
-      attributes: {member: creator},
-      options: {user_context: UserContext.new(user: publisher, profile: creator)}
-    )
-    service.on(:create_group_membership_failed) do |gm|
-      raise gm.errors.full_messages.join('\n')
-    end
-    service.commit
-  end
-
-  def create_members_group
-    group = groups.create!(
-      name: I18n.t('groups.default.members.name'),
-      name_singular: I18n.t('groups.default.members.name_singular'),
-      page: self
-    )
-    group.grants << Grant.new(grant_set: GrantSet.participator, edge: primary_container_node)
-    group.save!
-    group
-  end
-
-  def create_system_vocabs
-    ActsAsTenant.with_tenant(self) do
-      VocabSyncWorker.perform_async if Group.public.present?
-    end
-  end
-
   def save_manifest
     manifest.save
   end
 
   def tenant_update
     tenant.update!(iri_prefix: iri_prefix)
-  end
-
-  def tenant_create
-    create_tenant!(root_id: uuid, iri_prefix: iri_prefix)
   end
 
   def update_language
