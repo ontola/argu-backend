@@ -153,7 +153,3 @@ PermittedAction.create_for_grant_sets('CustomForm', 'create', administrator_plus
 PermittedAction.create_for_grant_sets('CustomForm', 'update', administrator_plus)
 PermittedAction.create_for_grant_sets('CustomForm', 'destroy', administrator_plus)
 PermittedAction.create_for_grant_sets('CustomForm', 'trash', administrator_plus)
-PermittedAction.create_for_grant_sets('CustomFormField', 'create', administrator_plus)
-PermittedAction.create_for_grant_sets('CustomFormField', 'update', administrator_plus)
-PermittedAction.create_for_grant_sets('CustomFormField', 'destroy', administrator_plus)
-PermittedAction.create_for_grant_sets('CustomFormField', 'trash', administrator_plus)

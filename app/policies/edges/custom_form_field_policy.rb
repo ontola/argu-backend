@@ -7,4 +7,16 @@ class CustomFormFieldPolicy < EdgePolicy
                        max_inclusive_label min_inclusive_label required]
   permit_attributes %i[form_field_type_id], has_values: {swipe_tool?: false}
   permit_nested_attributes %i[options_vocab]
+
+  def create?
+    parent_policy.update?
+  end
+
+  def trash?
+    parent_policy.update?
+  end
+
+  def destroy?
+    parent_policy.update?
+  end
 end
