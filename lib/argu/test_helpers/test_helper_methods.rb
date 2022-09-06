@@ -184,9 +184,9 @@ module Argu
           user
         end
 
-        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         def create_resource(klass, attributes = {}, **options)
-          parent_edge = attributes.delete(:parent)
+          parent_edge = attributes.delete(:parent) || attributes[:edge]
           ActsAsTenant.with_tenant(parent_edge&.root || ActsAsTenant.current_tenant) do
             attributes[:owner_type] = klass.to_s if klass < Edge
 
@@ -204,7 +204,7 @@ module Argu
             service.resource.try(:store_in_redis?) ? service.resource : service.resource.reload
           end
         end
-        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
         def service_options(publisher: nil, creator: nil)
           user = publisher || create(:user, confirmed_at: Time.current)

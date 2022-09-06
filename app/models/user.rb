@@ -129,8 +129,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     true
   end
 
-  def ancestor(_type); end
-
   def confirmed?
     @confirmed ||= email_addresses.where.not(confirmed_at: nil).any?
   end
@@ -177,7 +175,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     @favorite_pages ||=
       ActsAsTenant.without_tenant do
-        pids = page_ids + profile.groups.pluck('distinct root_id')
+        pids = page_ids + profile.groups.distinct.pluck(:root_id)
         Kaminari.paginate_array(
           Page
             .joins(:profile)

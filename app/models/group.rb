@@ -14,15 +14,12 @@ class Group < ApplicationRecord
   has_many :unscoped_group_memberships, class_name: 'GroupMembership', dependent: :destroy
   has_many :grants, dependent: :destroy, inverse_of: :group
   has_many :members, through: :group_memberships, class_name: 'Profile'
-  belongs_to :page, optional: false, inverse_of: :groups, primary_key: :uuid, foreign_key: :root_id
   accepts_nested_attributes_for :grants, reject_if: :all_blank
   alias_attribute :display_name, :name
 
   scope :confirmation_required, -> { where(require_confirmation: true) }
 
   enum group_type: {custom: 0, users: 1, admin: 2}
-
-  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
   collection_options(
     association: :groups,
@@ -50,11 +47,14 @@ class Group < ApplicationRecord
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
   validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
 
-  delegate :publisher, to: :page
+  delegate :publisher, to: :root
   delegate :include?, to: :members
 
-  parentable :page
-  alias edgeable_record parent
+  parentable :root
+  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
+
+  alias parent root
+  alias edgeable_record root
 
   def action_triples
     return super if id.positive? || ActsAsTenant.current_tenant.url == Page::ARGU_URL
@@ -91,7 +91,7 @@ class Group < ApplicationRecord
   def iri(**opts)
     return @iri if @iri && opts.empty?
 
-    iri ||= ActsAsTenant.with_tenant(page || ActsAsTenant.current_tenant) { super }
+    iri ||= ActsAsTenant.with_tenant(root || ActsAsTenant.current_tenant) { super }
     @iri = iri if opts.empty?
     iri
   end
@@ -107,7 +107,7 @@ class Group < ApplicationRecord
   class << self
     def attributes_for_new(opts)
       attrs = super
-      attrs[:page] = ActsAsTenant.current_tenant
+      attrs[:root] = ActsAsTenant.current_tenant
       attrs
     end
 

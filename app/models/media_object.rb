@@ -98,6 +98,10 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     content.attach(io: URI.open(image_url), filename: video_info&.title || url.split('/').last)
   end
 
+  def root
+    parent.try(:root)
+  end
+
   def thumbnail
     public_url_for_version(:icon)
   end

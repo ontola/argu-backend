@@ -10,6 +10,7 @@ class Export < ApplicationRecord
   belongs_to :edge, primary_key: :uuid
   after_commit :schedule_export_job, on: :create
   after_update :notify_status_change
+  delegate :root, to: :edge
 
   enum status: {pending: 0, processing: 1, done: 2, failed: -1}
 

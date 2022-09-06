@@ -4,6 +4,6 @@ class GroupsController < ServiceController
   private
 
   def redirect_location
-    settings_iri(authenticated_resource.page, tab: :groups)
+    settings_iri(authenticated_resource.root, tab: :groups)
   end
 end
