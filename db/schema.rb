@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_05_093143) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_05_142204) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "hstore"
@@ -197,10 +197,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_05_093143) do
     t.datetime "updated_at", null: false
     t.integer "grant_set_id"
     t.uuid "edge_id", null: false
+    t.uuid "root_id", null: false
     t.index ["edge_id"], name: "index_grants_on_edge_id"
     t.index ["grant_set_id"], name: "index_grants_on_grant_set_id"
     t.index ["group_id", "edge_id"], name: "index_grants_on_group_id_and_edge_id", unique: true
     t.index ["group_id"], name: "index_grants_on_group_id"
+    t.index ["root_id", "edge_id"], name: "index_grants_on_root_id_and_edge_id"
+    t.index ["root_id", "group_id"], name: "index_grants_on_root_id_and_group_id"
+    t.index ["root_id"], name: "index_grants_on_root_id"
   end
 
   create_table "group_memberships", id: :serial, force: :cascade do |t|
@@ -524,9 +528,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_05_093143) do
   add_foreign_key "grant_sets", "edges", column: "root_id", primary_key: "uuid"
   add_foreign_key "grant_sets_permitted_actions", "grant_sets"
   add_foreign_key "grant_sets_permitted_actions", "permitted_actions"
+  add_foreign_key "grants", "edges", column: "root_id", primary_key: "uuid"
   add_foreign_key "grants", "edges", primary_key: "uuid"
   add_foreign_key "grants", "grant_sets"
   add_foreign_key "grants", "groups"
+  add_foreign_key "group_memberships", "edges", column: "root_id", primary_key: "uuid"
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "profiles", column: "member_id"
   add_foreign_key "groups", "edges", column: "root_id", primary_key: "uuid"

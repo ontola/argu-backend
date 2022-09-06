@@ -13,7 +13,9 @@ RSpec.configure do |config|
     load(Dir[Rails.root.join('db/seeds/test.seeds.rb')][0])
     forum = Forum.find_via_shortname('freetown')
     forum.initial_public_grant = :spectator
-    forum.send(:create_default_grant)
+    ActsAsTenant.with_tenant(forum.root) do
+      forum.send(:create_default_grant)
+    end
   end
 
   config.before do

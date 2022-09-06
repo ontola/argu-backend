@@ -20,8 +20,6 @@ class Grant < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :moderator, -> { where(grant_set_id: GrantSet.moderator.id) }
   scope :administrator, -> { where(grant_set_id: GrantSet.administrator.id) }
 
-  scope :custom, -> { where('group_id > 0') }
-
   with_columns(
     settings: [
       NS.argu[:target],
@@ -45,6 +43,7 @@ class Grant < ApplicationRecord # rubocop:disable Metrics/ClassLength
     association_base: -> { Grant.collection_items(self) },
     include_members: true
   )
+  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
   %i[creator spectator participator initiator moderator administrator].each do |role|
     define_method "#{role}?" do
