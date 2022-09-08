@@ -43,6 +43,39 @@ class Manifest < LinkedRails::Manifest # rubocop:disable Metrics/ClassLength
     '#eef0f2'
   end
 
+  def csp_entries # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    page_specific_entries = {
+      connectSrc: [
+        matomo_host
+      ].compact,
+      scriptSrc: [
+        matomo_cdn
+      ].compact,
+      imgSrc: []
+    }
+
+    if page.google_uac
+      page_specific_entries.scriptSrc << 'https://www.google-analytics.com'
+      page_specific_entries.connectSrc << 'https://www.google-analytics.com'
+      page_specific_entries.imgSrc << 'https://www.google-analytics.com'
+    end
+
+    if page.google_tag_manager
+      page_specific_entries.scriptSrc << 'https://*.googletagmanager.com'
+      page_specific_entries.connectSrc += %w[
+        https://*.google-analytics.com
+        https://*.analytics.google.com
+        https://*.googletagmanager.com
+      ]
+      page_specific_entries.imgSrc += %w[
+        https://*.google-analytics.com
+        https://*.googletagmanager.com
+      ]
+    end
+
+    super.deep_merge(page_specific_entries)
+  end
+
   def icon(name, size)
     props = {
       src: icon_src(name, size),
@@ -80,6 +113,14 @@ class Manifest < LinkedRails::Manifest # rubocop:disable Metrics/ClassLength
 
   def header_text
     page.header_text.sub('text_', '')
+  end
+
+  def matomo_cdn
+    page.matomo_cdn || ENV['MATOMO_CDN'] || ENV['MATOMO_HOST']
+  end
+
+  def matomo_host
+    page.matomo_host || ENV['MATOMO_HOST']
   end
 
   def preconnect
@@ -130,7 +171,8 @@ class Manifest < LinkedRails::Manifest # rubocop:disable Metrics/ClassLength
     if page.matomo_site_id
       trackers << {
         type: 'Matomo',
-        host: page.matomo_host || ENV['MATOMO_HOST'],
+        host: matomo_host,
+        cdn: matomo_cdn,
         container_id: page.matomo_site_id
       }
     end

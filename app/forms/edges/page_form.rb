@@ -33,6 +33,7 @@ class PageForm < ApplicationForm
     field :requires_intro
     field :matomo_site_id
     field :matomo_host
+    field :matomo_cdn
     field :piwik_pro_site_id
     field :piwik_pro_host
     field :google_tag_manager

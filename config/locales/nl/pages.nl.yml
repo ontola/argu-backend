@@ -56,6 +56,9 @@ nl:
       matomo_host:
         label: "Matomo host"
         description: "Laat leeg om de standaard host te gebruiken"
+      matomo_cdn:
+        label: "Matomo cdn"
+        description: "Laat leeg om de standaard cdn te gebruiken"
       matomo_site_id:
         label: "Matomo site id"
       piwik_pro_host:

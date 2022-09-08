@@ -70,6 +70,9 @@ de:
       matomo_host:
         label: Matomo-Host
         description: Leer lassen, um den Standard-Host zu verwenden
+      matomo_cdn:
+        label: Matomo-CDN
+        description: Leer lassen, um den Standard-CDN zu verwenden
       matomo_site_id:
         label: Matomo-Site-ID
       piwik_pro_host:

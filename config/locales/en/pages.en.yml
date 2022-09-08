@@ -57,6 +57,9 @@ en:
       matomo_host:
         label: "Matomo host"
         description: "Leave blank to use the default host"
+      matomo_cdn:
+        label: "Matomo cdn"
+        description: "Leave blank to use the default cdn"
       matomo_site_id:
         label: "Matomo site id"
       piwik_pro_host:
