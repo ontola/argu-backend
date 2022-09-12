@@ -11,6 +11,18 @@ class SubmissionsController < EdgeableController
 
   private
 
+  def active_response_custom_responses(format)
+    return unless action_name == 'index'
+
+    skip_verify_policy_scoped(sure: true)
+    format.csv do
+      send_data(
+        Submission.collection_csv(requested_resource),
+        filename: "#{requested_resource.display_name}-#{Time.current.to_i}"
+      )
+    end
+  end
+
   def allow_empty_params?
     true
   end

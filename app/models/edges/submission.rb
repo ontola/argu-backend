@@ -7,6 +7,9 @@ class Submission < Edge
   enhance LinkedRails::Enhancements::Updatable
   enhance Couponable
 
+  collection_options(
+    download_urls: -> { [Submission.download_url(self)] }
+  )
   with_columns default: [
     NS.schema.dateCreated,
     NS.argu[:submissionStatus],
@@ -53,6 +56,47 @@ class Submission < Edge
   end
 
   class << self
+    def default_columns
+      [
+        {key: :created_at, label: I18n.t('schema.dateCreated.label')},
+        {key: :status, label: I18n.t('argu.submissionStatus.label')}
+      ]
+    end
+
+    def form_field_columns(submission)
+      submission.action_body.custom_form_fields.map do |field|
+        {
+          key: field.sh_path.to_s,
+          label: field.display_name
+        }
+      end
+    end
+
+    def collection_csv(collection)
+      submission = collection.parent
+      columns = default_columns + form_field_columns(submission)
+
+      Argu::CSVBuilder
+        .new(columns: columns, rows: collection.association_base.includes(:submission_data))
+        .generate do |row, column|
+        csv_row(row, column)
+      end
+    end
+
+    def csv_row(row, column)
+      if column[:key].is_a?(Symbol)
+        row.send(column[:key])
+      else
+        row.submission_data&.cached_properties.try(:[], column[:key])&.join(', ')
+      end
+    end
+
+    def download_url(collection)
+      iri = collection.iri.dup
+      iri.path += '.csv'
+      iri
+    end
+
     def interact_as_guest?
       true
     end
