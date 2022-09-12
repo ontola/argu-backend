@@ -157,7 +157,7 @@ class AppMenuList < ApplicationMenuList # rubocop:disable Metrics/ClassLength
       ),
       menu_item(
         :help,
-        href: RDF::URI('https://argu.co/argu/help'),
+        href: RDF::URI('https://docs.argu.co'),
         image: 'fa-question'
       )
     ]
