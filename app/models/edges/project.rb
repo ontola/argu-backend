@@ -45,7 +45,7 @@ class Project < Discussion
       name: I18n.t('projects.phase_template.blog_post.name'),
       position: 3,
       publisher: publisher,
-      resource_type: :blog_post
+      resource_type: :topic
     )
 
     update!(current_phase: identify)

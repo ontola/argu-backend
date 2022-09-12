@@ -42,8 +42,6 @@ class Phase < Edge
     motion: 2,
     topic: 3,
     budget_shop: 4,
-    blog_post: 5,
-    vocabulary: 6,
     dashboard: 7
   }
 

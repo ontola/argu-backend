@@ -18,7 +18,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
         ['Phase', 3],
         ['Survey', 1],
         ['Question', 1],
-        ['BlogPost', 1],
+        ['Topic', 1],
         ['Activity', 1]
       ]
     )
@@ -29,6 +29,6 @@ class ProjectsTest < ActionDispatch::IntegrationTest
     project = Project.last
     assert_equal project.phases.first.resource, Survey.last
     assert_equal project.phases.second.resource, Question.last
-    assert_equal project.phases.third.resource, BlogPost.last
+    assert_equal project.phases.third.resource, Topic.last
   end
 end

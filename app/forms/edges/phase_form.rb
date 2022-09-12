@@ -6,5 +6,4 @@ class PhaseForm < ContainerNodeForm
   field :description, datatype: NS.fhir[:markdown]
   field :position
   field :time
-  has_many :attachments
 end
