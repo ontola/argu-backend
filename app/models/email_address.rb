@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EmailAddress < ApplicationRecord
+class EmailAddress < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance LinkedRails::Enhancements::Creatable
   enhance LinkedRails::Enhancements::Destroyable
   enhance LinkedRails::Enhancements::Updatable, except: %i[Action]
@@ -41,7 +41,7 @@ class EmailAddress < ApplicationRecord
 
   def after_confirmation
     user.edges.update_all(confirmed: true) # rubocop:disable Rails/SkipsModelValidations
-    UserChannel.broadcast_to(user, hex_delta([invalidate_collection_delta(EmailAddress.root_collection)]))
+    UserChannel.broadcast_to(user, hex_delta(after_confirmation_delta))
     Vote.fix_counts
   end
 
@@ -67,6 +67,13 @@ class EmailAddress < ApplicationRecord
   end
 
   private
+
+  def after_confirmation_delta
+    [
+      invalidate_collection_delta(EmailAddress.root_collection),
+      [NS.sp.Variable, RDF.type, NS.ontola['Create::Page'], delta_iri(:invalidate)]
+    ]
+  end
 
   def dont_update_confirmed_email
     return unless persisted? && confirmed? && email_changed?

@@ -2,6 +2,8 @@
 de:
   actions:
     pages:
+      create:
+        confirmation_required: Um fortzufahren, bestätigen Sie bitte Ihre E-Mail-Adresse, indem Sie auf den Link klicken, den wir an Ihre Adresse gesendet haben.
       destroy:
         description: Sind Sie sicher, dass Sie die gesamte Community dauerhaft löschen wollen?. Dies kann nicht rückgängig gemacht werden.
         label: Community löschen

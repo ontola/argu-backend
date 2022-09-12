@@ -2,6 +2,8 @@
 nl:
   actions:
     pages:
+      create:
+        confirmation_required: Bevestig jouw e-mailadres door op de link te klikken die we hebben gestuurd om door te gaan.
       destroy:
         description: Weet je zeker dat je de volledige community permanent wil verwijderen? Deze actie is niet ongedaan te maken.
         label: Community verwijderen

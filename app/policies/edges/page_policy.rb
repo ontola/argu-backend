@@ -41,6 +41,8 @@ class PagePolicy < EdgePolicy
   end
 
   def create?
+    return forbid_unconfirmed unless user.guest? || user.confirmed?
+
     pages_left? || service?
   end
 
@@ -58,6 +60,10 @@ class PagePolicy < EdgePolicy
   end
 
   private
+
+  def forbid_unconfirmed
+    forbid_with_message(I18n.t('actions.pages.create.confirmation_required'))
+  end
 
   def group_member?
     user.profile.group_memberships.joins(:group).where(groups: {root_id: record.uuid}).present?
