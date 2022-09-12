@@ -269,6 +269,10 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   alias is_trashed is_trashed?
 
+  def owner_type=(type)
+    super unless type.is_a?(Array)
+  end
+
   # @return [Array] The ids of (persisted) ancestors, excluding self
   def persisted_ancestor_ids
     parent&.persisted_edge&.path&.split('.')&.map(&:to_i)
