@@ -15,7 +15,8 @@ module Bannerable
       with_collection :banners,
                       association: :banners
       with_collection :banner_managements,
-                      association: :banner_managements
+                      association: :banner_managements,
+                      title: -> { I18n.t('ontola.Banner.plural_label') }
     end
   end
 end

@@ -18,7 +18,8 @@ class SubmissionsController < EdgeableController
     format.csv do
       send_data(
         Submission.collection_csv(requested_resource),
-        filename: "#{requested_resource.display_name}-#{Time.current.to_i}"
+        filename: "#{requested_resource.title}-#{Time.current.to_i}.csv",
+        type: 'text/csv'
       )
     end
   end

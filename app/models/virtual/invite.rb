@@ -30,8 +30,10 @@ class Invite < VirtualResource
   def granted_groups_iri
     return if edge.persisted_edge.blank?
 
+    filter = {NS.argu[:groupType] => %i[custom users]} unless ActsAsTenant.current_tenant.feature_enabled?(:groups)
     GrantedGroup.collection_iri(
-      parent_iri: split_iri_segments(edge.persisted_edge.root_relative_iri)
+      parent_iri: split_iri_segments(edge.persisted_edge.root_relative_iri),
+      filter: filter
     )
   end
 
@@ -57,8 +59,6 @@ class Invite < VirtualResource
         message: I18n.t('invites.default_message', resource: opts[:parent].display_name),
         redirect_url: opts[:parent].iri.to_s,
         root_id: ActsAsTenant.current_tenant&.uuid,
-        max_usages: 1,
-        expires_at: 1.week.from_now,
         send_mail: true
       }
       attrs[:creator] = opts[:user_context]&.user&.iri

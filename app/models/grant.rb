@@ -113,9 +113,9 @@ class Grant < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     def collection_items(collection)
-      return collection.parent.try(:grants) unless collection.parent.is_a?(Edge)
+      return collection.parent.grants if collection.parent.is_a?(Group)
 
-      grants = collection.parent.grants.to_a || []
+      grants = collection.parent.try(:grants)&.to_a || []
       missing_groups = Group.pluck(:id) - grants.map(&:group_id)
       missing_grants = missing_groups.map do |group_id|
         Grant.new(group_id: group_id)

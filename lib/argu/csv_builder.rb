@@ -2,7 +2,7 @@
 
 module Argu
   class CSVBuilder
-    DEFAULT_OPTIONS = {headers: true, col_sep: ';', force_quotes: true}.freeze
+    DEFAULT_OPTIONS = {headers: true, col_sep: ',', force_quotes: true}.freeze
 
     attr_accessor :columns, :csv_options, :rows
 

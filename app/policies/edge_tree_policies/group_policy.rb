@@ -34,7 +34,7 @@ class GroupPolicy < EdgeTreePolicy
 
   def update?
     return false unless edgeable_policy.update?
-    return forbid_wrong_tier unless record.deletable || feature_enabled?(:groups)
+    return forbid_wrong_tier if record.admin? && !feature_enabled?(:groups)
 
     true
   end

@@ -4,11 +4,20 @@ class GrantedGroup < VirtualResource
   collection_options(
     association_base: -> { GrantedGroup.collection_items(self) }
   )
+  filterable(
+    NS.argu[:groupType] => {
+      values: []
+    }
+  )
 
   class << self
     def collection_items(collection)
       granted = collection.user_context.grant_tree.granted_groups(collection.parent)
-      granted.any?(&:users?) ? Group.all : granted
+      collection.send(:apply_filters, granted.any?(&:users?) ? Group.all : granted)
+    end
+
+    def predicate_mapping
+      Group.predicate_mapping
     end
 
     def requested_index_resource(params, user_context)

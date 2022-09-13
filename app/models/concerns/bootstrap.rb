@@ -43,8 +43,8 @@ module Bootstrap
   def build_default_groups
     ActsAsTenant.with_tenant(self) do
       build_default_group(:users, :users)
-      build_default_group(:admin, :admin, require_confirmation: true)
       build_default_group(:members, :custom)
+      build_default_group(:admin, :admin, require_confirmation: true)
     end
   end
 
