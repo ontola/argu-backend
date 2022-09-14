@@ -81,7 +81,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   property :allowed_external_sources, :string, NS.ontola[:allowedExternalSources], array: true
   property :hide_language_switcher, :boolean, NS.ontola[:hideLanguageSwitcher]
   property :styled_headers, :boolean, NS.ontola[:styledHeaders]
-  property :live_updates, :boolean, NS.ontola[:liveUpdates], default: false
 
   def all_shortnames
     @all_shortnames ||=

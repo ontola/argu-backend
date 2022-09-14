@@ -18,8 +18,7 @@ class PublicationsWorker
   private
 
   def broadcast_publication
-    RootChannel.broadcast_to(resource.root, publish_delta) if resource.root.live_updates?
-    UserChannel.broadcast_to(@publication.publisher, publish_delta)
+    RootChannel.broadcast_to(resource.root, publish_delta)
   end
 
   def cancelled?

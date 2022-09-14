@@ -29,7 +29,10 @@ module DeltaHelper
 
   def resource_added_delta(resource)
     delta = super + counter_cache_delta(resource)
-    delta << invalidate_resource_delta(resource.action(:publish)) if resource.try(:is_publishable?)
+    if resource.try(:is_publishable?)
+      delta << invalidate_resource_delta(resource.action(:publish))
+      delta << invalidate_resource_delta(resource.menu(:share)) if resource.menu(:share)
+    end
     delta.concat(resource.added_delta) if resource.respond_to?(:added_delta)
     delta
   end
