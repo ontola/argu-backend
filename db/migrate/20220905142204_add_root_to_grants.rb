@@ -11,9 +11,5 @@ class AddRootToGrants < ActiveRecord::Migration[7.0]
 
     add_foreign_key :group_memberships, :edges, column: :root_id, primary_key: :uuid
     add_foreign_key :grants, :edges, column: :root_id, primary_key: :uuid
-
-    Page.find_each do |page|
-      Grant.where(root_id: page.uuid, group_id: -1).update_all(group_id: page.users_group.id)
-    end
   end
 end
