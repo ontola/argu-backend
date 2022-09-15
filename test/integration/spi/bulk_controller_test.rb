@@ -123,26 +123,27 @@ module SPI
       bulk_request(resources: linked_record_resources, responses: linked_record_responses)
     end
 
-    test 'guest should post bulk request for whitelisted linked_record' do
-      linked_record_stub(dg_motion1)
-      argu.update(allowed_external_sources: [demogemeente.iri])
+    test 'guest should post bulk request for whitelisted linked_records' do
+      linked_record_stub('https://example.com/m/1', holland_motion1)
+      argu.update(allowed_external_sources: [demogemeente.iri, 'https://example.com/m/1'])
       sign_in guest_user
 
       bulk_request(resources: linked_record_resources, responses: whitelisted_linked_record_responses)
 
-      slice = JSON.parse(JSON.parse(body).first['body'])
-      linked_iri = URI("http://argu.localtest/argu/resource?iri=#{CGI.escape(dg_motion1.iri)}")
-      included_records = slice.keys.uniq.sort.filter { |subject| subject.start_with?('http') }
+      example_com_slice = JSON.parse(JSON.parse(body).second['body'])
+      linked_iri = URI("http://argu.localtest/argu/resource?iri=#{CGI.escape('https://example.com/m/1')}")
+      included_records = example_com_slice.keys.uniq.sort.filter { |subject| subject.start_with?('http') }
       expected_includes = ActsAsTenant.with_tenant(demogemeente) do
         [
           linked_iri.to_s,
-          dg_motion1.iri.to_s,
-          dg_motion1.argument_columns_iri.to_s,
-          dg_motion1.location_query_iri.to_s
+          holland_motion1.iri.to_s,
+          holland_motion1.argument_columns_iri.to_s,
+          holland_motion1.location_query_iri.to_s,
+          'https://example.com/m/1'
         ]
       end
       assert_equal(included_records, expected_includes)
-      expect_slice_attribute(slice, linked_iri, NS.argu[:linkedRecord], dg_motion1.iri)
+      expect_slice_attribute(example_com_slice, linked_iri, NS.argu[:linkedRecord], URI('https://example.com/m/1'))
     end
 
     ####################################
@@ -332,18 +333,20 @@ module SPI
 
     def linked_record_resources
       [
-        {include: true, iri: dg_motion1.iri}
+        {include: true, iri: dg_motion1.iri},
+        {include: true, iri: 'https://example.com/m/1'}
       ]
     end
 
     def linked_record_responses(**opts)
       {
-        dg_motion1.iri => {cache: 'private', status: 404, include: false}
+        dg_motion1.iri => {cache: 'private', status: 404, include: false},
+        'https://example.com/m/1' => {cache: 'private', status: 404, include: false}
       }.merge(opts)
     end
 
-    def linked_record_stub(record)
-      stub_request(:get, record.iri).to_return(
+    def linked_record_stub(iri, record)
+      stub_request(:get, iri).to_return(
         status: 200,
         body: linked_record_stub_body(record)
       )
@@ -362,7 +365,8 @@ module SPI
 
     def whitelisted_linked_record_responses(**opts)
       {
-        dg_motion1.iri => {cache: 'no-cache', status: 200, include: true}
+        dg_motion1.iri => {cache: 'public', status: 200, include: true, type: Motion},
+        'https://example.com/m/1' => {cache: 'no-cache', status: 200, include: true}
       }.merge(opts)
     end
 

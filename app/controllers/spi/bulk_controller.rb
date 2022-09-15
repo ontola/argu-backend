@@ -4,7 +4,7 @@ require 'benchmark'
 require 'prometheus_exporter/client'
 
 module SPI
-  class BulkController < LinkedRails::BulkController
+  class BulkController < LinkedRails::BulkController # rubocop:disable Metrics/ClassLength
     include Empathy::EmpJson::Helpers::Slices
     include Empathy::EmpJson::Helpers::Primitives
 
@@ -32,6 +32,12 @@ module SPI
       stats = ActiveRecord::Base.connection_pool.stat
 
       stats[:size] - stats[:busy] - stats[:waiting]
+    end
+
+    def body_from_other_tenant(opts, resource, tenant)
+      ActsAsTenant.with_tenant(tenant) do
+        response_from_resource(opts[:include], opts[:iri], resource)
+      end
     end
 
     def client
@@ -77,6 +83,12 @@ module SPI
       Oj.fast_generate(resource_hash_with_same_as(resource, iri))
     end
 
+    def resource_from_other_tenant(iri, tenant)
+      ActsAsTenant.with_tenant(tenant) do
+        LinkedRails.iri_mapper.resource_from_iri(request_path_to_url(iri), user_context)
+      end
+    end
+
     def resource_request(iri)
       req = super
       req.env['User-Context'] = user_context
@@ -90,6 +102,10 @@ module SPI
     def response_for_wrong_host(opts)
       iri = opts[:iri]
       return super unless allowed_external_host?(iri)
+
+      tenant = TenantFinder.from_url(iri)
+      resource = resource_from_other_tenant(iri, tenant)
+      return body_from_other_tenant(opts, resource, tenant) if resource
 
       include = opts[:include].to_s == 'true'
 
