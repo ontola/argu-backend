@@ -31,6 +31,11 @@
 # y:
 # z:
 
+require 'sidekiq/web'
+
+Sidekiq::Web.use ActionDispatch::Cookies
+Sidekiq::Web.use ActionDispatch::Session::CookieStore, key: "_sidekiq_session"
+
 Rails.application.routes.draw do
   constraints(LinkedRails::Constraints::Whitelist) do
     health_check_routes
@@ -43,6 +48,8 @@ Rails.application.routes.draw do
           get 'find_tenant', to: 'tenant_finder#show'
           get 'tenants', to: 'tenants#index'
         end
+
+        mount Sidekiq::Web => '/sidekiq'
       end
     end
 
@@ -99,9 +106,6 @@ Rails.application.routes.draw do
 
   constraints(Argu::StaffConstraint) do
     resources :documents, only: %i[update index create]
-    namespace :portal do
-      mount Sidekiq::Web => '/sidekiq'
-    end
   end
 
   constraints(LinkedRails::Constraints::Whitelist) do

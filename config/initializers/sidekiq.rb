@@ -11,7 +11,7 @@ end
 module Sidekiq
   module WebHelpers
     def root_path
-      "#{ActsAsTenant.current_tenant.iri.path}#{env['SCRIPT_NAME']}/"
+      "#{ActsAsTenant.current_tenant&.iri&.path || ''}#{env['SCRIPT_NAME']}/"
     end
   end
 end
