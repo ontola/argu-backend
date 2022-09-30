@@ -1,5 +1,6 @@
 test:
   service: Disk
+  endpoint: "https://localhost/"
   root: <%= Rails.root.join("tmp/storage") %>
 
 local:

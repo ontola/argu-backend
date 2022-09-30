@@ -44,9 +44,12 @@ class Manifest < LinkedRails::Manifest # rubocop:disable Metrics/ClassLength
   end
 
   def csp_entries # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    active_storage = Rails.application.config.active_storage
+
     page_specific_entries = {
       connectSrc: [
-        matomo_host
+        matomo_host,
+        active_storage.dig(:service_configurations, active_storage[:service].to_s, 'endpoint')
       ].compact,
       scriptSrc: [
         matomo_cdn
