@@ -27,6 +27,15 @@ class ManifestTest < ActiveSupport::TestCase
     assert_nil(get_redirect('http://example.com/'))
   end
 
+  test 'should set default csp entries' do
+    manifest = get_manifest('http://example.com/')
+    csp = manifest[:ontola][:csp]
+
+    assert_equal ['https://localhost/'], csp[:connectSrc]
+    assert_equal [], csp[:scriptSrc]
+    assert_equal [], csp[:imgSrc]
+  end
+
   private
 
   def get_manifest(iri)
