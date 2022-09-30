@@ -46,7 +46,8 @@ class Manifest < LinkedRails::Manifest # rubocop:disable Metrics/ClassLength
   def csp_entries # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     page_specific_entries = {
       connectSrc: [
-        matomo_host
+        matomo_host,
+        storage_endpoint
       ].compact,
       scriptSrc: [
         matomo_cdn
@@ -127,6 +128,17 @@ class Manifest < LinkedRails::Manifest # rubocop:disable Metrics/ClassLength
     [
       Rails.application.config.aws_url
     ].compact
+  end
+
+  def storage_endpoint
+    active_storage = Rails.application.config.active_storage
+    config = active_storage.dig(:service_configurations, active_storage[:service].to_s)
+
+    if config['service'] == 'S3'
+      ActiveStorage::Blob.service.bucket.url
+    else
+      config['endpoint']
+    end
   end
 
   def styled_headers
